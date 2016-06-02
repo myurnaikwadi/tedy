@@ -1,0 +1,99 @@
+﻿    <div class="parentBody" ng-controller="ksMainDashBoardCoachController">
+        <div class="applicationTopStrip">
+            <div class="applicationLogo"></div>
+            <div class="applicationSearch">
+                <input class="applicationSearchTag" type="search" placeholder="SEARCH">
+            </div>
+            <div class="applicationRightCornerStrip">
+                <div class="logoutOption">
+                    <div class="logoutOptionParent">
+                        <h5 class="fontClass genericPointerClass">LOGOUT</h5>
+                    </div>
+                </div>
+                <div class="notificationDiv">
+                    <div class="notificationDivParent">
+                        <h5 style="color: red;float:left;margin: auto 0;" class="fontClass genericPointerClass">NOTIFICATIONS</h5>					<div class="applicationNotiCount" title="5" style="float:left;text-align: center;margin: auto 5%;">
+                            <h4 style="margin:auto;font-weight: 700;line-height: 19px;color:white;">5</h4>
+                        </div>
+                    </div>
+                </div>
+                <div class="roleIcons">
+                    <div class="roleIconCircle coacheeBorderColor genericPointerClass"></div>
+                    <div class="roleIconCircle coachBorderColor genericPointerClass"></div>
+                    <div class="roleIconCircle menteeBorderColor genericPointerClass"></div>
+                    <div class="roleIconCircle mentorBorderColor genericPointerClass"></div>
+                </div>
+            </div>
+        </div>
+        <div class="applicationMiddleStrip">
+            <div class="parentRoleDashboard">
+                <div class="parentRoleMenu coachThemeColor">
+                    <div class="profileViewMode genericPointerClass">
+                        <div class="profileImagePart"></div>
+                        <div class="profileNamePart fontClass genericPointerClass">WELCOME UMESH</div>
+                    </div>
+                    <div class="leftSideMenuMainDashBoard">
+                        <div class="leftSideMenuParent">
+                            <div class="leftSideMenu" ng-repeat="option in leftSideMenus">
+                                <h5 class="leftSideMenuLable fontClass genericPointerClass">{{option.name}}</h5>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="parentRoleDetailRight">
+                    <div class="userNotificationParent">
+                        <div class="userRoleWizardParent" style="display: block;overflow: auto;
+float:left;">
+                            <div class="notificationWiz " ng-repeat="notification in notifications">
+                                <div ng-if="notification.notificationType == '1'">
+                                    <h6 class="notificationWizReason">{{notification.name}}</h6>
+                                    <h4 class="notificationWizName">{{notification.assignPerson}}</h4>
+                                    <div class="notificationWizButton">
+                                        <button style="width:100%;font-size: 10px;padding: 5px;font-weight: bolder;" class="signupButton fontClass genericPointerClass">ACCEPT</button>
+                                    </div>
+                                </div>
+                                <div ng-class="{ mentorThemeColor : notification.role =='mentor',coacheeThemeColor : notification.role =='coachee'}" style="float: left;width: 100%;height: 100%;" ng-if="notification.notificationType == '2'">
+                                    <div class="notificationWizReason" style=" margin 4%;border:0px;color: white; padding 0;">{{notification.name}}</div>
+                                    <div class="notificationTimingPanel">
+                                        <h6 class="notificationTiming notificationDate">{{notification.meetingDate}}</h6>
+                                        <h6 class="notificationTiming notificationTime">{{notification.meetingTime}}</h6>
+                                        <h6 style="float:right;    margin-right: 8%;" class="notificationTiming notificationDiff">{{notification.meetingTimeDiff}}</h6>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="dashBoardWizard">
+                        <div class="homeLabelInMainDB">
+                            <h5 class="fontClass">DASHBOARD >></h5>
+                        </div>
+                        <div class="mainDashBoardWizardParent">
+                            <div class="dashBoardMenuCoach">
+                                <div class="dashBoardMenuCoachRight genericPointerClass" ng-repeat="option in rightSideDashBoardArray">
+                                    <div class="dashBoardMenuCoachRightCircle">
+                                        <div class="dashBoardMenuCoachRightCirclePart"></div>
+                                    </div>
+                                    <div class="dashBoardMenuCoachRightlabel">
+                                        <h5 style="color:black;margin: auto;" class="leftSideMenuLable fontClass">{{option.name}}</h5>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="applicationBottomStrip">
+                            <ul class="bottomStripOption">
+                                <li class="fontClass">UNKNOWN@ 2016</li>
+                                <li class="fontClass">USER AGREEMENT</li>
+                                <li class="fontClass">PRIVACY POLICY</li>
+                                <li class="fontClass">COMMUNITY GUIDELINES</li>
+                                <li class="fontClass">COOKIE POLICY</li>
+                                <li class="fontClass">COPIRIGHT POLICY</li>
+                                <li class="fontClass">QUEST CONTROLS</li>
+                                <li class="fontClass">LANGUAGE</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+ 
