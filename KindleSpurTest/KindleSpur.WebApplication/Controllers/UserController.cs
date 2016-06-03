@@ -41,7 +41,7 @@ namespace KindleSpur.WebApplication.Controllers
                     smtp.Send(message);
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 ViewBag.ErrorMessage = "User already exists!!";
                 throw ex;
@@ -66,7 +66,7 @@ namespace KindleSpur.WebApplication.Controllers
             return View();
         }
         public ActionResult ksUserDashBoard()
-        {   
+        {
             return View();
         }
         public ActionResult ksDashBoardCoach()
@@ -99,7 +99,7 @@ namespace KindleSpur.WebApplication.Controllers
 
         public ActionResult Error()
         {
-            ViewBag.ErrorMessage= "User already exists.";
+            ViewBag.ErrorMessage = "User already exists.";
 
             return View();
         }

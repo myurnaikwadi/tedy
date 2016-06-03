@@ -252,9 +252,6 @@
     <Content Include="Scripts\Angular\Ajax Call\ajaxCallMgmt.js" />
     <Content Include="Scripts\Angular\App\app.js" />
     <Content Include="Scripts\Angular\App\stateController.js" />
-    <Content Include="Scripts\Angular\Controller\Home\ksDashBoardMentorController.js" />
-    <Content Include="Scripts\Angular\Controller\Home\ksDashBoardMenteeController.js" />
-    <Content Include="Scripts\Angular\Controller\Home\ksDashBoardCoacheeController.js" />
     <Content Include="Scripts\Angular\Controller\Home\ksDashBoardCoachController.js" />
     <Content Include="Scripts\Angular\Controller\Home\ksDashBoardController.js" />
     <Content Include="Scripts\Angular\Controller\Login\ksLoginController.js" />
@@ -1089,8 +1086,8 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\User\ksDashBoardCoach.cshtml" />
     <Content Include="Views\User\ksDashBoardCoachee.cshtml" />
-    <Content Include="Views\User\ksDashBoardMentor.cshtml" />
     <Content Include="Views\User\ksDashBoardMentee.cshtml" />
+    <Content Include="Views\User\ksDashBoardMentor.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
