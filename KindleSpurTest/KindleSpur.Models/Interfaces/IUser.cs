@@ -10,7 +10,7 @@ namespace KindleSpur.Models.Interfaces
     public interface IUser
     {
 
-         string EmailAddress { get; set; }
+        string EmailAddress { get; set; }
 
         string Password { get; set; }
 
@@ -20,14 +20,17 @@ namespace KindleSpur.Models.Interfaces
 
         int Mobile { get; set; }
 
-        //string Country { get; set; }
+        string Country { get; set; }
 
-        //string Region { get; set; }
+        string Region { get; set; }
 
-        //string Photo { get; set; }
+        string Photo { get; set; }
 
         Boolean IsExternalAuthentication { get; set; }
-        //DateTime CreateDate { get; set; }
-        //DateTime UpdateDate { get; set; }
+        DateTime CreateDate { get; set; }
+        DateTime UpdateDate { get; set; }
+        Boolean IsVerified { get; set; }
+        [BsonId]
+        ObjectId Id { get; set; }
     }
 }

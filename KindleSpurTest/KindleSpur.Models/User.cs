@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
+using MongoDB.Bson.Serialization;
 
 namespace KindleSpur.Models
 {
@@ -23,13 +24,14 @@ namespace KindleSpur.Models
         public string Region { get; set; }
         public string Photo { get; set; }
         public Boolean IsExternalAuthentication { get; set; }
+        public Boolean IsVerified { get; set; }
         public DateTime CreateDate { get; set; }
         public DateTime UpdateDate { get; set; }
 
-        //[BsonRepresentation(BsonType.ObjectId)]
-        //public ObjectId Id
-        //{
-        //    get; set;
-        //}
+        [BsonId]
+        public ObjectId Id
+        {
+            get; set;
+        }
     }
 }

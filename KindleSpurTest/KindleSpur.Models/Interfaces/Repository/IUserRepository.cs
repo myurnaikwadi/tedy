@@ -9,7 +9,7 @@ namespace KindleSpur.Models.Interfaces.Repository
     {
             bool AddNewUser(IUser userData);
 
-            bool EditUser(int id, IUser userData);
+            bool EditUser(string id, IUser userData);
 
             IUser GetUserDetail(int userId);
     }

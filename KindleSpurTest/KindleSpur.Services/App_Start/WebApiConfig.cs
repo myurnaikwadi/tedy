@@ -3,14 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Web.Http;
-using Microsoft.Practices.Unity;
 using Microsoft.Owin.Security.OAuth;
 using Newtonsoft.Json.Serialization;
 using KindleSpur.Models.Interfaces;
 using KindleSpur.Models;
 using KindleSpur.Data;
 using KindleSpur.Models.Interfaces.Repository;
-//using WebAPIRc.Helper;
 
 namespace KindleSpur.Services
 {

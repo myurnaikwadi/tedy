@@ -27,7 +27,7 @@ app.controller('ksLoginController', ['$scope', 'authentification', '$location', 
  	var _failureLoginCallBack = function (iObj) {
  	    console.error('In _failureCallBack');
  	  //$state.go('login');
- 	    $state.go('dashBoard');
+ 	   // $state.go('dashBoard');
  	  //  window.location = '/User/Login';
  	};
   	
@@ -53,9 +53,10 @@ app.controller('ksLoginController', ['$scope', 'authentification', '$location', 
  	    }
  	    var _string = window.location.href;
  	    _object.userId = _string.split("=")[1];
+
+        console.error(_object)
  	    authentification.savePassword({ signupObject: _object, successCallBack: _successLoginCallBack, failureCallBack: _failureLoginCallBack });
- 	};
- 	
+ 	}; 	
     
      /**
       * @auther : MKN

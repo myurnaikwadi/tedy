@@ -12,5 +12,25 @@ namespace KindleSpur.WebApplication.Controllers
         {
             return View();
         }
+        public ActionResult ksUserDashBoard()
+        {
+            return View();
+        }
+        public ActionResult ksDashBoardCoach()
+        {
+            return View();
+        }
+        public ActionResult ksDashBoardCoachee()
+        {
+            return View();
+        }
+        public ActionResult ksDashBoardMentor()
+        {
+            return View();
+        }
+        public ActionResult ksDashBoardMentee()
+        {
+            return View();
+        }
     }
 }

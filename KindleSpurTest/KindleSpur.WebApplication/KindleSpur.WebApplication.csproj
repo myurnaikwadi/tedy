@@ -98,6 +98,7 @@
       <HintPath>..\packages\Unity.AspNet.WebApi.4.0.1\lib\net45\Microsoft.Practices.Unity.WebApi.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="MongoDB.Bson, Version=1.10.0.277, Culture=neutral, PublicKeyToken=f686731cfb9cc103" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -232,6 +233,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\UserController.cs" />
+    <Compile Include="EmailHelper\EmailNotification.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -252,7 +254,7 @@
     <Content Include="Scripts\Angular\Ajax Call\ajaxCallMgmt.js" />
     <Content Include="Scripts\Angular\App\app.js" />
     <Content Include="Scripts\Angular\App\stateController.js" />
-    <Content Include="Scripts\Angular\Controller\Home\ksDashBoardMentorController.js" />
+    <Content Include="Scripts\css\ksDashBoardMentorController.js" />
     <Content Include="Scripts\Angular\Controller\Home\ksDashBoardMenteeController.js" />
     <Content Include="Scripts\Angular\Controller\Home\ksDashBoardCoacheeController.js" />
     <Content Include="Scripts\Angular\Controller\Home\ksDashBoardCoachController.js" />
@@ -290,9 +292,6 @@
     <Content Include="Scripts\Angular\Services\ksService.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
-    <Content Include="ApplicationInsights.config">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <Content Include="Scripts\Angular\Library Files\angular-animate.min.js.map" />
     <Content Include="Scripts\Angular\Library Files\angular-aria.min.js.map" />
     <Content Include="Scripts\Angular\Library Files\angular-cookies.min.js.map" />
@@ -313,6 +312,7 @@
     <Content Include="Scripts\css\ksDashBoard\ksDashBoardMentor.css" />
     <Content Include="Scripts\css\ksLogin\ksLogin.css" />
     <Content Include="Scripts\css\global.css" />
+    <Content Include="Scripts\css\ksLogin\ksSavePassoword.css" />
     <Content Include="Scripts\i18n\angular-locale_aa-dj.js" />
     <Content Include="Scripts\i18n\angular-locale_aa-er.js" />
     <Content Include="Scripts\i18n\angular-locale_aa-et.js" />
@@ -1083,14 +1083,14 @@
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\User\Login.cshtml" />
     <Content Include="Views\User\PasswordPromp.cshtml" />
-    <Content Include="Views\User\ksUserDashBoard.cshtml" />
+    <Content Include="Views\Home\ksUserDashBoard.cshtml" />
     <Content Include="Views\User\linkedIn.cshtml" />
     <Content Include="Views\User\Error.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\User\ksDashBoardCoach.cshtml" />
-    <Content Include="Views\User\ksDashBoardCoachee.cshtml" />
-    <Content Include="Views\User\ksDashBoardMentor.cshtml" />
-    <Content Include="Views\User\ksDashBoardMentee.cshtml" />
+    <Content Include="Views\Home\ksDashBoardCoach.cshtml" />
+    <Content Include="Views\Home\ksDashBoardCoachee.cshtml" />
+    <Content Include="Views\Home\ksDashBoardMentor.cshtml" />
+    <Content Include="Views\Home\ksDashBoardMentee.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

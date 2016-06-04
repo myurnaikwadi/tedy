@@ -9,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using MongoDB.Driver.Builders;
+using MongoDB.Bson;
 
 namespace KindleSpur.Data
 {
@@ -17,7 +18,6 @@ namespace KindleSpur.Data
         MongoClient _mongoClient;
         MongoServer _mongoServer;
         MongoDatabase _kindleDatabase;
-        //MongoCollection _userCollection;
         MongoCollection _logCollection;
 
         public UserRepository()
@@ -30,9 +30,8 @@ namespace KindleSpur.Data
                _mongoServer = _mongoClient.GetServer();
                _kindleDatabase = _mongoServer.GetDatabase("KindleSpur");
                 _logCollection = _kindleDatabase.GetCollection("ErrorLogs");
-                //_userCollection = _kindleDatabase.GetCollection("UserDetails");
             }
-            catch (Exception ex)
+            catch (MongoException ex)
             {
                 _logCollection.Insert("{ Error : 'Database connection failed.', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ");
             }
@@ -41,62 +40,45 @@ namespace KindleSpur.Data
         {
             bool _transactionStatus = false;
 
-            
-
             try
             {
                 var _userCollection = _kindleDatabase.GetCollection("UserDetails");
                 var result = _userCollection.Find(Query.EQ("EmailAddress", userData.EmailAddress));
-                //var result = _userCollection.Find(Query.And(
-                //                        Query.EQ("EmailAddress", userData.EmailAddress),
-                //                        Query.EQ("IsExternalAuthentication", true)
-                //                       ));
 
                 if (result.Count() > 0)
-                    throw new Exception("User already registered");
-
-                
+                    return false;
 
                 _userCollection.Insert(userData);
                 
                 _transactionStatus = true;
             }
-            catch (WriteConcernException ex)
+            catch (MongoException ex)
             {
                 _logCollection.Insert("{ Error : 'Failed at AddNewUser().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ");
-                throw new Exception();
+                throw new MongoException("Signup failure!!!");
             }
-            catch(Exception e)
-            {
-                throw new Exception();
-            }
-
+            
             return _transactionStatus;
 
         }
 
-        public bool EditUser(int userId, IUser userData)
+        public bool EditUser(string userId, IUser userData)
         {
             bool _transactionStatus = false;
             try
             {
                 var _userCollection = _kindleDatabase.GetCollection("UserDetails");
-                var userDetail = _userCollection.FindOneByIdAs<IUser>(userId);
+                var userDetail = _userCollection.FindOneAs<IUser>(Query.EQ("_id", ObjectId.Parse(userId)));
                 userDetail.EmailAddress = userData.EmailAddress;
-                userDetail.FirstName = userData.FirstName;
-                userDetail.LastName = userData.LastName;
                 userDetail.Password = userData.Password;
-                userDetail.Mobile = userData.Mobile;
-                //userDetail.Photo = userData.Photo;
                 userDetail.IsExternalAuthentication = userData.IsExternalAuthentication;
-                //userDetail.UpdateDate = userData.UpdateDate;
-                //userDetail.Country = userData.Country;
-                //userDetail.Region = userData.Region;
+                userDetail.UpdateDate = DateTime.Now;
+                userDetail.IsVerified = true;
 
                 _userCollection.Save(userDetail);
                 _transactionStatus = true;
             }
-            catch (Exception ex)
+            catch (MongoException ex)
             {
                 _logCollection.Insert("{ Error : 'Failed at EditUser().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ");
             }
