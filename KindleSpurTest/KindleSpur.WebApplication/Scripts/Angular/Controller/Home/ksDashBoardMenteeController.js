@@ -1,4 +1,4 @@
-﻿app.controller('ksCoacheeDashBoardController', function ($scope) {
+﻿app.controller('ksDashBoardMenteeController', function ($scope) {
     $scope.notifications = [
 
                 { notificationType: '1', name: 'YOU HAVE COACHING INVITE  FROM', assignPerson: 'HARSHADA D.' },

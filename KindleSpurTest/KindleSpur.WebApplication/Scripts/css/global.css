@@ -28,7 +28,9 @@ ul,h1,h2,h3,h4,h5,h6{
         .mentorBorderColor {
             border: 7px solid rgb(0,73,45);
         }
-
+        .mentorColor {
+            border-color: rgb(0,73,45);
+        }
         .menteeThemeColor {
             background-color: rgb(132,194,37);
         }
@@ -36,7 +38,9 @@ ul,h1,h2,h3,h4,h5,h6{
         .menteeBorderColor {
             border: 7px solid rgb(132,194,37);
         }
-
+        .menteeColor {
+            border-color: rgb(132,194,37);
+        }
         .coacheeThemeColor {
             background-color: rgb(248,195,0);
         }
@@ -44,11 +48,16 @@ ul,h1,h2,h3,h4,h5,h6{
         .coacheeBorderColor {
             border: 7px solid rgb(248,195,0);
         }
-
+        .coacheeColor {
+            border-color: rgb(248,195,0);
+        }
         .coachThemeColor {
             background-color: rgb(231,120,23);
         }
 
         .coachBorderColor {
             border: 7px solid rgb(231,120,23);
+        }
+        .coachColor {
+            border-color: rgb(231,120,23);
         }

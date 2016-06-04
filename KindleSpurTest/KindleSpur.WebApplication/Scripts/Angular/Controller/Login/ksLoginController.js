@@ -27,7 +27,7 @@ app.controller('ksLoginController', ['$scope', 'authentification', '$location', 
  	var _failureLoginCallBack = function (iObj) {
  	    console.error('In _failureCallBack');
  	  //$state.go('login');
- 	   // $state.go('dashBoard');
+ 	   $state.go('dashBoard');
  	  //  window.location = '/User/Login';
  	};
   	

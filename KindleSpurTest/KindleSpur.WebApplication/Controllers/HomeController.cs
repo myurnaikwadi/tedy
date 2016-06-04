@@ -12,6 +12,7 @@ namespace KindleSpur.WebApplication.Controllers
         {
             return View();
         }
+        [HttpGet]
         public ActionResult ksUserDashBoard()
         {
             return View();

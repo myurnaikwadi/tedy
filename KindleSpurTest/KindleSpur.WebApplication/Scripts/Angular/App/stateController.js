@@ -17,22 +17,22 @@ app.config(['$stateProvider', '$urlRouterProvider','$locationProvider',function(
     })
 	.state('dashBoard', {
 	    url: '/dashBoard',
-		templateUrl: '/User/ksUserDashBoard',
+	    templateUrl: '/Home/ksUserDashBoard',
 	})
     .state('dashBoardCoach', {
         url: '/coachDashboard',
-	    templateUrl: '/User/ksDashBoardCoach',
+	    templateUrl: '/Home/ksDashBoardCoach',
 	})
     .state('dashBoardCoachee', {
         url: '/coacheeDashboard',
-		templateUrl: '/User/ksDashBoardCoachee',
+		templateUrl: '/Home/ksDashBoardCoachee',
 	})
     .state('dashBoardMentor', {
 	    url: '/mentorDashboard',
-		templateUrl: '/User/ksDashBoardMentor',
+	    templateUrl: '/Home/ksDashBoardMentor',
     })
     .state('dashBoardMentee', {
         url: '/menteeDashboard',
-        templateUrl: '/User/ksDashBoardMentee',
+        templateUrl: '/Home/ksDashBoardMentee',
     })
 }]);
