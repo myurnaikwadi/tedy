@@ -8,7 +8,8 @@
           * @Purpose : login function - send credienal to verify details
           */
          login: function (iObj) {
-             $http.get('/plateformLogin', iObj.signupObject).then(iObj.successCallBack, iObj.failureCallBack);
+             console.error(iObj)
+             $http.post('/User/LoginResult', iObj.signupObject).then(iObj.successCallBack, iObj.failureCallBack);
          },
          /**
           * @auther : MKN

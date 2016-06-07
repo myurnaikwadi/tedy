@@ -16,6 +16,7 @@ namespace KindleSpur.WebApplication.Controllers
         // GET: User
         public ActionResult Login()
         {
+            Session.Abandon();
             return View();
         }
 
@@ -47,8 +48,8 @@ namespace KindleSpur.WebApplication.Controllers
         public ActionResult SavePassword(User signupObject)
         {
             UserRepository _repo = new UserRepository();
-
-            _repo.EditUser(TempData["UserId"].ToString(), signupObject);
+        
+            User obj= _repo.SavePassword(TempData["UserId"].ToString(), signupObject);
 
             return View();
         }
@@ -68,6 +69,25 @@ namespace KindleSpur.WebApplication.Controllers
         {
             return View();
         }
+        [HttpPost]
+        public bool LoginResult(User signupObject)
+        {
+            UserRepository _repo = new UserRepository();
+
+            IUser u = _repo.GetUserDetail(signupObject.EmailAddress);
+
+            if (u != null && u.Password==signupObject.Password)
+            {
+                Session["User"] = u;
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+
+        }
+
 
 
     }

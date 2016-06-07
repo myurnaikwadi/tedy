@@ -30,10 +30,10 @@
                           <div class="signupForm" style="height: 38% !important;margin-bottom: 0;">
                               <h4 class="sigupLabel fontClass">SIGN IN!</h4>
                               <div class="formDetails">
-                                  <input class="inputTagStyle fontClass" style="width: 94%;" type="text" placeholder="USERNAME" />
+                                  <input class="inputTagStyle fontClass" style="width: 94%;" type="text" ng-model="loginDetails.EmailAddress1" placeholder="EMAIL ID" />
                               </div>
                               <div class="formDetails">
-                                  <input class="inputTagStyle fontClass" style="width: 94%;" type="text" placeholder="PASSWORD" />
+                                  <input type="password" class="inputTagStyle fontClass" style="width: 94%;" ng-model="loginDetails.password" placeholder="PASSWORD" />
                               </div>
                               <div class="formDetails">
                                   <button class="signupButton fontClass" ng-click="loginClick()">SUBMIT</button>

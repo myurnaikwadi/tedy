@@ -3,9 +3,10 @@
      * @date : 07/05/2016
      * @Purpose : login and Signup controller - Manage all data related to  login and signup page
      */
-app.controller('ksLoginController', ['$scope', 'authentification', '$location', '$rootScope', '$state', function ($scope, authentification, $location, $rootScope, $state) {
+app.controller('ksLoginController', ['$scope', 'authentification', '$location', '$rootScope', '$state', '$stateParams', function ($scope, authentification, $location, $rootScope, $state, $stateParams) {
  	console.error('login Page loaded Successfully');
  	$scope.loginDetails = {};
+ 	console.error($stateParams);
      /**
      * @auther : MKN
      * @date : 07/05/2016
@@ -13,10 +14,20 @@ app.controller('ksLoginController', ['$scope', 'authentification', '$location', 
      */
  	var _successLoginCallBack = function (iObj) {
  	    console.error('In _successCallBack');
- 	    $state.go('dashBoard');
+ 	    $state.go('ksUserDashBoard');
  	};
+ 	var _successPasswordCallBack = function (iObj) {
+ 	    console.error('In _successCallBack');
+ 	    alert('Your password has been save successfully.Please login')
+ 	    $state.go('login');
+ 	};
+ 	
  	var _successCallBack = function (iObj) {
  	    console.error('In _successCallBack');
+ 	    $scope.loginDetails.FirstName = "";
+ 	    $scope.loginDetails.LastName = "";
+ 	    $scope.loginDetails.EmailAddress = "";
+ 	   
  	    alert('Verification Link is sent successfully. Please check your email account')
  	};
      /**
@@ -26,11 +37,19 @@ app.controller('ksLoginController', ['$scope', 'authentification', '$location', 
       */
  	var _failureLoginCallBack = function (iObj) {
  	    console.error('In _failureCallBack');
+ 	    alert('Invalid Username or Password')
  	  //$state.go('login');
- 	   $state.go('dashBoard');
+ 	 //  $state.go('dashBoard');
  	  //  window.location = '/User/Login';
  	};
-  	
+ 	var _failurePasswordCallBack = function (iObj) {
+ 	    console.error('In _failurePasswordCallBack');
+ 	    alert('Your password has been save successfully.Please login')
+ 	    //$state.go('login');
+ 	    $state.go('login');
+ 	    //  window.location = '/User/Login';
+ 	};
+ 	
      /**
       * @auther : MKN
       * @date : 07/05/2016
@@ -39,8 +58,8 @@ app.controller('ksLoginController', ['$scope', 'authentification', '$location', 
  	$scope.loginClick = function () {
    
  	    var _object = {
- 	        firstName: $scope.loginDetails.firstName,
- 	        lastName: $scope.loginDetails.lastName,
+ 	        EmailAddress: $scope.loginDetails.EmailAddress1,
+ 	        Password: $scope.loginDetails.password,
  	    }
  	    console.error(_object)
         
@@ -52,10 +71,10 @@ app.controller('ksLoginController', ['$scope', 'authentification', '$location', 
  	        Password: $scope.loginDetails.password
  	    }
  	    var _string = window.location.href;
- 	    _object.userId = _string.split("=")[1];
+ 	    _object.userId = _string.split("passwordPrompt/")[1];
 
         console.error(_object)
- 	    authentification.savePassword({ signupObject: _object, successCallBack: _successLoginCallBack, failureCallBack: _failureLoginCallBack });
+ 	    authentification.savePassword({ signupObject: _object, successCallBack: _successPasswordCallBack, failureCallBack: _failurePasswordCallBack });
  	}; 	
     
      /**
@@ -94,7 +113,7 @@ app.controller('ksLoginController', ['$scope', 'authentification', '$location', 
     //logout and go to login screen
  	$scope.logoutLinkedIn = function () {
  	    //retrieve values from LinkedIn
- 	    IN.User.logout();
+ 	    if(IN.User) IN.User.logout();
  	    delete $rootScope.userprofile;
  	    $rootScope.loggedUser = false;
  	    _failureLoginCallBack();

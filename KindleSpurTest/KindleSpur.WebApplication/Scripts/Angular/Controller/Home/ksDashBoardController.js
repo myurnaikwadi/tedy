@@ -23,7 +23,10 @@ app.controller('ksMainDashBoardController', function ($scope,$state,authentifica
 		
 		};
 
-        $scope.logout = function(){
+		$scope.logout = function () {
+		   
+            console.error(IN.User)  
+            if (IN.User) IN.User.logout();
             $state.go('login');
             authentification.logout({ loginObject : {}});
         };

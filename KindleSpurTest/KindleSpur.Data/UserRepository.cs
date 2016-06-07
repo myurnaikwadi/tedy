@@ -85,10 +85,31 @@ namespace KindleSpur.Data
             return _transactionStatus;
         }
 
+        public User SavePassword(string userId, IUser userData)
+        {
+
+                var _userCollection = _kindleDatabase.GetCollection("UserDetails");
+            User userDetail = _userCollection.FindOneAs<User>(Query.EQ("_id", ObjectId.Parse(userId)));
+            userDetail.Password = userData.Password;
+            userDetail.IsExternalAuthentication = userData.IsExternalAuthentication;
+            userDetail.UpdateDate = DateTime.Now;
+            userDetail.IsVerified = true;
+
+            _userCollection.Save(userDetail);
+
+            return (User)userDetail;
+
+        }
+
         public IUser GetUserDetail(int userId)
         {
             var _userCollection = _kindleDatabase.GetCollection("UserDetails");
             return _userCollection.FindOneByIdAs<IUser>(userId);
+        }
+        public IUser GetUserDetail(string EmailAddress)
+        {
+            var _userCollection = _kindleDatabase.GetCollection("UserDetails");
+            return _userCollection.FindOneAs<User>(Query.EQ("EmailAddress", EmailAddress));
         }
     }
 }
