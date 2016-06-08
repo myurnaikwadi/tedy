@@ -16,30 +16,33 @@
                           <div class="signupForm" style="margin-bottom: 4%;">
                               <h4 class="signupNewHereLabel fontClass">NEW HERE?</h4>
                               <h4 class="sigupLabel fontClass">SIGN UP!</h4>
-                              <div class="formDetails">
-                                  <input class="inputTagStyle fontClass" type="text" ng-model="loginDetails.FirstName" placeholder="FIRST NAME" />
-                                  <input class="inputTagStyle fontClass" style="margin-left: 5%;" ng-model="loginDetails.LastName" type="text" placeholder="LAST NAME" />
-                              </div>
-                              <div class="formDetails">
-                                  <input class="inputTagStyle fontClass" style="width: 94%;" type="text" ng-model="loginDetails.EmailAddress" placeholder="E-MAIL ID" />
-                              </div>
-                              <div class="formDetails">
-                                  <button class="signupButton fontClass" ng-click="signupClick()">SIGNUP</button>
-                              </div>
+                              <form name="myForm">
+                                  <div class="formDetails">
+                                      <input class="inputTagStyle fontClass" type="text" ng-model="signupDetails.FirstName" placeholder="FIRST NAME" ng-required />
+                                      <input class="inputTagStyle fontClass" style="margin-left: 5%;" ng-model="signupDetails.LastName" type="text" placeholder="LAST NAME" ng-required />
+                                  </div>
+                                  <div class="formDetails">
+                                      <input class="inputTagStyle fontClass" style="width: 94%;" type="text" ng-model="signupDetails.EmailAddress" placeholder="E-MAIL ID" ng-required />
+                                  </div>
+                                  <div class="formDetails">
+                                      <button class="signupButton fontClass" ng-click="signupClick()">SIGNUP</button>
+                                  </div>
+                              </form>
                           </div>
                           <div class="signupForm" style="height: 38% !important;margin-bottom: 0;">
                               <h4 class="sigupLabel fontClass">SIGN IN!</h4>
-                              <div class="formDetails">
-                                  <input class="inputTagStyle fontClass" style="width: 94%;" type="text" ng-model="loginDetails.EmailAddress1" placeholder="EMAIL ID" />
-                              </div>
-                              <div class="formDetails">
-                                  <input type="password" class="inputTagStyle fontClass" style="width: 94%;" ng-model="loginDetails.password" placeholder="PASSWORD" />
-                              </div>
-                              <div class="formDetails">
-                                  <button class="signupButton fontClass" ng-click="loginClick()">SUBMIT</button>
-                                  <h5 class="forgotPassword fontClass">FORGOT PASSOWORD</h5>
-                              </div>
-
+                              <form name="myForm">
+                                  <div class="formDetails">
+                                      <input class="inputTagStyle fontClass" style="width: 94%;" type="text" ng-model="loginDetails.emailAddress" placeholder="EMAIL ID" ng-required />
+                                  </div>
+                                  <div class="formDetails">
+                                      <input type="password" class="inputTagStyle fontClass" style="width: 94%;" ng-model="loginDetails.password" placeholder="PASSWORD" ng-required />
+                                  </div>
+                                  <div class="formDetails">
+                                      <button class="signupButton fontClass" ng-click="loginClick()">SUBMIT</button>
+                                      <h5 class="forgotPassword fontClass">FORGOT PASSOWORD</h5>
+                                  </div>
+                              </form>
                           </div>
                           <div class="signInWith" id="appBody">
                               <h4 class="signInWithLabel fontClass">SIGN IN WITH</h4>

@@ -255,6 +255,7 @@
     <Content Include="Scripts\Angular\App\app.js" />
     <Content Include="Scripts\Angular\App\stateController.js" />
     <Content Include="Scripts\Angular\Controller\Home\ksDashBoardMentorController.js" />
+    <Content Include="Scripts\Angular\Services\ksGenericDirective.js" />
     <Content Include="Scripts\css\ksDashBoardMentorController.js" />
     <Content Include="Scripts\Angular\Controller\Home\ksDashBoardMenteeController.js" />
     <Content Include="Scripts\Angular\Controller\Home\ksDashBoardCoacheeController.js" />

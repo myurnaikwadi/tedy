@@ -5,7 +5,17 @@
      */
 app.controller('ksLoginController', ['$scope', 'authentification', '$location', '$rootScope', '$state', '$stateParams', function ($scope, authentification, $location, $rootScope, $state, $stateParams) {
  	console.error('login Page loaded Successfully');
- 	$scope.loginDetails = {};
+ 	$scope.loginDetails = {
+ 	    emailAddress : '',
+        password : ''
+ 	};
+ 	$scope.signupDetails = {
+ 	    FirstName : '',
+ 	    LastName : '',
+ 	    EmailAddress: '',
+ 	    password: '',
+ 	    confirmPassword : ''
+ 	};
  	console.error($stateParams);
      /**
      * @auther : MKN
@@ -24,9 +34,9 @@ app.controller('ksLoginController', ['$scope', 'authentification', '$location', 
  	
  	var _successCallBack = function (iObj) {
  	    console.error('In _successCallBack');
- 	    $scope.loginDetails.FirstName = "";
- 	    $scope.loginDetails.LastName = "";
- 	    $scope.loginDetails.EmailAddress = "";
+ 	    $scope.signupDetails.FirstName = "";
+ 	    $scope.signupDetails.LastName = "";
+ 	    $scope.signupDetails.EmailAddress = "";
  	   
  	    alert('Verification Link is sent successfully. Please check your email account')
  	};
@@ -58,7 +68,7 @@ app.controller('ksLoginController', ['$scope', 'authentification', '$location', 
  	$scope.loginClick = function () {
    
  	    var _object = {
- 	        EmailAddress: $scope.loginDetails.EmailAddress1,
+ 	        EmailAddress: $scope.loginDetails.emailAddress,
  	        Password: $scope.loginDetails.password,
  	    }
  	    console.error(_object)
@@ -67,8 +77,9 @@ app.controller('ksLoginController', ['$scope', 'authentification', '$location', 
  	};
  
  	$scope.savePassword = function () {
+ 	    console.error($scope.signupDetails)
  	    var _object = {
- 	        Password: $scope.loginDetails.password
+ 	        Password: $scope.signupDetails.password
  	    }
  	    var _string = window.location.href;
  	    _object.userId = _string.split("passwordPrompt/")[1];
@@ -84,9 +95,9 @@ app.controller('ksLoginController', ['$scope', 'authentification', '$location', 
       */
  	$scope.signupClick = function () {
  		var _object = {
- 			FirstName : $scope.loginDetails.FirstName,
- 			LastName : $scope.loginDetails.LastName,
- 			EmailAddress : $scope.loginDetails.EmailAddress,
+ 		    FirstName: $scope.signupDetails.FirstName,
+ 		    LastName: $scope.signupDetails.LastName,
+ 		    EmailAddress: $scope.signupDetails.EmailAddress,
  		}
  		authentification.signup({ signupObject: _object, successCallBack: _successCallBack, failureCallBack: _failureLoginCallBack });
  	};
