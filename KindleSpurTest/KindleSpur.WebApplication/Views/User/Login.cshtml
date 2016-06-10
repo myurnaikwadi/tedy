@@ -12,7 +12,7 @@
                               <h4 class="landingSlogan" style="margin-left: 9%;font-size: 12px;font-size: 12px;">WHERE COACHING/MENTORING REDEFINES,</h4>	     <h4 class="landingSlogan" style="margin-left: 9%;font-size: 12px;">THE WAY WE PERCEIVE IT,IGNITED TO SHARE</h4>    <h4 class="landingSlogan" style="margin-left: 9%;font-size: 12px;">KNOWLEDGE,URGE TO LEARN-</h4>                       <h4 class="landingSlogan" style="margin-left: 9%;font-size: 12px;">MASTER BLEND OF KNOWLEDGE I & U</h4>
                           </div>
                       </div>
-                      <div class="signupLoginParent">
+                      <div class="signupLoginParentLogin">
                           <div class="signupForm" style="margin-bottom: 4%;">
                               <h4 class="signupNewHereLabel fontClass">NEW HERE?</h4>
                               <h4 class="sigupLabel fontClass">SIGN UP!</h4>
@@ -22,10 +22,10 @@
                                       <input class="inputTagStyle fontClass" style="margin-left: 5%;" ng-model="signupDetails.LastName" type="text" placeholder="LAST NAME" ng-required />
                                   </div>
                                   <div class="formDetails">
-                                      <input class="inputTagStyle fontClass" style="width: 94%;" type="text" ng-model="signupDetails.EmailAddress" placeholder="E-MAIL ID" ng-required />
+                                      <input class="inputTagStyle fontClass" style="width: 94%;" type="text" ng-class="{ invalidEmailNotify : emailValidate == false}"  focus-me set-Focus="false" blur="checkEmailFormat()" ng-model="signupDetails.EmailAddress" placeholder="E-MAIL ID" ng-required />
                                   </div>
                                   <div class="formDetails">
-                                      <button class="signupButton fontClass" ng-click="signupClick()">SIGNUP</button>
+                                      <button type="button" class="signupButton fontClass btn btn-default" ng-click="signupClick()">SIGNUP</button>
                                   </div>
                               </form>
                           </div>
@@ -33,13 +33,13 @@
                               <h4 class="sigupLabel fontClass">SIGN IN!</h4>
                               <form name="myForm">
                                   <div class="formDetails">
-                                      <input class="inputTagStyle fontClass" style="width: 94%;" type="text" ng-model="loginDetails.emailAddress" placeholder="EMAIL ID" ng-required />
+                                      <input class="inputTagStyle fontClass" style="width: 94%;" type="text" ng-class="{ invalidEmailNotify : emailValidate == false}"  focus-me set-Focus="true" blur="checkEmailFormat()" ng-model="loginDetails.emailAddress" placeholder="EMAIL ID" ng-required />
                                   </div>
                                   <div class="formDetails">
                                       <input type="password" class="inputTagStyle fontClass" style="width: 94%;" ng-model="loginDetails.password" placeholder="PASSWORD" ng-required />
                                   </div>
                                   <div class="formDetails">
-                                      <button class="signupButton fontClass" ng-click="loginClick()">SUBMIT</button>
+                                      <button type="button" class="signupButton fontClass btn btn-default" ng-click="loginClick()">SUBMIT</button>
                                       <h5 class="forgotPassword fontClass">FORGOT PASSOWORD</h5>
                                   </div>
                               </form>
@@ -57,16 +57,7 @@
                   </div>
               </div>
               <div class="applicationBottomStrip">
-                  <ul class="bottomStripOption">
-                      <li class="fontClass">UNKNOWN 2016</li>
-                      <li class="fontClass">USER AGREEMENT</li>
-                      <li class="fontClass">PRIVACY POLICY</li>
-                      <li class="fontClass">COMMUNITY GUIDELINES</li>
-                      <li class="fontClass">COOKIE POLICY</li>
-                      <li class="fontClass">COPIRIGHT POLICY</li>
-                      <li class="fontClass">QUEST CONTROLS</li>
-                      <li class="fontClass">LANGUAGE</li>
-                  </ul>
+                  <bottom-Main-Strip></bottom-Main-Strip>
               </div>
      
 </div>

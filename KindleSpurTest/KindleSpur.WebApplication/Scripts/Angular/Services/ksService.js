@@ -50,4 +50,61 @@
          },
 
      }
- });
+});
+/**
+  * @auther : MKN
+  * @date : 10/06/2016
+  * @Purpose : communication service with server
+  */
+app.factory('serverCommunication', function ($http) {
+    return {
+       
+        /**
+          * @auther : MKN
+          * @date : 10/06/2016
+          * @Purpose : login function - send credienal to verify details
+          */
+        getDashBoardData: function (iObj) {
+            console.error(iObj)
+            $http.get('/User/dashboard').then(iObj.successCallBack, iObj.failureCallBack);
+        },
+        /**
+         * @auther : MKN
+         * @date : 10/06/2016
+         * @Purpose : get Landing page data for Coach
+         */
+        getCoachData: function (iObj) {
+            console.error(iObj)
+            $http.get('/User/Coach').then(iObj.successCallBack, iObj.failureCallBack);
+        },
+         /**
+          * @auther : MKN
+          * @date : 10/06/2016
+          * @Purpose :  get Landing page data for coachee
+          */
+        getCoacheeData: function (iObj) {
+            console.error(iObj)
+            $http.get('/User/Coachee').then(iObj.successCallBack, iObj.failureCallBack);
+        },
+         /**
+          * @auther : MKN
+          * @date : 10/06/2016
+          * @Purpose :  get Landing page data for Mentor
+          */
+        getMentorData: function (iObj) {
+            console.error(iObj)
+            $http.get('/User/Mentor').then(iObj.successCallBack, iObj.failureCallBack);
+        },
+        /**
+          * @auther : MKN
+          * @date : 10/06/2016
+          * @Purpose : get Landing page data for Mentee
+          */
+        getMenteeData: function (iObj) {
+            console.error(iObj)
+            $http.get('/User/Mentee').then(iObj.successCallBack, iObj.failureCallBack);
+        },
+        
+
+    }
+});

@@ -1,4 +1,4 @@
-﻿app.controller('ksDashBoardCoacheeController', function ($scope) {
+﻿app.controller('ksDashBoardCoacheeController', function ($scope,serverCommunication ) {
     $scope.notifications = [
 
                 { notificationType: '1', name: 'YOU HAVE COACHING INVITE  FROM', assignPerson: 'HARSHADA D.' },
@@ -22,4 +22,18 @@
                 { name: 'BRAIN GAMES' },
                 { name: 'RESOURCES' }
     ]
+    $scope.init = function () {
+
+            serverCommunication.getCoacheeData({
+		        successCallBack: function () {
+		            console.error('In successCallBack');
+
+		        },
+		        failureCallBack: function () {
+		            console.error('In failureCallBack');
+
+		        }
+		    });
+	};
+	$scope.init();
 });

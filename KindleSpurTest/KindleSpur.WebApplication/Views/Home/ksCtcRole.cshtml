@@ -1,0 +1,35 @@
+﻿<div class="ctsParent">
+    <div class="ctsParentMain">
+        <div class="ctsParentMainPanel">
+            <div class="ctsCategoryHeading">
+                <h5 style="font-size: 15px;font-weight: 700;padding: 1%;padding-left: 0;" class="fontClass">CATEGORIES</h5>
+            </div>
+            <div class="ctsCategoryPanel">
+                <div class="parentCatgoryPanel">
+                    <div class="cateGoryRepeatPanel">
+                        <div style="float: left;width: 50%;height:50%" class="genericPointerClass" ng-click="categoryClick($index,option)" ng-repeat="option in catogoryArray">
+                            <div ng-class="{ coachThemeColor : $index == selectedCategory }" class="categoryCircle">
+                                <div class="categoryRightlabelPart">
+                                    <div class="categoryRightlabel">
+                                        <h5 style="color:#B5AFAF;margin: auto;font-size: 15px;" class="leftSideMenuLable fontClass" ng-class="{ whiteBackground : $index == selectedCategory }">
+                                            {{option.name | uppercase}}
+                                        </h5>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="ctsCategoryActionPanel">
+                <div class="cateGoryFormDetails">
+                    <button class="signupButton fontClass" style="width: 90px;height: 30px;padding: 0;">Publish</button>
+                    <h5 class="resetClass cancelLink fontClass">Cancel</h5>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="applicationBottomStrip">
+    <bottom-Main-Strip></bottom-Main-Strip>
+</div>

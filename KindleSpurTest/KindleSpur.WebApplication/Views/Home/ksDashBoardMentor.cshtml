@@ -1,31 +1,8 @@
 ﻿<div class="parentBody" ng-controller="ksDashBoardMentorController">
     <div class="applicationTopStrip">
-        <div class="applicationLogo"></div>
-        <div class="applicationSearch">
-            <input class="applicationSearchTag" type="search" placeholder="SEARCH">
-        </div>
-        <div class="applicationRightCornerStrip">
-            <div class="logoutOption">
-                <div class="logoutOptionParent">
-                    <h5 class="fontClass genericPointerClass">LOGOUT</h5>
-                </div>
-            </div>
-            <div class="notificationDiv">
-                <div class="notificationDivParent">
-                    <h5 style="color: red;float:left;margin: auto 0;" class="fontClass genericPointerClass">NOTIFICATIONS</h5>					<div class="applicationNotiCount" title="5" style="float:left;text-align: center;margin: auto 5%;">
-                        <h4 style="margin:auto;font-weight: 700;line-height: 19px;color:white;">5</h4>
-                    </div>
-                </div>
-            </div>
-            <div class="roleIcons">
-                <div class="roleIconCircle coacheeBorderColor genericPointerClass"></div>
-                <div class="roleIconCircle coachBorderColor genericPointerClass"></div>
-                <div class="roleIconCircle menteeBorderColor genericPointerClass"></div>
-                <div class="roleIconCircle mentorBorderColor genericPointerClass"></div>
-            </div>
-        </div>
+        <top-Main-Strip></top-Main-Strip>
     </div>
-    <div class="applicationMiddleStrip">
+    <div class="applicationMiddleStripMain">
         <div class="parentRoleDashboard">
             <div class="parentRoleMenu mentorThemeColor">
                 <div class="profileViewMode genericPointerClass">
@@ -80,16 +57,7 @@ float:left;">
                         </div>
                     </div>
                     <div class="applicationBottomStrip">
-                        <ul class="bottomStripOption">
-                            <li class="fontClass">UNKNOWN 2016</li>
-                            <li class="fontClass">USER AGREEMENT</li>
-                            <li class="fontClass">PRIVACY POLICY</li>
-                            <li class="fontClass">COMMUNITY GUIDELINES</li>
-                            <li class="fontClass">COOKIE POLICY</li>
-                            <li class="fontClass">COPIRIGHT POLICY</li>
-                            <li class="fontClass">QUEST CONTROLS</li>
-                            <li class="fontClass">LANGUAGE</li>
-                        </ul>
+                        <bottom-Main-Strip></bottom-Main-Strip>
                     </div>
                 </div>
             </div>

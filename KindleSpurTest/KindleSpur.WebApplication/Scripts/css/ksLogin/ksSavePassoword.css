@@ -144,19 +144,3 @@
                 float: left;
                 opacity: 0.4;
             }
-
-        .bottomStripOption {
-            position: relative;
-            float: left;
-            width: 81%;
-            margin-left: 19%;
-            margin-top: 1%;
-        }
-
-            .bottomStripOption li {
-                position: relative;
-                float: left;
-                font-size: 10px;
-                opacity: 0.4;
-                margin: 5px;
-            }

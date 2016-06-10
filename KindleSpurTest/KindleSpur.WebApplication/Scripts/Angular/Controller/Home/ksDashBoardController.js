@@ -1,4 +1,4 @@
-app.controller('ksMainDashBoardController', function ($scope,$state,authentification) {
+app.controller('ksMainDashBoardController', function ($scope,$state,serverCommunication) {
     console.error('Dashoard load successfully')
     $scope.notificationsArr = [
 			{ notificationType: '1', name: 'YOU HAVE COACHING INVITE  FROM', assignPerson: 'HARSHADA D.' },
@@ -29,5 +29,19 @@ app.controller('ksMainDashBoardController', function ($scope,$state,authentifica
             if (IN.User) IN.User.logout();
             $state.go('login');
             authentification.logout({ loginObject : {}});
-        };
+		};
+		$scope.init = function () {
+
+		    serverCommunication.getDashBoardData({
+		        successCallBack: function () {
+		            console.error('In successCallBack');
+
+		        },
+		        failureCallBack: function () {
+		            console.error('In failureCallBack');
+
+		        }
+		    });
+		};
+		$scope.init();
 });

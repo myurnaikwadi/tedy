@@ -17,6 +17,22 @@ app.controller('ksLoginController', ['$scope', 'authentification', '$location', 
  	    confirmPassword : ''
  	};
  	console.error($stateParams);
+
+ 	$scope.emailValidate = true;
+ 	$scope.emailValidation = function () {
+ 	    var mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+ 	    if ($scope.emailAddress.match(mailformat)) {
+ 	        $scope.emailValidate = true;
+ 	        console.error('validdate')
+ 	    } else {
+ 	        $scope.emailValidate = false;
+ 	    }
+
+
+ 	};
+
+
+
      /**
      * @auther : MKN
      * @date : 07/05/2016
@@ -66,7 +82,11 @@ app.controller('ksLoginController', ['$scope', 'authentification', '$location', 
       * @Purpose : signup function  - send data to auth factory to send data to server.
       */
  	$scope.loginClick = function () {
-   
+ 	    if ($scope.loginDetails.emailAddress == '' || $scope.loginDetails.password == '') {
+ 	        alert('Please enter emailAddress or  Password')
+ 	        return
+ 	    }
+
  	    var _object = {
  	        EmailAddress: $scope.loginDetails.emailAddress,
  	        Password: $scope.loginDetails.password,
@@ -78,6 +98,10 @@ app.controller('ksLoginController', ['$scope', 'authentification', '$location', 
  
  	$scope.savePassword = function () {
  	    console.error($scope.signupDetails)
+ 	    if ($scope.signupDetails.password == '') {
+ 	        alert('Please enter Password')
+ 	        return
+ 	    }
  	    var _object = {
  	        Password: $scope.signupDetails.password
  	    }
@@ -94,6 +118,28 @@ app.controller('ksLoginController', ['$scope', 'authentification', '$location', 
       * @Purpose : signup function  - send data to auth factory to send data to server.
       */
  	$scope.signupClick = function () {
+ 	    if ($scope.signupDetails.FirstName == '') {
+ 	        if ($scope.signupDetails.LastName == '' && $scope.signupDetails.EmailAddress == '') {
+ 	            alert('Please enter First,last name and Email address')
+ 	        }else if ($scope.signupDetails.LastName == '') {
+ 	            alert('Please enter last name')
+ 	        } else if ($scope.signupDetails.EmailAddress == '') {
+ 	            alert('Please enter Email address')
+ 	        }
+ 	        return
+ 	    }else if($scope.signupDetails.LastName == ''){
+ 	         if ($scope.signupDetails.EmailAddress == '') {
+ 	             alert('Please enter last name and Email address')
+ 	         } else {
+ 	             alert('Please enter last name')
+ 	         }
+ 	         return
+ 	    } else if ($scope.signupDetails.EmailAddress == '') {
+ 	        alert('Please enter Email address')
+ 	        return
+ 	    }
+ 	        
+
  		var _object = {
  		    FirstName: $scope.signupDetails.FirstName,
  		    LastName: $scope.signupDetails.LastName,

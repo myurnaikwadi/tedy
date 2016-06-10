@@ -18,6 +18,14 @@ namespace KindleSpur.WebApplication.Controllers
             ViewBag.Name = ((User)Session["User"]).FirstName;
             return View();
         }
+        public ActionResult ksTopMainStrip()
+        {
+            return View();
+        }
+        public ActionResult ksCtcRole()
+        {
+            return View();
+        }
         public ActionResult ksDashBoardCoach()
         {
             return View();
