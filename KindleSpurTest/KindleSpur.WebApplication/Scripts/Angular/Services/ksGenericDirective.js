@@ -96,8 +96,12 @@ app.directive('ctcRole', function ($state) {
                  { name: 'RESOURCES' }
             ];
             scope.selectedCategory = -1;
+            scope.selectedCategoryValue = null;
+            scope.categoryDisplay = true;
             scope.categoryClick = function (iIndex, iCategory) {
                 scope.selectedCategory = iIndex;
+                scope.categoryDisplay = false;
+                scope.selectedCategoryValue = iCategory;
             };
         }
     };

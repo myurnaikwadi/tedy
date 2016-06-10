@@ -2,11 +2,11 @@
     <div class="ctsParentMain">
         <div class="ctsParentMainPanel">
             <div class="ctsCategoryHeading">
-                <h5 style="font-size: 15px;font-weight: 700;padding: 1%;padding-left: 0;" class="fontClass">CATEGORIES</h5>
+                <h5 style="font-size: 15px;font-weight: 700;padding: 6px;padding-left: 0;" class="fontClass">{{ categoryDisplay ? 'CATEGORIES' : selectedCategoryValue.name | uppercase }}</h5>
             </div>
             <div class="ctsCategoryPanel">
                 <div class="parentCatgoryPanel">
-                    <div class="cateGoryRepeatPanel">
+                    <div class="cateGoryRepeatPanel" ng-if="categoryDisplay == true">
                         <div style="float: left;width: 50%;height:50%" class="genericPointerClass" ng-click="categoryClick($index,option)" ng-repeat="option in catogoryArray">
                             <div ng-class="{ coachThemeColor : $index == selectedCategory }" class="categoryCircle">
                                 <div class="categoryRightlabelPart">
@@ -19,11 +19,29 @@
                             </div>
                         </div>
                     </div>
+                    <div class="topicSkillPanel" ng-if="categoryDisplay == false">
+                        <div class="topicClassParent">
+                            <div class="topicHeadingSection">
+                                   <h5 class="topicHeadingBar">TOPIC</h5>
+                            </div>
+                            <div class="topicListingSection">
+
+                            </div>
+                        </div>
+                        <div class="skillsClassParent">
+                            <div class="topicHeadingSection">
+                                <h5 class="topicHeadingBar">SKILLS</h5>
+                            </div>
+                            <div class="topicListingSection">
+
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="ctsCategoryActionPanel">
                 <div class="cateGoryFormDetails">
-                    <button class="signupButton fontClass" style="width: 90px;height: 30px;padding: 0;">Publish</button>
+                    <button class="signupButton fontClass" style="width: 90px;height: 30px;padding: 0;">{{categoryDisplay ? 'Publish' : 'Save' }}</button>
                     <h5 class="resetClass cancelLink fontClass">Cancel</h5>
                 </div>
             </div>

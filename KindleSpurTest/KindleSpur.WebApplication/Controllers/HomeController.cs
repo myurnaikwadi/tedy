@@ -15,7 +15,7 @@ namespace KindleSpur.WebApplication.Controllers
         }
         public ActionResult ksUserDashBoard()
         {
-            ViewBag.Name = ((User)Session["User"]).FirstName;
+            //ViewBag.Name = ((User)Session["User"]).FirstName;
             return View();
         }
         public ActionResult ksTopMainStrip()
