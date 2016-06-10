@@ -62,6 +62,10 @@ namespace KindleSpur.WebApplication.Controllers
             {
                 ViewBag.ErrorMessage = "User already exists.";
             }
+            else
+            {
+                Session["User"] = _obj;
+            }
             return View();
         }
 

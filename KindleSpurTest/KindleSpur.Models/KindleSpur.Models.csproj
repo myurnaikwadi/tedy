@@ -53,6 +53,7 @@
     <Compile Include="Interfaces\IUser.cs" />
     <Compile Include="Interfaces\Repository\ICoacheeOrMenteeRepository.cs" />
     <Compile Include="Interfaces\Repository\ICoachOrMentorRepository.cs" />
+    <Compile Include="Interfaces\Repository\ICTSRepository.cs" />
     <Compile Include="Interfaces\Repository\IUserRepository.cs" />
     <Compile Include="ProgramConducted.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

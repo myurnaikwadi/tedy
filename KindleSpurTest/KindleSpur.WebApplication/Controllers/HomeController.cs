@@ -1,4 +1,5 @@
-﻿using System;
+﻿using KindleSpur.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -14,6 +15,7 @@ namespace KindleSpur.WebApplication.Controllers
         }
         public ActionResult ksUserDashBoard()
         {
+            ViewBag.Name = ((User)Session["User"]).FirstName;
             return View();
         }
         public ActionResult ksDashBoardCoach()
