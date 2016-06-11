@@ -34,6 +34,27 @@ namespace KindleSpur.Data
             }
         }
 
+        public List<BsonDocument> GetCTS()
+        {
+
+            List<BsonDocument> _categories = new List<BsonDocument>();
+
+            try
+            {
+                var _ctsCollection = _kindleDatabase.GetCollection("CTS");
+                _categories = _ctsCollection.FindAll().ToList();
+            }
+            catch (MongoException ex)
+            {
+                _logCollection.Insert("{ Error : 'Failed at GetCategories().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ");
+                throw new MongoException("Signup failure!!!");
+            }
+
+            return _categories;
+
+        }
+
+
         public List<BsonDocument> GetCategories()
         {
            

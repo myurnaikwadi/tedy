@@ -11,6 +11,13 @@ namespace KindleSpur.WebApplication.Controllers
 {
     public class CTSController : ApiController
     {
+
+        // GET: api/GetCTSCategories
+        public IEnumerable<BsonDocument> GetCTS()
+        {
+            CTSRepository _ctsRepo = new CTSRepository();
+            return _ctsRepo.GetCTS();
+        }
         // GET: api/GetCTSCategories
         public IEnumerable<BsonDocument> GetCTSCategories()
         {
