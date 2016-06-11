@@ -105,18 +105,18 @@ app.directive('ctcRole', function ($state, serverCommunication) {
                 scope.getTopicSkill(iCategory);
             };
             scope.getTopicSkill = function (iCategory) {
-                serverCommunication.getTopicSkill({
-                    cateGoryObject: iCategory,
-                    successCallBack: function (iObj) {
-                        console.error('In successCallBack', iObj);
+                //serverCommunication.getTopicSkill({
+                //    cateGoryObject: iCategory,
+                //    successCallBack: function (iObj) {
+                //        console.error('In successCallBack', iObj);
 
 
-                    },
-                    failureCallBack: function () {
-                        console.error('In failureCallBack', iObj);
+                //    },
+                //    failureCallBack: function () {
+                //        console.error('In failureCallBack', iObj);
 
-                    }
-                });
+                //    }
+                //});
             };
             scope.init = function () {
                 serverCommunication.getCategorys({
@@ -125,12 +125,13 @@ app.directive('ctcRole', function ($state, serverCommunication) {
 
 
                     },
-                    failureCallBack: function () {
+                    failureCallBack: function (iObj) {
                         console.error('In failureCallBack', iObj);
 
                     }
                 });
             };
+            scope.init();
         }
     };
 });

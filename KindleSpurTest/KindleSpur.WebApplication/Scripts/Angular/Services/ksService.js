@@ -112,7 +112,7 @@ app.factory('serverCommunication', function ($http) {
           */
         getCategorys: function (iObj) {
             console.error(iObj)
-            $http.get('/User/getCategory').then(iObj.successCallBack, iObj.failureCallBack);
+            $http.get('/api/CTS').then(iObj.successCallBack, iObj.failureCallBack);
         },
             /**
           * @auther : MKN
@@ -121,7 +121,7 @@ app.factory('serverCommunication', function ($http) {
           */
         getTopicSkill: function (iObj) {
             console.error(iObj)
-            $http.get('/User/getTopicSkill',iObj.cateGoryObject).then(iObj.successCallBack, iObj.failureCallBack);
+            $http.get('/CTS/GetTopicSkills', iObj.cateGoryObject).then(iObj.successCallBack, iObj.failureCallBack);
         },
     }
 });

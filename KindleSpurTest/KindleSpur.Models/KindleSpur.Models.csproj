@@ -31,7 +31,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="MongoDB.Bson">
-      <HintPath>D:\LWP data\EmployeeManagement\EmployeeManagement.Data\bin\Debug\MongoDB.Bson.dll</HintPath>
+      <HintPath>..\KindleSpur.WebApplication\bin\MongoDB.Bson.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />

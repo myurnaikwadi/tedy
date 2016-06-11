@@ -74,7 +74,7 @@ namespace KindleSpur.WebApplication.Controllers
             return View();
         }
         [HttpPost]
-        public bool LoginResult(User signupObject)
+        public Object LoginResult(User signupObject)
         {
             UserRepository _repo = new UserRepository();
 
@@ -83,11 +83,11 @@ namespace KindleSpur.WebApplication.Controllers
             if (u != null && u.Password==signupObject.Password)
             {
                 Session["User"] = u;
-                return true;
+                return Session["User"];
             }
             else
             {
-                return false;
+                return null;
             }
 
         }
