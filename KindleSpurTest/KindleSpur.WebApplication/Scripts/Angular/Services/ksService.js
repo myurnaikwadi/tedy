@@ -105,6 +105,23 @@ app.factory('serverCommunication', function ($http) {
             $http.get('/User/Mentee').then(iObj.successCallBack, iObj.failureCallBack);
         },
         
-
+        /**
+          * @auther : MKN
+          * @date : 10/06/2016
+          * @Purpose : get category as per role
+          */
+        getCategorys: function (iObj) {
+            console.error(iObj)
+            $http.get('/User/getCategory').then(iObj.successCallBack, iObj.failureCallBack);
+        },
+            /**
+          * @auther : MKN
+          * @date : 10/06/2016
+          * @Purpose : get topic and skill as per category selected
+          */
+        getTopicSkill: function (iObj) {
+            console.error(iObj)
+            $http.get('/User/getTopicSkill',iObj.cateGoryObject).then(iObj.successCallBack, iObj.failureCallBack);
+        },
     }
 });
