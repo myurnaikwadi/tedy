@@ -144,6 +144,13 @@ app.directive('ctcRole', function ($state, serverCommunication) {
                 else
                     iSkills.selected = true
             };
+
+            scope.backButtonClick = function () {
+                scope.categoryDisplay = true;
+                scope.skillsArray = [];
+                scope.topicArray= []
+            }
+            
             scope.getTopicSkill = function (iCategory) {
                 //serverCommunication.getTopicSkill({
                 //    cateGoryObject: iCategory,
