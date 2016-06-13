@@ -87,7 +87,9 @@ app.directive('ctcRole', function ($state, serverCommunication) {
         templateUrl: '/Home/ksCtcRole',
         //scope: true,   // optionally create a child scope
         link: function (scope, element, attrs) {
-            scope.catogoryArray = [
+            window.cts = scope;
+            scope.catogoryArray = [];
+            scope.topicArray = [
                  { name: 'Advertising' },
                  { name: 'Education' },
                  { name: 'Engineering' },
@@ -95,14 +97,52 @@ app.directive('ctcRole', function ($state, serverCommunication) {
                  { name: 'BRAIN GAMES' },
                  { name: 'RESOURCES' }
             ];
+            scope.skillsArray = [];
             scope.selectedCategory = -1;
+            scope.selectedTopic = -1;
+            scope.selectedSkills = -1;
             scope.selectedCategoryValue = null;
             scope.categoryDisplay = true;
             scope.categoryClick = function (iIndex, iCategory) {
                 scope.selectedCategory = iIndex;
                 scope.categoryDisplay = false;
                 scope.selectedCategoryValue = iCategory;
-                scope.getTopicSkill(iCategory);
+                scope.topicArray = [].concat(iCategory.Topics)
+                for (var k = 0; k < scope.topicArray.length ; k++) {
+                    scope.topicArray[k].selected = false;
+                }
+            //    scope.getTopicSkill(iCategory);
+            };
+            scope.topicSelection = function (iIndex, iTopic) {
+                for (var k = 0; k < iTopic.Skills.length ; k++) {
+                    iTopic.Skills[k].selected = false;
+                }
+                if (iTopic.selected) {
+                    iTopic.selected = false;
+                    if (iTopic.Skills.length > 0) {
+                        var _length = scope.skillsArray.length
+                        for (var l = 0 ; l < _length;) {
+                            for (var k = 0; k < iTopic.Skills.length ; k++) {
+                                if (scope.skillsArray[l] && scope.skillsArray[l].Name == iTopic.Skills[k].Name) {
+                                    scope.skillsArray.splice(l, 1);
+                                } else {
+                                    l++;
+                                }
+                            }
+                        }
+                    }
+                }
+                else {
+                    iTopic.selected = true;
+                    scope.skillsArray = scope.skillsArray.concat(iTopic.Skills)
+                }
+            };
+            scope.skillSelection = function (iIndex, iSkills) {
+               
+                if (iSkills.selected)
+                    iSkills.selected = false;
+                else
+                    iSkills.selected = true
             };
             scope.getTopicSkill = function (iCategory) {
                 //serverCommunication.getTopicSkill({
@@ -122,8 +162,9 @@ app.directive('ctcRole', function ($state, serverCommunication) {
                 serverCommunication.getCategorys({
                     successCallBack: function (iObj) {
                         console.error('In successCallBack', iObj);
-
-
+                        var _data = JSON.parse(iObj.data);
+                        console.error(_data)
+                        scope.catogoryArray = [].concat(_data);
                     },
                     failureCallBack: function (iObj) {
                         console.error('In failureCallBack', iObj);
