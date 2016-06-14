@@ -42,7 +42,7 @@ namespace KindleSpur.Data
             try
             {
                 var _ctsCollection = _kindleDatabase.GetCollection("CTS");
-                _categories = _ctsCollection.FindAll().SetFields(Fields.Exclude("_id")).ToList();
+                _categories = _ctsCollection.FindAll().ToList();
             }
             catch (MongoException ex)
             {
