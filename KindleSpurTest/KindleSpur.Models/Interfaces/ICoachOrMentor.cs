@@ -8,8 +8,8 @@ namespace KindleSpur.Models.Interfaces
    public interface ICoachOrMentor
     {
          string AdditionalRef { get; set; }
-         int LoginUserId { get; set; }
-         string Skill { get; set; }
+         int UserId { get; set; }
+         List<ICategory> Category { get; set; }
          decimal Experience { get; set; }
          string Proficiency { get; set; } 
          string Language { get; set; }

@@ -9,8 +9,8 @@ namespace KindleSpur.Models
     public class CoachOrMentor  : ICoachOrMentor
     {
        public string AdditionalRef { get; set; }
-        public int LoginUserId { get; set; }
-        public string Skill { get; set; }
+        public int UserId { get; set; }
+        public List<ICategory> Category { get; set; }
         public decimal Experience { get; set; }
         public string Proficiency { get; set; }
         public string Language { get; set; }

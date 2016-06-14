@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace KindleSpur.Models.Interfaces.Repository
 {
-    interface ICoachOrMentorRepository
+   public interface ICoachOrMentorRepository
     {
         bool AddNewCoachOrMentor(ICoachOrMentor Data);
 
