@@ -38,27 +38,96 @@ namespace KindleSpur.Data
 
         public bool AddNewCoachOrMentor(ICoachOrMentor Data)
         {
-            throw new NotImplementedException();
+            bool _transactionStatus = false;
+
+            try
+            {
+                var _collection = _kindleDatabase.GetCollection("CoachOrMentor");
+                var result = _collection.Find(Query.EQ("UserId", Data.UserId));
+
+                if (result.Count() > 0)
+                    return false;
+
+                _collection.Insert(Data);
+
+                _transactionStatus = true;
+            }
+            catch (MongoException ex)
+            {
+                _logCollection.Insert("{ Error : 'Failed at AddNewCoachOrMentor().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ");
+                throw new MongoException("Signup failure!!!");
+            }
+
+            return _transactionStatus;
         }
 
-        public bool DeleteCoachOrMentor(int Id)
+        public bool DeleteCoachOrMentor(string Id)
         {
-            throw new NotImplementedException();
+            bool _transactionStatus = false;
+            try
+            {
+                var _collection = _kindleDatabase.GetCollection("CoachOrMentor");
+                _collection.Remove(Query.EQ("_id", Id));
+                _transactionStatus = true;
+
+            }
+            catch (MongoException ex)
+            {
+                _logCollection.Insert("{ Error : 'Failed at AddNewCoachOrMentor().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ");
+                throw new MongoException("Signup failure!!!");
+            }
+
+            return _transactionStatus;
         }
 
-        public bool EditCoachOrMentor(int id, ICoachOrMentor Data)
+        public bool EditCoachOrMentor(string UserId, ICoachOrMentor Data)
         {
-            throw new NotImplementedException();
+            bool _transactionStatus = false;
+            try
+            {
+                var _collection = _kindleDatabase.GetCollection("CoachOrMentor");
+                var _entity = _collection.FindOneAs<IUser>(Query.EQ("UserId", ObjectId.Parse(UserId)));
+
+                _collection.Save(_entity);
+                _transactionStatus = true;
+            }
+            catch (MongoException ex)
+            {
+                _logCollection.Insert("{ Error : 'Failed at EditUser().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ");
+            }
+            return _transactionStatus;
         }
 
         public List<ICoachOrMentor> GetAllCoachOrMentorDetails()
         {
-            throw new NotImplementedException();
+            List<ICoachOrMentor> result = null;
+            try
+            {
+                var _collection = _kindleDatabase.GetCollection("CoachOrMentor");
+                result = _collection.FindAllAs<ICoachOrMentor>().ToList();
+            }
+            catch (MongoException ex)
+            {
+                _logCollection.Insert("{ Error : 'Failed at EditUser().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ");
+            }
+
+            return result;
         }
 
-        public ICoachOrMentor GetCoachOrMentorDetail(int Id)
+        public ICoachOrMentor GetCoachOrMentorDetail(string Id)
         {
-            throw new NotImplementedException();
+            ICoachOrMentor result = null;
+            try
+            {
+                var _collection = _kindleDatabase.GetCollection("CoachOrMentor");
+                result = _collection.FindOneAs<ICoachOrMentor>(Query.EQ("_id", ObjectId.Parse(Id)));    
+            }
+            catch (MongoException ex)
+            {
+                _logCollection.Insert("{ Error : 'Failed at EditUser().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ");
+            }
+
+            return result;
         }
     }
 }

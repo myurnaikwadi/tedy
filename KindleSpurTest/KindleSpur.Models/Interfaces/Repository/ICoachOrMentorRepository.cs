@@ -9,12 +9,12 @@ namespace KindleSpur.Models.Interfaces.Repository
     {
         bool AddNewCoachOrMentor(ICoachOrMentor Data);
 
-        bool EditCoachOrMentor(int id, ICoachOrMentor Data);
+        bool EditCoachOrMentor(string id, ICoachOrMentor Data);
 
-        bool DeleteCoachOrMentor(int Id);
+        bool DeleteCoachOrMentor(string Id);
 
         List<ICoachOrMentor> GetAllCoachOrMentorDetails();
 
-        ICoachOrMentor GetCoachOrMentorDetail(int Id);
+        ICoachOrMentor GetCoachOrMentorDetail(string Id);
     }
 }
