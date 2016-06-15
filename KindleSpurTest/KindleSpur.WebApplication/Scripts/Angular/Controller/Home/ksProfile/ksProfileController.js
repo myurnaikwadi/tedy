@@ -27,6 +27,12 @@
         }
         uploadImageOnPage(obj, function (imagePath) {
             var valueFile = document.getElementById("fileInputIdRv").files;
+            if (iProfile) {
+                $scope.myInfo.profileImage = valueFile[0];
+            } else {
+                $scope.myInfo.profileBackgroundImage = valueFile[0];
+            }
+
             console.error(valueFile)
             var _object = {
                 changeDetails: iProfile ? $scope.myInfo.profileImage :  $scope.myInfo.profileBackgroundImage,
