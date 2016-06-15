@@ -42,5 +42,9 @@ namespace KindleSpur.WebApplication.Controllers
         {
             return View();
         }
+        public ActionResult ksProfileView()
+        {
+            return View();
+        }
     }
 }

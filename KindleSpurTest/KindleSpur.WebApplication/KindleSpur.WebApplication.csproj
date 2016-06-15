@@ -256,7 +256,12 @@
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Images\camera.png" />
+    <Content Include="Images\cancel.png" />
+    <Content Include="Images\edit_Icon.png" />
     <Content Include="Images\linkedIn.jpg" />
+    <Content Include="Images\linkedin_square_gray.png" />
+    <Content Include="Images\save.png" />
     <Content Include="Scripts\ai.0.15.0-build58334.js" />
     <Content Include="Scripts\ai.0.15.0-build58334.min.js" />
     <Content Include="Scripts\angular.js" />
@@ -264,6 +269,7 @@
     <Content Include="Scripts\Angular\App\app.js" />
     <Content Include="Scripts\Angular\App\stateController.js" />
     <Content Include="Scripts\Angular\Controller\Home\ksDashBoardMentorController.js" />
+    <Content Include="Scripts\Angular\Controller\Home\ksProfile\ksProfileController.js" />
     <Content Include="Scripts\Angular\Services\ksGenericDirective.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -339,6 +345,7 @@
     <Content Include="Scripts\css\ksLogin\ksLogin.css" />
     <Content Include="Scripts\css\global.css" />
     <Content Include="Scripts\css\ksLogin\ksSavePassoword.css" />
+    <Content Include="Scripts\css\ksProfile\ksProfile.css" />
     <Content Include="Scripts\i18n\angular-locale_aa-dj.js" />
     <Content Include="Scripts\i18n\angular-locale_aa-er.js" />
     <Content Include="Scripts\i18n\angular-locale_aa-et.js" />
@@ -1084,6 +1091,9 @@
     <Content Include="Scripts\i18n\angular-locale_zu-za.js" />
     <Content Include="Scripts\i18n\angular-locale_zu.js" />
     <Content Include="Scripts\angular-ui-router.js" />
+    <Content Include="Scripts\jquery-1.10.2.js" />
+    <Content Include="Scripts\jquery-1.10.2.min.js" />
+    <Content Include="Scripts\jquery-1.10.2.min.map" />
     <None Include="Scripts\jquery-2.2.3.intellisense.js" />
     <Content Include="Scripts\jquery-2.2.3.js" />
     <Content Include="Scripts\jquery-2.2.3.min.js" />
@@ -1120,6 +1130,7 @@
     <Content Include="Views\Home\ksDashBoardMentee.cshtml" />
     <Content Include="Views\Home\ksTopMainStrip.cshtml" />
     <Content Include="Views\Home\ksCtcRole.cshtml" />
+    <Content Include="Views\Home\ksProfileView.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

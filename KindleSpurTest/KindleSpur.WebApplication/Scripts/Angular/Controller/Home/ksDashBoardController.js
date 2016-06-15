@@ -22,7 +22,10 @@ app.controller('ksMainDashBoardController', function ($scope,$state,serverCommun
 		    }
 		
 		};
-
+        
+        $scope.navigateToProfile = function () {
+            $state.go('profile');
+        };
 		$scope.logout = function () {
 		   
             console.error(IN.User)  

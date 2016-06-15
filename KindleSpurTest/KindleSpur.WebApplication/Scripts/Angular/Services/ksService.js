@@ -123,5 +123,23 @@ app.factory('serverCommunication', function ($http) {
             console.error(iObj)
             $http.get('/CTS/GetTopicSkills', iObj.cateGoryObject).then(iObj.successCallBack, iObj.failureCallBack);
         },
+        /**
+       * @auther : MKN
+       * @date : 15/06/2016
+       * @Purpose :
+       */
+        changeProgileDetails: function (iObj) {
+            console.error(iObj)
+            $http.get('/CTS/GetTopicSkills', iObj.changeDetails).then(iObj.successCallBack, iObj.failureCallBack);
+        },
+        /**
+       * @auther : MKN
+       * @date : 15/06/2016
+       * @Purpose :
+       */
+        changeDescriptionDetails: function (iObj) {
+            console.error(iObj)
+            $http.get('/CTS/GetTopicSkills', iObj.cateGoryObject).then(iObj.successCallBack, iObj.failureCallBack);
+        },
     }
 });

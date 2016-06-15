@@ -20,6 +20,10 @@ app.config(['$stateProvider', '$urlRouterProvider','$locationProvider',function(
 		url: '/login',
 		templateUrl: '/User/Login',
 	})
+    .state('profile', {
+        url: '/profile',
+        templateUrl: '/Home/ksProfileView',
+    })
     .state('passwordPrompt', {
         url: '/password/:userId',
         templateUrl: '/User/PasswordPromp',
