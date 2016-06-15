@@ -6,13 +6,13 @@
                 <!--displayBackgroundImage over here -->
                 <div class="profileDetailsPickerParent">
                     <div class="profilePicker">
-                        <img ng-click="triggerUpload('orgImage','orgImageInput')" style="width: 20px; height: 20px; float: right;margin: 1% auto;margin-right: 1%;" id="orgImage" src="~/Images/camera.png" />
+                        <img ng-click="triggerUpload()" style="width: 20px; height: 20px; float: right;margin: 1% auto;margin-right: 1%;" id="orgImage" src="~/Images/camera.png" />
                         <input type="file" onchange="angular.element(this).scope().uploadFileFunction()" ng-model="acceptedFile" style="display: none" id="fileInputIdRv" name="filedata" />
                     </div>
                     <div class="profileDetails" style="background: white;">
                         <div class="profileImageParent">
                             <div class="profileImageProfile" style="width: 85%;height: 82%;">
-                                <img  ng-click="triggerUpload('orgImage','orgImageInput')" style="width: 20px; height: 20px; background: white;float: right;margin: 1% auto;margin-right: 1%;" id="orgImage"  src="~/Images/camera.png" />
+                                <img ng-click="triggerUpload(true)" style="width: 20px; height: 20px; background: white;float: right;margin: 1% auto;margin-right: 1%;" id="orgImage"  src="~/Images/camera.png" />
                                 <input type="file" onchange="angular.element(this).scope().uploadFileFunction()" ng-model="acceptedFile" style="display: none" id="fileInputIdRv" name="filedata" />
                             </div>
                         </div>

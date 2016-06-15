@@ -5,6 +5,8 @@
         linkedInLink: 'No link available',
         firstName: 'Test',
         lastName: 'User',
+        profileImage: '',
+        profileBackgroundImage: '',
         description : 'No Description Available'
     }
     var uploadImageOnPage = function (iObj, iCallback) {
@@ -18,7 +20,7 @@
         };
 
     };
-    $scope.triggerUpload = function (id, iModel) {
+    $scope.triggerUpload = function (iProfile) {
         console.error('width: 42px;')
         var obj = {
             fileInputId: "fileInputIdRv"
@@ -26,6 +28,18 @@
         uploadImageOnPage(obj, function (imagePath) {
             var valueFile = document.getElementById("fileInputIdRv").files;
             console.error(valueFile)
+            var _object = {
+                changeDetails: iProfile ? $scope.myInfo.profileImage :  $scope.myInfo.profileBackgroundImage,
+                successCallBack: function () {
+                    console.error('In successCallBack');
+
+                },
+                failureCallBack: function () {
+                    console.error('In failureCallBack');
+
+                }
+            }
+            serverCommunication.changeProfileImageDetails(_object);
             document.getElementById("fileInputIdRv").value = "";
             $scope.$apply();
         });
