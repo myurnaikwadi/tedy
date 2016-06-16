@@ -123,6 +123,15 @@ app.factory('serverCommunication', function ($http) {
             console.error(iObj)
             $http.get('/CTS/GetTopicSkills', iObj.cateGoryObject).then(iObj.successCallBack, iObj.failureCallBack);
         },
+           /**
+          * @auther : MKN
+          * @date : 10/06/2016
+          * @Purpose : get topic and skill as per category selected
+          */
+        sendSelectedCTSDataToServer: function (iObj) {
+            console.error(iObj)
+            $http.get('/CTS/saveAction', iObj.selectedArray).then(iObj.successCallBack, iObj.failureCallBack);
+        },
         /**
        * @auther : MKN
        * @date : 15/06/2016
