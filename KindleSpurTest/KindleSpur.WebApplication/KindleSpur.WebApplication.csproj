@@ -256,6 +256,8 @@
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Images\add.png" />
+    <Content Include="Images\addBold.png" />
     <Content Include="Images\camera.png" />
     <Content Include="Images\cancel.png" />
     <Content Include="Images\edit_Icon.png" />
@@ -346,10 +348,14 @@
     <Content Include="Scripts\css\ksDashBoard\ksDashBoardCoachee.css" />
     <Content Include="Scripts\css\ksDashBoard\ksDashBoardMentee.css" />
     <Content Include="Scripts\css\ksDashBoard\ksDashBoardMentor.css" />
+    <Content Include="Scripts\css\ksDashBoard\ksMoleculeStrcture.css" />
     <Content Include="Scripts\css\ksLogin\ksLogin.css" />
     <Content Include="Scripts\css\global.css" />
     <Content Include="Scripts\css\ksLogin\ksSavePassoword.css" />
     <Content Include="Scripts\css\ksProfile\ksProfile.css" />
+    <Content Include="Scripts\d3.v3.js" />
+    <Content Include="Scripts\d3.v3.min.js" />
+    <Content Include="Scripts\glow.js" />
     <Content Include="Scripts\i18n\angular-locale_aa-dj.js" />
     <Content Include="Scripts\i18n\angular-locale_aa-er.js" />
     <Content Include="Scripts\i18n\angular-locale_aa-et.js" />

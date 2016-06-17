@@ -339,7 +339,7 @@
 	float: left;
 	width: 100%;
 	height : 93%;
-	display:flex;
+	
 }
 .ctsParentMain{
 	float: left;
@@ -349,6 +349,12 @@
 	height : 93%;
     display: flex;
 }
+.ctsCategoryPanelMainPanel {
+    float: left;
+	width: 100%;
+	height : 81%;
+}
+
 .ctsParentMainPanel{
 	float: left;
 	width: 95%;
@@ -365,7 +371,7 @@
 .ctsCategoryPanel{
 	float: left;
 	width: 100%;
-	height : 80%;
+	height : 100%;
 	display:flex;
 }
 .ctsCategoryActionPanel{
