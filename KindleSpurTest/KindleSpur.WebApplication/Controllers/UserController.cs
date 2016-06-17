@@ -8,6 +8,7 @@ using KindleSpur.Models.Interfaces;
 using KindleSpur.Data;
 using System.Net.Mail;
 using KindleSpur.WebApplication.MessageHelper;
+using System.Web.Script.Serialization;
 
 namespace KindleSpur.WebApplication.Controllers
 {
@@ -82,6 +83,10 @@ namespace KindleSpur.WebApplication.Controllers
 
             if (u != null && u.Password==signupObject.Password)
             {
+                HttpCookie cookie = new HttpCookie("User");                
+                cookie["User"]= new JavaScriptSerializer().Serialize(u);
+                Response.SetCookie(cookie);
+
                 Session["User"] = u;
                 return Session["User"];
             }

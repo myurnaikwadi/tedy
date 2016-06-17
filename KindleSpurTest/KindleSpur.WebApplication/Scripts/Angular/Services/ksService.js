@@ -130,7 +130,7 @@ app.factory('serverCommunication', function ($http) {
        */
         changeProgileDetails: function (iObj) {
             console.error(iObj)
-            $http.get('/CTS/GetTopicSkills', iObj.changeDetails).then(iObj.successCallBack, iObj.failureCallBack);
+            $http.post('/CTS/UpdateUserDetails', iObj.changeDetails).then(iObj.successCallBack, iObj.failureCallBack);
         },
         /**
        * @auther : MKN
@@ -139,7 +139,7 @@ app.factory('serverCommunication', function ($http) {
        */
         changeDescriptionDetails: function (iObj) {
             console.error(iObj)
-            $http.get('/CTS/GetTopicSkills', iObj.cateGoryObject).then(iObj.successCallBack, iObj.failureCallBack);
+            $http.post('/CTS/UpdateUserDesc', iObj.cateGoryObject).then(iObj.successCallBack, iObj.failureCallBack);
         },
         /**
       * @auther : MKN
@@ -148,7 +148,7 @@ app.factory('serverCommunication', function ($http) {
       */
         changeProfileImageDetails: function (iObj) {
             console.error(iObj)
-            $http.get('/CTS/GetTopicSkills', iObj.cateGoryObject).then(iObj.successCallBack, iObj.failureCallBack);
+            $http.post('/CTS/GetTopicSkills', iObj.cateGoryObject).then(iObj.successCallBack, iObj.failureCallBack);
         },
     }
 });

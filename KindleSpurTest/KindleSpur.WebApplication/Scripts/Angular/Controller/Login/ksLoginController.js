@@ -3,7 +3,7 @@
      * @date : 07/05/2016
      * @Purpose : login and Signup controller - Manage all data related to  login and signup page
      */
-app.controller('ksLoginController', ['$scope', 'authentification', '$location', '$rootScope', '$state', '$stateParams', function ($scope, authentification, $location, $rootScope, $state, $stateParams) {
+app.controller('ksLoginController', ['$scope', 'authentification', '$location', '$rootScope', '$state', '$stateParams', '$cookieStore', function ($scope, authentification, $location, $rootScope, $state, $stateParams, $cookieStore) {
     console.error('login Page loaded Successfully');
     rootScope = $rootScope;
  	$scope.loginDetails = {
@@ -41,6 +41,10 @@ app.controller('ksLoginController', ['$scope', 'authentification', '$location', 
      */
  	var _successLoginCallBack = function (iObject) {
  	    console.error('In _successCallBack', iObject);
+
+ 	    //var _user = $cookieStore.get('user');
+ 	    //console.error($cookieStore)
+ 	    //console.error(_user)
  	    $rootScope.loggedDetail = iObject;
  	    $state.go('ksUserDashBoard');
  	};
@@ -84,8 +88,8 @@ app.controller('ksLoginController', ['$scope', 'authentification', '$location', 
       * @Purpose : signup function  - send data to auth factory to send data to server.
       */
  	$scope.loginClick = function () {
- 	    $state.go('ksUserDashBoard');
-        return
+ 	    //$state.go('ksUserDashBoard');
+        //return
  	    if ($scope.loginDetails.emailAddress == '' || $scope.loginDetails.password == '') {
  	        alert('Please enter emailAddress or  Password')
  	        return

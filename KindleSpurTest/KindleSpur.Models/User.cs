@@ -22,11 +22,13 @@ namespace KindleSpur.Models
         public int Mobile { get; set; }
         public string Country { get; set; }
         public string Region { get; set; }
-        public string Photo { get; set; }
         public Boolean IsExternalAuthentication { get; set; }
         public Boolean IsVerified { get; set; }
         public DateTime CreateDate { get; set; }
         public DateTime UpdateDate { get; set; }
+        public string LinkdinURL { get; set; }
+        public string description { get; set; }
+        public string Photo { get; set; }
 
         [BsonId]
         public ObjectId Id
