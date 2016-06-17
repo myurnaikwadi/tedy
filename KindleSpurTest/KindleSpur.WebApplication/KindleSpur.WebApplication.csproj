@@ -354,6 +354,7 @@
     <Content Include="Scripts\css\global.css" />
     <Content Include="Scripts\css\ksLogin\ksSavePassoword.css" />
     <Content Include="Scripts\css\ksProfile\ksProfile.css" />
+    <Content Include="Scripts\glow.js" />
     <Content Include="Scripts\i18n\angular-locale_aa-dj.js" />
     <Content Include="Scripts\i18n\angular-locale_aa-er.js" />
     <Content Include="Scripts\i18n\angular-locale_aa-et.js" />
