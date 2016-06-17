@@ -119,10 +119,10 @@ app.directive('ctcRole', function ($state, serverCommunication) {
                 for (var k = 0; k < iTopic.Skills.length ; k++) {
                     iTopic.Skills[k].selected = false;
                 }
-                var _index = _updateArray.indexOf(iTopic.Name);
+               // var _index = _updateArray.indexOf(iTopic.Name);
                 if (iTopic.selected) {
                     
-                    if (_index > -1) _updateArray.splice(_index, 1);
+                   // if (_index > -1) _updateArray.splice(_index, 1);
                     iTopic.selected = false;
                     if (iTopic.Skills.length > 0) {
                         var _length = scope.skillsArray.length;
@@ -139,18 +139,18 @@ app.directive('ctcRole', function ($state, serverCommunication) {
                 }
                 else {
                     iTopic.selected = true;
-                    if (_index == -1) _updateArray.push(iTopic.Name);
+                  //  if (_index == -1) _updateArray.push(iTopic.Name);
                     scope.skillsArray = scope.skillsArray.concat(iTopic.Skills)
                 }
             };
             scope.skillSelection = function (iIndex, iSkills) {
-                var _index = _updateArray.indexOf(iSkills.Name);
+                var _index = _updateArray.indexOf(iSkills.id);
                 if (iSkills.selected) {
                     iSkills.selected = false;
                     if (_index > -1) _updateArray.splice(_index, 1);
                 } else {
                     iSkills.selected = true;
-                    if (_index == -1) _updateArray.push(iSkills.Name);
+                    if (_index == -1) _updateArray.push(iSkills.id);
                 }
             };
 
@@ -158,6 +158,7 @@ app.directive('ctcRole', function ($state, serverCommunication) {
                 scope.categoryDisplay = true;
                 scope.skillsArray = [];
                 scope.topicArray = [];
+                _updateArray = [];
             };
 
             scope.savepublishClick = function () {
@@ -165,6 +166,17 @@ app.directive('ctcRole', function ($state, serverCommunication) {
                     //publish check
                 } else {
                     console.error(_updateArray);
+                    if(_updateArray.length > 0){
+			serverCommunication.sendSelectedCTSDataToServer({
+	                    	selectedArray  : _updateArray,
+	                	successCallBack: function (iObj) {
+	                        	console.error('In successCallBack', iObj);
+	                	},
+	                    	failureCallBack: function () {
+	                        	console.error('In failureCallBack', iObj);
+	                        }
+                   	});                    	
+                    }
                 }
             };
                         
