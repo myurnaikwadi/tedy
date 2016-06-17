@@ -258,6 +258,8 @@
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Images\add.png" />
+    <Content Include="Images\addBold.png" />
     <Content Include="Images\camera.png" />
     <Content Include="Images\cancel.png" />
     <Content Include="Images\edit_Icon.png" />
