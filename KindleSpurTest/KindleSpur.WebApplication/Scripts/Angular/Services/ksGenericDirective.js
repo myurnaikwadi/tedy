@@ -144,13 +144,13 @@ app.directive('ctcRole', function ($state, serverCommunication) {
                 }
             };
             scope.skillSelection = function (iIndex, iSkills) {
-                var _index = _updateArray.indexOf(iSkills.id);
+                var _index = _updateArray.indexOf(iSkills.Id);
                 if (iSkills.selected) {
                     iSkills.selected = false;
                     if (_index > -1) _updateArray.splice(_index, 1);
                 } else {
                     iSkills.selected = true;
-                    if (_index == -1) _updateArray.push(iSkills.id);
+                    if (_index == -1) _updateArray.push(iSkills.Id);
                 }
             };
 
@@ -172,7 +172,7 @@ app.directive('ctcRole', function ($state, serverCommunication) {
 	                	successCallBack: function (iObj) {
 	                        	console.error('In successCallBack', iObj);
 	                	},
-	                    	failureCallBack: function () {
+	                	failureCallBack: function (iObj) {
 	                        	console.error('In failureCallBack', iObj);
 	                        }
                    	});                    	

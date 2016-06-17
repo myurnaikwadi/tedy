@@ -12,7 +12,7 @@ using MongoDB.Bson;
 
 namespace KindleSpur.Data
 {
-    class CoachOrMentorRepository : ICoachOrMentorRepository
+   public class CoachOrMentorRepository : ICoachOrMentorRepository
     {
         MongoClient _mongoClient;
         MongoServer _mongoServer;

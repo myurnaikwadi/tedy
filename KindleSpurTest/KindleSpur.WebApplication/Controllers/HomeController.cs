@@ -46,5 +46,6 @@ namespace KindleSpur.WebApplication.Controllers
         {
             return View();
         }
+
     }
 }

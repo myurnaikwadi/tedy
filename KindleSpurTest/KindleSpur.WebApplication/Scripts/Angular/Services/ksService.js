@@ -130,7 +130,7 @@ app.factory('serverCommunication', function ($http) {
           */
         sendSelectedCTSDataToServer: function (iObj) {
             console.error(iObj)
-            $http.get('/CTS/saveAction', iObj.selectedArray).then(iObj.successCallBack, iObj.failureCallBack);
+            $http.post('/api/CTS', iObj.selectedArray).then(iObj.successCallBack, iObj.failureCallBack);
         },
         /**
        * @auther : MKN
