@@ -6,6 +6,10 @@ using System.Net.Http;
 using System.Web.Http;
 using KindleSpur.Data;
 using MongoDB.Bson;
+using KindleSpur.Models;
+using KindleSpur.Models.Interfaces;
+using System.Web.Mvc;
+using System.Web;
 
 namespace KindleSpur.WebApplication.Controllers
 {
@@ -65,5 +69,31 @@ namespace KindleSpur.WebApplication.Controllers
         //    CTSRepository _ctsRepo = new CTSRepository();
         //    return _ctsRepo.GetSkills(category, topic);
         //}
+        [System.Web.Mvc.HttpPost]
+        public void UpdateUserDetails(User _obj)
+        {
+
+            UserRepository _repo = new UserRepository();
+
+            
+
+            if (_repo.UpdateUserDetails(((IUser)HttpContext.Current.Session["User"]).Id, _obj))
+            {
+            }
+            //return View();
+        }
+        [System.Web.Mvc.HttpPost]
+        public void UpdateUserDesc(User _obj)
+        {
+
+            UserRepository _repo = new UserRepository();
+
+
+
+            if (_repo.UpdateUserDesc(((IUser)HttpContext.Current.Session["User"]).Id, _obj))
+            {
+            }
+            //return View();
+        }
     }
 }

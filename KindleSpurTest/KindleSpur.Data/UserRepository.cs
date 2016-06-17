@@ -111,5 +111,53 @@ namespace KindleSpur.Data
             var _userCollection = _kindleDatabase.GetCollection("UserDetails");
             return _userCollection.FindOneAs<User>(Query.EQ("EmailAddress", EmailAddress));
         }
+
+        public bool UpdateUserDetails(ObjectId userId, IUser userData)
+        {
+            bool _transactionStatus = false;
+            try
+            {
+                var _userCollection = _kindleDatabase.GetCollection("UserDetails");
+                var userDetail = _userCollection.FindOneByIdAs<IUser>(userId);
+                userDetail.FirstName = userData.FirstName;
+                userDetail.LastName = userData.LastName;
+                //userDetail.EmailAddress = userData.EmailAddress;
+                userDetail.Mobile = userData.Mobile;
+                userDetail.LinkdinURL = userData.LinkdinURL;
+                //userDetail.description = userData.description;
+                //userDetail.Photo = userData.Photo;
+                //userDetail.IsExternalAuthentication = userData.IsExternalAuthentication;
+                //userDetail.UpdateDate = userData.UpdateDate;
+                //userDetail.Country = userData.Country;
+                //userDetail.Region = userData.Region;
+
+                _userCollection.Save(userDetail);
+                _transactionStatus = true;
+            }
+            catch (Exception ex)
+            {
+                _logCollection.Insert("{ Error : 'Failed at EditUser().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ");
+            }
+            return _transactionStatus;
+        }
+
+        public bool UpdateUserDesc(ObjectId userId, IUser userData)
+        {
+            bool _transactionStatus = false;
+            try
+            {
+                var _userCollection = _kindleDatabase.GetCollection("UserDetails");
+                var userDetail = _userCollection.FindOneByIdAs<IUser>(userId);
+                userDetail.description = userData.description;
+
+                _userCollection.Save(userDetail);
+                _transactionStatus = true;
+            }
+            catch (Exception ex)
+            {
+                _logCollection.Insert("{ Error : 'Failed at EditUser().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ");
+            }
+            return _transactionStatus;
+        }
     }
 }

@@ -24,6 +24,10 @@ namespace KindleSpur.Models.Interfaces
 
         string Region { get; set; }
 
+        string LinkdinURL { get; set; }
+
+        string description { get; set; }
+
         string Photo { get; set; }
 
         Boolean IsExternalAuthentication { get; set; }
