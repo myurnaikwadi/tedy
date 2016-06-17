@@ -82,7 +82,8 @@ app.directive('bottomMainStrip', function ($timeout) {
 app.directive('ctcRole', function ($state, serverCommunication) {
     return {
         scope: {
-
+            role : "=",
+            skillRequired: "=",
         },
         templateUrl: '/Home/ksCtcRole',
         //scope: true,   // optionally create a child scope
@@ -117,40 +118,55 @@ app.directive('ctcRole', function ($state, serverCommunication) {
 
             var _updateArray = {};
             scope.topicSelection = function (iIndex, iTopic) {
-                for (var k = 0; k < iTopic.Skills.length ; k++) {
-                    iTopic.Skills[k].selected = false;
+                if (scope.skillRequired) {
+                    for (var k = 0; k < iTopic.Skills.length ; k++) {
+                        iTopic.Skills[k].selected = false;
+                    }
                 }
-                // var _index = _updateArray.indexOf(iTopic.Name);
+                
+                var _index = _updateArray.indexOf(iTopic.Name);
                 if (iTopic.selected) {
 
-                    // if (_index > -1) _updateArray.splice(_index, 1);
                     iTopic.selected = false;
-                    if (iTopic.Skills.length > 0) {
-                        var _length = scope.skillsArray.length;
-                        for (var l = 0 ; l < _length;) {
-                            for (var k = 0; k < iTopic.Skills.length ; k++) {
-                                if (scope.skillsArray[l] && scope.skillsArray[l].Name == iTopic.Skills[k].Name) {
-                                    scope.skillsArray.splice(l, 1);
-                                } else {
-                                    l++;
+                    if (scope.skillRequired) {
+                        if (iTopic.Skills.length > 0) {
+                            var _length = scope.skillsArray.length;
+                            for (var l = 0 ; l < _length;) {
+
+                                for (var k = 0; k < iTopic.Skills.length ; k++) {
+                                    var _indexSkill = _updateArray.indexOf(iTopic.Skills[k].Name);
+                                    if (_indexSkill > -1) _updateArray.splice(_indexSkill, 1);
+                                    if (scope.skillsArray[l] && scope.skillsArray[l].Name == iTopic.Skills[k].Name) {
+                                        scope.skillsArray.splice(l, 1);
+                                        
+                                    } else {
+                                        l++;
+                                    }
                                 }
                             }
                         }
+                    } else {
+                        if (_index > -1) _updateArray.splice(_index, 1);
                     }
                 }
                 else {
                     iTopic.selected = true;
-                    //  if (_index == -1) _updateArray.push(iTopic.Name);
-                    scope.skillsArray = scope.skillsArray.concat(iTopic.Skills)
+                   
+                    if (scope.skillRequired) {
+                        scope.skillsArray = scope.skillsArray.concat(iTopic.Skills)
+                    } else {
+                        if (_index == -1) _updateArray.push(iTopic.Name);
+                    }
                 }
             };
             scope.skillSelection = function (iIndex, iSkills) {
+                var _index = _updateArray.indexOf(iSkills.Name);
                 if (iSkills.selected) {
                     iSkills.selected = false;
-                    if (_updateArray[iSkills.Id]) delete _updateArray[iSkills.Id];
+                    if (_index > -1) _updateArray.splice(_index, 1);
                 } else {
                     iSkills.selected = true;
-                    _updateArray[iSkills.Id] = iSkills;
+                    if (_index == -1) _updateArray.push(iSkills.Name);
                 }
             };
 
@@ -174,15 +190,29 @@ app.directive('ctcRole', function ($state, serverCommunication) {
                 } else {
                     console.error(_updateArray);
                     if (_updateArray.length > 0) {
-                        serverCommunication.sendSelectedCTSDataToServer({
-                            selectedArray: _updateArray,
-                            successCallBack: function (iObj) {
-                                console.error('In successCallBack', iObj);
-                            },
-                            failureCallBack: function (iObj) {
-                                console.error('In failureCallBack', iObj);
-                            }
-                        });
+                        if (scope.skillRequired) {
+                            serverCommunication.sendSelectedCTSDataToServer({
+                                selectedArray: _updateArray,
+                                successCallBack: function (iObj) {
+                                    console.error('In successCallBack', iObj);
+                                },
+                                failureCallBack: function (iObj) {
+                                    console.error('In failureCallBack', iObj);
+                                }
+                            });
+                        } else {
+                            serverCommunication.sendSelectedCTSDataToServerMentor({
+                                selectedArray: _updateArray,
+                                successCallBack: function (iObj) {
+                                    console.error('In successCallBack', iObj);
+                                },
+                                failureCallBack: function (iObj) {
+                                    console.error('In failureCallBack', iObj);
+                                }
+                            });
+                            
+                        }
+                        _updateArray = [];
                     }
                 }
             };

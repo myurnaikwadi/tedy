@@ -17,7 +17,7 @@
             position: relative;
             width: 18%;
             padding: 1%;
-            height: 98%;
+            height: 100%;
             float: left;
         }
 
@@ -338,7 +338,7 @@
 .ctsParent{
 	float: left;
 	width: 100%;
-	height : 93%;
+	height : 100%;
 	
 }
 .ctsCategoryPanelMainPanel {
@@ -348,11 +348,12 @@
 }
 .ctsParentMain{
 	float: left;
-	width: 100%;
-	margin: 3% auto auto auto;
+	width: 96%;
+	    margin: 2%;
 	background : #f1f1f1;
-	height : 93%;
+	height : 89%;
     display: flex;
+    margin-bottom: 0;
 }
 .ctsParentMainPanel{
 	float: left;
