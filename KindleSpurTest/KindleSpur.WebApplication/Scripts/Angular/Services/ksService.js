@@ -105,6 +105,15 @@ app.factory('serverCommunication', function ($http) {
             $http.get('/User/Mentee').then(iObj.successCallBack, iObj.failureCallBack);
         },
         
+            /**
+        * @auther : MKN
+        * @date : 10/06/2016
+        * @Purpose : get category as per role
+        */
+        getMySelection: function (iObj) {
+                console.error(iObj)
+                $http.get('/api/CTS').then(iObj.successCallBack, iObj.failureCallBack);
+        },
         /**
           * @auther : MKN
           * @date : 10/06/2016
