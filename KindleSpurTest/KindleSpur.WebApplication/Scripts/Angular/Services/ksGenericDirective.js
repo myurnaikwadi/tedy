@@ -116,7 +116,7 @@ app.directive('ctcRole', function ($state, serverCommunication) {
                 //    scope.getTopicSkill(iCategory);
             };
 
-            var _updateArray = {};
+            var _updateArray = [];
             scope.topicSelection = function (iIndex, iTopic) {
                 if (scope.skillRequired) {
                     for (var k = 0; k < iTopic.Skills.length ; k++) {
