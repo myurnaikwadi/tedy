@@ -500,5 +500,9 @@
     background : white;
 }
 
+.heightTopicClass {
+     height: 100% !important;
+}
+
 
   

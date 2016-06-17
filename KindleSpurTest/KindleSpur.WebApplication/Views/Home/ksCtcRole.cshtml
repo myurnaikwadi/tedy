@@ -28,7 +28,7 @@
                             </div>
                         </div>
                         <div class="topicSkillPanel" ng-if="categoryDisplay == false">
-                            <div class="topicClassParent">
+                            <div class="topicClassParent" ng-class="{ heightTopicClass : skillRequired == true}">
                                 <div class="topicHeadingSection">
                                     <h5 class="topicHeadingBar">TOPIC</h5>
                                 </div>
@@ -48,7 +48,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="skillsClassParent">
+                            <div class="skillsClassParent" ng-if="skillRequired">
                                 <div class="topicHeadingSection">
                                     <h5 class="topicHeadingBar">SKILLS</h5>
                                 </div>
