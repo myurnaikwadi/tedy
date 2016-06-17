@@ -1,4 +1,6 @@
-﻿using System;
+﻿using MongoDB.Bson;
+using MongoDB.Bson.Serialization.Attributes;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -7,10 +9,16 @@ namespace KindleSpur.Models.Interfaces
 {
    public interface ICoachOrMentor
     {
-         string AdditionalRef { get; set; }
-         int UserId { get; set; }
-         List<ICategory> Category { get; set; }
-         decimal Experience { get; set; }
+        [BsonId]
+         ObjectId Id
+        {
+            get; set;
+        }
+        string AdditionalRef { get; set; }
+         string UserId { get; set; }
+         List<String> Skills { get; set; }
+         List<String> Topics { get; set; }
+        decimal Experience { get; set; }
          string Proficiency { get; set; } 
          string Language { get; set; }
          Boolean Published { get; set; }

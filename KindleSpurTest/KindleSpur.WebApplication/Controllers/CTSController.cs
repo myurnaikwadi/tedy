@@ -23,22 +23,7 @@ namespace KindleSpur.WebApplication.Controllers
             return _ctsRepo.GetCTS().ToJson();
         }
 
-        // POST: api/PostCTS
-        public Boolean PostCTS([FromBody] List<string> obj)
-        {
-            CTSRepository _ctsRepo = new CTSRepository();
-            List<BsonDocument> docs = _ctsRepo.GetCTSCategoryAndTopic(obj[0]);
-            CoachOrMentorRepository _coachRepo = new CoachOrMentorRepository();
-           
-            
-                            
-
-            KindleSpur.Models.CoachOrMentor _obj = new Models.CoachOrMentor();
-          
-
-            
-            return true;
-        }
+   
         //// GET: api/GetCTSCategories
         //public IEnumerable<BsonDocument> GetCTSCategories()
         //{
@@ -69,31 +54,5 @@ namespace KindleSpur.WebApplication.Controllers
         //    CTSRepository _ctsRepo = new CTSRepository();
         //    return _ctsRepo.GetSkills(category, topic);
         //}
-        [System.Web.Mvc.HttpPost]
-        public void UpdateUserDetails(User _obj)
-        {
-
-            UserRepository _repo = new UserRepository();
-
-            
-
-            if (_repo.UpdateUserDetails(((IUser)HttpContext.Current.Session["User"]).Id, _obj))
-            {
-            }
-            //return View();
-        }
-        [System.Web.Mvc.HttpPost]
-        public void UpdateUserDesc(User _obj)
-        {
-
-            UserRepository _repo = new UserRepository();
-
-
-
-            if (_repo.UpdateUserDesc(((IUser)HttpContext.Current.Session["User"]).Id, _obj))
-            {
-            }
-            //return View();
-        }
     }
 }

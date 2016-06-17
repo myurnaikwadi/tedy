@@ -12,6 +12,7 @@
                 , { name: 'BRAIN GAMES' }
                 , { name: 'GRAPHS' }
                 , { name: 'RESOURCES' }
+                ,{ name : 'Add Topics'}
     ]
     $scope.applicationRole = [{ name: 'COACHEE' }, { name: 'MENTEE' }, { name: 'COACH' }, { name: 'MENTOR' }]
     $scope.rightSideDashBoardArray = [
@@ -21,7 +22,17 @@
                 { name: 'GRAPHS' },
                 { name: 'BRAIN GAMES' },
                 { name: 'RESOURCES' }
-    ]
+    ];
+
+    $scope.selectedMenu = '0';
+    $scope.menuClick = function (iIndex, iOption) {
+        $scope.selectedMenu = iIndex;
+        //switch (iIndex) {
+        //    case '0': break;
+        //}
+    };
+
+
     $scope.init = function () {
 
             serverCommunication.getMentorData({

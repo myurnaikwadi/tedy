@@ -236,8 +236,10 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\CoachController.cs" />
     <Compile Include="Controllers\CTSController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\MentorController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="EmailHelper\EmailNotification.cs" />
     <Compile Include="Global.asax.cs">
@@ -1104,7 +1106,7 @@
     <Content Include="Scripts\jquery-2.2.3.min.map" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\jquery.validate.js" />
-    <Content Include="Scripts\jquery.validate.min.js" />
+    <Content Include="Views\Home\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
@@ -1139,6 +1141,8 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Models\" />
+    <Folder Include="Views\Coach\" />
+    <Folder Include="Views\Mentor\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
