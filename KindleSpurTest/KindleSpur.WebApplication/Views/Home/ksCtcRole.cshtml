@@ -2,80 +2,71 @@
     <div class="ctsParentMain">
         <div class="ctsParentMainPanel">
             <div class="ctsCategoryHeading">
-                <h5 ng-show="mySelection" style="font-size: 15px;font-weight: 700;padding: 6px;padding-left: 0;" class="fontClass">MY SELECTION</h5>
-                <h5 ng-hide="mySelection" style="font-size: 15px;font-weight: 700;padding: 6px;padding-left: 0;" class="fontClass">{{ categoryDisplay ? 'CATEGORIES' : selectedCategoryValue.Category | uppercase }}</h5>
-                <img ng-show="mySelection" style="width:20px;height : 20px;float:right;margin: auto auto;margin-right: 0;" ng-click="addSkill()" src="~/Images/addBold.png" />
+                <h5 style="font-size: 15px;font-weight: 700;padding: 6px;padding-left: 0;" class="fontClass">{{ categoryDisplay ? 'CATEGORIES' : selectedCategoryValue.Category | uppercase }}</h5>
             </div>
-            <div class="ctsCategoryPanelMainPanel" ng-show="mySelection">
-                
-                <molecule-Map></molecule-Map>
-
-            </div>
-            <div class="ctsCategoryPanelMainPanel" ng-hide="mySelection">
-                <div class="ctsCategoryPanel">
-                    <div class="parentCatgoryPanel">
-                        <div class="cateGoryRepeatPanel" ng-if="categoryDisplay == true">
-                            <div style="float: left;width: 50%;height:50%" class="genericPointerClass" ng-click="categoryClick($index,option)" ng-repeat="option in catogoryArray">
-                                <div ng-class="{ coachThemeColor : $index == selectedCategory }" class="categoryCircle">
-                                    <div class="categoryRightlabelPart">
-                                        <div class="categoryRightlabel">
-                                            <h5 style="color:#B5AFAF;margin: auto;font-size: 15px;" class="leftSideMenuLable fontClass" ng-class="{ whiteBackground : $index == selectedCategory }">
-                                                {{option.Category | uppercase}}
-                                            </h5>
-                                        </div>
+            <div class="ctsCategoryPanel">
+                <div class="parentCatgoryPanel">
+                    <div class="cateGoryRepeatPanel" ng-if="categoryDisplay == true">
+                        <div style="float: left;width: 50%;height:50%" class="genericPointerClass" ng-click="categoryClick($index,option)" ng-repeat="option in catogoryArray">
+                            <div ng-class="{ coachThemeColor : $index == selectedCategory }" class="categoryCircle">
+                                <div class="categoryRightlabelPart">
+                                    <div class="categoryRightlabel">
+                                        <h5 style="color:#B5AFAF;margin: auto;font-size: 15px;" class="leftSideMenuLable fontClass" ng-class="{ whiteBackground : $index == selectedCategory }">
+                                            {{option.Category | uppercase}}
+                                        </h5>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="topicSkillPanel" ng-if="categoryDisplay == false">
-                            <div class="topicClassParent">
-                                <div class="topicHeadingSection">
-                                    <h5 class="topicHeadingBar">TOPIC</h5>
-                                </div>
-                                <div class="topicListingSection">
-                                    <div class="topicListingPanel">
-                                        <div ng-show="topicArray.length == 0" class="topicHeadingPlaceholdr">
-                                            <h5 style="color:gray;margin: auto;font-size: 30px;" class="leftSideMenuLable fontClass">
-                                                Some placeholder here
-                                            </h5>
-                                        </div>
-
-                                        <div class="topicsList" ng-repeat="topic in topicArray" ng-class="{ coachThemeColor : topic.selected == true }" ng-click="topicSelection($index,topic)">
-                                            <h5 style="color:black;margin: auto;font-size: 10px;" class="leftSideMenuLable fontClass">
-                                                {{topic.Name | uppercase}}
-                                            </h5>
-                                        </div>
-                                    </div>
-                                </div>
+                    </div>
+                    <div class="topicSkillPanel" ng-if="categoryDisplay == false">
+                        <div class="topicClassParent">
+                            <div class="topicHeadingSection">
+                                <h5 class="topicHeadingBar">TOPIC</h5>
                             </div>
-                            <div class="skillsClassParent">
-                                <div class="topicHeadingSection">
-                                    <h5 class="topicHeadingBar">SKILLS</h5>
-                                </div>
-                                <div class="topicListingSection">
-                                    <div ng-show="skillsArray.length == 0" class="topicHeadingPlaceholdr">
+                            <div class="topicListingSection">
+                                <div class="topicListingPanel">
+                                    <div ng-show="topicArray.length == 0" class="topicHeadingPlaceholdr">
                                         <h5 style="color:gray;margin: auto;font-size: 30px;" class="leftSideMenuLable fontClass">
                                             Some placeholder here
                                         </h5>
                                     </div>
-                                    <div class="topicsList" ng-repeat="skill in skillsArray" ng-class="{ coachThemeColor : skill.selected == true }" ng-click="skillSelection($index,skill)">
+
+                                    <div class="topicsList" ng-repeat="topic in topicArray" ng-class="{ coachThemeColor : topic.selected == true }" ng-click="topicSelection($index,topic)">
                                         <h5 style="color:black;margin: auto;font-size: 10px;" class="leftSideMenuLable fontClass">
-                                            {{skill.Name | uppercase}}
+                                            {{topic.Name | uppercase}}
                                         </h5>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </div>
-                <div class="ctsCategoryActionPanel">
-                    <div class="cateGoryFormDetails">
-                        <button class="signupButton fontClass" ng-click="savepublishClick()" style="width: 90px;height: 30px;padding: 0;">{{categoryDisplay ? 'Publish' : 'Save' }}</button>
-                        <h5 class="resetClass cancelLink fontClass" ng-click="backButtonClick()">Cancel</h5>
+                        <div class="skillsClassParent">
+                            <div class="topicHeadingSection">
+                                <h5 class="topicHeadingBar">SKILLS</h5>
+                            </div>
+                            <div class="topicListingSection">
+                                <div ng-show="skillsArray.length == 0" class="topicHeadingPlaceholdr">
+                                    <h5 style="color:gray;margin: auto;font-size: 30px;" class="leftSideMenuLable fontClass">
+                                        Some placeholder here
+                                    </h5>
+                                </div>
+                                <div class="topicsList" ng-repeat="skill in skillsArray" ng-class="{ coachThemeColor : skill.selected == true }" ng-click="skillSelection($index,skill)">
+                                    <h5 style="color:black;margin: auto;font-size: 10px;" class="leftSideMenuLable fontClass">
+                                        {{skill.Name | uppercase}}
+                                    </h5>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-            
+            <div class="ctsCategoryActionPanel">
+                <div class="cateGoryFormDetails">
+                    <button class="signupButton fontClass" ng-click="savepublishClick()" style="width: 90px;height: 30px;padding: 0;">{{categoryDisplay ? 'Publish' : 'Save' }}</button>
+                    <h5 class="resetClass cancelLink fontClass" ng-click="backButtonClick()">Cancel</h5>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 <div class="applicationBottomStrip">

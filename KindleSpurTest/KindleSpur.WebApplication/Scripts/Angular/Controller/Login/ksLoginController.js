@@ -86,8 +86,8 @@ app.controller('ksLoginController', ['$scope', 'authentification', '$location', 
       * @Purpose : signup function  - send data to auth factory to send data to server.
       */
  	$scope.loginClick = function () {
- 	    $state.go('ksUserDashBoard');
-        return
+ 	    //$state.go('ksUserDashBoard');
+        //return
  	    if ($scope.loginDetails.emailAddress == '' || $scope.loginDetails.password == '') {
  	        alert('Please enter emailAddress or  Password')
  	        return
