@@ -10,8 +10,8 @@ namespace KindleSpur.Models.Interfaces
 {
    public interface ISkill
     {
-        [BsonId]
-        ObjectId Id { get; set; }
+        
+        string Id { get; set; }
 
         string Name { get; set; }
     }

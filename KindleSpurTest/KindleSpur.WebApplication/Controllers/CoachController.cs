@@ -13,7 +13,7 @@ namespace KindleSpur.WebApplication.Controllers
     {
        
         [HttpPost]
-        public Boolean SaveSkills(List<string> selectedArray)
+        public Boolean SaveSkills(List<Models.Skill> selectedArray)
         {
             CTSRepository _ctsRepo = new CTSRepository();
             CoachOrMentorRepository _coachRepo = new CoachOrMentorRepository();
@@ -23,31 +23,37 @@ namespace KindleSpur.WebApplication.Controllers
             _obj.Role = "Coach";
             _obj.CreateDate = _obj.UpdateDate= DateTime.Now;
             if (_obj.Skills == null) _obj.Skills = new List<string>();
-            _obj.Skills.AddRange(selectedArray);
-
+            foreach (Models.Skill skill in selectedArray)
+            {
+                _obj.Skills.Add(skill.Name);
+                _obj.Proficiency = skill.profiLevel;
+            }
+            
             _coachRepo.AddNewCoachOrMentor(_obj);
 
             return true;
         }
 
-        public List<string> GetCTS()
+        public string GetCTS()
         {
-            List<string> CTS = new List<string>();
+            
             CoachOrMentorRepository _coachRepo = new CoachOrMentorRepository();
             string UserId = ((IUser)Session["User"]).EmailAddress;
 
             List<string> skills = _coachRepo.GetSkillsForCoach(UserId);
             CTSRepository _ctsRepo = new CTSRepository();
-
+            BsonDocument doc = new BsonDocument();
+            BsonArray arr = new BsonArray();
             foreach (string skill in skills)
             {
+                
                 BsonDocument result = _ctsRepo.GetCoachTopicAndCategory(skill);
-               
+                arr.Add(result);
 
-                CTS.Add(result.ToJson());
+             
             }
-            
-            return CTS;
+            doc.Add("Categories",arr);
+            return doc.ToJson();
         }
     }
 }
