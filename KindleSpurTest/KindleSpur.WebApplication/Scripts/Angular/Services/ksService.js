@@ -161,3 +161,21 @@ app.factory('serverCommunication', function ($http) {
         },
     }
 });
+
+var _getMyDetailsFromCookies = function () {
+    var _user = document.cookie;
+    console.error(_user)
+    var ca = _user.split(';');
+    var _userDetails = null;
+    for (var i = 0; i < ca.length; i++) {
+        var c = ca[i];
+        if (c.indexOf('ksUser') > 0) {
+            _userDetails = c;
+        }
+    }
+    var _de = _userDetails.split('com=');
+    var _userDetails = JSON.parse(_de[1]);
+    console.error(ca)
+    return _userDetails;
+};
+

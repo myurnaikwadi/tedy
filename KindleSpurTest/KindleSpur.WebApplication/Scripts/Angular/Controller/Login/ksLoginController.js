@@ -41,11 +41,9 @@ app.controller('ksLoginController', ['$scope', 'authentification', '$location', 
      */
  	var _successLoginCallBack = function (iObject) {
  	    console.error('In _successCallBack', iObject);
-
- 	    //var _user = $cookieStore.get('user');
- 	    //console.error($cookieStore)
- 	    //console.error(_user)
- 	    $rootScope.loggedDetail = iObject;
+ 	    window.$cookieStore = $cookieStore
+ 	    var _userDetails = _getMyDetailsFromCookies();
+ 	    $rootScope.loggedDetail = _userDetails;
  	    $state.go('ksUserDashBoard');
  	};
  	var _successPasswordCallBack = function (iObj) {

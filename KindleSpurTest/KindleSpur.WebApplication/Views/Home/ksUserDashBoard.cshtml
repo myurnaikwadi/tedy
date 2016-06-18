@@ -23,7 +23,7 @@
                             </div>
                             <div class="profileNamePartMain fontClass" ng-click="navigateToProfile()">
                                 <h2 class="profileName">WELCOME</h2>
-                                <h2 class="profileName">&nbsp @ViewBag.Name</h2>
+                                <h2 class="profileName">&nbsp {{loggedDetail.FirstName+" "+loggedDetail.LastName}}</h2>
                             </div>
                         </div>
                     </div>
@@ -75,16 +75,7 @@
                 </div>
                 <div class="bottomStripParent">
                     <div class="applicationBottomStrip">
-                        <ul class="bottomStripOption">
-                            <li class="fontClass">UNKNOWN 2016</li>
-                            <li class="fontClass">USER AGREEMENT</li>
-                            <li class="fontClass">PRIVACY POLICY</li>
-                            <li class="fontClass">COMMUNITY GUIDELINES</li>
-                            <li class="fontClass">COOKIE POLICY</li>
-                            <li class="fontClass">COPIRIGHT POLICY</li>
-                            <li class="fontClass">QUEST CONTROLS</li>
-                            <li class="fontClass">LANGUAGE</li>
-                        </ul>
+                        <bottom-Main-Strip></bottom-Main-Strip>
                     </div>
                 </div>
             </div>

@@ -83,8 +83,8 @@ namespace KindleSpur.WebApplication.Controllers
 
             if (u != null && u.Password==signupObject.Password)
             {
-                HttpCookie cookie = new HttpCookie("User");                
-                cookie["User"]= new JavaScriptSerializer().Serialize(u);
+                HttpCookie cookie = new HttpCookie("ksUser");                
+                cookie[u.EmailAddress] = new JavaScriptSerializer().Serialize(u);
                 Response.SetCookie(cookie);
 
                 Session["User"] = u;
