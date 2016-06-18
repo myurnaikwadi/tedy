@@ -1,10 +1,10 @@
-﻿app.controller('ksProfileController', function ($scope, commonFunction, serverCommunication) {
+﻿app.controller('ksProfileController', function ($scope, commonFunction, serverCommunication,$rootScope) {
     $scope.editModeProfile = false;
     $scope.myInfo = {
         mobileNumber : '1234567890',
         linkedInLink: 'No link available',
-        firstName: 'Test',
-        lastName: 'User',
+        firstName: $rootScope.FirstName,
+        lastName: $rootScope.LastName,
         profileImage: '',
         profileBackgroundImage: '',
         description : 'No Description Available'
@@ -53,6 +53,11 @@
     $scope.sendDetailsToServer = function () {
         $scope.editModeProfile = false;
         console.error($scope.myInfo)
+        if ($rootScope.FirstName == $scope.myInfo.firstName || $rootScope.LastName == $scope.myInfo.lastName) {
+            return;
+        }
+        $rootScope.FirstName = $scope.myInfo.firstName;
+        $rootScope.LastName = $scope.myInfo.lastName;
         var _object = {
             changeDetails: $scope.myInfo,
             successCallBack: function () {
