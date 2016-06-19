@@ -29,5 +29,25 @@ namespace KindleSpur.WebApplication.Controllers
 
             return true;
         }
+
+        public List<string> GetCTS()
+        {
+            List<string> CTS = new List<string>();
+            CoachOrMentorRepository _coachRepo = new CoachOrMentorRepository();
+            string UserId = ((IUser)Session["User"]).EmailAddress;
+
+            List<string> skills = _coachRepo.GetSkillsForCoach(UserId);
+            CTSRepository _ctsRepo = new CTSRepository();
+
+            foreach (string skill in skills)
+            {
+                BsonDocument result = _ctsRepo.GetCoachTopicAndCategory(skill);
+               
+
+                CTS.Add(result.ToJson());
+            }
+            
+            return CTS;
+        }
     }
 }

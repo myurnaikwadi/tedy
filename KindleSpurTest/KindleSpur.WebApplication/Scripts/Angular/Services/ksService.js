@@ -112,7 +112,7 @@ app.factory('serverCommunication', function ($http) {
         */
         getMySelection: function (iObj) {
                 console.error(iObj)
-                $http.get('/api/CTS').then(iObj.successCallBack, iObj.failureCallBack);
+                $http.get('/Coach/GetCTS').then(iObj.successCallBack, iObj.failureCallBack);
         },
         /**
           * @auther : MKN

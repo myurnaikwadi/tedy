@@ -67,6 +67,20 @@ namespace KindleSpur.Data
             return _transactionStatus;
         }
 
+        public List<string> GetSkillsForCoach(string UserId)
+        {
+           
+            var _collection = _kindleDatabase.GetCollection("CoachOrMentor");
+           var result = _collection.FindOneAs<CoachOrMentor>(Query.And(
+                                                                   Query.EQ("UserId", UserId),
+                                                                   Query.EQ("Role", "Coach")
+                                                                ));
+            if (result != null)
+                return result.Skills;
+            else
+                return new List<string>();
+        }
+
         public bool DeleteCoachOrMentor(string Id)
         {
             bool _transactionStatus = false;

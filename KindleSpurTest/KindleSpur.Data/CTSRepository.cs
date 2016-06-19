@@ -151,5 +151,31 @@ namespace KindleSpur.Data
         }
 
 
+        public BsonDocument GetCoachTopicAndCategory(string skill)
+        {
+            BsonDocument _Category = new BsonDocument();
+
+            try
+            {
+                var _ctsCollection = _kindleDatabase.GetCollection("CTS");
+
+                var query = Query.EQ("Name", skill);
+                BsonDocument result = _ctsCollection.Find(Query.ElemMatch("Topics.Skills", Query.EQ("Name",skill))).SetFields(Fields.Include("Category","Topics.Skills.$")).ToList()[0];
+                if (result != null)
+                {
+                    _Category = _Category.Add(new BsonElement("Category", result["Category"].AsString));
+                    _Category = _Category.Add(new BsonElement("Topic", result["Topics"][0]["Name"].AsString));
+                    _Category = _Category.Add(new BsonElement("Skill", skill));
+                }
+            }
+            catch (MongoException ex)
+            {
+                _logCollection.Insert("{ Error : 'Failed at GetCoachTopicAndCategory().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ");
+                throw new MongoException("Signup failure!!!");
+            }
+
+            return _Category;
+        }
+
     }
 }
