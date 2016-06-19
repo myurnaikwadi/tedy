@@ -114,7 +114,7 @@ app.directive('ctcRole', function ($state, serverCommunication) {
             //    scope.getTopicSkill(iCategory);
             };
 
-            var _updateArray = [];
+            var _updateArray = {};
             scope.topicSelection = function (iIndex, iTopic) {
                 for (var k = 0; k < iTopic.Skills.length ; k++) {
                     iTopic.Skills[k].selected = false;
@@ -144,14 +144,13 @@ app.directive('ctcRole', function ($state, serverCommunication) {
                 }
             };
             scope.skillSelection = function (iIndex, iSkills) {
-                var _index = _updateArray.indexOf(iSkills.Id);
-                if (iSkills.selected) {
+                 if (iSkills.selected) {
                     iSkills.selected = false;
-                    if (_index > -1) _updateArray.splice(_index, 1);
-                } else {
-                    iSkills.selected = true;
-                    if (_index == -1) _updateArray.push(iSkills.Id);
-                }
+                    if (_updateArray[iSkills.Id]) delete _updateArray[iSkills.Id];
+                 } else {
+                     iSkills.selected = true;
+                     _updateArray[iSkills.Id] = iSkills;
+                 }
             };
 
             scope.backButtonClick = function () {

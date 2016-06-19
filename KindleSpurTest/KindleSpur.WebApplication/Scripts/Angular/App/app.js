@@ -1,4 +1,4 @@
-﻿var app = angular.module('app', ['ngCookies','ui.router']);
+﻿var app = angular.module('app', ['ui.router']);
 var rootScope = null;
 function onLinkedInLoad() {
 

@@ -1,10 +1,11 @@
 ﻿app.controller('ksProfileController', function ($scope, commonFunction, serverCommunication,$rootScope) {
     $scope.editModeProfile = false;
+    console.error($rootScope.loggedDetail)
     $scope.myInfo = {
         mobileNumber : '1234567890',
         linkedInLink: 'No link available',
-        firstName: $rootScope.FirstName,
-        lastName: $rootScope.LastName,
+        firstName: $rootScope.loggedDetail.FirstName.toUpperCase(),
+        lastName: $rootScope.loggedDetail.LastName.toUpperCase(),
         profileImage: '',
         profileBackgroundImage: '',
         description : 'No Description Available'

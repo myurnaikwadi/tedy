@@ -3,7 +3,7 @@
      * @date : 07/05/2016
      * @Purpose : login and Signup controller - Manage all data related to  login and signup page
      */
-app.controller('ksLoginController', ['$scope', 'authentification', '$location', '$rootScope', '$state', '$stateParams', '$cookieStore', function ($scope, authentification, $location, $rootScope, $state, $stateParams, $cookieStore) {
+app.controller('ksLoginController', ['$scope', 'authentification', '$location', '$rootScope', '$state', '$stateParams', function ($scope, authentification, $location, $rootScope, $state, $stateParams) {
     console.error('login Page loaded Successfully');
     rootScope = $rootScope;
  	$scope.loginDetails = {
@@ -41,7 +41,7 @@ app.controller('ksLoginController', ['$scope', 'authentification', '$location', 
      */
  	var _successLoginCallBack = function (iObject) {
  	    console.error('In _successCallBack', iObject);
- 	    window.$cookieStore = $cookieStore
+ 	  //  window.$cookieStore = $cookieStore
  	    var _userDetails = _getMyDetailsFromCookies();
  	    $rootScope.loggedDetail = _userDetails;
  	    $state.go('ksUserDashBoard');
