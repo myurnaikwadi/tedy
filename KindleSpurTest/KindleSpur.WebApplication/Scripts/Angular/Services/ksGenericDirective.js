@@ -82,7 +82,7 @@ app.directive('bottomMainStrip', function ($timeout) {
 app.directive('ctcRole', function ($state, serverCommunication) {
     return {
         scope: {
-            role : "=",
+            role : "@",
             skillRequired: "=",
         },
         templateUrl: '/Home/ksCtcRole',
@@ -105,26 +105,33 @@ app.directive('ctcRole', function ($state, serverCommunication) {
             scope.selectedSkills = -1;
             scope.selectedCategoryValue = null;
             scope.categoryDisplay = true;
-            scope.categoryClick = function (iIndex, iCategory) {
+            scope.categoryClick = function (iEvent, iIndex, iCategory) {
                 scope.selectedCategory = iIndex;
                 scope.categoryDisplay = false;
                 scope.selectedCategoryValue = iCategory;
                 scope.topicArray = [].concat(iCategory.Topics)
                 for (var k = 0; k < scope.topicArray.length ; k++) {
                     scope.topicArray[k].selected = false;
+                   
                 }
                 //    scope.getTopicSkill(iCategory);
             };
 
             var _updateArray = [];
-            scope.topicSelection = function (iIndex, iTopic) {
+            scope.topicSelection = function (iEvent, iIndex, iTopic) {
+                iEvent.stopPropagation();
                 if (scope.skillRequired) {
+                    if (!iTopic.Skills) iTopic.Skills = [];
                     for (var k = 0; k < iTopic.Skills.length ; k++) {
                         iTopic.Skills[k].selected = false;
                     }
                 }
-                
-                var _index = _updateArray.indexOf(iTopic.Name);
+                var _index = -1;
+                for (var k = 0; k < _updateArray.length ; k++) {
+                    if (_updateArray[k].Name == iTopic.Name)
+                        _index = k;
+                }
+               
                 if (iTopic.selected) {
 
                     iTopic.selected = false;
@@ -134,7 +141,12 @@ app.directive('ctcRole', function ($state, serverCommunication) {
                             for (var l = 0 ; l < _length;) {
 
                                 for (var k = 0; k < iTopic.Skills.length ; k++) {
-                                    var _indexSkill = _updateArray.indexOf(iTopic.Skills[k].Name);
+                                    
+                                    var _indexSkill = -1;
+                                    for (var k = 0; k < _updateArray.length ; k++) {
+                                        if (_updateArray[k].Name == iTopic.Skills[k].Name)
+                                            _indexSkill = k;
+                                    }
                                     if (_indexSkill > -1) _updateArray.splice(_indexSkill, 1);
                                     if (scope.skillsArray[l] && scope.skillsArray[l].Name == iTopic.Skills[k].Name) {
                                         scope.skillsArray.splice(l, 1);
@@ -155,18 +167,25 @@ app.directive('ctcRole', function ($state, serverCommunication) {
                     if (scope.skillRequired) {
                         scope.skillsArray = scope.skillsArray.concat(iTopic.Skills)
                     } else {
-                        if (_index == -1) _updateArray.push(iTopic.Name);
+                        if (_index == -1) _updateArray.push(iTopic);
                     }
                 }
             };
-            scope.skillSelection = function (iIndex, iSkills) {
-                var _index = _updateArray.indexOf(iSkills.Name);
+            scope.skillSelection = function (iEvent, iIndex, iSkills) {
+                iEvent.stopPropagation();
+                var _index = -1;
+                for (var k = 0; k < _updateArray.length ; k++) {
+                    if (_updateArray[k].Name == iSkills.Name)
+                        _index = k;
+                }
                 if (iSkills.selected) {
                     iSkills.selected = false;
+                    iSkills.profiLevel = 0;
                     if (_index > -1) _updateArray.splice(_index, 1);
                 } else {
                     iSkills.selected = true;
-                    if (_index == -1) _updateArray.push(iSkills.Name);
+                    iSkills.profiLevel = 0;
+                    if (_index == -1) _updateArray.push(iSkills);
                 }
             };
 

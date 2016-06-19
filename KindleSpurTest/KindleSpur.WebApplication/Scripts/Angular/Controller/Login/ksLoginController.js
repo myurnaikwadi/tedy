@@ -87,6 +87,8 @@ app.controller('ksLoginController', ['$scope', 'authentification', '$location', 
       */
  	$scope.loginClick = function () {
  	  
+ 	  //  $state.go('ksUserDashBoard');
+       // return
  	    if ($scope.loginDetails.emailAddress == '' || $scope.loginDetails.password == '') {
  	        alert('Please enter emailAddress or  Password')
  	        return
