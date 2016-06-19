@@ -54,7 +54,7 @@ namespace KindleSpur.Data
 
         }
 
-        public List<BsonDocument> GetCTSCategoryAndTopic(string skill)
+        public List<BsonDocument> GetCTSCategoryAndTopic(List<string> skills)
         {
 
             List<BsonDocument> _categories = new List<BsonDocument>();
@@ -62,7 +62,7 @@ namespace KindleSpur.Data
             try
             {
                 var _ctsCollection = _kindleDatabase.GetCollection("CTS");
-                _categories = _ctsCollection.Find(Query.EQ("Name", skill)).SetFields(Fields.Exclude("_id")).ToList();
+                _categories = _ctsCollection.Find(Query.EQ("Name", skills[0])).SetFields(Fields.Exclude("_id")).ToList();
             }
             catch (MongoException ex)
             {

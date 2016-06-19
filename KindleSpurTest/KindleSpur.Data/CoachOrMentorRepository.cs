@@ -8,7 +8,7 @@ using KindleSpur.Models.Interfaces.Repository;
 using MongoDB.Driver;
 using MongoDB.Driver.Builders;
 using MongoDB.Bson;
-
+using KindleSpur.Models;
 
 namespace KindleSpur.Data
 {
@@ -43,12 +43,17 @@ namespace KindleSpur.Data
             try
             {
                 var _collection = _kindleDatabase.GetCollection("CoachOrMentor");
-                var result = _collection.Find(Query.EQ("UserId", Data.UserId));
+
+                var result = _collection.Find(Query.And(Query.EQ("UserId", Data.UserId), Query.EQ("Role", Data.Role)));                                                                ));
 
                 if (result.Count() > 0)
-                    return false;
-
-                _collection.Insert(Data);
+                {
+                    EditCoachOrMentor(Data.UserId.ToString(), Data);
+                }
+                else
+                {
+                    _collection.Insert(Data);
+                }
 
                 _transactionStatus = true;
             }
@@ -86,8 +91,32 @@ namespace KindleSpur.Data
             try
             {
                 var _collection = _kindleDatabase.GetCollection("CoachOrMentor");
-                var _entity = _collection.FindOneAs<IUser>(Query.EQ("UserId", ObjectId.Parse(UserId)));
+                var _entity = _collection.FindOneAs<CoachOrMentor>(Query.And(
+                                                                   Query.EQ("UserId", UserId),
+                                                                   Query.EQ("Role", Data.Role)
+                                                                ));
 
+               if (Data.Role == "Coach")
+               {
+                    foreach (string skill in Data.Skills)
+                    {
+                        if (!_entity.Skills.Contains(skill))
+                        {
+                            _entity.Skills.Add(skill);
+                        }
+                    }
+                }
+                else if(Data.Role == "Mentor")
+                {
+                    foreach (string topic in Data.Topics)
+                    {
+                        if (!_entity.Topics.Contains(topic))
+                        {
+                            _entity.Topics.Add(topic);
+                        }
+                    }
+                }
+                _entity.UpdateDate = DateTime.Now;
                 _collection.Save(_entity);
                 _transactionStatus = true;
             }
