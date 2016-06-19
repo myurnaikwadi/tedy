@@ -506,7 +506,7 @@
     margin: 2%;
     width: 89%;
     /* padding: 3px; */
-    /* display: flex; */
+    display: flex;
     height: 60%;
 }
 .heightTopicClass {
