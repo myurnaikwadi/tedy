@@ -180,15 +180,32 @@ app.directive('ctcRole', function ($state, serverCommunication) {
                 } else {
                     console.error(_updateArray);
                     if(_updateArray.length > 0){
-			serverCommunication.sendSelectedCTSDataToServer({
-	                    	selectedArray  : _updateArray,
-	                	successCallBack: function (iObj) {
-	                        	console.error('In successCallBack', iObj);
-	                	},
-	                	failureCallBack: function (iObj) {
-	                        	console.error('In failureCallBack', iObj);
-	                        }
-                   	});                    	
+                        if (scope.skillRequired) {
+                            serverCommunication.sendSelectedCTSDataToServer({
+	                    	    selectedArray  : _updateArray,
+	                	        successCallBack: function (iObj) {
+	                        	    console.error('In successCallBack', iObj);
+	                	        },
+	                	        failureCallBack: function (iObj) {
+	                        	    console.error('In failureCallBack', iObj);
+	                            }
+                            });
+
+                            _updateArray = [];
+                        }else{
+                        
+                            serverCommunication.sendSelectedCTSDataToServerMentor({
+	                    	    selectedArray  : _updateArray,
+	                	        successCallBack: function (iObj) {
+	                        	    console.error('In successCallBack', iObj);
+	                	        },
+	                	        failureCallBack: function (iObj) {
+	                        	    console.error('In failureCallBack', iObj);
+	                            }
+                            });
+                            _updateArray = [];
+                        }
+                                   	
                     }
                 }
             };

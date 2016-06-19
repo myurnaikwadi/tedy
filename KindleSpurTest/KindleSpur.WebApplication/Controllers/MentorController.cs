@@ -10,6 +10,7 @@ namespace KindleSpur.WebApplication.Controllers
 {
     public class MentorController : Controller
     {
+        [HttpPost]
         public Boolean SaveTopics(List<string> selectedArray)
         {
             CoachOrMentorRepository _mentorRepo = new CoachOrMentorRepository();

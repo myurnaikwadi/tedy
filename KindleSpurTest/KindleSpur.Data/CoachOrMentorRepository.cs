@@ -12,7 +12,7 @@ using KindleSpur.Models;
 
 namespace KindleSpur.Data
 {
-   public class CoachOrMentorRepository : ICoachOrMentorRepository
+    public class CoachOrMentorRepository : ICoachOrMentorRepository
     {
         MongoClient _mongoClient;
         MongoServer _mongoServer;
@@ -44,7 +44,7 @@ namespace KindleSpur.Data
             {
                 var _collection = _kindleDatabase.GetCollection("CoachOrMentor");
 
-                var result = _collection.Find(Query.And(Query.EQ("UserId", Data.UserId), Query.EQ("Role", Data.Role)));                                                                ));
+                var result = _collection.Find(Query.And(Query.EQ("UserId", Data.UserId), Query.EQ("Role", Data.Role))).ToList();                                                              
 
                 if (result.Count() > 0)
                 {
@@ -62,6 +62,7 @@ namespace KindleSpur.Data
                 _logCollection.Insert("{ Error : 'Failed at AddNewCoachOrMentor().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ");
                 throw new MongoException("Signup failure!!!");
             }
+        
 
             return _transactionStatus;
         }
@@ -96,8 +97,8 @@ namespace KindleSpur.Data
                                                                    Query.EQ("Role", Data.Role)
                                                                 ));
 
-               if (Data.Role == "Coach")
-               {
+                if (Data.Role == "Coach")
+                {
                     foreach (string skill in Data.Skills)
                     {
                         if (!_entity.Skills.Contains(skill))
@@ -106,7 +107,8 @@ namespace KindleSpur.Data
                         }
                     }
                 }
-                else if(Data.Role == "Mentor")
+
+                if (Data.Role == "Mentor")
                 {
                     foreach (string topic in Data.Topics)
                     {
@@ -125,6 +127,7 @@ namespace KindleSpur.Data
                 _logCollection.Insert("{ Error : 'Failed at EditUser().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ");
             }
             return _transactionStatus;
+        
         }
 
         public List<ICoachOrMentor> GetAllCoachOrMentorDetails()
@@ -149,7 +152,7 @@ namespace KindleSpur.Data
             try
             {
                 var _collection = _kindleDatabase.GetCollection("CoachOrMentor");
-                result = _collection.FindOneAs<ICoachOrMentor>(Query.EQ("_id", ObjectId.Parse(Id)));    
+                result = _collection.FindOneAs<ICoachOrMentor>(Query.EQ("_id", ObjectId.Parse(Id)));
             }
             catch (MongoException ex)
             {
@@ -160,3 +163,5 @@ namespace KindleSpur.Data
         }
     }
 }
+
+

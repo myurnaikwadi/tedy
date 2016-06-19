@@ -134,6 +134,15 @@ app.factory('serverCommunication', function ($http) {
         },
         /**
        * @auther : MKN
+       * @date : 10/06/2016
+       * @Purpose : get topic and skill as per category selected
+       */
+        sendSelectedCTSDataToServerMentor: function (iObj) {
+            console.error(iObj)
+            $http.post('/Mentor/SaveTopics', iObj.selectedArray).then(iObj.successCallBack, iObj.failureCallBack);
+        },
+        /**
+       * @auther : MKN
        * @date : 15/06/2016
        * @Purpose :
        */
