@@ -67,7 +67,7 @@ namespace KindleSpur.Data
             return _transactionStatus;
         }
 
-        public List<string> GetSkillsForCoach(string UserId)
+        public List<Skill> GetSkillsForCoach(string UserId)
         {
            
             var _collection = _kindleDatabase.GetCollection("CoachOrMentor");
@@ -78,7 +78,7 @@ namespace KindleSpur.Data
             if (result != null)
                 return result.Skills;
             else
-                return new List<string>();
+                return new List<Skill>();
         }
 
         public bool DeleteCoachOrMentor(string Id)
@@ -113,7 +113,7 @@ namespace KindleSpur.Data
 
                 if (Data.Role == "Coach")
                 {
-                    foreach (string skill in Data.Skills)
+                    foreach (Skill skill in Data.Skills)
                     {
                         if (!_entity.Skills.Contains(skill))
                         {

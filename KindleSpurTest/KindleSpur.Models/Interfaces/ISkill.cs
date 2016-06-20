@@ -14,5 +14,7 @@ namespace KindleSpur.Models.Interfaces
         string Id { get; set; }
 
         string Name { get; set; }
+
+        string profiLevel { get; set; }
     }
 }

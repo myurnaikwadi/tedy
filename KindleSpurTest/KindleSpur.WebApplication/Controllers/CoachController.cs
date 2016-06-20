@@ -1,4 +1,5 @@
 ﻿using KindleSpur.Data;
+using KindleSpur.Models;
 using KindleSpur.Models.Interfaces;
 using MongoDB.Bson;
 using System;
@@ -22,12 +23,8 @@ namespace KindleSpur.WebApplication.Controllers
             _obj.UserId = ((IUser)System.Web.HttpContext.Current.Session["User"]).EmailAddress;
             _obj.Role = "Coach";
             _obj.CreateDate = _obj.UpdateDate= DateTime.Now;
-            if (_obj.Skills == null) _obj.Skills = new List<string>();
-            foreach (Models.Skill skill in selectedArray)
-            {
-                _obj.Skills.Add(skill.Name);
-                _obj.Proficiency = skill.profiLevel;
-            }
+            if (_obj.Skills == null) _obj.Skills = new List<Skill>();
+            _obj.Skills.AddRange(selectedArray);
             
             _coachRepo.AddNewCoachOrMentor(_obj);
 
@@ -40,16 +37,15 @@ namespace KindleSpur.WebApplication.Controllers
             CoachOrMentorRepository _coachRepo = new CoachOrMentorRepository();
             string UserId = ((IUser)Session["User"]).EmailAddress;
 
-            List<string> skills = _coachRepo.GetSkillsForCoach(UserId);
+            List<Skill> skills = _coachRepo.GetSkillsForCoach(UserId);
             CTSRepository _ctsRepo = new CTSRepository();
             BsonDocument doc = new BsonDocument();
             BsonArray arr = new BsonArray();
-            foreach (string skill in skills)
+            foreach (Skill skill in skills)
             {
                 
                 BsonDocument result = _ctsRepo.GetCoachTopicAndCategory(skill);
                 arr.Add(result);
-
              
             }
             doc.Add("Categories",arr);

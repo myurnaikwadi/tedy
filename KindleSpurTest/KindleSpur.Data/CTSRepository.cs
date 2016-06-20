@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using MongoDB.Driver;
 using MongoDB.Driver.Builders;
 using MongoDB.Bson;
+using KindleSpur.Models;
 
 namespace KindleSpur.Data
 {
@@ -151,7 +152,7 @@ namespace KindleSpur.Data
         }
 
 
-        public BsonDocument GetCoachTopicAndCategory(string skill)
+        public BsonDocument GetCoachTopicAndCategory(Skill skill)
         {
             BsonDocument _Category = new BsonDocument();
 
@@ -160,13 +161,14 @@ namespace KindleSpur.Data
                 var _ctsCollection = _kindleDatabase.GetCollection("CTS");
                 if (skill != null)
                 {
-                    var query = Query.EQ("Name", skill);
-                    BsonDocument result = _ctsCollection.Find(Query.ElemMatch("Topics.Skills", Query.EQ("Name", skill))).SetFields(Fields.Include("Category", "Topics.Skills.$")).ToList()[0];
+                    var query = Query.EQ("Name", skill.Name);
+                    BsonDocument result = _ctsCollection.Find(Query.ElemMatch("Topics.Skills", Query.EQ("Name", skill.Name))).SetFields(Fields.Include("Category", "Topics.Skills.$")).ToList()[0];
                     if (result != null)
                     {
                         _Category = _Category.Add(new BsonElement("Category", result["Category"].AsString));
                         _Category = _Category.Add(new BsonElement("Topic", result["Topics"][0]["Name"].AsString));
-                        _Category = _Category.Add(new BsonElement("Skill", skill));
+                        _Category = _Category.Add(new BsonElement("Skill", skill.Name));
+                        _Category = _Category.Add(new BsonElement("profiLevel", skill.profiLevel));
                     }
                 }
             }
