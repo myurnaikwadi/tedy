@@ -187,7 +187,7 @@ var _getMyDetailsFromCookies = function () {
     var _userDetails = null;
     for (var i = 0; i < ca.length; i++) {
         var c = ca[i];
-        if (c.indexOf('ksUser') > 0) {
+        if (c.indexOf('ksUser') > -1) {
             _userDetails = c;
         }
     }

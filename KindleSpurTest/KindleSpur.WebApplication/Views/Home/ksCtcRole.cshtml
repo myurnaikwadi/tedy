@@ -8,7 +8,7 @@
             </div>
             <div class="ctsCategoryPanelMainPanel" ng-show="mySelection">
 
-                <molecule-Map></molecule-Map>
+                <molecule-Map ng-if="ctsDataForMolecule" cts-Data="ctsDataForMolecule"></molecule-Map>
 
             </div>
             <div class="ctsCategoryPanelMainPanel" ng-hide="mySelection">
@@ -16,10 +16,10 @@
                     <div class="parentCatgoryPanel">
                         <div class="cateGoryRepeatPanel" ng-if="categoryDisplay == true">
                             <div style="float: left;width: 50%;height:50%" class="genericPointerClass" ng-click="categoryClick($event,$index,option)" ng-repeat="option in catogoryArray">
-                                <div ng-class="{ coachThemeColor : $index == selectedCategory && role == 'coach' , mentorThemeColor : $index == selectedCategory && role == 'mentor' }" class="categoryCircle">
+                                <div ng-class="{ coachThemeColor : option.selectedCategory == true && role == 'coach' , mentorThemeColor : option.selectedCategory == true && role == 'mentor' }" class="categoryCircle">
                                     <div class="categoryRightlabelPart">
                                         <div class="categoryRightlabel">
-                                            <h5 style="color:#B5AFAF;margin: auto;font-size: 15px;" class="leftSideMenuLable fontClass" ng-class="{ whiteBackground : $index == selectedCategory }">
+                                            <h5 style="color:#B5AFAF;margin: auto;font-size: 15px;" class="leftSideMenuLable fontClass" ng-class="{ whiteBackground : option.selectedCategory == true }">
                                                 {{option.Category | uppercase}}
                                             </h5>
                                         </div>

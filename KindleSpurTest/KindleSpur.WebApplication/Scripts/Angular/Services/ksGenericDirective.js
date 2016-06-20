@@ -100,19 +100,26 @@ app.directive('ctcRole', function ($state, serverCommunication) {
             ];
             scope.skillsArray = [];
             scope.mySelection = true;
-            scope.selectedCategory = -1;
+           // scope.selectedCategory = -1;
             scope.selectedTopic = -1;
             scope.selectedSkills = -1;
             scope.selectedCategoryValue = null;
             scope.categoryDisplay = true;
             scope.categoryClick = function (iEvent, iIndex, iCategory) {
-                scope.selectedCategory = iIndex;
+               // scope.selectedCategory = iIndex;
+                iCategory.selectedCategory == true
                 scope.categoryDisplay = false;
                 scope.selectedCategoryValue = iCategory;
                 scope.topicArray = [].concat(iCategory.Topics)
                 for (var k = 0; k < scope.topicArray.length ; k++) {
                     scope.topicArray[k].selected = false;
-                   
+                   // console.error('1')
+                    if (_category[scope.topicArray[k].Name]) {
+                        //console.error('12')
+                        scope.topicArray[k].alreadySelected = true;
+                        scope.topicSelection(iEvent, k, scope.topicArray[k]);
+                     }
+                    
                 }
                 //    scope.getTopicSkill(iCategory);
             };
@@ -120,46 +127,73 @@ app.directive('ctcRole', function ($state, serverCommunication) {
             var _updateArray = [];
             scope.topicSelection = function (iEvent, iIndex, iTopic) {
                 iEvent.stopPropagation();
+              // console.error('1')
                 if (scope.skillRequired) {
+                   // console.error('2')
                     if (!iTopic.Skills) iTopic.Skills = [];
                     for (var k = 0; k < iTopic.Skills.length ; k++) {
                         iTopic.Skills[k].selected = false;
+                        //console.error('3')
+                        if (_category[iTopic.Skills[k].Name]) {
+                            iTopic.Skills[k].alreadySelected = true;
+                            iTopic.Skills[k].selected = true;
+                        }
                     }
                 }
                 var _index = -1;
+               // console.error('4')
                 for (var k = 0; k < _updateArray.length ; k++) {
-                    if (_updateArray[k].Name == iTopic.Name)
+                    if (_updateArray[k].Name == iTopic.Name) {
                         _index = k;
+                       // console.error('5')
+                        break;
+                    }
                 }
                
                 if (iTopic.selected) {
-
+                 //   console.error('6')
                     iTopic.selected = false;
                     if (scope.skillRequired) {
                         if (iTopic.Skills.length > 0) {
-                            var _length = scope.skillsArray.length;
-                            for (var l = 0 ; l < _length;) {
-
+                            var _deleteArray = [];
+                            for (var l = 0 ; l < scope.skillsArray.length; l++) {
+                              //  console.error('11')
                                 for (var k = 0; k < iTopic.Skills.length ; k++) {
-                                    
-                                    var _indexSkill = -1;
-                                    for (var u = 0; u < _updateArray.length ; u++) {
-                                        if (_updateArray[u].Name == iTopic.Skills[u].Name)
-                                            _indexSkill = u;
+                                       // console.error('12')
+                                        var _indexSkill = -1;
+                                        for (var u = 0; u < _updateArray.length ; u++) {
+                                            if (_updateArray[u].Name == iTopic.Skills[k].Name) {
+                                                _indexSkill = u;
+                                             //   console.error('13')
+                                                break;
+                                            }
+                                        }
+                                        if (_indexSkill > -1) _updateArray.splice(_indexSkill, 1);
+
+                                        //console.error(scope.skillsArray[l].Name, iTopic.Skills[k].Name);
+                                      //  console.error(scope.skillsArray[l].Name == iTopic.Skills[k].Name);
+                                        if (scope.skillsArray[l] && scope.skillsArray[l].Name == iTopic.Skills[k].Name) {
+                                            // scope.skillsArray.splice(l, 1);
+                                            _deleteArray.push(l);
+                                          //  console.error('14')
+                                        }
+                                        //} else {
+                                        //    l++;
+                                        //}
                                     }
-                                    if (_indexSkill > -1) _updateArray.splice(_indexSkill, 1);
-                                    if (scope.skillsArray[l] && scope.skillsArray[l].Name == iTopic.Skills[k].Name) {
-                                        scope.skillsArray.splice(l, 1);
-                                        
-                                    } else {
-                                        l++;
-                                    }
+
+
+                                }
+                               // console.error(_deleteArray)
+                                _deleteArray.sort(function (a, b) { return b - a })
+                                for (var z = 0 ; z < _deleteArray.length ; z++) {
+                                    scope.skillsArray.splice(_deleteArray[z], 1);
                                 }
                             }
+                        } else {
+                            if (_index > -1) _updateArray.splice(_index, 1);
                         }
-                    } else {
-                        if (_index > -1) _updateArray.splice(_index, 1);
-                    }
+                   
                 }
                 else {
                     iTopic.selected = true;
@@ -193,6 +227,10 @@ app.directive('ctcRole', function ($state, serverCommunication) {
                 console.error(scope.categoryDisplay)
                 if (scope.categoryDisplay == true) {
                     scope.mySelection = true;
+                  //  scope.selectedCategory = -1;
+                    scope.selectedTopic = -1;
+                    scope.selectedSkills = -1;
+                    scope.selectedCategoryValue = null;
                 }
                 else {
                     scope.categoryDisplay = true;
@@ -213,6 +251,14 @@ app.directive('ctcRole', function ($state, serverCommunication) {
                             serverCommunication.sendSelectedCTSDataToServer({
                                 selectedArray: _updateArray,
                                 successCallBack: function (iObj) {
+                                    scope.mySelection = true;
+                                    scope.categoryDisplay = true;
+                                   // scope.selectedCategory = -1;
+                                    scope.selectedTopic = -1;
+                                    scope.selectedSkills = -1;
+                                    scope.selectedCategoryValue = null;
+                                    scope.init();
+
                                     console.error('In successCallBack', iObj);
                                 },
                                 failureCallBack: function (iObj) {
@@ -264,6 +310,13 @@ app.directive('ctcRole', function ($state, serverCommunication) {
                         var _data = JSON.parse(iObj.data);
                         console.error(_data)
                         scope.catogoryArray = [].concat(_data);
+                        for (var k = 0; k < scope.catogoryArray.length ; k++) {
+                            if (_category[scope.catogoryArray[k].Category]) {
+                                scope.catogoryArray[k].selectedCategory = true;
+                                scope.catogoryArray[k].alreadySelected = true;
+                            }
+                        }
+                        
                     },
                     failureCallBack: function (iObj) {
                         console.error('In failureCallBack', iObj);
@@ -271,12 +324,73 @@ app.directive('ctcRole', function ($state, serverCommunication) {
                     }
                 });
             };
-
+            var _category = {};
+            var _categoryArray = [];
+            var _topicArray = [];
+            var _skillsArray = [];
             scope.init = function () {
+                scope.ctsDataForMolecule = null;
                 serverCommunication.getMySelection({
                     successCallBack: function (iObj) {
                         console.error('In getMySelection', iObj);
+                        _category = {};
+                        _categoryArray = [];
+                        _topicArray = [];
+                        _skillsArray = [];
+                        if (iObj.data && iObj.data.Categories && iObj.data.Categories.length > 0) {
+                            for (var k = 0; k < iObj.data.Categories.length ; k++) {
+                                if(Object.keys(iObj.data.Categories[k]).length > 0 ){
+                                    if (iObj.data.Categories[k].Category) {
+                                        if (_category[iObj.data.Categories[k].Category]) {
+                                            
+                                        } else {
+                                              _category[iObj.data.Categories[k].Category]  = { Name : iObj.data.Categories[k].Category };
+                                              _categoryArray.push(_category[iObj.data.Categories[k].Category]);
+                                        }
+                                  
+
+                                    }
+
+                                    if (iObj.data.Categories[k].Topic) {
+                                        if (_category[iObj.data.Categories[k].Topic]) {
+
+                                        } else {
+                                            _category[iObj.data.Categories[k].Topic] = { Name: iObj.data.Categories[k].Topic };
+                                            _topicArray.push(_category[iObj.data.Categories[k].Topic]);
+                                        }
+                                    }
+
+                                    if (iObj.data.Categories[k].Skill) {
+                                        if (_category[iObj.data.Categories[k].Skill]) {
+
+                                        } else {
+                                            _category[iObj.data.Categories[k].Skill] = { Name: iObj.data.Categories[k].Skill };
+                                            _skillsArray.push(_category[iObj.data.Categories[k].Skill]);
+                                        }
+                                    }
+                                     
+                                }
+                            }
+                        }
+                        console.error('In getMySelection', _category, _categoryArray, _topicArray, _skillsArray);
+                        var _array = [];
                         
+                        for(var _key in _category){
+                            _array.push({
+                                "symbol": _key,
+                                "size": 25,
+                                "id": "d83f4a48-2a50-49b1-9dc3-873363a541a3"+_key,
+                                "bonds": 1
+                            });
+                        }
+                         var _retu = {
+                                  "3-iodo-3-methylhexan-1,4-diamine": {
+                                      "nodes": _array,
+                                      "links": []
+                                    }
+                         }
+                         console.error(_retu)
+                         scope.ctsDataForMolecule = _retu
                     },
                     failureCallBack: function (iObj) {
                         console.error('In failuregetMySelectionCallBack', iObj);
@@ -327,7 +441,7 @@ app.factory('commonFunction', function ($http) {
 app.directive('moleculeMap', function ($rootScope) {
     return {
         scope: {
-
+            ctsData : "="
         },
         template: '<div id="moleculeDisplay" style="float:left;width : 100%;height:100%;"></div>',// template will be different
         restrict: 'EAC',
@@ -418,335 +532,10 @@ app.directive('moleculeMap', function ($rootScope) {
             window.loadMoleculeExample = function () {
                 newMoleculeSimulation(moleculeExamples, $('#moleculeExample').val().trim());
             };
-
+            console.error($scope)
             var _func = function () {
-                var _retu = {
-                    "3-iodo-3-methylhexan-1,4-diamine": {
-                        "nodes": [
-           {
-               "symbol": "H",
-               "size": 1,
-               "id": "3d79d3f2-65de-4cf8-a4fa-a66c89a64088",
-               "bonds": 1
-           },
-           {
-               "symbol": "H",
-               "size": 1,
-               "id": "d83f4a48-2a50-49b1-9dc3-873363a541a3",
-               "bonds": 1
-           },
-           {
-               "symbol": "N",
-               "size": 12,
-               "id": "d7540a37-50e9-4480-8381-e48d483208a1",
-               "bonds": 1
-           },
-           {
-               "symbol": "H",
-               "size": 1,
-               "id": "5430831b-5b97-4e3c-9b7a-c60e6678529a",
-               "bonds": 1
-           },
-           {
-               "symbol": "H",
-               "size": 1,
-               "id": "dbafd0eb-0395-426b-80da-431ee69fcb50",
-               "bonds": 1
-           },
-           {
-               "symbol": "N",
-               "size": 12,
-               "id": "04c26f7d-7877-4c39-8e3c-0f506394dae8",
-               "bonds": 1
-           },
-           {
-               "symbol": "H",
-               "size": 1,
-               "id": "bd2f9ef7-a49f-4068-91d6-72b0c7429999",
-               "bonds": 1
-           },
-           {
-               "symbol": "H",
-               "size": 1,
-               "id": "cf58c989-81e5-440a-8e8c-8ea31ad0f80a",
-               "bonds": 1
-           },
-           {
-               "symbol": "H",
-               "size": 1,
-               "id": "4ade5fa8-8309-4fe3-b7a1-facf25e82eed",
-               "bonds": 1
-           },
-           {
-               "symbol": "H",
-               "size": 1,
-               "id": "9b4f6f12-bc0f-4712-a8ea-82a04eeaef63",
-               "bonds": 1
-           },
-           {
-               "symbol": "H",
-               "size": 1,
-               "id": "eb9d0238-f82a-4358-b08a-e15503bf6083",
-               "bonds": 1
-           },
-           {
-               "symbol": "C",
-               "size": 12,
-               "id": "1f0382d7-f288-4d97-8e77-25bcaa5e5785",
-               "bonds": 1
-           },
-           {
-               "symbol": "H",
-               "size": 1,
-               "id": "268b7540-fe82-4fb5-b844-b3acf2e275fd",
-               "bonds": 1
-           },
-           {
-               "symbol": "H",
-               "size": 1,
-               "id": "c99c22c3-d438-41c3-adde-54c85cce8224",
-               "bonds": 1
-           },
-           {
-               "symbol": "C",
-               "size": 12,
-               "id": "634581f9-2921-44b6-9931-b456b107a80c",
-               "bonds": 2
-           },
-           {
-               "symbol": "I",
-               "size": 12,
-               "id": "f99fd75b-82d9-405c-955e-4cacaceff591",
-               "bonds": 1
-           },
-           {
-               "symbol": "H",
-               "size": 1,
-               "id": "0a5db525-d856-4ef8-ba3b-4c552386bbca",
-               "bonds": 1
-           },
-           {
-               "symbol": "C",
-               "size": 12,
-               "id": "e9fb1029-63ad-4cbb-89e1-45338a560b85",
-               "bonds": 3
-           },
-           {
-               "symbol": "H",
-               "size": 1,
-               "id": "fbd61a8c-56ff-49fe-b749-89819a760823",
-               "bonds": 1
-           },
-           {
-               "symbol": "H",
-               "size": 1,
-               "id": "26a4131d-5fff-42f1-9939-5c63445a51ea",
-               "bonds": 1
-           },
-           {
-               "symbol": "H",
-               "size": 1,
-               "id": "a19b42cd-0e41-47a3-a596-efc2f00137c3",
-               "bonds": 1
-           },
-           {
-               "symbol": "C",
-               "size": 12,
-               "id": "b846b84a-7432-4f5d-b3ee-0ad524178f00",
-               "bonds": 1
-           },
-           {
-               "symbol": "H",
-               "size": 1,
-               "id": "c732798b-4daf-4d3a-8f1a-46c2f394eed2",
-               "bonds": 1
-           },
-           {
-               "symbol": "H",
-               "size": 1,
-               "id": 5,
-               "bonds": 1
-           },
-           {
-               "symbol": "C",
-               "size": 12,
-               "id": 3,
-               "bonds": 2
-           },
-           {
-               "symbol": "C",
-               "size": 12,
-               "id": 2,
-               "bonds": 2
-           },
-           {
-               "symbol": "C",
-               "size": 12,
-               "id": 1,
-               "bonds": 4
-           }
-                        ],
-                        "links": [
-                            {
-                                "source": 2,
-                                "target": 17,
-                                "id": "1567c53b-bfda-4d43-83dc-984ba6e2fdf6",
-                                "bondType": 1
-                            },
-                            {
-                                "source": 2,
-                                "target": 0,
-                                "id": "b2f92ef9-04bf-459f-885d-d7bded5c427f",
-                                "bondType": 1
-                            },
-                            {
-                                "source": 2,
-                                "target": 1,
-                                "id": "52678c9d-940d-40c2-82ce-0c8222a9dc46",
-                                "bondType": 1
-                            },
-                            {
-                                "source": 5,
-                                "target": 24,
-                                "id": "aaaec74a-f54a-4318-81c5-858e590b3d83",
-                                "bondType": 1
-                            },
-                            {
-                                "source": 5,
-                                "target": 3,
-                                "id": "38477ce0-8fc9-432a-8244-8d35cdb24df9",
-                                "bondType": 1
-                            },
-                            {
-                                "source": 5,
-                                "target": 4,
-                                "id": "e661cc3a-c89f-46bf-9c36-83b4618d193e",
-                                "bondType": 1
-                            },
-                            {
-                                "source": 24,
-                                "target": 6,
-                                "id": "c02b9262-923c-4ef2-b17e-aaa59a9327ae",
-                                "bondType": 1
-                            },
-                            {
-                                "source": 24,
-                                "target": 7,
-                                "id": "b6735688-82f7-4ab5-a210-c7b13427a5e2",
-                                "bondType": 1
-                            },
-                            {
-                                "source": 11,
-                                "target": 14,
-                                "id": "c1ceb693-3106-4d07-8164-309db8c5c230",
-                                "bondType": 1
-                            },
-                            {
-                                "source": 11,
-                                "target": 8,
-                                "id": "ed79fd9d-46ff-4183-8a20-e08f4d91f4c1",
-                                "bondType": 1
-                            },
-                            {
-                                "source": 11,
-                                "target": 9,
-                                "id": "172bed61-5fcc-4f15-a075-fd1d1556c228",
-                                "bondType": 1
-                            },
-                            {
-                                "source": 11,
-                                "target": 10,
-                                "id": "30deb8a1-d700-4c74-9955-640db0410534",
-                                "bondType": 1
-                            },
-                            {
-                                "source": 14,
-                                "target": 17,
-                                "id": "fdae62ac-6277-47c0-a650-14d17a84aeab",
-                                "bondType": 1
-                            },
-                            {
-                                "source": 14,
-                                "target": 12,
-                                "id": "40c3cacd-e44e-40ee-8222-e6995c7dd94b",
-                                "bondType": 1
-                            },
-                            {
-                                "source": 14,
-                                "target": 13,
-                                "id": "109bd1f4-3bc1-4537-b2b6-2679047a463f",
-                                "bondType": 1
-                            },
-                            {
-                                "source": 15,
-                                "target": 26,
-                                "id": "7fdaa31b-010b-4673-9959-7d6fa6201da5",
-                                "bondType": 1
-                            },
-                            {
-                                "source": 17,
-                                "target": 26,
-                                "id": "497eb54e-9162-4180-bfd4-ca602256d166",
-                                "bondType": 1
-                            },
-                            {
-                                "source": 17,
-                                "target": 16,
-                                "id": "6b9a64fa-36fe-4cf8-9b89-1d2fd1f7a084",
-                                "bondType": 1
-                            },
-                            {
-                                "source": 21,
-                                "target": 26,
-                                "id": "3713c73f-c9ac-4159-82bb-38beb402be40",
-                                "bondType": 1
-                            },
-                            {
-                                "source": 21,
-                                "target": 18,
-                                "id": "470461f1-5acc-4e3e-808c-622991faf8b0",
-                                "bondType": 1
-                            },
-                            {
-                                "source": 21,
-                                "target": 19,
-                                "id": "8f8848f9-4d89-447b-9ff1-c1a76922a3af",
-                                "bondType": 1
-                            },
-                            {
-                                "source": 21,
-                                "target": 20,
-                                "id": "b060103e-624e-48db-82f3-670d37ade5d6",
-                                "bondType": 1
-                            },
-                            {
-                                "source": 25,
-                                "target": 22,
-                                "id": "907984f1-a3fd-44d7-ad1e-597313f81069",
-                                "bondType": 1
-                            },
-                            {
-                                "source": 25,
-                                "target": 23,
-                                "id": 26,
-                                "bondType": 1
-                            },
-                            {
-                                "source": 25,
-                                "target": 24,
-                                "id": 22,
-                                "bondType": 1
-                            },
-                            {
-                                "source": 26,
-                                "target": 25,
-                                "id": 21,
-                                "bondType": 1
-                            }
-                        ]
-                    }
-                }
-                return _retu
+                
+                return $scope.ctsData
             };
 
             moleculeExamples = _func();
