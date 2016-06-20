@@ -1,5 +1,6 @@
 ﻿using KindleSpur.Data;
 using KindleSpur.Models.Interfaces;
+using MongoDB.Bson;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,6 +26,27 @@ namespace KindleSpur.WebApplication.Controllers
             _mentorRepo.AddNewCoachOrMentor(_obj);
 
             return true;
+        }
+
+        public string GetTopics()
+        {
+
+            CoachOrMentorRepository _coachRepo = new CoachOrMentorRepository();
+            string UserId = ((IUser)Session["User"]).EmailAddress;
+
+            List<string> topics = _coachRepo.GetTopicsForMentor(UserId);
+            CTSRepository _ctsRepo = new CTSRepository();
+            BsonDocument doc = new BsonDocument();
+            BsonArray arr = new BsonArray();
+            foreach (string topic in topics)
+            {
+
+                BsonDocument result = _ctsRepo.GetMentorCategory(topic);
+                arr.Add(result);
+
+            }
+            doc.Add("Categories", arr);
+            return doc.ToJson();
         }
     }
 }
