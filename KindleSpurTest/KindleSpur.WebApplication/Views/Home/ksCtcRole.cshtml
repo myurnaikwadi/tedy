@@ -41,7 +41,7 @@
                                         </div>
 
                                         <div class="topicsList" ng-repeat="topic in topicArray" ng-click="topicSelection($event,$index,topic)">
-                                           <div class="topicsListParent fontClass"  ng-class="{ coachThemeColor : topic.selected == true && skillRequired == false && role == 'coach' ,mentorThemeColor : topic.selected == true && skillRequired == false && role == 'mentor' }">
+                                           <div class="topicsListParent fontClass"  ng-class="{ coachThemeColor : topic.selected == true && role == 'coach' ,mentorThemeColor : topic.selected == true && role == 'mentor' }">
                                                <div ng-show="skillRequired == false || (skillRequired == false && topic.selected == true)" style="float:left;display: flex;height: 100%;" title="{{(topic.profiLevel == 0 ? 'Basic' : (topic.profiLevel == 1 ? 'Intermediate' : 'Expert') )}}" ng-class="{ zeroBackground : topic.profiLevel == 0 && role == 'coach' , fiftyBackground : topic.profiLevel == 1 && role == 'coach', hundredBackground  : topic.profiLevel == 2 && role == 'coach' ,zeroBackgroundMentor : topic.profiLevel == 0 && role == 'mentor' , fiftyBackgroundMentor : topic.profiLevel == 1 && role == 'mentor', hundredBackgroundMentor  : topic.profiLevel == 2 && role == 'mentor' }" >
                                                    <h5 ng-class="{ whiteBackground : skillRequired == false && topic.selected == true }" style="float:left;margin: auto 5px;font-size: 11px;"> {{topic.Name | uppercase}}</h5>
                                                </div>
