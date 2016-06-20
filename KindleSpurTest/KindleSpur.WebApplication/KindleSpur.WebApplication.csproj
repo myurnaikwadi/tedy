@@ -265,6 +265,7 @@
     <Content Include="Images\edit_Icon.png" />
     <Content Include="Images\linkedIn.jpg" />
     <Content Include="Images\linkedin_square_gray.png" />
+    <Content Include="Images\loginLanding.jpg" />
     <Content Include="Images\save.png" />
     <Content Include="Scripts\ai.0.15.0-build58334.js" />
     <Content Include="Scripts\ai.0.15.0-build58334.min.js" />

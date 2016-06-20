@@ -347,8 +347,6 @@ app.directive('ctcRole', function ($state, serverCommunication) {
                                               _category[iObj.data.Categories[k].Category]  = { Name : iObj.data.Categories[k].Category };
                                               _categoryArray.push(_category[iObj.data.Categories[k].Category]);
                                         }
-                                  
-
                                     }
 
                                     if (iObj.data.Categories[k].Topic) {

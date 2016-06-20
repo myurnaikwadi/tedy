@@ -25,7 +25,7 @@
                                       <input class="inputTagStyle fontClass" style="width: 94%;" type="text" ng-class="{ invalidEmailNotify : emailValidate == false}"  focus-me set-Focus="false" blur="checkEmailFormat()" ng-model="signupDetails.EmailAddress" placeholder="E-MAIL ID" ng-required />
                                   </div>
                                   <div class="formDetails">
-                                      <button type="button" class="signupButton fontClass btn btn-default" ng-click="signupClick()">SIGNUP</button>
+                                      <button type="button" style="width: 70px;height: 30px;" class="signupButton fontClass btn btn-default" ng-click="signupClick()">SIGNUP</button>
                                   </div>
                               </form>
                           </div>
@@ -39,14 +39,14 @@
                                       <input type="password" class="inputTagStyle fontClass" style="width: 94%;" ng-model="loginDetails.password" placeholder="PASSWORD" ng-required />
                                   </div>
                                   <div class="formDetails">
-                                      <button type="button" class="signupButton fontClass btn btn-default" ng-click="loginClick()">SUBMIT</button>
-                                      <h5 class="forgotPassword fontClass">FORGOT PASSOWORD</h5>
+                                      <button type="button" style="width: 70px;height: 30px;" class="signupButton fontClass btn btn-default" ng-click="loginClick()">SUBMIT</button>
+                                      <h5 class="forgotPassword fontClass" style="margin: 10px;">FORGOT PASSOWORD</h5>
                                   </div>
                               </form>
                           </div>
                           <div class="signInWith" id="appBody">
-                              <h4 class="signInWithLabel fontClass">SIGN IN WITH</h4>
-                              <script type="in/Login"></script>
+                              @*<h4 class="signInWithLabel fontClass">SIGN IN WITH</h4>*@
+                              <script class="signInWithLabel" type="in/Login"></script>
                           </div>
                           <div class="signInWithTerms">
                               <p class="fontClass">
