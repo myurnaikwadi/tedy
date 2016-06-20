@@ -143,9 +143,9 @@ app.directive('ctcRole', function ($state, serverCommunication) {
                                 for (var k = 0; k < iTopic.Skills.length ; k++) {
                                     
                                     var _indexSkill = -1;
-                                    for (var k = 0; k < _updateArray.length ; k++) {
-                                        if (_updateArray[k].Name == iTopic.Skills[k].Name)
-                                            _indexSkill = k;
+                                    for (var u = 0; u < _updateArray.length ; u++) {
+                                        if (_updateArray[u].Name == iTopic.Skills[u].Name)
+                                            _indexSkill = u;
                                     }
                                     if (_indexSkill > -1) _updateArray.splice(_indexSkill, 1);
                                     if (scope.skillsArray[l] && scope.skillsArray[l].Name == iTopic.Skills[k].Name) {
