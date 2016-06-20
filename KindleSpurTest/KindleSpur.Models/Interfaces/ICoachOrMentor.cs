@@ -16,10 +16,9 @@ namespace KindleSpur.Models.Interfaces
         }
         string AdditionalRef { get; set; }
          string UserId { get; set; }
-         List<String> Skills { get; set; }
+         List<Skill> Skills { get; set; }
          List<String> Topics { get; set; }
         decimal Experience { get; set; }
-         string Proficiency { get; set; } 
          string Language { get; set; }
          Boolean Published { get; set; }
          string Role { get; set; }
