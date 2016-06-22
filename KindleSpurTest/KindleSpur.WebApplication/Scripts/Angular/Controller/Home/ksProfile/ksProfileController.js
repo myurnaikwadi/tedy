@@ -21,7 +21,7 @@
         };
 
     };
-
+     
     $scope.editskills = function (iProfile) {
        // $scope.selectedMenu = true;
         $state.go('dashBoardCoach',{ param: 'test' });

@@ -1,5 +1,5 @@
 ﻿app.controller('ksDashBoardCoachController', function ($scope,serverCommunication,$stateParams) {
-    console.error($stateParams)
+    console.error($stateParams) 
     $scope.passedData = $stateParams;
     $scope.notifications = [
 

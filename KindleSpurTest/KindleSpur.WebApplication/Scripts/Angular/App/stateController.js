@@ -28,6 +28,7 @@ app.config(['$stateProvider', '$urlRouterProvider','$locationProvider',function(
         url: '/password/:userId',
         templateUrl: '/User/PasswordPromp',
     })
+
 	.state('ksUserDashBoard', {
 	    url: '/ksUserDashBoard',
 	    templateUrl: '/Home/ksUserDashBoard',
