@@ -129,6 +129,8 @@ display: flex;
     margin: auto auto;
     border: 1px solid;
     display: flex;
+    background-image: url('~/Images/default-user.png');
+  
 }
 .userNameProfile{
 float: left;

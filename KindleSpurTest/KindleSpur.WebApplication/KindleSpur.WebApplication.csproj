@@ -262,6 +262,7 @@
     <Content Include="Images\addBold.png" />
     <Content Include="Images\camera.png" />
     <Content Include="Images\cancel.png" />
+    <Content Include="Images\default-user.png" />
     <Content Include="Images\edit_Icon.png" />
     <Content Include="Images\linkedIn.jpg" />
     <Content Include="Images\linkedin_square_gray.png" />
