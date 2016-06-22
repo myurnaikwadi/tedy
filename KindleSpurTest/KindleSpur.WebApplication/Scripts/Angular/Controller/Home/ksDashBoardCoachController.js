@@ -1,4 +1,6 @@
-﻿app.controller('ksDashBoardCoachController', function ($scope,serverCommunication) {
+﻿app.controller('ksDashBoardCoachController', function ($scope,serverCommunication,$stateParams) {
+    console.error($stateParams)
+    $scope.passedData = $stateParams;
     $scope.notifications = [
 
                 { notificationType: '1', name: 'YOU HAVE COACHING INVITE  FROM', assignPerson: 'HARSHADA D.' },
@@ -23,7 +25,7 @@
                 { name: 'BRAIN GAMES' },
                 { name: 'RESOURCES' }
     ];
-    $scope.selectedMenu = '0';
+  
     $scope.menuClick = function (iIndex, iOption) {
         $scope.selectedMenu = iIndex;
         //switch (iIndex) {
@@ -32,17 +34,24 @@
     };
 
     $scope.init = function () {
+        console.error( $scope.passedData)
+        if( $scope.passedData &&  $scope.passedData.param){
 
+            $scope.selectedMenu = '6';
+        }else{
+            $scope.selectedMenu = '0';
             serverCommunication.getCoachData({
-		        successCallBack: function () {
-		            console.error('In successCallBack');
+                successCallBack: function () {
+                    console.error('In successCallBack');
 
-		        },
-		        failureCallBack: function () {
-		            console.error('In failureCallBack');
+                },
+                failureCallBack: function () {
+                    console.error('In failureCallBack');
 
-		        }
-		    });
+                }
+            });
+        }
+            
 	};
 	$scope.init();
 });

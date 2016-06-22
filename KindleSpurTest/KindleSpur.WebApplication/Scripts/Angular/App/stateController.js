@@ -33,7 +33,7 @@ app.config(['$stateProvider', '$urlRouterProvider','$locationProvider',function(
 	    templateUrl: '/Home/ksUserDashBoard',
 	})
     .state('dashBoardCoach', {
-        url: '/coachDashboard',
+        url: '/coachDashboard/:param',
 	    templateUrl: '/Home/ksDashBoardCoach',
 	})
     .state('dashBoardCoachee', {

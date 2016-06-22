@@ -279,6 +279,7 @@
     <Content Include="Scripts\Angular\Controller\Home\ksDashBoardMentorController.js" />
     <Content Include="Scripts\Angular\Controller\Home\ksProfile\ksProfileController.js" />
     <Content Include="Scripts\Angular\Services\ksGenericDirective.js" />
+    <Content Include="Scripts\Angular\Services\msIsotope.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\css\ksDashBoardMentorController.js" />

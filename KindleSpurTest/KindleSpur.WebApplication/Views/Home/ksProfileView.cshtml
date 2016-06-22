@@ -91,10 +91,15 @@
                     <div class="descriptionLabel">
                         <div class="descriptionLabelParent">
                             <h5 class="descHeading">Skills</h5>
-                            <img style="width: 15px;float: left;height: 15px;background: white;margin: auto 0;margin-left: 1%;" src="~/Images/edit_Icon.png">
+                            <img ng-click="editskills()" style="width: 15px;float: left;height: 15px;background: white;margin: auto 0;margin-left: 1%;" src="~/Images/edit_Icon.png">
                         </div>
                     </div>
                     <div class="skillParent">
+                        <div class="topicsList" ng-repeat="topic in topicArray">
+                            <div class="topicsListParent fontClass coachThemeColor">
+                                <h5 style="float:left;margin: auto 5px;font-size: 11px;"> {{topic.Name | uppercase}}</h5>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

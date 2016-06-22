@@ -1,4 +1,4 @@
-﻿app.controller('ksProfileController', function ($scope, commonFunction, serverCommunication,$rootScope) {
+﻿app.controller('ksProfileController', function ($scope, commonFunction, serverCommunication,$rootScope,$state) {
     $scope.editModeProfile = false;
     console.error($rootScope.loggedDetail)
     $scope.myInfo = {
@@ -21,6 +21,12 @@
         };
 
     };
+
+    $scope.editskills = function (iProfile) {
+       // $scope.selectedMenu = true;
+        $state.go('dashBoardCoach',{ param: 'test' });
+    };
+
     $scope.triggerUpload = function (iProfile) {
         console.error('width: 42px;')
         var obj = {
@@ -88,5 +94,61 @@
         }
         serverCommunication.changeDescriptionDetails(_object);
     };
-    
+     var _category = {};
+            var _categoryArray = [];
+            var _topicArray = [];
+            var _skillsArray = [];
+    $scope.init = function () {
+        $scope.ctsDataForMolecule = null;
+        serverCommunication.getMySelection({
+            successCallBack: function (iObj) {
+                console.error('In getMySelection', iObj);
+                _category = {};
+                _categoryArray = [];
+                _topicArray = [];
+                _skillsArray = [];
+                if (iObj.data && iObj.data.Categories && iObj.data.Categories.length > 0) {
+                    for (var k = 0; k < iObj.data.Categories.length ; k++) {
+                        if (Object.keys(iObj.data.Categories[k]).length > 0) {
+                            if (iObj.data.Categories[k].Category) {
+                                if (_category[iObj.data.Categories[k].Category]) {
+
+                                } else {
+                                    _category[iObj.data.Categories[k].Category] = { Name: iObj.data.Categories[k].Category };
+                                    _categoryArray.push(_category[iObj.data.Categories[k].Category]);
+                                }
+                            }
+
+                            if (iObj.data.Categories[k].Topic) {
+                                if (_category[iObj.data.Categories[k].Topic]) {
+
+                                } else {
+                                    _category[iObj.data.Categories[k].Topic] = { Name: iObj.data.Categories[k].Topic };
+                                    _topicArray.push(_category[iObj.data.Categories[k].Topic]);
+                                }
+                            }
+
+                            if (iObj.data.Categories[k].Skill) {
+                                if (_category[iObj.data.Categories[k].Skill]) {
+
+                                } else {
+                                    _category[iObj.data.Categories[k].Skill] = { Name: iObj.data.Categories[k].Skill };
+                                    _skillsArray.push(_category[iObj.data.Categories[k].Skill]);
+                                }
+                            }
+
+                        }
+                    }
+                }
+                console.error('In getMySelection', _category, _categoryArray, _topicArray, _skillsArray);
+               
+            },
+            failureCallBack: function (iObj) {
+                console.error('In failuregetMySelectionCallBack', iObj);
+
+            }
+        });
+
+    };
+    $scope.init();
 });
