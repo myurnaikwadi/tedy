@@ -1,17 +1,7 @@
 ﻿<script src="~/Scripts/Angular/Controller/Home/ksDashBoardController.js"></script>
 <div class="parentBody" ng-controller="ksMainDashBoardController">
         <div class="applicationTopStrip">
-            <div class="applicationLogo"></div>
-            <div class="applicationSearch">
-                <input class="applicationSearchTag" type="search" placeholder="SEARCH">
-            </div>
-            <div class="applicationRightCornerStrip">
-                <div class="logoutOption">
-                    <div class="logoutOptionParent">
-                        <h5 class="fontClass genericPointerClass" ng-click="logout()">LOGOUT</h5>
-                    </div>
-                </div>
-             </div>
+            <top-Main-Strip notification="false"></top-Main-Strip>
         </div>
         <div class="applicationMiddleStripMain">
             <div class="parentRoleDashboard">

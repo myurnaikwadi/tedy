@@ -36,12 +36,19 @@ app.directive('focusMe', function ($timeout, $parse) {
 app.directive('topMainStrip', function ($state) {
     return {
         scope: {
-
+          notification :'@'
         },
         templateUrl: '/Home/ksTopMainStrip',
         //scope: true,   // optionally create a child scope
         link: function (scope, element, attrs) {
             scope.selectedRole = 0;
+            scope.notification = (scope.notification || scope.notification == false) ? scope.notification : true;
+            scope.logout = function () {
+                console.error(IN.User)
+                if (IN.User) IN.User.logout();
+                $state.go('login');
+                authentification.logout({ loginObject: {} });
+            };
             scope.navigateAsPerRole = function (iRole) {
                 console.error(iRole);
                 scope.selectedRole = iRole;
