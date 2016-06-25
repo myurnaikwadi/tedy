@@ -132,6 +132,15 @@ app.factory('serverCommunication', function ($http) {
           * @date : 10/06/2016
           * @Purpose : get category as per role
           */
+         getMyMentorSelection: function (iObj) {
+             console.error(iObj)
+             $http.get('/Mentor/GetTopics').then(iObj.successCallBack, iObj.failureCallBack);
+         },
+        /**
+          * @auther : MKN
+          * @date : 10/06/2016
+          * @Purpose : get category as per role
+          */
         getCategorys: function (iObj) {
             console.error(iObj)
             $http.get('/api/CTS').then(iObj.successCallBack, iObj.failureCallBack);

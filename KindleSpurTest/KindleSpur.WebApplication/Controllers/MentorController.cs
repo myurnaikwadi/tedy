@@ -1,4 +1,5 @@
 ﻿using KindleSpur.Data;
+using KindleSpur.Models;
 using KindleSpur.Models.Interfaces;
 using MongoDB.Bson;
 using System;
@@ -12,7 +13,7 @@ namespace KindleSpur.WebApplication.Controllers
     public class MentorController : Controller
     {
         [HttpPost]
-        public Boolean SaveTopics(List<string> selectedArray)
+        public Boolean SaveTopics(List<Skill> selectedArray)
         {
             CoachOrMentorRepository _mentorRepo = new CoachOrMentorRepository();
 
@@ -21,7 +22,9 @@ namespace KindleSpur.WebApplication.Controllers
             _obj.Role = "Mentor";
             _obj.CreateDate = _obj.UpdateDate = DateTime.Now;
             if (_obj.Topics == null) _obj.Topics = new List<string>();
-            _obj.Topics.AddRange(selectedArray);
+
+            var topicsList = selectedArray.Select(x => x.Name).ToList();
+           _obj.Topics.AddRange(topicsList);
 
             _mentorRepo.AddNewCoachOrMentor(_obj);
 
