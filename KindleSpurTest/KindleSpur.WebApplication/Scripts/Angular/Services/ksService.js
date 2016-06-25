@@ -29,38 +29,40 @@
             $http.post('/User/Login', iObj.signupObject).then(iObj.successCallBack, iObj.failureCallBack);
         },
 
-        /**
-         * @auther : SVH
-         * @date : 26/06/2016
-         * @Purpose : forgotPassword click function - send credienal to verify details
-         */
-        forgotPassword: function (iObj) {
-            console.error(iObj)
-            $http.post('/User/Login', iObj.signupObject).then(iObj.successCallBack, iObj.failureCallBack);
-        },
+         ///*** @auther : SVH * @date : 07/05/2016 */
+         //forgotPassword: function (iObj) {
+         //    console.error(iObj)
+         //    $http.post('/User/ForgotPasswordEmail', iObj.signupObject).then(iObj.successCallBack, iObj.failureCallBack);
+         //},
 
-        savePassword: function (iObj) {
-            console.error(iObj)
-            $http.post('/User/SavePassword', iObj.signupObject).then(iObj.successCallBack, iObj.failureCallBack);
-        },
+         savePassword: function (iObj) {
+             console.error(iObj)
+             $http.post('/User/SavePassword', iObj.signupObject).then(iObj.successCallBack, iObj.failureCallBack);
+         },
 
-        linkedInClick: function (iObj) {
-            console.error(iObj)
-            var _obj = {
-                FirstName: iObj.loginObject.firstName,
-                LastName: iObj.loginObject.lastName,
-                img: iObj.loginObject.pictureUrl,
-                publicUrl: iObj.loginObject.publicProfileUrl,
-                EmailAddress: iObj.loginObject.emailAddress,
-                IsExternalAuthentication: true
-            }
-            $http.post('/User/linkedIn', _obj).then(iObj.successCallBack, iObj.failureCallBack);
-        },
+         verifyEmailAddress: function (iObj) {
+             console.error(iObj)
+             $http.post('/User/ForgotPasswordEmail', iObj.signupObject).then(iObj.successCallBack, iObj.failureCallBack);
+         },
 
-        logout: function (iObj) {
-            $http.post('/User/logout', iObj.loginObject).then(iObj.successCallBack, iObj.failureCallBack);
-        },
-    }
+         
+         linkedInClick: function (iObj) {
+             console.error(iObj)
+             var _obj = {
+                 FirstName: iObj.loginObject.firstName,
+                 LastName: iObj.loginObject.lastName,
+                 img: iObj.loginObject.pictureUrl,
+                 publicUrl: iObj.loginObject.publicProfileUrl,
+                 EmailAddress: iObj.loginObject.emailAddress,
+                 IsExternalAuthentication: true
+             }
+             $http.post('/User/linkedIn', _obj).then(iObj.successCallBack, iObj.failureCallBack);
+         },
+         logout: function (iObj) {
+             $http.post('/User/logout', iObj.loginObject).then(iObj.successCallBack, iObj.failureCallBack);
+         },
+
+     }
 });
 
 
@@ -126,7 +128,19 @@ app.factory('serverCommunication', function ($http) {
          getMySelection: function (iObj) {
                 console.error(iObj)
                 $http.get('/Coach/GetCTS').then(iObj.successCallBack, iObj.failureCallBack);
-         },
+        },
+
+        /**
+   * @auther : MKN
+   * @date : 10/06/2016
+   * @Purpose : get category as per role
+   */
+        getMyMentorSelection: function (iObj) {
+            console.error(iObj)
+            $http.get('/Mentor/GetTopics').then(iObj.successCallBack, iObj.failureCallBack);
+        },
+
+        
         /**
           * @auther : MKN
           * @date : 10/06/2016
