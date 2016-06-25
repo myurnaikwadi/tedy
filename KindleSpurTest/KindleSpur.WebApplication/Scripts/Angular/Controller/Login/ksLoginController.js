@@ -31,8 +31,6 @@ app.controller('ksLoginController', ['$scope', 'authentification', '$location', 
  	    } else {
  	        $scope.emailValidate = false;
  	    }
-
-
  	};
  	//$scope.hideCancelButton = false;
  	//if (window.location.href.indexOf('passwordPrompt') > -1) {
@@ -49,7 +47,8 @@ app.controller('ksLoginController', ['$scope', 'authentification', '$location', 
  	    console.error('In _successCallBack', iObject);
  	  //  window.$cookieStore = $cookieStore
  	    var _userDetails = _getMyDetailsFromCookies();
- 	    $rootScope.loggedDetail = _userDetails;
+        if(_userDetails)
+ 	        $rootScope.loggedDetail = _userDetails;
  	    $state.go('ksUserDashBoard');
  	};
  	var _successPasswordCallBack = function (iObj) {
@@ -97,11 +96,10 @@ app.controller('ksLoginController', ['$scope', 'authentification', '$location', 
       * @Purpose : signup function  - send data to auth factory to send data to server.
       */
  	$scope.loginClick = function () {
- 	  
- 	  //  $state.go('ksUserDashBoard');
-       // return
+ 	    //$state.go('ksUserDashBoard');
+        //return
  	    if ($scope.loginDetails.emailAddress == '' || $scope.loginDetails.password == '') {
- 	        alert('Please enter emailAddress or  Password')
+ 	        alert('Please enter emailAddress or Password')
  	        return
  	    }
 
@@ -162,8 +160,6 @@ app.controller('ksLoginController', ['$scope', 'authentification', '$location', 
  	        alert('Please enter Email address')
  	        return
  	    }
- 	        
-
  		var _object = {
  		    FirstName: $scope.signupDetails.FirstName,
  		    LastName: $scope.signupDetails.LastName,
@@ -172,20 +168,16 @@ app.controller('ksLoginController', ['$scope', 'authentification', '$location', 
  		authentification.signup({ signupObject: _object, successCallBack: _successCallBack, failureCallBack: _failureLoginCallBack });
  	};
 
-    /**
-     * @auther : SVH
-     * @date : 26/06/2016
-     * @Purpose : forgot password function  
-     */
+    /*SVH 26-06-2016*/
  	$scope.forgotPasswordClick = function () {
- 	    if ($scope.signupDetails.EmailAddress == '') {
- 	            alert('Please enter Email address.')
- 	        }
- 	    return
- 	    var _object = {
- 	        EmailAddress: $scope.signupDetails.EmailAddress,
+ 	    if ($scope.loginDetails.emailAddress == '') {
+ 	        alert('Please enter emailAddress')
+ 	        return
  	    }
- 	    authentification.forgotPassword({ signupObject: _object, successCallBack: _successCallBack, failureCallBack: _failureLoginCallBack });
+ 		var _object = {
+ 		    EmailAddress: $scope.loginDetails.EmailAddress
+ 		}
+ 		authentification.forgotPassword({ signupObject: _object, successCallBack: _successCallBack, failureCallBack: _failureLoginCallBack });
  	};
 
  	$scope.getLinkedInData = function () {
@@ -193,12 +185,20 @@ app.controller('ksLoginController', ['$scope', 'authentification', '$location', 
  	    if (!$scope.hasOwnProperty("userprofile")) {
  	        IN.API.Profile("me").fields(
 					["id", "firstName", "lastName", "pictureUrl",
-							"publicProfileUrl", "email-address"]).result(function (result) {
+							"publicProfileUrl", "email-address",'summary']).result(function (result) {
 							    console.error(result);
 							    // set the model
 							    $rootScope.$apply(function () {
-							        var userprofile = result.values[0]
-							        authentification.linkedInClick({ loginObject: userprofile, successCallBack: _successLoginCallBack, failureCallBack: _failureLoginCallBack });
+							        var userprofile = result.values[0];
+							        $rootScope.loggedDetail = {};
+							        $rootScope.loggedDetail.FirstName = userprofile.firstName;
+							        $rootScope.loggedDetail.LastName = userprofile.lastName;
+							        $rootScope.loggedDetail.Photo = userprofile.pictureUrl;
+							        $rootScope.loggedDetail.publicProfileUrl = userprofile.publicProfileUrl;
+							        $rootScope.loggedDetail.EmailAddress = userprofile.emailAddress;
+							        $rootScope.loggedDetail.LinkdinURL = userprofile.id;
+							        authentification.linkedInClick({ loginObject: $rootScope.loggedDetail, successCallBack: _successLoginCallBack, failureCallBack: _failureLoginCallBack
+							    });
 							        //go to main
 							        //  $location.path("/main");
 							    });

@@ -9,6 +9,8 @@ using KindleSpur.Data;
 using System.Net.Mail;
 using KindleSpur.WebApplication.MessageHelper;
 using System.Web.Script.Serialization;
+using System.IO;
+using MongoDB.Bson;
 using System.Web.UI;
 
 namespace KindleSpur.WebApplication.Controllers
@@ -120,6 +122,52 @@ namespace KindleSpur.WebApplication.Controllers
                 return null;
             }
 
+        }
+
+        // POST: api/UpdateUserDetails
+        [HttpPost]
+        public void UpdateUserDetails(User _obj)
+        {
+            UserRepository _repo = new UserRepository();
+            if (_repo.UpdateUserDetails(((IUser)System.Web.HttpContext.Current.Session["User"]).Id, _obj))
+            {
+            }
+        }
+        [HttpPost]
+        public void UpdateUserDesc(User _obj)
+        {
+            ObjectId id = ((IUser)System.Web.HttpContext.Current.Session["User"]).Id;
+            UserRepository _repo = new UserRepository();
+            if (_repo.UpdateUserDesc(((IUser)System.Web.HttpContext.Current.Session["User"]).Id, _obj))
+            {
+            }
+        }
+
+        [HttpPost]
+        public ActionResult UpdateUserPhoto(HttpPostedFileBase file)
+        {
+            UserRepository _repo = new UserRepository();
+            var allowedExtensions = new[] {
+                    ".Jpg", ".png", ".jpg", "jpeg"
+                };
+            var fileName = Path.GetFileName(file.FileName); //getting only file name(ex-ganesh.jpg)  
+            var ext = Path.GetExtension(file.FileName); //getting the extension(ex-.jpg)  
+            if (allowedExtensions.Contains(ext)) //check what type of extension  
+            {
+                string name = Path.GetFileNameWithoutExtension(fileName); //getting file name without extension  
+                string myfile = name + ext; //appending the name with id  
+                                            // store the file inside ~/project folder(Img)  
+                var path = Path.Combine(Server.MapPath("~/Img"), myfile);
+                file.SaveAs(path);
+                if (_repo.UpdateUserPhoto(((IUser)System.Web.HttpContext.Current.Session["User"]).Id, path))
+                {
+                }
+            }
+            else
+            {
+                ViewBag.message = "Please choose only Image file";
+            }
+            return View();
         }
                 
        

@@ -2,8 +2,8 @@
     $scope.editModeProfile = false;
     console.error($rootScope.loggedDetail)
     $scope.myInfo = {
-        mobileNumber : '1234567890',
-        linkedInLink: 'No link available',
+        mobileNumber: $rootScope.loggedDetail.Mobile ? $rootScope.loggedDetail.Mobile : "",
+        linkedInLink:  $rootScope.loggedDetail.LinkdinURL ? $rootScope.loggedDetail.LinkdinURL : "",
         firstName: $rootScope.loggedDetail.FirstName.toUpperCase(),
         lastName: $rootScope.loggedDetail.LastName.toUpperCase(),
         profileImage: '',
@@ -27,7 +27,7 @@
         $state.go('dashBoardCoach',{ param: 'test' });
     };
 
-    $scope.triggerUpload = function (iProfile) {
+   $scope.triggerUpload = function (iProfile) {
         console.error('width: 42px;')
         var obj = {
             fileInputId: "fileInputIdRv"
@@ -42,56 +42,63 @@
 
             console.error(valueFile)
             var _object = {
-                changeDetails: iProfile ? $scope.myInfo.profileImage :  $scope.myInfo.profileBackgroundImage,
-                successCallBack: function () {
+                file: valueFile[0],
+                    successCallBack: function () {
                     console.error('In successCallBack');
 
                 },
-                failureCallBack: function () {
+                        failureCallBack: function () {
                     console.error('In failureCallBack');
 
                 }
-            }
+                }
             serverCommunication.changeProfileImageDetails(_object);
             document.getElementById("fileInputIdRv").value = "";
             $scope.$apply();
-        });
-    };
+            });
+            };
     $scope.sendDetailsToServer = function () {
         $scope.editModeProfile = false;
         console.error($scope.myInfo)
-        if ($rootScope.FirstName == $scope.myInfo.firstName || $rootScope.LastName == $scope.myInfo.lastName) {
-            return;
-        }
-        $rootScope.FirstName = $scope.myInfo.firstName;
-        $rootScope.LastName = $scope.myInfo.lastName;
+            //if ($rootScope.loggedDetail.Mobile == $scope.myInfo.mobileNumber || $rootScope.loggedDetail.FirstName == $scope.myInfo.firstName || $rootScope.loggedDetail.LastName == $scope.myInfo.lastName) {
+            //    return;
+        //}
+        $rootScope.loggedDetail.FirstName = $scope.myInfo.firstName;
+        $rootScope.loggedDetail.LastName = $scope.myInfo.lastName;
+        $rootScope.loggedDetail.Mobile = $scope.myInfo.mobileNumber;
+        $rootScope.loggedDetail.LinkdinURL = $scope.myInfo.linkedInLink;
+
         var _object = {
-            changeDetails: $scope.myInfo,
-            successCallBack: function () {
+            changeDetails: {
+            LinkdinURL: $scope.myInfo.linkedInLink, Mobile: $scope.myInfo.mobileNumber, FirstName: $scope.myInfo.firstName, LastName: $scope.myInfo.lastName
+            },
+                successCallBack: function () {
                 console.error('In successCallBack');
 
             },
-            failureCallBack: function () {
+                    failureCallBack: function () {
                 console.error('In failureCallBack');
 
             }
         }
         serverCommunication.changeProgileDetails(_object);
     };
-    $scope.sendDescDetailsToServer = function () {
+    $scope.sendDescDetailsToServer = function() {
         $scope.editDescription = false;
         console.error($scope.myInfo)
         var _object = {
-            changeDetails: { description: $scope.myInfo.description },
-            successCallBack: function () {
+            changeDetails: {
+                    description: $scope.myInfo.description
+                    },
+                        successCallBack: function() {
                 console.error('In successCallBack');
 
             },
-            failureCallBack: function () {
+    failureCallBack : function () {
                 console.error('In failureCallBack');
 
             }
-        }
+            }
         serverCommunication.changeDescriptionDetails(_object);
     };
      var _category = {};
@@ -141,7 +148,10 @@
                     }
                 }
                 console.error('In getMySelection', _category, _categoryArray, _topicArray, _skillsArray);
-               
+                $scope.topicArray = [];
+                 $scope.topicArray =  $scope.topicArray.concat(_categoryArray);
+                 $scope.topicArray = $scope.topicArray.concat(_topicArray);
+                $scope.topicArray =  $scope.topicArray.concat(_skillsArray);
             },
             failureCallBack: function (iObj) {
                 console.error('In failuregetMySelectionCallBack', iObj);
