@@ -1,7 +1,5 @@
-﻿using System;
+﻿using MongoDB.Bson;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace KindleSpur.Models.Interfaces.Repository
 {
@@ -16,5 +14,7 @@ namespace KindleSpur.Models.Interfaces.Repository
         List<ICoachOrMentor> GetAllCoachOrMentorDetails();
 
         ICoachOrMentor GetCoachOrMentorDetail(string Id);
+
+        List<BsonDocument> GetAllCoachOrMentors(CTSFilter ctsFilter);
     }
 }

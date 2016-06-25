@@ -215,6 +215,22 @@ app.factory('serverCommunication', function ($http) {
             console.error(iObj)
             $http.post('/User/UpdateUserPhoto', iObj.file).then(iObj.successCallBack, iObj.failureCallBack);
         },
+
+        getCTSFilters: function (iObj) {
+            $http.get('/CTS/GetCTSFilters').then(iObj.successCallBack, iObj.failureCallBack)
+        },
+
+        getCoaches: function (iObj) {
+            var req = {
+                method: 'POST',
+                url: '/Coach/GetCoachs',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                data: { ctsFilter: iObj.filter }
+            }
+            $http(req).then(iObj.successCallBack, iObj.failureCallBack);
+        },
     }
 });
 
