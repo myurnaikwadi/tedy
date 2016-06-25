@@ -1,14 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using KindleSpur.Models;
 using KindleSpur.Models.Interfaces;
 using KindleSpur.Models.Interfaces.Repository;
+using MongoDB.Bson;
 using MongoDB.Driver;
 using MongoDB.Driver.Builders;
-using MongoDB.Bson;
-using KindleSpur.Models;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace KindleSpur.Data
 {
@@ -188,6 +186,36 @@ namespace KindleSpur.Data
             }
 
             return result;
+        }
+
+        public List<BsonDocument> GetAllCoachOrMentors(CTSFilter ctsFilter)
+        {
+            var coachOrMentors = _kindleDatabase.GetCollection("CoachOrMentor");
+            IQueryable<BsonDocument> coachEntities = default(IQueryable<BsonDocument>);
+            try
+            {
+                var res1 = new List<BsonDocument>();
+                if (ctsFilter.Type == FilterType.Skill)
+                {
+                    coachEntities = coachOrMentors.Find(Query.ElemMatch("Skills", Query.EQ("Name", ctsFilter.Name))).AsQueryable();
+                }
+                if (ctsFilter.Type == FilterType.Topic || !(coachOrMentors.Count() > 0))
+                    coachEntities = coachOrMentors.Find(Query.EQ("Topics", ctsFilter.Name)).AsQueryable();
+
+                if (ctsFilter.Type == FilterType.Category || !(coachOrMentors.Count() > 0))
+                {
+                    //Get Topics -> Get Skills
+                    coachEntities = new List<BsonDocument>().AsQueryable();
+                }
+               
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+
+            return coachEntities.ToList();
         }
     }
 }

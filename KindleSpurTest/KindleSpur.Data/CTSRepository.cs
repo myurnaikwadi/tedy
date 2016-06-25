@@ -1,13 +1,10 @@
-﻿using KindleSpur.Models.Interfaces.Repository;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using KindleSpur.Models;
+using KindleSpur.Models.Interfaces.Repository;
+using MongoDB.Bson;
 using MongoDB.Driver;
 using MongoDB.Driver.Builders;
-using MongoDB.Bson;
-using KindleSpur.Models;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace KindleSpur.Data
 {
@@ -75,7 +72,6 @@ namespace KindleSpur.Data
 
         }
 
-
         public List<BsonDocument> GetCategories()
         {
            
@@ -132,7 +128,6 @@ namespace KindleSpur.Data
             return _skills;
         }
 
-
         public List<BsonDocument> GetSkills(string category, string topic)
         {
             List<BsonDocument> _skills = new List<BsonDocument>();
@@ -178,7 +173,6 @@ namespace KindleSpur.Data
             return _Category;
         }
 
-
         public BsonDocument GetCoachTopicAndCategory(Skill skill)
         {
             BsonDocument _Category = new BsonDocument();
@@ -206,6 +200,46 @@ namespace KindleSpur.Data
             }
 
             return _Category;
+        }
+
+        public List<CTSFilter> GetCTSFilters()
+        {
+            List<BsonDocument> _categories = new List<BsonDocument>();
+            var filters = new List<CTSFilter>();
+
+            try
+            {
+                var _ctsCollection = _kindleDatabase.GetCollection("CTS");
+                _categories = _ctsCollection.FindAll().SetFields(Fields.Exclude("_id")).ToList();
+
+                foreach (BsonDocument category in _categories)
+                {
+                    filters.Add(new CTSFilter() { Id = category["Id"].ToString(), Name = category["Category"].ToString(), Type = FilterType.Category });
+                    if (category.Contains("Topics"))
+                    {
+                        BsonArray topics = (BsonArray)category["Topics"];
+                        foreach (BsonDocument topic in topics)
+                        {
+                            filters.Add(new CTSFilter() { Id = topic["Id"].ToString(), Name = topic["Name"].ToString(), Type = FilterType.Topic, ParentId = category["Id"].ToString() });
+                            if (topic.Contains("Skills"))
+                            {
+                                BsonArray skills = (BsonArray)topic["Skills"];
+                                foreach (BsonDocument skill in skills)
+                                {
+                                    filters.Add(new CTSFilter() { Id = skill["Id"].ToString(), Name = skill["Name"].ToString(), Type = FilterType.Skill, ParentId = topic["Id"].ToString() });
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            catch (MongoException ex)
+            {
+                _logCollection.Insert("{ Error : 'Failed at GetCategories().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ");
+                throw new MongoException("Signup failure!!!");
+            }
+
+            return filters;
         }
 
     }

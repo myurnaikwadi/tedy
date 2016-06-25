@@ -12,13 +12,12 @@ namespace KindleSpur.WebApplication.Controllers
 {
     public class CoachController : Controller
     {
+        private readonly CTSRepository _ctsRepo = new CTSRepository();
+        private readonly CoachOrMentorRepository _coachRepo = new CoachOrMentorRepository();
        
         [HttpPost]
         public Boolean SaveSkills(List<Models.Skill> selectedArray)
         {
-            CTSRepository _ctsRepo = new CTSRepository();
-            CoachOrMentorRepository _coachRepo = new CoachOrMentorRepository();
-
             KindleSpur.Models.CoachOrMentor _obj = new Models.CoachOrMentor();
             _obj.UserId = ((IUser)System.Web.HttpContext.Current.Session["User"]).EmailAddress;
             _obj.Role = "Coach";
@@ -33,8 +32,6 @@ namespace KindleSpur.WebApplication.Controllers
 
         public string GetCTS()
         {
-            
-            CoachOrMentorRepository _coachRepo = new CoachOrMentorRepository();
             string UserId = ((IUser)Session["User"]).EmailAddress;
 
             List<Skill> skills = _coachRepo.GetSkillsForCoach(UserId);
@@ -50,6 +47,12 @@ namespace KindleSpur.WebApplication.Controllers
             }
             doc.Add("Categories",arr);
             return doc.ToJson();
+        }
+
+        public ActionResult GetCoachs(CTSFilter ctsFilter)
+        {
+            var result = _coachRepo.GetAllCoachOrMentors(ctsFilter);
+            return Json(new { Coaches = result.ToString(), Success = true }, JsonRequestBehavior.AllowGet);
         }
     }
 }
