@@ -9,6 +9,7 @@ using KindleSpur.Data;
 using System.Net.Mail;
 using KindleSpur.WebApplication.MessageHelper;
 using System.Web.Script.Serialization;
+using System.Web.UI;
 
 namespace KindleSpur.WebApplication.Controllers
 {
@@ -45,16 +46,39 @@ namespace KindleSpur.WebApplication.Controllers
             return View();
         }
 
+        public ActionResult ForgotPasswordEmail()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult ForgotPasswordEmail(User signupObject)
+        {
+            UserRepository _repo = new UserRepository();
+            IUser u = _repo.GetUserDetail(signupObject.EmailAddress);
+            if (u != null)
+            {
+               
+                string uri =  Request.Url.AbsoluteUri.Replace("/User/ForgotPasswordEmail", "/User/PasswordPromp?UserId=" + u.Id);
+                EmailNotification.SendEmail(signupObject, uri);
+            }
+            else
+            {
+
+            }
+            return View();
+        }
+
         [HttpPost]
         public ActionResult SavePassword(User signupObject)
         {
             UserRepository _repo = new UserRepository();
         
             User obj= _repo.SavePassword(TempData["UserId"].ToString(), signupObject);
-
+            
             return View();
         }
-        
+
         [HttpPost]
         public ActionResult linkedIn(User _obj)
         {
@@ -74,6 +98,7 @@ namespace KindleSpur.WebApplication.Controllers
         {
             return View();
         }
+
         [HttpPost]
         public Object LoginResult(User signupObject)
         {
@@ -96,8 +121,28 @@ namespace KindleSpur.WebApplication.Controllers
             }
 
         }
+                
+       
 
-
+        //[HttpPost]
+        //public ActionResult ForgotPassword(string EmailAddress)
+        //{            
+        //    UserRepository _repo = new UserRepository();
+        //    IUser u = _repo.GetUserDetail(EmailAddress);
+        //    if (u != null)
+        //    {
+        //        User signupObject = new User();
+        //        string uri = Request.Url.AbsoluteUri.Replace("/User/Login", "/User/PasswordPromp?UserId=" + signupObject.Id);
+        //        EmailNotification.SendEmail(signupObject, uri);
+        //        ViewBag.message = "Please check your e-Mail for further procedure..";
+        //    }
+        //    else
+        //    {
+        //        ViewBag.Error = "UserName doesnot Exists!!! Please SignUp";
+        //    }
+            
+        //    return PartialView();
+        //}
 
     }
 }

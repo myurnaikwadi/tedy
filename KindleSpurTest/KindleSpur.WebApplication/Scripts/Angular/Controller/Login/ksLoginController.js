@@ -6,10 +6,13 @@
 app.controller('ksLoginController', ['$scope', 'authentification', '$location', '$rootScope', '$state', '$stateParams', function ($scope, authentification, $location, $rootScope, $state, $stateParams) {
     console.error('login Page loaded Successfully');
     rootScope = $rootScope;
+    $scope.passedData = $stateParams;
  	$scope.loginDetails = {
  	    emailAddress : '',
         password : ''
  	};
+
+ 	console.error($scope.passedData)
  	$scope.signupDetails = {
  	    FirstName : '',
  	    LastName : '',
@@ -31,7 +34,10 @@ app.controller('ksLoginController', ['$scope', 'authentification', '$location', 
 
 
  	};
-
+ 	//$scope.hideCancelButton = false;
+ 	//if (window.location.href.indexOf('passwordPrompt') > -1) {
+ 	//    $scope.hideCancelButton = true;
+ 	//}
 
 
      /**
@@ -79,7 +85,12 @@ app.controller('ksLoginController', ['$scope', 'authentification', '$location', 
  	    $state.go('login');
  	    //  window.location = '/User/Login';
  	};
+ 	$scope.isVerified = false;
+ 	$scope.forgotPasswordClickFunc = function (iEvent) {
+ 	    iEvent.stopPropagation();
+ 	    $state.go('forgotPassword');
  	
+ 	};
      /**
       * @auther : MKN
       * @date : 07/05/2016
@@ -103,8 +114,14 @@ app.controller('ksLoginController', ['$scope', 'authentification', '$location', 
 	    authentification.login({ signupObject: _object, successCallBack: _successLoginCallBack, failureCallBack: _failureLoginCallBack });
  	};
  
+ 	$scope.cancelClick = function () {
+ 	    
+ 	    $state.go('login');
+ 	};
+
  	$scope.savePassword = function () {
  	    console.error($scope.signupDetails)
+ 
  	    if ($scope.signupDetails.password == '') {
  	        alert('Please enter Password')
  	        return
@@ -153,6 +170,22 @@ app.controller('ksLoginController', ['$scope', 'authentification', '$location', 
  		    EmailAddress: $scope.signupDetails.EmailAddress,
  		}
  		authentification.signup({ signupObject: _object, successCallBack: _successCallBack, failureCallBack: _failureLoginCallBack });
+ 	};
+
+    /**
+     * @auther : SVH
+     * @date : 26/06/2016
+     * @Purpose : forgot password function  
+     */
+ 	$scope.forgotPasswordClick = function () {
+ 	    if ($scope.signupDetails.EmailAddress == '') {
+ 	            alert('Please enter Email address.')
+ 	        }
+ 	    return
+ 	    var _object = {
+ 	        EmailAddress: $scope.signupDetails.EmailAddress,
+ 	    }
+ 	    authentification.forgotPassword({ signupObject: _object, successCallBack: _successCallBack, failureCallBack: _failureLoginCallBack });
  	};
 
  	$scope.getLinkedInData = function () {

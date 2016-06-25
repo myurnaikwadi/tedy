@@ -29,10 +29,23 @@
              $http.post('/User/Login',iObj.signupObject).then(iObj.successCallBack,iObj.failureCallBack);
          },
 
+         ///*** @auther : SVH * @date : 07/05/2016 */
+         //forgotPassword: function (iObj) {
+         //    console.error(iObj)
+         //    $http.post('/User/ForgotPasswordEmail', iObj.signupObject).then(iObj.successCallBack, iObj.failureCallBack);
+         //},
+
          savePassword: function (iObj) {
              console.error(iObj)
              $http.post('/User/SavePassword', iObj.signupObject).then(iObj.successCallBack, iObj.failureCallBack);
          },
+
+         verifyEmailAddress: function (iObj) {
+             console.error(iObj)
+             $http.post('/User/ForgotPasswordEmail', iObj.signupObject).then(iObj.successCallBack, iObj.failureCallBack);
+         },
+
+         
          linkedInClick: function (iObj) {
              console.error(iObj)
              var _obj = {
@@ -114,6 +127,18 @@ app.factory('serverCommunication', function ($http) {
                 console.error(iObj)
                 $http.get('/Coach/GetCTS').then(iObj.successCallBack, iObj.failureCallBack);
         },
+
+        /**
+   * @auther : MKN
+   * @date : 10/06/2016
+   * @Purpose : get category as per role
+   */
+        getMyMentorSelection: function (iObj) {
+            console.error(iObj)
+            $http.get('/Mentor/GetTopics').then(iObj.successCallBack, iObj.failureCallBack);
+        },
+
+        
         /**
           * @auther : MKN
           * @date : 10/06/2016
