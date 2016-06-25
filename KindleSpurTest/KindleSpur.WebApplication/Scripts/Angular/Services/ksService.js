@@ -34,7 +34,7 @@
          //    console.error(iObj)
          //    $http.post('/User/ForgotPasswordEmail', iObj.signupObject).then(iObj.successCallBack, iObj.failureCallBack);
          //},
-
+        
          savePassword: function (iObj) {
              console.error(iObj)
              $http.post('/User/SavePassword', iObj.signupObject).then(iObj.successCallBack, iObj.failureCallBack);

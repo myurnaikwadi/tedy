@@ -105,12 +105,12 @@ namespace KindleSpur.WebApplication.Controllers
         public Object LoginResult(User signupObject)
         {
             UserRepository _repo = new UserRepository();
-
+            HttpCookie cookie = new HttpCookie("ksUser");
             IUser u = _repo.GetUserDetail(signupObject.EmailAddress);
 
             if (u != null && u.Password==signupObject.Password)
             {
-                HttpCookie cookie = new HttpCookie("ksUser");                
+                           
                 cookie[u.EmailAddress] = new JavaScriptSerializer().Serialize(u);
                 Response.SetCookie(cookie);
 
@@ -119,7 +119,9 @@ namespace KindleSpur.WebApplication.Controllers
             }
             else
             {
+               
                 return null;
+
             }
 
         }

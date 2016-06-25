@@ -45,12 +45,18 @@ app.controller('ksLoginController', ['$scope', 'authentification', '$location', 
      */
  	var _successLoginCallBack = function (iObject) {
  	    console.error('In _successCallBack', iObject);
- 	  //  window.$cookieStore = $cookieStore
- 	    var _userDetails = _getMyDetailsFromCookies();
-        if(_userDetails)
- 	        $rootScope.loggedDetail = _userDetails;
- 	    $state.go('ksUserDashBoard');
- 	};
+ 	    //  window.$cookieStore = $cookieStore 	    
+          var _userDetails = _getMyDetailsFromCookies();
+          if(_userDetails)
+              $rootScope.loggedDetail = _userDetails;
+          if (_userDetails.emailAddress == null && _userDetails.emailAddress == '') {
+              alert('wrong id password');
+              $state.go('login');              
+          } else
+        {
+              $state.go('ksUserDashBoard');
+        }
+        };
  	var _successPasswordCallBack = function (iObj) {
  	    console.error('In _successCallBack');
  	    alert('Your password has been save successfully.Please login')
@@ -84,6 +90,7 @@ app.controller('ksLoginController', ['$scope', 'authentification', '$location', 
  	    $state.go('login');
  	    //  window.location = '/User/Login';
  	};
+
  	$scope.isVerified = false;
  	$scope.forgotPasswordClickFunc = function (iEvent) {
  	    iEvent.stopPropagation();
@@ -170,14 +177,15 @@ app.controller('ksLoginController', ['$scope', 'authentification', '$location', 
 
     /*SVH 26-06-2016*/
  	$scope.forgotPasswordClick = function () {
- 	    if ($scope.loginDetails.emailAddress == '') {
+ 	    if ($scope.signupDetails.EmailAddress == '') {
  	        alert('Please enter emailAddress')
  	        return
  	    }
  		var _object = {
- 		    EmailAddress: $scope.loginDetails.EmailAddress
+ 		    EmailAddress: $scope.signupDetails.EmailAddress
  		}
- 		authentification.forgotPassword({ signupObject: _object, successCallBack: _successCallBack, failureCallBack: _failureLoginCallBack });
+ 		authentification.verifyEmailAddress({ signupObject: _object, successCallBack: _successCallBack, failureCallBack: _failureLoginCallBack
+ 	});
  	};
 
  	$scope.getLinkedInData = function () {
