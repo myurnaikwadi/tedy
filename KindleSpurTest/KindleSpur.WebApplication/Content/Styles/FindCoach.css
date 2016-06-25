@@ -1,0 +1,159 @@
+﻿.profile-image {
+    padding-top: 10px;
+    text-align: center;
+}
+
+.profile-close {
+    float: right;
+    top: 10px;
+    right: 10px;
+    color: #808080;
+    font-size: .8em;
+    cursor: pointer;
+}
+
+.profile-info {
+    padding: 8px;
+    text-align: center;
+}
+
+.mentor-name {
+    font-size: 1.1em;
+    padding: 0px 0;
+    color: #e42c2c;
+    margin: 2px 0px;
+}
+
+.mentor-skils {
+    font-size: .9em;
+    padding: 0px 0;
+    color: #808080;
+    margin: 2px 0px;
+}
+
+.mentor-location {
+    font-size: .8em;
+    padding: 0px 0;
+    color: #808080;
+    margin: 2px 0px;
+}
+
+.mentor-card {
+    background-color: #fff;
+    width: 18%;
+    height: 180px;
+    border: 1px solid #d7d5d5;
+    padding: 8px;
+    margin: 5px;
+    box-shadow: 0 4px 5px rgba(0, 0, 0, 0.15);
+    display: inline-block;
+    cursor:pointer;
+}
+
+.mentor-list {
+    width: 100%;
+}
+
+.img-circle {
+    border-radius: 50%;
+    height: 80px;
+    width: 80px;
+}
+
+.auto-complete {
+    padding-left: 30px;
+    height: 35px;
+    width: 250px;
+    /*-webkit-border-radius: 10px;
+        -moz-border-radius: 10px;
+        border-radius: 10px;*/
+    border: 1px solid #cfcfcf;
+    font-size: .8em;
+    outline: none;
+}
+
+.auto-complete-container {
+    max-height: 100px;
+    min-height: 20px;
+    width: 250px;
+    background-color: #f1f1f1;
+    overflow-y: scroll;
+    /*border-radius: 10px;
+        border-top-left-radius: 0px;
+        border-top-right-radius: 0px;
+        border-radius: 10px;
+        -moz-border-radius: 10px;
+        -webkit-border-radius: 10px;*/
+    border: 1px solid #aaa;
+    border-right: none;
+    font-size: 1em;
+    outline: none;
+    z-index: 100;
+    /*padding: 4px 0px;*/
+    position: relative;
+    box-shadow: 0 4px 5px rgba(0, 0, 0, 0.15);
+}
+
+    .auto-complete-container div.item {
+        padding: 4px;
+        border-bottom: 1px solid #cfcfcf;
+        cursor: pointer;
+    }
+
+        .auto-complete-container div.item:last-child {
+            border-bottom: none;
+        }
+
+        .auto-complete-container div.item:hover {
+            background-color: #13489e;
+            color: #fff;
+        }
+
+.filter-icon {
+    cursor: pointer;
+}
+
+/* enable absolute positioning */
+.inner-addon {
+    position: relative;
+}
+
+    /* style icon */
+    .inner-addon .fa {
+        position: absolute;
+        padding: 10px;
+    }
+
+/* align icon */
+.left-addon .fa {
+    left: 0px;
+}
+
+/* add padding  */
+.left-addon input {
+    padding-left: 30px;
+}
+
+.no-result {
+    padding: 4px;
+}
+
+.search-mentor {
+    margin-left: 29px;
+}
+
+.search-result {
+    top: -15px;
+}
+
+.margin-small {
+    margin-left: 10px;
+}
+
+.mentor-actions {
+    display: none;
+}
+    
+.mentor-card:hover + div.mentor-actions {
+    display: block;
+}
