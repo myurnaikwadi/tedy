@@ -65,6 +65,24 @@ namespace KindleSpur.Data
             return _transactionStatus;
         }
 
+        public bool addFeedback(string UserId, Feedback feedback)
+        {
+            bool _transactionStatus = false;
+            try {
+                var coachOrMentors = _kindleDatabase.GetCollection("CoachOrMentor");
+                CoachOrMentor entity = coachOrMentors.FindOneAs<CoachOrMentor>(Query.EQ("UserId", UserId));
+                entity.Feedback.Add(feedback);
+                coachOrMentors.Save(entity);
+                _transactionStatus = true;
+            }
+            catch(Exception e)
+            {
+                _transactionStatus = false;
+            }
+            return _transactionStatus;
+
+        }
+
         public List<Skill> GetSkillsForCoach(string UserId)
         {
            

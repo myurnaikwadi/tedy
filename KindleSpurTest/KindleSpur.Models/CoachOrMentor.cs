@@ -12,13 +12,15 @@ namespace KindleSpur.Models
     {
        public string AdditionalRef { get; set; }
         public string UserId { get; set; }
-       public List<Skill> Skills { get; set; }
+        public List<Skill> Skills { get; set; }
         public List<String> Topics { get; set; }
         public decimal Experience { get; set; }
         public string Language { get; set; }
         public Boolean Published { get; set; }
         public string Role { get; set; }
         public string Bookmarks { get; set; }
+        public List<Feedback> Feedback { get; set; }
+        public int RewardPointsGained { get; set; }
         public DateTime CreateDate { get; set; }
         public DateTime UpdateDate { get; set; }
         public List<IProgramConducted> ProgramsConducted { get; set; }

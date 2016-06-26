@@ -12,13 +12,18 @@ namespace KindleSpur.WebApplication.Controllers
 {
     public class MentorController : Controller
     {
+        private readonly string UserId;
+        public MentorController()
+        {
+            UserId = ((IUser)Session["User"]).EmailAddress;
+        }
         [HttpPost]
         public Boolean SaveTopics(List<Skill> selectedArray)
         {
             CoachOrMentorRepository _mentorRepo = new CoachOrMentorRepository();
 
             KindleSpur.Models.CoachOrMentor _obj = new Models.CoachOrMentor();
-            _obj.UserId = ((IUser)System.Web.HttpContext.Current.Session["User"]).EmailAddress;
+            _obj.UserId = UserId;
             _obj.Role = "Mentor";
             _obj.CreateDate = _obj.UpdateDate = DateTime.Now;
             if (_obj.Topics == null) _obj.Topics = new List<string>();
@@ -35,7 +40,6 @@ namespace KindleSpur.WebApplication.Controllers
         {
 
             CoachOrMentorRepository _coachRepo = new CoachOrMentorRepository();
-            string UserId = ((IUser)Session["User"]).EmailAddress;
 
             List<string> topics = _coachRepo.GetTopicsForMentor(UserId);
             CTSRepository _ctsRepo = new CTSRepository();
@@ -51,5 +55,14 @@ namespace KindleSpur.WebApplication.Controllers
             doc.Add("Categories", arr);
             return doc.ToJson();
         }
+
+        [HttpPost]
+        public Boolean SaveFeedBack(Feedback feedback)
+        {
+            CoachOrMentorRepository _coachRepo = new CoachOrMentorRepository();
+            return _coachRepo.addFeedback(UserId, feedback);
+
+        }
+
     }
 }

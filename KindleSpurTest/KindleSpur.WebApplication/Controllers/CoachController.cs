@@ -14,12 +14,17 @@ namespace KindleSpur.WebApplication.Controllers
     {
         private readonly CTSRepository _ctsRepo = new CTSRepository();
         private readonly CoachOrMentorRepository _coachRepo = new CoachOrMentorRepository();
+        private readonly string UserId;
+        public CoachController()
+        {
+            UserId = ((IUser)Session["User"]).EmailAddress;
+        }
        
         [HttpPost]
         public Boolean SaveSkills(List<Models.Skill> selectedArray)
         {
             KindleSpur.Models.CoachOrMentor _obj = new Models.CoachOrMentor();
-            _obj.UserId = ((IUser)System.Web.HttpContext.Current.Session["User"]).EmailAddress;
+            _obj.UserId = UserId;
             _obj.Role = "Coach";
             _obj.CreateDate = _obj.UpdateDate= DateTime.Now;
             if (_obj.Skills == null) _obj.Skills = new List<Skill>();
@@ -32,7 +37,6 @@ namespace KindleSpur.WebApplication.Controllers
 
         public string GetCTS()
         {
-            string UserId = ((IUser)Session["User"]).EmailAddress;
 
             List<Skill> skills = _coachRepo.GetSkillsForCoach(UserId);
             CTSRepository _ctsRepo = new CTSRepository();
@@ -53,6 +57,14 @@ namespace KindleSpur.WebApplication.Controllers
         {
             var result = _coachRepo.GetAllCoachOrMentors(ctsFilter);
             return Json(new { Coaches = result.ToString(), Success = true }, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public Boolean SaveFeedBack(Feedback feedback)
+        {
+            CoachOrMentorRepository _coachRepo = new CoachOrMentorRepository();
+            return _coachRepo.addFeedback(UserId, feedback);
+          
         }
     }
 }
