@@ -70,7 +70,7 @@ namespace KindleSpur.Data
             bool _transactionStatus = false;
             try {
                 var coachOrMentors = _kindleDatabase.GetCollection("CoachOrMentor");
-                CoachOrMentor entity = coachOrMentors.FindOneAs<CoachOrMentor>(Query.EQ("UserId", UserId));
+                CoachOrMentor entity = coachOrMentors.FindOneAs<CoachOrMentor>(Query.And(Query.EQ("UserId", UserId), Query.EQ("Role", "Coach")));
                 entity.RewardPointsGained += 1;
                 entity.FeedbackPoints += feedback.Rating;
                 entity.Feedback.Add(feedback);
