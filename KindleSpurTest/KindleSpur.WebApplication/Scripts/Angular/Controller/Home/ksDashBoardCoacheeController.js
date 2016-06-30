@@ -126,4 +126,27 @@ app.directive('ctsDropdown', function () {
             }
         }
     }
-});
+})
+app.directive('ctsMentorCard', function () {
+    return {
+        link: function (scope, element, attrs) {
+
+            element.bind('mouseenter', function (evt) {
+                var info = $(element).find('div.mentor-info');
+                $(info).addClass('grid-out')
+                var position = $(info).position();
+                var action = $(element).find('div.mentor-actions');
+                $(action).css(position);
+                $(action).show();
+            });
+
+            element.bind('mouseleave', function (evt) {
+                var action = $(element).find('div.mentor-actions');
+                var info = $(element).find('div.mentor-info');
+                $(action).hide();
+                $(info).removeClass('grid-out')
+            });
+        }
+    }
+})
+;

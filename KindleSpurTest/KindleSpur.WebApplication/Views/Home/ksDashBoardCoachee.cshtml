@@ -92,18 +92,26 @@
                                 <div class="filterListContainer">
                                     <div class="mentor-list">
                                         <div class="row" style="margin:0px;">
-                                            <div class="mentor-card" ng-repeat="coach in Coaches">
-                                                <span class="profile-close" style="float:right;top:10px;right:10px;"><i class="fa fa-times"></i></span>
-                                                <div class="profile-image">
-                                                    <img src="https://www.abeautifulsite.net/content/uploads/2014/08/rounded-image-250x250.png" class="img-circle" />
+                                            <div class="mentor-card" ng-repeat="coach in Coaches" cts-mentor-card>
+                                                <div class="mentor-info">
+                                                    <span class="profile-close" style="float:right;top:10px;right:10px;"><i class="fa fa-times"></i></span>
+                                                    <div class="profile-image">
+                                                        <img src="https://www.abeautifulsite.net/content/uploads/2014/08/rounded-image-250x250.png" class="img-circle" />
+                                                    </div>
+                                                    <div class="profile-info">
+                                                        <p class="mentor-name">{{coach.Name}}</p>
+                                                        <p class="mentor-skils">{{coach.Skill}}</p>
+                                                        <p class="mentor-location">{{coach.City}} <b>|</b> {{coach.Country}}</p>
+                                                    </div>
                                                 </div>
-                                                <div class="profile-info">
-                                                    <p class="mentor-name">{{coach.Name}}</p>
-                                                    <p class="mentor-skils">{{coach.Skill}}</p>
-                                                    <p class="mentor-location">{{coach.City}} <b>|</b> {{coach.Country}}</p>
-                                                </div>
-                                                <div class="mentor-actions">
-                                                    Hello...
+                                                <div class="mentor-actions" style="display:none; position:absolute">
+                                                    <div class="row">
+                                                        <i class="btn col-md-2 fa fa-linkedin btn-blue" style="border-radius:0px;"></i>
+                                                        <button class="btn col-md-9 btn-gray" data-toggle="modal" data-target="#myModal" style="border-radius:0px;">View Profile</button>
+                                                    </div>
+                                                    <br />
+                                                    <button class="btn signupButton">Request</button>
+                                                    <br />
                                                 </div>
                                             </div>
                                         </div>
@@ -116,6 +124,27 @@
                         <bottom-main-strip></bottom-main-strip>
                     </div>
                 </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+            </div>
+            <div class="modal-body">
+                ...
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
             </div>
         </div>
     </div>

@@ -17,9 +17,9 @@ namespace KindleSpur.WebApplication.Controllers
         private readonly string UserId;
         public CoachController()
         {
-            UserId = ((IUser)Session["User"]).EmailAddress;
+            UserId = ((IUser)System.Web.HttpContext.Current.Session["User"]).EmailAddress;
         }
-       
+
         [HttpPost]
         public Boolean SaveSkills(List<Models.Skill> selectedArray)
         {
@@ -29,7 +29,7 @@ namespace KindleSpur.WebApplication.Controllers
             _obj.CreateDate = _obj.UpdateDate= DateTime.Now;
             if (_obj.Skills == null) _obj.Skills = new List<Skill>();
             _obj.Skills.AddRange(selectedArray);
-            
+
             _coachRepo.AddNewCoachOrMentor(_obj);
 
             return true;
@@ -44,10 +44,10 @@ namespace KindleSpur.WebApplication.Controllers
             BsonArray arr = new BsonArray();
             foreach (Skill skill in skills)
             {
-                
+
                 BsonDocument result = _ctsRepo.GetCoachTopicAndCategory(skill);
                 arr.Add(result);
-             
+
             }
             doc.Add("Categories",arr);
             return doc.ToJson();
@@ -64,7 +64,7 @@ namespace KindleSpur.WebApplication.Controllers
         {
             CoachOrMentorRepository _coachRepo = new CoachOrMentorRepository();
             return _coachRepo.addFeedback(UserId, feedback);
-          
+
         }
     }
 }
