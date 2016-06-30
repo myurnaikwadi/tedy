@@ -21,6 +21,7 @@ namespace KindleSpur.Models
         public string Bookmarks { get; set; }
         public List<Feedback> Feedback { get; set; }
         public int RewardPointsGained { get; set; }
+        public int FeedbackPoints { get; set; }
         public DateTime CreateDate { get; set; }
         public DateTime UpdateDate { get; set; }
         public List<IProgramConducted> ProgramsConducted { get; set; }

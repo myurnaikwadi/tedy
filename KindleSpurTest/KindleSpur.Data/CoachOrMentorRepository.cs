@@ -71,8 +71,14 @@ namespace KindleSpur.Data
             try {
                 var coachOrMentors = _kindleDatabase.GetCollection("CoachOrMentor");
                 CoachOrMentor entity = coachOrMentors.FindOneAs<CoachOrMentor>(Query.EQ("UserId", UserId));
+                entity.RewardPointsGained += 1;
+                entity.FeedbackPoints += feedback.Rating;
                 entity.Feedback.Add(feedback);
                 coachOrMentors.Save(entity);
+                var _users = _kindleDatabase.GetCollection("UserDetails");
+                User user = _users.FindOneAs<User>(Query.EQ("EmailAddress", UserId));
+                user.RewardPointsGained += 1;
+                _users.Save(user);
                 _transactionStatus = true;
             }
             catch(Exception e)
