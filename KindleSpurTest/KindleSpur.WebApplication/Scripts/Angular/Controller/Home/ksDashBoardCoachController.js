@@ -1,4 +1,4 @@
-﻿app.controller('ksDashBoardCoachController', function ($scope,serverCommunication,$stateParams) {
+﻿app.controller('ksDashBoardCoachController', function ($rootScope,$scope, serverCommunication, $stateParams) {
     console.error($stateParams) 
     $scope.passedData = $stateParams;
 
@@ -39,13 +39,46 @@
   
     $scope.menuClick = function (iIndex, iOption) {
         $scope.selectedMenu = iIndex;
-        //switch (iIndex) {
-        //    case '0': break;
-        //}
+        $scope.feedBack.selectedComparioson = 1;
+        $scope.feedBack.selectedAttractive = 1;
+        $scope.feedBack.selectedstar = 1;
+        $scope.feedBack.likeMostMessage = '';
+          
+        
+        $scope.askFeedback = false;
+        switch (iIndex) {
+            case 1: $scope.getCoachRecord(); break;
+        }
+    };
+    $scope.getCoachRecord = function () {
+        serverCommunication.getCoachingWithStatus({
+            loggedUserDetails: $rootScope.loggedDetail,
+            successCallBack: function (iObj) {
+                console.error('In successCallBack', iObj);
+
+            },
+            failureCallBack: function (iObj) {
+                console.error('In failureCallBack', iObj);
+
+            }
+        });
     };
     $scope.selectedOption = function (iIndex, iCate) {
-        if (iCate.name == 'BRAIN GAMES')
+
+        if (iCate.name == 'BRAIN GAMES') {
             iCate.selectedOption = !iCate.selectedOption;
+            serverCommunication.unlockGameCode({
+             //   loggedUserDetails: $rootScope.loggedDetail,
+                successCallBack: function (iObj) {
+                    console.error('In successCallBack', iObj);
+
+                },
+                failureCallBack: function (iObj) {
+                    console.error('In failureCallBack', iObj);
+
+                }
+            });
+        }
     }
 
     $scope.init = function () {
@@ -56,17 +89,112 @@
         }else{
             $scope.selectedMenu = '0';
             serverCommunication.getCoachData({
-                successCallBack: function () {
-                    console.error('In successCallBack');
+                successCallBack: function (iObj) {
+                    console.error('In successCallBack', iObj);
 
                 },
-                failureCallBack: function () {
-                    console.error('In failureCallBack');
+                failureCallBack: function (iObj) {
+                    console.error('In failureCallBack', iObj);
 
                 }
             });
         }
             
 	};
-	$scope.init();
+    $scope.init();
+
+
+
+    $scope.conversationList = [{ name: 'HARSHADA D' }
+                , { name: 'SAGAR N' }
+                , { name: 'SAGAR P' }
+                , { name: 'MAYUR' }
+
+    ]
+
+    $scope.conversationLoad = function (iIndex, iCategory) {
+        for (var i = 0 ; i < $scope.conversationList.length ; i++) {
+            $scope.conversationList[i].selectedConversation = false;
+        }
+        if (iCategory.selectedConversation == true) {
+            iCategory.selectedConversation = false;
+        } else {
+            iCategory.selectedConversation = true;
+        }
+    };
+    $scope.feedBack = {
+        selectedComparioson: 1,
+        selectedAttractive: 1,
+        selectedstar: 1,
+        likeMostMessage: '',
+    };
+
+    $scope.feedBack.competitorSelected = function (iIndex) {
+        $scope.feedBack.selectedComparioson = iIndex;
+    };
+
+    $scope.feedBack.findAttractiveSelected = function (iIndex) {
+        $scope.feedBack.selectedAttractive = iIndex;
+    };
+
+    $scope.feedBack.starSelected = function (iIndex) {
+        $scope.feedBack.selectedstar = iIndex;
+    };
+
+    $scope.feedBack.sendFeedBackDetail = function () {
+        $scope.askFeedback = false;
+        var _object = {
+            sender : 'sagar'+Math.floor((Math.random() * 100) + 1222222)+"@gmail.com",
+            selectedComparioson: $scope.feedBack.selectedComparioson,
+            selectedAttractive: $scope.feedBack.selectedAttractive,
+            selectedstar: $scope.feedBack.selectedstar,
+            likeMostMessage: $scope.feedBack.likeMostMessage
+        }
+        console.error(_object);
+        
+        serverCommunication.sendFeedback({
+            loggedUserDetails: _object,
+            successCallBack: function () {
+                console.error('In successCallBack');
+
+            },
+            failureCallBack: function () {
+                console.error('In failureCallBack');
+
+            }
+        });
+    };
+
+    $scope.applicationRole = [{ name: 'COACHEE' }, { name: 'MENTEE' }, { name: 'COACH' }, { name: 'MENTOR' }]
+    $scope.rightSideDashBoardArray = [
+                { name: 'COACHING STATUS' },
+                { name: 'KNOWLEDGE GARDEN' },
+                { name: 'FEED YOU SHOULD READ' },
+                { name: 'GRAPHS' },
+                { name: 'BRAIN GAMES' },
+                { name: 'RESOURCES' }
+    ]
+    $scope.catogoryArray = [
+                { name: 'Advertising' },
+                { name: 'Education' },
+                { name: 'Engineering' },
+                { name: 'Marketing' },
+                { name: 'BRAIN GAMES' },
+                { name: 'RESOURCES' }
+    ];
+
+    $scope.askFeedback = false;
+    $scope.formValue = '0';
+    $scope.askFeedBackFunc= function () {
+        $scope.askFeedback = true
+        $scope.formValue = '1';
+        $scope.feedBack.selectedComparioson = 1;
+        $scope.feedBack.selectedAttractive = 1;
+        $scope.feedBack.selectedstar = 1;
+        $scope.feedBack.likeMostMessage = '';
+
+    }
+
+
+
 });

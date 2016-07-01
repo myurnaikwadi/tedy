@@ -236,6 +236,31 @@ app.factory('serverCommunication', function ($http) {
             }
             $http(req).then(iObj.successCallBack, iObj.failureCallBack);
         },
+        /**
+         * @auther : MKN
+         * @date : 15/06/2016
+         * @Purpose :
+         */
+        getCoachingWithStatus: function (iObj) {
+            $http.get('/CTS/GetCTSFilters', iObj.loggedUserDetails).then(iObj.successCallBack, iObj.failureCallBack)
+        },
+        /**
+        * @auther : MKN
+        * @date : 15/06/2016
+        * @Purpose :
+        */
+        sendFeedback: function (iObj) {
+            $http.get('/CTS/GetCTSFilters', iObj.loggedUserDetails).then(iObj.successCallBack, iObj.failureCallBack)
+        },
+        /**
+        * @auther : MKN
+         * @date : 15/06/2016
+         * @Purpose :
+     */
+        unlockGameCode: function (iObj) {
+            $http.get('/CTS/GetCTSFilters').then(iObj.successCallBack, iObj.failureCallBack)
+        },
+
     }
 });
 

@@ -21,6 +21,175 @@
                 <div class="parentRoleDetailRight" ng-if="selectedMenu == '6'">
                     <ctc-Role role="coach" skill-Required="true"></ctc-Role>
                 </div>
+                <div class="parentRoleDetailRight" ng-if="selectedMenu == '2'">
+                    <div class="homeLabelInChat">
+                        <h5 class="fontClass">NOTIFICATIONS</h5>
+                    </div>
+
+                    <div class="communicationMainPanel">
+                        <div ng-show='askFeedback' class="feedbackPanel">
+                            <!-- Screen 1 -->
+                            <div class="popupContainer" ng-show="formValue == '3'">
+                                <div class="popupContainerOne">
+                                   
+                                    <img src="~/Images/communication/lineDiag1.png" />
+                                </div>
+                                <div class="popupContainerTwo">
+                                    <h1>What is the one thing that you like most about us?</h1>
+                                </div>
+                                <div class="popupContainerThree">
+                                    <textarea ng-model="feedBack.likeMostMessage" placeholder="CLICK HERE TO TYPE MESSAGE"></textarea>
+                                </div>
+                                <div class="popupContainerFour">
+                                    <div class="fa fa-angle-left arrowContainer genericPointerClass" ng-click="formValue = '2'"></div>
+                                    <div class="fa fa-angle-right arrowContainer genericPointerClass" ng-click="formValue = '4'"></div>
+                                </div>
+                            </div>
+
+                            <!-- Screen 2 -->
+                            <div class="popupContainer" ng-show="formValue == '1'">
+                                <div class="popupContainerOne">
+                                    <img src="~/Images/communication/lineDiag2.png" />
+                                </div>
+                                <div class="popupContainerTwo">
+                                    <h1>How Do You Compare the value we provide you against our Competitor</h1>
+                                </div>
+                                <div class="popupContainerThree">
+                                    <img class="genericPointerClass" style="padding: 3%;float:left;" ng-click="feedBack.competitorSelected('1')" ng-class="{ highlightedCompetitor :  feedBack.selectedComparioson == '1'}" src="~/Images/communication/competitorsBetter.png">
+                                    <img class="genericPointerClass" style="padding: 3%;float:left;" ng-click="feedBack.competitorSelected('2')" ng-class="{ highlightedCompetitor :  feedBack.selectedComparioson == '2'}" src="~/Images/communication/sameasCompetitors.png">
+                                    <img class="genericPointerClass" style="padding: 3%;float:left;" ng-click="feedBack.competitorSelected('3')" ng-class="{ highlightedCompetitor :  feedBack.selectedComparioson == '3'}" src="~/Images/communication/betterCompetitors.png">
+
+                                </div>
+                                <div class="popupContainerFour">
+                                    <div class="fa"></div>
+                                    <div class="fa fa-angle-right arrowContainer genericPointerClass" ng-click="formValue = '2'"></div>
+                                </div>
+                            </div>
+
+                            <!-- Screen 3 -->
+
+                            <div class="popupContainer" ng-show="formValue == '4'">
+                                <div class="popupContainerOne">
+
+                                    <img src="~/Images/communication/lineDiag3.png" />
+                                </div>
+                                <div class="popupContainerTwo">
+                                    <h1>overall customer satisfaction</h1>
+                                </div>
+                                <div class="popupContainerThree">
+                                    <!--	<img style="padding: 3%;float:left;" ng-click="feedBack.starSelected('1')" ng-src="{{ feedBack.selectedstar == '1' && '~/Images/communication/smallSelectedStar.png' || '~/Images/communication/smallStar.png'}}" ng-class="{ highlightedCompetitor :  feedBack.selectedstar == '1'}" src="~/Images/communication/smallStar.png">
+                        <img style="padding: 3%;float:left;" ng-click="feedBack.starSelected('2')" ng-src="{{ feedBack.selectedstar == '1' && '~/Images/communication/smallBigSelectedStar.png' || '~/Images/communication/smallBigStar.png'}}" ng-class="{ highlightedCompetitor :  feedBack.selectedstar == '2'}" src="~/Images/communication/smallBigStar.png">
+                        <img style="padding: 3%;float:left;" ng-click="feedBack.starSelected('3')" ng-src="{{ feedBack.selectedstar == '1' && '~/Images/communication/bigSelectedStar.png' || '~/Images/communication/bigStar.png'}}" ng-class="{ highlightedCompetitor :  feedBack.selectedstar == '3'}" src="~/Images/communication/bigStar.png">		-->
+
+                                    <img class="genericPointerClass" style="padding: 3%;float:left;" ng-click="feedBack.starSelected('1')" ng-class="{ highlightedCompetitor :  feedBack.selectedstar == '1'}" src="~/Images/communication/smallStar.png">
+                                    <img class="genericPointerClass" style="padding: 3%;float:left;" ng-click="feedBack.starSelected('2')" ng-class="{ highlightedCompetitor :  feedBack.selectedstar == '2'}" src="~/Images/communication/smallBigStar.png">
+                                    <img class="genericPointerClass" style="padding: 3%;float:left;" ng-click="feedBack.starSelected('3')" ng-class="{ highlightedCompetitor :  feedBack.selectedstar == '3'}" src="~/Images/communication/bigStar.png">
+                                </div>
+                                <div class="popupContainerFour">
+                                    <div class="fa fa-angle-left arrowContainer genericPointerClass" ng-click="formValue = '3'"></div>
+                                    <button type="submit" ng-click="feedBack.sendFeedBackDetail()">Submit</button>
+                                </div>
+                            </div>
+
+                            <!-- Screen 4 -->
+
+                            <div class="popupContainer" ng-show="formValue== '2'">
+                                <div class="popupContainerOne">
+                                    <img src="~/Images/communication/lineDiag4.png">
+                                </div>
+                                <div class="popupContainerTwo">
+                                    <h1>What do you find most attractive about our company?</h1>
+                                </div>
+                                <div class="popupContainerThree">
+
+                                    <img class="genericPointerClass" style="padding: 3%;float:left;" ng-click="feedBack.findAttractiveSelected('1')" ng-class="{ highlightedCompetitor :  feedBack.selectedAttractive == '1'}" src="~/Images/communication/price_feedBack.png">
+                                    <img class="genericPointerClass" style="padding: 3%;float:left;" ng-click="feedBack.findAttractiveSelected('2')" ng-class="{ highlightedCompetitor :  feedBack.selectedAttractive == '2'}" src="~/Images/communication/product_feedBack.png">
+                                    <img class="genericPointerClass" style="padding: 3%;float:left;" ng-click="feedBack.findAttractiveSelected('3')" ng-class="{ highlightedCompetitor :  feedBack.selectedAttractive == '3'}" src="~/Images/communication/customer_service_feedBack.png">
+                                    <img class="genericPointerClass" style="padding: 3%;float:left;" ng-click="feedBack.findAttractiveSelected('4')" ng-class="{ highlightedCompetitor :  feedBack.selectedAttractive == '4'}" src="~/Images/communication/location_feedBack.png">
+                                </div>
+                                <div class="popupContainerFour">
+                                    <div class="fa fa-angle-left arrowContainer genericPointerClass" ng-click="formValue = '1'"></div>
+                                    <div class="fa fa-angle-right arrowContainer genericPointerClass" ng-click="formValue = '3'"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="conversationPanel">
+                            <div class="conversationPanelDiv">
+                                <div class="conversationList " ng-click="conversationLoad($index,conversation)" ng-repeat="conversation in conversationList">
+                                    <div class="conversationListPanel genericPointerClass" ng-class="{ highlightedGrayClass : conversation.selectedConversation == true }">
+                                        <div style="float:left;    margin: auto auto;width: 85%;">
+                                            <h5 style="margin:auto auto;margin-left: 0;font-size: large;float: left;width: 88%;    font-weight: 700;    font-size: 15px;">{{conversation.name}}</h5>
+                                            <div class="applicationNotiCount" title="5" style=" display flex;float:left;text-align: center;height 15px;width 15px;">
+                                                <h6 class="fontClass" style=" font-size 10px;display inline-block;text-align center; text-overflow clip; margin auto auto;color:white;">5</h6>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div ng-show="conversation.selectedConversation == true" class="triangleArrowRight trangleOveRideBlack" style="float: left;margin-top: 15px;"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="communicationPanel">
+                            <div class="chatParent">
+                                <div class="chatHeader">
+                                    <div class="chatStrongHeader">
+                                        <div class="chatHalfContainer">
+                                            <span class="chatHalfContainerSpan">
+                                                <h5>Paresh Patil</h5>
+                                            </span>
+                                            <span class="chatHalfContainerSpanNxt">
+                                                <h6 class="genericPointerClass">Close Session</h6>
+                                                <h6 class="genericPointerClass" ng-click="askFeedBackFunc()">Ask Feedback</h6>
+                                            </span>
+                                        </div>
+                                        <div class="chatHalfContainer">
+                                            <span class="chatHalfContainerSpanNxt" style="align-items: center;">
+                                                <h6 style="padding: 0px;">UI-UX Designer | PUNE AREA | INDIA</h6>
+                                            </span>
+                                        </div>
+                                    </div>
+
+
+                                </div>
+                                <div class="chatMiddle">
+                                    <div class="chatOuterContainer">
+                                        <div class="chatSender">
+                                            <h5>I would like to request couching from you.</h5>
+                                        </div>
+                                        <div class="chatTime">
+                                            <h5>02/20</h5>
+                                        </div>
+                                    </div>
+                                    <div class="chatOuterContainer">
+                                        <div class="chatReceiver">
+                                            <h5>Couching Request from Paresh has been accepted</h5>
+                                        </div>
+                                        <div class="chatTime">
+                                            <h5 style="text-align : right">02/20</h5>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="chatBottom">
+                                    <div class="chatBottomOne">
+                                        <textarea placeholder="CLICK HERE TO TYPE MESSAGE"></textarea>
+                                    </div>
+                                    <div class="chatBottomTwo">
+                                        <div class="iconContainer">
+                                            <div class="fa fa-paperclip" style="padding: 0px 8px;"></div>
+                                            <div class="fa fa-phone" style="padding: 0px 8px;"></div>
+                                        </div>
+                                        <div class="iconContainer" style="justify-content: center;">
+                                            <button type="submit">Submit</button>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+
+                </div>
                 <div class="parentRoleDetailRight" ng-if="selectedMenu == '1'">
                     <div class="homeLabelInMainDB">
                         <h5 class="fontClass">COACHING STATUS</h5>
