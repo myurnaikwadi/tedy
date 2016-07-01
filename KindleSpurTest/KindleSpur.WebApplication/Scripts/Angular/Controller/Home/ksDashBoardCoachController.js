@@ -44,7 +44,8 @@
         //}
     };
     $scope.selectedOption = function (iIndex, iCate) {
-        iCate.selectedOption = !iCate.selectedOption;
+        if (iCate.name == 'BRAIN GAMES')
+            iCate.selectedOption = !iCate.selectedOption;
     }
 
     $scope.init = function () {
