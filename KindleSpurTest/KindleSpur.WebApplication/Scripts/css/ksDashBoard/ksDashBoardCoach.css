@@ -100,7 +100,7 @@
         .mainDashBoardWizardParent {
             position: relative;
             float: left;
-            height: 86%;
+            height: 84%;
             width: 100%;
         }
         .roleRepeatWizard {
@@ -118,16 +118,16 @@
             position: relative;
             float: left;
             width: 100%;
-            height: 7%;
+            height: 9%;
         }
 
-            .homeLabelInMainDB h5 {
-                float: left;
-                position: relative;
-                margin-left: 2%;
-                margin-top: 2%;
-                font-size: 16px;
-            }
+        .homeLabelInMainDB h5 {
+            float: left;
+            position: relative;
+            margin-left: 2%;
+            margin-top: 2%;
+            font-size: 16px;
+        }
 
         
         .userRoleWizardParent {
@@ -538,3 +538,154 @@
     width:100%;
 }
   
+
+.statusParentDiv{
+    float: left;
+    width: 100%;
+    height: 100%;
+overflow:auto;
+}
+
+
+.ngRepeatDivForStatus{
+    float: left;
+    width: 96%;
+    height: 13%;
+    background: #f3f3f3;
+border-bottom: 1px solid white;
+   display: flex;
+    margin-left: 2%;
+}
+
+.profileImageCoachingStatus{
+    float: left;
+    width: 7%;
+    height: 100%;
+margin: auto auto;
+   display: flex;
+    margin-right: 0;
+}
+.profileNameCoachingStatus{
+float: left;
+   display: flex;
+    width: 13%;
+    height: 100%;
+margin: auto auto;
+    margin-right: 0;
+}
+.progressBarCoachingStatus{
+float: left;
+   display: flex;
+    width: 15%;
+    height: 100%;
+margin: auto auto;
+    margin-right: 0;
+}
+.skillsCoachingStatus{
+float: left;
+    width: 13%;
+    height: 100%;
+   display: flex;
+margin: auto auto;
+    margin-right: 0;
+	}
+.statusCoachingStatus{
+float: left;
+    width: 15%;
+    height: 100%;
+   display: flex;
+margin: auto auto;
+    margin-right: 0;
+}
+.treeCoachingStatus{
+float: left;
+    width: 7%;
+    height: 100%;
+   display: flex;
+margin: auto auto;
+    margin-right: 0;
+}
+.communicationsCoachingStatus{
+float: left;
+    width: 13%;
+   display: flex;
+    height: 100%;
+margin: auto auto;
+
+}
+
+.iconOnStatusArray{
+	margin: auto auto;float: left;height: 15px;width: 15px;
+}
+.textAlignCoachingStatus{
+    font-size: 14px;
+    margin: auto auto;margin-left: 0;float: left;
+    font-weight: bold;
+    font-family: monospace;
+}
+
+/* entire container, keeps perspective */
+.flipContainer {
+	perspective: 1000px;
+}
+
+.flipContainer, .front, .back {
+	    float: left;
+    width: 100%;
+    height: 100%;
+}
+
+/* flip speed goes here */
+.flipper {
+	transition: 1s;
+	transform-style: preserve-3d;
+        transform: rotateY(-180deg);
+	position: relative;
+}
+.flipperBack {
+	transition: 1s;
+	transform-style: preserve-3d;
+        transform: rotateY(180deg);
+	position: relative;
+}
+
+/* hide back of pane during swap */
+.front, .back {
+	backface-visibility: hidden;
+	position: absolute;
+	top: 0;
+	left: 0;
+}
+
+/* front pane, placed above back */
+.front {
+	z-index: 2;
+	/* for firefox 31 */
+	transform: rotateY(0deg);
+	border: 1px solid #BBB8B8;
+}
+
+/* back, initially hidden pane */
+.back {
+	transform: rotateY(180deg);
+
+}
+.disableClass{
+	background: rgba(0,0,0,0.55);
+}
+.flipDivOnClass {
+float: left;
+    width: 100%;
+    height: 100%;
+	display:flex;
+}
+.promoCodeClass{
+	margin:auto auto;
+}
+
+.shadow4:before, .shadow4:after{
+  content:"";
+  box-shadow:0 0 25px 3px #548E7F;
+  border-radius:100px/10px;
+  z-index:-1;
+}

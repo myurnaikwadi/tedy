@@ -213,6 +213,11 @@ app.factory('serverCommunication', function ($http) {
       */
         changeProfileImageDetails: function (iObj) {
             console.error(iObj)
+            //method: 'POST',
+            //url: '/resources/messages',
+            //data: message // your original form data,
+            //transformRequest: formDataObject  // this sends your data to the formDataObject provider that we are defining below.
+            //headers: {'Content-Type': 'multipart/form-data'}
             $http.post('/User/UpdateUserPhoto', iObj.file).then(iObj.successCallBack, iObj.failureCallBack);
         },
 

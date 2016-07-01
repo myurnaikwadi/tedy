@@ -27,6 +27,29 @@
         $state.go('dashBoardCoach',{ param: 'test' });
     };
 
+    $scope.uploadFileFunction = function () {
+       
+        var valueFile = document.getElementById("fileInputIdRv").files;
+        if (iProfile) {
+            $scope.myInfo.profileImage = valueFile[0];
+        } else {
+            $scope.myInfo.profileBackgroundImage = valueFile[0];
+        }
+
+        console.error(valueFile)
+        var _object = {
+            file: valueFile[0],
+            successCallBack: function () {
+                console.error('In successCallBack');
+
+            },
+            failureCallBack: function () {
+                console.error('In failureCallBack');
+
+            }
+        }
+        serverCommunication.changeProfileImageDetails(_object);
+    }
    $scope.triggerUpload = function (iProfile) {
         console.error('width: 42px;')
         var obj = {

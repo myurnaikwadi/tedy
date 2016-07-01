@@ -138,7 +138,8 @@ app.controller('ksLoginController', ['$scope', 'authentification', '$location', 
  	    _object.userId = _string.split("passwordPrompt/")[1];
 
         console.error(_object)
- 	    authentification.savePassword({ signupObject: _object, successCallBack: _successPasswordCallBack, failureCallBack: _failurePasswordCallBack });
+        authentification.savePassword({ signupObject: _object, successCallBack: _successPasswordCallBack, failureCallBack: _failurePasswordCallBack });
+        $state.go('login');
  	}; 	
     
      /**
