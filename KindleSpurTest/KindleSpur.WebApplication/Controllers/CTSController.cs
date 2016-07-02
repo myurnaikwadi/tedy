@@ -1,4 +1,5 @@
 ﻿using KindleSpur.Data;
+using MongoDB.Bson;
 using System.Web.Mvc;
 
 namespace KindleSpur.WebApplication.Controllers
@@ -7,10 +8,9 @@ namespace KindleSpur.WebApplication.Controllers
     {
         private readonly CTSRepository _ctsRepo = new CTSRepository();
 
-        public ActionResult GetCTS()
+        public string GetCTS()
         {
-            var filters = _ctsRepo.GetCTS();
-            return Json(new { Filters = filters, Success = true }, JsonRequestBehavior.AllowGet);
+            return _ctsRepo.GetCTS().ToJson();
 
         }
 

@@ -144,11 +144,17 @@
     $scope.feedBack.sendFeedBackDetail = function () {
         $scope.askFeedback = false;
         var _object = {
-            sender : 'sagar'+Math.floor((Math.random() * 100) + 1222222)+"@gmail.com",
-            selectedComparioson: $scope.feedBack.selectedComparioson,
-            selectedAttractive: $scope.feedBack.selectedAttractive,
-            selectedstar: $scope.feedBack.selectedstar,
-            likeMostMessage: $scope.feedBack.likeMostMessage
+            sender : "patilsagar28290@gmail.com",
+            selectedComparioson: {
+                question : 'HOW DO YOU COMPARE THE VALUE WE PROVIDE YOU AGAINST OUR COMPETITOR',
+                answer   : $scope.feedBack.selectedComparioson,
+            },
+            selectedAttractive: { 
+                question: 'WHAT DO YOU FIND MOST ATTRACTIVE ABOUT OUR COMPANY?',
+                answer   : $scope.feedBack.selectedAttractive,
+            },
+            customerSatisfactionRating: $scope.feedBack.selectedstar,
+            FeedbackText: $scope.feedBack.likeMostMessage
         }
         console.error(_object);
         

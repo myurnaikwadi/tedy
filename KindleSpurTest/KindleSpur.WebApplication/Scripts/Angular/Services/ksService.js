@@ -157,7 +157,7 @@ app.factory('serverCommunication', function ($http) {
           */
         getCategorys: function (iObj) {
             console.error(iObj)
-            $http.get('/api/CTS').then(iObj.successCallBack, iObj.failureCallBack);
+            $http.get('/CTS/GetCTS').then(iObj.successCallBack, iObj.failureCallBack);
         },
         /**
       * @auther : MKN
@@ -250,7 +250,8 @@ app.factory('serverCommunication', function ($http) {
         * @Purpose :
         */
         sendFeedback: function (iObj) {
-            $http.get('/CTS/GetCTSFilters', iObj.loggedUserDetails).then(iObj.successCallBack, iObj.failureCallBack)
+            console.error(iObj.loggedUserDetails)
+            $http.post('/Coach/SaveFeedBack', iObj.loggedUserDetails).then(iObj.successCallBack, iObj.failureCallBack)
         },
         /**
         * @auther : MKN

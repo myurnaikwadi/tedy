@@ -336,7 +336,7 @@ app.directive('ctcRole', function ($state, serverCommunication) {
                     serverCommunication.getCategorys({
                         successCallBack: function (iObj) {
                             console.error('In successCallBack', iObj);
-                            var _data = JSON.parse(iObj.data);
+                            var _data = iObj.data;
                             console.error(_data)
                             scope.catogoryArray = [].concat(_data);
                             for (var k = 0; k < scope.catogoryArray.length ; k++) {
