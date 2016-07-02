@@ -65,7 +65,7 @@ namespace KindleSpur.Data
             return _transactionStatus;
         }
 
-        public bool addFeedback(string UserId, Feedback feedback)
+        public int addFeedback(string UserId, Feedback feedback)
         {
             bool _transactionStatus = false;
             try {
@@ -82,12 +82,13 @@ namespace KindleSpur.Data
                 user.RewardPointsGained += 1;
                 _users.Save(user);
                 _transactionStatus = true;
+                return user.RewardPointsGained;
             }
             catch(Exception e)
             {
                 _transactionStatus = false;
             }
-            return _transactionStatus;
+            return 0;
 
         }
 
