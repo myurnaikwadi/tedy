@@ -259,7 +259,7 @@ app.factory('serverCommunication', function ($http) {
          * @Purpose :
      */
         unlockGameCode: function (iObj) {
-            $http.get('/CTS/GetCTSFilters').then(iObj.successCallBack, iObj.failureCallBack)
+            $http.get('/User/UnlockGame').then(iObj.successCallBack, iObj.failureCallBack)
         },
 
     }

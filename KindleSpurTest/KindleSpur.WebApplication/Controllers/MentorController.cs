@@ -57,7 +57,7 @@ namespace KindleSpur.WebApplication.Controllers
         }
 
         [HttpPost]
-        public Boolean SaveFeedBack(Feedback feedback)
+        public int SaveFeedBack(Feedback feedback)
         {
             CoachOrMentorRepository _coachRepo = new CoachOrMentorRepository();
             return _coachRepo.addFeedback(UserId, feedback);

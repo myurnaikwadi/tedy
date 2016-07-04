@@ -168,5 +168,47 @@ namespace KindleSpur.Data
             }
             return _transactionStatus;
         }
+
+        public string GamesUnLocked(ObjectId userId)
+        {
+            bool _transactionStatus = false;
+            try
+            {
+                var _userCollection = _kindleDatabase.GetCollection("UserDetails");
+                var userDetail = _userCollection.FindOneByIdAs<User>(userId);
+                
+                Game _game = UnlockGames(userDetail.RewardPointsGained);
+                if (_game != null)
+                {
+                    //_game.ExpirationDate = DateTime.Now.AddDays(7);
+                    if (userDetail.Games == null) userDetail.Games = new List<Game>();
+                    userDetail.Games.Add(_game);
+                   // userDetail.RewardPointsGained -= (_game.GameId * 10);
+                    _userCollection.Save(userDetail);
+                    _transactionStatus = true;
+                    return _game.Key;
+                }
+            }
+            catch (Exception ex)
+            {
+                _logCollection.Insert("{ Error : 'Failed at EditUser().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ");
+                 throw ex;
+            }
+            return "";
+        }
+
+        private Game UnlockGames(int RewardPointsGained)
+        {
+            var _gamesCollection = _kindleDatabase.GetCollection("BrainGames");
+     
+            if(RewardPointsGained < 10)
+            {
+                throw new Exception("You do not have sufficient points to unlock games!!!");
+            }
+
+            // RewardPointsGained = (RewardPointsGained - (RewardPointsGained % 10))/10;
+            string Id = (RewardPointsGained / 10).ToString();
+            return _gamesCollection.FindOneAs<Game>(Query.EQ("GameId", Id));
+        }
     }
 }

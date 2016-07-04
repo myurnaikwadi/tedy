@@ -30,7 +30,7 @@ namespace KindleSpur.Models
         public string LinkdinURL { get; set; }
         public string description { get; set; }
         public string Photo { get; set; }
-
+        public List<Game> Games { get; set; }
         [BsonId]
         public ObjectId Id
         {

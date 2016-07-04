@@ -1,17 +1,15 @@
-﻿using System;
+﻿using KindleSpur.Data;
+using KindleSpur.Models;
+using KindleSpur.Models.Interfaces;
+using KindleSpur.WebApplication.MessageHelper;
+using MongoDB.Bson;
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using KindleSpur.Models;
-using KindleSpur.Models.Interfaces;
-using KindleSpur.Data;
-using System.Net.Mail;
-using KindleSpur.WebApplication.MessageHelper;
 using System.Web.Script.Serialization;
-using System.IO;
-using MongoDB.Bson;
-using System.Web.UI;
 
 namespace KindleSpur.WebApplication.Controllers
 {
@@ -172,6 +170,12 @@ namespace KindleSpur.WebApplication.Controllers
             return View();
         }
                 
+        public string UnlockGame()
+        {
+            UserRepository _repo = new UserRepository();
+            ObjectId userId = ((IUser)System.Web.HttpContext.Current.Session["User"]).Id;
+            return _repo.GamesUnLocked(userId);
+        }
        
 
         //[HttpPost]

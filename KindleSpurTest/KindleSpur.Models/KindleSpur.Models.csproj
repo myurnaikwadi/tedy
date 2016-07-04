@@ -56,11 +56,13 @@
     <Compile Include="CoachOrMentor.cs" />
     <Compile Include="CTSFilter.cs" />
     <Compile Include="Feedback.cs" />
+    <Compile Include="Game.cs" />
     <Compile Include="Interfaces\ICategory.cs" />
     <Compile Include="Interfaces\ICoacheeOrMentee.cs" />
     <Compile Include="Interfaces\ICoachOrMentor.cs" />
     <Compile Include="Interfaces\ICommunication.cs" />
     <Compile Include="Interfaces\IFeedback.cs" />
+    <Compile Include="Interfaces\IGame.cs" />
     <Compile Include="Interfaces\ISkill.cs" />
     <Compile Include="Interfaces\ITopic.cs" />
     <Compile Include="Interfaces\IUser.cs" />

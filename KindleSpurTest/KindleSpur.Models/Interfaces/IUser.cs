@@ -19,7 +19,7 @@ namespace KindleSpur.Models.Interfaces
         string LastName { get; set; }
 
         int Mobile { get; set; }
-
+        int RewardPointsGained { get; set; }
         string Country { get; set; }
 
         string Region { get; set; }
@@ -29,6 +29,7 @@ namespace KindleSpur.Models.Interfaces
         string description { get; set; }
 
         string Photo { get; set; }
+        List<Game> Games { get; set; }
 
         Boolean IsExternalAuthentication { get; set; }
         DateTime CreateDate { get; set; }
