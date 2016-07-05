@@ -25,7 +25,8 @@
                 , { name: 'BRAIN GAMES' }
                 , { name: 'GRAPHS' }
                 , { name: 'RESOURCES' }
-                ,{ name : 'Add Skills'}
+                , { name: 'Add Skills' }
+                , { name: 'REWARDS' }
     ]
     $scope.applicationRole = [{ name: 'COACHEE' }, { name: 'MENTEE' }, { name: 'COACH' }, { name: 'MENTOR' }]
     $scope.rightSideDashBoardArray = [
@@ -165,11 +166,11 @@
         serverCommunication.sendFeedback({
             loggedUserDetails: _object,
             successCallBack: function (iObj) {
-                console.error('In successCallBack');
-                $scope.points = iObj.rewardPoints;
+                console.error('In successCallBack', iObj);
+                $scope.points = iObj.data;
             },
-            failureCallBack: function () {
-                console.error('In failureCallBack');
+            failureCallBack: function (iObj) {
+                console.error('In failureCallBack', iObj);
 
             }
         });
@@ -205,6 +206,36 @@
 
     }
 
+    $scope.myRewardsArray = [
+					{ name: 'www.yryr.com', unlockKey : 'NUF783F' },
+					{ name: 'PSR', unlockKey: 'UF783GF' },
+					{ name: 'www.cdd.com', unlockKey: 'F783F33' },
+					{ name: 'www.fff.com', unlockKey: 'N3FF789' }
+    ];
 
+    $scope.redeemPointsClick = function () {
+        $scope.askFeedback = false;
+        $scope.formValue = '1';
+        $scope.menuClick(7);
+        serverCommunication.unlockGameCode({
+            //   loggedUserDetails: $rootScope.loggedDetail,
+            successCallBack: function (iObj) {
+
+                alert(iObj.data);
+                $scope.gameKey = iObj.data;
+                console.error('In successCallBack', iObj);
+
+            },
+            failureCallBack: function (iObj) {
+                console.error('In failureCallBack', iObj);
+
+            }
+        });
+    };
+
+    $scope.openRedeemPanel = function () {
+        $scope.askFeedback = true;
+        $scope.formValue = '6';
+    };
 
 });
