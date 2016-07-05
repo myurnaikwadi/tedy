@@ -27,7 +27,7 @@
                     </div>
 
                     <div class="communicationMainPanel">
-                        <div ng-show='askFeedback' class="feedbackPanel">
+                        <div ng-show='askFeedback' class="feedbackPanel" style="height: 75%;">
                             <!-- Screen 1 -->
                             <div class="popupContainer" ng-show="formValue == '3'">
                                 <div class="popupContainerOne">
@@ -87,7 +87,7 @@
                                 </div>
                                 <div class="popupContainerFour">
                                     <div class="fa fa-angle-left arrowContainer genericPointerClass" ng-click="formValue = '3'"></div>
-                                    <button type="submit" ng-click="feedBack.sendFeedBackDetail()">Submit</button>
+                                    <button type="submit" ng-click="feedBack.sendFeedBackDetail();formValue = '5'">Submit</button>
                                 </div>
                             </div>
 
@@ -110,6 +110,138 @@
                                 <div class="popupContainerFour">
                                     <div class="fa fa-angle-left arrowContainer genericPointerClass" ng-click="formValue = '1'"></div>
                                     <div class="fa fa-angle-right arrowContainer genericPointerClass" ng-click="formValue = '3'"></div>
+                                </div>
+                            </div>
+
+                            <!-- Screen 5 -->
+
+                            <div class="popupContainer" ng-show="formValue== '5'">
+                                <div class="fivePopupContainerOne">
+                                    <div class="" style="float: left;display:flex; width: 100%;">
+                                        <h1 style="margin: auto auto;margin-top: 6%;color: white;font-weight: 600;">THANK YOU</h1>
+                                    </div>
+                                    <div class="" style="float: left;display:flex; width: 100%;">
+                                        <h5 style="margin: auto auto;font-size: 16px;color: white;">FOR YOUR FEEDBACK!</h5>
+                                    </div>
+
+
+                                </div>
+                                <div class="fivePopupContainerTwo">
+                                    <img style="position:absolute;left: 46%;width: 60px;" src="~/Images/communication/moneyBag.png">
+                                    <div class="" style="float: left;display:flex; width: 100%;height: 100%;">
+                                        <div class="" style="border: 3px solid black;margin: auto auto;float: left;display:flex; width: 35%;height: 60%;margin-bottom: 4%;">
+                                            <div class="" style="float: left; width: 100%;margin: auto auto;">
+                                                <h5 class="fontClass" style="font-size: 19px;text-align: center;font-weight: 500;">YOU HAVE EARNED</h5>
+                                                <h5 class="fontClass" style="font-size: 19px;text-align: center;font-weight: 700;font-weight: 700;margin: 2px;">{{points}} POINTS</h5>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="fivePopupContainerThree">
+                                    <div class="" style="float: left;width: 100%;height: 100%;">
+
+                                        <div class="" style="float: left; width: 100%; height: 40%;">
+                                            <h5 class="fontClass" style="font-size: 19px;text-align: center;font-weight: 500;">PLANT A TREE</h5>
+                                        </div>
+                                        <div class="" style="float: left; width: 100%; display: flex;">
+                                            <button type="button" style="margin: auto auto; margin-right: 10%; padding: 6px;width: 20%;" class="signupButton fontClass btn btn-default" ng-click="signupClick()">SHARE</button>
+                                            <button type="button" style="margin: auto auto; margin-left: 0%; padding: 6px;width: 20%;" class="signupButton fontClass btn btn-default" ng-click="formValue = '6'">REDEEM POINTS</button>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Screen 6 -->
+                            <div class="popupContainer" ng-show="formValue == '6'">
+                                <div class="fivePopupContainerOne" style="height:21%;">
+                                    <div class="" style="float: left;display:flex; width: 100%;height: 100%;">
+                                        <h5 style="margin: auto auto;font-size: 19px;">REDEEM POINTS</h5>
+                                    </div>
+                                </div>
+                                <div class="fivePopupContainerTwo" style="height:30%;">
+                                    <img style="position:absolute;left: 46%;width: 60px;" src="~/Images/communication/moneyBag.png">
+                                    <div class="" style="float: left;display:flex; width: 100%;height: 100%;">
+
+                                        <div class="" style="border: 3px solid black;margin: 6% auto;float: left;display:flex; width: 55%;height: 60%;">
+                                            <div class="" style="float: left; width: 100%;margin: auto auto;">
+                                                <h5 class="fontClass" style="font-size: 22px;text-align: center;font-weight: 600;margin: 2px;">{{points}} POINTS</h5>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="fivePopupContainerThree" style="height: 49%;">
+                                    <div class="" style="float: left;width: 100%;height: 100%;">
+                                        <div class="" style="float: left; width: 100%; height: 60%;display: flex;">
+                                            <div class="partSubOne" style="margin: auto auto;height: 100%;margin-right: 3%;">
+                                                <div class="" style="float: left;display: flex;width: 100%;height: 25%;">
+                                                    <input type="radio" name="rm" style="margin: auto auto;float: left;height: 30px;width: 20px;">
+                                                </div>
+                                                <div class="" style="float: left;display: flex;width: 100%;height: 30%;">
+                                                    <img style="float: left;margin: auto;margin-right: 0;width: 35px;" src="~/Images/communication/moneyBag.png">
+                                                    <h5 class="fontClass" style="font-size: 27px;text-align: center;font-weight: 600;margin: 6px auto;margin: auto;margin-left: 3%;width: 35px;">{{points}}</h5>
+                                                </div>
+                                                <div class="" style="float: left;display: flex;width: 100%;height: 30%;">
+                                                    <h5 class="fontClass" style="font-size: 14px;text-align: center;font-weight: 600;margin: auto auto;">3 Brain Games</h5>
+                                                </div>
+                                            </div>
+                                            <div class="partSubTwo" style="margin: auto auto;height: 100%;">
+                                                <div class="" style="float: left;display: flex;width: 100%;height: 25%;">
+                                                    <input type="radio" name="rm" style="margin: auto auto;float: left;height: 30px;width: 20px;">
+                                                </div>
+                                                <div class="" style="float: left;display: flex;width: 100%;height: 30%;">
+                                                    <img style="float: left;margin: auto;margin-right: 0;width: 35px;" src="~/Images/communication/moneyBag.png">
+                                                    <h5 class="fontClass" style="font-size: 27px;text-align: center;font-weight: 600;margin: 6px auto;margin: auto;margin-left: 3%;width: 35px;">{{points}}</h5>
+                                                </div>
+                                                <div class="" style="float: left;display: flex;width: 100%;height: 30%;">
+                                                    <h5 class="fontClass" style="font-size: 14px;text-align: center;font-weight: 600;margin: auto auto;">PSR</h5>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="" style="float: left; width: 100%; display: flex;height: 40%;">
+                                            <button type="button" style="border-radius: 0;background : #D72A1A; margin: auto auto; padding: 6px;font-size: 11px;color:white;" ng-click="askFeedback = false;formValue = '1'" class="fontClass btn btn-default" ng-click="signupClick()">REDEEM POINTS</button>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div> 
+
+
+                            <!-- Screen 7 -->
+
+                            <div class="popupContainer" ng-show="formValue== '7'">
+                                <div class="fivePopupContainerOne">
+                                    <div class="" style="float: left;display:flex; width: 100%;">
+                                        <h1 style="margin: auto auto;margin-top: 6%;color: white;font-weight: 600;">THANK YOU</h1>
+                                    </div>
+                                    <div class="" style="float: left;display:flex; width: 100%;">
+                                        <h5 style="margin: auto auto;font-size: 16px;color: white;">FOR YOUR FEEDBACK!</h5>
+                                    </div>
+
+
+                                </div>
+                                <div class="fivePopupContainerTwo">
+                                    <div class="" style="float: left;display:flex; width: 100%;height: 100%;">
+                                        <div class="" style="border: 3px solid black;margin: auto auto;float: left;display:flex; width: 35%;height: 60%;margin-bottom: 8%;">
+                                            <div class="" style="float: left; width: 100%;margin: auto auto;">
+                                                <h5 class="fontClass" style="font-size: 19px;text-align: center;font-weight: 500;">YOU HAVE EARNED</h5>
+                                                <h5 class="fontClass" style="font-size: 19px;text-align: center;font-weight: 700;font-weight: 700;margin: 2px;">60 POINTS</h5>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="fivePopupContainerThree">
+                                    <div class="" style="float: left;width: 100%;height: 100%;">
+
+                                        <div class="" style="float: left; width: 100%; height: 40%;">
+                                            <h5 class="fontClass" style="font-size: 19px;text-align: center;font-weight: 500;">PLANT A TREE</h5>
+                                        </div>
+                                        <div class="" style="float: left; width: 100%; display: flex;">
+                                            <button type="button" style="margin: auto auto; margin-right: 10%; padding: 6px;width: 20%;" class="signupButton fontClass btn btn-default" ng-click="signupClick()">SHARE</button>
+                                            <button type="button" style="margin: auto auto; margin-left: 0%; padding: 6px;width: 20%;" class="signupButton fontClass btn btn-default" ng-click="signupClick()">REDEEM POINTS</button>
+                                        </div>
+
+                                    </div>
                                 </div>
                             </div>
                         </div>

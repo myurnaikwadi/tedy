@@ -144,8 +144,9 @@
         $scope.feedBack.selectedstar = iIndex;
     };
 
+    $scope.points = 0;
     $scope.feedBack.sendFeedBackDetail = function () {
-        $scope.askFeedback = false;
+        //$scope.askFeedback = false;
         var _object = {
             sender : "patilsagar28290@gmail.com",
             selectedComparioson: {
@@ -163,9 +164,9 @@
         
         serverCommunication.sendFeedback({
             loggedUserDetails: _object,
-            successCallBack: function () {
+            successCallBack: function (iObj) {
                 console.error('In successCallBack');
-
+                $scope.points = iObj.rewardPoints;
             },
             failureCallBack: function () {
                 console.error('In failureCallBack');
@@ -195,7 +196,7 @@
     $scope.askFeedback = false;
     $scope.formValue = '0';
     $scope.askFeedBackFunc= function () {
-        $scope.askFeedback = true
+        $scope.askFeedback = true;  
         $scope.formValue = '1';
         $scope.feedBack.selectedComparioson = 1;
         $scope.feedBack.selectedAttractive = 1;

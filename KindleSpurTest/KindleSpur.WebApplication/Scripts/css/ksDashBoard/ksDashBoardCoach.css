@@ -689,3 +689,21 @@ float: left;
   border-radius:100px/10px;
   z-index:-1;
 }
+.fivePopupContainerOne{
+    width: 100%;
+   height: 30%;
+	float:left;
+	
+}
+.fivePopupContainerTwo{
+    width: 100%;
+   height: 40%;
+    float:left;
+	
+}
+.fivePopupContainerThree{
+    width: 100%;
+   height: 30%;
+    float:left;
+    
+}
