@@ -1,7 +1,7 @@
 ﻿app.controller('ksDashBoardCoachController', function ($rootScope,$scope, serverCommunication, $stateParams) {
     console.error($stateParams) 
     $scope.passedData = $stateParams;
-
+    window.ddd = $scope;
     $scope.coachingStatusArray = [{ name: 'MAYUR N', progressBar: 50, skills: 'ANGULAR JS', status: 'NOT STARTED' }
 					, { name: 'SAGAR N', progressBar: 30, skills: 'C# MVC', status: 'JUST PROGRESS' }
 					, { name: 'SAGAR P', progressBar: 90, skills: 'C# MVC', status: 'JUST PROGRESS' }
