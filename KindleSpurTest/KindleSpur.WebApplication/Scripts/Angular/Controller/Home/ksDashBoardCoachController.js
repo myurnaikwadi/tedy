@@ -78,6 +78,7 @@
 
                 },
                 failureCallBack: function (iObj) {
+                    alert('Sorry......, You do not have sufficient point to unlock games!!!');
                     console.error('In failureCallBack', iObj);
 
                 }

@@ -183,7 +183,7 @@ namespace KindleSpur.Data
                     //_game.ExpirationDate = DateTime.Now.AddDays(7);
                     if (userDetail.Games == null) userDetail.Games = new List<Game>();
                     userDetail.Games.Add(_game);
-                   // userDetail.RewardPointsGained -= (_game.GameId * 10);
+                     userDetail.RewardPointsGained -= (int.Parse(_game.GameId) * 10);
                     _userCollection.Save(userDetail);
                     _transactionStatus = true;
                     return _game.Key;

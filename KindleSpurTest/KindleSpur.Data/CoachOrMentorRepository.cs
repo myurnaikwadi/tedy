@@ -80,9 +80,10 @@ namespace KindleSpur.Data
                 var _users = _kindleDatabase.GetCollection("UserDetails");
                 User user = _users.FindOneAs<User>(Query.EQ("EmailAddress", UserId));
                 user.RewardPointsGained += 1;
+                user.TotalRewardPoints +=1;
                 _users.Save(user);
                 _transactionStatus = true;
-                return user.RewardPointsGained;
+                return user.TotalRewardPoints;
             }
             catch(Exception e)
             {
