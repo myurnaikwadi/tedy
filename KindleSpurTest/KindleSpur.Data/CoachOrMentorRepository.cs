@@ -75,11 +75,12 @@ namespace KindleSpur.Data
 
                 if (entity.Feedback == null) entity.Feedback = new List<Feedback>();
                 feedback.Sender = UserId;
-                entity.Feedback.Add(feedback);           
+                entity.Feedback.Add(feedback);
+                entity.RewardPointsGained += 1;           
                 coachOrMentors.Save(entity);
                 var _users = _kindleDatabase.GetCollection("UserDetails");
                 User user = _users.FindOneAs<User>(Query.EQ("EmailAddress", UserId));
-                user.RewardPointsGained += 1;
+                user.BalanceRewardPoints += 1;
                 user.TotalRewardPoints +=1;
                 _users.Save(user);
                 _transactionStatus = true;
@@ -182,6 +183,31 @@ namespace KindleSpur.Data
             }
             return _transactionStatus;
         
+        }
+
+        public void GetRewardPoints(string userId, ref Reward reward)
+        {
+            bool _transactionStatus = false;
+            try
+            {
+                var _collection = _kindleDatabase.GetCollection("CoachOrMentor");
+                CoachOrMentor coach = _collection.FindOneAs<CoachOrMentor>(Query.And(Query.EQ("UserId", userId),
+                                                                                             Query.EQ("Role", "Coach")));
+                reward.CoachRewardPoints = (coach != null ? coach.RewardPointsGained : 0);
+                CoachOrMentor mentor = _collection.FindOneAs<CoachOrMentor>(Query.And(Query.EQ("UserId", userId),
+                                                                                              Query.EQ("Role", "Mentor")));
+
+                reward.MentorRewardPoints = (mentor != null ? mentor.RewardPointsGained : 0);
+
+                _transactionStatus = true;
+
+            }
+            catch (MongoException ex)
+            {
+                _logCollection.Insert("{ Error : 'Failed at AddNewCoachOrMentor().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ");
+                throw new MongoException("Signup failure!!!");
+            }
+            
         }
 
         public List<ICoachOrMentor> GetAllCoachOrMentorDetails()

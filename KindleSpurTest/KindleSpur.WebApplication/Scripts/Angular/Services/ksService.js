@@ -268,7 +268,7 @@ app.factory('serverCommunication', function ($http) {
         * @Purpose :
     */
         getPointsRecord: function (iObj) {
-            $http.get('/User/UnlockGame').then(iObj.successCallBack, iObj.failureCallBack)
+            $http.get('/User/GetRewardPoints').then(iObj.successCallBack, iObj.failureCallBack)
         },
         
 

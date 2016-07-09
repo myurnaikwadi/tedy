@@ -178,6 +178,21 @@ namespace KindleSpur.WebApplication.Controllers
         }
        
 
+        public string GetRewardPoints()
+        {
+            Reward reward = new Reward();
+            UserRepository _userRepo = new UserRepository();
+            string EmailAddress = ((IUser)System.Web.HttpContext.Current.Session["User"]).EmailAddress;
+            _userRepo.GetRewardPoints(EmailAddress, ref reward);
+
+            CoachOrMentorRepository _coachOrMentorRepo = new CoachOrMentorRepository();
+            _coachOrMentorRepo.GetRewardPoints(EmailAddress, ref reward);
+
+            reward.CoacheeRewardPoints = 0;
+            reward.MenteeRewardPoints = 0;
+            return reward.ToJson();
+        }
+
         //[HttpPost]
         //public ActionResult ForgotPassword(string EmailAddress)
         //{            

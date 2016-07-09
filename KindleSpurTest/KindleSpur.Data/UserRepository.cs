@@ -169,6 +169,39 @@ namespace KindleSpur.Data
             return _transactionStatus;
         }
 
+        public void GetRewardPoints(string EmailAddress, ref Reward reward)
+        {
+            bool _transactionStatus = false;
+            try
+            {
+                var _userCollection = _kindleDatabase.GetCollection("UserDetails");
+                var userDetail = _userCollection.FindOneAs<User>(Query.EQ("EmailAddress", EmailAddress));
+                 reward.TotalRewardPoints = (userDetail.TotalRewardPoints.ToString() != null ? userDetail.TotalRewardPoints : 0);
+                 reward.BalanceRewardPoints = (userDetail.BalanceRewardPoints.ToString() != null ? userDetail.BalanceRewardPoints : 0);
+                 reward.RedeemedPoints = (userDetail.RedeemedPoints.ToString() != null ? userDetail.RedeemedPoints : 0);
+               
+                if (reward.PSRAndGames == null) reward.PSRAndGames = new List<ActiveGamesAndPSR>();
+
+                if (userDetail.Games != null)
+                {
+                    for (int index = userDetail.Games.Count - 1; index >= 0; index--)
+                    {
+                        ActiveGamesAndPSR objGamesAndPSR = new ActiveGamesAndPSR();
+                        objGamesAndPSR.Key = userDetail.Games[index].Key;
+                        objGamesAndPSR.date = userDetail.Games[index].UnlockedDate;
+                        objGamesAndPSR.PSR = false;
+
+                        reward.PSRAndGames.Add(objGamesAndPSR);
+                    }
+                }
+                _transactionStatus = true;
+            }
+            catch (Exception ex)
+            {
+                _logCollection.Insert("{ Error : 'Failed at EditUser().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ");
+            }
+        }
+
         public string GamesUnLocked(ObjectId userId)
         {
             bool _transactionStatus = false;
@@ -177,14 +210,19 @@ namespace KindleSpur.Data
                 var _userCollection = _kindleDatabase.GetCollection("UserDetails");
                 var userDetail = _userCollection.FindOneByIdAs<User>(userId);
                 
-                Game _game = UnlockGames(userDetail.RewardPointsGained);
+                Game _game = UnlockGames(userDetail.TotalRewardPoints);
                 if (_game != null)
                 {
-                    //_game.ExpirationDate = DateTime.Now.AddDays(7);
                     if (userDetail.Games == null) userDetail.Games = new List<Game>();
-                    userDetail.Games.Add(_game);
-                     userDetail.RewardPointsGained -= (int.Parse(_game.GameId) * 10);
-                    _userCollection.Save(userDetail);
+
+                    if (!userDetail.Games.Any(x => x.Key == _game.Key))
+                    {
+                        _game.UnlockedDate = DateTime.Now;
+                        userDetail.Games.Add(_game);
+                        userDetail.BalanceRewardPoints -= (int.Parse(_game.GameId) * 10);
+                        userDetail.RedeemedPoints += (int.Parse(_game.GameId) * 10);
+                        _userCollection.Save(userDetail);                       
+                    }
                     _transactionStatus = true;
                     return _game.Key;
                 }

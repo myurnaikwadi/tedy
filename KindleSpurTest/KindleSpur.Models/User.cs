@@ -23,7 +23,8 @@ namespace KindleSpur.Models
         public string Country { get; set; }
         public string Region { get; set; }
         public Boolean IsExternalAuthentication { get; set; }
-        public int RewardPointsGained { get; set; }
+        public int BalanceRewardPoints { get; set; }
+        public int RedeemedPoints { get; set; }
         public int TotalRewardPoints { get; set; }
         public Boolean IsVerified { get; set; }
         public DateTime CreateDate { get; set; }

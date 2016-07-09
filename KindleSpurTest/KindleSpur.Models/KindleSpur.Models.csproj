@@ -52,6 +52,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ActiveGamesAndPSR.cs" />
     <Compile Include="CoacheeOrMentee.cs" />
     <Compile Include="CoachOrMentor.cs" />
     <Compile Include="CTSFilter.cs" />
@@ -73,6 +74,7 @@
     <Compile Include="ProgramConducted.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="QueAndAns.cs" />
+    <Compile Include="Reward.cs" />
     <Compile Include="Skill.cs" />
     <Compile Include="User.cs" />
   </ItemGroup>

@@ -19,7 +19,9 @@ namespace KindleSpur.Models.Interfaces
         string LastName { get; set; }
 
         int Mobile { get; set; }
-        int RewardPointsGained { get; set; }
+        int BalanceRewardPoints { get; set; }
+
+        int RedeemedPoints { get; set; }
 
         int TotalRewardPoints { get; set; }
         string Country { get; set; }

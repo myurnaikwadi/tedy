@@ -68,13 +68,13 @@
             loggedUserDetails: $rootScope.loggedDetail,
             successCallBack: function (iObj) {
                 console.error('In successCallBack', iObj);
-                //$scope.rewardsPoints.mentorPoints
-                //$scope.rewardsPoints.menteePoints
-                //$scope.rewardsPoints.coachPoints
-                //$scope.rewardsPoints.coacheePoints
-                //$scope.rewardsPoints.totalPoints
-                //$scope.rewardsPoints.balancePoints
-                //$scope.rewardsPoints.redeemedPoints
+                $scope.rewardsPoints.mentorPoints = iObj.Data.MentorRewardPoints;
+                $scope.rewardsPoints.menteePoints = iObj.Data.MenteeRewardPoints;
+                $scope.rewardsPoints.coachPoints = iObj.Data.CoachRewardPoints;
+                $scope.rewardsPoints.coacheePoints = iObj.Data.CoacheeRewardPoints;
+                $scope.rewardsPoints.totalPoints = iObj.Data.TotalRewardPoints;
+                $scope.rewardsPoints.balancePoints = iObj.Data.BalanceRewardPoints;
+                $scope.rewardsPoints.redeemedPoints = iObj.Data.RedeemedPoints;
 
 
             },
