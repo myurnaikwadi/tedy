@@ -244,8 +244,8 @@
                                     <div class="conversationListPanel genericPointerClass" ng-class="{ highlightedGrayClass : conversation.selectedConversation == true }">
                                         <div style="float:left;    margin: auto auto;width: 85%;">
                                             <h5 style="margin:auto auto;margin-left: 0;font-size: large;float: left;width: 88%;    font-weight: 700;    font-size: 15px;">{{conversation.name}}</h5>
-                                            <div class="applicationNotiCount" title="5" style=" display flex;float:left;text-align: center;height 15px;width 15px;">
-                                                <h6 class="fontClass" style=" font-size 10px;display inline-block;text-align center; text-overflow clip; margin auto auto;color:white;">5</h6>
+                                            <div class="applicationNotiCount" title="5" style=" display :flex; float:left; text-align: center; height: 15px; width : 15px;">
+                                                <h6 class="fontClass" style=" font-size:10px;display :inline-block;text-align: center; text-overflow: clip; margin: auto auto;color:white;">5</h6>
                                             </div>
                                         </div>
                                     </div>
@@ -428,15 +428,15 @@
                             <div class="rewardPointRecord">
                                 <div class="countRecordPartOne">
                                     <div class="totalPointsPanel">
-                                        <h5 class="fontClass" style="float: left;font-size: 40px;color: orange;">130</h5>
+                                        <h5 class="fontClass" style="float: left;font-size: 40px;color: orange;">{{rewardsPoints.totalPoints}}</h5>
                                         <h5 class="fontClass" style="float: left;font-size: 17px;text-align: center;width: 50%;color: lightgray;">TOTAL POINTS</h5>
                                     </div>
                                     <div class="redeemedPointsPanel">
-                                        <h5 class="fontClass" style="float: left;font-size: 40px;color: green;">40</h5>
+                                        <h5 class="fontClass" style="float: left;font-size: 40px;color: green;">{{rewardsPoints.redeemedPoints}}</h5>
                                         <h5 class="fontClass" style="float: left;font-size: 17px;text-align: center;width: 50%;color: lightgray;">REDEEMED POINTS</h5>
                                     </div>
                                     <div class="balancePointsPanel">
-                                        <h5 class="fontClass" style="float: left;font-size: 40px;color: skyblue;">90</h5>
+                                        <h5 class="fontClass" style="float: left;font-size: 40px;color: skyblue;">{{rewardsPoints.balancePoints}}</h5>
                                         <h5 class="fontClass" style="float: left;font-size: 17px;text-align: center;width: 50%;color: lightgray;">BALANCE POINTS</h5>
                                     </div>
                                 </div>
@@ -445,25 +445,25 @@
                                         <div class="rolesPointStatus mentorThemeColor">
                                             <h5 class="fontClass roleLabelPointStatus">MENTOR</h5>
                                         </div>
-                                        <h5 class="fontClass" style="float: left;text-align: center;width: 100%;margin-top:15px;">30</h5>
+                                        <h5 class="fontClass" style="float: left;text-align: center;width: 100%;margin-top:15px;">{{rewardsPoints.mentorPoints}}</h5>
                                     </div>
                                     <div class="roleNamePointStatus">
                                         <div class="rolesPointStatus coachThemeColor">
                                             <h5 class="fontClass roleLabelPointStatus">COACH</h5>
                                         </div>
-                                        <h5 class="fontClass" style="float: left;text-align: center;width: 100%;margin-top:15px;">26</h5>
+                                        <h5 class="fontClass" style="float: left;text-align: center;width: 100%;margin-top:15px;">{{rewardsPoints.coachPoints}}</h5>
                                     </div>
                                     <div class="roleNamePointStatus">
                                         <div class="rolesPointStatus menteeThemeColor">
                                             <h5 class="fontClass roleLabelPointStatus">MENTEE</h5>
                                         </div>
-                                        <h5 class="fontClass" style="float: left;text-align: center;width: 100%;margin-top:15px;">60</h5>
+                                        <h5 class="fontClass" style="float: left;text-align: center;width: 100%;margin-top:15px;">{{rewardsPoints.menteePoints}}</h5>
                                     </div>
                                     <div class="roleNamePointStatus">
                                         <div class="rolesPointStatus coacheeThemeColor">
                                             <h5 class="fontClass roleLabelPointStatus">COACH</h5>
                                         </div>
-                                        <h5 class="fontClass" style="float: left;text-align: center;width: 100%;margin-top:15px;">30</h5>
+                                        <h5 class="fontClass" style="float: left;text-align: center;width: 100%;margin-top:15px;">{{rewardsPoints.coachPoints}}</h5>
                                     </div>
 
                                 </div>

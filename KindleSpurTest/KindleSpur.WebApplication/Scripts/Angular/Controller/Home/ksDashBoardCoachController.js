@@ -49,8 +49,42 @@
         $scope.askFeedback = false;
         switch (iIndex) {
             case 1: $scope.getCoachRecord(); break;
+            case 7: $scope.getPointsRecord(); break;
         }
     };
+
+    $scope.rewardsPoints = {
+        mentorPoints: 23,
+        menteePoints: 23,
+        coachPoints: 23,
+        coacheePoints: 23,
+        balancePoints: 45,
+        redeemedPoints: 23,
+        totalPoints: 121
+    };
+
+    $scope.getPointsRecord = function () {
+        serverCommunication.getPointsRecord({
+            loggedUserDetails: $rootScope.loggedDetail,
+            successCallBack: function (iObj) {
+                console.error('In successCallBack', iObj);
+                //$scope.rewardsPoints.mentorPoints
+                //$scope.rewardsPoints.menteePoints
+                //$scope.rewardsPoints.coachPoints
+                //$scope.rewardsPoints.coacheePoints
+                //$scope.rewardsPoints.totalPoints
+                //$scope.rewardsPoints.balancePoints
+                //$scope.rewardsPoints.redeemedPoints
+
+
+            },
+            failureCallBack: function (iObj) {
+                console.error('In failureCallBack', iObj);
+
+            }
+        });
+    };
+
     $scope.getCoachRecord = function () {
         serverCommunication.getCoachingWithStatus({
             loggedUserDetails: $rootScope.loggedDetail,
