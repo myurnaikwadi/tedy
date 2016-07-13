@@ -184,15 +184,15 @@ namespace KindleSpur.Data
 
                 if (userDetail.Games != null)
                 {
-                    for (int index = userDetail.Games.Count - 1; index >= 0; index--)
-                    {
-                        ActiveGamesAndPSR objGamesAndPSR = new ActiveGamesAndPSR();
-                        objGamesAndPSR.Key = userDetail.Games[index].Key;
-                        objGamesAndPSR.date = userDetail.Games[index].UnlockedDate;
-                        objGamesAndPSR.PSR = false;
+                    //for (int index = userDetail.Games.Count - 1; index >= 0; index--)
+                    //{
+                    //    ActiveGamesAndPSR objGamesAndPSR = new ActiveGamesAndPSR();
+                    //    objGamesAndPSR.Key = userDetail.Games[index].Key;
+                    //    objGamesAndPSR.date = userDetail.Games[index].UnlockedDate;
+                    //    objGamesAndPSR.PSR = false;
 
-                        reward.PSRAndGames.Add(objGamesAndPSR);
-                    }
+                    //    reward.PSRAndGames.Add(objGamesAndPSR);
+                    //}
                 }
                 _transactionStatus = true;
             }

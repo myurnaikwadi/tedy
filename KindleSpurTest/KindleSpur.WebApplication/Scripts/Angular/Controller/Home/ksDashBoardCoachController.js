@@ -54,27 +54,27 @@
     };
 
     $scope.rewardsPoints = {
-        mentorPoints: 23,
-        menteePoints: 23,
-        coachPoints: 23,
-        coacheePoints: 23,
-        balancePoints: 45,
-        redeemedPoints: 23,
-        totalPoints: 121
+        mentorPoints: 0,
+        menteePoints: 0,
+        coachPoints: 0,
+        coacheePoints: 0,
+        balancePoints: 0,
+        redeemedPoints: 0,
+        totalPoints: 0
     };
 
     $scope.getPointsRecord = function () {
         serverCommunication.getPointsRecord({
-            loggedUserDetails: $rootScope.loggedDetail,
+        
             successCallBack: function (iObj) {
                 console.error('In successCallBack', iObj);
-                $scope.rewardsPoints.mentorPoints = iObj.Data.MentorRewardPoints;
-                $scope.rewardsPoints.menteePoints = iObj.Data.MenteeRewardPoints;
-                $scope.rewardsPoints.coachPoints = iObj.Data.CoachRewardPoints;
-                $scope.rewardsPoints.coacheePoints = iObj.Data.CoacheeRewardPoints;
-                $scope.rewardsPoints.totalPoints = iObj.Data.TotalRewardPoints;
-                $scope.rewardsPoints.balancePoints = iObj.Data.BalanceRewardPoints;
-                $scope.rewardsPoints.redeemedPoints = iObj.Data.RedeemedPoints;
+                $scope.rewardsPoints.mentorPoints = iObj.data.MentorRewardPoints;
+                $scope.rewardsPoints.menteePoints = iObj.data.MenteeRewardPoints;
+                $scope.rewardsPoints.coachPoints = iObj.data.CoachRewardPoints;
+                $scope.rewardsPoints.coacheePoints = iObj.data.CoacheeRewardPoints;
+                $scope.rewardsPoints.totalPoints = iObj.data.TotalRewardPoints;
+                $scope.rewardsPoints.balancePoints = iObj.data.BalanceRewardPoints;
+                $scope.rewardsPoints.redeemedPoints = iObj.data.RedeemedPoints;
 
 
             },
@@ -105,7 +105,8 @@
             serverCommunication.unlockGameCode({
              //   loggedUserDetails: $rootScope.loggedDetail,
                 successCallBack: function (iObj) {
-                    
+                    debugger;
+                    $scope.getPointsRecord();
                     alert(iObj.data);
                     $scope.gameKey = iObj.data;
                     console.error('In successCallBack', iObj);
