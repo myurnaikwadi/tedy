@@ -2,13 +2,13 @@
     console.error($stateParams) 
     $scope.passedData = $stateParams;
     window.ddd = $scope;
-    $scope.coachingStatusArray = [{ name: 'MAYUR N', progressBar: 50, skills: 'ANGULAR JS', status: 'NOT STARTED' }
-					, { name: 'SAGAR N', progressBar: 30, skills: 'C# MVC', status: 'JUST PROGRESS' }
-					, { name: 'SAGAR P', progressBar: 90, skills: 'C# MVC', status: 'JUST PROGRESS' }
-					, { name: 'SHILPA M', progressBar: 60, skills: 'BUSINESS', status: 'NOT STARTED' }
-					, { name: 'SHANTANU P', progressBar: 05, skills: 'BUSINESS', status: 'JUST PROGRESS' }
-					, { name: 'SONALI J', progressBar: 50, skills: 'PROGRAM', status: 'JUST PROGRESS' }
-					, { name: 'ISHWAR J', progressBar: 100, skills: 'DEV', status: 'SESSION OVER' }
+    $scope.coachingStatusArray = [{ Sender : '', FirstName: 'MAYUR', LastName: 'N',PhotoURL :'', Rating : '', TreeURL : '', FeedbackCount: 5, Skill: 'ANGULAR JS' }
+					, { Sender: '', FirstName: 'SAGAR N', LastName: 'N', PhotoURL: '', Rating: '', TreeURL: '', FeedbackCount: 3, Skill: 'C# MVC' }
+					, { Sender: '', FirstName: 'SAGAR P', LastName: 'P', PhotoURL: '', Rating: '', TreeURL: '', FeedbackCount: 1, Skill: 'C# MVC' }
+					, { Sender: '', FirstName: 'SHILPA', LastName: 'M', PhotoURL: '', Rating: '', TreeURL: '', FeedbackCount: 6, Skill: 'BUSINESS' }
+					, { Sender: '', FirstName: 'SHANTANU', LastName: 'P', PhotoURL: '', Rating: '', TreeURL: '', FeedbackCount: 5, Skill: 'BUSINESS' }
+					, { Sender: '', FirstName: 'SONALI', LastName: 'J', PhotoURL: '', Rating: '', TreeURL: '', FeedbackCount: 5, Skill: 'PROGRAM' }
+					, { Sender: '', FirstName: 'ISHWAR', LastName: 'J', PhotoURL: '', Rating: '', TreeURL: '', FeedbackCount: 1, Skill: 'DEV', }
     ];
 
 

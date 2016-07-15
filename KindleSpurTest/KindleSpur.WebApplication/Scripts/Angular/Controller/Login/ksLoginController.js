@@ -68,8 +68,13 @@ app.controller('ksLoginController', ['$scope', 'authentification', '$location', 
  	    $scope.signupDetails.FirstName = "";
  	    $scope.signupDetails.LastName = "";
  	    $scope.signupDetails.EmailAddress = "";
- 	   
- 	    alert('Verification Link is sent successfully. Please check your email account')
+ 	    //$rootscope.$broadcast('alertBox', {
+        //        showAlertBox: true,
+        //        formatType: 'success',
+        //        closeRequired: true,
+        //        message: 'Verification Link is sent successfully. Please check your email account'
+        //});
+ 	   // alert('Verification Link is sent successfully. Please check your email account')
  	};
      /**
       * @auther : MKN
