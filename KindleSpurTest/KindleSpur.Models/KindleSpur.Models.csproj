@@ -55,6 +55,7 @@
     <Compile Include="ActiveGamesAndPSR.cs" />
     <Compile Include="CoacheeOrMentee.cs" />
     <Compile Include="CoachOrMentor.cs" />
+    <Compile Include="CoachStatus.cs" />
     <Compile Include="CTSFilter.cs" />
     <Compile Include="Feedback.cs" />
     <Compile Include="Game.cs" />

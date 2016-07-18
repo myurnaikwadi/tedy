@@ -10,6 +10,7 @@ namespace KindleSpur.Models.Interfaces
             string Sender { get; set; }
             string FeedbackText { get; set; }
             DateTime CreateDate { get; set; }
+            string Skill { get; set; }
             int customerSatisfactionRating { get; set; }
         }
 }

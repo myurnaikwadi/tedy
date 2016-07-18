@@ -13,6 +13,7 @@ namespace KindleSpur.Models
         public QueAndAns selectedAttractive { get; set; }
         public string FeedbackText { get; set; }
         public DateTime CreateDate { get; set; }
+        public string Skill { get; set; }
         public int customerSatisfactionRating { get; set; }
     }
 }

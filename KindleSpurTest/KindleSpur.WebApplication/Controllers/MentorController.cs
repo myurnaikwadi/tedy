@@ -15,7 +15,8 @@ namespace KindleSpur.WebApplication.Controllers
         private readonly string UserId;
         public MentorController()
         {
-            UserId = ((IUser)Session["User"]).EmailAddress;
+            //UserId = ((IUser)Session["User"]).EmailAddress;
+            UserId = "patilsagar28290@gmail.com";
         }
         [HttpPost]
         public Boolean SaveTopics(List<Skill> selectedArray)
@@ -62,6 +63,12 @@ namespace KindleSpur.WebApplication.Controllers
             CoachOrMentorRepository _coachRepo = new CoachOrMentorRepository();
             return _coachRepo.addFeedback(UserId, feedback);
 
+        }
+        public ActionResult GetCoachingStatus()
+        {
+            CoachOrMentorRepository _coachRepo = new CoachOrMentorRepository();
+            var filters = _coachRepo.GetCoachingStatus(UserId);
+            return Json(new { Filters = filters, Success = true }, JsonRequestBehavior.AllowGet);
         }
 
     }

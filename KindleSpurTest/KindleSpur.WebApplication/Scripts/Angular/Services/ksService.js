@@ -242,7 +242,7 @@ app.factory('serverCommunication', function ($http) {
          * @Purpose :
          */
         getCoachingWithStatus: function (iObj) {
-            $http.get('/CTS/GetCTSFilters', iObj.loggedUserDetails).then(iObj.successCallBack, iObj.failureCallBack)
+            $http.get('/Mentor/GetCoachingStatus', iObj.loggedUserDetails).then(iObj.successCallBack, iObj.failureCallBack)
         },
         /**
         * @auther : MKN

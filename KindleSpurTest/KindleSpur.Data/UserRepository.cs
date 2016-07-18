@@ -108,7 +108,7 @@ namespace KindleSpur.Data
         }
         public IUser GetUserDetail(string EmailAddress)
         {
-            var _userCollection = _kindleDatabase.GetCollection("UserDetails");
+            var _userCollection = _kindleDatabase.GetCollection("UserDetail");
             return _userCollection.FindOneAs<User>(Query.EQ("EmailAddress", EmailAddress));
         }
 
