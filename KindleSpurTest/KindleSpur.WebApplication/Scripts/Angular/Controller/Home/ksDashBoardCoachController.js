@@ -62,7 +62,12 @@
         redeemedPoints: 0,
         totalPoints: 0
     };
-
+    $scope.myRewardsArray = [
+                   { name: 'www.yryr.com', Key: 'NUF783F' },
+                   { name: 'PSR', Key: 'UF783GF' },
+                   { name: 'www.cdd.com', Key: 'F783F33' },
+                   { name: 'www.fff.com', Key: 'N3FF789' }
+    ];
     $scope.getPointsRecord = function () {
         serverCommunication.getPointsRecord({
         
@@ -75,7 +80,7 @@
                 $scope.rewardsPoints.totalPoints = iObj.data.TotalRewardPoints;
                 $scope.rewardsPoints.balancePoints = iObj.data.BalanceRewardPoints;
                 $scope.rewardsPoints.redeemedPoints = iObj.data.RedeemedPoints;
-
+                $scope.myRewardsArray = iObj.data.PSRAndGames;
 
             },
             failureCallBack: function (iObj) {
@@ -241,13 +246,6 @@
         $scope.feedBack.likeMostMessage = '';
 
     }
-
-    $scope.myRewardsArray = [
-					{ name: 'www.yryr.com', unlockKey : 'NUF783F' },
-					{ name: 'PSR', unlockKey: 'UF783GF' },
-					{ name: 'www.cdd.com', unlockKey: 'F783F33' },
-					{ name: 'www.fff.com', unlockKey: 'N3FF789' }
-    ];
 
     $scope.redeemPointsClick = function () {
         $scope.askFeedback = false;
