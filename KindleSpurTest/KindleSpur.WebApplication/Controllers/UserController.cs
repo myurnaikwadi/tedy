@@ -194,8 +194,9 @@ namespace KindleSpur.WebApplication.Controllers
         }
 
         [HttpPost]
-        public void AddVSCSActivity()
+        public void AddVSCSActivity(VSCS _vscs)
         {
+            
             UserRepository _userRepo = new UserRepository();
             string EmailAddress = ((IUser)System.Web.HttpContext.Current.Session["User"]).EmailAddress;
             _userRepo.SaveVCSCActivity(EmailAddress);
