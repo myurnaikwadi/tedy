@@ -132,18 +132,6 @@ width: 40%;
 	transition : all 4s
 }
 
-.bottomStripOption{
-	position: relative;
-    float: left;
-    margin:0;
-}
-.bottomStripOption li{
-	 position: relative;
-    float: left;
-font-size : 10px;
-
-margin: 5px
-}
  .applicationNotiCount {
             height: 19px;
             width: 19px;
