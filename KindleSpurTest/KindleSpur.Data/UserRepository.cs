@@ -248,5 +248,24 @@ namespace KindleSpur.Data
             string Id = (RewardPointsGained / 10).ToString();
             return _gamesCollection.FindOneAs<Game>(Query.EQ("GameId", Id));
         }
+
+        
+        public Boolean SaveVCSCActivity(string userId)
+        {
+            bool _transactionStatus = false;
+            try
+            {
+                var _userCollection = _kindleDatabase.GetCollection("UserDetails");
+                var userDetail = _userCollection.FindOneByIdAs<User>(userId);
+                ValueCreationActivity _activity = new ValueCreationActivity();
+                _userCollection.Save(_activity);
+                _transactionStatus = true;
+            }
+            catch (Exception ex)
+            {
+                _logCollection.Insert("{ Error : 'Failed at EditUser().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ");
+            }
+            return _transactionStatus
+        }
     }
 }
