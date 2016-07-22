@@ -164,7 +164,7 @@ float: left;
 .bottomStripOption{
 	position: relative;
     float: left;
-    width: 81%;
+    margin: auto
 }
 .bottomStripOption li{
 	position: relative;

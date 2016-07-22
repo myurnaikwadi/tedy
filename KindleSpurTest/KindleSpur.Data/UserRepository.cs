@@ -184,15 +184,15 @@ namespace KindleSpur.Data
 
                 if (userDetail.Games != null)
                 {
-                    //for (int index = userDetail.Games.Count - 1; index >= 0; index--)
-                    //{
-                    //    ActiveGamesAndPSR objGamesAndPSR = new ActiveGamesAndPSR();
-                    //    objGamesAndPSR.Key = userDetail.Games[index].Key;
-                    //    objGamesAndPSR.date = userDetail.Games[index].UnlockedDate;
-                    //    objGamesAndPSR.PSR = false;
+                    for (int index = userDetail.Games.Count - 1; index >= 0; index--)
+                    {
+                        ActiveGamesAndPSR objGamesAndPSR = new ActiveGamesAndPSR();
+                        objGamesAndPSR.Key = userDetail.Games[index].Key;
+                        objGamesAndPSR.date = userDetail.Games[index].UnlockedDate;
+                        objGamesAndPSR.PSR = false;
 
-                    //    reward.PSRAndGames.Add(objGamesAndPSR);
-                    //}
+                        reward.PSRAndGames.Add(objGamesAndPSR);
+                    }
                 }
                 _transactionStatus = true;
             }
@@ -247,6 +247,25 @@ namespace KindleSpur.Data
             // RewardPointsGained = (RewardPointsGained - (RewardPointsGained % 10))/10;
             string Id = (RewardPointsGained / 10).ToString();
             return _gamesCollection.FindOneAs<Game>(Query.EQ("GameId", Id));
+        }
+
+        
+        public Boolean SaveVCSCActivity(string userId)
+        {
+            bool _transactionStatus = false;
+            try
+            {
+                var _userCollection = _kindleDatabase.GetCollection("UserDetails");
+                var userDetail = _userCollection.FindOneByIdAs<User>(userId);
+                ValueCreationActivity _activity = new ValueCreationActivity();
+                _userCollection.Save(_activity);
+                _transactionStatus = true;
+            }
+            catch (Exception ex)
+            {
+                _logCollection.Insert("{ Error : 'Failed at EditUser().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ");
+            }
+            return _transactionStatus;
         }
     }
 }

@@ -480,22 +480,22 @@
                                     <h5 class="fontClass" style="margin: auto auto;font-weight: 700;">MY REWARDS</h5>
                                 </div>
                                 <div class="myRewardsPointParent">
-                                    <div class="myRewardsPointRepeatParent" ng-class="{ psrRewardColor : $index == 1}" ng-repeat="myRewards in myRewardsArray">
+                                    <div ng-show="myRewardsArray.length >0" class="myRewardsPointRepeatParent" ng-class="{ psrRewardColor : $index == 1}" ng-repeat="myRewards in myRewardsArray">
                                         <div class="medalIconsMyReward">
                                             <img style="float: left;height: 100%;" src="F:\simulation\img\moneyBag.png">
                                             <img style="float: right;height: 100%;" src="F:\simulation\img\moneyBag.png">
                                         </div>
                                         <div class="rewardsLabelDivMyReward">
-                                            <h5 class="fontClass" style="margin: auto auto;margin-left:0;font-size: 16px;font-weight: 600;">{{myRewards.name}}</h5>
+                                            <h5 class="fontClass" style="margin: auto auto;margin-left:0;font-size: 16px;font-weight: 600;">www.yryr.com</h5>
                                         </div>
                                         <div class="rewardsDateDivMyReward">
                                             <div class="unlockParent">
                                                 <h5 class="fontClass" style="margin: auto auto;margin-left:0;font-size: 9px;">Unlock Date</h5>
-                                                <h5 class="fontClass" style="margin: auto auto;margin-left:0;font-size: 12px;font-weight: 600;margin-top: 4%;">12/12/2015</h5>
+                                                <h5 class="fontClass" style="margin: auto auto;margin-left:0;font-size: 12px;font-weight: 600;margin-top: 4%;">{{myRewards.date}}</h5>
                                             </div>
                                             <div class="unlockParent" style="float:right;width:40%;">
                                                 <h5 class="fontClass" style="margin: auto auto;margin-left:0;font-size: 9px;">Unlock Key</h5>
-                                                <h5 class="fontClass" style="margin: auto auto;margin-left:0;font-size: 12px;font-weight: 600;margin-top: 4%;">{{myRewards.unlockKey}}</h5>
+                                                <h5 class="fontClass" style="margin: auto auto;margin-left:0;font-size: 12px;font-weight: 600;margin-top: 4%;">{{myRewards.Key}}</h5>
                                             </div>
 
                                         </div>
@@ -503,6 +503,11 @@
                                             <h5 class="fontClass" style="margin: auto auto;margin-left:0;font-size: 9px;">Status : N/A</h5>
                                         </div>
 
+                                    </div>
+                                    <div ng-show="myRewardsArray.length == 0" class="topicHeadingPlaceholdr">
+                                        <h5 style="color:gray;margin: auto;font-size: 30px;" class="leftSideMenuLable fontClass">
+                                            No Rewards
+                                        </h5>
                                     </div>
                                 </div>
                             </div>

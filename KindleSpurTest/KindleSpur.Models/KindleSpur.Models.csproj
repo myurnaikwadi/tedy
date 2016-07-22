@@ -57,6 +57,7 @@
     <Compile Include="CoachOrMentor.cs" />
     <Compile Include="CoachStatus.cs" />
     <Compile Include="CTSFilter.cs" />
+    <Compile Include="Enums.cs" />
     <Compile Include="Feedback.cs" />
     <Compile Include="Game.cs" />
     <Compile Include="Interfaces\ICategory.cs" />
@@ -78,6 +79,10 @@
     <Compile Include="Reward.cs" />
     <Compile Include="Skill.cs" />
     <Compile Include="User.cs" />
+    <Compile Include="ValueCreation.cs" />
+    <Compile Include="ValueCreationScore.cs" />
+    <Compile Include="ValueCreationTasks.cs" />
+    <Compile Include="VSCS.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

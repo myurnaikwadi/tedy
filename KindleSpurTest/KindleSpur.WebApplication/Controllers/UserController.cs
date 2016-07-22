@@ -193,6 +193,15 @@ namespace KindleSpur.WebApplication.Controllers
             return reward.ToJson();
         }
 
+        [HttpPost]
+        public void AddVSCSActivity(VSCS _vscs)
+        {
+            
+            UserRepository _userRepo = new UserRepository();
+            string EmailAddress = ((IUser)System.Web.HttpContext.Current.Session["User"]).EmailAddress;
+            _userRepo.SaveVCSCActivity(EmailAddress);
+        }
+
         //[HttpPost]
         //public ActionResult ForgotPassword(string EmailAddress)
         //{            
