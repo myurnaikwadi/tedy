@@ -90,7 +90,7 @@
             loggedUserDetails: $rootScope.loggedDetail,
             successCallBack: function (iObj) {
                 console.error('In successCallBack', iObj);
-                $scope.coachingStatusArray = iObj.data;
+                $scope.coachingStatusArray = iObj.data.Filters;
 
             },
             failureCallBack: function (iObj) {
