@@ -1,0 +1,383 @@
+﻿
+.addActivityStrip{
+    float: left;
+    width: 100%;
+    height: 6%;
+    margin-bottom: 5px;
+}
+
+.addActivityPanelHide{
+    float: left;
+    width: 0%;
+    height: 0%;
+overflow: hidden;
+  transition: 0.5s ease all;
+    -moz-transition: 0.5s ease all;
+    -webkit-transition: 0.5s ease all;
+}
+.addActivityPanelShow{
+    float: left;
+    width: 100%;
+    height: 60%;
+    margin-bottom: 5px;
+     transition: 0.5s ease all;
+    -moz-transition: 0.5s ease all;
+    -webkit-transition: 0.5s ease all;
+}
+
+.activityListPanelHide{
+    float: left;
+    width: 100%;
+    height: 87%;
+    overflow:auto;
+     transition: 0.5s ease all;
+    -moz-transition: 0.5s ease all;
+    -webkit-transition: 0.5s ease all;
+}
+.activityListPanelShow{
+    float: left;
+    width: 100%;
+    height: 27%;
+    overflow:auto;
+  transition: 0.5s ease all;
+    -moz-transition: 0.5s ease all;
+    -webkit-transition: 0.5s ease all;
+}
+.plusIconAddActivity{
+	display : flex;
+	width:4%;	
+	height:100%;
+	float: left;
+	background:rgb(231,120,23);
+}
+.plusSymbolActivity{
+	float: left;
+	margin: auto auto;
+	font-size: 16px;
+   	 font-weight: bolder;
+
+}
+.addActivityStripLabel{
+	display : flex;
+	width:96%;	
+	height:100%;
+	float: left;
+	background:#f2f2f2;
+}
+.labelAddActivity{
+	margin: auto 0;
+	margin-left:2%;
+	float: left;
+    	font-size: 14px;
+}
+
+.parentDivForActivityListShow{
+	width:100%;	
+	height:202px !important;
+	float: left;
+	border-bottom: 5px solid white;
+	background:#f3f3f3;
+     transition: 0.5s ease all;
+    -moz-transition: 0.5s ease all;
+    -webkit-transition: 0.5s ease all;
+}
+
+.parentDivForActivityListHide{
+	width:100%;	
+	height:35px;
+	float: left;
+	border-bottom: 5px solid white;
+	background:#f3f3f3;
+     transition: 0.5s ease all;
+    -moz-transition: 0.5s ease all;
+    -webkit-transition: 0.5s ease all;
+}
+.activityNameDivShow{
+	width:100%;
+	height:16% !important;
+	display : flex;
+	float:left;
+        background: #D0D0D0;
+	border-bottom: 2px solid white;
+}
+.activityNameDivHide{
+	width:100%;
+	height:100%;
+	display : flex;
+	float:left;
+        background: #D0D0D0;
+}
+.taskListPanelDivHide{
+	width:100%;
+	height:0% ;
+	float:left;
+	overflow:auto;
+         transition: 0.5s ease all;
+    -moz-transition: 0.5s ease all;
+    -webkit-transition: 0.5s ease all;
+}
+.dummyTaskListPanelShow{
+width:100%;
+	height:0% !important;
+	float:left;
+	overflow:auto;
+         transition: 0.5s ease all;
+    -moz-transition: 0.5s ease all;
+    -webkit-transition: 0.5s ease all;
+}
+.dummyTaskDisplay{
+	width:100%;
+	height:27%;
+	float:left;
+	overflow:auto;
+         transition: 0.5s ease all;
+    -moz-transition: 0.5s ease all;
+    -webkit-transition: 0.5s ease all;
+}
+.taskListPanelDivShow{
+	width:100%;
+	height:87%;
+	float:left;
+	background: #F3F3F3;
+	overflow:auto;
+         transition: 0.5s ease all;
+    -moz-transition: 0.5s ease all;
+    -webkit-transition: 0.5s ease all;
+}
+.taskListPanelRepeatDiv{
+	width:100%;	
+	height:50%;
+	float: left;
+	border-bottom: 1px solid white;
+	background:#E9E9E9;
+}
+.taskLavelParentDiv{
+	width:100%;
+float: left;
+	height:100%;
+	display : flex;
+}
+.taskLabelParentDiv{
+	margin: auto;
+	margin-right: 0;
+	width: 16%;
+}
+.taskLevelImpactZone{
+	margin: auto;
+	margin-right: 0;
+	display : flex;
+	width: 45%;
+	height: 80%;
+}
+.taskLevelDescription{
+	margin: auto;
+	margin-right: 0;
+	display : flex;
+	width: 18%;
+	height: 80%;
+}
+
+.taskLevelMedal{
+	margin: auto;
+	margin-right: 0;
+	display : flex;
+	width: 6%;
+}
+.taskLeveliCon{
+	margin: auto;
+	margin-right: 0;
+	display : flex;
+	width: 7%;
+}
+.tagTasks{
+	margin: auto;
+	width: 30%;
+        text-align: center;
+        padding: 4px;
+	border: 1px solid #CCCCCC;
+	text-overflow:ellipsis;
+}
+.tasksDescription{
+	margin: auto;
+	width: 90%;
+	height: 90%;
+	color:#ADADAD;
+	padding: 4px;
+	background:white;
+}
+
+.activityNameInputBox{ 
+    position:relative; 
+    float: left;
+    width: 80%;
+    height: 100%;
+}
+
+.homeLogininput, .addTaskinputClass{
+    padding: 19px 10px 5px 15px;
+    display: block;
+    width: 100%;
+    border: none;
+    border-bottom: 0px solid red;
+    background: transparent;
+    color: white;
+    font-family: raleway !important;
+    font-size: 16.5px !important;
+    font-weight: 700 !important;
+    letter-spacing: 2px;
+    border-bottom: 1px solid #D2D2D2;
+}
+.addTaskInputClass {
+	color: black;
+}
+.homeLogininput:focus{ outline:none; }
+.addTaskinputClass:focus{  outline:none; }
+
+/* LABEL ======================================= */
+.homeLoginlabel, .addTaskLabel{
+  
+    font-size: 15px;
+    position: absolute;
+    font-family: raleway;
+    pointer-events: none;
+    letter-spacing: 2px;
+    left: 15px;
+    top: 13px;
+    transition: 0.2s ease all;
+    -moz-transition: 0.2s ease all;
+    -webkit-transition: 0.2s ease all;
+}
+
+.homeLogininput:focus ~ .homeLoginlabel, .homeLogininput:valid ~ .homeLoginlabel{
+    top: 5px;
+    font-size: 12px;
+    color: #A4A4A4;
+}
+
+.addTaskinputClass:focus ~ .addTaskLabel, .addTaskinputClass:valid ~ .addTaskLabel{
+    top: 5px;
+    font-size: 12px;
+    color: #A4A4A4;
+}
+
+
+/* BOTTOM BARS ================================= */
+.bar 	{ position:relative; display:block; width:60%; }
+.bar:before, .bar:after 	{
+  content:'';
+  height:2px; 
+  width:0;
+  bottom:1px; 
+  position:absolute;
+  background:#FFF; 
+  transition:0.2s ease all; 
+  -moz-transition:0.2s ease all; 
+  -webkit-transition:0.2s ease all;
+}
+.bar:before {
+  left:50%;
+}
+.bar:after {
+  right:50%; 
+}
+
+/* active state */
+input:focus ~ .bar:before, input:focus ~ .bar:after {
+  width:50%;
+}
+
+/* HIGHLIGHTER ================================== */
+.highlight {
+  position:absolute;
+  height:60%; 
+  width:100px; 
+  top:25%; 
+  left:0;
+  pointer-events:none;
+  opacity:0.5;
+}
+.homeLoginLabels{
+    font-family: raleway;
+    color: white;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    margin: 10px 0px;
+}
+.homeloginlink{
+    border-bottom: 1px solid #BABABA;
+    padding-bottom: 4px;
+    cursor:pointer;
+}
+/* active state */
+input:focus ~ .highlight {
+  -webkit-animation:inputHighlighter 0.3s ease;
+  -moz-animation:inputHighlighter 0.3s ease;
+  animation:inputHighlighter 0.3s ease;
+}
+
+/* ANIMATIONS ================ */
+@-webkit-keyframes inputHighlighter {
+	from { background:#5264AE; }
+  to 	{ width:0; background:transparent; }
+}
+@-moz-keyframes inputHighlighter {
+	from { background:#5264AE; }
+  to 	{ width:0; background:transparent; }
+}
+@keyframes inputHighlighter {
+	from { background:#5264AE; }
+  to 	{ width:0; background:transparent; }
+}
+
+.addTaskInput{
+	width:100%;
+	float: left;
+	height:20%;
+}
+.impactMeasureDescription{
+	width:100%;
+	float: left;
+	height:70%;
+}
+.buttonClassImpactMeasure{
+	width:100%;
+	float: left;
+	height:10%;
+ display:flex;
+}
+.impactZoneParent{
+    float: left;
+    width: 42%;
+    height: 100%;
+}
+.impactZoneMeasureParent{
+    float: left;
+    width: 18%;
+    height: 100%;
+}
+.impactZoneTypeParent{
+    float: left;
+    width: 18%;
+    height: 100%;
+}
+.impactZoneTaskDescParent{
+    float: left;
+    width: 22%;
+    height: 100%;
+    display:flex;
+}
+.impactLabel{ 
+    float: left;
+    width: 100%;
+    height: 14%;
+    display:flex;
+}
+.impactZoneTag{
+    float: left;
+    width: 100%;
+    height: 86%;
+}
+.selectedZoneClass{
+	border:1px solid #F8C713; background:#F8C713;
+}
