@@ -294,12 +294,13 @@ namespace KindleSpur.Data
                                   Rating = grp.OrderByDescending(t => t.customerSatisfactionRating).FirstOrDefault().customerSatisfactionRating
                               }).ToList();
 
-
-
-                for (var i = 0; i < result.Count(); i++)
-                {
-                    result[i] = GetCocheeDetails(result[i]);
-                    result[i].TreeURL = GetTreeURL(result[i].FeedbackCount, result[i].Rating);
+                if(result.Count()>0)
+                { 
+                    for (var i = 0; i < result.Count(); i++)
+                    {
+                        result[i] = GetCocheeDetails(result[i]);
+                        result[i].TreeURL = GetTreeURL(result[i].FeedbackCount, result[i].Rating);
+                    }
                 }
 
             }
@@ -313,48 +314,47 @@ namespace KindleSpur.Data
 
         public CoachStatus GetCocheeDetails(CoachStatus c)
         {
-            var _userCollection = _kindleDatabase.GetCollection("UserDetail");
-            User userDetail = _userCollection.FindOneAs<User>(Query.EQ("EmailAddress", c.Sender));
-            c.FirstName = userDetail.FirstName;
-            c.LastName = userDetail.LastName;
-            c.PhotoURL = userDetail.Photo;
+            if(c != null)
+            { 
+                var _userCollection = _kindleDatabase.GetCollection("UserDetail");
+                User userDetail = _userCollection.FindOneAs<User>(Query.EQ("EmailAddress", c.Sender));
+                c.FirstName = userDetail.FirstName;
+                c.LastName = userDetail.LastName;
+                c.PhotoURL = userDetail.Photo;
+            }
             return c;
         }
         public string GetTreeURL(int FeedbackCount, int Rating)
         {
-            string TreeURL = "~/Images/Tree/Stage 1.png";
+            string TreeURL = "Images/Tree/Stage 1.png";
 
             if (FeedbackCount == 1)
             {
                 if (Rating >= 1 && Rating <= 3)
-                    TreeURL = "~/Images/Tree/Stage 1.png";
+                    TreeURL = "Images/Tree/Stage 2.png";
                 else if (Rating >= 4 && Rating <= 5)
-                    TreeURL = "~/Images/Tree/Stage 1.png";
+                    TreeURL = "Images/Tree/Stage 2 with water.png";
             }
             else if (FeedbackCount == 2)
             {
                 if (Rating >= 1 && Rating <= 3)
-                    TreeURL = "";
+                    TreeURL = "Images/Tree/Stage 3.png";
                 else if (Rating >= 4 && Rating <= 5)
-                    TreeURL = "";
+                    TreeURL = "Images/Tree/Stage 3 with flower.png"; 
             }
             else if (FeedbackCount == 3)
             {
                 if (Rating >= 1 && Rating <= 3)
-                    TreeURL = "";
+                    TreeURL = "Images/Tree/Stage 4.png"; 
                 else if (Rating >= 4 && Rating <= 5)
-                    TreeURL = "";
+                    TreeURL = "Images/Tree/Stage 4 with Fruits.png"; 
             }
             else if (FeedbackCount >= 4)
             {
                 if (Rating >= 1 && Rating <= 3)
-                    TreeURL = "";
+                    TreeURL = "Images/Tree/Stage 5.png"; 
                 else if (Rating >= 4 && Rating <= 5)
-                    TreeURL = "";
-            }
-            else
-            {
-                TreeURL = "";
+                    TreeURL = "Images/Tree/Stage 5 with Fruits.png"; 
             }
             return TreeURL;
         }
