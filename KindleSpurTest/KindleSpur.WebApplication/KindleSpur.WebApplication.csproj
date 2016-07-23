@@ -288,6 +288,8 @@
     <Content Include="Images\communication\smallSelectedStar.png" />
     <Content Include="Images\communication\smallStar.png" />
     <Content Include="Images\default-user.png" />
+    <Content Include="Images\defaultImage.png" />
+    <Content Include="Images\delete.png" />
     <Content Include="Images\edit_Icon.png" />
     <Content Include="Images\linkedIn.jpg" />
     <Content Include="Images\linkedin_square_gray.png" />
@@ -298,7 +300,14 @@
     <Content Include="Images\pointStatusPanel.png" />
     <Content Include="Images\save.png" />
     <Content Include="Images\Tree\Stage 1.png" />
+    <Content Include="Images\Tree\Stage 2 with water.png" />
     <Content Include="Images\Tree\Stage 2.png" />
+    <Content Include="Images\Tree\Stage 3 with flower.png" />
+    <Content Include="Images\Tree\Stage 3.png" />
+    <Content Include="Images\Tree\Stage 4 with Fruits.png" />
+    <Content Include="Images\Tree\Stage 4.png" />
+    <Content Include="Images\Tree\Stage 5 with Fruits.png" />
+    <Content Include="Images\Tree\Stage 5.png" />
     <Content Include="Images\tree_psr.png" />
     <Content Include="Scripts\ai.0.15.0-build58334.js" />
     <Content Include="Scripts\ai.0.15.0-build58334.min.js" />
