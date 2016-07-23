@@ -1,14 +1,15 @@
-﻿app.controller('ksProfileController', function ($scope, commonFunction, serverCommunication,$rootScope,$state) {
+﻿app.controller('ksProfileController', function ($scope, commonFunction, serverCommunication, $rootScope, $state) {
     $scope.editModeProfile = false;
-    console.error($rootScope.loggedDetail)
+    console.error($scope.userInfo)
+    window.profile = $scope;
     $scope.myInfo = {
-        mobileNumber: $rootScope.loggedDetail.Mobile ? $rootScope.loggedDetail.Mobile : "",
-        linkedInLink:  $rootScope.loggedDetail.LinkdinURL ? $rootScope.loggedDetail.LinkdinURL : "",
-        firstName: $rootScope.loggedDetail.FirstName.toUpperCase(),
-        lastName: $rootScope.loggedDetail.LastName.toUpperCase(),
+        mobileNumber: $scope.userInfo.Mobile ? $scope.userInfo.Mobile : null,
+        linkedInLink: $scope.userInfo.LinkdinURL ? $scope.userInfo.LinkdinURL : null,
+        firstName: $scope.userInfo.FirstName.toUpperCase(),
+        lastName: $scope.userInfo.LastName.toUpperCase(),
         profileImage: '',
         profileBackgroundImage: '',
-        description : 'No Description Available'
+        description: 'No Description Available'
     }
     var uploadImageOnPage = function (iObj, iCallback) {
         var fileInputId = iObj.fileInputId;
@@ -21,14 +22,21 @@
         };
 
     };
-     
+
+    $scope.closeProfilePopup = function () {
+        console.error('dddddddddddddddddddddd')
+        console.error($scope.closePopup)
+        if ($scope.closePopup) $scope.closePopup();
+    };
+
+
     $scope.editskills = function (iProfile) {
-       // $scope.selectedMenu = true;
+        // $scope.selectedMenu = true;
         $state.go('dashBoardCoach',{ param: 'test' });
     };
 
     $scope.uploadFileFunction = function () {
-       
+
         var valueFile = document.getElementById("fileInputIdRv").files;
         if (iProfile) {
             $scope.myInfo.profileImage = valueFile[0];
@@ -50,7 +58,7 @@
         }
         serverCommunication.changeProfileImageDetails(_object);
     }
-   $scope.triggerUpload = function (iProfile) {
+    $scope.triggerUpload = function (iProfile) {
         console.error('width: 42px;')
         var obj = {
             fileInputId: "fileInputIdRv"
@@ -66,40 +74,40 @@
             console.error(valueFile)
             var _object = {
                 file: valueFile[0],
-                    successCallBack: function () {
+                successCallBack: function () {
                     console.error('In successCallBack');
 
                 },
-                        failureCallBack: function () {
+                failureCallBack: function () {
                     console.error('In failureCallBack');
 
                 }
-                }
+            }
             serverCommunication.changeProfileImageDetails(_object);
             document.getElementById("fileInputIdRv").value = "";
             $scope.$apply();
-            });
-            };
+        });
+    };
     $scope.sendDetailsToServer = function () {
         $scope.editModeProfile = false;
         console.error($scope.myInfo)
-            //if ($rootScope.loggedDetail.Mobile == $scope.myInfo.mobileNumber || $rootScope.loggedDetail.FirstName == $scope.myInfo.firstName || $rootScope.loggedDetail.LastName == $scope.myInfo.lastName) {
-            //    return;
+        //if ($scope.userInfo.Mobile == $scope.myInfo.mobileNumber || $scope.userInfo.FirstName == $scope.myInfo.firstName || $scope.userInfo.LastName == $scope.myInfo.lastName) {
+        //    return;
         //}
-        $rootScope.loggedDetail.FirstName = $scope.myInfo.firstName;
-        $rootScope.loggedDetail.LastName = $scope.myInfo.lastName;
-        $rootScope.loggedDetail.Mobile = $scope.myInfo.mobileNumber;
-        $rootScope.loggedDetail.LinkdinURL = $scope.myInfo.linkedInLink;
+        $scope.userInfo.FirstName = $scope.myInfo.firstName;
+        $scope.userInfo.LastName = $scope.myInfo.lastName;
+        $scope.userInfo.Mobile = $scope.myInfo.mobileNumber;
+        $scope.userInfo.LinkdinURL = $scope.myInfo.linkedInLink;
 
         var _object = {
             changeDetails: {
-            LinkdinURL: $scope.myInfo.linkedInLink, Mobile: $scope.myInfo.mobileNumber, FirstName: $scope.myInfo.firstName, LastName: $scope.myInfo.lastName
+                LinkdinURL: $scope.myInfo.linkedInLink, Mobile: $scope.myInfo.mobileNumber, FirstName: $scope.myInfo.firstName, LastName: $scope.myInfo.lastName
             },
-                successCallBack: function () {
+            successCallBack: function () {
                 console.error('In successCallBack');
 
             },
-                    failureCallBack: function () {
+            failureCallBack: function () {
                 console.error('In failureCallBack');
 
             }
@@ -111,23 +119,23 @@
         console.error($scope.myInfo)
         var _object = {
             changeDetails: {
-                    description: $scope.myInfo.description
-                    },
-                        successCallBack: function() {
+                description: $scope.myInfo.description
+            },
+            successCallBack: function() {
                 console.error('In successCallBack');
 
             },
-    failureCallBack : function () {
+            failureCallBack: function () {
                 console.error('In failureCallBack');
 
             }
-            }
+        }
         serverCommunication.changeDescriptionDetails(_object);
     };
-     var _category = {};
-            var _categoryArray = [];
-            var _topicArray = [];
-            var _skillsArray = [];
+    var _category = {};
+    var _categoryArray = [];
+    var _topicArray = [];
+    var _skillsArray = [];
     $scope.init = function () {
         $scope.ctsDataForMolecule = null;
         serverCommunication.getMySelection({
@@ -172,8 +180,8 @@
                 }
                 console.error('In getMySelection', _category, _categoryArray, _topicArray, _skillsArray);
                 $scope.topicArray = [];
-                 $scope.topicArray =  $scope.topicArray.concat(_categoryArray);
-                 $scope.topicArray = $scope.topicArray.concat(_topicArray);
+                $scope.topicArray =  $scope.topicArray.concat(_categoryArray);
+                $scope.topicArray =  $scope.topicArray.concat(_topicArray);
                 $scope.topicArray =  $scope.topicArray.concat(_skillsArray);
             },
             failureCallBack: function (iObj) {
@@ -184,4 +192,20 @@
 
     };
     $scope.init();
+});
+
+app.directive('profilePage', function ($state, serverCommunication) {
+    return {
+        scope: {
+            editRequired: "@",
+            userInfo: "=",
+            closePopup: "&"
+        },
+        templateUrl: '/Home/ksProfileTemplate',
+        controller: "ksProfileController",
+        //scope: true,   // optionally create a child scope
+        link: function (scope, element, attrs) {
+
+        }
+    }
 });

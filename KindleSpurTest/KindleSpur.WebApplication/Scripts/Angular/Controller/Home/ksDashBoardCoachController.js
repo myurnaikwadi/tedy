@@ -11,7 +11,18 @@
 					, { Sender: '', FirstName: 'ISHWAR', LastName: 'J', PhotoURL: '', Rating: '', TreeURL: '', FeedbackCount: 1, Skill: 'DEV', }
     ];
 
+    $scope.showCoacheeProfile = false;
+    $scope.userInfo = null;
+    $scope.showCoacheeProfileStatus = function (iOption) {
+        console.error('showeCoacheeProfileClass')
+        $scope.showCoacheeProfile = true;
+        $scope.userInfo = iOption;
+    };
 
+    $scope.closeProfilePic = function () {
+        $scope.showCoacheeProfile = false;
+        $scope.userInfo = null;
+    };
     $scope.notifications = [
 
                 { notificationType: '1', name: 'YOU HAVE COACHING INVITE  FROM', assignPerson: 'HARSHADA D.' },

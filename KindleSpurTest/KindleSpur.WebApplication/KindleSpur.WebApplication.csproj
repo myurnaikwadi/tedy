@@ -401,6 +401,7 @@
     <Content Include="Views\Home\ksProfileView.cshtml" />
     <Content Include="Views\User\ForgotPassword.cshtml" />
     <Content Include="Views\User\ForgotPasswordEmail.cshtml" />
+    <Content Include="Views\Home\ksProfileTemplate.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
