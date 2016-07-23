@@ -292,6 +292,9 @@
     <Content Include="Images\linkedIn.jpg" />
     <Content Include="Images\linkedin_square_gray.png" />
     <Content Include="Images\loginLanding.jpg" />
+    <Content Include="Images\MedalImage\bronzeMedal.png" />
+    <Content Include="Images\MedalImage\goldMedal.png" />
+    <Content Include="Images\MedalImage\silverMedal.png" />
     <Content Include="Images\pointStatusPanel.png" />
     <Content Include="Images\save.png" />
     <Content Include="Images\Tree\Stage 1.png" />
@@ -357,6 +360,7 @@
     <Content Include="Scripts\css\ksLogin\ksSavePassoword.css" />
     <Content Include="Scripts\css\ksProfile\ksProfile.css" />
     <Content Include="Scripts\css\rewards\ksRewardProgram.css" />
+    <Content Include="Scripts\css\VCS\ksVcs.css" />
     <Content Include="Scripts\d3.v3.min.js" />
     <Content Include="Scripts\glow.js" />
     <Content Include="Scripts\angular-ui-router.js" />
@@ -376,6 +380,7 @@
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\_references.js" />
+    <Content Include="Views\Home\ksvcs.html" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>

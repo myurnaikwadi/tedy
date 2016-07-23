@@ -1,0 +1,152 @@
+﻿<div class="addActivityStrip" ng-init="addActivityShowFlag = false" ng-click="addActivityShowFlag =! addActivityShowFlag;dummyTaskArray = [];setFocusToActivityPart()">
+    <div class="plusIconAddActivity">
+        <h5 class="plusSymbolActivity">+</h5>
+    </div>
+    <div class="addActivityStripLabel">
+        <h5 class="labelAddActivity fontClass">ADD ACTIVITY</h5>
+    </div>
+</div>
+<div class="addActivityPanelHide" ng-class="{ addActivityPanelShow : addActivityShowFlag == true }">
+    <div class="activityNameDivShow" style="height: 12% !important;">
+        <div class="activityNameInputBox">
+            <input class="homeLogininput" type="text" required ng-keydown="autoCompleteEmailId($event);" ng-blur="resetAutoComplete();closeAlertMessage()" ng-change='selectedIndex=-1;showRecentlyLoggedName(credentials.username)' name="username" id="userId" ng-model="activity.eventTitle" tabindex="0" autocomplete="off">
+            <span class="highlight"></span>
+            <span class="bar"></span>
+            <label class="homeLoginlabel fontClass">ACTIVITY NAME</label>
+        </div>
+        <div class="taskLeveliCon">
+            <img src="../../Images/MedalImage/bronzeMedal.png" title="Save" ng-click="saveActvity()" style="margin: auto auto;float: left;height: 35px;width: 35px;" />
+            <img src="../../Images/MedalImage/silverMedal.png" title="Cancel" ng-click="addActivityShowFlag = false;dummyTaskArray = [];" style="margin: auto auto;float: left;height: 35px;width: 35px;" />
+        </div>
+    </div>
+    <div class="taskListPanelDivShow">
+        <div class="addTaskInput">
+            <div class="activityNameInputBox">
+                <input class="addTaskinputClass addTaskInputClass" type="text" required ng-keydown="autoCompleteEmailId($event);" ng-blur="resetAutoComplete();closeAlertMessage()" ng-change='selectedIndex=-1;showRecentlyLoggedName(credentials.username)' name="username" id="userIdTask" ng-model="addTaskObject.eventTitle" tabindex="0" autocomplete="off">
+                <span class="highlight"></span>
+                <span class="bar"></span>
+                <label class="addTaskLabel fontClass">TASK NAME</label>
+            </div>
+        </div>
+
+        <div class="impactMeasureDescription">
+            <div class="impactZoneParent">
+                <div class="impactLabel">
+                    <h5 class="labelAddActivity fontClass" style="color:#A4A4A4;    margin: auto;">IMPACT ZONE</h5>
+                </div>
+                <div class="impactZoneTag">
+
+                    <h5 class="tagTasks fontClass" style="float: left;margin: 10px;margin-bottom: 0;margin-right: 0;width: 131px;height: 28px;" ng-class="{ selectedZoneClass : addTaskObject.impactZone == $index }" ng-click="impactZoneSelection($index,option)" ng-repeat="option in leftSideMenus">{{option.name | uppercase}}</h5>
+
+                </div>
+            </div>
+            <div class="impactZoneMeasureParent">
+                <div class="impactLabel">
+                    <h5 class="labelAddActivity fontClass" style="color:#A4A4A4;    margin: auto;">MEASURE OF IMPACT</h5>
+                </div>
+                <div class="impactZoneTag" style="display: flex;">
+                    <div style="float:left;margin:auto;width: 81%;
+    height: 100%;">
+                        <h5 class="tagTasks fontClass" style="float: left;margin: 10px;margin-bottom: 0;margin-right: 0;width: 131px;height: 28px;" ng-class="{ selectedZoneClass : addTaskObject.measureImapact == $index }" ng-click="measureOfImapactSelection($index,option)" ng-repeat="option in measureOfImpact">{{option.name | uppercase}}</h5>
+                    </div>
+                </div>
+            </div>
+            <div class="impactZoneTypeParent">
+                <div class="impactLabel">
+                    <h5 class="labelAddActivity fontClass" style="color:#A4A4A4;    margin: auto;">TYPE OF IMPACT</h5>
+                </div>
+                <div class="impactZoneTag" style="display: flex;">
+                    <div style="float:left;margin:auto;width: 81%;
+    height: 100%;">
+                        <h5 class="tagTasks fontClass" style="float: left;margin: 10px;margin-bottom: 0;margin-right: 0;width: 131px;height: 28px;" ng-class="{ selectedZoneClass : addTaskObject.typeImapact == $index }" ng-click="typeOfImapactSelection($index,option)" ng-repeat="option in typeOfImpact">{{option.name | uppercase}}</h5>
+                    </div>
+                </div>
+            </div>
+            <div class="impactZoneTaskDescParent">
+                <textArea ng-model="addTaskObject.description" style="margin:auto;resize:none;color:#6C6C6C;background: #F3F3F3;width: 80%; height: 80%; white-space: inherit;padding: 7px; word-break: break-all;" placeholder="Description"> </textArea>
+            </div>
+        </div>
+        <div class="buttonClassImpactMeasure">
+            <button style="background: #D72C28;width: 65px; height: 25px;font-size: 10px;padding: 5px;font-weight: bolder;margin: auto;" class="signupButton fontClass genericPointerClass" ng-click="saveTask()">SAVE</button>
+        </div>
+
+    </div>
+</div>
+
+<div class="taskListPanelDivHide" ng-class="{ dummyTaskDisplay  : dummyTaskArray.length > 0 }">
+    <div class="taskListPanelRepeatDiv" ng-repeat="tasks in dummyTaskArray">
+        <div class="taskLavelParentDiv">
+            <div class="taskLabelParentDiv">
+                <h5 style="font-size: 14px;font-weight: bold;" class="fontClass">{{tasks.eventTitle}}</h5>
+                <h5 style="font-size: 11px;margin-top: 5px" class="fontClass">12/31/3434</h5>
+            </div>
+            <div class="taskLevelImpactZone">
+                <h5 class="tagTasks selectedZoneClass fontClass">{{leftSideMenus[tasks.impactZone].name}}</h5>
+                <h5 class="tagTasks selectedZoneClass fontClass">{{measureOfImpact[tasks.measureImapact].name}}</h5>
+                <h5 class="tagTasks selectedZoneClass fontClass">{{typeOfImpact[tasks.typeImapact].name}}</h5>
+            </div>
+            <div class="taskLevelDescription">
+                <h5 class="tasksDescription fontClass">
+                    {{tasks.description}}
+                </h5>
+            </div>
+            <div class="taskLevelMedal">
+                <img ng-show="tasks.measureImapact == 0 && tasks.typeImapact == 1 || tasks.measureImapact == 1 && tasks.typeImapact == 1 || tasks.measureImapact == 0 && tasks.typeImapact == 0" src="../../Images/MedalImage/bronzeMedal.png" style="margin: auto auto;float: left;height: 65px;width: 65px;" />
+                <img ng-show="tasks.measureImapact == 2 && tasks.typeImapact == 1 || tasks.measureImapact == 1 && tasks.typeImapact == 0" src="../../Images/MedalImage/silverMedal.png" style="margin: auto auto;float: left;height: 65px;width: 65px;" />
+                <img ng-show="tasks.measureImapact == 2 && tasks.typeImapact == 0" src="../../Images/MedalImage/goldMedal.png.png" style="margin: auto auto;float: left;height: 65px;width: 65px;" />
+
+            </div>
+            <div class="taskLeveliCon">
+                <img src="../../Images/MedalImage/bronzeMedal.png" style="margin: auto auto;float: left;height: 35px;width: 35px;" />
+                <img src="../../Images/MedalImage/silverMedal.png" title="Delete" ng-click="dummyTaskArray.splice($index,1);" style="margin: auto auto;float: left;height: 35px;width: 35px;" />
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+<div class="activityListPanelHide" ng-class="{ activityListPanelShow : addActivityShowFlag == true && dummyTaskArray.length == 0, dummyTaskListPanelShow	 : addActivityShowFlag == true && dummyTaskArray.length > 0}">
+
+
+    <div class="parentDivForActivityListHide" ng-class="{ parentDivForActivityListShow : option.displayDetail == true }" ng-repeat="option in activityMainArray" ng-click="option.displayDetail =! option.displayDetail">
+        <div class="activityNameDivHide" ng-class="{ activityNameDivShow : option.displayDetail == true }">
+            <h5 class="labelAddActivity fontClass">{{option.eventTitle | uppercase}}</h5>
+        </div>
+        <div class="taskListPanelDivHide" ng-class="{ taskListPanelDivShow : option.displayDetail == true }">
+            <div class="taskListPanelRepeatDiv" ng-repeat="tasks in option.taskArr">
+                <div class="taskLavelParentDiv">
+                    <div class="taskLabelParentDiv">
+                        <h5 style="font-size: 14px;font-weight: bold;" class="fontClass">{{tasks.eventTitle}}</h5>
+                        <h5 style="font-size: 11px;margin-top: 5px" class="fontClass">12/12/2222</h5>
+                    </div>
+                    <div class="taskLevelImpactZone">
+                        <h5 class="tagTasks selectedZoneClass fontClass">{{leftSideMenus[tasks.impactZone].name}}</h5>
+                        <h5 class="tagTasks selectedZoneClass fontClass">{{measureOfImpact[tasks.measureImapact].name}}</h5>
+                        <h5 class="tagTasks selectedZoneClass fontClass">{{typeOfImpact[tasks.typeImapact].name}}</h5>
+                    </div>
+                    <div class="taskLevelDescription">
+                        <h5 class="tasksDescription fontClass">
+                            {{tasks.description}}
+                        </h5>
+                    </div>
+                    <div class="taskLevelMedal">
+                        <img ng-show="tasks.measureImapact == 0 && tasks.typeImapact == 1 || tasks.measureImapact == 1 && tasks.typeImapact == 1 || tasks.measureImapact == 0 && tasks.typeImapact == 0" src="../../Images/MedalImage/bronzeMedal.png" style="margin: auto auto;float: left;height: 65px;width: 65px;" />
+                        <img ng-show="tasks.measureImapact == 2 && tasks.typeImapact == 1 || tasks.measureImapact == 1 && tasks.typeImapact == 0" src="../../Images/MedalImage/silverMedal.png" style="margin: auto auto;float: left;height: 65px;width: 65px;" />
+                        <img ng-show="tasks.measureImapact == 2 && tasks.typeImapact == 0" src="../../Images/MedalImage/goldMedal.png.png" style="margin: auto auto;float: left;height: 65px;width: 65px;" />
+                    </div>
+                    <div class="taskLeveliCon">    
+                        <img src="../../Images/MedalImage/bronzeMedal.png" style="margin: auto auto;float: left;height: 40px;width: 40px;" />
+                        <img src="../../Images/MedalImage/bronzeMedal.png" style="margin: auto auto;float: left;height: 40px;width: 40px;" />
+                    </div>
+                </div>
+
+
+
+            </div>
+        </div>
+    </div>
+</div>
+<div class="applicationBottomStrip">
+    <bottom-Main-Strip></bottom-Main-Strip>
+</div>		
