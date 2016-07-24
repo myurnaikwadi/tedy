@@ -1,6 +1,7 @@
 ﻿app.controller('ksDashBoardCoachController', function ($rootScope,$scope, serverCommunication, $stateParams) {
     console.error($stateParams) 
     $scope.passedData = $stateParams;
+    $scope.redeemAction = "GAME";
     window.ddd = $scope;
     $scope.coachingStatusArray = [{ Sender : '', FirstName: 'MAYUR', LastName: 'N',PhotoURL :'', Rating : '', TreeURL : '', FeedbackCount: 5, Skill: 'ANGULAR JS' }
 					, { Sender: '', FirstName: 'SAGAR N', LastName: 'N', PhotoURL: '', Rating: '', TreeURL: '', FeedbackCount: 3, Skill: 'C# MVC' }
@@ -74,16 +75,16 @@
         totalPoints: 0
     };
     $scope.myRewardsArray = [
-                   { name: 'www.yryr.com', Key: 'NUF783F' },
-                   { name: 'PSR', Key: 'UF783GF' },
-                   { name: 'www.cdd.com', Key: 'F783F33' },
-                   { name: 'www.fff.com', Key: 'N3FF789' }
+                   { name: 'www.yryr.com', date: '12/12/2011', Key: 'NUF783F', PSR: false },
+                   { name: 'PSR', date: '12/12/2011', Key: 'UF783GF', PSR: true },
+                   { name: 'www.cdd.com', date: '12/12/2011', Key: 'F783F33', PSR: false },
+                   { name: 'www.fff.com',date : '12/12/2011', Key: 'N3FF789' ,PSR : false}
     ];
     $scope.getPointsRecord = function () {
         serverCommunication.getPointsRecord({
         
             successCallBack: function (iObj) {
-                console.error('In successCallBack', iObj);
+               // console.error('In successCallBack', iObj);
                 $scope.rewardsPoints.mentorPoints = iObj.data.MentorRewardPoints;
                 $scope.rewardsPoints.menteePoints = iObj.data.MenteeRewardPoints;
                 $scope.rewardsPoints.coachPoints = iObj.data.CoachRewardPoints;
@@ -95,7 +96,7 @@
 
             },
             failureCallBack: function (iObj) {
-                console.error('In failureCallBack', iObj);
+                //console.error('In failureCallBack', iObj);
 
             }
         });
@@ -262,9 +263,10 @@
     $scope.redeemPointsClick = function () {
         $scope.askFeedback = false;
         $scope.formValue = '1';
-        $scope.menuClick(7);
+        $scope.menuClick(7); 
         serverCommunication.unlockGameCode({
             //   loggedUserDetails: $rootScope.loggedDetail,
+            redeemAction : $scope.redeemAction,
             successCallBack: function (iObj) {
 
                 alert(iObj.data);

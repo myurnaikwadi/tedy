@@ -301,7 +301,9 @@
     <Content Include="Images\MedalImage\bronzeMedal.png" />
     <Content Include="Images\MedalImage\goldMedal.png" />
     <Content Include="Images\MedalImage\silverMedal.png" />
+    <Content Include="Images\normalMedal.png" />
     <Content Include="Images\pointStatusPanel.png" />
+    <Content Include="Images\psrPlant.png" />
     <Content Include="Images\save.png" />
     <Content Include="Images\Tree\Stage 1.png" />
     <Content Include="Images\Tree\Stage 2 with water.png" />

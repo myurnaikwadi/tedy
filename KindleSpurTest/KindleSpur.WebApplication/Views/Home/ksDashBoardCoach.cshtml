@@ -175,7 +175,7 @@
                                     <div class="" style="float: left; width: 100%; height: 60%;display: flex;">
                                         <div class="partSubOne" style="margin: auto auto;height: 100%;margin-right: 3%;">
                                             <div class="" style="float: left;display: flex;width: 100%;height: 25%;">
-                                                <input type="radio" name="rm" style="margin: auto auto;float: left;height: 30px;width: 20px;">
+                                                <input type="radio" ng-model="redeemAction" value="GAME" name="rm" style="margin: auto auto;float: left;height: 30px;width: 20px;">
                                             </div>
                                             <div class="" style="float: left;display: flex;width: 100%;height: 30%;">
                                                 <img style="float: left;margin: auto;margin-right: 0;width: 35px;" src="~/Images/communication/moneyBag.png">
@@ -187,14 +187,14 @@
                                         </div>
                                         <div class="partSubTwo" style="margin: auto auto;height: 100%;">
                                             <div class="" style="float: left;display: flex;width: 100%;height: 25%;">
-                                                <input type="radio" name="rm" style="margin: auto auto;float: left;height: 30px;width: 20px;">
+                                                <input type="radio" ng-model="redeemAction" value="PSR" name="rm" style="margin: auto auto;float: left;height: 30px;width: 20px;">
                                             </div>
                                             <div class="" style="float: left;display: flex;width: 100%;height: 30%;">
                                                 <img style="float: left;margin: auto;margin-right: 0;width: 35px;" src="~/Images/communication/moneyBag.png">
                                                 <h5 class="fontClass" style="font-size: 27px;text-align: center;font-weight: 600;margin: 6px auto;margin: auto;margin-left: 3%;width: 35px;">{{points}}</h5>
                                             </div>
                                             <div class="" style="float: left;display: flex;width: 100%;height: 30%;">
-                                                <h5 class="fontClass" style="font-size: 14px;text-align: center;font-weight: 600;margin: auto auto;" ng-click="formValue='8'">PSR</h5>
+                                                <h5 class="fontClass" style="font-size: 14px;text-align: center;font-weight: 600;margin: auto auto;cursor:help;" ng-click="formValue='8'">PSR</h5>
                                             </div>
                                         </div>
                                     </div>
@@ -390,7 +390,7 @@
                                 <div class="" style="float: left; width: 100%; height: 60%;display: flex;">
                                     <div class="partSubOne" style="margin: auto auto;height: 100%;margin-right: 3%;">
                                         <div class="" style="float: left;display: flex;width: 100%;height: 25%;">
-                                            <input type="radio" name="rm" style="margin: auto auto;float: left;height: 30px;width: 20px;">
+                                            <input type="radio" ng-model="redeemAction" value="GAME" name="rm" style="margin: auto auto;float: left;height: 30px;width: 20px;">
                                         </div>
                                         <div class="" style="float: left;display: flex;width: 100%;height: 30%;">
                                             <img style="float: left;margin: auto;margin-right: 0;width: 35px;" src="~/Images/communication/moneyBag.png">
@@ -402,7 +402,7 @@
                                     </div>
                                     <div class="partSubTwo" style="margin: auto auto;height: 100%;">
                                         <div class="" style="float: left;display: flex;width: 100%;height: 25%;">
-                                            <input type="radio" name="rm" style="margin: auto auto;float: left;height: 30px;width: 20px;">
+                                            <input type="radio" ng-model="redeemAction" value="PSR" name="rm" style="margin: auto auto;float: left;height: 30px;width: 20px;">
                                         </div>
                                         <div class="" style="float: left;display: flex;width: 100%;height: 30%;">
                                             <img style="float: left;margin: auto;margin-right: 0;width: 35px;" src="~/Images/communication/moneyBag.png">
@@ -484,10 +484,10 @@
                                 <h5 class="fontClass" style="margin: auto auto;font-weight: 700;">MY REWARDS</h5>
                             </div>
                             <div class="myRewardsPointParent">
-                                <div ng-show="myRewardsArray.length >0" class="myRewardsPointRepeatParent" ng-class="{ psrRewardColor : $index == 1}" ng-repeat="myRewards in myRewardsArray">
+                                <div ng-show="myRewardsArray.length >0" class="myRewardsPointRepeatParent" ng-class="{ psrRewardColor : myRewards.PSR == true}" ng-repeat="myRewards in myRewardsArray">
                                     <div class="medalIconsMyReward">
-                                        <img style="float: left;height: 100%;" src="F:\simulation\img\moneyBag.png">
-                                        <img style="float: right;height: 100%;" src="F:\simulation\img\moneyBag.png">
+                                        <img ng-show="myRewards.PSR == true" style="float: left;height: 100%;" src="~/Images/psrPlant.png">
+                                        <img style="float: right;height: 100%;" src="~/Images/normalMedal.png">
                                     </div>
                                     <div class="rewardsLabelDivMyReward">
                                         <h5 class="fontClass" style="margin: auto auto;margin-left:0;font-size: 16px;font-weight: 600;">www.yryr.com</h5>

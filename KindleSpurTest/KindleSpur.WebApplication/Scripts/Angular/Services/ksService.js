@@ -250,7 +250,7 @@ app.factory('serverCommunication', function ($http) {
         * @Purpose :
         */
         sendFeedback: function (iObj) {
-            console.error(iObj.loggedUserDetails)
+            console.error(iObj)
             $http.post('/Coach/SaveFeedBack', iObj.loggedUserDetails).then(iObj.successCallBack, iObj.failureCallBack)
         },
         /**
@@ -259,7 +259,8 @@ app.factory('serverCommunication', function ($http) {
          * @Purpose :
      */
         unlockGameCode: function (iObj) {
-            $http.get('/User/UnlockGame').then(iObj.successCallBack, iObj.failureCallBack)
+            console.error(iObj)
+            $http.get('/User/UnlockGame', iObj.redeemAction).then(iObj.successCallBack, iObj.failureCallBack)
         },
 
         /**
@@ -268,6 +269,7 @@ app.factory('serverCommunication', function ($http) {
         * @Purpose :
     */
         getPointsRecord: function (iObj) {
+            console.error(iObj)
             $http.get('/User/GetRewardPoints').then(iObj.successCallBack, iObj.failureCallBack)
         },
         
