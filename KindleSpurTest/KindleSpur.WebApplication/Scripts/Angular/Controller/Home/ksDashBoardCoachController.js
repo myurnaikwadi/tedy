@@ -37,8 +37,9 @@
                 , { name: 'BRAIN GAMES' }
                 , { name: 'GRAPHS' }
                 , { name: 'RESOURCES' }
-                , { name: 'Add Skills' }
+                , { name: 'ADD SKILLS' }
                 , { name: 'REWARDS' }
+                 , { name: 'VCS' }
     ]
     $scope.applicationRole = [{ name: 'COACHEE' }, { name: 'MENTEE' }, { name: 'COACH' }, { name: 'MENTOR' }]
     $scope.rightSideDashBoardArray = [

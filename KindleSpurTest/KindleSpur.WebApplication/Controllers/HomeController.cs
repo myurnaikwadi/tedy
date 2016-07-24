@@ -50,6 +50,9 @@ namespace KindleSpur.WebApplication.Controllers
         {
             return View();
         }
-
+        public ActionResult ksVcs()
+        {
+            return View();
+        }
     }
 }

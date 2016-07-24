@@ -323,6 +323,7 @@
     <Content Include="Scripts\Angular\App\stateController.js" />
     <Content Include="Scripts\Angular\Controller\Home\ksDashBoardMentorController.js" />
     <Content Include="Scripts\Angular\Controller\Home\ksProfile\ksProfileController.js" />
+    <Content Include="Scripts\Angular\Controller\Home\ksVcsController.js" />
     <Content Include="Scripts\Angular\Services\ksGenericDirective.js" />
     <Content Include="Scripts\Angular\Services\msIsotope.js" />
     <Content Include="Scripts\bootstrap.js" />
@@ -405,8 +406,6 @@
       <DependentUpon>Web.config</DependentUpon>
     </Content>
     <Content Include="Views\Web.config" />
-    <Content Include="Views\Shared\Error.cshtml" />
-    <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\User\Login.cshtml" />
     <Content Include="Views\User\PasswordPromp.cshtml" />
     <Content Include="Views\Home\ksUserDashBoard.cshtml" />
@@ -423,6 +422,7 @@
     <Content Include="Views\User\ForgotPassword.cshtml" />
     <Content Include="Views\User\ForgotPasswordEmail.cshtml" />
     <Content Include="Views\Home\ksProfileTemplate.cshtml" />
+    <Content Include="Views\Home\ksVcs.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -430,6 +430,7 @@
     <Folder Include="Models\" />
     <Folder Include="Views\Coach\" />
     <Folder Include="Views\Mentor\" />
+    <Folder Include="Views\Shared\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

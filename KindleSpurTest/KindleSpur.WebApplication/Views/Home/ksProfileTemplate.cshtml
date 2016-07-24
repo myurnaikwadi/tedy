@@ -22,6 +22,7 @@
                             <img ng-click="editModeProfile = true" ng-hide="editModeProfile || editRequired == 'false'" style="width: 15px;float: right;height: 15px;background: white;margin: auto 0;margin-left: 1%;right: 2%;position: absolute;" src="~/Images/edit_Icon.png" />
                             <div ng-hide="editModeProfile" class="userNameProfile">
                                 <h3 style="font-weight:bold;float:left;width:auto;max-width:100%;margin: auto 0;">{{ myInfo.firstName+" "+myInfo.lastName }}</h3>
+                                <img ng-hide="editRequired == 'false'" style="float: left;width: 15px;height: 15px;" ng-click="openValueScope()" src="~/Images/MedalImage/goldMedal.png" />
                             </div>
                             <div ng-show="editModeProfile" class="userNameProfile">
                                 <div style="margin : 0;" class="formDetails">

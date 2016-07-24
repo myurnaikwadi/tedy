@@ -29,6 +29,9 @@
         if ($scope.closePopup) $scope.closePopup();
     };
 
+    $scope.openValueScope = function () {
+
+    };
 
     $scope.editskills = function (iProfile) {
         // $scope.selectedMenu = true;
@@ -180,8 +183,8 @@
                 }
                 console.error('In getMySelection', _category, _categoryArray, _topicArray, _skillsArray);
                 $scope.topicArray = [];
-                $scope.topicArray =  $scope.topicArray.concat(_categoryArray);
-                $scope.topicArray =  $scope.topicArray.concat(_topicArray);
+              //  $scope.topicArray =  $scope.topicArray.concat(_categoryArray);
+              //  $scope.topicArray =  $scope.topicArray.concat(_topicArray);
                 $scope.topicArray =  $scope.topicArray.concat(_skillsArray);
             },
             failureCallBack: function (iObj) {
