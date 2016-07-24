@@ -12,5 +12,7 @@ namespace KindleSpur.Models
         public string ImpactMeasure { get; set; }
         public string ImpactType { get; set; }
         public int Score { get; set; }
+
+        public string Medal { get; set; }
     }
 }

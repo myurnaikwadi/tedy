@@ -199,7 +199,7 @@ namespace KindleSpur.WebApplication.Controllers
             
             UserRepository _userRepo = new UserRepository();
             string EmailAddress = ((IUser)System.Web.HttpContext.Current.Session["User"]).EmailAddress;
-            _userRepo.SaveVCSCActivity(EmailAddress);
+            _userRepo.SaveVCSCActivity(EmailAddress, _vscs);
         }
 
         //[HttpPost]

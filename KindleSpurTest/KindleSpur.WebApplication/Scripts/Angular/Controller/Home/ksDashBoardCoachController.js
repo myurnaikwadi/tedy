@@ -75,10 +75,7 @@
         totalPoints: 0
     };
     $scope.myRewardsArray = [
-                   { name: 'www.yryr.com', date: '12/12/2011', Key: 'NUF783F', PSR: false },
-                   { name: 'PSR', date: '12/12/2011', Key: 'UF783GF', PSR: true },
-                   { name: 'www.cdd.com', date: '12/12/2011', Key: 'F783F33', PSR: false },
-                   { name: 'www.fff.com',date : '12/12/2011', Key: 'N3FF789' ,PSR : false}
+                   { Name: 'www.yryr.com', date: '12/12/2011', Key: 'NUF783F', PSR: false },
     ];
     $scope.getPointsRecord = function () {
         serverCommunication.getPointsRecord({

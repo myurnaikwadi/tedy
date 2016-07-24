@@ -8,8 +8,9 @@ namespace KindleSpur.Models
 {
    public class ActiveGamesAndPSR
     {
-        public DateTime date { get; set; }
+        public string date { get; set; }
         public string Key { get; set; }
         public Boolean PSR { get; set; }
+        public string Name { get; set; }
     }
 }
