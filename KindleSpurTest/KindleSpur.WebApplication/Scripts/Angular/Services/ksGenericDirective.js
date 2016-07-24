@@ -36,7 +36,7 @@ app.directive('focusMe', function ($timeout, $parse) {
 app.directive('topMainStrip', function ($state) {
     return {
         scope: {
-          notification :'@'
+            notification: '@'
         },
         templateUrl: '/Home/ksTopMainStrip',
         //scope: true,   // optionally create a child scope
@@ -89,7 +89,7 @@ app.directive('bottomMainStrip', function ($timeout) {
 app.directive('ctcRole', function ($state, serverCommunication) {
     return {
         scope: {
-            role : "@",
+            role: "@",
             skillRequired: "=",
         },
         templateUrl: '/Home/ksCtcRole',
@@ -107,26 +107,26 @@ app.directive('ctcRole', function ($state, serverCommunication) {
             ];
             scope.skillsArray = [];
             scope.mySelection = true;
-           // scope.selectedCategory = -1;
+            // scope.selectedCategory = -1;
             scope.selectedTopic = -1;
             scope.selectedSkills = -1;
             scope.selectedCategoryValue = null;
             scope.categoryDisplay = true;
             scope.categoryClick = function (iEvent, iIndex, iCategory) {
-               // scope.selectedCategory = iIndex;
+                // scope.selectedCategory = iIndex;
                 iCategory.selectedCategory == true
                 scope.categoryDisplay = false;
                 scope.selectedCategoryValue = iCategory;
                 scope.topicArray = [].concat(iCategory.Topics)
                 for (var k = 0; k < scope.topicArray.length ; k++) {
                     scope.topicArray[k].selected = false;
-                   // console.error('1')
+                    // console.error('1')
                     if (_category[scope.topicArray[k].Name]) {
                         //console.error('12')
                         scope.topicArray[k].alreadySelected = true;
                         scope.topicSelection(iEvent, k, scope.topicArray[k]);
-                     }
-                    
+                    }
+
                 }
                 //    scope.getTopicSkill(iCategory);
             };
@@ -134,9 +134,9 @@ app.directive('ctcRole', function ($state, serverCommunication) {
             var _updateArray = [];
             scope.topicSelection = function (iEvent, iIndex, iTopic) {
                 iEvent.stopPropagation();
-              // console.error('1')
+                // console.error('1')
                 if (scope.skillRequired) {
-                   // console.error('2')
+                    // console.error('2')
                     if (!iTopic.Skills) iTopic.Skills = [];
                     for (var k = 0; k < iTopic.Skills.length ; k++) {
                         iTopic.Skills[k].selected = false;
@@ -148,63 +148,63 @@ app.directive('ctcRole', function ($state, serverCommunication) {
                     }
                 }
                 var _index = -1;
-               // console.error('4')
+                // console.error('4')
                 for (var k = 0; k < _updateArray.length ; k++) {
                     if (_updateArray[k].Name == iTopic.Name) {
                         _index = k;
-                       // console.error('5')
+                        // console.error('5')
                         break;
                     }
                 }
-               
+
                 if (iTopic.selected) {
-                 //   console.error('6')
+                    //   console.error('6')
                     iTopic.selected = false;
                     if (scope.skillRequired) {
                         if (iTopic.Skills.length > 0) {
                             var _deleteArray = [];
                             for (var l = 0 ; l < scope.skillsArray.length; l++) {
-                              //  console.error('11')
+                                //  console.error('11')
                                 for (var k = 0; k < iTopic.Skills.length ; k++) {
-                                       // console.error('12')
-                                        var _indexSkill = -1;
-                                        for (var u = 0; u < _updateArray.length ; u++) {
-                                            if (_updateArray[u].Name == iTopic.Skills[k].Name) {
-                                                _indexSkill = u;
-                                             //   console.error('13')
-                                                break;
-                                            }
+                                    // console.error('12')
+                                    var _indexSkill = -1;
+                                    for (var u = 0; u < _updateArray.length ; u++) {
+                                        if (_updateArray[u].Name == iTopic.Skills[k].Name) {
+                                            _indexSkill = u;
+                                            //   console.error('13')
+                                            break;
                                         }
-                                        if (_indexSkill > -1) _updateArray.splice(_indexSkill, 1);
-
-                                        //console.error(scope.skillsArray[l].Name, iTopic.Skills[k].Name);
-                                      //  console.error(scope.skillsArray[l].Name == iTopic.Skills[k].Name);
-                                        if (scope.skillsArray[l] && scope.skillsArray[l].Name == iTopic.Skills[k].Name) {
-                                            // scope.skillsArray.splice(l, 1);
-                                            _deleteArray.push(l);
-                                          //  console.error('14')
-                                        }
-                                        //} else {
-                                        //    l++;
-                                        //}
                                     }
+                                    if (_indexSkill > -1) _updateArray.splice(_indexSkill, 1);
+
+                                    //console.error(scope.skillsArray[l].Name, iTopic.Skills[k].Name);
+                                    //  console.error(scope.skillsArray[l].Name == iTopic.Skills[k].Name);
+                                    if (scope.skillsArray[l] && scope.skillsArray[l].Name == iTopic.Skills[k].Name) {
+                                        // scope.skillsArray.splice(l, 1);
+                                        _deleteArray.push(l);
+                                        //  console.error('14')
+                                    }
+                                    //} else {
+                                    //    l++;
+                                    //}
+                                }
 
 
-                                }
-                               // console.error(_deleteArray)
-                                _deleteArray.sort(function (a, b) { return b - a })
-                                for (var z = 0 ; z < _deleteArray.length ; z++) {
-                                    scope.skillsArray.splice(_deleteArray[z], 1);
-                                }
                             }
-                        } else {
-                            if (_index > -1) _updateArray.splice(_index, 1);
+                            // console.error(_deleteArray)
+                            _deleteArray.sort(function (a, b) { return b - a })
+                            for (var z = 0 ; z < _deleteArray.length ; z++) {
+                                scope.skillsArray.splice(_deleteArray[z], 1);
+                            }
                         }
-                   
+                    } else {
+                        if (_index > -1) _updateArray.splice(_index, 1);
+                    }
+
                 }
                 else {
                     iTopic.selected = true;
-                   
+
                     if (scope.skillRequired) {
                         scope.skillsArray = scope.skillsArray.concat(iTopic.Skills)
                     } else {
@@ -234,7 +234,7 @@ app.directive('ctcRole', function ($state, serverCommunication) {
                 console.error(scope.categoryDisplay)
                 if (scope.categoryDisplay == true) {
                     scope.mySelection = true;
-                  //  scope.selectedCategory = -1;
+                    //  scope.selectedCategory = -1;
                     scope.selectedTopic = -1;
                     scope.selectedSkills = -1;
                     scope.selectedCategoryValue = null;
@@ -260,7 +260,7 @@ app.directive('ctcRole', function ($state, serverCommunication) {
                                 successCallBack: function (iObj) {
                                     scope.mySelection = true;
                                     scope.categoryDisplay = true;
-                                   // scope.selectedCategory = -1;
+                                    // scope.selectedCategory = -1;
                                     scope.selectedTopic = -1;
                                     scope.selectedSkills = -1;
                                     scope.selectedCategoryValue = null;
@@ -282,7 +282,7 @@ app.directive('ctcRole', function ($state, serverCommunication) {
                                     console.error('In failureCallBack', iObj);
                                 }
                             });
-                            
+
                         }
                         _updateArray = [];
                     }
@@ -313,26 +313,26 @@ app.directive('ctcRole', function ($state, serverCommunication) {
                 scope.selectedCategoryValue = null;
                 if (scope.role == "mentor") {
                     console.error('get data for mentor')
-                serverCommunication.getCategorys({
-                    successCallBack: function (iObj) {
-                        console.error('In successCallBack', iObj);
-                        var _data = JSON.parse(iObj.data);
-                        console.error(_data)
-                        scope.catogoryArray = [].concat(_data);
-                        for (var k = 0; k < scope.catogoryArray.length ; k++) {
-                            if (_category[scope.catogoryArray[k].Category]) {
-                                scope.catogoryArray[k].selectedCategory = true;
-                                scope.catogoryArray[k].alreadySelected = true;
+                    serverCommunication.getCategorys({
+                        successCallBack: function (iObj) {
+                            console.error('In successCallBack', iObj);
+                            var _data = JSON.parse(iObj.data);
+                            console.error(_data)
+                            scope.catogoryArray = [].concat(_data);
+                            for (var k = 0; k < scope.catogoryArray.length ; k++) {
+                                if (_category[scope.catogoryArray[k].Category]) {
+                                    scope.catogoryArray[k].selectedCategory = true;
+                                    scope.catogoryArray[k].alreadySelected = true;
+                                }
                             }
-                        }
-                        
-                    },
-                    failureCallBack: function (iObj) {
-                        console.error('In failureCallBack', iObj);
 
-                    }
-                });
-                }else{
+                        },
+                        failureCallBack: function (iObj) {
+                            console.error('In failureCallBack', iObj);
+
+                        }
+                    });
+                } else {
                     serverCommunication.getCategorys({
                         successCallBack: function (iObj) {
                             console.error('In successCallBack', iObj);
@@ -353,7 +353,7 @@ app.directive('ctcRole', function ($state, serverCommunication) {
                         }
                     });
                 }
-                
+
             };
             var _category = {};
             var _categoryArray = [];
@@ -363,7 +363,7 @@ app.directive('ctcRole', function ($state, serverCommunication) {
                 scope.ctsDataForMolecule = null;
 
                 if (scope.role == "mentor") {
-console.error('get data for mentor')
+                    console.error('get data for mentor')
                     serverCommunication.getMyMentorSelection({
                         successCallBack: function (iObj) {
                             console.error('In getMyMentorSelection', iObj);
@@ -432,71 +432,162 @@ console.error('get data for mentor')
                 } else {
 
 
-                serverCommunication.getMySelection({
-                    successCallBack: function (iObj) {
-                        console.error('In getMySelection', iObj);
-                        _category = {};
-                        _categoryArray = [];
-                        _topicArray = [];
-                        _skillsArray = [];
-                        if (iObj.data && iObj.data.Categories && iObj.data.Categories.length > 0) {
-                            for (var k = 0; k < iObj.data.Categories.length ; k++) {
+                    serverCommunication.getMySelection({
+                        successCallBack: function (iObj) {
+                            console.error('In getMySelection', iObj);
+                            _category = {};
+                            _categoryArray = [];
+                            _topicArray = [];
+                            _skillsArray = [];
+                            debugger
+                            if (iObj.data && iObj.data.Categories && iObj.data.Categories.length > 0) {
+                                for (var k = 0; k < iObj.data.Categories.length ; k++) {
                                     if (Object.keys(iObj.data.Categories[k]).length > 0) {
-                                    if (iObj.data.Categories[k].Category) {
-                                        if (_category[iObj.data.Categories[k].Category]) {
-                                            
-                                        } else {
-                                                _category[iObj.data.Categories[k].Category] = { Name: iObj.data.Categories[k].Category };
-                                              _categoryArray.push(_category[iObj.data.Categories[k].Category]);
+
+                                        // _category[iObj.data.Categories[k].Category] = { Name: iObj.data.Categories[k].Category };
+                                        if (iObj.data.Categories[k].Category) {
+                                            if (_category[iObj.data.Categories[k].Category]) {//if category is already present
+                                                if (_category[iObj.data.Categories[k].Category].topic[iObj.data.Categories[k].Topic]) {//if topic is already present
+                                                    //  _category[iObj.data.Categories[k].Category].topic[iObj.data.Categories[k].Topic] = { Name: iObj.data.Categories[k].Topic, skill: {} };
+                                                    if (iObj.data.Categories[k].Skill) {
+                                                        _category[iObj.data.Categories[k].Category].topic[iObj.data.Categories[k].Topic].skill[iObj.data.Categories[k].Skill] = { Name: iObj.data.Categories[k].Skill }
+                                                    }
+                                                } else {
+                                                    _category[iObj.data.Categories[k].Category].topic[iObj.data.Categories[k].Topic] = { Name: iObj.data.Categories[k].Topic, skill: {} };
+                                                    if (iObj.data.Categories[k].Skill) {
+                                                        _category[iObj.data.Categories[k].Category].topic[iObj.data.Categories[k].Topic].skill[iObj.data.Categories[k].Skill] = { Name: iObj.data.Categories[k].Skill }
+                                                    }
+                                                }
+                                            } else {
+                                                _category[iObj.data.Categories[k].Category] = { Name: iObj.data.Categories[k].Category, topic: {} };
+                                                _category[iObj.data.Categories[k].Category].topic[iObj.data.Categories[k].Topic] = { Name: iObj.data.Categories[k].Topic, skill: {} };
+                                                if (iObj.data.Categories[k].Skill) {
+                                                    _category[iObj.data.Categories[k].Category].topic[iObj.data.Categories[k].Topic].skill[iObj.data.Categories[k].Skill] = { Name: iObj.data.Categories[k].Skill }
+                                                }
+                                                _categoryArray.push(_category[iObj.data.Categories[k].Category]);
+                                            }
                                         }
+
                                     }
-
-                                    if (iObj.data.Categories[k].Topic) {
-                                        if (_category[iObj.data.Categories[k].Topic]) {
-
-                                        } else {
-                                            _category[iObj.data.Categories[k].Topic] = { Name: iObj.data.Categories[k].Topic };
-                                            _topicArray.push(_category[iObj.data.Categories[k].Topic]);
-                                        }
-                                    }
-
-                                    if (iObj.data.Categories[k].Skill) {
-                                        if (_category[iObj.data.Categories[k].Skill]) {
-
-                                        } else {
-                                            _category[iObj.data.Categories[k].Skill] = { Name: iObj.data.Categories[k].Skill };
-                                            _skillsArray.push(_category[iObj.data.Categories[k].Skill]);
-                                        }
-                                    }
-                                     
                                 }
                             }
-                        }
-                        console.error('In getMySelection', _category, _categoryArray, _topicArray, _skillsArray);
-                        var _array = [];
-                        
-                            for (var _key in _category) {
+                            console.error('In getMySelection', _category, _categoryArray, _topicArray, _skillsArray);
+                            var _array = [];
+                            var _node = [];
+                            var _count = 1;
+                            var _idArray = [];
                             _array.push({
-                                "symbol": _key,
-                                "size": 25,
-                                    "id": "d83f4a48-2a50-49b1-9dc3-873363a541a3" + _key,
+                                "symbol": 'My Selection',
+                                "size": 30,
+                                "id": 0,
                                 "bonds": 1
                             });
-                        }
-                         var _retu = {
-                                  "3-iodo-3-methylhexan-1,4-diamine": {
-                                      "nodes": _array,
-                                      "links": []
-                                    }
-                         }
-                         console.error(_retu)
-                         scope.ctsDataForMolecule = _retu
-                    },
-                    failureCallBack: function (iObj) {
-                        console.error('In failuregetMySelectionCallBack', iObj);
+                            for (var _key in _category) {
 
-                    }
-                });
+
+                                _array.push({
+                                    "symbol": _key,
+                                    "size": 25,
+                                    "id": _count,
+                                    "bonds": 1
+                                });
+                                _node.push({
+                                    "source": 0,
+                                    "target": _count,
+                                    "id": 'link_' + _count,
+                                    "bondType": 1
+
+                                });
+                                if (_category[_key].topic) {
+                                    var _level = 1;
+                                    var _dd = 0;
+                                    var _topicId = _count;
+                                    for (var _topic in _category[_key].topic) {
+                                        var _topicId = _topicId + _level;
+
+
+                                        _array.push({
+                                            "symbol": _topic,
+                                            "size": 15,
+                                            "id": _topicId,
+                                            "bonds": 1
+                                        });
+
+                                        _node.push({
+                                            "source": _count,
+                                            "target": _topicId,
+                                            "id": 'link_' + _topicId,
+                                            "bondType": 1
+
+                                        });
+
+                                        var _levelSkill = 1;
+                                        if (!_category[_key].topic[_topic].skill) {
+                                            //
+                                            //_idArray.push(_topicId);
+                                        } else {
+                                            var _finalLevelVaue = 0;
+                                            for (var _skill in _category[_key].topic[_topic].skill) {
+                                                var _skillId = _topicId + _levelSkill;
+
+
+                                                // _idArray.push(_skillId);
+                                                _array.push({
+                                                    "symbol": _skill,
+                                                    "size": 5,
+                                                    "id": _skillId,
+                                                    "bonds": 1
+                                                });
+
+                                                _node.push({
+                                                    "source": _topicId,
+                                                    "target": _skillId,
+                                                    "id": 'link_' + _skillId,
+                                                    "bondType": 1
+
+                                                });
+                                                console.error(_levelSkill, Object.keys(_category[_key].topic[_topic].skill).length)
+                                                if (_levelSkill == (Object.keys(_category[_key].topic[_topic].skill).length)) {
+                                                    console.error(_skillId)
+                                                    _topicId = _skillId;
+                                                }
+                                                _levelSkill++;
+
+                                            }
+
+                                        }
+
+
+                                        console.error(Object.keys(_category[_key].topic).length)
+                                        if (_dd == (Object.keys(_category[_key].topic).length - 1)) {
+                                            console.error(_skillId)
+                                            _count = _skillId;
+                                        }
+                                        // _level = _finalLevelVaue;
+                                        //  _level++;
+                                        _dd++;
+                                        console.error(_level)
+
+
+                                    }
+                                }
+                                _count++;
+                            }
+                            console.error(_node, _array)
+                            var _retu = {
+                                "3-iodo-3-methylhexan-1,4-diamine": {
+                                    "nodes": _array,
+                                    "links": _node
+                                }
+                            }
+                            console.error(_retu)
+                            scope.ctsDataForMolecule = _retu
+                        },
+                        failureCallBack: function (iObj) {
+                            console.error('In failuregetMySelectionCallBack', iObj);
+
+                        }
+                    });
                 }
             };
             scope.init();
@@ -541,7 +632,7 @@ app.factory('commonFunction', function ($http) {
 app.directive('moleculeMap', function ($rootScope) {
     return {
         scope: {
-            ctsData : "="
+            ctsData: "="
         },
         template: '<div id="moleculeDisplay" style="float:left;width : 100%;height:100%;"></div>',// template will be different
         restrict: 'EAC',
@@ -634,7 +725,7 @@ app.directive('moleculeMap', function ($rootScope) {
             };
             console.error($scope)
             var _func = function () {
-                
+
                 return $scope.ctsData
             };
 

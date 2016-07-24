@@ -29,7 +29,12 @@
 			float  	 : left;
 		}
 .middleBackgroundImage {
-    background-image: url('../../../Images/loginLanding.jpg');
+    
+     background: url('../../../Images/loginLanding.jpg') no-repeat center center fixed; 
+    -webkit-background-size: cover;
+     -moz-background-size: cover;
+     -o-background-size: cover;
+     background-size: cover;
 }
 .staticStringMessage{
 			    position: relative;
