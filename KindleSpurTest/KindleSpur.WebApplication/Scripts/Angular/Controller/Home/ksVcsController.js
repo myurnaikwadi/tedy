@@ -1,6 +1,6 @@
 ﻿
 //MKN - Added
-app.directive('vcsDir', function ($state, serverCommunication) {
+app.directive('vcsDir', function ($state, serverCommunication,$rootScope) {
     return {
         scope: {
             //role: "@",
@@ -123,6 +123,17 @@ app.directive('vcsDir', function ($state, serverCommunication) {
                 }
                 $scope.activity.taskArr = [].concat($scope.dummyTaskArray);
                 $scope.activityMainArray.push($scope.activity);
+                serverCommunication.saveActivity({
+                    activity: $scope.activity,
+                    successCallBack: function (iObj) {
+                        console.error('In getMySelection', iObj);
+                        _createMoleculeStructure(iObj);
+                    },
+                    failureCallBack: function (iObj) {
+                        console.error('In failuregetMySelectionCallBack', iObj);
+
+                    }
+                });
                 $scope.activity = { eventTitle: '' };
                 $scope.dummyTaskArray = [];
             };
@@ -133,6 +144,21 @@ app.directive('vcsDir', function ($state, serverCommunication) {
                     _setElementFocus('userId');
                 }, 400);
             };
+                        
+            var _init = function () {
+                serverCommunication.getActivityByUser({
+                    loggedUserDetails: $rootScope.loggedDetail,
+                    successCallBack: function (iObj) {
+                        console.error('In getMySelection', iObj);
+                        _createMoleculeStructure(iObj);
+                    },
+                    failureCallBack: function (iObj) {
+                        console.error('In failuregetMySelectionCallBack', iObj);
+
+                    }
+                });
+            };
+            _init();
         }
     }
 });

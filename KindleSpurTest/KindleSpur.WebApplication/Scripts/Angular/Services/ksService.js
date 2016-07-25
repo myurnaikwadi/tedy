@@ -254,25 +254,43 @@ app.factory('serverCommunication', function ($http) {
             $http.post('/Coach/SaveFeedBack', iObj.loggedUserDetails).then(iObj.successCallBack, iObj.failureCallBack)
         },
         /**
-        * @auther : MKN
-         * @date : 15/06/2016
-         * @Purpose :
-     */
+          * @auther : MKN
+          * @date : 15/06/2016
+          * @Purpose :
+          */
         unlockGameCode: function (iObj) {
             console.error(iObj)
             $http.get('/User/UnlockGame', iObj.redeemAction).then(iObj.successCallBack, iObj.failureCallBack)
         },
 
         /**
-       * @auther : MKN
-        * @date : 15/06/2016
-        * @Purpose :
-    */
+          * @auther : MKN
+          * @date : 15/06/2016
+          * @Purpose :
+          */
         getPointsRecord: function (iObj) {
             console.error(iObj)
             $http.get('/User/GetRewardPoints').then(iObj.successCallBack, iObj.failureCallBack)
         },
-        
+
+        /**
+          * @auther : MKN
+          * @date : 25/07/2016
+          * @Purpose :
+          */
+        getActivityByUser: function (iObj) {
+            console.error(iObj)
+            $http.post('/Coach/getActivity', iObj.loggedUserDetails).then(iObj.successCallBack, iObj.failureCallBack);
+        },
+        /**
+         * @auther : MKN
+         * @date : 25/07/2016
+         * @Purpose :
+         */
+        saveActivity: function (iObj) {
+            console.error(iObj)
+            $http.post('/Coach/SavegetActivity', iObj.activity).then(iObj.successCallBack, iObj.failureCallBack);
+        },
 
     }
 });
