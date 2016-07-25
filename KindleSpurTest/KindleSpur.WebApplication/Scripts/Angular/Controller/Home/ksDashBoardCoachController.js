@@ -267,8 +267,8 @@
             redeemAction : $scope.redeemAction,
             successCallBack: function (iObj) {
 
-                alert(iObj.data);
-                $scope.gameKey = iObj.data;
+                //alert(iObj.data);
+                //$scope.gameKey = iObj.data;
                 console.error('In successCallBack', iObj);
 
             },

@@ -192,8 +192,10 @@ float: left;
 .tagTasks{
 	margin: auto;
 	width: 30%;
+    font-size: 11px;
+    padding: 7px;
         text-align: center;
-        padding: 4px;
+            overflow: hidden;
 	border: 1px solid #CCCCCC;
 	text-overflow:ellipsis;
 }
@@ -221,7 +223,7 @@ float: left;
     border-bottom: 0px solid red;
     background: transparent;
     color: white;
-    font-family: raleway !important;
+   
     font-size: 16.5px !important;
     font-weight: 700 !important;
     letter-spacing: 2px;
@@ -238,7 +240,7 @@ float: left;
   
     font-size: 15px;
     position: absolute;
-    font-family: raleway;
+   
     pointer-events: none;
     letter-spacing: 2px;
     left: 15px;
@@ -297,7 +299,7 @@ input:focus ~ .bar:before, input:focus ~ .bar:after {
   opacity:0.5;
 }
 .homeLoginLabels{
-    font-family: raleway;
+  
     color: white;
     font-size: 12px;
     font-weight: 700;

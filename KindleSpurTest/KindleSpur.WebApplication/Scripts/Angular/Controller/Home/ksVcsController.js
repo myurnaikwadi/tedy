@@ -107,6 +107,7 @@ app.directive('vcsDir', function ($state, serverCommunication,$rootScope) {
                     alert('Please fill Blank field');
                     return
                 }
+                $scope.addTaskObject.date = new Date().toJSON();
                 $scope.dummyTaskArray.push($scope.addTaskObject);
                 $scope.addTaskObject = { eventTitle: '', impactZone: -1, measureImapact: -1, typeImapact: -1, description: '' };
             }
@@ -129,8 +130,8 @@ app.directive('vcsDir', function ($state, serverCommunication,$rootScope) {
                 serverCommunication.saveActivity({
                     activity: $scope.activity,
                     successCallBack: function (iObj) {
-                        console.error('In getMySelection', iObj);
-                        _createMoleculeStructure(iObj);
+                        console.error('In Success CallBack', iObj);
+                      //  _createMoleculeStructure(iObj);
                     },
                     failureCallBack: function (iObj) {
                         console.error('In failuregetMySelectionCallBack', iObj);
@@ -147,13 +148,21 @@ app.directive('vcsDir', function ($state, serverCommunication,$rootScope) {
                     _setElementFocus('userId');
                 }, 400);
             };
-                        
+                    
+            var _displayActivity = function (iObj) {
+                if (typeof iObj.data === 'string')
+                    iObj.data = JSON.parse(iObj.data);
+                console.error(iObj.data)
+                //var _data = JSON.parse(_data);
+                $scope.activityMainArray = [].concat(iObj.data);
+            };
+
             var _init = function () {
                 serverCommunication.getActivityByUser({
                     loggedUserDetails: $rootScope.loggedDetail,
                     successCallBack: function (iObj) {
                         console.error('In getMySelection', iObj);
-                        _createMoleculeStructure(iObj);
+                       _displayActivity(iObj);
                     },
                     failureCallBack: function (iObj) {
                         console.error('In failuregetMySelectionCallBack', iObj);

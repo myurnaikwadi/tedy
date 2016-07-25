@@ -15,7 +15,7 @@
             <label class="homeLoginlabel fontClass">ACTIVITY NAME</label>
         </div>
         <div class="taskLeveliCon">
-            <img src="../../Images/save.png" title="Save" ng-click="saveActvity()" style="margin: auto auto;float: left;height: 35px;width: 35px;" />
+            <img src="../../Images/save.png" title="Save" ng-click="saveActvity()" style="margin: auto auto;float: left;height: 20px;width: 20px;" />
             <img src="../../Images/cancel.png" title="Cancel" ng-click="addActivityShowFlag = false;dummyTaskArray = [];" style="margin: auto auto;float: left;height: 20px;width: 20px;" />
         </div>
     </div>
@@ -42,7 +42,7 @@
             </div>
             <div class="impactZoneMeasureParent">
                 <div class="impactLabel">
-                    <h5 class="labelAddActivity fontClass" style="color:#A4A4A4;    margin: auto;">MEASURE OF IMPACT</h5>
+                    <h5 class="labelAddActivity fontClass" style="color:#A4A4A4;margin: auto;">MEASURE OF IMPACT</h5>
                 </div>
                 <div class="impactZoneTag" style="display: flex;">
                     <div style="float:left;margin:auto;width: 81%;
@@ -78,7 +78,7 @@
         <div class="taskLavelParentDiv">
             <div class="taskLabelParentDiv">
                 <h5 style="font-size: 14px;font-weight: bold;" class="fontClass">{{tasks.eventTitle}}</h5>
-                <h5 style="font-size: 11px;margin-top: 5px" class="fontClass">12/31/3434</h5>
+                <h5 style="font-size: 11px;margin-top: 5px" class="fontClass">{{ tasks.date | date :'dd/MM/yyyy'}}</h5>
             </div>
             <div class="taskLevelImpactZone">
                 <h5 class="tagTasks selectedZoneClass fontClass">{{leftSideMenus[tasks.impactZone].name}}</h5>
@@ -114,11 +114,11 @@
             <h5 class="labelAddActivity fontClass">{{option.eventTitle | uppercase}}</h5>
         </div>
         <div class="taskListPanelDivHide" ng-class="{ taskListPanelDivShow : option.displayDetail == true }">
-            <div class="taskListPanelRepeatDiv" ng-repeat="tasks in option.taskArr">
+            <div class="taskListPanelRepeatDiv" ng-repeat="tasks in option.Tasks">
                 <div class="taskLavelParentDiv">
                     <div class="taskLabelParentDiv">
                         <h5 style="font-size: 14px;font-weight: bold;" class="fontClass">{{tasks.eventTitle}}</h5>
-                        <h5 style="font-size: 11px;margin-top: 5px" class="fontClass">12/12/2222</h5>
+                        <h5 style="font-size: 11px;margin-top: 5px" class="fontClass">{{tasks.date | date :'dd/MM/yyyy'}}</h5>
                     </div>
                     <div class="taskLevelImpactZone">
                         <h5 class="tagTasks selectedZoneClass fontClass">{{leftSideMenus[tasks.impactZone].name}}</h5>
