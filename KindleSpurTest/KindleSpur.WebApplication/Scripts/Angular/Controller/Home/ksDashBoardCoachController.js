@@ -1,7 +1,7 @@
 ﻿app.controller('ksDashBoardCoachController', function ($rootScope,$scope, serverCommunication, $stateParams) {
     console.error($stateParams) 
     $scope.passedData = $stateParams;
-    $scope.redeemAction = "GAME";
+    $scope.redeemAction = { actionName: "GAME" } ;
     window.ddd = $scope;
     $scope.coachingStatusArray = [{ Sender : '', FirstName: 'MAYUR', LastName: 'N',PhotoURL :'', Rating : '', TreeURL : '', FeedbackCount: 5, Skill: 'ANGULAR JS' }
 					, { Sender: '', FirstName: 'SAGAR N', LastName: 'N', PhotoURL: '', Rating: '', TreeURL: '', FeedbackCount: 3, Skill: 'C# MVC' }

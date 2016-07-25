@@ -260,7 +260,12 @@ app.factory('serverCommunication', function ($http) {
           */
         unlockGameCode: function (iObj) {
             console.error(iObj)
-            $http.get('/User/UnlockGame', iObj.redeemAction).then(iObj.successCallBack, iObj.failureCallBack)
+            if (iObj.redeemAction.redeemAction == 'GAME') {
+                $http.get('/User/UnlockGame').then(iObj.successCallBack, iObj.failureCallBack)
+            } else {
+                $http.get('/User/UnlockPSR').then(iObj.successCallBack, iObj.failureCallBack)
+            }
+            
         },
 
         /**
