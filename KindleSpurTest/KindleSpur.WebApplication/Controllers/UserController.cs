@@ -170,11 +170,11 @@ namespace KindleSpur.WebApplication.Controllers
             return View();
         }
                 
-        public string UnlockGame(string redeemAction)
+        public string UnlockGame(PSRAndGamesVM obj)
         {
             UserRepository _repo = new UserRepository();
             ObjectId userId = ((IUser)System.Web.HttpContext.Current.Session["User"]).Id;
-            if (redeemAction == "GAME")
+            if (obj.ToString() == "GAME")
             {
                 return _repo.GamesUnLocked(userId);
             }

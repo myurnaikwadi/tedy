@@ -316,7 +316,7 @@ namespace KindleSpur.Data
         {
             if(c != null)
             { 
-                var _userCollection = _kindleDatabase.GetCollection("UserDetail");
+                var _userCollection = _kindleDatabase.GetCollection("UserDetails");
                 User userDetail = _userCollection.FindOneAs<User>(Query.EQ("EmailAddress", c.Sender));
                 c.FirstName = userDetail.FirstName;
                 c.LastName = userDetail.LastName;

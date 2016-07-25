@@ -249,15 +249,17 @@ namespace KindleSpur.Data
                 {
                     if (userDetail.Games == null) userDetail.Games = new List<Game>();
 
+                    int count = userDetail.Games.Select(x => x.Name.Contains("PSR")).Count() + 1;
+
                        Game _game = new Game();
                         _game.Id = new ObjectId();
-                        _game.Name = "PSR";
+                        _game.Name = "PSR" + count;
                         _game.Key = "";
                         _game.UnlockedDate = DateTime.Now;
 
                         userDetail.Games.Add(_game);
-                        userDetail.BalanceRewardPoints -= (int.Parse(_game.GameId) * 10);
-                        userDetail.RedeemedPoints += (int.Parse(_game.GameId) * 10);
+                        userDetail.BalanceRewardPoints -= 10;
+                        userDetail.RedeemedPoints += 10;
                         _userCollection.Save(userDetail);
                    
                     _transactionStatus = true;
