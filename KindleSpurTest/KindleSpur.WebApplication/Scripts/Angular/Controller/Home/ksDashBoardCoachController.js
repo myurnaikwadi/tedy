@@ -259,14 +259,14 @@
     }
 
     $scope.redeemPointsClick = function () {
-        $scope.askFeedback = false;
-        $scope.formValue = '1';
-        $scope.menuClick(7); 
+        $scope.askFeedback = false;     
+     
         serverCommunication.unlockGameCode({
             //   loggedUserDetails: $rootScope.loggedDetail,
             redeemAction : $scope.redeemAction,
             successCallBack: function (iObj) {
-
+                $scope.formValue = '1';
+                $scope.menuClick(7);  
                 //alert(iObj.data);
                 //$scope.gameKey = iObj.data;
                 console.error('In successCallBack', iObj);

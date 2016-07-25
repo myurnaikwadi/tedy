@@ -162,6 +162,7 @@
 
 .notificationTiming{
 		float : left;
+        margin: 0;
 		color:#ffffff;
         border-bottom: 1px solid white;
 }

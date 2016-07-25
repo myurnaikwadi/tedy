@@ -29,8 +29,8 @@
                                 </div>
                             </div>
                             <div ng-class="{ mentorThemeColor : notification.role =='mentor',coacheeThemeColor : notification.role =='coachee'}" style="float: left;width: 100%;height: 100%;" ng-if="notification.notificationType == '2'">
-                                <div class="notificationWizReason" style="margin 4%;border:0px;color: white; padding : 0;">{{notification.name}}</div>
-                                <div class="notificationTimingPanel>"
+                                <div class="notificationWizReason" style="margin :4%;border:0px;color: white; padding : 0;">{{notification.name}}</div>
+                                <div class="notificationTimingPanel">
                                     <h6 class="notificationTiming notificationDate">{{notification.meetingDate}}</h6>
                                     <h6 class="notificationTiming notificationTime">{{notification.meetingTime}}</h6>
                                     <h6 style="float:right;    margin-right: 8%;" class="notificationTiming notificationDiff">{{notification.meetingTimeDiff}}</h6>
