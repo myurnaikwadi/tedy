@@ -236,6 +236,42 @@ namespace KindleSpur.Data
             return "";
         }
 
+        public string PSRUnLocked(ObjectId userId)
+        {
+            bool _transactionStatus = false;
+            try
+            {
+                var _userCollection = _kindleDatabase.GetCollection("UserDetails");
+                var userDetail = _userCollection.FindOneByIdAs<User>(userId);
+
+                Boolean _psr = UnlockPSR(userDetail.TotalRewardPoints);
+                if (_psr)
+                {
+                    if (userDetail.Games == null) userDetail.Games = new List<Game>();
+
+                       Game _game = new Game();
+                        _game.Id = new ObjectId();
+                        _game.Name = "PSR";
+                        _game.Key = "";
+                        _game.UnlockedDate = DateTime.Now;
+
+                        userDetail.Games.Add(_game);
+                        userDetail.BalanceRewardPoints -= (int.Parse(_game.GameId) * 10);
+                        userDetail.RedeemedPoints += (int.Parse(_game.GameId) * 10);
+                        _userCollection.Save(userDetail);
+                   
+                    _transactionStatus = true;
+                    return _game.Key;
+                }
+            }
+            catch (Exception ex)
+            {
+                _logCollection.Insert("{ Error : 'Failed at EditUser().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ");
+                throw ex;
+            }
+            return "";
+        }
+
         private Game UnlockGames(int RewardPointsGained)
         {
             var _gamesCollection = _kindleDatabase.GetCollection("BrainGames");
@@ -250,7 +286,18 @@ namespace KindleSpur.Data
             return _gamesCollection.FindOneAs<Game>(Query.EQ("GameId", Id));
         }
 
-        
+        private Boolean UnlockPSR(int RewardPointsGained)
+        {
+         
+            if (RewardPointsGained < 10)
+            {
+                throw new Exception("You do not have sufficient points to unlock games!!!");
+            }
+
+            return true;
+        }
+
+
         public Boolean SaveVCSCActivity(string userId, VSCS _vscs)
         {
             bool _transactionStatus = false;

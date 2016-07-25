@@ -377,7 +377,7 @@ app.directive('ctcRole', function ($state, serverCommunication) {
                                         //  _category[iObj.data.Categories[k].Category].topic[iObj.data.Categories[k].Topic] = { Name: iObj.data.Categories[k].Topic, skill: {} };
                                         if (iObj.data.Categories[k].Skill) {
                                             _skills[iObj.data.Categories[k].Skill] = { Name: iObj.data.Categories[k].Skill };
-                                            _category[iObj.data.Categories[k].Category].topic[iObj.data.Categories[k].Topic].skill = {}
+                                            if (!_category[iObj.data.Categories[k].Category].topic[iObj.data.Categories[k].Topic].skill) _category[iObj.data.Categories[k].Category].topic[iObj.data.Categories[k].Topic].skill = {}
                                             _category[iObj.data.Categories[k].Category].topic[iObj.data.Categories[k].Topic].skill[iObj.data.Categories[k].Skill] = { Name: iObj.data.Categories[k].Skill }
                                         }
                                     } else {
@@ -385,7 +385,7 @@ app.directive('ctcRole', function ($state, serverCommunication) {
                                         _category[iObj.data.Categories[k].Category].topic[iObj.data.Categories[k].Topic] = { Name: iObj.data.Categories[k].Topic, skill: null };
                                         if (iObj.data.Categories[k].Skill) {
                                             _skills[iObj.data.Categories[k].Skill] = { Name: iObj.data.Categories[k].Skill };
-                                            _category[iObj.data.Categories[k].Category].topic[iObj.data.Categories[k].Topic].skill = {}
+                                            if (!_category[iObj.data.Categories[k].Category].topic[iObj.data.Categories[k].Topic].skill)  _category[iObj.data.Categories[k].Category].topic[iObj.data.Categories[k].Topic].skill = {}
                                             _category[iObj.data.Categories[k].Category].topic[iObj.data.Categories[k].Topic].skill[iObj.data.Categories[k].Skill] = { Name: iObj.data.Categories[k].Skill }
                                         }
                                     }
@@ -414,14 +414,14 @@ app.directive('ctcRole', function ($state, serverCommunication) {
                 }else{ 
                     _array.push({
                         "symbol": 'My Selection',
-                        "size": 30,
+                        "size": 40,
                         "id": 0,
                         "bonds": 1
                     });
                     for (var _key in _category) {
                         _array.push({
                             "symbol": _key,
-                            "size": 25,
+                            "size": 35,
                             "id": _count,
                             "bonds": 1
                         });
@@ -440,7 +440,7 @@ app.directive('ctcRole', function ($state, serverCommunication) {
                                 var _topicId = _topicId + _level;
                                 _array.push({
                                     "symbol": _topic,
-                                    "size": 15,
+                                    "size": 25,
                                     "id": _topicId,
                                     "bonds": 1
                                 });
@@ -464,7 +464,7 @@ app.directive('ctcRole', function ($state, serverCommunication) {
 
                                         _array.push({
                                             "symbol": _skill,
-                                            "size": 5,
+                                            "size": 15,
                                             "id": _skillId,
                                             "bonds": 1
                                         });
