@@ -187,10 +187,21 @@ namespace KindleSpur.Data
                     for (int index = userDetail.Games.Count - 1; index >= 0; index--)
                     {
                         ActiveGamesAndPSR objGamesAndPSR = new ActiveGamesAndPSR();
-                        objGamesAndPSR.Name = "Game " + (index + 1);
+                        if (!userDetail.Games[index].Name.Contains("PSR"))
+                        {
+                            objGamesAndPSR.Name = "Game " + (index + 1);
+                            objGamesAndPSR.PSR = false;
+                        } 
+                        else
+                        {
+                            objGamesAndPSR.Name = userDetail.Games[index].Name;
+                            objGamesAndPSR.PSR = true;
+                        }
+
+                        
                         objGamesAndPSR.Key = userDetail.Games[index].Key;
                         objGamesAndPSR.date = userDetail.Games[index].UnlockedDate.ToShortDateString();
-                        objGamesAndPSR.PSR = false;
+                        
 
                         reward.PSRAndGames.Add(objGamesAndPSR);
                     }
@@ -211,7 +222,7 @@ namespace KindleSpur.Data
                 var _userCollection = _kindleDatabase.GetCollection("UserDetails");
                 var userDetail = _userCollection.FindOneByIdAs<User>(userId);
                 
-                Game _game = UnlockGames(userDetail.TotalRewardPoints);
+                Game _game = UnlockGames(userDetail.TotalRewardPoints, userDetail.BalanceRewardPoints);
                 if (_game != null)
                 {
                     if (userDetail.Games == null) userDetail.Games = new List<Game>();
@@ -244,7 +255,7 @@ namespace KindleSpur.Data
                 var _userCollection = _kindleDatabase.GetCollection("UserDetails");
                 var userDetail = _userCollection.FindOneByIdAs<User>(userId);
 
-                Boolean _psr = UnlockPSR(userDetail.TotalRewardPoints);
+                Boolean _psr = UnlockPSR(userDetail.TotalRewardPoints, userDetail.BalanceRewardPoints);
                 if (_psr)
                 {
                     if (userDetail.Games == null) userDetail.Games = new List<Game>();
@@ -255,6 +266,7 @@ namespace KindleSpur.Data
                         _game.Id = new ObjectId();
                         _game.Name = "PSR" + count;
                         _game.Key = "";
+                    
                         _game.UnlockedDate = DateTime.Now;
 
                         userDetail.Games.Add(_game);
@@ -274,11 +286,11 @@ namespace KindleSpur.Data
             return "";
         }
 
-        private Game UnlockGames(int RewardPointsGained)
+        private Game UnlockGames(int RewardPointsGained, int BalancePoints)
         {
             var _gamesCollection = _kindleDatabase.GetCollection("BrainGames");
      
-            if(RewardPointsGained < 10)
+            if(RewardPointsGained < 10 || BalancePoints < 10)
             {
                 throw new Exception("You do not have sufficient points to unlock games!!!");
             }
@@ -288,10 +300,10 @@ namespace KindleSpur.Data
             return _gamesCollection.FindOneAs<Game>(Query.EQ("GameId", Id));
         }
 
-        private Boolean UnlockPSR(int RewardPointsGained)
+        private Boolean UnlockPSR(int RewardPointsGained, int BalancePoints)
         {
          
-            if (RewardPointsGained < 10)
+            if (RewardPointsGained < 10 || BalancePoints < 10)
             {
                 throw new Exception("You do not have sufficient points to unlock games!!!");
             }
