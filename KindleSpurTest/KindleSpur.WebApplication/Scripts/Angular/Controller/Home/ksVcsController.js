@@ -10,13 +10,16 @@ app.directive('vcsDir', function ($state, serverCommunication,$rootScope) {
         //scope: true,   // optionally create a child scope
         link: function ($scope, element, attrs) {  
             window.vcs = $scope;//mkn
-            $scope.leftSideMenus = [{ name: 'DASHBOARD' }
-					, { name: 'COACHING STATUS' }
+            $scope.leftSideMenus = [{ name: 'Higher Revenue' }
+					, { name: 'Lower costs' }
 					, { name: 'KNOWLEDGE GARDEN' }
-					, { name: 'BRAIN GAMES' }
-					, { name: 'GRAPHS' }
-					, { name: 'RESOURCES' }
-					, { name: 'Add Skills' }
+					, { name: 'Improved Brand' }
+					, { name: 'Certainty of Success' }
+					, { name: 'Turn Around' }
+					, { name: 'Customer Delight' }
+                    , { name: 'Peer Success' }
+                    , { name: 'Team Success' }
+                    , { name: 'Subordinate Success' }
             ]
             var _resetStyles = function () {//AKP
                 var txtBoxes = document.getElementsByTagName("INPUT");
