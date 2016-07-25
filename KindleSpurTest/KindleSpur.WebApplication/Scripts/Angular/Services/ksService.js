@@ -280,7 +280,7 @@ app.factory('serverCommunication', function ($http) {
           */
         getActivityByUser: function (iObj) {
             console.error(iObj)
-            $http.post('/Coach/getActivity', iObj.loggedUserDetails).then(iObj.successCallBack, iObj.failureCallBack);
+            $http.post('/User/GetVSCSActivity', iObj.loggedUserDetails).then(iObj.successCallBack, iObj.failureCallBack);
         },
         /**
          * @auther : MKN
@@ -289,7 +289,7 @@ app.factory('serverCommunication', function ($http) {
          */
         saveActivity: function (iObj) {
             console.error(iObj)
-            $http.post('/Coach/SavegetActivity', iObj.activity).then(iObj.successCallBack, iObj.failureCallBack);
+            $http.post('/User/AddVSCSActivity', iObj.activity).then(iObj.successCallBack, iObj.failureCallBack);
         },
 
     }

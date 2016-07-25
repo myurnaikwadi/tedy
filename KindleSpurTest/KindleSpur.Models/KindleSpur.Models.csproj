@@ -80,6 +80,7 @@
     <Compile Include="QueAndAns.cs" />
     <Compile Include="Reward.cs" />
     <Compile Include="Skill.cs" />
+    <Compile Include="Tasks.cs" />
     <Compile Include="User.cs" />
     <Compile Include="ValueCreation.cs" />
     <Compile Include="ValueCreationScore.cs" />

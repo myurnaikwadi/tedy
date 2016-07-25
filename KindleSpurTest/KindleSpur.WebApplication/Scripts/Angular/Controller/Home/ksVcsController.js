@@ -124,7 +124,7 @@ app.directive('vcsDir', function ($state, serverCommunication,$rootScope) {
                     alert('Please add atlist one score');
                     return;
                 }
-                $scope.activity.taskArr = [].concat($scope.dummyTaskArray);
+                $scope.activity.Tasks = [].concat($scope.dummyTaskArray);
                 $scope.activityMainArray.push($scope.activity);
                 serverCommunication.saveActivity({
                     activity: $scope.activity,

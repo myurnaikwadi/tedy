@@ -209,6 +209,14 @@ namespace KindleSpur.WebApplication.Controllers
             _userRepo.SaveVCSCActivity(EmailAddress, _vscs);
         }
 
+        public string GetVSCSActivity()
+        {
+
+            UserRepository _userRepo = new UserRepository();
+            string EmailAddress = ((IUser)System.Web.HttpContext.Current.Session["User"]).EmailAddress;
+            return ( _userRepo.GetVCSCActivity(EmailAddress)).ToJson();
+        }
+
         //[HttpPost]
         //public ActionResult ForgotPassword(string EmailAddress)
         //{            
@@ -225,7 +233,7 @@ namespace KindleSpur.WebApplication.Controllers
         //    {
         //        ViewBag.Error = "UserName doesnot Exists!!! Please SignUp";
         //    }
-            
+
         //    return PartialView();
         //}
 

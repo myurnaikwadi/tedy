@@ -298,58 +298,60 @@ namespace KindleSpur.Data
         }
 
 
-        public Boolean SaveVCSCActivity(string userId, VSCS _vscs)
+        public Boolean SaveVCSCActivity(string EmailAddress, VSCS _vscs)
         {
             bool _transactionStatus = false;
             try
             {
                 var _userCollection = _kindleDatabase.GetCollection("UserDetails");
-                var userDetail = _userCollection.FindOneByIdAs<User>(userId);
-                ValueCreationActivity _activity = new ValueCreationActivity();
+                var userDetail = _userCollection.FindOneAs<User>(Query.EQ("EmailAddress", EmailAddress));
+                if (userDetail.ValueCreationActivity == null) userDetail.ValueCreationActivity = new List<VSCS>();
+                userDetail.ValueCreationActivity.Add(_vscs);
+                //ValueCreationActivity _activity = new ValueCreationActivity();
 
-                if (_activity.Tasks == null) _activity.Tasks = new List<ValueCreationTasks>();
+                //if (_activity.Tasks == null) _activity.Tasks = new List<ValueCreationTasks>();
 
-                ValueCreationTasks _vscsTasks = new ValueCreationTasks();
-                _vscsTasks.TaskName = _vscs.TaskName;
-                ValueCreationScore _vscsScore = new ValueCreationScore();
-                _vscsScore.ImpactMeasure = _vscs.ImpactMeasure;
-                _vscsScore.ImpactType = _vscs.ImpactType;
-                _vscsScore.ImpactZone = _vscs.ImpactZone;
+                //ValueCreationTasks _vscsTasks = new ValueCreationTasks();
+                //_vscsTasks.TaskName = _vscs.TaskName;
+                //ValueCreationScore _vscsScore = new ValueCreationScore();
+                //_vscsScore.ImpactMeasure = _vscs.ImpactMeasure;
+                //_vscsScore.ImpactType = _vscs.ImpactType;
+                //_vscsScore.ImpactZone = _vscs.ImpactZone;
 
-                int type = int.Parse(_vscs.ImpactType.ToString());
-                int measure = int.Parse(_vscs.ImpactMeasure.ToString());
-                _vscsScore.Score = CalculateScore(type, measure);
+                //int type = int.Parse(_vscs.ImpactType.ToString());
+                //int measure = int.Parse(_vscs.ImpactMeasure.ToString());
+                //_vscsScore.Score = CalculateScore(type, measure);
 
-                _vscsTasks.TaskScore += _vscsScore.Score;
-                _activity.ActivityScore += _vscsScore.Score;
-                if (_vscs.ImpactType == Enums.ImactType.Direct.ToString())
-                {
+                //_vscsTasks.TaskScore += _vscsScore.Score;
+                //_activity.ActivityScore += _vscsScore.Score;
+                //if (_vscs.ImpactType == Enums.ImactType.Direct.ToString())
+                //{
                     
-                    if (_vscs.ImpactMeasure == Enums.ImactMeasure.Exceeding.ToString())
-                    {
-                        _vscsScore.Medal = "Gold"; 
-                    }
-                    else if(_vscs.ImpactMeasure == Enums.ImactMeasure.Concrete.ToString())
-                    {
-                        _vscsScore.Medal = "Silver";
-                    }
-                    else
-                    {
-                        _vscsScore.Medal = "Bronze";
-                    }                   
-                }
-                else
-                {
-                    _vscsScore.Medal = "Bronze";
-                    if (_vscs.ImpactMeasure == Enums.ImactMeasure.Exceeding.ToString())
-                    {
-                        _vscsScore.Medal = "Silver";
-                    }
+                //    if (_vscs.ImpactMeasure == Enums.ImactMeasure.Exceeding.ToString())
+                //    {
+                //        _vscsScore.Medal = "Gold"; 
+                //    }
+                //    else if(_vscs.ImpactMeasure == Enums.ImactMeasure.Concrete.ToString())
+                //    {
+                //        _vscsScore.Medal = "Silver";
+                //    }
+                //    else
+                //    {
+                //        _vscsScore.Medal = "Bronze";
+                //    }                   
+                //}
+                //else
+                //{
+                //    _vscsScore.Medal = "Bronze";
+                //    if (_vscs.ImpactMeasure == Enums.ImactMeasure.Exceeding.ToString())
+                //    {
+                //        _vscsScore.Medal = "Silver";
+                //    }
                    
-                }
-                _vscsTasks.ValueCreationScore.Add(_vscsScore);
-                _activity.Tasks.Add(_vscsTasks);
-                _userCollection.Save(_activity);
+                //}
+                //_vscsTasks.ValueCreationScore.Add(_vscsScore);
+                //_activity.Tasks.Add(_vscsTasks);
+                _userCollection.Save(userDetail);
                 _transactionStatus = true;
             }
             catch (Exception ex)
@@ -362,6 +364,15 @@ namespace KindleSpur.Data
         private int CalculateScore(int type, int measure)
         {
             return (1 * type * measure);
+        }
+
+
+        public string GetVCSCActivity(string EmailAddress)
+        {
+            
+                var _userCollection = _kindleDatabase.GetCollection("UserDetails");
+                var userDetail = _userCollection.FindOneAs<User>(Query.EQ("EmailAddress", EmailAddress));
+            return userDetail.ValueCreationActivity.ToJson();
         }
     }
 }

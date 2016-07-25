@@ -33,7 +33,7 @@ namespace KindleSpur.Models
         public string description { get; set; }
         public string Photo { get; set; }
         public List<Game> Games { get; set; }
-        public List<ValueCreationActivity> ValueCreationActivity { get; set; }
+        public List<VSCS> ValueCreationActivity { get; set; }
         [BsonId]
         public ObjectId Id
         {
