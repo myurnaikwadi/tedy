@@ -30,9 +30,10 @@
                 </div>
 
                 <div class="communicationMainPanel">
-                    <div ng-show='askFeedback' class="feedbackPanel" style="height: 75%;">
+                    <div ng-show='feedBack.askFeedback' class="feedbackPanel" style="height: 75%;">
                         <!-- Screen 1 -->
-                        <div class="popupContainer" ng-show="formValue == '3'">
+                        <div class="popupContainer" ng-show="feedBack.formValue == '3'">
+                            <img ng-click="feedBack.closeFeedBackPopup()" style="width: 15px;height: 15px;top:1%;right: 1%;bottom: 0;position: absolute;" title="Close" src="~/Images/cancel.png" />
                             <div class="popupContainerOne">
 
                                 <img src="~/Images/communication/lineDiag1.png" />
@@ -44,13 +45,14 @@
                                 <textarea ng-model="feedBack.likeMostMessage" placeholder="CLICK HERE TO TYPE MESSAGE"></textarea>
                             </div>
                             <div class="popupContainerFour">
-                                <div class="fa fa-angle-left arrowContainer genericPointerClass" ng-click="formValue = '2'"></div>
-                                <div class="fa fa-angle-right arrowContainer genericPointerClass" ng-click="formValue = '4'"></div>
+                                <div class="fa fa-angle-left arrowContainer genericPointerClass" ng-click="feedBack.formValue = '2'"></div>
+                                <div class="fa fa-angle-right arrowContainer genericPointerClass" ng-click="feedBack.formValue = '4'"></div>
                             </div>
                         </div>
 
                         <!-- Screen 2 -->
-                        <div class="popupContainer" ng-show="formValue == '1'">
+                        <div class="popupContainer" ng-show="feedBack.formValue == '1'">
+                            <img ng-click="feedBack.closeFeedBackPopup()" style="width: 15px;height: 15px;top:1%;right: 1%;bottom: 0;position: absolute;" title="Close" src="~/Images/cancel.png" />
                             <div class="popupContainerOne">
                                 <img src="~/Images/communication/lineDiag2.png" />
                             </div>
@@ -65,13 +67,14 @@
                             </div>
                             <div class="popupContainerFour">
                                 <div class="fa"></div>
-                                <div class="fa fa-angle-right arrowContainer genericPointerClass" ng-click="formValue = '2'"></div>
+                                <div class="fa fa-angle-right arrowContainer genericPointerClass" ng-click="feedBack.formValue = '2'"></div>
                             </div>
                         </div>
 
                         <!-- Screen 3 -->
 
-                        <div class="popupContainer" ng-show="formValue == '4'">
+                        <div class="popupContainer" ng-show="feedBack.formValue == '4'">
+                            <img ng-click="feedBack.closeFeedBackPopup()" style="width: 15px;height: 15px;top:1%;right: 1%;bottom: 0;position: absolute;" title="Close" src="~/Images/cancel.png" />
                             <div class="popupContainerOne">
 
                                 <img src="~/Images/communication/lineDiag3.png" />
@@ -89,14 +92,15 @@
                                 <img class="genericPointerClass" style="padding: 3%;float:left;" ng-click="feedBack.starSelected('3')" ng-class="{ highlightedCompetitor :  feedBack.selectedstar == '3'}" src="~/Images/communication/bigStar.png">
                             </div>
                             <div class="popupContainerFour">
-                                <div class="fa fa-angle-left arrowContainer genericPointerClass" ng-click="formValue = '3'"></div>
-                                <button type="submit" ng-click="feedBack.sendFeedBackDetail();formValue = '5'">Submit</button>
+                                <div class="fa fa-angle-left arrowContainer genericPointerClass" ng-click="feedBack.formValue = '3'"></div>
+                                <button type="submit" ng-click="feedBack.sendFeedBackDetail();feedBack.formValue = '5'">Submit</button>
                             </div>
                         </div>
 
                         <!-- Screen 4 -->
 
-                        <div class="popupContainer" ng-show="formValue== '2'">
+                        <div class="popupContainer" ng-show="feedBack.formValue== '2'">
+                            <img ng-click="feedBack.closeFeedBackPopup()" style="width: 15px;height: 15px;top:1%;right: 1%;bottom: 0;position: absolute;" title="Close" src="~/Images/cancel.png" />
                             <div class="popupContainerOne">
                                 <img src="~/Images/communication/lineDiag4.png">
                             </div>
@@ -111,14 +115,15 @@
                                 <img class="genericPointerClass" style="padding: 3%;float:left;" ng-click="feedBack.findAttractiveSelected('4')" ng-class="{ highlightedCompetitor :  feedBack.selectedAttractive == '4'}" src="~/Images/communication/location_feedBack.png">
                             </div>
                             <div class="popupContainerFour">
-                                <div class="fa fa-angle-left arrowContainer genericPointerClass" ng-click="formValue = '1'"></div>
-                                <div class="fa fa-angle-right arrowContainer genericPointerClass" ng-click="formValue = '3'"></div>
+                                <div class="fa fa-angle-left arrowContainer genericPointerClass" ng-click="feedBack.formValue = '1'"></div>
+                                <div class="fa fa-angle-right arrowContainer genericPointerClass" ng-click="feedBack.formValue = '3'"></div>
                             </div>
                         </div>
 
                         <!-- Screen 5 -->
 
-                        <div class="popupContainer" ng-show="formValue== '5'">
+                        <div class="popupContainer" ng-show="feedBack.formValue== '5'">
+                            <img ng-click="feedBack.closeFeedBackPopup()" style="width: 15px;height: 15px;top:1%;right: 1%;bottom: 0;position: absolute;" title="Close" src="~/Images/cancel.png" />
                             <div class="fivePopupContainerOne">
                                 <div class="" style="float: left;display:flex; width: 100%;">
                                     <h1 style="margin: auto auto;margin-top: 6%;color: white;font-weight: 600;">THANK YOU</h1>
@@ -148,7 +153,7 @@
                                     </div>
                                     <div class="" style="float: left; width: 100%; display: flex;">
                                         <button type="button" style="margin: auto auto; margin-right: 10%; padding: 6px;width: 20%;" class="signupButton fontClass btn btn-default" ng-click="signupClick()">SHARE</button>
-                                        <button type="button" style="margin: auto auto; margin-left: 0%; padding: 6px;width: 20%;" class="signupButton fontClass btn btn-default" ng-click="formValue = '6'">REDEEM POINTS</button>
+                                        <button type="button" style="margin: auto auto; margin-left: 0%; padding: 6px;width: 20%;" class="signupButton fontClass btn btn-default" ng-click="feedBack.formValue = '6'">REDEEM POINTS</button>
                                     </div>
 
                                 </div>
@@ -156,7 +161,8 @@
                         </div>
 
                         <!-- Screen 6 -->
-                        <div class="popupContainer" ng-show="formValue == '6'">
+                        <div class="popupContainer" ng-show="feedBack.formValue == '6'">
+                            <img ng-click="feedBack.closeFeedBackPopup()" style="width: 15px;height: 15px;top:1%;right: 1%;bottom: 0;position: absolute;" title="Close" src="~/Images/cancel.png" />
                             <div class="fivePopupContainerOne" style="height:21%;">
                                 <div class="" style="float: left;display:flex; width: 100%;height: 100%;">
                                     <h5 style="margin: auto auto;font-size: 19px;">REDEEM POINTS</h5>
@@ -197,7 +203,7 @@
                                                 <h5 class="fontClass" style="font-size: 27px;text-align: center;font-weight: 600;margin: 6px auto;margin: auto;margin-left: 3%;width: 35px;">{{rewardsPoints.balancePoints}}</h5>
                                             </div>
                                             <div class="" style="float: left;display: flex;width: 100%;height: 30%;">
-                                                <h5 class="fontClass" style="font-size: 14px;text-align: center;font-weight: 600;margin: auto auto;cursor:help;" ng-click="formValue='8'">PSR</h5>
+                                                <h5 class="fontClass" style="font-size: 14px;text-align: center;font-weight: 600;margin: auto auto;cursor:help;" ng-click="feedBack.formValue='8'">PSR</h5>
                                             </div>
                                         </div>
                                     </div>
@@ -210,8 +216,8 @@
                         </div>
                         <!-- Screen 8 -->
 
-                        <div class="popupContainer" ng-show="formValue == '8'">
-
+                        <div class="popupContainer" ng-show="feedBack.formValue == '8'">
+                            <img ng-click="feedBack.formValue = '6'" style="width: 15px;height: 15px;top:1%;right: 1%;bottom: 0;position: absolute;" title="Close" src="~/Images/cancel.png" />
                             <div class="fivePopupContainerOne" style="height:21%;">
                                 <div class="" style="float: left;display:flex; width: 100%;height: 100%;">
                                     <h5 style="margin: auto auto;font-size: 19px;">PROFESSIONAL SOCIAL RESPONSIBILITY</h5>
@@ -234,7 +240,7 @@
                                 </div>
                             </div>
                             <div class="" style="float: left; width: 100%; display: flex;height: 15%;">
-                                <button type="button" style="border-radius: 0;background : rgb(64,64,64); margin: auto auto; margin-right: 10%;padding: 3px; width: 20%;font-size: 11px;color:white;" ng-click="formValue = '6'" class="fontClass btn btn-default">BACK</button>
+                                @*<button type="button" style="border-radius: 0;background : rgb(64,64,64); margin: auto auto; margin-right: 10%;padding: 3px; width: 20%;font-size: 11px;color:white;" ng-click="feedBack.formValue = '6'" class="fontClass btn btn-default">BACK</button>*@
                                 <button type="button" style="border-radius: 0;background : rgb(64,64,64); margin: auto auto; margin-left: 0; padding: 3px;width: 20%;font-size: 11px;color:white;" class="fontClass btn btn-default">SHARE</button>
                             </div>
 
@@ -368,10 +374,11 @@
                 <div class="homeLabelInChat" style="display: flex;height:6%;">
                     <h5 class="fontClass" style="margin: auto 0; font-weight: 700;">POINT STATUS</h5>
                 </div>
-                <div ng-show='askFeedback' class="feedbackPanel" style="height: 75%;">
+                <div ng-show='feedBack.askFeedback' class="feedbackPanel" style="height: 75%;">
 
                     <!-- Screen 6 -->
-                    <div class="popupContainer" ng-show="formValue == '6'">
+                    <div class="popupContainer" ng-show="feedBack.formValue == '6'">
+                        <img ng-click="feedBack.closeFeedBackPopup()" style="width: 15px;height: 15px;top:1%;right: 1%;bottom: 0;position: absolute;" title="Close" src="~/Images/cancel.png" />
                         <div class="fivePopupContainerOne" style="height:21%;">
                             <div class="" style="float: left;display:flex; width: 100%;height: 100%;">
                                 <h5 style="margin: auto auto;font-size: 19px;">REDEEM POINTS</h5>
@@ -412,7 +419,7 @@
                                             <h5 class="fontClass" style="font-size: 27px;text-align: center;font-weight: 600;margin: 6px auto;margin: auto;margin-left: 3%;width: 35px;">{{rewardsPoints.balancePoints}}</h5>
                                         </div>
                                         <div class="" style="float: left;display: flex;width: 100%;height: 30%;">
-                                            <h5 class="fontClass" style="font-size: 14px;text-align: center;font-weight: 600;margin: auto auto;" ng-click="formValue='8'">PSR</h5>
+                                            <h5 class="fontClass" style="font-size: 14px;text-align: center;font-weight: 600;margin: auto auto;" ng-click="feedBack.formValue='8'">PSR</h5>
                                         </div>
                                     </div>
                                 </div>

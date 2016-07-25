@@ -52,14 +52,8 @@
     ];
   
     $scope.menuClick = function (iIndex, iOption) {
-        $scope.selectedMenu = iIndex;
-        $scope.feedBack.selectedComparioson = 1;
-        $scope.feedBack.selectedAttractive = 1;
-        $scope.feedBack.selectedstar = 1;
-        $scope.feedBack.likeMostMessage = '';
-          
-        
-        $scope.askFeedback = false;
+        $scope.selectedMenu = iIndex;       
+        $scope.feedBack.closeFeedBackPopup();
         switch (iIndex) {
             case 1: $scope.getCoachRecord(); break;
             case 7: $scope.getPointsRecord(); break;
@@ -123,7 +117,7 @@
                 successCallBack: function (iObj) {
                     debugger;
                     $scope.getPointsRecord();
-                    alert(iObj.data);
+                    //alert(iObj.data);
                     $scope.gameKey = iObj.data;
                     console.error('In successCallBack', iObj);
 
@@ -219,7 +213,7 @@
             loggedUserDetails: _object,
             successCallBack: function (iObj) {
                 console.error('In successCallBack', iObj);
-                $scope.points = iObj.data;
+                $scope.getPointsRecord();
             },
             failureCallBack: function (iObj) {
                 console.error('In failureCallBack', iObj);
@@ -246,11 +240,11 @@
                 { name: 'RESOURCES' }
     ];
 
-    $scope.askFeedback = false;
-    $scope.formValue = '0';
+    $scope.feedBack.askFeedback = false;
+    $scope.feedBack.formValue = '0';
     $scope.askFeedBackFunc= function () {
-        $scope.askFeedback = true;  
-        $scope.formValue = '1';
+        $scope.feedBack.askFeedback = true;
+        $scope.feedBack.formValue = '1';
         $scope.feedBack.selectedComparioson = 1;
         $scope.feedBack.selectedAttractive = 1;
         $scope.feedBack.selectedstar = 1;
@@ -258,30 +252,37 @@
 
     }
 
+    $scope.feedBack.closeFeedBackPopup = function () {
+        $scope.feedBack.askFeedback = false;
+        $scope.feedBack.formValue = '1';
+        $scope.feedBack.selectedComparioson = 1;
+        $scope.feedBack.selectedAttractive = 1;
+        $scope.feedBack.selectedstar = 1;
+        $scope.feedBack.likeMostMessage = '';
+    };
+
+
     $scope.redeemPointsClick = function () {
-        $scope.askFeedback = false;     
-     
+
+        $scope.feedBack.closeFeedBackPopup();
         serverCommunication.unlockGameCode({
             //   loggedUserDetails: $rootScope.loggedDetail,
-            redeemAction : $scope.redeemAction,
-            successCallBack: function (iObj) {
-                $scope.formValue = '1';
-                $scope.menuClick(7);  
-                //alert(iObj.data);
-                //$scope.gameKey = iObj.data;
-                console.error('In successCallBack', iObj);
+                redeemAction: $scope.redeemAction,
+                successCallBack: function (iObj) {              
+                    $scope.menuClick(7);
+                    console.error('In successCallBack', iObj);
 
-            },
-            failureCallBack: function (iObj) {
-                console.error('In failureCallBack', iObj);
+                },
+                failureCallBack: function (iObj) {
+                    console.error('In failureCallBack', iObj);
 
-            }
+                 }
         });
     };
 
     $scope.openRedeemPanel = function () {
-        $scope.askFeedback = true;
-        $scope.formValue = '6';
+        $scope.feedBack.askFeedback = true;
+        $scope.feedBack.formValue = '6';
     };
 
 });
