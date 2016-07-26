@@ -16,7 +16,7 @@
                     <div class="parentCatgoryPanel">
                         <div class="cateGoryRepeatPanel" ng-if="categoryDisplay == true">
                             <div style="float: left;width: 50%;height:50%" class="genericPointerClass" ng-click="categoryClick($event,$index,option)" ng-repeat="option in catogoryArray">
-                                <div ng-class="{ coachThemeColor : option.selectedCategory == true && role == 'coach' , mentorThemeColor : option.selectedCategory == true && role == 'mentor' }" class="categoryCircle">
+                                <div ng-class="{ coachThemeColor : option.selectedCategory == true && role == 'coach' , mentorThemeColor : option.selectedCategory == true && role == 'mentor' , menteeThemeColor : option.selectedCategory == true && role == 'mentee',coacheeThemeColor : option.selectedCategory == true && role == 'coachee' , }" class="categoryCircle">
                                     <div class="categoryRightlabelPart">
                                         <div class="categoryRightlabel">
                                             <h5 style="color:#B5AFAF;margin: auto;font-size: 15px;" class="leftSideMenuLable fontClass" ng-class="{ whiteBackground : option.selectedCategory == true }">
@@ -41,13 +41,13 @@
                                         </div>
 
                                         <div class="topicsList" ng-repeat="topic in topicArray" ng-click="topicSelection($event,$index,topic)">
-                                           <div class="topicsListParent fontClass"  ng-class="{ coachThemeColor : topic.selected == true && role == 'coach' ,mentorThemeColor : topic.selected == true && role == 'mentor' }">
-                                               <div ng-show="skillRequired == false || (skillRequired == false && topic.selected == true)" style="float:left;display: flex;height: 100%;" title="{{(topic.profiLevel == 0 ? 'Basic' : (topic.profiLevel == 1 ? 'Intermediate' : 'Expert') )}}" ng-class="{ zeroBackground : topic.profiLevel == 0 && role == 'coach' , fiftyBackground : topic.profiLevel == 1 && role == 'coach', hundredBackground  : topic.profiLevel == 2 && role == 'coach' ,zeroBackgroundMentor : topic.profiLevel == 0 && role == 'mentor' , fiftyBackgroundMentor : topic.profiLevel == 1 && role == 'mentor', hundredBackgroundMentor  : topic.profiLevel == 2 && role == 'mentor' }" >
-                                                   <h5 ng-class="{ whiteBackground : skillRequired == false && topic.selected == true }" style="float:left;margin: auto 5px;font-size: 11px;"> {{topic.Name | uppercase}}</h5>
-                                               </div>
-                                               <h5 ng-show="skillRequired == true || (skillRequired == true && topic.selected == true)"  style="float:left;margin: auto 5px;font-size: 11px;"> {{topic.Name | uppercase}}</h5>
-                                           </div>
-                                            
+                                            <div class="topicsListParent fontClass" ng-class="{ coachThemeColor : topic.selected == true && role == 'coach' ,mentorThemeColor : topic.selected == true && role == 'mentor' ,menteeThemeColor : topic.selected == true && role == 'mentee',coacheeThemeColor : topic.selected == true && role == 'coachee'}">
+                                                <div ng-show="skillRequired == false || (skillRequired == false && topic.selected == true)" style="float:left;display: flex;height: 100%;" title="{{(topic.profiLevel == 0 ? 'Basic' : (topic.profiLevel == 1 ? 'Intermediate' : 'Expert') )}}" ng-class="{ zeroBackground : topic.profiLevel == 0 && role == 'coach' , fiftyBackground : topic.profiLevel == 1 && role == 'coach', hundredBackground  : topic.profiLevel == 2 && role == 'coach', zeroBackground : topic.profiLevel == 0 && role == 'coachee' , fiftyBackground : topic.profiLevel == 1 && role == 'coachee', hundredBackground  : topic.profiLevel == 2 && role == 'coachee',  zeroBackground : topic.profiLevel == 0 && role == 'mentee' , fiftyBackground : topic.profiLevel == 1 && role == 'mentee', hundredBackground  : topic.profiLevel == 2 && role == 'mentee',zeroBackgroundMentor : topic.profiLevel == 0 && role == 'mentor' , fiftyBackgroundMentor : topic.profiLevel == 1 && role == 'mentor', hundredBackgroundMentor  : topic.profiLevel == 2 && role == 'mentor' }">
+                                                    <h5 ng-class="{ whiteBackground : skillRequired == false && topic.selected == true }" style="float:left;margin: auto 5px;font-size: 11px;"> {{topic.Name | uppercase}}</h5>
+                                                </div>
+                                                <h5 ng-show="skillRequired == true || (skillRequired == true && topic.selected == true)" style="float:left;margin: auto 5px;font-size: 11px;"> {{topic.Name | uppercase}}</h5>
+                                            </div>
+
                                             <input ng-show="skillRequired == false && topic.selected == true" ng-click="$event.stopPropagation()" ng-model="topic.profiLevel" name="Proficiency Level" title="{{"Proficiency Level"+ (topic.profiLevel == 0 ? 'Basic' : (topic.profiLevel == 1 ? 'Intermediate' : 'Expert') )}}" min="0" step="1" max="2" style="float: left;margin: 2%; padding: 0; margin-right: 0;    width: 89%;" type="range" />
                                         </div>
                                     </div>
@@ -63,13 +63,13 @@
                                             Some placeholder here
                                         </h5>
                                     </div>
-                                   
+
                                     <div class="topicsList" ng-repeat="skill in skillsArray" ng-click="skillSelection($event,$index,skill)">
-                                        <div class="topicsListParent fontClass" ng-class="{ coachThemeColor : skill.selected == true && role == 'coach',mentorThemeColor : skill.selected == true && role == 'mentor' }">
+                                        <div class="topicsListParent fontClass" ng-class="{ coachThemeColor : skill.selected == true && role == 'coach',menteeThemeColor : skill.selected == true && role == 'mentee',mentorThemeColor : skill.selected == true && role == 'mentor',coacheeThemeColor : skill.selected == true && role == 'coachee' }">
                                             <div style="float:left;display: flex;height: 100%;" title="{{(skill.profiLevel == 0 ? 'Basic' : (skill.profiLevel == 1 ? 'Intermediate' : 'Expert') )}}" ng-class="{ zeroBackground : skill.profiLevel == 0 , fiftyBackground : skill.profiLevel == 1, hundredBackground  : skill.profiLevel == 2 ,zeroBackgroundMentor : topic.profiLevel == 0 && role == 'mentor' , fiftyBackgroundMentor : topic.profiLevel == 1 && role == 'mentor', hundredBackgroundMentor  : topic.profiLevel == 2 && role == 'mentor'}">
                                                 <h5 ng-class="{ whiteBackground : skill.selected == true }" style="float:left;margin: auto 5px;font-size: 11px;"> {{skill.Name | uppercase}}</h5>
                                             </div>
-                                           
+
                                         </div>
 
                                         <input ng-show="skill.selected == true" ng-click="$event.stopPropagation()" ng-model="skill.profiLevel" name="Proficiency Level" title="{{ "Proficiency Level"+ (skill.profiLevel == 0 ? 'Basic' : (skill.profiLevel == 1 ? 'Intermediate' : 'Expert') )}}" min="0" step="1" max="2" style="float: left;margin: 2%; padding: 0; margin-right: 0;    width: 89%;" type="range" />

@@ -55,6 +55,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CoacheeOrMenteeRepository.cs" />
     <Compile Include="CoachOrMentorRepository.cs" />
     <Compile Include="CTSRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

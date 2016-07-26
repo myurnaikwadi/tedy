@@ -29,40 +29,40 @@
             $http.post('/User/Login', iObj.signupObject).then(iObj.successCallBack, iObj.failureCallBack);
         },
 
-         ///*** @auther : SVH * @date : 07/05/2016 */
-         //forgotPassword: function (iObj) {
-         //    console.error(iObj)
-         //    $http.post('/User/ForgotPasswordEmail', iObj.signupObject).then(iObj.successCallBack, iObj.failureCallBack);
-         //},
-        
-         savePassword: function (iObj) {
-             console.error(iObj)
-             $http.post('/User/SavePassword', iObj.signupObject).then(iObj.successCallBack, iObj.failureCallBack);
-         },
+        ///*** @auther : SVH * @date : 07/05/2016 */
+        //forgotPassword: function (iObj) {
+        //    console.error(iObj)
+        //    $http.post('/User/ForgotPasswordEmail', iObj.signupObject).then(iObj.successCallBack, iObj.failureCallBack);
+        //},
 
-         verifyEmailAddress: function (iObj) {
-             console.error(iObj)
-             $http.post('/User/ForgotPasswordEmail', iObj.signupObject).then(iObj.successCallBack, iObj.failureCallBack);
-         },
+        savePassword: function (iObj) {
+            console.error(iObj)
+            $http.post('/User/SavePassword', iObj.signupObject).then(iObj.successCallBack, iObj.failureCallBack);
+        },
 
-         
-         linkedInClick: function (iObj) {
-             console.error(iObj)
-             var _obj = {
-                 FirstName: iObj.loginObject.firstName,
-                 LastName: iObj.loginObject.lastName,
-                 img: iObj.loginObject.pictureUrl,
-                 publicUrl: iObj.loginObject.publicProfileUrl,
-                 EmailAddress: iObj.loginObject.emailAddress,
-                 IsExternalAuthentication: true
-             }
-             $http.post('/User/linkedIn', _obj).then(iObj.successCallBack, iObj.failureCallBack);
-         },
-         logout: function (iObj) {
-             $http.post('/User/logout', iObj.loginObject).then(iObj.successCallBack, iObj.failureCallBack);
-         },
+        verifyEmailAddress: function (iObj) {
+            console.error(iObj)
+            $http.post('/User/ForgotPasswordEmail', iObj.signupObject).then(iObj.successCallBack, iObj.failureCallBack);
+        },
 
-     }
+
+        linkedInClick: function (iObj) {
+            console.error(iObj)
+            var _obj = {
+                FirstName: iObj.loginObject.firstName,
+                LastName: iObj.loginObject.lastName,
+                img: iObj.loginObject.pictureUrl,
+                publicUrl: iObj.loginObject.publicProfileUrl,
+                EmailAddress: iObj.loginObject.emailAddress,
+                IsExternalAuthentication: true
+            }
+            $http.post('/User/linkedIn', _obj).then(iObj.successCallBack, iObj.failureCallBack);
+        },
+        logout: function (iObj) {
+            $http.post('/User/logout', iObj.loginObject).then(iObj.successCallBack, iObj.failureCallBack);
+        },
+
+    }
 });
 
 
@@ -125,9 +125,9 @@ app.factory('serverCommunication', function ($http) {
           * @date : 10/06/2016
           * @Purpose : get category as per role
           */
-         getMySelection: function (iObj) {
-                console.error(iObj)
-                $http.get('/Coach/GetCTS').then(iObj.successCallBack, iObj.failureCallBack);
+        getMySelection: function (iObj) {
+            console.error(iObj)
+            $http.get('/Coach/GetCTS').then(iObj.successCallBack, iObj.failureCallBack);
         },
 
         /**
@@ -140,16 +140,16 @@ app.factory('serverCommunication', function ($http) {
             $http.get('/Mentor/GetTopics').then(iObj.successCallBack, iObj.failureCallBack);
         },
 
-        
+
         /**
           * @auther : MKN
           * @date : 10/06/2016
           * @Purpose : get category as per role
           */
-         getMyMentorSelection: function (iObj) {
-             console.error(iObj)
-             $http.get('/Mentor/GetTopics').then(iObj.successCallBack, iObj.failureCallBack);
-         },
+        getMyMentorSelection: function (iObj) {
+            console.error(iObj)
+            $http.get('/Mentor/GetTopics').then(iObj.successCallBack, iObj.failureCallBack);
+        },
         /**
           * @auther : MKN
           * @date : 10/06/2016
@@ -184,7 +184,10 @@ app.factory('serverCommunication', function ($http) {
           */
         sendSelectedCTSDataToServerMentor: function (iObj) {
             console.error(iObj)
-            $http.post('/Mentor/SaveTopics', iObj.selectedArray).then(iObj.successCallBack, iObj.failureCallBack);
+            var _action = '/Mentor/SaveTopics';
+            if (iObj.role == 'mentee')
+                _action = '/Mentee/SaveTopics';
+            $http.post(_action, iObj.selectedArray).then(iObj.successCallBack, iObj.failureCallBack);
         },
 
 
@@ -254,10 +257,10 @@ app.factory('serverCommunication', function ($http) {
             $http.post('/Coach/SaveFeedBack', iObj.loggedUserDetails).then(iObj.successCallBack, iObj.failureCallBack)
         },
         /**
-          * @auther : MKN
-          * @date : 15/06/2016
-          * @Purpose :
-          */
+        * @auther : MKN
+         * @date : 15/06/2016
+         * @Purpose :
+     */
         unlockGameCode: function (iObj) {
             console.error(iObj)
             if (iObj.redeemAction.redeemAction == 'GAME') {
@@ -265,19 +268,25 @@ app.factory('serverCommunication', function ($http) {
             } else {
                 $http.get('/User/UnlockPSR').then(iObj.successCallBack, iObj.failureCallBack)
             }
-            
         },
 
         /**
-          * @auther : MKN
-          * @date : 15/06/2016
-          * @Purpose :
-          */
+       * @auther : MKN
+        * @date : 15/06/2016
+        * @Purpose :
+    */
         getPointsRecord: function (iObj) {
             console.error(iObj)
             $http.get('/User/GetRewardPoints').then(iObj.successCallBack, iObj.failureCallBack)
         },
-
+        /**
+             * @auther : MKN
+              * @date : 15/07/2016
+              * @Purpose :
+          */
+        getMyMenteeSelection: function (iObj) {
+            $http.get('/Mentee/GetTopics').then(iObj.successCallBack, iObj.failureCallBack);
+        },
         /**
           * @auther : MKN
           * @date : 25/07/2016
@@ -296,6 +305,8 @@ app.factory('serverCommunication', function ($http) {
             console.error(iObj)
             $http.post('/User/AddVSCSActivity', iObj.activity).then(iObj.successCallBack, iObj.failureCallBack);
         },
+
+
 
     }
 });
