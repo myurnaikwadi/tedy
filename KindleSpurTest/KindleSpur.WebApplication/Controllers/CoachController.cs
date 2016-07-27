@@ -41,15 +41,18 @@ namespace KindleSpur.WebApplication.Controllers
             List<Skill> skills = _coachRepo.GetSkillsForCoach(UserId);
             CTSRepository _ctsRepo = new CTSRepository();
             BsonDocument doc = new BsonDocument();
-            BsonArray arr = new BsonArray();
-            foreach (Skill skill in skills)
+            if (skills != null)
             {
+                BsonArray arr = new BsonArray();
+                foreach (Skill skill in skills)
+                {
 
-                BsonDocument result = _ctsRepo.GetCoachTopicAndCategory(skill);
-                arr.Add(result);
+                    BsonDocument result = _ctsRepo.GetCoachTopicAndCategory(skill);
+                    arr.Add(result);
 
+                }
+                doc.Add("Categories", arr);
             }
-            doc.Add("Categories",arr);
             return doc.ToJson();
         }
 
