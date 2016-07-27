@@ -121,7 +121,7 @@ app.directive('ctcRole', function ($state, serverCommunication) {
                 for (var k = 0; k < scope.topicArray.length ; k++) {
                     scope.topicArray[k].selected = false;
                     // console.error('1')
-                    if (_category[scope.topicArray[k].Name]) {
+                    if (_topics[scope.topicArray[k].Name]) {
                         //console.error('12')
                         scope.topicArray[k].alreadySelected = true;
                         scope.topicSelection(iEvent, k, scope.topicArray[k]);
@@ -141,7 +141,7 @@ app.directive('ctcRole', function ($state, serverCommunication) {
                     for (var k = 0; k < iTopic.Skills.length ; k++) {
                         iTopic.Skills[k].selected = false;
                         //console.error('3')
-                        if (_category[iTopic.Skills[k].Name]) {
+                        if (_skills[iTopic.Skills[k].Name]) {
                             iTopic.Skills[k].alreadySelected = true;
                             iTopic.Skills[k].selected = true;
                         }
@@ -266,7 +266,6 @@ app.directive('ctcRole', function ($state, serverCommunication) {
                                     scope.selectedSkills = -1;
                                     scope.selectedCategoryValue = null;
                                     scope.init();
-
                                     console.error('In successCallBack', iObj);
                                 },
                                 failureCallBack: function (iObj) {
@@ -274,12 +273,18 @@ app.directive('ctcRole', function ($state, serverCommunication) {
                                 }
                             });
                         } else {
-
                             serverCommunication.sendSelectedCTSDataToServerMentor({
                                 selectedArray: _updateArray,
                                 role: scope.role,
                                 successCallBack: function (iObj) {
                                     console.error('In successCallBack', iObj);
+                                    scope.mySelection = true;
+                                    scope.categoryDisplay = true;
+                                    // scope.selectedCategory = -1;
+                                    scope.selectedTopic = -1;
+                                    scope.selectedSkills = -1;
+                                    scope.selectedCategoryValue = null;
+                                    scope.init();
                                 },
                                 failureCallBack: function (iObj) {
                                     console.error('In failureCallBack', iObj);
@@ -314,34 +319,202 @@ app.directive('ctcRole', function ($state, serverCommunication) {
                 scope.selectedTopic = -1;
                 scope.selectedSkills = -1;
                 scope.selectedCategoryValue = null;
-                console.error('get data')
-                serverCommunication.getCategorys({
-                    successCallBack: function (iObj) {
-                        console.error('In successCallBack', iObj);
-                        var _data = iObj.data;
-                        console.error(_data)
-                        scope.catogoryArray = [].concat(_data);
-                        for (var k = 0; k < scope.catogoryArray.length ; k++) {
-                            if (_category[scope.catogoryArray[k].Category]) {
-                                scope.catogoryArray[k].selectedCategory = true;
-                                scope.catogoryArray[k].alreadySelected = true;
+                if (scope.role == "mentor") {
+                    console.error('get data for mentor')
+                    serverCommunication.getCategorys({
+                        successCallBack: function (iObj) {
+                            console.error('In successCallBack', iObj);
+                            var _data = iObj.data;
+                            console.error(_data)
+                            scope.catogoryArray = [].concat(_data);
+                            for (var k = 0; k < scope.catogoryArray.length ; k++) {
+                                if (_category[scope.catogoryArray[k].Category]) {
+                                    scope.catogoryArray[k].selectedCategory = true;
+                                    scope.catogoryArray[k].alreadySelected = true;
+                                }
+                            }
+
+                        },
+                        failureCallBack: function (iObj) {
+                            console.error('In failureCallBack', iObj);
+
+                        }
+                    });
+                } else {
+                    serverCommunication.getCategorys({
+                        successCallBack: function (iObj) {
+                            console.error('In successCallBack', iObj);
+                            var _data = iObj.data;
+                            console.error(_data)
+                            scope.catogoryArray = [].concat(_data);
+                            for (var k = 0; k < scope.catogoryArray.length ; k++) {
+                                if (_category[scope.catogoryArray[k].Category]) {
+                                    scope.catogoryArray[k].selectedCategory = true;
+                                    scope.catogoryArray[k].alreadySelected = true;
+                                }
+                            }
+
+                        },
+                        failureCallBack: function (iObj) {
+                            console.error('In failureCallBack', iObj);
+
+                        }
+                    });
+                }
+
+            };
+
+            var _createMoleculeStructure = function (iObj) {
+                _category = {};
+                _topics = {};
+                _skills = {};
+                if (iObj.data && iObj.data.Categories && iObj.data.Categories.length > 0) {
+                    for (var k = 0; k < iObj.data.Categories.length ; k++) {
+                        if (Object.keys(iObj.data.Categories[k]).length > 0) {
+
+                            // _category[iObj.data.Categories[k].Category] = { Name: iObj.data.Categories[k].Category };
+                            if (iObj.data.Categories[k].Category) {
+                                if (_category[iObj.data.Categories[k].Category]) {//if category is already present
+                                    if (_category[iObj.data.Categories[k].Category].topic[iObj.data.Categories[k].Topic]) {//if topic is already present
+                                        //  _category[iObj.data.Categories[k].Category].topic[iObj.data.Categories[k].Topic] = { Name: iObj.data.Categories[k].Topic, skill: {} };
+                                        if (iObj.data.Categories[k].Skill) {
+                                            _skills[iObj.data.Categories[k].Skill] = { Name: iObj.data.Categories[k].Skill };
+                                            if (!_category[iObj.data.Categories[k].Category].topic[iObj.data.Categories[k].Topic].skill) _category[iObj.data.Categories[k].Category].topic[iObj.data.Categories[k].Topic].skill = {}
+                                            _category[iObj.data.Categories[k].Category].topic[iObj.data.Categories[k].Topic].skill[iObj.data.Categories[k].Skill] = { Name: iObj.data.Categories[k].Skill }
+                                        }
+                                    } else {
+                                        _topics[iObj.data.Categories[k].Topic] = { Name: iObj.data.Categories[k].Topic, skill: {} };
+                                        _category[iObj.data.Categories[k].Category].topic[iObj.data.Categories[k].Topic] = { Name: iObj.data.Categories[k].Topic, skill: null };
+                                        if (iObj.data.Categories[k].Skill) {
+                                            _skills[iObj.data.Categories[k].Skill] = { Name: iObj.data.Categories[k].Skill };
+                                            if (!_category[iObj.data.Categories[k].Category].topic[iObj.data.Categories[k].Topic].skill) _category[iObj.data.Categories[k].Category].topic[iObj.data.Categories[k].Topic].skill = {}
+                                            _category[iObj.data.Categories[k].Category].topic[iObj.data.Categories[k].Topic].skill[iObj.data.Categories[k].Skill] = { Name: iObj.data.Categories[k].Skill }
+                                        }
+                                    }
+                                } else {
+                                    _category[iObj.data.Categories[k].Category] = { Name: iObj.data.Categories[k].Category, topic: {} };
+                                    _topics[iObj.data.Categories[k].Topic] = { Name: iObj.data.Categories[k].Topic, skill: null };
+                                    _category[iObj.data.Categories[k].Category].topic[iObj.data.Categories[k].Topic] = { Name: iObj.data.Categories[k].Topic, skill: {} };
+                                    if (iObj.data.Categories[k].Skill) {
+                                        _skills[iObj.data.Categories[k].Skill] = { Name: iObj.data.Categories[k].Skill };
+                                        _category[iObj.data.Categories[k].Category].topic[iObj.data.Categories[k].Topic].skill = {}
+                                        _category[iObj.data.Categories[k].Category].topic[iObj.data.Categories[k].Topic].skill[iObj.data.Categories[k].Skill] = { Name: iObj.data.Categories[k].Skill }
+                                    }
+                                }
+                            }
+
+                        }
+                    }
+                }
+                console.error('In getMySelection', _category, _topics, _skills);
+                var _array = [];
+                var _node = [];
+                var _count = 1;
+                // var _idArray = [];
+                if (Object.keys(_category).length == 0) {
+
+                } else {
+                    _array.push({
+                        "symbol": 'My Selection',
+                        "size": 40,
+                        "id": 0,
+                        "bonds": 1
+                    });
+                    for (var _key in _category) {
+                        _array.push({
+                            "symbol": _key,
+                            "size": 35,
+                            "id": _count,
+                            "bonds": 1
+                        });
+                        _node.push({
+                            "source": 0,
+                            "target": _count,
+                            "id": 'link_' + _count,
+                            "bondType": 1
+
+                        });
+                        if (_category[_key].topic) {
+                            var _level = 1;
+                            var _dd = 0;
+                            var _topicId = _count;
+                            for (var _topic in _category[_key].topic) {
+                                var _topicId = _topicId + _level;
+                                _array.push({
+                                    "symbol": _topic,
+                                    "size": 25,
+                                    "id": _topicId,
+                                    "bonds": 1
+                                });
+
+                                _node.push({
+                                    "source": _count,
+                                    "target": _topicId,
+                                    "id": 'link_' + _topicId,
+                                    "bondType": 1
+
+                                });
+
+                                var _levelSkill = 1;
+                                var _skillId = 0;
+                                if (!_category[_key].topic[_topic].skill) {
+                                    _skillId = _topicId;
+                                } else {
+                                    var _finalLevelVaue = 0;
+                                    for (var _skill in _category[_key].topic[_topic].skill) {
+                                        var _skillId = _topicId + _levelSkill;
+
+                                        _array.push({
+                                            "symbol": _skill,
+                                            "size": 15,
+                                            "id": _skillId,
+                                            "bonds": 1
+                                        });
+
+                                        _node.push({
+                                            "source": _topicId,
+                                            "target": _skillId,
+                                            "id": 'link_' + _skillId,
+                                            "bondType": 1
+
+                                        });
+                                        // console.error(_levelSkill, Object.keys(_category[_key].topic[_topic].skill).length)
+                                        if (_levelSkill == (Object.keys(_category[_key].topic[_topic].skill).length)) {
+                                            // console.error(_skillId)
+                                            _topicId = _skillId;
+                                        }
+                                        _levelSkill++;
+                                    }
+                                }
+                                //console.error(Object.keys(_category[_key].topic).length)
+                                if (_dd == (Object.keys(_category[_key].topic).length - 1)) {
+                                    console.error(_skillId)
+                                    _count = _skillId;
+                                }
+                                // _level = _finalLevelVaue;
+                                //  _level++;
+                                _dd++;
+                                // console.error(_level)
                             }
                         }
-
-                    },
-                    failureCallBack: function (iObj) {
-                        console.error('In failureCallBack', iObj);
-
+                        _count++;
                     }
-                });
+                    console.error(_node, _array)
+                    var _retu = {
+                        "3-iodo-3-methylhexan-1,4-diamine": {
+                            "nodes": _array,
+                            "links": _node
+                        }
+                    }
+                    console.error(_retu)
+                    scope.ctsDataForMolecule = _retu;
+                }
             };
 
             var _category = {};
-            var _categoryArray = [];
-            var _topicArray = [];
-            var _skillsArray = [];
-
-
+            //var _categoryArray = {};
+            var _topics = {};
+            var _skills = {};
             scope.init = function () {
                 scope.ctsDataForMolecule = null;
 
@@ -350,129 +523,7 @@ app.directive('ctcRole', function ($state, serverCommunication) {
                     serverCommunication.getMyMentorSelection({
                         successCallBack: function (iObj) {
                             console.error('In getMyMentorSelection', iObj);
-                            _category = {};
-                            _categoryArray = [];
-                            _topicArray = [];
-                            _skillsArray = [];
-                            if (iObj.data && iObj.data.Categories && iObj.data.Categories.length > 0) {
-                                for (var k = 0; k < iObj.data.Categories.length ; k++) {
-                                    if (Object.keys(iObj.data.Categories[k]).length > 0) {
-                                        if (iObj.data.Categories[k].Category) {
-                                            if (_category[iObj.data.Categories[k].Category]) {
-
-                                            } else {
-                                                _category[iObj.data.Categories[k].Category] = { Name: iObj.data.Categories[k].Category };
-                                                _categoryArray.push(_category[iObj.data.Categories[k].Category]);
-                                            }
-                                        }
-
-                                        if (iObj.data.Categories[k].Topic) {
-                                            if (_category[iObj.data.Categories[k].Topic]) {
-
-                                            } else {
-                                                _category[iObj.data.Categories[k].Topic] = { Name: iObj.data.Categories[k].Topic };
-                                                _topicArray.push(_category[iObj.data.Categories[k].Topic]);
-                                            }
-                                        }
-
-                                        if (iObj.data.Categories[k].Skill) {
-                                            if (_category[iObj.data.Categories[k].Skill]) {
-
-                                            } else {
-                                                _category[iObj.data.Categories[k].Skill] = { Name: iObj.data.Categories[k].Skill };
-                                                _skillsArray.push(_category[iObj.data.Categories[k].Skill]);
-                                            }
-                                        }
-
-                                    }
-                                }
-                            }
-                            console.error('In getMySelection', _category, _categoryArray, _topicArray, _skillsArray);
-                            var _array = [];
-
-                            for (var _key in _category) {
-                                _array.push({
-                                    "symbol": _key,
-                                    "size": 25,
-                                    "id": "d83f4a48-2a50-49b1-9dc3-873363a541a3" + _key,
-                                    "bonds": 1
-                                });
-                            }
-                            var _retu = {
-                                "3-iodo-3-methylhexan-1,4-diamine": {
-                                    "nodes": _array,
-                                    "links": []
-                                }
-                            }
-                            console.error(_retu)
-                            scope.ctsDataForMolecule = _retu
-                        },
-                        failureCallBack: function (iObj) {
-                            console.error('In failuregetMySelectionCallBack', iObj);
-
-                        }
-                    });
-                } else if (scope.role == "mentee") {
-                    console.error('get data for mentee')
-                    serverCommunication.getMyMenteeSelection({
-                        successCallBack: function (iObj) {
-                            console.error('In getMyMenteeSelection', iObj);
-                            _category = {};
-                            _categoryArray = [];
-                            _topicArray = [];
-                            _skillsArray = [];
-                            if (iObj.data && iObj.data.Categories && iObj.data.Categories.length > 0) {
-                                for (var k = 0; k < iObj.data.Categories.length ; k++) {
-                                    if (Object.keys(iObj.data.Categories[k]).length > 0) {
-                                        if (iObj.data.Categories[k].Category) {
-                                            if (_category[iObj.data.Categories[k].Category]) {
-
-                                            } else {
-                                                _category[iObj.data.Categories[k].Category] = { Name: iObj.data.Categories[k].Category };
-                                                _categoryArray.push(_category[iObj.data.Categories[k].Category]);
-                                            }
-                                        }
-
-                                        if (iObj.data.Categories[k].Topic) {
-                                            if (_category[iObj.data.Categories[k].Topic]) {
-
-                                            } else {
-                                                _category[iObj.data.Categories[k].Topic] = { Name: iObj.data.Categories[k].Topic };
-                                                _topicArray.push(_category[iObj.data.Categories[k].Topic]);
-                                            }
-                                        }
-
-                                        if (iObj.data.Categories[k].Skill) {
-                                            if (_category[iObj.data.Categories[k].Skill]) {
-
-                                            } else {
-                                                _category[iObj.data.Categories[k].Skill] = { Name: iObj.data.Categories[k].Skill };
-                                                _skillsArray.push(_category[iObj.data.Categories[k].Skill]);
-                                            }
-                                        }
-
-                                    }
-                                }
-                            }
-                            console.error('In getMySelection', _category, _categoryArray, _topicArray, _skillsArray);
-                            var _array = [];
-
-                            for (var _key in _category) {
-                                _array.push({
-                                    "symbol": _key,
-                                    "size": 25,
-                                    "id": "d83f4a48-2a50-49b1-9dc3-873363a541a3" + _key,
-                                    "bonds": 1
-                                });
-                            }
-                            var _retu = {
-                                "3-iodo-3-methylhexan-1,4-diamine": {
-                                    "nodes": _array,
-                                    "links": []
-                                }
-                            }
-                            console.error(_retu)
-                            scope.ctsDataForMolecule = _retu
+                            _createMoleculeStructure(iObj);
                         },
                         failureCallBack: function (iObj) {
                             console.error('In failuregetMySelectionCallBack', iObj);
@@ -483,62 +534,7 @@ app.directive('ctcRole', function ($state, serverCommunication) {
                     serverCommunication.getMySelection({
                         successCallBack: function (iObj) {
                             console.error('In getMySelection', iObj);
-                            _category = {};
-                            _categoryArray = [];
-                            _topicArray = [];
-                            _skillsArray = [];
-                            if (iObj.data && iObj.data.Categories && iObj.data.Categories.length > 0) {
-                                for (var k = 0; k < iObj.data.Categories.length ; k++) {
-                                    if (Object.keys(iObj.data.Categories[k]).length > 0) {
-                                        if (iObj.data.Categories[k].Category) {
-                                            if (_category[iObj.data.Categories[k].Category]) {
-
-                                            } else {
-                                                _category[iObj.data.Categories[k].Category] = { Name: iObj.data.Categories[k].Category };
-                                                _categoryArray.push(_category[iObj.data.Categories[k].Category]);
-                                            }
-                                        }
-
-                                        if (iObj.data.Categories[k].Topic) {
-                                            if (_category[iObj.data.Categories[k].Topic]) {
-
-                                            } else {
-                                                _category[iObj.data.Categories[k].Topic] = { Name: iObj.data.Categories[k].Topic };
-                                                _topicArray.push(_category[iObj.data.Categories[k].Topic]);
-                                            }
-                                        }
-
-                                        if (iObj.data.Categories[k].Skill) {
-                                            if (_category[iObj.data.Categories[k].Skill]) {
-
-                                            } else {
-                                                _category[iObj.data.Categories[k].Skill] = { Name: iObj.data.Categories[k].Skill };
-                                                _skillsArray.push(_category[iObj.data.Categories[k].Skill]);
-                                            }
-                                        }
-
-                                    }
-                                }
-                            }
-                            console.error('In getMySelection', _category, _categoryArray, _topicArray, _skillsArray);
-                            var _array = [];
-
-                            for (var _key in _category) {
-                                _array.push({
-                                    "symbol": _key,
-                                    "size": 25,
-                                    "id": "d83f4a48-2a50-49b1-9dc3-873363a541a3" + _key,
-                                    "bonds": 1
-                                });
-                            }
-                            var _retu = {
-                                "3-iodo-3-methylhexan-1,4-diamine": {
-                                    "nodes": _array,
-                                    "links": []
-                                }
-                            }
-                            console.error(_retu)
-                            scope.ctsDataForMolecule = _retu
+                            _createMoleculeStructure(iObj);
                         },
                         failureCallBack: function (iObj) {
                             console.error('In failuregetMySelectionCallBack', iObj);
@@ -1070,22 +1066,6 @@ app.directive('moleculeMap', function ($rootScope) {
                 }
             };
             newMoleculeSimulation(moleculeExamples, '3-iodo-3-methylhexan-1,4-diamine');
-
-        }
-    }
-});
-
-app.directive('profilePage', function ($state, serverCommunication) {
-    return {
-        scope: {
-            editRequired: "@",
-            userInfo: "=",
-            closePopup: "&"
-        },
-        templateUrl: '/Home/ksProfileTemplate',
-        controller: "ksProfileController",
-        //scope: true,   // optionally create a child scope
-        link: function (scope, element, attrs) {
 
         }
     }

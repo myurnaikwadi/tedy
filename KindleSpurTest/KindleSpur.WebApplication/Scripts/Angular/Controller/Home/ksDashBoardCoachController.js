@@ -52,13 +52,25 @@
     ];
   
     $scope.menuClick = function (iIndex, iOption) {
-        $scope.selectedMenu = iIndex;       
+
+        $scope.selectedMenu = iIndex;
         $scope.feedBack.closeFeedBackPopup();
+        //8 vcs
+        //9 - Rss
         switch (iIndex) {
             case 1: $scope.getCoachRecord(); break;
             case 7: $scope.getPointsRecord(); break;
+            case 8: $scope.getPointsRecord(); break;
         }
     };
+
+    $scope.selectedOption = function (iIndex, iCate) {
+        console.error(iCate.name)
+        if (iCate.name == 'FEED YOU SHOULD READ') {
+            //iCate.selectedOption = !iCate.selectedOption;
+            $scope.selectedMenu = '9';
+        }
+    }
 
     $scope.rewardsPoints = {
         mentorPoints: 0,
@@ -108,28 +120,7 @@
             }
         });
     };
-    $scope.selectedOption = function (iIndex, iCate) {
-
-        if (iCate.name == 'BRAIN GAMES') {
-            iCate.selectedOption = !iCate.selectedOption;
-            serverCommunication.unlockGameCode({
-             //   loggedUserDetails: $rootScope.loggedDetail,
-                successCallBack: function (iObj) {
-                    debugger;
-                    $scope.getPointsRecord();
-                    //alert(iObj.data);
-                    $scope.gameKey = iObj.data;
-                    console.error('In successCallBack', iObj);
-
-                },
-                failureCallBack: function (iObj) {
-                    alert('Sorry......, You do not have sufficient point to unlock games!!!');
-                    console.error('In failureCallBack', iObj);
-
-                }
-            });
-        }
-    }
+   
 
     $scope.init = function () {
         console.error( $scope.passedData)
@@ -283,6 +274,57 @@
     $scope.openRedeemPanel = function () {
         $scope.feedBack.askFeedback = true;
         $scope.feedBack.formValue = '6';
+    };
+
+    //feedback
+    $scope.feedCategoryArray = [
+        	        { name: 'C' ,selected : false },
+					{ name: 'C++',selected : false  },
+					{ name: 'JAVA',selected : false  },
+					{ name: 'C#',selected : false  },
+					{ name: 'ANGULAR JS',selected : false  },
+    ]
+    $scope.feedContainArray = [
+					{ name: 'COACHING STATUS' },
+					{ name: 'KNOWLEDGE GARDEN' },
+					{ name: 'FEED YOU SHOULD READ' },
+					{ name: 'GRAPHS' },
+					{ name: 'BRAIN GAMES' },
+					{ name: 'RESOURCES' },
+					{ name: 'Advertising' },
+					{ name: 'Education' },
+					{ name: 'Engineering' },
+					{ name: 'Marketing' },
+					{ name: 'BRAIN GAMES' },
+					{ name: 'RESOURCES' }, { name: 'COACHEE' }, { name: 'MENTEE' }, { name: 'COACH' }, { name: 'MENTOR' }
+    ];
+
+    var _selectedTagFed = [];
+    $scope.selectedFeedTag = function (iIndex, iOption) {
+        console.error(iOption.selected)
+        if (iOption.selected) {
+            iOption.selected = false;
+            var _index = _selectedTagFed.indexOf(iOption.name);
+            if (_index > -1)
+                _selectedTagFed.splice(_index, 1);
+        } else {
+            _selectedTagFed.push(iOption.name);
+            iOption.selected = true;
+        }
+        console.error(iOption.selected)
+        console.error(_selectedTagFed);
+        serverCommunication.sendSelectedFeed({
+            selectedFeed : _selectedTagFed,
+            successCallBack: function (iObj) {             
+                console.error('In sendSelectedFeed', iObj);
+                //$scope.feedContainArray = iObj.data.Filter;
+            },
+            failureCallBack: function (iObj) {
+                console.error('In failure sendSelectedFeed CallBack', iObj);
+
+            }
+        });
+        
     };
 
 });

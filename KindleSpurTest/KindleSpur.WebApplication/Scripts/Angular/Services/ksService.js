@@ -306,6 +306,15 @@ app.factory('serverCommunication', function ($http) {
             $http.post('/User/AddVSCSActivity', iObj.activity).then(iObj.successCallBack, iObj.failureCallBack);
         },
 
+        /**
+        * @auther : MKN
+        * @date : 25/07/2016
+        * @Purpose :
+        */
+        sendSelectedFeed: function (iObj) {
+            console.error(iObj)
+            $http.post('', iObj.selectedFeed).then(iObj.successCallBack, iObj.failureCallBack);
+        },
 
 
     }
