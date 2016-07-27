@@ -282,7 +282,8 @@
 					{ name: 'C++',selected : false  },
 					{ name: 'JAVA',selected : false  },
 					{ name: 'C#',selected : false  },
-					{ name: 'ANGULAR JS',selected : false  },
+					{ name: 'ANGULAR JS', selected: false },
+                    
     ]
     $scope.feedContainArray = [
 					{ name: 'COACHING STATUS' },
