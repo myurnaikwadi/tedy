@@ -348,13 +348,14 @@
                     <h5 class="fontClass" style="font-size: 16px;">COACHING STATUS</h5>
                 </div>
                 <div class="mainDashBoardWizardParent">
-                    <div class="statusParentDiv">
-                        <div ng-show="coachingStatusArray.length == 0" class="topicHeadingPlaceholdr">
-                            <h5 style="color:gray;margin: auto;font-size: 30px;" class="leftSideMenuLable fontClass">
-                                No Coachee Available
-                            </h5>
-                        </div>
-                        <div ng-hide="coachingStatusArray.length == 0" class="ngRepeatDivForStatus " ng-click="showCoacheeProfile = true;showCoacheeProfileStatus(option)" ng-repeat="option in coachingStatusArray">
+                    <div ng-show="coachingStatusArray.length == 0" class="topicHeadingPlaceholdr">
+                        <h5 style="color:gray;margin: auto;font-size: 30px;" class="leftSideMenuLable fontClass">
+                            No Coachee Available
+                        </h5>
+                    </div>
+                    <div class="statusParentDiv" ng-hide="coachingStatusArray.length == 0">
+                        
+                        <div  class="ngRepeatDivForStatus " ng-click="showCoacheeProfile = true;showCoacheeProfileStatus(option)" ng-repeat="option in coachingStatusArray">
 
                             <div class="profileImageCoachingStatus">
                                 <img ng-src="{{option.PhotoURL ? option.PhotoURL : '/Images/icons/profile.png' }}" style="margin: auto auto;float: left;height: 35px;width: 35px;" />
@@ -378,7 +379,7 @@
                             </div>
                             <div class="communicationsCoachingStatus">
                                 <img src="" class="iconOnStatusArray" style="visibility:hidden;">
-                                <img src="~/Images/icons/call.png" class="iconOnStatusArray">
+                                <img src="~/Images/icons/call.png" class="iconOnStatusArray iconOnStatusArrayss">
                                 <img src="" class="iconOnStatusArray" style="visibility:hidden;">
 
                             </div>
