@@ -34,12 +34,12 @@
     $scope.leftSideMenus = [{ name: 'DASHBOARD' }
                 , { name: 'COACHING STATUS' }
                 , { name: 'KNOWLEDGE GARDEN' }
-                , { name: 'BRAIN GAMES' }
-                , { name: 'GRAPHS' }
-                , { name: 'RESOURCES' }
+                , { name: 'COMMUNICATION' }
+                , { name: 'KNOWLEDGE FEED' }
+              //  , { name: 'RESOURCES' }
                 , { name: 'ADD SKILLS' }
                 , { name: 'REWARDS' }
-                 , { name: 'VCS' }
+                // , { name: 'VCS' }
     ]
     $scope.applicationRole = [{ name: 'COACHEE' }, { name: 'MENTEE' }, { name: 'COACH' }, { name: 'MENTOR' }]
     $scope.rightSideDashBoardArray = [
@@ -52,25 +52,14 @@
     ];
   
     $scope.menuClick = function (iIndex, iOption) {
-
-        $scope.selectedMenu = iIndex;
+        $scope.selectedMenu = iIndex;       
         $scope.feedBack.closeFeedBackPopup();
-        //8 vcs
-        //9 - Rss
         switch (iIndex) {
             case 1: $scope.getCoachRecord(); break;
-            case 7: $scope.getPointsRecord(); break;
-            case 8: $scope.getPointsRecord(); break;
+            case 2: $scope.generateGarden(); break;
+            case 6: $scope.getPointsRecord(); break;
         }
     };
-
-    $scope.selectedOption = function (iIndex, iCate) {
-        console.error(iCate.name)
-        if (iCate.name == 'FEED YOU SHOULD READ') {
-            //iCate.selectedOption = !iCate.selectedOption;
-            $scope.selectedMenu = '9';
-        }
-    }
 
     $scope.rewardsPoints = {
         mentorPoints: 0,
@@ -84,6 +73,8 @@
     $scope.myRewardsArray = [
                    { Name: 'www.yryr.com', date: '12/12/2011', Key: 'NUF783F', PSR: false },
     ];
+
+    
     $scope.getPointsRecord = function () {
         serverCommunication.getPointsRecord({
         
@@ -106,6 +97,42 @@
         });
     };
 
+    $scope.generateGarden = function () {
+        $scope.ctsDataForMolecule = null;
+        serverCommunication.getCoachingWithStatus({
+            loggedUserDetails: $rootScope.loggedDetail,
+            successCallBack: function (iObj) {
+                console.error('In successCallBack', iObj);
+                $scope.coachingStatusArray = iObj.data.Filters;
+              
+                var _array = [];
+                for (var k = 0 ; k < $scope.coachingStatusArray.length ; k++) {
+                    //$scope.coachingStatusArray[k]
+
+                        _array.push({
+                            "symbol": $scope.coachingStatusArray[k].FirstName+" "+$scope.coachingStatusArray[k].LastName,
+                            "image": $scope.coachingStatusArray[k].TreeURL,
+                            "size": 25,
+                            "id": Math.random() + k,
+                            "bonds": 1
+                         });
+                }
+                var _retu = {
+                    "3-iodo-3-methylhexan-1,4-diamine": {
+                        "nodes": _array,
+                        "links": []
+                    }
+                }
+                console.error(_retu)
+                $scope.ctsDataForMolecule = _retu;
+
+            },
+            failureCallBack: function (iObj) {
+                console.error('In failureCallBack', iObj);
+
+            }
+        });
+    };
     $scope.getCoachRecord = function () {
         serverCommunication.getCoachingWithStatus({
             loggedUserDetails: $rootScope.loggedDetail,
@@ -120,7 +147,28 @@
             }
         });
     };
-   
+    $scope.selectedOption = function (iIndex, iCate) {
+
+        if (iCate.name == 'BRAIN GAMES') {
+            iCate.selectedOption = !iCate.selectedOption;
+            serverCommunication.unlockGameCode({
+             //   loggedUserDetails: $rootScope.loggedDetail,
+                successCallBack: function (iObj) {
+                    debugger;
+                    $scope.getPointsRecord();
+                    //alert(iObj.data);
+                    $scope.gameKey = iObj.data;
+                    console.error('In successCallBack', iObj);
+
+                },
+                failureCallBack: function (iObj) {
+                    alert('Sorry......, You do not have sufficient point to unlock games!!!');
+                    console.error('In failureCallBack', iObj);
+
+                }
+            });
+        }
+    }
 
     $scope.init = function () {
         console.error( $scope.passedData)
@@ -278,12 +326,12 @@
 
     //feedback
     $scope.feedCategoryArray = [
-        	        { name: 'C' ,selected : false },
-					{ name: 'C++',selected : false  },
-					{ name: 'JAVA',selected : false  },
-					{ name: 'C#',selected : false  },
+        	        { name: 'C', selected: false },
+					{ name: 'C++', selected: false },
+					{ name: 'JAVA', selected: false },
+					{ name: 'C#', selected: false },
 					{ name: 'ANGULAR JS', selected: false },
-                    
+
     ]
     $scope.feedContainArray = [
 					{ name: 'COACHING STATUS' },
@@ -315,8 +363,8 @@
         console.error(iOption.selected)
         console.error(_selectedTagFed);
         serverCommunication.sendSelectedFeed({
-            selectedFeed : _selectedTagFed,
-            successCallBack: function (iObj) {             
+            selectedFeed: _selectedTagFed,
+            successCallBack: function (iObj) {
                 console.error('In sendSelectedFeed', iObj);
                 //$scope.feedContainArray = iObj.data.Filter;
             },
@@ -325,7 +373,6 @@
 
             }
         });
-        
-    };
 
+    };
 });

@@ -18,15 +18,25 @@
                     </div>
                 </div>
             </div>
+            @*Knowledge Garden*@
+            <div class="parentRoleDetailRight" style="padding:1%;" ng-if="selectedMenu == '2'">
+                <div class="homeLabelInChat">
+                    <h5 class="fontClass" style="font-size: 16px;">KNOWLEDGE GARDERN</h5>
+                </div>
+                <molecule-Map ng-if="ctsDataForMolecule" cts-Data="ctsDataForMolecule"></molecule-Map>
+            </div>
+            @*VCS*@
             <div class="parentRoleDetailRight" ng-if="selectedMenu == '8'">
                 <vcs-Dir></vcs-Dir>
             </div>
-            <div class="parentRoleDetailRight" ng-if="selectedMenu == '6'">
+            @*Add Skills*@
+            <div class="parentRoleDetailRight" ng-if="selectedMenu == '5'">
                 <ctc-Role role="coach" skill-Required="true"></ctc-Role>
             </div>
-            <div class="parentRoleDetailRight" ng-if="selectedMenu == '2'">
+            @*Communication*@
+            <div class="parentRoleDetailRight" ng-if="selectedMenu == '3'">
                 <div class="homeLabelInChat">
-                    <h5 class="fontClass">NOTIFICATIONS</h5>
+                    <h5 class="fontClass" style="font-size: 16px;margin-left:2%;">NOTIFICATIONS</h5>
                 </div>
 
                 <div class="communicationMainPanel">
@@ -253,9 +263,9 @@
                                 <div class="conversationListPanel genericPointerClass" ng-class="{ highlightedGrayClass : conversation.selectedConversation == true }">
                                     <div style="float:left;    margin: auto auto;width: 85%;">
                                         <h5 style="margin:auto auto;margin-left: 0;font-size: large;float: left;width: 88%;    font-weight: 700;    font-size: 15px;">{{conversation.name}}</h5>
-                                         <div class="applicationNotiCount" title="5" style=" display :flex; float:left; text-align: center; height: 15px; width : 15px;">
-                                                <h6 class="fontClass" style=" font-size:10px;display :inline-block;text-align: center; text-overflow: clip; margin: auto auto;color:white;">5</h6>
-                                            </div>
+                                        <div class="applicationNotiCount" title="5" style=" display: flex; float:left; text-align: center; height: 15px; width : 15px;">
+                                            <h6 class="fontClass" style=" font-size:10px;display :inline-block;text-align: center; text-overflow: clip; margin: auto auto;color:white;">5</h6>
+                                        </div>
                                     </div>
                                 </div>
                                 <div ng-show="conversation.selectedConversation == true" class="triangleArrowRight trangleOveRideBlack" style="float: left;margin-top: 15px;"></div>
@@ -324,13 +334,14 @@
 
 
             </div>
+            @*Coaching Status*@
             <div class="parentRoleDetailRight" ng-if="selectedMenu == '1'">
 
                 <div class="hideCoacheeProfile" ng-class="{ showCoacheeProfileClass : showCoacheeProfile == true }">
                     <profile-Page ng-if="showCoacheeProfile && userInfo" user-Info="userInfo" close-Popup="closeProfilePic()" edit-Required="false"></profile-Page>
                 </div>
                 <div class="homeLabelInMainDB">
-                    <h5 class="fontClass">COACHING STATUS</h5>
+                    <h5 class="fontClass" style="font-size: 16px;">COACHING STATUS</h5>
                 </div>
                 <div class="mainDashBoardWizardParent">
                     <div class="statusParentDiv">
@@ -369,10 +380,11 @@
                     <bottom-Main-Strip></bottom-Main-Strip>
                 </div>
             </div>
-            <div class="parentRoleDetailRightRewardsPoint" ng-if="selectedMenu == '7'">
+            @*MY Rewards*@
+            <div class="parentRoleDetailRightRewardsPoint" ng-if="selectedMenu == '6'">
 
                 <div class="homeLabelInChat" style="display: flex;height:6%;">
-                    <h5 class="fontClass" style="margin: auto 0; font-weight: 700;">POINT STATUS</h5>
+                    <h5 class="fontClass" style="margin: auto 0;font-size: 16px;">POINT STATUS</h5>
                 </div>
                 <div ng-show='feedBack.askFeedback' class="feedbackPanel" style="height: 75%;">
 
@@ -532,8 +544,8 @@
                     <bottom-Main-Strip></bottom-Main-Strip>
                 </div>
             </div>
-
-            <div class="parentRoleDetailRight" style="padding:1%;" ng-if="selectedMenu == '0'">
+            @*DashBoard*@
+            <div class="parentRoleDetailRight" style="padding:1%;"  ng-if="selectedMenu == '0'">
                 <div class="userNotificationParent">
                     <div class="userRoleWizardParent" style="display: block;overflow: auto;float:left;">
                         <div class="notificationWiz " ng-repeat="notification in notifications">
@@ -557,7 +569,7 @@
                 </div>
                 <div class="dashBoardWizard">
                     <div class="homeLabelInMainDB">
-                        <h5 class="fontClass">DASHBOARD >></h5>
+                        <h5 class="fontClass" style="font-size: 16px;">DASHBOARD >></h5>
                     </div>
                     <div class="mainDashBoardWizardParent">
                         <div class="dashBoardMenuCoach">
@@ -595,29 +607,29 @@
                     </div>
                 </div>
             </div>
-            <div class="parentRoleDetailRight" style="padding:1%;" ng-if="selectedMenu == '9'">
+            @*Knowledge feed*@
+            <div class="parentRoleDetailRight" style="padding:1%;" ng-if="selectedMenu == '4'">
                 <div class="feedPanel">
-					<div class="homeLabelfeed">
-						<h5 class="fontClass">FEED YOU SHOULD READ</h5>					
-					</div>
-					
-					<div class="skillTaggingArray">
-                        <h5 class="tagTasks fontClass" style="float: left;margin: 7px;width: 131px;height: 30px;" ng-class="{ coachThemeColor : option.selected == true }" ng-click="selectedFeedTag($index,option)" ng-repeat="option in feedCategoryArray">{{option.name | uppercase}}</h5>
-					</div>
+                    <div class="homeLabelfeed">
+                        <h5 class="fontClass" style="font-size: 16px;">KNOWLEDGE FEED</h5>
+                    </div>
 
-					<div class="feedParentArray">
-						<div class="feedParentMainArray">
-							<div class="feedContainRepeatDiv" ng-repeat="feed in feedContainArray">
-							    
-							</div>			
-						</div>						
-					</div>
+                    <div class="skillTaggingArray">
+                        <h5 class="tagTasks fontClass" style="float: left;margin: 7px;width: 131px;height: 30px;" ng-class="{ coachThemeColor : option.selected == true }" ng-click="selectedFeedTag($index,option)" ng-repeat="option in feedCategoryArray">{{option.name | uppercase}}</h5>
+                    </div>
+
+                    <div class="feedParentArray">
+                        <div class="feedParentMainArray">
+                            <div class="feedContainRepeatDiv" ng-repeat="feed in feedContainArray">
+
+                            </div>
+                        </div>
+                    </div>
                     <div class="applicationBottomStrip">
                         <bottom-Main-Strip></bottom-Main-Strip>
-                    </div>		
-				</div>
-            </div>   
-
+                    </div>
+                </div>
+            </div>
 
         </div>
     </div>

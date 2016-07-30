@@ -2,8 +2,8 @@
     <div class="ctsParentMain">
         <div class="ctsParentMainPanel">
             <div class="ctsCategoryHeading">
-                <h5 ng-show="mySelection" style="font-size: 15px;font-weight: 700;padding: 6px;padding-left: 0;" class="fontClass">MY SELECTION</h5>
-                <h5 ng-hide="mySelection" style="font-size: 15px;font-weight: 700;padding: 6px;padding-left: 0;" class="fontClass">{{ categoryDisplay ? 'CATEGORIES' : selectedCategoryValue.Category | uppercase }}</h5>
+                <h5 ng-show="mySelection" style="font-size: 16px;padding: 6px;padding-left: 0;" class="fontClass">MY SELECTION</h5>
+                <h5 ng-hide="mySelection" style="font-size: 16px;padding: 6px;padding-left: 0;" class="fontClass">{{ categoryDisplay ? 'CATEGORIES' : selectedCategoryValue.Category | uppercase }}</h5>
                 <img ng-show="mySelection" style="width:20px;height : 20px;float:right;margin: auto auto;margin-right: 0;" ng-click="addSkill()" src="~/Images/addBold.png" />
             </div>
             <div class="ctsCategoryPanelMainPanel" ng-show="mySelection">
