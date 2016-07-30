@@ -137,6 +137,7 @@ app.directive('ctcRole', function ($state, serverCommunication) {
                 for (var k = 0; k < scope.topicArray.length ; k++) {
                     scope.topicArray[k].selected = false;
                     // console.error('1')
+                    if (!scope.topicArray[k].profiLevel) scope.topicArray[k].profiLevel = '0';
                     if (_topics[scope.topicArray[k].Name]) {
                         //console.error('12')
                         scope.topicArray[k].alreadySelected = true;
@@ -146,7 +147,7 @@ app.directive('ctcRole', function ($state, serverCommunication) {
                 }
             };
 
-            
+
             scope.topicSelection = function (iEvent, iIndex, iTopic) {
                 iEvent.stopPropagation();
                 iTopic.type = 'T';
@@ -164,15 +165,15 @@ app.directive('ctcRole', function ($state, serverCommunication) {
                         if (iTopic.Skills.length > 0) {
                             var _deleteArr = [];
                             for (var l = 0 ; l < scope.skillsArray.length; l++) {
-                                for (var k = 0; k < iTopic.Skills.length ; k++) {                                    
+                                for (var k = 0; k < iTopic.Skills.length ; k++) {
                                     //if (_updateArray[iTopic.Skills[k].Name]) 
                                     //    delete _updateArray[iTopic.Skills[k].Name];                                   
                                     if (iTopic.Skills[k].alreadySelected == true) {
                                         _deleteArray[iTopic.Skills[k].Name] = iTopic.Skills[k];
                                     }
                                     if (scope.skillsArray[l] && scope.skillsArray[l].Name == iTopic.Skills[k].Name) {
-                                        _deleteArr.push(l);                                       
-                                    }                                   
+                                        _deleteArr.push(l);
+                                    }
                                 }
                             }
                             // console.error(_deleteArray)
@@ -181,27 +182,28 @@ app.directive('ctcRole', function ($state, serverCommunication) {
                                 scope.skillsArray.splice(_deleteArr[z], 1);
                             }
                         }
-                    } 
+                    }
                 }
                 else {
                     iTopic.selected = true;
-                   
+
                     if (iTopic.alreadySelected == true) {
                         if (_deleteArray[iTopic.Name]) delete _deleteArray[iTopic.Name];
-                    //    if (_updateArray[iTopic.Name]) delete _updateArray[iTopic.Name];
+                        //    if (_updateArray[iTopic.Name]) delete _updateArray[iTopic.Name];
                     } //else {                    
                     //        _updateArray[iTopic.Name] = iTopic;                     
                     //}
                     if (scope.skillRequired) {
-                       
+
                         for (var k = 0; k < iTopic.Skills.length ; k++) {
+                            if (!iTopic.Skills[k].profiLevel) iTopic.Skills[k].profiLevel = '0';
                             if (_skills[iTopic.Skills[k].Name]) {
                                 iTopic.Skills[k].alreadySelected = true;
                                 if (_deleteArray[iTopic.Skills[k].Name]) {
                                     delete _deleteArray[iTopic.Skills[k].Name];
                                 } else {
                                     iTopic.Skills[k].selected = true;
-                                }                                   
+                                }
                             }// else {
                             //    //if (_updateArray[iTopic.Skills[k].Name]) {
                             //    //    _updateArray[iTopic.Skills[k].Name] = iTopic.Skills[k];
@@ -209,7 +211,7 @@ app.directive('ctcRole', function ($state, serverCommunication) {
                             //}                           
                         }
                         scope.skillsArray = scope.skillsArray.concat(iTopic.Skills);
-                    } 
+                    }
                 }
             };
             scope.skillSelection = function (iEvent, iIndex, iSkills) {
@@ -227,11 +229,11 @@ app.directive('ctcRole', function ($state, serverCommunication) {
                 } else {
                     iSkills.selected = true;
                     iSkills.profiLevel = 0;
-                  //  _updateArray[iSkills.Name] = iSkills;
+                    //  _updateArray[iSkills.Name] = iSkills;
                     if (iSkills.alreadySelected == true) {
                         if (_deleteArray[iSkills.Name]) delete _deleteArray[iSkills.Name];
                         if (_updateArray[iSkills.Name]) delete _updateArray[iSkills.Name];
-                    } else  {
+                    } else {
                         if (_updateArray[iSkills.Name]) {
                             _updateArray[iSkills.Name] = iSkills;
                         }
@@ -260,23 +262,23 @@ app.directive('ctcRole', function ($state, serverCommunication) {
 
             scope.savepublishClick = function () {
                 console.error(_updateArray, _deleteArray);
-              //  return 
+                //  return 
                 if (scope.categoryDisplay) {
                     //publish check
                 } else {
-                   // console.error(_updateArray);
+                    // console.error(_updateArray);
                     //if (Object.keys(_updateArray).length > 0 || Object.keys(_deleteArray).length > 0 ){
                     var _dataArray = [];
                     var _dd = [];
                     for (var l = 0 ; l < scope.skillsArray.length; l++) {
-                            console.error(scope.skillsArray[l].Name)                           
-                            if (scope.skillsArray[l].selected) {
-                                _dataArray.push(scope.skillsArray[l]);
-                            } else {
-                                 if (_skills[scope.skillsArray[l].Name]) {
-                                     delete _skills[scope.skillsArray[l].Name];
-                                }
+                        console.error(scope.skillsArray[l].Name)
+                        if (scope.skillsArray[l].selected) {
+                            _dataArray.push(scope.skillsArray[l]);
+                        } else {
+                            if (_skills[scope.skillsArray[l].Name]) {
+                                delete _skills[scope.skillsArray[l].Name];
                             }
+                        }
                     }
                     for (var _key in _skills) {
                         for (var j = 0 ; j < scope.catogoryArray.length ; j++) {
@@ -285,64 +287,91 @@ app.directive('ctcRole', function ($state, serverCommunication) {
                                     if (_key == scope.catogoryArray[j].Topics[y].Skills[w].Name) {
                                         _skills[_key].Id = scope.catogoryArray[j].Topics[y].Skills[w].Id;
                                         _dd.push(_skills[_key]);
-                                    }                                  
+                                    }
                                 }
                             }
                         }
-                       
+
                     }
-                    console.error(_dd)                  
+                    console.error(_dd)
                     console.error(_category);
                     console.error(_topics);
                     console.error(_skills);
-                    
+
                     _dataArray = _dataArray.concat(_dd);
                     //return
-                        if (scope.skillRequired) {
-                            serverCommunication.sendSelectedCTSDataToServer({
-                                selectedArray: _dataArray,
-                                role: scope.role,
-                                successCallBack: function (iObj) {
-                                    scope.mySelection = true;
-                                    scope.categoryDisplay = true;
-                                    // scope.selectedCategory = -1;
-                                    scope.selectedTopic = -1;
-                                    scope.selectedSkills = -1;
-                                    scope.selectedCategoryValue = null;
-                                    scope.init();
-                                    console.error('In successCallBack', iObj);
-                                },
-                                failureCallBack: function (iObj) {
-                                    console.error('In failureCallBack', iObj);
-                                }
-                            });
-                        } else {
-                            var _dataArray =[];
-                            for (var l = 0; l < scope.topicArray.length; l++) {
-                                if (scope.topicArray[l].selected) {
-                                    _dataArray.push(scope.topicArray[l]);
-                                 }
+                    if (scope.skillRequired) {
+                        serverCommunication.sendSelectedCTSDataToServer({
+                            selectedArray: _dataArray,
+                            role: scope.role,
+                            successCallBack: function (iObj) {
+                                scope.mySelection = true;
+                                scope.categoryDisplay = true;
+                                // scope.selectedCategory = -1;
+                                scope.selectedTopic = -1;
+                                scope.selectedSkills = -1;
+                                scope.selectedCategoryValue = null;
+                                scope.init();
+                                console.error('In successCallBack', iObj);
+                            },
+                            failureCallBack: function (iObj) {
+                                console.error('In failureCallBack', iObj);
                             }
-                            serverCommunication.sendSelectedCTSDataToServerMentor({
-                                selectedArray: _dataArray,
-                                role: scope.role,
-                                successCallBack: function (iObj) {
-                                    console.error('In successCallBack', iObj);
-                                    scope.mySelection = true;
-                                    scope.categoryDisplay = true;
-                                    // scope.selectedCategory = -1;
-                                    scope.selectedTopic = -1;
-                                    scope.selectedSkills = -1;
-                                    scope.selectedCategoryValue = null;
-                                    scope.init();
-                                },
-                                failureCallBack: function (iObj) {
-                                    console.error('In failureCallBack', iObj);
+                        });
+                    } else {
+                        
+
+                        var _dataArray = [];
+                        var _dd = [];
+                        for (var l = 0 ; l < scope.topicArray.length; l++) {
+                            console.error(scope.topicArray[l].Name)
+                            if (scope.topicArray[l].selected) {
+                                _dataArray.push(scope.topicArray[l]);
+                            } else {
+                                if (_topics[scope.topicArray[l].Name]) {
+                                    delete _topics[scope.topicArray[l].Name];
                                 }
-                            });
+                            }
                         }
-                        _updateArray = {};
-                        _deleteArray = {}
+                        for (var _key in _topics) {
+                            for (var j = 0 ; j < scope.catogoryArray.length ; j++) {
+                                for (var y = 0; y < scope.catogoryArray[j].Topics.length; y++) {
+                                        if (_key == scope.catogoryArray[j].Topics[y].Name) {
+                                                _topics[_key].Id = scope.catogoryArray[j].Topics[y].Id;
+                                                _dd.push(_topics[_key]);
+                                         }
+                                   
+                                }
+                            }
+
+                        }
+                        _dataArray = _dataArray.concat(_dd);
+                        console.error(_dd)
+                        console.error(_dataArray)
+                        console.error(_category);
+                        console.error(_topics);
+                        console.error(_skills);
+                       // return
+                        serverCommunication.sendSelectedCTSDataToServerMentor({
+                            selectedArray: _dataArray,
+                            role: scope.role,
+                            successCallBack: function (iObj) {
+                                console.error('In successCallBack', iObj);
+                                scope.mySelection = true;
+                                scope.categoryDisplay = true;
+                                // scope.selectedCategory = -1;
+                                scope.selectedTopic = -1;
+                                scope.selectedSkills = -1;
+                                scope.selectedCategoryValue = null;
+                                scope.init();
+                            },
+                            failureCallBack: function (iObj) {
+                                console.error('In failureCallBack', iObj);
+                            }
+                        });
+                    }
+                    _updateArray = {};
+                    _deleteArray = {}
                     //}
                 }
             };
@@ -419,7 +448,7 @@ app.directive('ctcRole', function ($state, serverCommunication) {
                 _category = {};
                 _topics = {};
                 _skills = {};
-                    console.error(angular.copy(iObj.data));
+                console.error(angular.copy(iObj.data));
 
                 if (iObj.data && iObj.data.Categories && iObj.data.Categories.length > 0) {
                     for (var k = 0; k < iObj.data.Categories.length ; k++) {
@@ -436,8 +465,8 @@ app.directive('ctcRole', function ($state, serverCommunication) {
                                             _category[iObj.data.Categories[k].Category].topic[iObj.data.Categories[k].Topic].skill[iObj.data.Categories[k].Skill] = { Name: iObj.data.Categories[k].Skill, profiLevel: iObj.data.Categories[k].profiLevel }
                                         }
                                     } else {
-                                        _topics[iObj.data.Categories[k].Topic] = { Name: iObj.data.Categories[k].Topic, skill: {} };
-                                        _category[iObj.data.Categories[k].Category].topic[iObj.data.Categories[k].Topic] = { Name: iObj.data.Categories[k].Topic, skill: null };
+                                        _topics[iObj.data.Categories[k].Topic] = { Name: iObj.data.Categories[k].Topic, skill: {}, profiLevel: iObj.data.Categories[k].profiLevel };
+                                        _category[iObj.data.Categories[k].Category].topic[iObj.data.Categories[k].Topic] = { Name: iObj.data.Categories[k].Topic, skill: null, profiLevel: iObj.data.Categories[k].profiLevel };
                                         if (iObj.data.Categories[k].Skill) {
                                             _skills[iObj.data.Categories[k].Skill] = { Name: iObj.data.Categories[k].Skill, profiLevel: iObj.data.Categories[k].profiLevel };
                                             if (!_category[iObj.data.Categories[k].Category].topic[iObj.data.Categories[k].Topic].skill) _category[iObj.data.Categories[k].Category].topic[iObj.data.Categories[k].Topic].skill = {}
@@ -446,8 +475,8 @@ app.directive('ctcRole', function ($state, serverCommunication) {
                                     }
                                 } else {
                                     _category[iObj.data.Categories[k].Category] = { Name: iObj.data.Categories[k].Category, topic: {} };
-                                    _topics[iObj.data.Categories[k].Topic] = { Name: iObj.data.Categories[k].Topic, skill: null };
-                                    _category[iObj.data.Categories[k].Category].topic[iObj.data.Categories[k].Topic] = { Name: iObj.data.Categories[k].Topic, skill: {} };
+                                    _topics[iObj.data.Categories[k].Topic] = { Name: iObj.data.Categories[k].Topic, skill: null, profiLevel: iObj.data.Categories[k].profiLevel };
+                                    _category[iObj.data.Categories[k].Category].topic[iObj.data.Categories[k].Topic] = { Name: iObj.data.Categories[k].Topic, skill: {}, profiLevel: iObj.data.Categories[k].profiLevel};
                                     if (iObj.data.Categories[k].Skill) {
                                         _skills[iObj.data.Categories[k].Skill] = { Name: iObj.data.Categories[k].Skill, profiLevel: iObj.data.Categories[k].profiLevel };
                                         _category[iObj.data.Categories[k].Category].topic[iObj.data.Categories[k].Topic].skill = {}
@@ -804,23 +833,23 @@ app.directive('moleculeMap', function ($rootScope) {
                             //  .style("fill", function (d) { return color(d.symbol); });
 
                             // Add atom symbol
-                             // Add atom symbol
+                            // Add atom symbol
                             if (d.image) {
                                 d3.select(this)
                                  .append("image")
-                                 .attr("xlink:href", function(d) { return d.image; })
-                                
+                                 .attr("xlink:href", function (d) { return d.image; })
+
                                  .attr("width", "75px")
                                   .attr("height", "75px");
-                                 d3.select(this)
-                                          .append("text")
-                                          .attr("dy", ".35em")
-                                          .attr("x", "20")
-                                          .attr("y", "20")
-                                          .attr("text-anchor", "middle")
-                                          .text(function (d) {
-                                               return d.symbol;
-                                });
+                                d3.select(this)
+                                         .append("text")
+                                         .attr("dy", ".35em")
+                                         .attr("x", "20")
+                                         .attr("y", "20")
+                                         .attr("text-anchor", "middle")
+                                         .text(function (d) {
+                                             return d.symbol;
+                                         });
                                 //d3.select(this)
                                 //    .append("defs")
                                 //    .append("pattern")
@@ -836,48 +865,48 @@ app.directive('moleculeMap', function ($rootScope) {
                                 //    .attr("x", "0")
                                 //    .attr("y", "0");
 
-//                                d3.select(this)
-//                                .append("circle")
-//                                .attr("r", function (d) {
-//return radius(d.size);
-//                                })
-//                                .style("fill", "url(#" +d.id + ")");
+                                //                                d3.select(this)
+                                //                                .append("circle")
+                                //                                .attr("r", function (d) {
+                                //return radius(d.size);
+                                //                                })
+                                //                                .style("fill", "url(#" +d.id + ")");
 
-                                    // d3.select(this)
-                                    // .append("image")
-                                    // .attr("x", "-22px")
-                                    // .attr("y", "-22px")
-                                    // .attr("width", "50px")
-                                        // .attr("height", "50px")
-                                   // .style("fill", function (d) { return color(d.symbol); })
-                                   //// .style("fill","url("+d.image+")")
-                                       //.attr("xlink:href", function (d) { return d.image; });
-                                       //       d3.select(this)
-                         //.append("image")
-                                        //.attr("xlink:href", function (d) { return d.image; })
-                             //.attr("x", "-12px")
-                                 //.attr("y", "-12px")
-                                        //.attr("width", "24px")
-                                        // .attr("height", "24px");
+                                // d3.select(this)
+                                // .append("image")
+                                // .attr("x", "-22px")
+                                // .attr("y", "-22px")
+                                // .attr("width", "50px")
+                                // .attr("height", "50px")
+                                // .style("fill", function (d) { return color(d.symbol); })
+                                //// .style("fill","url("+d.image+")")
+                                //.attr("xlink:href", function (d) { return d.image; });
+                                //       d3.select(this)
+                                //.append("image")
+                                //.attr("xlink:href", function (d) { return d.image; })
+                                //.attr("x", "-12px")
+                                //.attr("y", "-12px")
+                                //.attr("width", "24px")
+                                // .attr("height", "24px");
 
-                                    } else {
-                                        d3.select(this)
-                                         .append("circle")
-                                         .attr("r", function (d) {
-                                                return radius(d.size);
-                                         })
-                                         .style("fill", function (d) {
-                                                return color(d.symbol);
-                                         });
+                            } else {
+                                d3.select(this)
+                                 .append("circle")
+                                 .attr("r", function (d) {
+                                     return radius(d.size);
+                                 })
+                                 .style("fill", function (d) {
+                                     return color(d.symbol);
+                                 });
 
-                                        d3.select(this)
-                                          .append("text")
-                                          .attr("dy", ".35em")
-                                          .attr("text-anchor", "middle")
-                                          .text(function (d) {
-                                               return d.symbol;
-                                          });
-                                    }
+                                d3.select(this)
+                                  .append("text")
+                                  .attr("dy", ".35em")
+                                  .attr("text-anchor", "middle")
+                                  .text(function (d) {
+                                      return d.symbol;
+                                  });
+                            }
 
                             // Give atom the power to be selected
                             d3.select(this)
