@@ -254,6 +254,23 @@ namespace KindleSpur.Data
             return result;
         }
 
+
+        public string GetRecommended(string role)
+        {
+            string result = string.Empty;
+            try
+            {
+                var _collection = _kindleDatabase.GetCollection("CoachOrMentor");
+                result = _collection.Find(Query.EQ("Role", role)).ToJson();
+            }
+            catch (Exception ex)
+            {
+                _logCollection.Insert("{ Error : 'Failed at EditUser().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ");
+            }
+
+            return result;
+        }
+
         public ICoachOrMentor GetCoachOrMentorDetail(string Id)
         {
             ICoachOrMentor result = null;

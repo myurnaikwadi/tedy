@@ -35,6 +35,11 @@ namespace KindleSpur.WebApplication.Controllers
             return true;
         }
 
+        public string GetRecommendedCoach()
+        {
+            return _coachRepo.GetRecommended("Coach").ToJson();
+        }
+
         public string GetCTS()
         {
 
