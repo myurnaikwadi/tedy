@@ -1,4 +1,5 @@
 ﻿app.controller('ksDashBoardCoacheeController', function ($scope, serverCommunication) {
+    window.cocc = $scope;
     $scope.notifications = [
 
                 { notificationType: '1', name: 'YOU HAVE COACHING INVITE  FROM', assignPerson: 'HARSHADA D.' },
@@ -73,12 +74,12 @@
         serverCommunication.getCoaches({
             filter: skill,
             successCallBack: function (result) {
-                console.log('Result - ' + result);
+                console.log('Result - ' , result);
             },
             failureCallBack: function () {
                 console.error('In failureCallBack');
             }
-        })
+        });
     };
 
     $scope.clearSearch = function (skill) {

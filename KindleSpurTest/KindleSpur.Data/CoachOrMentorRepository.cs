@@ -282,7 +282,7 @@ namespace KindleSpur.Data
                     coachEntities = coachOrMentors.Find(Query.ElemMatch("Skills", Query.EQ("Name", ctsFilter.Name))).AsQueryable();
                 }
                 if (ctsFilter.Type == FilterType.Topic || !(coachOrMentors.Count() > 0))
-                    coachEntities = coachOrMentors.Find(Query.EQ("Topics", ctsFilter.Name)).AsQueryable();
+                    coachEntities = coachOrMentors.Find(Query.ElemMatch("Topics", Query.EQ("Name", ctsFilter.Name))).AsQueryable();
 
                 if (ctsFilter.Type == FilterType.Category || !(coachOrMentors.Count() > 0))
                 {

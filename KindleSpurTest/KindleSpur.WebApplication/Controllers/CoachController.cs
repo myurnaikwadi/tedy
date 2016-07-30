@@ -56,10 +56,10 @@ namespace KindleSpur.WebApplication.Controllers
             return doc.ToJson();
         }
 
-        public ActionResult GetCoachs(CTSFilter ctsFilter)
+        public string GetCoachs(CTSFilter ctsFilter)
         {
             var result = _coachRepo.GetAllCoachOrMentors(ctsFilter);
-            return Json(new { Coaches = result.ToString(), Success = true }, JsonRequestBehavior.AllowGet);
+            return result.ToList().ToJson();
         }
 
         [HttpPost]
