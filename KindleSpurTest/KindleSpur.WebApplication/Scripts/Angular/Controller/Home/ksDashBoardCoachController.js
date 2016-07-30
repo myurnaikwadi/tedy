@@ -108,9 +108,9 @@
                 var _array = [];
                 for (var k = 0 ; k < $scope.coachingStatusArray.length ; k++) {
                     //$scope.coachingStatusArray[k]
-
+                        var _str = $scope.coachingStatusArray[k].FirstName+" "+$scope.coachingStatusArray[k].LastName;
                         _array.push({
-                            "symbol": $scope.coachingStatusArray[k].FirstName+" "+$scope.coachingStatusArray[k].LastName,
+                            "symbol": _str.toUpperCase(),
                             "image": $scope.coachingStatusArray[k].TreeURL,
                             "size": 25,
                             "id": Math.random() + k,

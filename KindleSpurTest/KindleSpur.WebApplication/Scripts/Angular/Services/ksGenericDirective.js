@@ -266,12 +266,38 @@ app.directive('ctcRole', function ($state, serverCommunication) {
                 } else {
                    // console.error(_updateArray);
                     //if (Object.keys(_updateArray).length > 0 || Object.keys(_deleteArray).length > 0 ){
-                        var _dataArray = [];
-                        for (var l = 0 ; l < scope.skillsArray.length; l++) {
+                    var _dataArray = [];
+                    var _dd = [];
+                    for (var l = 0 ; l < scope.skillsArray.length; l++) {
+                            console.error(scope.skillsArray[l].Name)                           
                             if (scope.skillsArray[l].selected) {
                                 _dataArray.push(scope.skillsArray[l]);
+                            } else {
+                                 if (_skills[scope.skillsArray[l].Name]) {
+                                     delete _skills[scope.skillsArray[l].Name];
+                                }
+                            }
+                    }
+                    for (var _key in _skills) {
+                        for (var j = 0 ; j < scope.catogoryArray.length ; j++) {
+                            for (var y = 0 ; y < scope.catogoryArray[j].Topics.length ; y++) {
+                                for (var w = 0 ; w < scope.catogoryArray[j].Topics[y].Skills.length ; w++) {
+                                    if (_key == scope.catogoryArray[j].Topics[y].Skills[w].Name) {
+                                        _skills[_key].Id = scope.catogoryArray[j].Topics[y].Skills[w].Id;
+                                        _dd.push(_skills[_key]);
+                                    }                                  
+                                }
                             }
                         }
+                       
+                    }
+                    console.error(_dd)                  
+                    console.error(_category);
+                    console.error(_topics);
+                    console.error(_skills);
+                    
+                    _dataArray = _dataArray.concat(_dd);
+                    //return
                         if (scope.skillRequired) {
                             serverCommunication.sendSelectedCTSDataToServer({
                                 selectedArray: _dataArray,
@@ -291,8 +317,14 @@ app.directive('ctcRole', function ($state, serverCommunication) {
                                 }
                             });
                         } else {
+                            var _dataArray =[];
+                            for (var l = 0; l < scope.topicArray.length; l++) {
+                                if (scope.topicArray[l].selected) {
+                                    _dataArray.push(scope.topicArray[l]);
+                                 }
+                            }
                             serverCommunication.sendSelectedCTSDataToServerMentor({
-                                selectedArray: _updateArray,
+                                selectedArray: _dataArray,
                                 role: scope.role,
                                 successCallBack: function (iObj) {
                                     console.error('In successCallBack', iObj);
@@ -387,6 +419,8 @@ app.directive('ctcRole', function ($state, serverCommunication) {
                 _category = {};
                 _topics = {};
                 _skills = {};
+                    console.error(angular.copy(iObj.data));
+
                 if (iObj.data && iObj.data.Categories && iObj.data.Categories.length > 0) {
                     for (var k = 0; k < iObj.data.Categories.length ; k++) {
                         if (Object.keys(iObj.data.Categories[k]).length > 0) {
@@ -397,17 +431,17 @@ app.directive('ctcRole', function ($state, serverCommunication) {
                                     if (_category[iObj.data.Categories[k].Category].topic[iObj.data.Categories[k].Topic]) {//if topic is already present
                                         //  _category[iObj.data.Categories[k].Category].topic[iObj.data.Categories[k].Topic] = { Name: iObj.data.Categories[k].Topic, skill: {} };
                                         if (iObj.data.Categories[k].Skill) {
-                                            _skills[iObj.data.Categories[k].Skill] = { Name: iObj.data.Categories[k].Skill };
+                                            _skills[iObj.data.Categories[k].Skill] = { Name: iObj.data.Categories[k].Skill, profiLevel: iObj.data.Categories[k].profiLevel };
                                             if (!_category[iObj.data.Categories[k].Category].topic[iObj.data.Categories[k].Topic].skill) _category[iObj.data.Categories[k].Category].topic[iObj.data.Categories[k].Topic].skill = {}
-                                            _category[iObj.data.Categories[k].Category].topic[iObj.data.Categories[k].Topic].skill[iObj.data.Categories[k].Skill] = { Name: iObj.data.Categories[k].Skill }
+                                            _category[iObj.data.Categories[k].Category].topic[iObj.data.Categories[k].Topic].skill[iObj.data.Categories[k].Skill] = { Name: iObj.data.Categories[k].Skill, profiLevel: iObj.data.Categories[k].profiLevel }
                                         }
                                     } else {
                                         _topics[iObj.data.Categories[k].Topic] = { Name: iObj.data.Categories[k].Topic, skill: {} };
                                         _category[iObj.data.Categories[k].Category].topic[iObj.data.Categories[k].Topic] = { Name: iObj.data.Categories[k].Topic, skill: null };
                                         if (iObj.data.Categories[k].Skill) {
-                                            _skills[iObj.data.Categories[k].Skill] = { Name: iObj.data.Categories[k].Skill };
+                                            _skills[iObj.data.Categories[k].Skill] = { Name: iObj.data.Categories[k].Skill, profiLevel: iObj.data.Categories[k].profiLevel };
                                             if (!_category[iObj.data.Categories[k].Category].topic[iObj.data.Categories[k].Topic].skill) _category[iObj.data.Categories[k].Category].topic[iObj.data.Categories[k].Topic].skill = {}
-                                            _category[iObj.data.Categories[k].Category].topic[iObj.data.Categories[k].Topic].skill[iObj.data.Categories[k].Skill] = { Name: iObj.data.Categories[k].Skill }
+                                            _category[iObj.data.Categories[k].Category].topic[iObj.data.Categories[k].Topic].skill[iObj.data.Categories[k].Skill] = { Name: iObj.data.Categories[k].Skill, profiLevel: iObj.data.Categories[k].profiLevel }
                                         }
                                     }
                                 } else {
@@ -415,9 +449,9 @@ app.directive('ctcRole', function ($state, serverCommunication) {
                                     _topics[iObj.data.Categories[k].Topic] = { Name: iObj.data.Categories[k].Topic, skill: null };
                                     _category[iObj.data.Categories[k].Category].topic[iObj.data.Categories[k].Topic] = { Name: iObj.data.Categories[k].Topic, skill: {} };
                                     if (iObj.data.Categories[k].Skill) {
-                                        _skills[iObj.data.Categories[k].Skill] = { Name: iObj.data.Categories[k].Skill };
+                                        _skills[iObj.data.Categories[k].Skill] = { Name: iObj.data.Categories[k].Skill, profiLevel: iObj.data.Categories[k].profiLevel };
                                         _category[iObj.data.Categories[k].Category].topic[iObj.data.Categories[k].Topic].skill = {}
-                                        _category[iObj.data.Categories[k].Category].topic[iObj.data.Categories[k].Topic].skill[iObj.data.Categories[k].Skill] = { Name: iObj.data.Categories[k].Skill }
+                                        _category[iObj.data.Categories[k].Category].topic[iObj.data.Categories[k].Topic].skill[iObj.data.Categories[k].Skill] = { Name: iObj.data.Categories[k].Skill, profiLevel: iObj.data.Categories[k].profiLevel }
                                     }
                                 }
                             }
