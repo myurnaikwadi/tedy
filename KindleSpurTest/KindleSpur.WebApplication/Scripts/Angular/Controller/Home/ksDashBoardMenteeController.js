@@ -16,11 +16,11 @@
     ]
     $scope.applicationRole = [{ name: 'COACHEE' }, { name: 'MENTEE' }, { name: 'COACH' }, { name: 'MENTOR' }]
     $scope.rightSideDashBoardArray = [
-                { name: 'MENTORING STATUS' },
-                { name: 'KNOWLEDGE GARDEN' },
-                { name: 'KNOWLEDGE FEED' },
-                { name: 'COMMUNICATION' },
-                { name: 'REWORDS' }
+                { name: 'ADD SKILLS' , url: '../../Images/icons/book.png ' },
+                { name: 'SEARCH MENTOR', url: '../../Images/icons/Knowledge.png ' },
+                { name: 'KNOWLEDGE FEED', url: '../../Images/icons/KnowledgeFeed.png ' },
+                { name: 'COMMUNICATION', url: '../../Images/icons/Resources.png ' },
+                { name: 'REWORDS', url: '../../Images/icons/Reword.png ' }
     ]
     $scope.menuClick = function (iIndex, iOption) {
         $scope.selectedMenu = iIndex;

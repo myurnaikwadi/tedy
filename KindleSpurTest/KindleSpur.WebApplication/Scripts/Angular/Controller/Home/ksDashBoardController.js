@@ -7,7 +7,7 @@ app.controller('ksMainDashBoardController', function ($scope,$state,serverCommun
 			
     ];
 		$scope.leftSideMenus = [{ name : 'DashBoard'},{ name : 'Profile'}]
-		$scope.applicationRole = [{ name : 'COACHEE'},{ name : 'MENTEE'},{ name : 'COACH'},{ name : 'MENTOR'}]
+		$scope.applicationRole = [{ name: 'COACHEE', img: '../../Images/icons/coachee.png' }, { name: 'MENTEE', img: '../../Images/icons/mentee.png' }, { name: 'COACH', img: '../../Images/icons/coach.png' }, { name: 'MENTOR', img: '../../Images/icons/mentor.png' }]
 		$scope.roleClick = function (iEvent, iObj) {
 		    
 		    switch(iObj.name){

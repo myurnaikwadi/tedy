@@ -235,3 +235,8 @@ _Pvt_Extensions
 # FAKE - F# Make
 .fake/
 /KindleSpurTest/KindleSpur.WebApplication/Scripts
+/KindleSpurTest/KindleSpur.WebApplication/Images/icons/mentor.png
+/KindleSpurTest/KindleSpur.WebApplication/Images/icons/mentee.png
+/KindleSpurTest/KindleSpur.WebApplication/Images/icons/logo.png
+/KindleSpurTest/KindleSpur.WebApplication/Images/icons/coachee.png
+/KindleSpurTest/KindleSpur.WebApplication/Images/icons/coach.png

@@ -19,7 +19,7 @@
 
     $scope.applicationRole = [{ name: 'COACHEE' }, { name: 'MENTEE' }, { name: 'COACH' }, { name: 'MENTOR' }]
     $scope.rightSideDashBoardArray = [
-                { name: 'COACHING STATUS' ,url:'../../Images/icons/book.png '},
+                { name: 'ADD SkILLS' ,url:'../../Images/icons/book.png '},
                 { name: 'SEARCH COACH', url: '../../Images/icons/Knowledge.png ' },
                 { name: 'KNOWLEDGE FEED' ,url:'../../Images/icons/KnowledgeFeed.png ' },                 
                 { name: 'COMMUNICATION' ,url:'../../Images/icons/Resources.png '},

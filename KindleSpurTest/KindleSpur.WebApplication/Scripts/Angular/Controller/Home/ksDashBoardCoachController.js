@@ -261,15 +261,7 @@
         });
     };
 
-    $scope.applicationRole = [{ name: 'COACHEE' }, { name: 'MENTEE' }, { name: 'COACH' }, { name: 'MENTOR' }]
-    $scope.rightSideDashBoardArray = [
-                { name: 'COACHING STATUS' },
-                { name: 'KNOWLEDGE GARDEN' },
-                { name: 'FEED YOU SHOULD READ' },
-                { name: 'GRAPHS' },
-                { name: 'BRAIN GAMES' },
-                { name: 'RESOURCES' }
-    ]
+   
     $scope.catogoryArray = [
                 { name: 'Advertising' },
                 { name: 'Education' },
