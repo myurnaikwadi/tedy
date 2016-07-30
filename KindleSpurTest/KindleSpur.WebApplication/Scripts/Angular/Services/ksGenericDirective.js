@@ -764,17 +764,86 @@ app.directive('moleculeMap', function ($rootScope) {
                         .attr("class", "node")
                         .each(function (d) {
                             // Add node circle
-                            d3.select(this)
-                              .append("circle")
-                              .attr("r", function (d) { return radius(d.size); })
-                              .style("fill", function (d) { return color(d.symbol); });
+                            //d3.select(this)
+                            //  .append("circle")
+                            //  .attr("r", function (d) { return radius(d.size); })
+                            //  .style("fill", function (d) { return color(d.symbol); });
 
                             // Add atom symbol
-                            d3.select(this)
-                              .append("text")
-                                      .attr("dy", ".35em")
-                                      .attr("text-anchor", "middle")
-                                      .text(function (d) { return d.symbol; });
+                             // Add atom symbol
+                            if (d.image) {
+                                d3.select(this)
+                                 .append("image")
+                                 .attr("xlink:href", function(d) { return d.image; })
+                                
+                                 .attr("width", "75px")
+                                  .attr("height", "75px");
+                                 d3.select(this)
+                                          .append("text")
+                                          .attr("dy", ".35em")
+                                          .attr("x", "20")
+                                          .attr("y", "20")
+                                          .attr("text-anchor", "middle")
+                                          .text(function (d) {
+                                               return d.symbol;
+                                });
+                                //d3.select(this)
+                                //    .append("defs")
+                                //    .append("pattern")
+                                //    .attr("id", d.id)
+                                //    .attr("width", "50px")
+                                //    .attr("height", "50px")
+                                //    .attr("patternUnits", "userSpaceOnUse")
+                                //    .append("image")
+                                //    .attr("xlink:href", function (d) { return d.image;
+                                //    })
+                                //    .attr("width", "50px")
+                                //    .attr("height", "50px")
+                                //    .attr("x", "0")
+                                //    .attr("y", "0");
+
+//                                d3.select(this)
+//                                .append("circle")
+//                                .attr("r", function (d) {
+//return radius(d.size);
+//                                })
+//                                .style("fill", "url(#" +d.id + ")");
+
+                                    // d3.select(this)
+                                    // .append("image")
+                                    // .attr("x", "-22px")
+                                    // .attr("y", "-22px")
+                                    // .attr("width", "50px")
+                                        // .attr("height", "50px")
+                                   // .style("fill", function (d) { return color(d.symbol); })
+                                   //// .style("fill","url("+d.image+")")
+                                       //.attr("xlink:href", function (d) { return d.image; });
+                                       //       d3.select(this)
+                         //.append("image")
+                                        //.attr("xlink:href", function (d) { return d.image; })
+                             //.attr("x", "-12px")
+                                 //.attr("y", "-12px")
+                                        //.attr("width", "24px")
+                                        // .attr("height", "24px");
+
+                                    } else {
+                                        d3.select(this)
+                                         .append("circle")
+                                         .attr("r", function (d) {
+                                                return radius(d.size);
+                                         })
+                                         .style("fill", function (d) {
+                                                return color(d.symbol);
+                                         });
+
+                                        d3.select(this)
+                                          .append("text")
+                                          .attr("dy", ".35em")
+                                          .attr("text-anchor", "middle")
+                                          .text(function (d) {
+                                               return d.symbol;
+                                          });
+                                    }
 
                             // Give atom the power to be selected
                             d3.select(this)
