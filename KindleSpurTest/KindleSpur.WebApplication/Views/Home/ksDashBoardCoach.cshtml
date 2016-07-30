@@ -250,7 +250,6 @@
                                                 LORUM OSSD GERIG GR REGIRE GB RGB RGB 4IGBREIGBREILGB IREGREILGRELIGBREIGB RIEGBREIGBREIGI UGB EG ERIUGB IBGS IREGBERG GREG ERGSE FGTERBRHTH BTFRSV ES FDV TGR E GFRG FV RTGFD GTH RGFE DG TYHRG EFDG GTRE F RED E E FE  DFS AD GREFG ERG REHGRBJKGB  REG ERG RGERJ GHRILU GRILU R.GFRG FV RTGFD GTH RGFE DG TYHRG EFDG GTRE F RED E E FE  DFS AD GREFG ERG REHGRBJKGB  REG ERG.
                                             </p>
                                         </div>
-
                                     </div>
                                 </div>
                             </div>
@@ -627,8 +626,24 @@
 
                     <div class="feedParentArray">
                         <div class="feedParentMainArray">
-                            <div class="feedContainRepeatDiv" ng-repeat="feed in feedContainArray">
-
+                            <div class="feedContainRepeatDiv" ng-click="loadFeedOnNextTab(feed)" ng-repeat="feed in feedContainArray">
+                                <div class="" style="float: left;display:flex; width: 100%;height: 50%;">
+                                    
+                                </div>
+                                <div class="" style="float: left; width: 100%;height: 20%;">
+                                    <div class="" style="width: 100%;float: left;display:flex;">
+                                        <p style="float: left;font-weight: 700; font-size: 14px; white-space: inherit;word-break: break-all;margin: auto;">
+                                            {{feed.name}}
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="" style="float: left;display:flex; width: 100%;height: 30%;">
+                                    <div class="" style="width: auto;float: left;display:flex;overflow:auto;">
+                                        <p style="float: left;width: 100%;height: 100%;font-size: 14px; white-space: inherit;word-break: break-all;	margin: auto;">
+                                            {{feed.snippet}}
+                                        </p>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
