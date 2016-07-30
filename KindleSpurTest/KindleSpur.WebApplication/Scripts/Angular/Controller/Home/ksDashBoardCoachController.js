@@ -21,6 +21,7 @@
     };
 
     $scope.closeProfilePic = function () {
+        console.error('closeProfilePopup')
         $scope.showCoacheeProfile = false;
         $scope.userInfo = null;
     };

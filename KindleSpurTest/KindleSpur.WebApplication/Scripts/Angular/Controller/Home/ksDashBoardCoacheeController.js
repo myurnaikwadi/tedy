@@ -60,6 +60,10 @@
        { Name: 'Shankar', Skill: 'CA', City: 'Pune', Country: 'India' },
     ];
 
+    $scope.loadCommunication = function () {
+        $scope.menuClick(3);
+    };
+
     $scope.selectedMenu = 0;
     $scope.menuClick = function (iIndex, iOption) {
         $scope.selectedMenu = iIndex;
@@ -74,7 +78,12 @@
     $scope.searchKey = '';
     $scope.searching = false;
     $scope.selectedSkill = {};
+    $scope.conversationList = [{ name: 'HARSHADA D' }
+              , { name: 'SAGAR N' }
+              , { name: 'SAGAR P' }
+              , { name: 'MAYUR' }
 
+    ]
     $scope.skillFilter = function (skill) {
         var regExp = new RegExp($scope.searchKey, 'i');
         return !$scope.searchKey || regExp.test(skill.Name);
