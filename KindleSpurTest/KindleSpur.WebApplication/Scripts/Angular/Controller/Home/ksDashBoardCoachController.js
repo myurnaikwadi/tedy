@@ -55,7 +55,7 @@
     $scope.menuClick = function (iIndex, iOption) {
         $scope.selectedMenu = iIndex;
         $scope.feedBack.closeFeedBackPopup();
-        $scope.feedContainArray
+        $scope.feedContainArray =[];
         switch (iIndex) {
             case 1: $scope.getCoachRecord(); break;
             case 2: $scope.generateGarden(); break;
@@ -98,6 +98,7 @@
         }
         console.error(iOption.selected)
         console.error(_selectedTagFed);
+        $scope.feedContainArray =[];
         var _rec = function (iArr, iNdex) {
             $scope.getRssFeedData(iArr[iNdex]);
             iNdex++;
