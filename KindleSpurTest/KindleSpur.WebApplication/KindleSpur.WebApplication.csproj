@@ -296,6 +296,12 @@
     <Content Include="Images\defaultImage.png" />
     <Content Include="Images\delete.png" />
     <Content Include="Images\edit_Icon.png" />
+    <Content Include="Images\icons\book.png" />
+    <Content Include="Images\icons\coachee.jpg" />
+    <Content Include="Images\icons\Knowledge.png" />
+    <Content Include="Images\icons\KnowledgeFeed.png" />
+    <Content Include="Images\icons\Resources.png" />
+    <Content Include="Images\icons\Reword.png" />
     <Content Include="Images\linkedIn.jpg" />
     <Content Include="Images\linkedin_square_gray.png" />
     <Content Include="Images\loginLanding.jpg" />
@@ -368,6 +374,7 @@
     <Content Include="fonts\fontawesome-webfont.eot" />
     <Content Include="Scripts\d3.v3.js" />
     <Content Include="Scripts\d3.v3.min.js" />
+    <Content Include="fonts\Roboto-Regular.ttf" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\css\ksDashBoard\ksDashBoard.css" />
     <Content Include="Scripts\css\ksDashBoard\ksDashBoardCoach.css" />

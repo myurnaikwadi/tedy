@@ -233,7 +233,11 @@ app.factory('serverCommunication', function ($http) {
         getCTSFilters: function (iObj) {
             $http.get('/CTS/GetCTSFilters').then(iObj.successCallBack, iObj.failureCallBack)
         },
-
+        
+        getRecommendedCoach: function (iObj) {
+            $http.get('/Coach/GetRecommendedCoach').then(iObj.successCallBack, iObj.failureCallBack)
+        },
+        
         getCoaches: function (iObj) {
             var req = {
                 method: 'POST',

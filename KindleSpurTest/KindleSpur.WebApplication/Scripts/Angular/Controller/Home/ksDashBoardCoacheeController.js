@@ -89,17 +89,29 @@
 
     $scope.init = function () {
 
-        serverCommunication.getCTSFilters({
+
+        serverCommunication.getRecommendedCoach({
             successCallBack: function (result) {
-                console.error(result)
-                $scope.availableSkills.splice(0, $scope.availableSkills.length);
-                $scope.availableSkills.push.apply($scope.availableSkills, result.data.Filters);
+                console.error(result);
+
+                serverCommunication.getCTSFilters({
+                    successCallBack: function (result) {
+                        console.error(result)
+                        $scope.availableSkills.splice(0, $scope.availableSkills.length);
+                        $scope.availableSkills.push.apply($scope.availableSkills, result.data.Filters);
+                    },
+                    failureCallBack: function () {
+                        // console.error('In failureCallBack');
+
+                    }
+                });
             },
             failureCallBack: function () {
                 // console.error('In failureCallBack');
 
             }
         });
+      
     };
     $scope.init();
 })

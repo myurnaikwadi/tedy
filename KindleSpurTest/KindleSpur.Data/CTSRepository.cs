@@ -189,6 +189,7 @@ namespace KindleSpur.Data
                         _Category = _Category.Add(new BsonElement("Category", result["Category"].AsString));
                         _Category = _Category.Add(new BsonElement("Topic", result["Topics"][0]["Name"].AsString));
                         _Category = _Category.Add(new BsonElement("Skill", skill.Name));
+                        if (skill.profiLevel == null) skill.profiLevel = "0";
                         _Category = _Category.Add(new BsonElement("profiLevel", skill.profiLevel));
                     }
                 }
