@@ -1,5 +1,5 @@
 ﻿<link href="~/Content/Styles/FindCoach.css" rel="stylesheet" />
-<link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+@*<link href="~/Content/bootstrap.min.css" rel="stylesheet" />*@
 
 <div class="parentBody" ng-controller="ksDashBoardCoacheeController">
     <div class="applicationTopStrip">
@@ -22,7 +22,7 @@
             </div>
             <div class="parentRoleDetailRight" ng-show="selectedMenu == 0">
                 <div class="userNotificationParent">
-                    <div class="userRoleWizardParent" style="display: block;overflow: auto;float:left;">
+                    <div class="userRoleWizardParent" style="display: inline-flex;overflow: auto;float:left; overflow-x:scroll; overflow-y:hidden;width:96%;margin-left:2%;">
                         <div class="notificationWiz " ng-repeat="notification in notifications">
                             <div ng-if="notification.notificationType == '1'">
                                 <h6 class="notificationWizReason">{{notification.name}}</h6>
@@ -48,9 +48,12 @@
                     </div>
                     <div class="mainDashBoardWizardParent">
                         <div class="dashBoardMenuCoach" ng-if="selectedMenu == 0">
-                            <div class="dashBoardMenuCoachRight genericPointerClass" ng-repeat="option in rightSideDashBoardArray">
+                            <div class="dashBoardMenuCoachRight genericPointerClas col-md-3 "  ng-repeat="option in rightSideDashBoardArray" ng-class="{'dashBoardMenuCoachBottom': $index == 3}">
                                 <div class="dashBoardMenuCoachRightCircle">
-                                    <div class="dashBoardMenuCoachRightCirclePart"></div>
+                                  
+                                    <div class="dashBoardMenuCoachRightCirclePart">
+                                        <img src={{option.url}} class="dashBoardMenuCoachImage">
+                                    </div>
                                 </div>
                                 <div class="dashBoardMenuCoachRightlabel">
                                     <h5 style="color:black;margin: auto;" class="leftSideMenuLable fontClass">{{option.name}}</h5>

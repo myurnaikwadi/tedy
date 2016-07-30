@@ -18,14 +18,13 @@
 
     $scope.applicationRole = [{ name: 'COACHEE' }, { name: 'MENTEE' }, { name: 'COACH' }, { name: 'MENTOR' }]
     $scope.rightSideDashBoardArray = [
-                { name: 'COACHING STATUS' },
-                { name: 'KNOWLEDGE GARDEN' },
-                { name: 'FEED YOU SHOULD READ' },
-                { name: 'GRAPHS' },
-                { name: 'BRAIN GAMES' },
-                { name: 'RESOURCES' }
-    ];
+                { name: 'COACHING STATUS' ,url:'../../Images/icons/book.png '},
+                { name: 'SEARCH COACH', url: '../../Images/icons/Knowledge.png ' },
+                { name: 'KNOWLEDGE FEED' ,url:'../../Images/icons/KnowledgeFeed.png ' },                 
+                { name: 'COMMUNICATION' ,url:'../../Images/icons/Resources.png '},
+                { name: 'REWORDS', url: '../../Images/icons/Reword.png ' }
 
+    ]
     $scope.Coaches = [
        { Name: 'Amit Devgan', Skill: 'Storage Engineer', City: 'Pune', Country: 'India' },
        { Name: 'Srinivas R', Skill: 'MVC Devloper', City: 'Pune', Country: 'India' },

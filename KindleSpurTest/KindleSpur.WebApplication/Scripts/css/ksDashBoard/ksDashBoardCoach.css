@@ -762,7 +762,19 @@ float: left;
 	border : 1px solid;
 }
 
+.dashBoardMenuCoachBottom {
+    margin-left:17%;
+}
 
+.col-md-3{
+    width: 30%
+}
+.dashBoardMenuCoachImage{
+   height: 70%;
+    width: 59%;
+    margin-left: 20%;
+    margin-top: 11%;
+}
 
 
 
