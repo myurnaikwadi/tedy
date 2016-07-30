@@ -52,10 +52,10 @@ namespace KindleSpur.Data
                 
                 _transactionStatus = true;
             }
-            catch (MongoException ex)
+            catch (Exception ex)
             {
                 _logCollection.Insert("{ Error : 'Failed at AddNewUser().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ");
-                throw new MongoException("Signup failure!!!");
+                throw new Exception("Signup failure!!!");
             }
             
             return _transactionStatus;
@@ -103,13 +103,27 @@ namespace KindleSpur.Data
 
         public IUser GetUserDetail(int userId)
         {
-            var _userCollection = _kindleDatabase.GetCollection("UserDetails");
-            return _userCollection.FindOneByIdAs<IUser>(userId);
+            try
+            {
+                var _userCollection = _kindleDatabase.GetCollection("UserDetails");
+                 return _userCollection.FindOneByIdAs<IUser>(userId);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("User does not Exist!!!");
+            }
         }
         public IUser GetUserDetail(string EmailAddress)
         {
-            var _userCollection = _kindleDatabase.GetCollection("UserDetails");
-            return _userCollection.FindOneAs<User>(Query.EQ("EmailAddress", EmailAddress));
+            try
+            {
+                var _userCollection = _kindleDatabase.GetCollection("UserDetails");
+                return _userCollection.FindOneAs<User>(Query.EQ("EmailAddress", EmailAddress));
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("User does not Exist!!!");
+            }
         }
 
         public bool UpdateUserDetails(ObjectId userId, IUser userData)

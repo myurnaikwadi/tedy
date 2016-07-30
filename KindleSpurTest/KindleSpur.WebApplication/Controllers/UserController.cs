@@ -15,6 +15,7 @@ namespace KindleSpur.WebApplication.Controllers
 {
     public class UserController : Controller
     {
+        private ResponseMessage response;
         // GET: User
         public ActionResult Login()
         {
@@ -23,25 +24,31 @@ namespace KindleSpur.WebApplication.Controllers
         }
 
         [HttpPost]
-        public ActionResult Login(User signupObject)
+        public string Login(User signupObject)
         {
+            response = new ResponseMessage();
             UserRepository _repo = new UserRepository();
-            if (_repo.AddNewUser(signupObject))
+            try
             {
-                string uri = Request.Url.AbsoluteUri.Replace("/User/Login", "/User/PasswordPromp?UserId=" + signupObject.Id);
-                EmailNotification.SendEmail(signupObject, uri);
-                TempData["StatusMessage"] = "Please check your mail to activate account!!!";
+                if (_repo.AddNewUser(signupObject))
+                {
+                    string uri = Request.Url.AbsoluteUri.Replace("/User/Login", "/User/PasswordPromp?UserId=" + signupObject.Id);
+                    EmailNotification.SendEmail(signupObject, uri);
+                }
+                else
+                {
+                    response.FailureCallBack("User is already registered!!!");
+                }
             }
-            else
+            catch (Exception ex)
             {
-                TempData["ErrorMessage"] = "User is already registered!!!";
+                response.FailureCallBack(ex.Message);
             }
-            return View();
+            return response.ToJson();
         }
 
         public ActionResult PasswordPromp(int? UserId)
         {
-            //RedirectToAction("", "Home");
             TempData["UserId"] = Request["UserId"].ToString();
             return View();
         }
@@ -52,21 +59,28 @@ namespace KindleSpur.WebApplication.Controllers
         }
 
         [HttpPost]
-        public ActionResult ForgotPasswordEmail(User signupObject)
+        public string ForgotPasswordEmail(User signupObject)
         {
+            response = new ResponseMessage();
             UserRepository _repo = new UserRepository();
-            IUser u = _repo.GetUserDetail(signupObject.EmailAddress);
-            if (u != null)
+            try
             {
-               
-                string uri =  Request.Url.AbsoluteUri.Replace("/User/ForgotPasswordEmail", "/User/PasswordPromp?UserId=" + u.Id);
-                EmailNotification.SendEmail(signupObject, uri);
+                IUser u = _repo.GetUserDetail(signupObject.EmailAddress);
+                if (u != null)
+                {
+                    string uri = Request.Url.AbsoluteUri.Replace("/User/ForgotPasswordEmail", "/User/PasswordPromp?UserId=" + u.Id);
+                    EmailNotification.SendEmail(signupObject, uri);
+                }
+                else
+                {
+                    response.FailureCallBack("UserId does not exists!!!");
+                }
             }
-            else
+            catch(Exception ex)
             {
-
+                response.FailureCallBack(ex.Message);
             }
-            return View();
+            return response.ToJson();
         }
 
         [HttpPost]
@@ -82,10 +96,11 @@ namespace KindleSpur.WebApplication.Controllers
         [HttpPost]
         public ActionResult linkedIn(User _obj)
         {
+            response = new ResponseMessage();
             UserRepository _repo = new UserRepository();
             if (!_repo.AddNewUser(_obj))
             {
-                ViewBag.ErrorMessage = "User already exists.";
+                response.FailureCallBack("User already exists!!!");
             }
             else
             {
@@ -100,28 +115,34 @@ namespace KindleSpur.WebApplication.Controllers
         }
 
         [HttpPost]
-        public Object LoginResult(User signupObject)
+        public string LoginResult(User signupObject)
         {
+            response = new ResponseMessage();
             UserRepository _repo = new UserRepository();
             HttpCookie cookie = new HttpCookie("ksUser");
-            IUser u = _repo.GetUserDetail(signupObject.EmailAddress);
-
-            if (u != null && u.Password==signupObject.Password)
+            try
             {
-                           
-                cookie[u.EmailAddress] = new JavaScriptSerializer().Serialize(u);
-                Response.SetCookie(cookie);
+                IUser u = _repo.GetUserDetail(signupObject.EmailAddress);
 
-                Session["User"] = u;
-                return Session["User"];
+                if (u != null && u.Password == signupObject.Password)
+                {
+
+                    cookie[u.EmailAddress] = new JavaScriptSerializer().Serialize(u);
+                    Response.SetCookie(cookie);
+
+                    Session["User"] = u;
+                }
+                else
+                {
+                    response.FailureCallBack("User does not exists, Please Sign up!!!");
+
+                }
             }
-            else
+            catch(Exception ex)
             {
-               
-                return null;
-
+                response.FailureCallBack(ex.Message);
             }
-
+            return response.ToJson();
         }
 
         // POST: api/UpdateUserDetails
