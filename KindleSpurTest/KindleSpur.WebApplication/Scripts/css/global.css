@@ -1,4 +1,8 @@
-﻿body{
+﻿@font-face {
+    font-family: 'Roboto-Regular';
+    src: url('../../fonts/Roboto-Regular.ttf') format('truetype');
+}
+body{
      margin: 0;
     float: left;
     display: inline-block;
@@ -10,7 +14,7 @@ ul,h1,h2,h3,h4,h5,h6{
             cursor: pointer;
         }
 .fontClass {
-	font-family: sans-serif;
+	font-family: Roboto-Regular;
 }
 
  ::-webkit-scrollbar {

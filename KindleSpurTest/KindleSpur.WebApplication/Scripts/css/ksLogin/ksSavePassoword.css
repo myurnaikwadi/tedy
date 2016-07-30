@@ -1,4 +1,9 @@
-﻿ .applicationMiddleStrip {
+﻿
+@font-face {
+    font-family: 'Roboto-Regular';
+    src: url('../../../fonts/Roboto-Regular.ttf') format('truetype');
+}
+.applicationMiddleStrip {
             position: relative;
             width: 100%;
             height: 85%;
@@ -28,7 +33,7 @@
 
         .landingSlogan {
             margin: 1%;
-            font-family: sans-serif;
+            font-family: Roboto-Regular;
         }
 
         .systemTheory {
@@ -95,7 +100,7 @@
             border: 0px solid #FF0100;
             display: inline-block;
             cursor: pointer;
-            font-family: sans-serif;
+            font-family: Roboto-Regular;
             color: #ffffff;
             padding: 3%;
             font-weight: 100;

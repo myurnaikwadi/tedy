@@ -19,7 +19,7 @@
                     </div>
                 </div>
                 <div class="userRoleWizardParentMain">
-                    <div class="userRoleWizardParent" style="display: block;overflow: auto;float:left;">
+                    <div class="userRoleWizardParent" style="display: inline-flex;overflow: auto;float:left; overflow-x:scroll; overflow-y:hidden;width:96%;margin-left:2%;">
                         <div class="notificationWiz" ng-repeat="notification in notificationsArr">
                             <div ng-if="notification.notificationType == '1'">
                                 <h6 class="notificationWizReason">{{notification.name}}</h6>
