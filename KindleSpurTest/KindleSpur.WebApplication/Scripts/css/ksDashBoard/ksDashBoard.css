@@ -50,7 +50,7 @@
 }
 .userImageParentcenter{
 	position: relative;
-	width: 20%;
+	width: 45%;
 	height: 100%;
 	float : left;
 	margin: 0 auto;
@@ -58,17 +58,17 @@
 }
 .profileViewModeMain{
 	position: relative;
-	width: 100%;
+	    margin-left: 10%;
 	float : left;
 	height: 100%;
-    	width: 100%;
+    width: 90%;
 }
 
 .profileImagePartMain{
 	position: relative;
 	float : left;
 	height: 100%;
-    	width: 30%;
+    	    width: 75px;
 	display: flex;
 }
 .profileNamePartMain{

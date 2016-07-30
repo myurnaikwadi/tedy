@@ -15,7 +15,7 @@
                  //  , { name: 'RESOURCES' }
                    , { name: 'SEARCH COACH' }
                    , { name: 'REWARDS' }
-                    , { name: 'ADD SkILLS' }
+                    , { name: 'ADD SKILLS' }
     ]
     //$scope.leftSideMenus = [{ name: 'DASHBOARD' },
     //                        { name: 'COACHING STATUS' },
@@ -28,7 +28,7 @@
 
     $scope.applicationRole = [{ name: 'COACHEE' }, { name: 'MENTEE' }, { name: 'COACH' }, { name: 'MENTOR' }]
     $scope.rightSideDashBoardArray = [
-                 { name: 'ADD SkILLS', url: '../../Images/icons/book.png ' },
+                 { name: 'ADD SKILLS', url: '../../Images/icons/book.png ' },
                 { name: 'SEARCH COACH', url: '../../Images/icons/Knowledge.png ' },
                 { name: 'KNOWLEDGE FEED', url: '../../Images/icons/KnowledgeFeed.png ' },
                 { name: 'COMMUNICATION', url: '../../Images/icons/Resources.png ' },

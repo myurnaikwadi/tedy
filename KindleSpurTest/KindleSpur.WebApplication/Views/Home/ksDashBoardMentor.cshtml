@@ -11,7 +11,7 @@
                 </div>
                 <div class="leftSideMenuMainDashBoard">
                     <div class="leftSideMenuParent">
-                        <div class="leftSideMenu coachColor" ng-repeat="option in leftSideMenus" ng-click="menuClick($index,option)">
+                        <div class="leftSideMenu" ng-repeat="option in leftSideMenus" ng-click="menuClick($index,option)">
                             <h5 class="leftSideMenuLable fontClass genericPointerClass">{{option.name}}</h5>
                             <h5 ng-if="option.name == 'Add Skills'" style="float: right;font-size: 25px;margin: 1%;" class="leftSideMenuLable fontClass genericPointerClass">@*+*@</h5>
                         </div>
