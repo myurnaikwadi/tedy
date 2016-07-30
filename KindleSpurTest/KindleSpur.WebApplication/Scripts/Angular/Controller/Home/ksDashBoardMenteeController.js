@@ -5,18 +5,21 @@
                 { notificationType: '2', role: 'mentor', name: 'YOUR MEETING HAS BEEN SCHEDULED WITH SAGAR N  ON', meetingDate: '20/05/2016', meetingTime: '11:00PM', meetingTimeDiff: '1 HOUR' },
                 { notificationType: '2', role: 'coachee', name: 'YOUR MEETING HAS BEEN SCHEDULED WITH SAGAR N  ON', meetingDate: '25/05/2016', meetingTime: '08:00AM', meetingTimeDiff: '2 HOUR' },
 
-    ]
+    ];
+    $scope.selectedMenu = '0';
     $scope.leftSideMenus = [{ name: 'DASHBOARD' }
-                , { name: 'COACHING STATUS' }
-                , { name: 'KNOWLEDGE GARDEN' }
-                , { name: 'BRAIN GAMES' }
-                , { name: 'GRAPHS' }
-                , { name: 'RESOURCES' }
-                , { name: 'ADD TOPICS' }
+                 , { name: 'MENTORING STATUS' }
+                 , { name: 'KNOWLEDGE GARDEN' }
+                 , { name: 'COMMUNICATION' }
+                 , { name: 'KNOWLEDGE FEED' }
+               //  , { name: 'RESOURCES' }
+                 , { name: 'FIND MENTOR' }
+                 , { name: 'REWARDS' }
+                 , { name: 'ADD TOPICS' }
     ]
     $scope.applicationRole = [{ name: 'COACHEE' }, { name: 'MENTEE' }, { name: 'COACH' }, { name: 'MENTOR' }]
     $scope.rightSideDashBoardArray = [
-                { name: 'ADD SKILLS' , url: '../../Images/icons/book.png ' },
+               { name: 'ADD TOPICS', url: '../../Images/icons/book.png ' },
                 { name: 'SEARCH MENTOR', url: '../../Images/icons/Knowledge.png ' },
                 { name: 'KNOWLEDGE FEED', url: '../../Images/icons/KnowledgeFeed.png ' },
                 { name: 'COMMUNICATION', url: '../../Images/icons/Resources.png ' },
@@ -24,10 +27,7 @@
     ]
     $scope.menuClick = function (iIndex, iOption) {
         $scope.selectedMenu = iIndex;
-        $scope.feedBack.selectedComparioson = 1;
-        $scope.feedBack.selectedAttractive = 1;
-        $scope.feedBack.selectedstar = 1;
-        $scope.feedBack.likeMostMessage = '';
+
 
 
         $scope.askFeedback = false;

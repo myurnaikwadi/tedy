@@ -19,8 +19,67 @@
                 </div>
             </div>
 
-            <div class="parentRoleDetailRight" ng-if="selectedMenu == '6'">
-                <ctc-Role role="mentee" skill-Required="false"></ctc-Role>
+            <div class="parentRoleDetailRight" ng-show="selectedMenu == '5'">
+                <div class="ctsParent">
+                    <div class="ctsParentMain">
+                        <div class="ctsParentMainPanel">
+                            <div class="ctsCategoryHeading row">
+                                <div class="col-md-8 search-result">
+                                    <h3 class="margin-small">Search Results</h3>
+                                </div>
+                                <div class="col-md-2 search-mentor">
+                                    <div class="inner-addon left-addon">
+                                        <span ng-show="searchKey.length > 0" class="filter-icon" ng-click="clearSearch()"><i class="fa fa-times-circle"></i></span>
+                                        <span ng-show="searchKey.length == 0" class="filter-icon"><i class="fa fa-search"></i></span>
+                                        <input type="text" class="auto-complete" cts-dropdown ng-model="searchKey" key="searchKey" searching="searching" skill="selectedSkill" placeholder="Type to search" />
+                                    </div>
+                                    <div class="auto-complete-container" ng-show="searching" ng-class="{hide:!searching}">
+                                        <div class="item" ng-repeat="skill in skills = (availableSkills | filter: skillFilter)">
+                                            <div ng-click="selectSkill(skill)">{{skill.Name}}</div>
+                                        </div>
+                                        <div ng-show="!skills.length && searching" class="no-result">
+                                            No result found.
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="ctsCategoryPanelMainPanel" style="overflow-y:scroll;">
+                                <h5 class="margin-small">Recommended Coaches</h5>
+                                <div class="filterListContainer">
+                                    <div class="mentor-list">
+                                        <div class="row" style="margin:0px;">
+                                            <div class="mentor-card" ng-repeat="coach in Coaches" cts-mentor-card>
+                                                <div class="mentor-info">
+                                                    <span class="profile-close" style="float:right;top:10px;right:10px;"><i class="fa fa-times"></i></span>
+                                                    <div class="profile-image">
+                                                        <img src="https://www.abeautifulsite.net/content/uploads/2014/08/rounded-image-250x250.png" class="img-circle" />
+                                                    </div>
+                                                    <div class="profile-info">
+                                                        <p class="mentor-name">{{coach.Name}}</p>
+                                                        <p class="mentor-skils">{{coach.Skill}}</p>
+                                                        <p class="mentor-location">{{coach.City}} <b>|</b> {{coach.Country}}</p>
+                                                    </div>
+                                                </div>
+                                                <div class="mentor-actions" style="display:none; position:absolute">
+                                                    <div class="row">
+                                                        <i class="btn col-md-2 fa fa-linkedin btn-blue" style="border-radius:0px;"></i>
+                                                        <button class="btn col-md-9 btn-gray" data-toggle="modal" data-target="#myModal" style="border-radius:0px;">View Profile</button>
+                                                    </div>
+                                                    <br />
+                                                    <button class="btn signupButton">Request</button>
+                                                    <br />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="applicationBottomStrip">
+                        <bottom-main-strip></bottom-main-strip>
+                    </div>
+                </div>
             </div>
 
             <div class="parentRoleDetailRight" ng-if="selectedMenu == '0'">

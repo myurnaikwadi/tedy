@@ -300,6 +300,7 @@
     <Content Include="Images\icons\coachee.jpg" />
     <Content Include="Images\icons\Knowledge.png" />
     <Content Include="Images\icons\KnowledgeFeed.png" />
+    <Content Include="Images\icons\profile.png" />
     <Content Include="Images\icons\Resources.png" />
     <Content Include="Images\icons\Reword.png" />
     <Content Include="Images\linkedIn.jpg" />

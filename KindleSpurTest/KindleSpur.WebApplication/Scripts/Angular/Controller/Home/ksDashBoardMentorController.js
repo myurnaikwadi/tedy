@@ -9,18 +9,20 @@
     $scope.leftSideMenus = [{ name: 'DASHBOARD' }
                 , { name: 'COACHING STATUS' }
                 , { name: 'KNOWLEDGE GARDEN' }
-                , { name: 'BRAIN GAMES' }
-                , { name: 'GRAPHS' }
-                , { name: 'RESOURCES' }
+                , { name: 'COMMUNICATION' }
+                , { name: 'KNOWLEDGE FEED' }
+              //  , { name: 'RESOURCES' }
                 , { name: 'ADD TOPICS' }
+                , { name: 'REWARDS' }
+                // , { name: 'VCS' }
     ]
     $scope.applicationRole = [{ name: 'COACHEE' }, { name: 'MENTEE' }, { name: 'COACH' }, { name: 'MENTOR' }]
     $scope.rightSideDashBoardArray = [
-                { name: 'MENTORING STATUS', url: '../../Images/icons/book.png ' },
+                 { name: 'MENTORING STATUS', url: '../../Images/icons/book.png ' },
                 { name: 'KNOWLEDGE GARDEN', url: '../../Images/icons/Knowledge.png ' },
-                { name: 'KNOWLEDGE FEED' ,url: '../../Images/icons/KnowledgeFeed.png '},
+                { name: 'KNOWLEDGE FEED', url: '../../Images/icons/KnowledgeFeed.png ' },
                 { name: 'COMMUNICATION', url: '../../Images/icons/Resources.png ' },
-                { name: 'REWORDS' , url: '../../Images/icons/Reword.png '}
+                { name: 'REWORDS', url: '../../Images/icons/Reword.png ' }
     ];
 
     $scope.selectedMenu = '0';

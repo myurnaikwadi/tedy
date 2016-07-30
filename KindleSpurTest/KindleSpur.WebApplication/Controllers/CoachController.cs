@@ -35,9 +35,10 @@ namespace KindleSpur.WebApplication.Controllers
             return true;
         }
 
-        public string GetRecommendedCoach()
+        public List<BsonDocument>  GetRecommendedCoach()
         {
-            return _coachRepo.GetRecommended("Coach").ToJson();
+            return _coachRepo.GetRecommended("Coach");
+            
         }
 
         public string GetCTS()
@@ -64,7 +65,7 @@ namespace KindleSpur.WebApplication.Controllers
         public string GetCoachs(CTSFilter ctsFilter)
         {
             var result = _coachRepo.GetAllCoachOrMentors(ctsFilter);
-            return result.ToList().ToJson();
+            return result.ToJson();
         }
 
         [HttpPost]

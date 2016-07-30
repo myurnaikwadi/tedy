@@ -276,13 +276,13 @@ namespace KindleSpur.Data
         }
 
 
-        public string GetRecommended(string role)
+        public List<BsonDocument> GetRecommended(string role)
         {
-            string result = string.Empty;
+            List<BsonDocument> result = new List<BsonDocument>();
             try
             {
                 var _collection = _kindleDatabase.GetCollection("CoachOrMentor");
-                result = _collection.Find(Query.EQ("Role", role)).ToJson();
+                result = _collection.Find(Query.EQ("Role", role)).SetFields(Fields.Exclude("_id")).ToList();
             }
             catch (Exception ex)
             {
@@ -308,24 +308,24 @@ namespace KindleSpur.Data
             return result;
         }
 
-        public List<BsonDocument> GetAllCoachOrMentors(CTSFilter ctsFilter)
+        public List<CoachOrMentor> GetAllCoachOrMentors(CTSFilter ctsFilter)
         {
             var coachOrMentors = _kindleDatabase.GetCollection("CoachOrMentor");
-            IQueryable<BsonDocument> coachEntities = default(IQueryable<BsonDocument>);
+            IQueryable<CoachOrMentor> coachEntities = default(IQueryable<CoachOrMentor>);
             try
             {
                 var res1 = new List<BsonDocument>();
                 if (ctsFilter.Type == FilterType.Skill)
                 {
-                    coachEntities = coachOrMentors.Find(Query.ElemMatch("Skills", Query.EQ("Name", ctsFilter.Name))).AsQueryable();
+                    coachEntities = coachOrMentors.FindAs<CoachOrMentor>(Query.ElemMatch("Skills", Query.EQ("Name", ctsFilter.Name))).AsQueryable();
                 }
                 if (ctsFilter.Type == FilterType.Topic || !(coachOrMentors.Count() > 0))
-                    coachEntities = coachOrMentors.Find(Query.ElemMatch("Topics", Query.EQ("Name", ctsFilter.Name))).AsQueryable();
+                    coachEntities = coachOrMentors.FindAs<CoachOrMentor>(Query.ElemMatch("Topics", Query.EQ("Name", ctsFilter.Name))).AsQueryable();
 
                 if (ctsFilter.Type == FilterType.Category || !(coachOrMentors.Count() > 0))
                 {
                     //Get Topics -> Get Skills
-                    coachEntities = new List<BsonDocument>().AsQueryable();
+                    coachEntities = new List<CoachOrMentor>().AsQueryable();
                 }
                
             }
