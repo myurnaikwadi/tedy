@@ -13,11 +13,11 @@ app.config(['$stateProvider', '$urlRouterProvider','$locationProvider',function(
     }else{
          $urlRouterProvider.otherwise('login');
     }
-  
+
     $locationProvider.html5Mode(true);
     $stateProvider
 	.state('login', {
-		url: '/login',
+		url: '/',
 		templateUrl: '/User/Login',
 	})
     .state('profile', {

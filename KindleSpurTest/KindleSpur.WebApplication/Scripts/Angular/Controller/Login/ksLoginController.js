@@ -46,16 +46,19 @@ app.controller('ksLoginController', ['$scope', 'authentification', '$location', 
  	var _successLoginCallBack = function (iObject) {
  	    console.error('In _successCallBack', iObject);
  	    //  window.$cookieStore = $cookieStore 	    
-          var _userDetails = _getMyDetailsFromCookies();
-          if(_userDetails)
-              $rootScope.loggedDetail = _userDetails;
-          if (_userDetails.emailAddress == null && _userDetails.emailAddress == '') {
-              alert('wrong id password');
-              $state.go('login');              
-          } else
-        {
-              $state.go('ksUserDashBoard');
-        }
+ 	    if (!iObject.data.Result) {
+ 	        alert(iObject.data.Message);
+ 	    } else {
+ 	        var _userDetails = _getMyDetailsFromCookies();
+ 	        if (_userDetails)
+ 	            $rootScope.loggedDetail = _userDetails;
+ 	        if (_userDetails.emailAddress == null && _userDetails.emailAddress == '') {
+ 	            alert('wrong id password');
+ 	            $state.go('login');
+ 	        } else {
+ 	            $state.go('ksUserDashBoard');
+ 	        }
+ 	    }
         };
  	var _successPasswordCallBack = function (iObj) {
  	    console.error('In _successCallBack');
@@ -68,6 +71,11 @@ app.controller('ksLoginController', ['$scope', 'authentification', '$location', 
  	    $scope.signupDetails.FirstName = "";
  	    $scope.signupDetails.LastName = "";
  	    $scope.signupDetails.EmailAddress = "";
+
+ 	    if(!iObj.data.Result)
+ 	    {
+ 	        alert(iObj.data.Message);
+        }
  	    //$rootscope.$broadcast('alertBox', {
         //        showAlertBox: true,
         //        formatType: 'success',
@@ -87,7 +95,7 @@ app.controller('ksLoginController', ['$scope', 'authentification', '$location', 
  	  //$state.go('login');
  	 //  $state.go('dashBoard');
  	  //  window.location = '/User/Login';
- 	};
+ 	};	
  	var _failurePasswordCallBack = function (iObj) {
  	    console.error('In _failurePasswordCallBack');
  	    alert('Your password has been save successfully.Please login')

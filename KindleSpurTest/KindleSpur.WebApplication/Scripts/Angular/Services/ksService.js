@@ -56,11 +56,17 @@
                 EmailAddress: iObj.loginObject.emailAddress,
                 IsExternalAuthentication: true
             }
-            $http.post('/User/linkedIn', _obj).then(iObj.successCallBack, iObj.failureCallBack);
+            $http.post('/User/linkedIn', _obj).then(iObj.successLinkedCallBack, iObj.failureCallBack);
         },
         logout: function (iObj) {
             $http.post('/User/logout', iObj.loginObject).then(iObj.successCallBack, iObj.failureCallBack);
         },
+
+         successLinkedCallBack: function(iObj){
+             if (!iObj.data.Result) {
+                 alert(iObj.data.Message);
+             }
+        }
 
     }
 });

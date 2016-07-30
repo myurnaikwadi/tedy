@@ -124,13 +124,19 @@ namespace KindleSpur.WebApplication.Controllers
             {
                 IUser u = _repo.GetUserDetail(signupObject.EmailAddress);
 
-                if (u != null && u.Password == signupObject.Password)
+                if (u != null)
                 {
+                    if (u.Password == signupObject.Password)
+                    {
+                        cookie[u.EmailAddress] = new JavaScriptSerializer().Serialize(u);
+                        Response.SetCookie(cookie);
 
-                    cookie[u.EmailAddress] = new JavaScriptSerializer().Serialize(u);
-                    Response.SetCookie(cookie);
-
-                    Session["User"] = u;
+                        Session["User"] = u;
+                    }
+                    else
+                    {
+                        response.FailureCallBack("Wrong Password!!!");
+                    }
                 }
                 else
                 {
