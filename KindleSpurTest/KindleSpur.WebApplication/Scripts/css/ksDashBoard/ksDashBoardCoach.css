@@ -781,7 +781,13 @@ float: left;
     margin-left: 20%;
     margin-top: 11%;
 }
-
+.backgroundIamgeFeed {
+    background : url('../../../Images/communication/feedLogo.png') no-repeat;
+    -webkit-background-size: 100%;
+    -moz-background-size: 100%;
+    -o-background-size: 100%;
+    background-size: 100%;
+}
 
 
 /*--------------------*/

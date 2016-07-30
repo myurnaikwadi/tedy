@@ -48,7 +48,7 @@
                 { name: 'KNOWLEDGE GARDEN', url: '../../Images/icons/Knowledge.png ' },
                 { name: 'KNOWLEDGE FEED', url: '../../Images/icons/KnowledgeFeed.png ' },
                 { name: 'COMMUNICATION', url: '../../Images/icons/Resources.png ' },
-                { name: 'REWORDS', url: '../../Images/icons/Reword.png ' }
+                { name: 'REWARDS', url: '../../Images/icons/Reword.png ' }
 
     ];
 
@@ -63,90 +63,31 @@
             case 6: $scope.getPointsRecord(); break;
         }
     };
-    //feedback
-    $scope.feedCategoryArray = [
-                     {
-                         name: 'C', selected: false
-                     },
-                     {
-                         name: 'C++', selected: false
-                     },
-                     {
-                         name: 'JAVA', selected: false
-                     },
+
+    $scope.feedCategoryArray =[];
+    $scope.getRssFeedData = function () {
+        //feedback
+        $scope.feedCategoryArray = [
                          {
-                             name: 'C#', selected: false
+                             name: 'C', selected: false
                          },
-                     {
-                         name: 'ANGULAR JS', selected: false
-                     },
+                         {
+                             name: 'C++', selected: false
+                         },
+                         {
+                             name: 'JAVA', selected: false
+                         },
+                             {
+                                 name: 'C#', selected: false
+                             },
+                         {
+                             name: 'ANGULAR JS', selected: false
+                         },
 
-    ];
+        ];
 
-    $scope.feedContainArray = [];
-    var _selectedTagFed = [];
-    $scope.selectedFeedTag = function (iIndex, iOption) {
-        console.error(iOption.selected)
-        if (iOption.selected) {
-            iOption.selected = false;
-            var _index = _selectedTagFed.indexOf(iOption.name);
-            if (_index > -1)
-                _selectedTagFed.splice(_index, 1);
-        } else {
-            _selectedTagFed.push(iOption.name);
-            iOption.selected = true;
-        }
-        console.error(iOption.selected)
-        console.error(_selectedTagFed);
-        $scope.feedContainArray =[];
-        var _rec = function (iArr, iNdex) {
-            $scope.getRssFeedData(iArr[iNdex]);
-            iNdex++;
-            if (iNdex == iArr.length) {
-                console.error('final callBack')
-            } else {
-                _rec(iArr, iNdex)
-            }
-        }
-        _rec(_selectedTagFed,0);
     };
-
-    $scope.loadFeedOnNextTab = function (iFeed) {
-        window.open(iFeed.url);
-    };
-
-    $scope.getRssFeedData = function (iString) {
-         var params = {
-                    // Request parameters
-                     "q"         : iString ? iString : 'Live Wire Project',
-                     "count"     : "10",
-                     "offset"    : "0",
-                     "mkt"       : "en-us",
-                     "safesearch": "Moderate",
-        };
-
-        $.ajax({
-                url: "https://api.cognitive.microsoft.com/bing/v5.0/search?" +$.param(params),
-                beforeSend: function (xhrObj) {
-                    // Request headers
-                  xhrObj.setRequestHeader("Ocp-Apim-Subscription-Key", "5e3cfc43cfeb4f5499ed80126dd1b08b");
-        },
-            type: "GET",
-            // Request body
-                data: "{body}",
-        })
-         .done(function (data) {
-             // alert("success");
-             console.error(data)
-             $scope.feedContainArray = $scope.feedContainArray.concat(data.webPages.value);
-            $scope.$digest();
-        })
-        .fail(function (data) {
-            alert("error");
-             console.error(data)
-        });
-    };
-
+      
     $scope.rewardsPoints = {
         mentorPoints: 0,
         menteePoints: 0,
@@ -157,16 +98,16 @@
         totalPoints: 0
     };
     $scope.myRewardsArray =[
-                       { Name: 'www.yryr.com', date: '12/12/2011', Key: 'NUF783F', PSR: false
-},
-];
+                           { Name: 'www.yryr.com', date: '12/12/2011', Key: 'NUF783F', PSR: false
+    },
+    ];
 
 
-    $scope.getPointsRecord = function () {
-        serverCommunication.getPointsRecord({
+        $scope.getPointsRecord = function () {
+            serverCommunication.getPointsRecord({
 
-                successCallBack: function (iObj) {
-                    // console.error('In successCallBack', iObj);
+                    successCallBack: function (iObj) {
+                        // console.error('In successCallBack', iObj);
                 $scope.rewardsPoints.mentorPoints = iObj.data.MentorRewardPoints;
                 $scope.rewardsPoints.menteePoints = iObj.data.MenteeRewardPoints;
                 $scope.rewardsPoints.coachPoints = iObj.data.CoachRewardPoints;
@@ -176,12 +117,12 @@
                 $scope.rewardsPoints.redeemedPoints = iObj.data.RedeemedPoints;
                 $scope.myRewardsArray = iObj.data.PSRAndGames;
 
-        },
-                failureCallBack: function (iObj) {
-                    //console.error('In failureCallBack', iObj);
+            },
+                    failureCallBack: function (iObj) {
+                        //console.error('In failureCallBack', iObj);
 
         }
-});
+        });
     };
 
     $scope.generateGarden = function () {
@@ -217,8 +158,8 @@
                 failureCallBack: function (iObj) {
                 console.error('In failureCallBack', iObj);
 
-        }
-});
+    }
+    });
     };
     $scope.getCoachRecord = function () {
         serverCommunication.getCoachingWithStatus({
@@ -231,8 +172,8 @@
                 failureCallBack: function (iObj) {
                 console.error('In failureCallBack', iObj);
 
-        }
-});
+    }
+    });
     };
     $scope.selectedOption = function (iIndex, iCate) {
 
@@ -252,9 +193,9 @@
                     alert('Sorry......, You do not have sufficient point to unlock games!!!');
                     console.error('In failureCallBack', iObj);
 
-            }
-});
-}
+    }
+    });
+    }
     }
 
     $scope.init = function () {
@@ -288,7 +229,7 @@
                 , { name: 'SAGAR P'
     }
                 , { name: 'MAYUR'
-}
+    }
 
     ]
 
@@ -300,7 +241,7 @@
             iCategory.selectedConversation = false;
     } else {
             iCategory.selectedConversation = true;
-}
+    }
     };
     $scope.feedBack = {
         selectedComparioson: 1,
@@ -340,7 +281,7 @@
     console.error(_object);
 
         serverCommunication.sendFeedback({
-            loggedUserDetails: _object,
+                loggedUserDetails: _object,
                 successCallBack: function (iObj) {
                 console.error('In successCallBack', iObj);
                 $scope.getPointsRecord();
@@ -348,24 +289,24 @@
                 failureCallBack: function (iObj) {
                 console.error('In failureCallBack', iObj);
 
-        }
-});
-};
+    }
+    });
+    };
 
 
-    $scope.catogoryArray =[
-                    { name: 'Advertising'
-    },
-                    { name: 'Education'
-    },
-                    { name: 'Engineering'
-    },
-                    { name: 'Marketing'
-    },
-                    { name: 'BRAIN GAMES'
-    },
-                    { name: 'RESOURCES'
-}
+        $scope.catogoryArray =[
+                        { name: 'Advertising'
+        },
+                        { name: 'Education'
+        },
+                        { name: 'Engineering'
+        },
+                        { name: 'Marketing'
+        },
+                        { name: 'BRAIN GAMES'
+        },
+                        { name: 'RESOURCES'
+    }
     ];
 
     $scope.feedBack.askFeedback = false;
@@ -387,7 +328,7 @@
         $scope.feedBack.selectedAttractive = 1;
         $scope.feedBack.selectedstar = 1;
         $scope.feedBack.likeMostMessage = '';
-};
+        };
 
 
 $scope.redeemPointsClick = function () {
@@ -404,7 +345,7 @@ $scope.redeemPointsClick = function () {
                 failureCallBack: function (iObj) {
                     console.error('In failureCallBack', iObj);
 
-        }
+}
 });
     };
 

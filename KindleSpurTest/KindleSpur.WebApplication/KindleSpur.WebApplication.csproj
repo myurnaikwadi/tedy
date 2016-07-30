@@ -279,6 +279,7 @@
     <Content Include="Images\communication\bigStar.png" />
     <Content Include="Images\communication\competitorsBetter.png" />
     <Content Include="Images\communication\customer_service_feedBack.png" />
+    <Content Include="Images\communication\feedLogo.png" />
     <Content Include="Images\communication\lineDiag1.png" />
     <Content Include="Images\communication\lineDiag2.png" />
     <Content Include="Images\communication\lineDiag3.png" />
@@ -432,6 +433,7 @@
     <Content Include="Views\User\ForgotPasswordEmail.cshtml" />
     <Content Include="Views\Home\ksProfileTemplate.cshtml" />
     <Content Include="Views\Home\ksVcs.cshtml" />
+    <Content Include="Views\Home\ksRssFeed.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

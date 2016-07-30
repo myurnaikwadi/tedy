@@ -18,6 +18,9 @@
                     </div>
                 </div>
             </div>
+            <div class="parentRoleDetailRight" style="padding:1%;padding-bottom: 0;" ng-if="selectedMenu == '4'">
+                <rss-Feed ng-if="feedCategoryArray.length > 0" skill="feedCategoryArray"></rss-Feed>
+            </div>
             <div class="parentRoleDetailRight" ng-if="selectedMenu == '5'">
                 <ctc-Role role="mentor" skill-Required="false"></ctc-Role>
             </div>

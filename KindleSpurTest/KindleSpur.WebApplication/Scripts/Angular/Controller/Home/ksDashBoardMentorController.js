@@ -22,17 +22,39 @@
                 { name: 'KNOWLEDGE GARDEN', url: '../../Images/icons/Knowledge.png ' },
                 { name: 'KNOWLEDGE FEED', url: '../../Images/icons/KnowledgeFeed.png ' },
                 { name: 'COMMUNICATION', url: '../../Images/icons/Resources.png ' },
-                { name: 'REWORDS', url: '../../Images/icons/Reword.png ' }
+                { name: 'REWARDS', url: '../../Images/icons/Reword.png ' }
     ];
 
     $scope.selectedMenu = '0';
     $scope.menuClick = function (iIndex, iOption) {
         $scope.selectedMenu = iIndex;
-        //switch (iIndex) {
-        //    case '0': break;
-        //}
+        switch (iIndex) {
+            case 4: $scope.getRssFeedData(); break;
+        }
     };
+    $scope.feedCategoryArray = [];
+    $scope.getRssFeedData = function () {
+        //feedback
+        $scope.feedCategoryArray = [
+                         {
+                             name: 'C', selected: false
+                         },
+                         {
+                             name: 'C++', selected: false
+                         },
+                         {
+                             name: 'JAVA', selected: false
+                         },
+                             {
+                                 name: 'C#', selected: false
+                             },
+                         {
+                             name: 'ANGULAR JS', selected: false
+                         },
 
+        ];
+
+    };
 
     $scope.init = function () {
 

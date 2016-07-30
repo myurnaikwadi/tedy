@@ -13,7 +13,7 @@
                  , { name: 'COMMUNICATION' }
                  , { name: 'KNOWLEDGE FEED' }
                //  , { name: 'RESOURCES' }
-                 , { name: 'FIND MENTOR' }
+                 , { name: 'SEARCH MENTOR' }
                  , { name: 'REWARDS' }
                  , { name: 'ADD TOPICS' }
     ]
@@ -23,7 +23,7 @@
                 { name: 'SEARCH MENTOR', url: '../../Images/icons/Knowledge.png ' },
                 { name: 'KNOWLEDGE FEED', url: '../../Images/icons/KnowledgeFeed.png ' },
                 { name: 'COMMUNICATION', url: '../../Images/icons/Resources.png ' },
-                { name: 'REWORDS', url: '../../Images/icons/Reword.png ' }
+                { name: 'REWARDS', url: '../../Images/icons/Reword.png ' }
     ]
     $scope.menuClick = function (iIndex, iOption) {
         $scope.selectedMenu = iIndex;
@@ -33,8 +33,32 @@
         $scope.askFeedback = false;
         switch (iIndex) {
             case 1: $scope.getCoachRecord(); break;
+            case 4: $scope.getRssFeedData(); break;
             case 7: $scope.getPointsRecord(); break;
         }
+    };
+    $scope.feedCategoryArray = [];
+    $scope.getRssFeedData = function () {
+        //feedback
+        $scope.feedCategoryArray = [
+                         {
+                             name: 'C', selected: false
+                         },
+                         {
+                             name: 'C++', selected: false
+                         },
+                         {
+                             name: 'JAVA', selected: false
+                         },
+                             {
+                                 name: 'C#', selected: false
+                             },
+                         {
+                             name: 'ANGULAR JS', selected: false
+                         },
+
+        ];
+
     };
     $scope.getCoachRecord = function () {
         serverCommunication.getCoachingWithStatus({

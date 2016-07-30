@@ -1221,3 +1221,88 @@ app.directive('moleculeMap', function ($rootScope) {
         }
     }
 });
+
+
+app.directive('rssFeed', function ($state, serverCommunication) {
+    return {
+        scope: {
+           skill: "=",
+        },
+        templateUrl: '/Home/ksRssFeed',
+        //scope: true,   // optionally create a child scope
+        link: function ($scope, element, attrs) {
+            window.rss = $scope;
+            $scope.feedContainArray = [];
+            var _selectedTagFed = [];
+            $scope.selectedFeedTag = function (iIndex, iOption) {
+                console.error(iOption.selected)
+                if (iOption.selected) {
+                    iOption.selected = false;
+                    var _index = _selectedTagFed.indexOf(iOption.name);
+                    if (_index > -1)
+                        _selectedTagFed.splice(_index, 1);
+                } else {
+                    _selectedTagFed.push(iOption.name);
+                    iOption.selected = true;
+                }
+                console.error(iOption.selected)
+                console.error(_selectedTagFed);
+                $scope.feedContainArray = [];
+                var _rec = function (iArr, iNdex) {
+                    $scope.getRssFeedData(iArr[iNdex]);
+                    iNdex++;
+                    if (iNdex == iArr.length) {
+                        console.error('final callBack')
+                    }else {
+                        _rec(iArr, iNdex)
+                    }
+                }
+                _rec(_selectedTagFed, 0);
+            };
+
+            $scope.loadFeedOnNextTab = function (iFeed) {
+                window.open(iFeed.url);
+            };
+
+            $scope.getRssFeedData = function (iString) {
+                var params = {
+                    // Request parameters
+                    "q": iString ? iString : 'Live Wire Project',
+                    "count": "10",
+                    "offset": "0",
+                    "mkt": "en-us",
+                    "safesearch": "Moderate",
+                };
+
+                $.ajax({
+                    url: "https://api.cognitive.microsoft.com/bing/v5.0/search?" + $.param(params),
+                    beforeSend: function (xhrObj) {
+                        // Request headers
+                        xhrObj.setRequestHeader("Ocp-Apim-Subscription-Key", "5e3cfc43cfeb4f5499ed80126dd1b08b");
+                    },
+                    type: "GET",
+                    // Request body
+                    data: "{body}",
+                })
+                 .done(function (data) {
+                     // alert("success");
+                     console.error(data)
+                     $scope.feedContainArray = $scope.feedContainArray.concat(data.webPages.value);
+                    // $scope.feedContainArray.so
+                     $scope.feedContainArray.sort(function (a, b) {
+                         a = new Date(a.dateLastCrawled);
+                         b = new Date(b.dateLastCrawled);
+                         return a > b ? -1 : a < b ? 1 : 0;
+                     });
+                     if (!$scope.$$phase) $scope.$digest();
+                 })
+                .fail(function (data) {
+                    //alert("error");
+                    console.error(data)
+                });
+            };
+
+            $scope.getRssFeedData();
+        }
+    }
+});

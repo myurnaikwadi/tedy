@@ -54,5 +54,9 @@ namespace KindleSpur.WebApplication.Controllers
         {
             return View();
         }
+        public ActionResult ksRssFeed()
+        {
+            return View();
+        }
     }
 }

@@ -349,7 +349,12 @@
                 </div>
                 <div class="mainDashBoardWizardParent">
                     <div class="statusParentDiv">
-                        <div class="ngRepeatDivForStatus " ng-click="showCoacheeProfile = true;showCoacheeProfileStatus(option)" ng-repeat="option in coachingStatusArray">
+                        <div ng-show="coachingStatusArray.length == 0" class="topicHeadingPlaceholdr">
+                            <h5 style="color:gray;margin: auto;font-size: 30px;" class="leftSideMenuLable fontClass">
+                                No Coachee Available
+                            </h5>
+                        </div>
+                        <div ng-hide="coachingStatusArray.length == 0" class="ngRepeatDivForStatus " ng-click="showCoacheeProfile = true;showCoacheeProfileStatus(option)" ng-repeat="option in coachingStatusArray">
 
                             <div class="profileImageCoachingStatus">
                                 <img ng-src="{{option.PhotoURL ? option.PhotoURL : '/Images/icons/profile.png' }}" style="margin: auto auto;float: left;height: 35px;width: 35px;" />
@@ -615,42 +620,7 @@
             </div>
             @*Knowledge feed*@
             <div class="parentRoleDetailRight" style="padding:1%;padding-bottom: 0;" ng-if="selectedMenu == '4'">
-                <div class="feedPanel">
-                    <div class="homeLabelfeed">
-                        <h5 class="fontClass" style="font-size: 16px;">KNOWLEDGE FEED</h5>
-                    </div>
-
-                    <div class="skillTaggingArray">
-                        <h5 class="tagTasks fontClass genericPointerClass" style="float: left;margin: 7px;width: 131px;height: 30px;" ng-class="{ coachThemeColor : option.selected == true }" ng-click="selectedFeedTag($index,option)" ng-repeat="option in feedCategoryArray">{{option.name | uppercase}}</h5>
-                    </div>
-
-                    <div class="feedParentArray">
-                        <div class="feedParentMainArray">
-                            <div class="feedContainRepeatDiv genericPointerClass" ng-click="loadFeedOnNextTab(feed)" ng-repeat="feed in feedContainArray">
-                                <div class="" style="float: left;display:flex; width: 100%;height: 50%;">
-                                    
-                                </div>
-                                <div class="" style="float: left; width: 100%;height: 20%;">
-                                    <div class="" style="width: 100%;float: left;display:flex;">
-                                        <p style="float: left;font-weight: 700; font-size: 14px; white-space: inherit;word-break: break-all;margin: auto;">
-                                            {{feed.name}}
-                                        </p>
-                                    </div>
-                                </div>
-                                <div class="" style="float: left;display:flex; width: 100%;height: 30%;">
-                                    <div class="" style="width: auto;float: left;display:flex;overflow:auto;">
-                                        <p style="float: left;width: 100%;height: 100%;font-size: 14px; white-space: inherit;word-break: break-all;	margin: auto;">
-                                            {{feed.snippet}}
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="applicationBottomStrip">
-                        <bottom-Main-Strip></bottom-Main-Strip>
-                    </div>
-                </div>
+                <rss-Feed ng-if="feedCategoryArray.length > 0" skill="feedCategoryArray"></rss-Feed>               
             </div>
            
         </div>
