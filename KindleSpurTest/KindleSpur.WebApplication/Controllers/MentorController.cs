@@ -19,7 +19,7 @@ namespace KindleSpur.WebApplication.Controllers
             UserId = "patilsagar28290@gmail.com";
         }
         [HttpPost]
-        public Boolean SaveTopics(List<Skill> selectedArray)
+        public Boolean SaveTopics(List<SkillOrTopic> selectedArray)
         {
             CoachOrMentorRepository _mentorRepo = new CoachOrMentorRepository();
 
@@ -27,10 +27,8 @@ namespace KindleSpur.WebApplication.Controllers
             _obj.UserId = UserId;
             _obj.Role = "Mentor";
             _obj.CreateDate = _obj.UpdateDate = DateTime.Now;
-            if (_obj.Topics == null) _obj.Topics = new List<string>();
-
-            var topicsList = selectedArray.Select(x => x.Name).ToList();
-           _obj.Topics.AddRange(topicsList);
+            if (_obj.Topics == null) _obj.Topics = new List<SkillOrTopic>();
+           _obj.Topics.AddRange(selectedArray);
 
             _mentorRepo.AddNewCoachOrMentor(_obj);
 
@@ -42,14 +40,14 @@ namespace KindleSpur.WebApplication.Controllers
 
             CoachOrMentorRepository _coachRepo = new CoachOrMentorRepository();
 
-            List<string> topics = _coachRepo.GetTopicsForMentor(UserId);
+            List<SkillOrTopic> topics = _coachRepo.GetTopicsForMentor(UserId);
             CTSRepository _ctsRepo = new CTSRepository();
             BsonDocument doc = new BsonDocument();
             BsonArray arr = new BsonArray();
-            foreach (string topic in topics)
+            foreach (SkillOrTopic topic in topics)
             {
 
-                BsonDocument result = _ctsRepo.GetMentorCategory(topic);
+                BsonDocument result = _ctsRepo.GetMentorCategory(topic.Name);
                 arr.Add(result);
 
             }

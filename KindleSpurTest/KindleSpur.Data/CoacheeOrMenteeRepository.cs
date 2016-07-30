@@ -79,7 +79,7 @@ namespace KindleSpur.Data
 
                 if (Data.Role == "Coachee")
                 {
-                    foreach (Skill skill in Data.Skills)
+                    foreach (SkillOrTopic skill in Data.Skills)
                     {
                         if (!_entity.Skills.Contains(skill))
                         {

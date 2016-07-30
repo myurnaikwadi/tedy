@@ -21,13 +21,13 @@ namespace KindleSpur.WebApplication.Controllers
         }
 
         [HttpPost]
-        public Boolean SaveSkills(List<Models.Skill> selectedArray)
+        public Boolean SaveSkills(List<Models.SkillOrTopic> selectedArray)
         {
             KindleSpur.Models.CoachOrMentor _obj = new Models.CoachOrMentor();
             _obj.UserId = UserId;
             _obj.Role = "Coach";
             _obj.CreateDate = _obj.UpdateDate= DateTime.Now;
-            if (_obj.Skills == null) _obj.Skills = new List<Skill>();
+            if (_obj.Skills == null) _obj.Skills = new List<SkillOrTopic>();
             _obj.Skills.AddRange(selectedArray);
 
             _coachRepo.AddNewCoachOrMentor(_obj);
@@ -43,13 +43,13 @@ namespace KindleSpur.WebApplication.Controllers
         public string GetCTS()
         {
 
-            List<Skill> skills = _coachRepo.GetSkillsForCoach(UserId);
+            List<SkillOrTopic> skills = _coachRepo.GetSkillsForCoach(UserId);
             CTSRepository _ctsRepo = new CTSRepository();
             BsonDocument doc = new BsonDocument();
             if (skills != null)
             {
                 BsonArray arr = new BsonArray();
-                foreach (Skill skill in skills)
+                foreach (SkillOrTopic skill in skills)
                 {
 
                     BsonDocument result = _ctsRepo.GetCoachTopicAndCategory(skill);

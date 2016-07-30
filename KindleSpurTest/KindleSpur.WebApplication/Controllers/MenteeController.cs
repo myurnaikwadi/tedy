@@ -19,7 +19,7 @@ namespace KindleSpur.WebApplication.Controllers
         }
 
         [HttpPost]
-        public Boolean SaveTopics(List<Skill> selectedArray)
+        public Boolean SaveTopics(List<SkillOrTopic> selectedArray)
 
         {
             CoacheeOrMenteeRepository _menteeRepo = new Data.CoacheeOrMenteeRepository();

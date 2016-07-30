@@ -94,7 +94,7 @@ namespace KindleSpur.Data
 
         }
 
-        public List<Skill> GetSkillsForCoach(string UserId)
+        public List<SkillOrTopic> GetSkillsForCoach(string UserId)
         {
            
             var _collection = _kindleDatabase.GetCollection("CoachOrMentor");
@@ -105,10 +105,10 @@ namespace KindleSpur.Data
             if (result != null)
                 return result.Skills;
             else
-                return new List<Skill>();
+                return new List<SkillOrTopic>();
         }
 
-        public List<string> GetTopicsForMentor(string UserId)
+        public List<SkillOrTopic> GetTopicsForMentor(string UserId)
         {
 
             var _collection = _kindleDatabase.GetCollection("CoachOrMentor");
@@ -119,7 +119,7 @@ namespace KindleSpur.Data
             if (result != null)
                 return result.Topics;
             else
-                return new List<string>();
+                return new List<SkillOrTopic>();
         }
 
         public bool DeleteCoachOrMentor(string Id)
@@ -154,21 +154,11 @@ namespace KindleSpur.Data
 
                 if (Data.Role.ToLower() == "coach" || Data.Role.ToLower() == "coachee")
                 {
-                   
-
-                    foreach (Skill skill in Data.Skills)
-                    {
-                        if (!_entity.Skills.Contains(skill))
-                        {
-                            _entity.Skills.Add(skill);
-                        }
-                    }
-
                     for (int i = _entity.Skills.Count - 1; i >= 0; i--)
                     {
                         bool blnDelete = true;
 
-                        foreach (Skill item in Data.Skills)
+                        foreach (SkillOrTopic item in Data.Skills)
                         {
                             if (item.Id == _entity.Skills[i].Id)
                             {
@@ -180,6 +170,22 @@ namespace KindleSpur.Data
                         if (blnDelete) _entity.Skills.RemoveAt(i);
                     }
 
+                    foreach (SkillOrTopic skill in Data.Skills)
+                    {
+                        bool blnAdd = true;
+                        for (int i = _entity.Skills.Count - 1; i >= 0; i--)
+                        {
+                            if (_entity.Skills[i].Id == skill.Id)
+                            {
+                                blnAdd = false;
+                                break;
+                            }
+                        }
+
+                        if (blnAdd) _entity.Skills.Add(skill);
+                    }
+
+                   
 
                 }
 
@@ -187,18 +193,33 @@ namespace KindleSpur.Data
                 {
                     for (int i = _entity.Topics.Count - 1; i >= 0; i--)
                     {
-                        if (!Data.Topics.Contains(_entity.Topics[i]))
+                        bool blnDelete = true;
+
+                        foreach (SkillOrTopic item in Data.Topics)
                         {
-                            _entity.Topics.RemoveAt(i);
+                            if (item.Id == _entity.Topics[i].Id)
+                            {
+                                blnDelete = false;
+                                break;
+                            }
                         }
+
+                        if (blnDelete) _entity.Topics.RemoveAt(i);
                     }
 
-                    foreach (string topic in Data.Topics)
+                    foreach (SkillOrTopic topic in Data.Topics)
                     {
-                        if (!_entity.Topics.Contains(topic))
+                        bool blnAdd = true;
+                        for (int i = _entity.Topics.Count - 1; i >= 0; i--)
                         {
-                            _entity.Topics.Add(topic);
+                            if(_entity.Topics[i].Id == topic.Id)
+                            {
+                                blnAdd = false;
+                                break;
+                            }
                         }
+
+                        if (blnAdd) _entity.Topics.Add(topic);
                     }
                 }
                 _entity.UpdateDate = DateTime.Now;

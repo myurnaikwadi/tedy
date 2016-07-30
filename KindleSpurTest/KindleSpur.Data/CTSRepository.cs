@@ -173,7 +173,7 @@ namespace KindleSpur.Data
             return _Category;
         }
 
-        public BsonDocument GetCoachTopicAndCategory(Skill skill)
+        public BsonDocument GetCoachTopicAndCategory(SkillOrTopic skill)
         {
             BsonDocument _Category = new BsonDocument();
 

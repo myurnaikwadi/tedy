@@ -8,7 +8,7 @@ using MongoDB.Bson;
 
 namespace KindleSpur.Models
 {
-    public class Skill : ISkill
+    public class SkillOrTopic : ISkill
     {
         public string Id
         {
