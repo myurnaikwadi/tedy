@@ -226,5 +226,77 @@ namespace KindleSpur.Data
 
             return coacheeEntities.ToList();
         }
+        public int addFeedback(string UserId, Feedback feedback)
+        {
+            bool _transactionStatus = false;
+            try
+            {
+                var coachOrMentors = _kindleDatabase.GetCollection("CoachOrMentor");
+                CoachOrMentor entity = coachOrMentors.FindOneAs<CoachOrMentor>(Query.And(Query.EQ("UserId", feedback.Sender), Query.EQ("Role", "Coach")));
+                entity.FeedbackPoints += ((feedback.customerSatisfactionRating + feedback.selectedAttractive.answer + feedback.selectedComparioson.answer) / 3);
+
+                if (entity.Feedback == null) entity.Feedback = new List<Feedback>();
+                feedback.Sender = UserId;
+                entity.Feedback.Add(feedback);
+                entity.RewardPointsGained += 1;
+                coachOrMentors.Save(entity);
+                var _users = _kindleDatabase.GetCollection("UserDetails");
+                User user = _users.FindOneAs<User>(Query.EQ("EmailAddress", UserId));
+                user.BalanceRewardPoints += 1;
+                user.TotalRewardPoints += 1;
+                _users.Save(user);
+                _transactionStatus = true;
+                return user.TotalRewardPoints;
+            }
+            catch (Exception e)
+            {
+                _transactionStatus = false;
+            }
+            return 0;
+
+        }
+        public List<SkillOrTopic> GetSkillsForCoachee(string UserId)
+        {
+
+            var _collection = _kindleDatabase.GetCollection("CoacheeOrMentee");
+            var result = _collection.FindOneAs<CoacheeOrMentee>(Query.And(
+                                                                    Query.EQ("UserId", UserId),
+                                                                    Query.EQ("Role", "Coachee")
+                                                                 ));
+            if (result != null)
+                return result.Skills;
+            else
+                return new List<SkillOrTopic>();
+        }
+
+        public List<BsonDocument> GetAllCoacheeOrMentees(CTSFilter ctsFilter)
+        {
+            var coacheeOrMentees = _kindleDatabase.GetCollection("CoacheeOrMentee");
+            IQueryable<BsonDocument> coacheeEntities = default(IQueryable<BsonDocument>);
+            try
+            {
+                var res1 = new List<BsonDocument>();
+                if (ctsFilter.Type == FilterType.Skill)
+                {
+                    coacheeEntities = coacheeOrMentees.Find(Query.ElemMatch("Skills", Query.EQ("Name", ctsFilter.Name))).AsQueryable();
+                }
+                if (ctsFilter.Type == FilterType.Topic || !(coacheeOrMentees.Count() > 0))
+                    coacheeEntities = coacheeOrMentees.Find(Query.EQ("Topics", ctsFilter.Name)).AsQueryable();
+
+                if (ctsFilter.Type == FilterType.Category || !(coacheeOrMentees.Count() > 0))
+                {
+                    //Get Topics -> Get Skills
+                    coacheeEntities = new List<BsonDocument>().AsQueryable();
+                }
+
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+
+            return coacheeEntities.ToList();
+        }
     }
 }

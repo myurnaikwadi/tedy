@@ -75,5 +75,11 @@ namespace KindleSpur.WebApplication.Controllers
             return _coachRepo.addFeedback(UserId, feedback);
 
         }
+        public ActionResult GetCoachingStatus()
+        {
+            CoachOrMentorRepository _coachRepo = new CoachOrMentorRepository();
+            var filters = _coachRepo.GetCoachingStatus(UserId);
+            return Json(new { Filters = filters, Success = true }, JsonRequestBehavior.AllowGet);
+        }
     }
 }

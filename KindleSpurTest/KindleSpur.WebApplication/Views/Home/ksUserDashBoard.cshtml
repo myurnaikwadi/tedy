@@ -1,75 +1,76 @@
-﻿<script src="~/Scripts/Angular/Controller/Home/ksDashBoardController.js"></script>
-<div class="parentBody" ng-controller="ksMainDashBoardController">
-        <div class="applicationTopStrip">
-            <top-Main-Strip notification="false"></top-Main-Strip>
-        </div>
-        <div class="applicationMiddleStripMain">
-            <div class="parentRoleDashboard">
-                <div class="userImageParent">
-                    <div class="userImageParentcenter">
-                        <div class="profileViewModeMain">
-                            <div class="profileImagePartMain">
-                                <div class="profileImage"></div>
+﻿<div class="parentBody" ng-controller="ksMainDashBoardController">
+    <div class="applicationTopStrip">
+        <top-Main-Strip notification="false"></top-Main-Strip>
+    </div>
+    <div class="applicationMiddleStripMain">
+        <div class="parentRoleDashboard">
+            <div class="userImageParent">
+                <div class="userImageParentcenter">
+                    <div class="profileViewModeMain">
+                        <div class="profileImagePartMain">
+                            <div class="profileImage"></div>
+                        </div>
+                        <div class="profileNamePartMain fontClass" ng-click="navigateToProfile()">
+                            <h2 class="profileName">WELCOME</h2>
+                            <h2 class="profileName">&nbsp {{loggedDetail.FirstName+" "+loggedDetail.LastName}}</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="userRoleWizardParentMain">
+                <div class="userRoleWizardParent" style="display: inline-flex;overflow: auto;float:left; overflow-x:scroll; overflow-y:hidden;width:96%;margin-left:2%;">
+                    <div class="notificationWiz" ng-repeat="notification in notificationsArr">
+                        <div ng-if="notification.notificationType == '1'">
+                            <h6 class="notificationWizReason">{{notification.name}}</h6>
+                            <h4 class="notificationWizName">{{notification.assignPerson}}</h4>
+                            <div class="notificationWizButton">
+                                <button style="width:100%;font-size: 10px;padding: 5px;font-weight: bolder;" class="signupButton fontClass">ACCEPT</button>
                             </div>
-                            <div class="profileNamePartMain fontClass" ng-click="navigateToProfile()">
-                                <h2 class="profileName">WELCOME</h2>
-                                <h2 class="profileName">&nbsp {{loggedDetail.FirstName+" "+loggedDetail.LastName}}</h2>
+                        </div>
+                        <div ng-class="{ mentorThemeColor : notification.role =='mentor',coacheeThemeColor : notification.role =='coachee'}" style="float: left;width: 100%;height: 100%;" ng-if="notification.notificationType == '2'">
+                            <div class="notificationWizReason" style="margin :4%;border:0px;color: white; padding : 0;">{{notification.name}}</div>
+                            <div class="notificationTimingPanel">
+                                <h6 class="notificationTiming notificationDate">{{notification.meetingDate}}</h6>
+                                <h6 class="notificationTiming notificationTime">{{notification.meetingTime}}</h6>
+                                <h6 style="float:right;    margin-right: 8%;" class="notificationTiming notificationDiff">{{notification.meetingTimeDiff}}</h6>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="userRoleWizardParentMain">
-                    <div class="userRoleWizardParent" style="display: inline-flex;overflow: auto;float:left; overflow-x:scroll; overflow-y:hidden;width:96%;margin-left:2%;">
-                        <div class="notificationWiz" ng-repeat="notification in notificationsArr">
-                            <div ng-if="notification.notificationType == '1'">
-                                <h6 class="notificationWizReason">{{notification.name}}</h6>
-                                <h4 class="notificationWizName">{{notification.assignPerson}}</h4>
-                                <div class="notificationWizButton">
-                                    <button style="width:100%;font-size: 10px;padding: 5px;font-weight: bolder;" class="signupButton fontClass">ACCEPT</button>
-                                </div>
+            </div>
+            <div class="userRolesParent">
+                <div class="userRoleWizardParenWizard">
+                    <div class="roleRepeatWizardMain" ng-class="{ mentorThemeColor : wizard.name =='MENTOR',menteeThemeColor : wizard.name =='MENTEE',coachThemeColor : wizard.name =='COACH',coacheeThemeColor : wizard.name =='COACHEE'}" ng-click="roleClick($event,wizard)" ng-repeat="wizard in applicationRole">
+                        <div class="rolelabelPart">
+                            <div class="roleNameLabel">
+                                <h1 style="width: 80%;margin: 10%;" class="notificationWizName" ng-class="{ whiteBackground : wizard.name =='MENTOR' || wizard.name =='COACH' }">{{wizard.name}}</h1>
                             </div>
-                            <div ng-class="{ mentorThemeColor : notification.role =='mentor',coacheeThemeColor : notification.role =='coachee'}" style="float: left;width: 100%;height: 100%;" ng-if="notification.notificationType == '2'">
-                                <div class="notificationWizReason" style="margin :4%;border:0px;color: white; padding : 0;">{{notification.name}}</div>
-                                <div class="notificationTimingPanel">
-                                    <h6 class="notificationTiming notificationDate">{{notification.meetingDate}}</h6>
-                                    <h6 class="notificationTiming notificationTime">{{notification.meetingTime}}</h6>
-                                    <h6 style="float:right;    margin-right: 8%;" class="notificationTiming notificationDiff">{{notification.meetingTimeDiff}}</h6>
+                            <div class="roleImage">
+                                <img src={{wizard.img}} class="homePageLogo">
+                            </div>
+                        </div>
+                        <div class="roleCountPart">
+                            <div class="fullWidthHeightClass" style="float:left;">
+                                <div class='roleWiseClass'>
+                                    <!--<div class="homeIcon"></div>
+                                    <div class="notificationIcon"></div>
+                                    <div class="roleRequestIcon"></div>
+                                    <div class="addRoleIcon"></div>-->
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </div>
-                <div class="userRolesParent">
-                    <div class="userRoleWizardParenWizard">
-                        <div class="roleRepeatWizardMain" ng-class="{ mentorThemeColor : wizard.name =='MENTOR',menteeThemeColor : wizard.name =='MENTEE',coachThemeColor : wizard.name =='COACH',coacheeThemeColor : wizard.name =='COACHEE'}" ng-click="roleClick($event,wizard)" ng-repeat="wizard in applicationRole">
-                            <div class="rolelabelPart">
-                                <div class="roleNameLabel">
-                                    <h1 style="width: 80%;margin: 10%;" class="notificationWizName" ng-class="{ whiteBackground : wizard.name =='MENTOR', whiteBackground : wizard.name =='COACH' }">{{wizard.name}}</h1>
-                                </div>
-                                <div class="roleImage">
-                                    <img src={{wizard.img}} class="homePageLogo">
-                                </div>
-                            </div>
-                            <div class="roleCountPart">
-                                <div class="fullWidthHeightClass" style="float:left;">
-                                    <div class='roleWiseClass'>
-                                        <!--<div class="homeIcon"></div>
-                                        <div class="notificationIcon"></div>
-                                        <div class="roleRequestIcon"></div>
-                                        <div class="addRoleIcon"></div>-->
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
 
-                </div>
-                <div class="bottomStripParent">
-                    <div class="applicationBottomStrip">
-                        <bottom-Main-Strip></bottom-Main-Strip>
                     </div>
+                    <img src="~/Images/icons/tranding topic.png" style="width:100%" />
+                </div>
+
+            </div>
+            <div class="bottomStripParent">
+                <div class="applicationBottomStrip">
+                    <bottom-Main-Strip></bottom-Main-Strip>
                 </div>
             </div>
         </div>
     </div>
+</div>
 

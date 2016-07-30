@@ -79,12 +79,14 @@
 	display: flex;
 }
 .profileImage{
-	border: 1px solid lightgray;
+	    border: 1px solid lightgray;
     	margin: auto auto;  
     	display: table;
     	width: 55%;
     	height: 50%;
- 	display: table;
+ 	    display: table;
+        background: url("/Images/icons/profile.png") center center;
+        background-size: contain;
 }
 .profileName{
     	margin: auto 0;
@@ -222,7 +224,7 @@ width: 20%;
 	color : white;
 }
 .homePageLogo{
-   width: 20%;
+   width: 50px;
     margin-top: 1%;
     height: auto;
 }

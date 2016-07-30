@@ -2,9 +2,9 @@
 
     <img src="~/Images/icons/logo.png" alt="logo" style="height: auto; width: 95%;margin-left: 12%;margin-top: 1%;" />
 </div>
-<div class="applicationSearch">
-    <input class="applicationSearchTag" type="search" placeholder="SEARCH">
-</div>
+@*<div class="applicationSearch">
+        <input class="applicationSearchTag" type="search" placeholder="SEARCH">
+    </div>*@
 <div class="applicationRightCornerStrip">
     <div class="logoutOption">
         <div class="logoutOptionParent">
@@ -13,10 +13,10 @@
     </div>
     <div class="notificationDiv" ng-if="notification">
         <div class="notificationDivParent">
-            <h5 style="color: red;float:left;margin: auto 0;" class="fontClass genericPointerClass">NOTIFICATIONS</h5>	
-            	<div class="applicationNotiCount" title="5" style="float:left;text-align: center;margin: auto 5%;display: flex;">
-                    <h4 class="fontClass" style="margin:auto;font-weight: 700;line-height: 19px;color:white;">5</h4>
-                </div>
+            <h5 style="color: red;float:left;margin: auto 0;" class="fontClass genericPointerClass">NOTIFICATIONS</h5>
+            <div class="applicationNotiCount" title="5" style="float:left;text-align: center;margin: auto 5%;display: flex;">
+                <h4 class="fontClass" style="margin:auto;font-weight: 700;line-height: 19px;color:white;">5</h4>
+            </div>
         </div>
     </div>
     <div class="roleIcons"  ng-if="notification">

@@ -243,5 +243,34 @@ namespace KindleSpur.Data
             return filters;
         }
 
+        public BsonDocument GetCoacheeTopicAndCategory(SkillOrTopic skill)
+        {
+            BsonDocument _Category = new BsonDocument();
+
+            try
+            {
+                var _ctsCollection = _kindleDatabase.GetCollection("CTS");
+                if (skill != null)
+                {
+                    var query = Query.EQ("Name", skill.Name);
+                    BsonDocument result = _ctsCollection.Find(Query.ElemMatch("Topics.Skills", Query.EQ("Name", skill.Name))).SetFields(Fields.Include("Category", "Topics.Skills.$")).ToList()[0];
+                    if (result != null)
+                    {
+                        _Category = _Category.Add(new BsonElement("Category", result["Category"].AsString));
+                        _Category = _Category.Add(new BsonElement("Topic", result["Topics"][0]["Name"].AsString));
+                        _Category = _Category.Add(new BsonElement("Skill", skill.Name));
+                        _Category = _Category.Add(new BsonElement("profiLevel", skill.profiLevel));
+                    }
+                }
+            }
+            catch (MongoException ex)
+            {
+                _logCollection.Insert("{ Error : 'Failed at GetCoacheeTopicAndCategory().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ");
+                throw new MongoException("Signup failure!!!");
+            }
+
+            return _Category;
+        }
+
     }
 }

@@ -25,9 +25,9 @@
                 </div>
                 <div class="" style="float:left;width:100%;height:86%;">
                     <molecule-Map ng-if="ctsDataForMolecule" cts-Data="ctsDataForMolecule"></molecule-Map>
-                </div>   
+                </div>
                 <div class="applicationBottomStrip">
-                     <bottom-Main-Strip></bottom-Main-Strip>
+                    <bottom-Main-Strip></bottom-Main-Strip>
                 </div>
             </div>
             @*VCS*@
@@ -350,10 +350,10 @@
                 </div>
                 <div class="mainDashBoardWizardParent">
                     <div class="statusParentDiv">
-                        <div class="ngRepeatDivForStatus shadow4" ng-click="showCoacheeProfile = true;showCoacheeProfileStatus(option)" ng-repeat="option in coachingStatusArray">
+                        <div class="ngRepeatDivForStatus " ng-click="showCoacheeProfile = true;showCoacheeProfileStatus(option)" ng-repeat="option in coachingStatusArray">
 
                             <div class="profileImageCoachingStatus">
-                                <img ng-src="{{option.PhotoURL}}" style="margin: auto auto;float: left;height: 45px;width: 45px;" />
+                                <img ng-src="{{option.PhotoURL ? option.PhotoURL : '/Images/icons/profile.png' }}" style="margin: auto auto;float: left;height: 35px;width: 35px;" />
                             </div>
                             <div class="profileNameCoachingStatus">
                                 <h5 class="textAlignCoachingStatus fontClass">{{option.FirstName+" "+option.LastName}}</h5>
@@ -373,9 +373,10 @@
                                 <img ng-src="{{option.TreeURL}}" style="margin: auto auto;float: left;height: 45px;width: 45px;" />
                             </div>
                             <div class="communicationsCoachingStatus">
-                                <img src="" class="iconOnStatusArray">
-                                <img src="" class="iconOnStatusArray">
-                                <img src="" class="iconOnStatusArray">
+                                <img src="" class="iconOnStatusArray" style="visibility:hidden;">
+                                <img src="~/Images/icons/call.png" class="iconOnStatusArray">
+                                <img src="" class="iconOnStatusArray" style="visibility:hidden;">
+
                             </div>
                         </div>
 
@@ -583,36 +584,34 @@
                                 @*<div class="flipContainer" ng-class="{ flipper : option.selectedOption == true }">
                                     <div class="flipper" style="float: left; width : 100%; height : 100%;">
                                         <div class="front">
-                                           
+
 
                                             <div class="flipDivOnClass">
                                                 <div class="promoCodeClass">
                                                     <h5 style="font-size: 18px; margin: 5px;" ng-model="gameKey"></h5>
-                                                  
+
                                             </div>
                                         </div>
                                         </div>*@
-                                        @*<div class="back">*@
-                                            <!-- back content -->
-                                            <div class="dashBoardMenuCoachRightCircle">
-                                                <div class="dashBoardMenuCoachRightCirclePart">
-                                                    <img src={{option.url}} class="dashBoardMenuCoachImage">
-                                                </div>
-                                            </div>
-                                            <div class="dashBoardMenuCoachRightlabel">
-                                                <h5 style="color:black;margin: auto;" class="leftSideMenuLable fontClass">{{option.name}}</h5>
-                                                
-                                             @*</div>*@
-                                        </div>
+                                @*<div class="back">*@
+                                <!-- back content -->
+                                <div class="dashBoardMenuCoachRightCircle">
+                                    <div class="dashBoardMenuCoachRightCirclePart">
+                                        <img src={{option.url}} class="dashBoardMenuCoachImage">
                                     </div>
                                 </div>
+                                <div class="dashBoardMenuCoachRightlabel">
+                                    <h5 style="color:black;margin: auto;" class="leftSideMenuLable fontClass">{{option.name}}</h5>
 
+                                    @*</div>*@
+                                </div>
                             </div>
                         </div>
+
                     </div>
-                    <div class="applicationBottomStrip">
-                        <bottom-Main-Strip></bottom-Main-Strip>
-                    </div>
+                </div>
+                <div class="applicationBottomStrip">
+                    <bottom-Main-Strip></bottom-Main-Strip>
                 </div>
             </div>
             @*Knowledge feed*@
@@ -638,7 +637,7 @@
                     </div>
                 </div>
             </div>
-
+           
         </div>
     </div>
 </div>

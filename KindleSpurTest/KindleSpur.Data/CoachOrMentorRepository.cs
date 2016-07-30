@@ -356,7 +356,7 @@ namespace KindleSpur.Data
                                  into grp
                               select new CoachStatus()
                               {
-                                  Sender = grp.Key.Sender,
+                                  EmailAddress = grp.Key.Sender,
                                   Skill = grp.Key.Skill,
                                   FeedbackCount = grp.Count(),
                                   Rating = grp.OrderByDescending(t => t.customerSatisfactionRating).FirstOrDefault().customerSatisfactionRating
@@ -381,15 +381,22 @@ namespace KindleSpur.Data
             return result;
         }
 
-        public CoachStatus GetCocheeDetails(CoachStatus c)
+       public CoachStatus GetCocheeDetails(CoachStatus c)
         {
             if(c != null)
             { 
                 var _userCollection = _kindleDatabase.GetCollection("UserDetails");
-                User userDetail = _userCollection.FindOneAs<User>(Query.EQ("EmailAddress", c.Sender));
+                User userDetail = _userCollection.FindOneAs<User>(Query.EQ("EmailAddress", c.EmailAddress));
                 c.FirstName = userDetail.FirstName;
                 c.LastName = userDetail.LastName;
                 c.PhotoURL = userDetail.Photo;
+                c.Mobile = userDetail.Mobile;
+                c.LinkdinURL = userDetail.LinkdinURL;
+                c.description = userDetail.description;
+
+                CoacheeOrMenteeRepository _coacheeRepo = new CoacheeOrMenteeRepository();
+                //c.topics = _coacheeRepo.GetTopicsForMentee(c.EmailAddress);
+                c.skills= _coacheeRepo.GetSkillsForCoachee(c.EmailAddress);
             }
             return c;
         }
