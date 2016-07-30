@@ -1223,7 +1223,7 @@ app.directive('moleculeMap', function ($rootScope) {
 });
 
 
-app.directive('rssFeed', function ($state, serverCommunication) {
+app.directive('rssFeed', function ($state, serverCommunication, $timeout) {
     return {
         scope: {
            skill: "=",
@@ -1232,7 +1232,7 @@ app.directive('rssFeed', function ($state, serverCommunication) {
         //scope: true,   // optionally create a child scope
         link: function ($scope, element, attrs) {
             window.rss = $scope;
-            $scope.feedContainArray = [];
+            $scope.feedContainArray = $scope.skill = [];
             
             var _selectedTagFed = [];
             $scope.selectedFeedTag = function (iIndex, iOption) {
@@ -1253,7 +1253,8 @@ app.directive('rssFeed', function ($state, serverCommunication) {
                     $scope.getRssFeedData(iArr[iNdex]);
                     iNdex++;
                     if (iNdex == iArr.length) {
-                        console.error('final callBack')
+                        console.error('final callBack');
+                        $timeout(function(){},0);
                     }else {
                         _rec(iArr, iNdex)
                     }
@@ -1295,7 +1296,8 @@ app.directive('rssFeed', function ($state, serverCommunication) {
                          b = new Date(b.dateLastCrawled);
                          return a > b ? -1 : a < b ? 1 : 0;
                      });
-                     if (!$scope.$$phase) $scope.$digest();
+                     // if (!$scope.$$phase) $scope.$digest();
+                     $timeout(function () { }, 0);
                  })
                 .fail(function (data) {
                     //alert("error");
