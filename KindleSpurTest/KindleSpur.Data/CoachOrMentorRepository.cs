@@ -154,21 +154,7 @@ namespace KindleSpur.Data
 
                 if (Data.Role.ToLower() == "coach" || Data.Role.ToLower() == "coachee")
                 {
-                    for (int i = _entity.Skills.Count - 1; i >= 0; i--)
-                    {
-                        bool blnDelete = true;
-
-                        foreach (Skill item in Data.Skills)
-                        {
-                            if(item.Id == _entity.Skills[i].Id)
-                            {
-                                blnDelete = false;
-                                break;
-                            }
-                        }
-
-                       if (blnDelete) _entity.Skills.RemoveAt(i);
-                    }
+                   
 
                     foreach (Skill skill in Data.Skills)
                     {
@@ -178,7 +164,23 @@ namespace KindleSpur.Data
                         }
                     }
 
-                   
+                    for (int i = _entity.Skills.Count - 1; i >= 0; i--)
+                    {
+                        bool blnDelete = true;
+
+                        foreach (Skill item in Data.Skills)
+                        {
+                            if (item.Id == _entity.Skills[i].Id)
+                            {
+                                blnDelete = false;
+                                break;
+                            }
+                        }
+
+                        if (blnDelete) _entity.Skills.RemoveAt(i);
+                    }
+
+
                 }
 
                 if (Data.Role.ToLower() == "mentor" || Data.Role.ToLower() == "mentee")
