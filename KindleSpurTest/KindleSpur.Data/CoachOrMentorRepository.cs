@@ -152,8 +152,16 @@ namespace KindleSpur.Data
                                                                    Query.EQ("Role", Data.Role)
                                                                 ));
 
-                if (Data.Role == "Coach")
+                if (Data.Role.ToLower() == "coach" || Data.Role.ToLower() == "coachee")
                 {
+                    for (int i = _entity.Skills.Count - 1; i >= 0; i--)
+                    {
+                        if (!Data.Skills.Contains(_entity.Skills[i]))
+                        {
+                            _entity.Skills.RemoveAt(i);
+                        }
+                    }
+
                     foreach (Skill skill in Data.Skills)
                     {
                         if (!_entity.Skills.Contains(skill))
@@ -161,10 +169,20 @@ namespace KindleSpur.Data
                             _entity.Skills.Add(skill);
                         }
                     }
+
+                   
                 }
 
-                if (Data.Role == "Mentor")
+                if (Data.Role.ToLower() == "mentor" || Data.Role.ToLower() == "mentee")
                 {
+                    for (int i = _entity.Topics.Count - 1; i >= 0; i--)
+                    {
+                        if (!Data.Topics.Contains(_entity.Topics[i]))
+                        {
+                            _entity.Topics.RemoveAt(i);
+                        }
+                    }
+
                     foreach (string topic in Data.Topics)
                     {
                         if (!_entity.Topics.Contains(topic))

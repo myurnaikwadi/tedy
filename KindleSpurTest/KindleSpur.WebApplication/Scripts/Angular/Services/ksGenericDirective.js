@@ -117,22 +117,22 @@ app.directive('ctcRole', function ($state, serverCommunication) {
             scope.categoryClick = function (iEvent, iIndex, iCategory) {
                 // scope.selectedCategory = iIndex;
                 iCategory.type = 'C';
-                if(iCategory.selectedCategory == true){//already select
-                    if (iCategory.alreadySelected == true) {//make delete array
-                        _deleteArray[iCategory.Name] = iCategory;
-                    }
-                }
+                //if(iCategory.selectedCategory == true){//already select
+                //    if (iCategory.alreadySelected == true) {//make delete array
+                //        _deleteArray[iCategory.Name] = iCategory;
+                //    }
+                //}
 
                 iCategory.selectedCategory = true;
                 scope.categoryDisplay = false;
                 scope.selectedCategoryValue = iCategory;
-                if (iCategory.alreadySelected == true) {
-                    if (_deleteArray[iCategory.Name]) delete _deleteArray[iCategory.Name];
-                } else {
-                    if (_updateArray[iCategory.Name]) {
-                        updateArray[iCategory.Name] = iCategory;
-                    }
-                }
+                //if (iCategory.alreadySelected == true) {
+                //    if (_deleteArray[iCategory.Name]) delete _deleteArray[iCategory.Name];
+                //} else {
+                //    if (_updateArray[iCategory.Name]) {
+                //        _updateArray[iCategory.Name] = iCategory;
+                //    }
+                //}
                 scope.topicArray = [].concat(iCategory.Topics)
                 for (var k = 0; k < scope.topicArray.length ; k++) {
                     scope.topicArray[k].selected = false;
@@ -157,16 +157,16 @@ app.directive('ctcRole', function ($state, serverCommunication) {
                     if (iTopic.alreadySelected == true) {//make delete array
                         _deleteArray[iTopic.Name] = iTopic;
                     }
-                    if (_updateArray[iTopic.Name]) {
-                        delete _updateArray[iTopic.Name];
-                    }
+                    //if (_updateArray[iTopic.Name]) {
+                    //    delete _updateArray[iTopic.Name];
+                    //}
                     if (scope.skillRequired) {
                         if (iTopic.Skills.length > 0) {
                             var _deleteArr = [];
                             for (var l = 0 ; l < scope.skillsArray.length; l++) {
                                 for (var k = 0; k < iTopic.Skills.length ; k++) {                                    
-                                    if (_updateArray[iTopic.Skills[k].Name]) 
-                                        delete _updateArray[iTopic.Skills[k].Name];                                   
+                                    //if (_updateArray[iTopic.Skills[k].Name]) 
+                                    //    delete _updateArray[iTopic.Skills[k].Name];                                   
                                     if (iTopic.Skills[k].alreadySelected == true) {
                                         _deleteArray[iTopic.Skills[k].Name] = iTopic.Skills[k];
                                     }
@@ -188,27 +188,25 @@ app.directive('ctcRole', function ($state, serverCommunication) {
                    
                     if (iTopic.alreadySelected == true) {
                         if (_deleteArray[iTopic.Name]) delete _deleteArray[iTopic.Name];
-                        if (_updateArray[iTopic.Name]) delete _updateArray[iTopic.Name];
-                    } else {                    
-                            updateArray[iTopic.Name] = iTopic;                     
-                    }
+                    //    if (_updateArray[iTopic.Name]) delete _updateArray[iTopic.Name];
+                    } //else {                    
+                    //        _updateArray[iTopic.Name] = iTopic;                     
+                    //}
                     if (scope.skillRequired) {
                        
                         for (var k = 0; k < iTopic.Skills.length ; k++) {
                             if (_skills[iTopic.Skills[k].Name]) {
                                 iTopic.Skills[k].alreadySelected = true;
                                 if (_deleteArray[iTopic.Skills[k].Name]) {
-
+                                    delete _deleteArray[iTopic.Skills[k].Name];
                                 } else {
                                     iTopic.Skills[k].selected = true;
-                                }
-
-
-                            } else {
-                                if (_updateArray[iTopic.Skills[k].Name]) {
-                                    updateArray[iTopic.Skills[k].Name] = iTopic.Skills[k];
-                                }
-                            }                           
+                                }                                   
+                            }// else {
+                            //    //if (_updateArray[iTopic.Skills[k].Name]) {
+                            //    //    _updateArray[iTopic.Skills[k].Name] = iTopic.Skills[k];
+                            //    //}
+                            //}                           
                         }
                         scope.skillsArray = scope.skillsArray.concat(iTopic.Skills);
                     } 
@@ -233,9 +231,9 @@ app.directive('ctcRole', function ($state, serverCommunication) {
                     if (iSkills.alreadySelected == true) {
                         if (_deleteArray[iSkills.Name]) delete _deleteArray[iSkills.Name];
                         if (_updateArray[iSkills.Name]) delete _updateArray[iSkills.Name];
-                    } else {
+                    } else  {
                         if (_updateArray[iSkills.Name]) {
-                            updateArray[iSkills.Name] = iSkills;
+                            _updateArray[iSkills.Name] = iSkills;
                         }
                     }
                 }
@@ -267,10 +265,16 @@ app.directive('ctcRole', function ($state, serverCommunication) {
                     //publish check
                 } else {
                    // console.error(_updateArray);
-                    if (Object.keys(_updateArray).length > 0 || Object.keys(_deleteArray).length > 0 ){
+                    //if (Object.keys(_updateArray).length > 0 || Object.keys(_deleteArray).length > 0 ){
+                        var _dataArray = [];
+                        for (var l = 0 ; l < scope.skillsArray.length; l++) {
+                            if (scope.skillsArray[l].selected) {
+                                _dataArray.push(scope.skillsArray[l]);
+                            }
+                        }
                         if (scope.skillRequired) {
                             serverCommunication.sendSelectedCTSDataToServer({
-                                selectedArray: { updateObj : _updateArray, deleteObj : _deleteArray },
+                                selectedArray: _dataArray,
                                 role: scope.role,
                                 successCallBack: function (iObj) {
                                     scope.mySelection = true;
@@ -307,7 +311,7 @@ app.directive('ctcRole', function ($state, serverCommunication) {
                         }
                         _updateArray = {};
                         _deleteArray = {}
-                    }
+                    //}
                 }
             };
 
@@ -333,6 +337,7 @@ app.directive('ctcRole', function ($state, serverCommunication) {
                 scope.selectedTopic = -1;
                 scope.selectedSkills = -1;
                 scope.selectedCategoryValue = null;
+                scope.skillsArray = [];
                 if (scope.role == "mentor") {
                     console.error('get data for mentor')
                     serverCommunication.getCategorys({
