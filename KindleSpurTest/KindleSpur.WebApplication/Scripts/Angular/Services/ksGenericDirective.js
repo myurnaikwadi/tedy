@@ -1232,7 +1232,7 @@ app.directive('rssFeed', function ($state, serverCommunication, $timeout) {
         //scope: true,   // optionally create a child scope
         link: function ($scope, element, attrs) {
             window.rss = $scope;
-            $scope.feedContainArray = $scope.skill = [];
+            $scope.feedContainArray = [];
             
             var _selectedTagFed = [];
             $scope.selectedFeedTag = function (iIndex, iOption) {
