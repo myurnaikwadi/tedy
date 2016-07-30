@@ -301,7 +301,7 @@
             //   loggedUserDetails: $rootScope.loggedDetail,
                 redeemAction: $scope.redeemAction,
                 successCallBack: function (iObj) {              
-                    $scope.menuClick(7);
+                    $scope.menuClick(6);
                     console.error('In successCallBack', iObj);
 
                 },

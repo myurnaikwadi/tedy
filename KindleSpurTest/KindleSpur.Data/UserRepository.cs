@@ -306,7 +306,7 @@ namespace KindleSpur.Data
      
             if(RewardPointsGained < 10 || BalancePoints < 10)
             {
-                throw new Exception("You do not have sufficient points to unlock games!!!");
+                return null;
             }
 
             // RewardPointsGained = (RewardPointsGained - (RewardPointsGained % 10))/10;

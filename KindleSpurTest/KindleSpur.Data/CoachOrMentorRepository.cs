@@ -76,12 +76,12 @@ namespace KindleSpur.Data
                 if (entity.Feedback == null) entity.Feedback = new List<Feedback>();
                 feedback.Sender = UserId;
                 entity.Feedback.Add(feedback);
-                entity.RewardPointsGained += 1;           
+                entity.RewardPointsGained += 5;           
                 coachOrMentors.Save(entity);
                 var _users = _kindleDatabase.GetCollection("UserDetails");
                 User user = _users.FindOneAs<User>(Query.EQ("EmailAddress", UserId));
-                user.BalanceRewardPoints += 1;
-                user.TotalRewardPoints +=1;
+                user.BalanceRewardPoints += 5;
+                user.TotalRewardPoints +=5;
                 _users.Save(user);
                 _transactionStatus = true;
                 return user.TotalRewardPoints;
@@ -349,9 +349,11 @@ namespace KindleSpur.Data
                 CoachOrMentor coach = FeedbackCollection.FindOneAs<CoachOrMentor>(Query.EQ("UserId", UserId));
                 LstCochees = coach.Feedback;
 
-                 result = (from t in LstCochees
+                if (LstCochees != null)
+                {
+                    result = (from t in LstCochees
                               group t by new { t.Sender, t.Skill }
-                              into grp
+                                 into grp
                               select new CoachStatus()
                               {
                                   Sender = grp.Key.Sender,
@@ -360,12 +362,13 @@ namespace KindleSpur.Data
                                   Rating = grp.OrderByDescending(t => t.customerSatisfactionRating).FirstOrDefault().customerSatisfactionRating
                               }).ToList();
 
-                if(result.Count()>0)
-                { 
-                    for (var i = 0; i < result.Count(); i++)
+                    if (result.Count() > 0)
                     {
-                        result[i] = GetCocheeDetails(result[i]);
-                        result[i].TreeURL = GetTreeURL(result[i].FeedbackCount, result[i].Rating);
+                        for (var i = 0; i < result.Count(); i++)
+                        {
+                            result[i] = GetCocheeDetails(result[i]);
+                            result[i].TreeURL = GetTreeURL(result[i].FeedbackCount, result[i].Rating);
+                        }
                     }
                 }
 
