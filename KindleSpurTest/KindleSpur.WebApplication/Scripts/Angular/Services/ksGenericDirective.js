@@ -1233,6 +1233,7 @@ app.directive('rssFeed', function ($state, serverCommunication) {
         link: function ($scope, element, attrs) {
             window.rss = $scope;
             $scope.feedContainArray = [];
+            
             var _selectedTagFed = [];
             $scope.selectedFeedTag = function (iIndex, iOption) {
                 console.error(iOption.selected)
@@ -1302,7 +1303,12 @@ app.directive('rssFeed', function ($state, serverCommunication) {
                 });
             };
 
-            $scope.getRssFeedData();
+            if ($scope.skill) {
+                if ($scope.skill.length > 0) {
+                    $scope.selectedFeedTag(0,$scope.skill[0]);
+                }
+            }
+            
         }
     }
 });
