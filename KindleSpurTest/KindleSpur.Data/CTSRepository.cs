@@ -183,7 +183,9 @@ namespace KindleSpur.Data
                 if (skill != null)
                 {
                     var query = Query.EQ("Name", skill.Name);
-                    BsonDocument result = _ctsCollection.Find(Query.ElemMatch("Topics.Skills", Query.EQ("Name", skill.Name))).SetFields(Fields.Include("Category", "Topics.Skills.$")).ToList()[0];
+                    if (_ctsCollection.Find(Query.ElemMatch("Topics.Skills", Query.EQ("Name", skill.Name))).SetFields(Fields.Include("Category", "Topics.Skills.$")).ToList().Count >0)
+                    { 
+                        BsonDocument result = _ctsCollection.Find(Query.ElemMatch("Topics.Skills", Query.EQ("Name", skill.Name))).SetFields(Fields.Include("Category", "Topics.Skills.$")).ToList()[0];
                     if (result != null)
                     {
                         _Category = _Category.Add(new BsonElement("Category", result["Category"].AsString));
@@ -193,6 +195,7 @@ namespace KindleSpur.Data
                         _Category = _Category.Add(new BsonElement("profiLevel", skill.profiLevel));
                     }
                 }
+              }
             }
             catch (MongoException ex)
             {

@@ -156,18 +156,19 @@ namespace KindleSpur.WebApplication.Controllers
         public void UpdateUserDetails(User _obj)
         {
             UserRepository _repo = new UserRepository();
-            if (_repo.UpdateUserDetails(((IUser)System.Web.HttpContext.Current.Session["User"]).Id, _obj))
+            if (_repo.UpdateUserDetails(((IUser)System.Web.HttpContext.Current.Session["User"]).EmailAddress, _obj))
             {
             }
         }
         [HttpPost]
         public void UpdateUserDesc(User _obj)
         {
-            ObjectId id = ((IUser)System.Web.HttpContext.Current.Session["User"]).Id;
             UserRepository _repo = new UserRepository();
-            if (_repo.UpdateUserDesc(((IUser)System.Web.HttpContext.Current.Session["User"]).Id, _obj))
+            if (_repo.UpdateUserDesc(((IUser)System.Web.HttpContext.Current.Session["User"]).EmailAddress, _obj.description))
             {
+
             }
+
         }
 
         [HttpPost]

@@ -299,9 +299,14 @@
     <Content Include="Images\edit_Icon.png" />
     <Content Include="Images\icons\book.png" />
     <Content Include="Images\icons\call.png" />
+    <Content Include="Images\icons\coach.png" />
     <Content Include="Images\icons\coachee.jpg" />
+    <Content Include="Images\icons\coachee.png" />
     <Content Include="Images\icons\Knowledge.png" />
     <Content Include="Images\icons\KnowledgeFeed.png" />
+    <Content Include="Images\icons\logo.png" />
+    <Content Include="Images\icons\mentee.png" />
+    <Content Include="Images\icons\mentor.png" />
     <Content Include="Images\icons\profile.png" />
     <Content Include="Images\icons\Resources.png" />
     <Content Include="Images\icons\Reword.png" />

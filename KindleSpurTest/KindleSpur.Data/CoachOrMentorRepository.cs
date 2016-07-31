@@ -75,6 +75,7 @@ namespace KindleSpur.Data
 
                 if (entity.Feedback == null) entity.Feedback = new List<Feedback>();
                 feedback.Sender = UserId;
+                feedback.Skill = feedback.FeedbackText;
                 entity.Feedback.Add(feedback);
                 entity.RewardPointsGained += 5;           
                 coachOrMentors.Save(entity);
@@ -347,27 +348,30 @@ namespace KindleSpur.Data
                 var FeedbackCollection = _kindleDatabase.GetCollection("CoachOrMentor");
 
                 CoachOrMentor coach = FeedbackCollection.FindOneAs<CoachOrMentor>(Query.EQ("UserId", UserId));
-                LstCochees = coach.Feedback;
-
-                if (LstCochees != null)
+                if (coach != null)
                 {
-                    result = (from t in LstCochees
-                              group t by new { t.Sender, t.Skill }
-                                 into grp
-                              select new CoachStatus()
-                              {
-                                  EmailAddress = grp.Key.Sender,
-                                  Skill = grp.Key.Skill,
-                                  FeedbackCount = grp.Count(),
-                                  Rating = grp.OrderByDescending(t => t.customerSatisfactionRating).FirstOrDefault().customerSatisfactionRating
-                              }).ToList();
+                    LstCochees = coach.Feedback;
 
-                    if (result.Count() > 0)
+                    if (LstCochees != null)
                     {
-                        for (var i = 0; i < result.Count(); i++)
+                        result = (from t in LstCochees
+                                  group t by new { t.Sender, t.Skill }
+                                     into grp
+                                  select new CoachStatus()
+                                  {
+                                      EmailAddress = grp.Key.Sender,
+                                      Skill = grp.Key.Skill,
+                                      FeedbackCount = grp.Count(),
+                                      Rating = grp.OrderByDescending(t => t.customerSatisfactionRating).FirstOrDefault().customerSatisfactionRating
+                                  }).ToList();
+
+                        if (result.Count() > 0)
                         {
-                            result[i] = GetCocheeDetails(result[i]);
-                            result[i].TreeURL = GetTreeURL(result[i].FeedbackCount, result[i].Rating);
+                            for (var i = 0; i < result.Count(); i++)
+                            {
+                                result[i] = GetCocheeDetails(result[i]);
+                                result[i].TreeURL = GetTreeURL(result[i].FeedbackCount, result[i].Rating);
+                            }
                         }
                     }
                 }

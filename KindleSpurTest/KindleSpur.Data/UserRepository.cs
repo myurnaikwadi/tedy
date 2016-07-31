@@ -126,13 +126,14 @@ namespace KindleSpur.Data
             }
         }
 
-        public bool UpdateUserDetails(ObjectId userId, IUser userData)
+        public bool UpdateUserDetails(string EmailAddress, IUser userData)
         {
             bool _transactionStatus = false;
             try
             {
                 var _userCollection = _kindleDatabase.GetCollection("UserDetails");
-                var userDetail = _userCollection.FindOneByIdAs<User>(userId);
+                //var userDetail = _userCollection.FindOneByIdAs<User>(userId);
+                var userDetail = _userCollection.FindOneAs<User>(Query.EQ("EmailAddress", EmailAddress));
                 userDetail.FirstName = userData.FirstName;
                 userDetail.LastName = userData.LastName;
                 userDetail.Mobile = userData.Mobile;
@@ -147,14 +148,15 @@ namespace KindleSpur.Data
             return _transactionStatus;
         }
 
-        public bool UpdateUserDesc(ObjectId userId, IUser userData)
+        public bool UpdateUserDesc(string EmailAddress, string description)
         {
             bool _transactionStatus = false;
             try
             {
                 var _userCollection = _kindleDatabase.GetCollection("UserDetails");
-                var userDetail = _userCollection.FindOneByIdAs<IUser>(userId);
-                userDetail.description = userData.description;
+                //var userDetail = _userCollection.FindOneByIdAs<IUser>(EmailAddress);
+                var userDetail = _userCollection.FindOneAs<User>(Query.EQ("EmailAddress", EmailAddress));
+                userDetail.description = description;
                 _userCollection.Save(userDetail);
                 _transactionStatus = true;
             }

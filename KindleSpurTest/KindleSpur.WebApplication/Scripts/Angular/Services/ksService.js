@@ -213,7 +213,7 @@ app.factory('serverCommunication', function ($http) {
        */
         changeDescriptionDetails: function (iObj) {
             console.error(iObj)
-            $http.post('/User/UpdateUserDesc', iObj.cateGoryObject).then(iObj.successCallBack, iObj.failureCallBack);
+            $http.post('/User/UpdateUserDesc', iObj.changeDetails).then(iObj.successCallBack, iObj.failureCallBack);
         },
         /**
       * @auther : MKN

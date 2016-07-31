@@ -9,7 +9,8 @@
         lastName: $scope.userInfo.LastName.toUpperCase(),
         profileImage: '',
         profileBackgroundImage: '',
-        description: 'No Description Available'
+        descriptiontoDisplay : '',
+        description:$scope.userInfo.description ? $scope.userInfo.description :  'No Description Available'
     }
     var uploadImageOnPage = function (iObj, iCallback) {
         var fileInputId = iObj.fileInputId;
@@ -21,6 +22,12 @@
             if (iCallback) iCallback();
         };
 
+    };
+
+    $scope.displayDes = function () {
+        if ($scope.myInfo.description && ($scope.myInfo.description != '' && $scope.myInfo.description != 'No Description Available')) {
+            $scope.myInfo.descriptiontoDisplay = $scope.myInfo.description;
+        }
     };
 
     $scope.closeProfilePopup = function () {
@@ -120,6 +127,7 @@
     $scope.sendDescDetailsToServer = function() {
         $scope.editDescription = false;
         console.error($scope.myInfo)
+        $scope.myInfo.description = $scope.myInfo.descriptiontoDisplay;
         var _object = {
             changeDetails: {
                 description: $scope.myInfo.description
