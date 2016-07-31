@@ -252,6 +252,13 @@ app.directive('ctcRole', function ($state, serverCommunication) {
                 }
                 else {
                     scope.categoryDisplay = true;
+                    for (var k = 0; k < scope.catogoryArray.length ; k++) {
+                        scope.catogoryArray[k].selectedCategory = false;
+                        if (_category[scope.catogoryArray[k].Category]) {
+                            scope.catogoryArray[k].selectedCategory = true;
+                            scope.catogoryArray[k].alreadySelected = true;
+                        }
+                    }
                 }
 
                 scope.skillsArray = [];

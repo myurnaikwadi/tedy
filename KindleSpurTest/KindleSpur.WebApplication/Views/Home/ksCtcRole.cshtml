@@ -63,13 +63,14 @@
                                     </div>
 
                                     <div class="topicsList" ng-repeat="skill in skillsArray" ng-click="skillSelection($event,$index,skill)">
-                                        <div class="topicsListParent fontClass" ng-class="{ coachThemeColor : skill.selected == true && role == 'coach',menteeThemeColor : skill.selected == true && role == 'mentee',mentorThemeColor : skill.selected == true && role == 'mentor',coacheeThemeColor : skill.selected == true && role == 'coachee' }">
+                                        <div ng-show="skill.selected == true" class="topicsListParent fontClass" ng-class="{ coachThemeColor : skill.selected == true && role == 'coach',menteeThemeColor : skill.selected == true && role == 'mentee',mentorThemeColor : skill.selected == true && role == 'mentor',coacheeThemeColor : skill.selected == true && role == 'coachee' }">
                                             <div style="float:left;display: flex;height: 100%;" title="{{(skill.profiLevel == 0 ? 'Basic' : (skill.profiLevel == 1 ? 'Intermediate' : 'Expert') )}}" ng-class="{ zeroBackground : skill.profiLevel == 0 , fiftyBackground : skill.profiLevel == 1, hundredBackground  : skill.profiLevel == 2 ,zeroBackgroundMentor : topic.profiLevel == 0 && role == 'mentor' , fiftyBackgroundMentor : topic.profiLevel == 1 && role == 'mentor', hundredBackgroundMentor  : topic.profiLevel == 2 && role == 'mentor'}">
                                                 <h5 ng-class="{ whiteBackground : skill.selected == true }" style="float:left;margin: auto 5px;font-size: 11px;" title="{{skill.Tooltip}}"> {{skill.Name | uppercase}}</h5>
                                             </div>
 
                                         </div>
-
+                                    
+                                        <h5 ng-hide="skill.selected == true" class="tagTasks fontClass" style="float: left;margin: 2%; width: 89%;height: 28px;">{{skill.Name | uppercase}}</h5>
                                         <input ng-show="skill.selected == true" ng-click="$event.stopPropagation()" ng-model="skill.profiLevel" name="Proficiency Level" title="{{ "Proficiency Level"+ (skill.profiLevel == 0 ? 'Basic' : (skill.profiLevel == 1 ? 'Intermediate' : 'Expert') )}}" min="0" step="1" max="2" style="float: left;margin: 2%; padding: 0; margin-right: 0;    width: 89%;" type="range" />
                                     </div>
                                 </div>
