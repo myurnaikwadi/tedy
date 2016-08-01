@@ -298,5 +298,104 @@ namespace KindleSpur.Data
 
             return coacheeEntities.ToList();
         }
+
+        public List<CoachStatus> GetCoachingStatus(string UserId)
+        {
+            List<Feedback> LstCochees = new List<Feedback>();
+            List<CoachStatus> result = new List<CoachStatus>();
+            try
+            {
+                var FeedbackCollection = _kindleDatabase.GetCollection("CoachOrMentor");
+
+                CoacheeOrMentee coach = FeedbackCollection.FindOneAs<CoacheeOrMentee>(Query.EQ("UserId", UserId));
+                if (coach != null)
+                {
+                    LstCochees = coach.Feedback;
+
+                    if (LstCochees != null)
+                    {
+                        result = (from t in LstCochees
+                                  group t by new { t.Sender, t.Skill }
+                                     into grp
+                                  select new CoachStatus()
+                                  {
+                                      EmailAddress = grp.Key.Sender,
+                                      Skill = grp.Key.Skill,
+                                      FeedbackCount = grp.Count(),
+                                      Rating = grp.OrderByDescending(t => t.customerSatisfactionRating).FirstOrDefault().customerSatisfactionRating
+                                  }).ToList();
+
+                        if (result.Count() > 0)
+                        {
+                            for (var i = 0; i < result.Count(); i++)
+                            {
+                                result[i] = GetCocheeDetails(result[i]);
+                                result[i].TreeURL = GetTreeURL(result[i].FeedbackCount, result[i].Rating);
+                            }
+                        }
+                    }
+                }
+
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+            return result;
+        }
+        public CoachStatus GetCocheeDetails(CoachStatus c)
+        {
+            if (c != null)
+            {
+                var _userCollection = _kindleDatabase.GetCollection("UserDetails");
+                User userDetail = _userCollection.FindOneAs<User>(Query.EQ("EmailAddress", c.EmailAddress));
+                c.FirstName = userDetail.FirstName;
+                c.LastName = userDetail.LastName;
+                c.PhotoURL = userDetail.Photo;
+                c.Mobile = userDetail.Mobile;
+                c.LinkdinURL = userDetail.LinkdinURL;
+                c.description = userDetail.description;
+
+                CoacheeOrMenteeRepository _coacheeRepo = new CoacheeOrMenteeRepository();
+                //c.topics = _coacheeRepo.GetTopicsForMentee(c.EmailAddress);
+                c.skills = _coacheeRepo.GetSkillsForCoachee(c.EmailAddress);
+            }
+            return c;
+        }
+        public string GetTreeURL(int FeedbackCount, int Rating)
+        {
+            string TreeURL = "Images/Tree/Stage 1.png";
+
+            if (FeedbackCount == 1)
+            {
+                if (Rating >= 1 && Rating <= 3)
+                    TreeURL = "Images/Tree/Stage 2.png";
+                else if (Rating >= 4 && Rating <= 5)
+                    TreeURL = "Images/Tree/Stage 2 with water.png";
+            }
+            else if (FeedbackCount == 2)
+            {
+                if (Rating >= 1 && Rating <= 3)
+                    TreeURL = "Images/Tree/Stage 3.png";
+                else if (Rating >= 4 && Rating <= 5)
+                    TreeURL = "Images/Tree/Stage 3 with flower.png";
+            }
+            else if (FeedbackCount == 3)
+            {
+                if (Rating >= 1 && Rating <= 3)
+                    TreeURL = "Images/Tree/Stage 4.png";
+                else if (Rating >= 4 && Rating <= 5)
+                    TreeURL = "Images/Tree/Stage 4 with Fruits.png";
+            }
+            else if (FeedbackCount >= 4)
+            {
+                if (Rating >= 1 && Rating <= 3)
+                    TreeURL = "Images/Tree/Stage 5.png";
+                else if (Rating >= 4 && Rating <= 5)
+                    TreeURL = "Images/Tree/Stage 5 with Fruits.png";
+            }
+            return TreeURL;
+        }
     }
 }

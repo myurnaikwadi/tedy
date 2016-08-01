@@ -22,6 +22,13 @@ app.controller('ksMainDashBoardController', function ($scope,$state,serverCommun
 		    }
 		
 		};
+		$scope.trendingTopicLeft = [
+            { name: 'Strategic Management ' },
+            { name: 'Finance for non-finance managers' },
+            { name: 'Bid Solutioning' },
+            { name: 'Successful Virtual Teams' },
+            { name: 'Technology migration' }
+		];
         
         $scope.navigateToProfile = function () {
             $state.go('profile');
