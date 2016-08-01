@@ -15,8 +15,7 @@ namespace KindleSpur.WebApplication.Controllers
         private readonly string UserId;
         public MentorController()
         {
-            //UserId = ((IUser)Session["User"]).EmailAddress;
-            UserId = "patilsagar28290@gmail.com";
+            UserId = ((IUser)System.Web.HttpContext.Current.Session["User"]).EmailAddress;
         }
         [HttpPost]
         public Boolean SaveTopics(List<SkillOrTopic> selectedArray)

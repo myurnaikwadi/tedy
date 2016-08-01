@@ -252,6 +252,7 @@
     <Compile Include="Controllers\MenteeController.cs" />
     <Compile Include="Controllers\MentorController.cs" />
     <Compile Include="Controllers\UserController.cs" />
+    <Compile Include="Controllers\ValueController.cs" />
     <Compile Include="EmailHelper\EmailNotification.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -449,6 +450,7 @@
     <Folder Include="Views\Coach\" />
     <Folder Include="Views\Mentor\" />
     <Folder Include="Views\Shared\" />
+    <Folder Include="Views\Value\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
