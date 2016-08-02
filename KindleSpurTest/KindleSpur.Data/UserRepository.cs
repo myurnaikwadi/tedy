@@ -10,15 +10,17 @@ using System.Text;
 using System.Threading.Tasks;
 using MongoDB.Driver.Builders;
 using MongoDB.Bson;
+using System.Collections;
 
 namespace KindleSpur.Data
 {
     public class UserRepository : IUserRepository
     {
-        MongoClient _mongoClient;
-        MongoServer _mongoServer;
-        MongoDatabase _kindleDatabase;
-        MongoCollection _logCollection;
+        private MongoClient _mongoClient;
+        private MongoServer _mongoServer;
+        private MongoDatabase _kindleDatabase;
+        private MongoCollection _logCollection;
+        private string emailAddress;
 
         public UserRepository()
         {
@@ -36,6 +38,12 @@ namespace KindleSpur.Data
                 _logCollection.Insert("{ Error : 'Database connection failed.', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ");
             }
         }
+
+        public UserRepository(string emailAddress) : this()
+        {
+            this.emailAddress = emailAddress;
+        }
+
         public bool AddNewUser(IUser userData)
         {
             bool _transactionStatus = false;
@@ -397,12 +405,45 @@ namespace KindleSpur.Data
             return (1 * type * measure);
         }
 
+        public bool SaveValueFeedStory(ValueFeedStory story)
+        {
+            var _userCollection = _kindleDatabase.GetCollection("UserDetails");
+            var userDetail = _userCollection.FindOneAs<User>(Query.EQ("EmailAddress", emailAddress));
+            try
+            {
+                if (userDetail.ValueFeedStories == null) userDetail.ValueFeedStories = new List<ValueFeedStory>();
+                userDetail.ValueFeedStories.Add(story);
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }                   
+        }
+
+        public string GetValueFeedStories(string ImpactZone)
+        {
+            var _userCollection = _kindleDatabase.GetCollection("UserDetails");
+
+            var matchMember = new BsonDocument("$match", new BsonDocument("ImpactZone", ImpactZone));
+            var unwindStories = new BsonDocument("$unwind", "$ValueFeedStories");
+            var sortOperation = new BsonDocument("$sort", new BsonDocument("CreateDate", 1));
+            var ProjectFinal = new BsonDocument("$project", new BsonDocument {{"_id", 0}, {"UserId", "EmailAddress"},{ "ValueFeedStories", "$ValueFeedStories" }});
+            IEnumerable<BsonDocument> pipeline = new[] { matchMember, unwindStories, sortOperation, ProjectFinal };
+
+            var args = new AggregateArgs();
+            args.Pipeline = pipeline;
+            args.AllowDiskUse = true;
+
+            return _userCollection.Aggregate(args).ToJson();
+
+        }
 
         public string GetVCSCActivity(string EmailAddress)
-        {
-            
+        {           
                 var _userCollection = _kindleDatabase.GetCollection("UserDetails");
                 var userDetail = _userCollection.FindOneAs<User>(Query.EQ("EmailAddress", EmailAddress));
+
             return userDetail.ValueCreationActivity.ToJson();
         }
     }
