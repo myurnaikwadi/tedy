@@ -301,7 +301,7 @@ namespace KindleSpur.Data
 
         public List<CoachStatus> GetCoachingStatus(string UserId)
         {
-            List<Feedback> LstCochees = new List<Feedback>();
+            List<IFeedback> LstCochees = new List<IFeedback>();
             List<CoachStatus> result = new List<CoachStatus>();
             try
             {
@@ -310,7 +310,7 @@ namespace KindleSpur.Data
                 CoacheeOrMentee coach = FeedbackCollection.FindOneAs<CoacheeOrMentee>(Query.EQ("UserId", UserId));
                 if (coach != null)
                 {
-                    LstCochees = coach.Feedback;
+                    LstCochees = coach.Feedbacks;
 
                     if (LstCochees != null)
                     {
