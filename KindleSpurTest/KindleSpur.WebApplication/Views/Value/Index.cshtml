@@ -1,0 +1,27 @@
+﻿<link href="~/Scripts/css/ksValue/ksValueFeeds.css" rel="stylesheet" />
+
+<script src="~/Scripts/angular.js"></script>
+<script src="~/Scripts/Angular/Controller/value/ksValueFeedsController.js"></script>
+<body ng-app="ValueCreationGame">
+    <div class="parentBody" ng-controller="ksValueFeedsController">
+        <div class="applicationTopStrip">
+            <top-Main-Strip></top-Main-Strip>
+        </div>
+        <div class="parentRoleDashboard">
+            <h5 class="fontClass ValueFeedsHeader">VALUE FEEDS</h5>
+            <h5> IMPACT ZONES</h5>
+            <div class="ImpactZoneButton">
+                <h5 class="tagTasks fontClass genericPointerClass" style="float: left;margin: 7px;width: 131px;height: 30px;"  ng-click="selectedFeedTag($index,option)" ng-repeat="option in ImpactZon">{{option.name | uppercase}}</h5>
+            </div>
+
+
+
+
+
+        </div>
+
+        <div class="applicationBottomStrip">
+            <bottom-Main-Strip></bottom-Main-Strip>
+        </div>
+    </div>
+</body>

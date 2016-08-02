@@ -38,6 +38,10 @@
             <div class="parentRoleDetailRight" ng-if="selectedMenu == '5'">
                 <ctc-Role role="coach" skill-Required="true"></ctc-Role>
             </div>
+            <div class="parentRoleDetailRight" ng-if="selectedMenu == '7'" ng-include="'/Views/Value/Index.cshtml'">
+
+                
+            </div>
             @*Communication*@
             <div class="parentRoleDetailRight" ng-if="selectedMenu == '3'">
                 <div class="homeLabelInChat" style="height:7%;border-bottom:1px solid lightgray;">
@@ -623,8 +627,7 @@
             <div class="parentRoleDetailRight" style="padding:1%;padding-bottom: 0;" ng-if="selectedMenu == '4'">
                 <rss-Feed ng-if="feedCategoryArray.length > 0" skill="feedCategoryArray"></rss-Feed>               
             </div>
-           
-        </div>
+          
     </div>
 </div>
 

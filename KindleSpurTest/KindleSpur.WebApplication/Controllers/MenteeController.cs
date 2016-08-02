@@ -61,9 +61,15 @@ namespace KindleSpur.WebApplication.Controllers
         [HttpPost]
         public int SaveFeedBack(Feedback feedback)
         {
-            CoachOrMentorRepository _coachRepo = new CoachOrMentorRepository();
+            CoacheeOrMenteeRepository _coachRepo = new CoacheeOrMenteeRepository();
             return _coachRepo.addFeedback(UserId, feedback);
 
+        }
+        public ActionResult GetCoachingStatus()
+        {
+            CoacheeOrMenteeRepository _coachRepo = new CoacheeOrMenteeRepository();
+            var filters = _coachRepo.GetCoachingStatus(UserId);
+            return Json(new { Filters = filters, Success = true }, JsonRequestBehavior.AllowGet);
         }
 
     }

@@ -41,6 +41,7 @@
                 , { name: 'ADD SKILLS' }
                 , { name: 'REWARDS' }
                 // , { name: 'VCS' }
+                ,{name: 'VALUE FEEDS'}
     ]
     $scope.applicationRole = [{ name: 'COACHEE' }, { name: 'MENTEE' }, { name: 'COACH' }, { name: 'MENTOR' }]
     $scope.rightSideDashBoardArray = [
@@ -399,7 +400,7 @@
             //   loggedUserDetails: $rootScope.loggedDetail,
                 redeemAction: $scope.redeemAction,
                 successCallBack: function (iObj) {
-                    $scope.menuClick(6);
+                    $scope.menuClick(7);
                     console.error('In successCallBack', iObj);
 
         },
@@ -412,6 +413,6 @@
 
     $scope.openRedeemPanel = function () {
         $scope.feedBack.askFeedback = true;
-        $scope.feedBack.formValue = '6';
+        $scope.feedBack.formValue = '7';
     };
 });
