@@ -19,5 +19,11 @@ namespace KindleSpur.WebApplication.Controllers
             var filters = _ctsRepo.GetCTSFilters();
             return Json(new { Filters = filters, Success = true }, JsonRequestBehavior.AllowGet);
         }
+
+        public ActionResult GetTrendingTopics()
+        {
+            var filters = _ctsRepo.GetTrendingTopics();
+            return Json(new { Filters = filters, Success = true }, JsonRequestBehavior.AllowGet);
+        }
     }
 }

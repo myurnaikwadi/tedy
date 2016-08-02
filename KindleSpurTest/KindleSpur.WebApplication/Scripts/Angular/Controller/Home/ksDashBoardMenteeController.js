@@ -8,18 +8,21 @@
     ];
     $scope.selectedMenu = '0';
     $scope.leftSideMenus = [{ name: 'DASHBOARD' }
-                 , { name: 'MENTORING STATUS' }
+                 //, { name: 'MENTORING STATUS' }
                  , { name: 'KNOWLEDGE GARDEN' }
+                 , { name: 'SELECT TOPICS' }
+                  , { name: 'SEARCH MENTOR' }
+                   , { name: 'KNOWLEDGE FEED' }
                  , { name: 'COMMUNICATION' }
-                 , { name: 'KNOWLEDGE FEED' }
+                
                //  , { name: 'RESOURCES' }
-                 , { name: 'SEARCH MENTOR' }
-                 , { name: 'REWARDS' }
-                 , { name: 'ADD TOPICS' }
+                
+                 , { name: 'MY REWARDS' }
+                 //, { name: 'ADD TOPICS' }
     ]
     $scope.applicationRole = [{ name: 'COACHEE' }, { name: 'MENTEE' }, { name: 'COACH' }, { name: 'MENTOR' }]
     $scope.rightSideDashBoardArray = [
-               { name: 'ADD TOPICS', url: '../../Images/icons/book.png ' },
+               { name: 'SELECT TOPICS', url: '../../Images/icons/book.png ' },
                 { name: 'SEARCH MENTOR', url: '../../Images/icons/Knowledge.png ' },
                 { name: 'KNOWLEDGE FEED', url: '../../Images/icons/KnowledgeFeed.png ' },
                 { name: 'COMMUNICATION', url: '../../Images/icons/Resources.png ' },
@@ -27,14 +30,18 @@
     ]
     $scope.menuClick = function (iIndex, iOption) {
         $scope.selectedMenu = iIndex;
-
-
-
-        $scope.askFeedback = false;
+       // $scope.askFeedback = false;
         switch (iIndex) {
-            case 1: $scope.getCoachRecord(); break;
+           // case 3: $scope.getCoachRecord(); break;
             case 4: $scope.getRssFeedData(); break;
-            case 7: $scope.getPointsRecord(); break;
+            case 6: $scope.getPointsRecord(); break;
+        }
+    };
+    $scope.selectedOption = function (iIndex, iCate) {
+        for (var k = 0; k < $scope.leftSideMenus.length; k++) {
+            if ($scope.leftSideMenus[k].name == iCate.name) {
+                $scope.menuClick(k, $scope.leftSideMenus[k]);
+            }
         }
     };
     $scope.feedCategoryArray = [];
@@ -60,19 +67,7 @@
         ];
 
     };
-    $scope.getCoachRecord = function () {
-        serverCommunication.getCoachingWithStatus({
-            loggedUserDetails: $rootScope.loggedDetail,
-            successCallBack: function (iObj) {
-                console.error('In successCallBack', iObj);
-
-            },
-            failureCallBack: function (iObj) {
-                console.error('In failureCallBack', iObj);
-
-            }
-        });
-    };
+ 
     $scope.init = function () {
 
         serverCommunication.getMenteeData({

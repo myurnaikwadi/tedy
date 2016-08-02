@@ -8,14 +8,25 @@
                 { notificationType: '3', name: 'MOHAN N.', profileImage: '' }
     ];
     $scope.leftSideMenus = [{ name: 'DASHBOARD' }
-                   , { name: 'COACHING STATUS' }
+                   //, { name: 'COACHING STATUS' }
                    , { name: 'KNOWLEDGE GARDEN' }
+                   , { name: 'SELECT SKILLS' }
+                    , { name: 'SEARCH COACH' }
+                     , { name: 'KNOWLEDGE FEED' }
                    , { name: 'COMMUNICATION' }
-                   , { name: 'KNOWLEDGE FEED' }
+               //    , { name: 'KNOWLEDGE FEED' }
                  //  , { name: 'RESOURCES' }
-                   , { name: 'SEARCH COACH' }
-                   , { name: 'REWARDS' }
-                    , { name: 'ADD SKILLS' }
+                  // , { name: 'SEARCH COACH' }
+                   , { name: 'MY REWARDS' }
+                   // , { name: 'ADD SKILLS' }
+    ];
+    $scope.rightSideDashBoardArray = [
+                { name: 'SELECT SKILLS', url: '../../Images/icons/book.png ' },
+               { name: 'SEARCH COACH', url: '../../Images/icons/Knowledge.png ' },
+               { name: 'KNOWLEDGE FEED', url: '../../Images/icons/KnowledgeFeed.png ' },
+               { name: 'COMMUNICATION', url: '../../Images/icons/Resources.png ' },
+               { name: 'MY REWARDS', url: '../../Images/icons/Reword.png ' }
+
     ]
     //$scope.leftSideMenus = [{ name: 'DASHBOARD' },
     //                        { name: 'COACHING STATUS' },
@@ -27,14 +38,7 @@
     //];
 
     $scope.applicationRole = [{ name: 'COACHEE' }, { name: 'MENTEE' }, { name: 'COACH' }, { name: 'MENTOR' }]
-    $scope.rightSideDashBoardArray = [
-                 { name: 'ADD SKILLS', url: '../../Images/icons/book.png ' },
-                { name: 'SEARCH COACH', url: '../../Images/icons/Knowledge.png ' },
-                { name: 'KNOWLEDGE FEED', url: '../../Images/icons/KnowledgeFeed.png ' },
-                { name: 'COMMUNICATION', url: '../../Images/icons/Resources.png ' },
-                { name: 'REWARDS', url: '../../Images/icons/Reword.png ' }
-
-    ]
+   
     $scope.Coaches = [
        { Name: 'Amit Devgan', Skill: 'Storage Engineer', City: 'Pune', Country: 'India' },
        { Name: 'Srinivas R', Skill: 'MVC Devloper', City: 'Pune', Country: 'India' },
@@ -69,9 +73,16 @@
         $scope.selectedMenu = iIndex;
         switch (iIndex) {
             case 4: $scope.getRssFeedData(); break;
-            case 5: $scope.getCoachRecord(); break;
+            case 3: $scope.getCoachRecord(); break;
                 //case 2: $scope.generateGarden(); break;
                 //case 6: $scope.getPointsRecord(); break;
+        }
+    };
+    $scope.selectedOption = function (iIndex, iCate) {
+        for (var k = 0; k < $scope.leftSideMenus.length; k++) {
+            if ($scope.leftSideMenus[k].name == iCate.name) {
+                $scope.menuClick(k, $scope.leftSideMenus[k]);
+            }
         }
     };
     $scope.feedCategoryArray = [];
