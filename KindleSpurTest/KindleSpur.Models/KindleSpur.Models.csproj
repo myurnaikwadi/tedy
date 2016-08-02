@@ -87,6 +87,7 @@
     <Compile Include="ValueCreation.cs" />
     <Compile Include="ValueCreationScore.cs" />
     <Compile Include="ValueCreationTasks.cs" />
+    <Compile Include="ValueFeedStory.cs" />
     <Compile Include="VSCS.cs" />
   </ItemGroup>
   <ItemGroup>
