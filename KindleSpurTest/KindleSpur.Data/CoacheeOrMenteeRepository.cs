@@ -139,6 +139,21 @@ namespace KindleSpur.Data
             }
             return _transactionStatus;
         }
+        public List<BsonDocument> GetRecommended(string role)
+        {
+            List<BsonDocument> result = new List<BsonDocument>();
+            try
+            {
+                var _collection = _kindleDatabase.GetCollection("CoacheeOrMentee");
+                result = _collection.Find(Query.EQ("Role", role)).SetFields(Fields.Exclude("_id")).ToList();
+            }
+            catch (Exception ex)
+            {
+                _logCollection.Insert("{ Error : 'Failed at EditUser().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ");
+            }
+
+            return result;
+        }
 
         public void GetRewardPoints(string userId, ref Reward reward)
         {
