@@ -35,7 +35,7 @@ namespace KindleSpur.WebApplication.Controllers
             return true;
         }
 
-        public List<BsonDocument>  GetRecommendedCoach()
+        public BsonDocument  GetRecommendedCoach()
         {
             return _coachRepo.GetRecommended("Coach");
             

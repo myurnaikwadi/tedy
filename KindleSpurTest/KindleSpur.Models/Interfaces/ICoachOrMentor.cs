@@ -26,7 +26,7 @@ namespace KindleSpur.Models.Interfaces
          DateTime CreateDate { get; set; }
          DateTime UpdateDate { get; set; }
          List<IProgramConducted> ProgramsConducted { get; set; }
-         List<IFeedback> Feedbacks { get; set; }
+         List<Feedback> Feedbacks { get; set; }
 
     }
 

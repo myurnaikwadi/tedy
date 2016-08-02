@@ -12,21 +12,16 @@ namespace KindleSpur.Data
 {
     public class CoachOrMentorRepository : ICoachOrMentorRepository
     {
-        MongoClient _mongoClient;
-        MongoServer _mongoServer;
-        MongoDatabase _kindleDatabase;
+        Connection con = new Connection();
         MongoCollection _logCollection;
+        MongoCollection _coachOrMentorCollection;
 
         public CoachOrMentorRepository()
         {
-            string mongoServerConfig = "mongodb://127.0.0.1:27017";
-
             try
-            {
-                _mongoClient = new MongoClient(mongoServerConfig);
-                _mongoServer = _mongoClient.GetServer();
-                _kindleDatabase = _mongoServer.GetDatabase("KindleSpur");
-                _logCollection = _kindleDatabase.GetCollection("ErrorLogs");
+            {         
+                _logCollection = con.GetCollection("ErrorLogs");
+                _coachOrMentorCollection = con.GetCollection("CoachOrMentor");
             }
             catch (MongoException ex)
             {
@@ -40,9 +35,7 @@ namespace KindleSpur.Data
 
             try
             {
-                var _collection = _kindleDatabase.GetCollection("CoachOrMentor");
-
-                var result = _collection.Find(Query.And(Query.EQ("UserId", Data.UserId), Query.EQ("Role", Data.Role))).ToList();                                                              
+                var result = _coachOrMentorCollection.FindAs<CoachOrMentor>(Query.And(Query.EQ("UserId", Data.UserId), Query.EQ("Role", Data.Role))).ToList();                                                              
 
                 if (result.Count() > 0)
                 {
@@ -50,7 +43,7 @@ namespace KindleSpur.Data
                 }
                 else
                 {
-                    _collection.Insert(Data);
+                    _coachOrMentorCollection.Insert(Data);
                 }
 
                 _transactionStatus = true;
@@ -69,17 +62,16 @@ namespace KindleSpur.Data
         {
             bool _transactionStatus = false;
             try {
-                var coachOrMentors = _kindleDatabase.GetCollection("CoachOrMentor");
-                CoachOrMentor entity = coachOrMentors.FindOneAs<CoachOrMentor>(Query.And(Query.EQ("UserId", feedback.Sender), Query.EQ("Role", "Coach")));                   
+                CoachOrMentor entity = _coachOrMentorCollection.FindOneAs<CoachOrMentor>(Query.And(Query.EQ("UserId", feedback.Sender), Query.EQ("Role", "Coach")));                   
                 entity.FeedbackPoints += ((feedback.customerSatisfactionRating + feedback.selectedAttractive.answer + feedback.selectedComparioson.answer)/3);
 
-                if (entity.Feedback == null) entity.Feedback = new List<Feedback>();
+                if (entity.Feedbacks == null) entity.Feedbacks = new List<Feedback>();
                 feedback.Sender = UserId;
                 feedback.Skill = feedback.FeedbackText;
-                entity.Feedback.Add(feedback);
+                entity.Feedbacks.Add(feedback);
                 entity.RewardPointsGained += 5;           
-                coachOrMentors.Save(entity);
-                var _users = _kindleDatabase.GetCollection("UserDetails");
+                _coachOrMentorCollection.Save(entity);
+                var _users = con.GetCollection("UserDetails");
                 User user = _users.FindOneAs<User>(Query.EQ("EmailAddress", UserId));
                 user.BalanceRewardPoints += 5;
                 user.TotalRewardPoints +=5;
@@ -97,9 +89,7 @@ namespace KindleSpur.Data
 
         public List<SkillOrTopic> GetSkillsForCoach(string UserId)
         {
-           
-            var _collection = _kindleDatabase.GetCollection("CoachOrMentor");
-           var result = _collection.FindOneAs<CoachOrMentor>(Query.And(
+           var result = _coachOrMentorCollection.FindOneAs<CoachOrMentor>(Query.And(
                                                                    Query.EQ("UserId", UserId),
                                                                    Query.EQ("Role", "Coach")
                                                                 ));
@@ -111,9 +101,7 @@ namespace KindleSpur.Data
 
         public List<SkillOrTopic> GetTopicsForMentor(string UserId)
         {
-
-            var _collection = _kindleDatabase.GetCollection("CoachOrMentor");
-            var result = _collection.FindOneAs<CoachOrMentor>(Query.And(
+            var result = _coachOrMentorCollection.FindOneAs<CoachOrMentor>(Query.And(
                                                                     Query.EQ("UserId", UserId),
                                                                     Query.EQ("Role", "Mentor")
                                                                  ));
@@ -128,8 +116,7 @@ namespace KindleSpur.Data
             bool _transactionStatus = false;
             try
             {
-                var _collection = _kindleDatabase.GetCollection("CoachOrMentor");
-                _collection.Remove(Query.EQ("_id", Id));
+                _coachOrMentorCollection.Remove(Query.EQ("_id", Id));
                 _transactionStatus = true;
 
             }
@@ -147,8 +134,7 @@ namespace KindleSpur.Data
             bool _transactionStatus = false;
             try
             {
-                var _collection = _kindleDatabase.GetCollection("CoachOrMentor");
-                var _entity = _collection.FindOneAs<CoachOrMentor>(Query.And(
+                var _entity = _coachOrMentorCollection.FindOneAs<CoachOrMentor>(Query.And(
                                                                    Query.EQ("UserId", UserId),
                                                                    Query.EQ("Role", Data.Role)
                                                                 ));
@@ -224,7 +210,7 @@ namespace KindleSpur.Data
                     }
                 }
                 _entity.UpdateDate = DateTime.Now;
-                _collection.Save(_entity);
+                _coachOrMentorCollection.Save(_entity);
                 _transactionStatus = true;
             }
             catch (MongoException ex)
@@ -240,11 +226,10 @@ namespace KindleSpur.Data
             bool _transactionStatus = false;
             try
             {
-                var _collection = _kindleDatabase.GetCollection("CoachOrMentor");
-                CoachOrMentor coach = _collection.FindOneAs<CoachOrMentor>(Query.And(Query.EQ("UserId", userId),
+                CoachOrMentor coach = _coachOrMentorCollection.FindOneAs<CoachOrMentor>(Query.And(Query.EQ("UserId", userId),
                                                                                              Query.EQ("Role", "Coach")));
                 reward.CoachRewardPoints = (coach != null ? coach.RewardPointsGained : 0);
-                CoachOrMentor mentor = _collection.FindOneAs<CoachOrMentor>(Query.And(Query.EQ("UserId", userId),
+                CoachOrMentor mentor = _coachOrMentorCollection.FindOneAs<CoachOrMentor>(Query.And(Query.EQ("UserId", userId),
                                                                                               Query.EQ("Role", "Mentor")));
 
                 reward.MentorRewardPoints = (mentor != null ? mentor.RewardPointsGained : 0);
@@ -265,8 +250,7 @@ namespace KindleSpur.Data
             List<ICoachOrMentor> result = null;
             try
             {
-                var _collection = _kindleDatabase.GetCollection("CoachOrMentor");
-                result = _collection.FindAllAs<ICoachOrMentor>().ToList();
+                result = _coachOrMentorCollection.FindAllAs<ICoachOrMentor>().ToList();
             }
             catch (MongoException ex)
             {
@@ -277,13 +261,12 @@ namespace KindleSpur.Data
         }
 
 
-        public List<BsonDocument> GetRecommended(string role)
+        public BsonDocument GetRecommended(string role)
         {
-            List<BsonDocument> result = new List<BsonDocument>();
+            BsonDocument result = null;
             try
             {
-                var _collection = _kindleDatabase.GetCollection("CoachOrMentor");
-                result = _collection.Find(Query.EQ("Role", role)).SetFields(Fields.Exclude("_id")).ToList();
+                result = _coachOrMentorCollection.FindAs<ICoachOrMentor>(Query.EQ("Role", role)).SetFields(Fields.Exclude("_id")).ToBsonDocument();
             }
             catch (Exception ex)
             {
@@ -298,8 +281,7 @@ namespace KindleSpur.Data
             ICoachOrMentor result = null;
             try
             {
-                var _collection = _kindleDatabase.GetCollection("CoachOrMentor");
-                result = _collection.FindOneAs<ICoachOrMentor>(Query.EQ("_id", ObjectId.Parse(Id)));
+                result = _coachOrMentorCollection.FindOneAs<ICoachOrMentor>(Query.EQ("_id", ObjectId.Parse(Id)));
             }
             catch (MongoException ex)
             {
@@ -311,19 +293,18 @@ namespace KindleSpur.Data
 
         public List<CoachOrMentor> GetAllCoachOrMentors(CTSFilter ctsFilter)
         {
-            var coachOrMentors = _kindleDatabase.GetCollection("CoachOrMentor");
             IQueryable<CoachOrMentor> coachEntities = default(IQueryable<CoachOrMentor>);
             try
             {
                 var res1 = new List<BsonDocument>();
                 if (ctsFilter.Type == FilterType.Skill)
                 {
-                    coachEntities = coachOrMentors.FindAs<CoachOrMentor>(Query.ElemMatch("Skills", Query.EQ("Name", ctsFilter.Name))).AsQueryable();
+                    coachEntities = _coachOrMentorCollection.FindAs<CoachOrMentor>(Query.ElemMatch("Skills", Query.EQ("Name", ctsFilter.Name))).AsQueryable();
                 }
-                if (ctsFilter.Type == FilterType.Topic || !(coachOrMentors.Count() > 0))
-                    coachEntities = coachOrMentors.FindAs<CoachOrMentor>(Query.ElemMatch("Topics", Query.EQ("Name", ctsFilter.Name))).AsQueryable();
+                if (ctsFilter.Type == FilterType.Topic || !(_coachOrMentorCollection.Count() > 0))
+                    coachEntities = _coachOrMentorCollection.FindAs<CoachOrMentor>(Query.ElemMatch("Topics", Query.EQ("Name", ctsFilter.Name))).AsQueryable();
 
-                if (ctsFilter.Type == FilterType.Category || !(coachOrMentors.Count() > 0))
+                if (ctsFilter.Type == FilterType.Category || !(_coachOrMentorCollection.Count() > 0))
                 {
                     //Get Topics -> Get Skills
                     coachEntities = new List<CoachOrMentor>().AsQueryable();
@@ -345,12 +326,10 @@ namespace KindleSpur.Data
             List<CoachStatus> result = new List<CoachStatus>();
             try
             {
-                var FeedbackCollection = _kindleDatabase.GetCollection("CoachOrMentor");
-
-                CoachOrMentor coach = FeedbackCollection.FindOneAs<CoachOrMentor>(Query.EQ("UserId", UserId));
+                CoachOrMentor coach = _coachOrMentorCollection.FindOneAs<CoachOrMentor>(Query.EQ("UserId", UserId));
                 if (coach != null)
                 {
-                    LstCochees = coach.Feedback;
+                    LstCochees = coach.Feedbacks;
 
                     if (LstCochees != null)
                     {
@@ -389,7 +368,7 @@ namespace KindleSpur.Data
         {
             if(c != null)
             { 
-                var _userCollection = _kindleDatabase.GetCollection("UserDetails");
+                var _userCollection = con.GetCollection("UserDetails");
                 User userDetail = _userCollection.FindOneAs<User>(Query.EQ("EmailAddress", c.EmailAddress));
                 c.FirstName = userDetail.FirstName;
                 c.LastName = userDetail.LastName;
