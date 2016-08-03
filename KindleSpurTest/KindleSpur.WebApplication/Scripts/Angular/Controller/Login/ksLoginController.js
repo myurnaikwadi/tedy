@@ -11,7 +11,11 @@ app.controller('ksLoginController', ['$scope', 'authentification', '$location', 
  	    emailAddress : '',
         password : ''
  	};
-
+ 	$scope.displayAlert = {
+ 	    showAlert: false,
+ 	    message: '',
+        formatType : '1'
+ 	};
  	console.error($scope.passedData)
  	$scope.signupDetails = {
  	    FirstName : '',
@@ -47,7 +51,13 @@ app.controller('ksLoginController', ['$scope', 'authentification', '$location', 
  	    console.error('In _successCallBack', iObject);
  	    //  window.$cookieStore = $cookieStore 	    
  	    if (!iObject.data.Result) {
- 	        alert(iObject.data.Message);
+ 	         alert(iObject.data.Message);
+ 	        //to access in html displayAlert.showAlert 
+ 	        //$scope.displayAlert.showAlert = true;
+ 	        //$scope.displayAlert.message = iObject.data.Message;
+ 	        //$scope.displayAlert.formatType = '1';
+ 	        //formatType: '1'
+ 	         
  	    } else {
  	        var _userDetails = _getMyDetailsFromCookies();
  	        if (_userDetails)
