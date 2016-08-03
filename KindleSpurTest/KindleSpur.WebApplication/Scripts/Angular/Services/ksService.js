@@ -129,7 +129,7 @@ app.factory('serverCommunication', function ($http) {
         /**
           * @auther : MKN
           * @date : 10/06/2016
-          * @Purpose : get category as per role
+          * @Purpose : get category as per role coach
           */
         getMySelection: function (iObj) {
             console.error(iObj)
@@ -152,9 +152,18 @@ app.factory('serverCommunication', function ($http) {
           * @date : 10/06/2016
           * @Purpose : get category as per role
           */
-        getMyMentorSelection: function (iObj) {
+        getMyMenteeSelection: function (iObj) {
             console.error(iObj)
-            $http.get('/Mentor/GetTopics').then(iObj.successCallBack, iObj.failureCallBack);
+            $http.get('/Mentee/GetTopics').then(iObj.successCallBack, iObj.failureCallBack);
+        },
+        /**
+         * @auther : MKN
+         * @date : 10/06/2016
+         * @Purpose : get category as per role
+         */
+        getMyCoacheeSelection: function (iObj) {
+            console.error(iObj)
+            $http.get('/Coachee/GetTopics').then(iObj.successCallBack, iObj.failureCallBack);
         },
         /**
           * @auther : MKN
@@ -181,7 +190,10 @@ app.factory('serverCommunication', function ($http) {
           */
         sendSelectedCTSDataToServer: function (iObj) {
             console.error(iObj)
-            $http.post('/Coach/SaveSkills', iObj.selectedArray).then(iObj.successCallBack, iObj.failureCallBack);
+            var _action = '/Coach/SaveSkills';
+            if (iObj.role == 'coachee')
+                _action = '/coachee/SaveTopics';
+            $http.post(_action, iObj.selectedArray).then(iObj.successCallBack, iObj.failureCallBack);
         },
         /**
           * @auther : MKN
