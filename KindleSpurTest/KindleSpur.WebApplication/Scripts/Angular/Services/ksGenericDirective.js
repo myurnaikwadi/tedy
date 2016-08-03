@@ -325,8 +325,7 @@ app.directive('ctcRole', function ($state, serverCommunication) {
                                 console.error('In failureCallBack', iObj);
                             }
                         });
-                    } else {
-                        
+                    } else {                       
 
                         var _dataArray = [];
                         var _dd = [];
@@ -604,33 +603,62 @@ app.directive('ctcRole', function ($state, serverCommunication) {
             //var _categoryArray = {};
             var _topics = {};
             var _skills = {};
+
+
             scope.init = function () {
                 scope.ctsDataForMolecule = null;
 
-                if (scope.role == "mentor") {
-                    console.error('get data for mentor')
-                    serverCommunication.getMyMentorSelection({
-                        successCallBack: function (iObj) {
-                            console.error('In getMyMentorSelection', iObj);
-                            _createMoleculeStructure(iObj);
-                        },
-                        failureCallBack: function (iObj) {
-                            console.error('In failuregetMySelectionCallBack', iObj);
+                switch (scope.role) {
+                    case 'coach':
+                            serverCommunication.getMySelection({
+                                successCallBack: function (iObj) {
+                                    console.error('In getMySelection', iObj);
+                                    _createMoleculeStructure(iObj);
+                                },
+                                failureCallBack: function (iObj) {
+                                    console.error('In failuregetMySelectionCallBack', iObj);
 
-                        }
-                    });
-                } else {
-                    serverCommunication.getMySelection({
-                        successCallBack: function (iObj) {
-                            console.error('In getMySelection', iObj);
-                            _createMoleculeStructure(iObj);
-                        },
-                        failureCallBack: function (iObj) {
-                            console.error('In failuregetMySelectionCallBack', iObj);
+                                }
+                            });
+                            break;
+                    case 'mentor':
+                            console.error('get data for mentor')
+                            serverCommunication.getMyMentorSelection({
+                                successCallBack: function (iObj) {
+                                    console.error('In getMyMentorSelection', iObj);
+                                    _createMoleculeStructure(iObj);
+                                },
+                                failureCallBack: function (iObj) {
+                                    console.error('In failuregetMySelectionCallBack', iObj);
 
-                        }
-                    });
-                }
+                                }
+                            });
+                         break;
+                    case 'mentee':
+                        serverCommunication.getMyMenteeSelection({
+                            successCallBack: function (iObj) {
+                                console.error('In getMyMenteeSelection', iObj);
+                                _createMoleculeStructure(iObj);
+                            },
+                            failureCallBack: function (iObj) {
+                                console.error('In failuregetMySelectionCallBack', iObj);
+
+                            }
+                        });
+                                break;
+                    case 'coachee':
+                        serverCommunication.getMyCoacheeSelection({
+                            successCallBack: function (iObj) {
+                                console.error('In getMyCoacheeSelection', iObj);
+                                _createMoleculeStructure(iObj);
+                            },
+                            failureCallBack: function (iObj) {
+                                console.error('In failuregetMySelectionCallBack', iObj);
+
+                            }
+                        });
+                        break;
+                }                
             };
             scope.init();
         }
@@ -1241,32 +1269,40 @@ app.directive('rssFeed', function ($state, serverCommunication, $timeout) {
             window.rss = $scope;
             $scope.feedContainArray = [];
             
-            var _selectedTagFed = [];
+            //var _selectedTagFed = [];
             $scope.selectedFeedTag = function (iIndex, iOption) {
                 console.error(iOption.selected)
-                if (iOption.selected) {
-                    iOption.selected = false;
-                    var _index = _selectedTagFed.indexOf(iOption.name);
-                    if (_index > -1)
-                        _selectedTagFed.splice(_index, 1);
-                } else {
-                    _selectedTagFed.push(iOption.name);
-                    iOption.selected = true;
-                }
-                console.error(iOption.selected)
-                console.error(_selectedTagFed);
+               // _selectedTagFed = [];
                 $scope.feedContainArray = [];
-                var _rec = function (iArr, iNdex) {
-                    $scope.getRssFeedData(iArr[iNdex]);
-                    iNdex++;
-                    if (iNdex == iArr.length) {
-                        console.error('final callBack');
-                        $timeout(function(){},0);
-                    }else {
-                        _rec(iArr, iNdex)
+                for (var k = 0 ; k < $scope.skill.length ; k++) {
+                    $scope.skill[k].selected = false;
+                    if (iOption.name == $scope.skill[k].name) {
+                        iOption.selected = true;
+                        $scope.getRssFeedData(iOption.name);                        
                     }
                 }
-                _rec(_selectedTagFed, 0);
+                //if (iOption.selected) {
+                //    iOption.selected = false;
+                //    var _index = _selectedTagFed.indexOf(iOption.name);
+                //    if (_index > -1)
+                //        _selectedTagFed.splice(_index, 1);
+                //} else {
+                //    _selectedTagFed.push(iOption.name);
+                //    iOption.selected = true;
+                //}
+               
+               
+                //var _rec = function (iArr, iNdex) {
+                //    $scope.getRssFeedData(iArr[iNdex]);
+                //    iNdex++;
+                //    if (iNdex == iArr.length) {
+                //        console.error('final callBack');
+                //        $timeout(function(){},0);
+                //    }else {
+                //        _rec(iArr, iNdex)
+                //    }
+                //}
+                //_rec(_selectedTagFed, 0);
             };
 
             $scope.loadFeedOnNextTab = function (iFeed) {
@@ -1293,7 +1329,7 @@ app.directive('rssFeed', function ($state, serverCommunication, $timeout) {
                     // Request body
                     data: "{body}",
                 })
-                 .done(function (data) {
+                .done(function (data) {
                      // alert("success");
                      console.error(data)
                      $scope.feedContainArray = $scope.feedContainArray.concat(data.webPages.value);
@@ -1318,6 +1354,19 @@ app.directive('rssFeed', function ($state, serverCommunication, $timeout) {
                 }
             }
             
+        }
+    }
+});
+
+app.directive('valueFeed', function ($state, serverCommunication) {
+    return {
+        scope: {
+
+        },
+        templateUrl: '/Home/ksCtcRole',
+        //scope: true,   // optionally create a child scope
+        link: function (scope, element, attrs) {
+            window.valueFeed = scope;
         }
     }
 });
