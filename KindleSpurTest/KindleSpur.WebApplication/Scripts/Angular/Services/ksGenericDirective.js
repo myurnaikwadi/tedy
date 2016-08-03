@@ -73,9 +73,9 @@ app.directive('bottomMainStrip', function ($timeout) {
             console.error(scope);
             scope.bottomOptionArray = [
                { name: 'ABOUT' },
-                { name: 'FEEDBACK' },
-                 { name: 'PRIVACY POLICY' },
-                { name: 'TERMS AND CONDITIONS' },
+               { name: 'FEEDBACK' },
+               { name: 'PRIVACY POLICY' },
+               { name: 'TERMS AND CONDITIONS' },
              ];
         }
     };
@@ -493,6 +493,16 @@ app.directive('ctcRole', function ($state, serverCommunication) {
                 var _array = [];
                 var _node = [];
                 var _count = 1;
+                var _color = 'transparent';
+                var _textColor = 'black';
+                
+                switch (scope.role) {
+                    case 'coach': _color = 'rgb(231,120,23)'; _textColor = 'white'; break;
+                    case 'mentor': _color = 'rgb(0,73,45)';  _textColor = 'white';  break;
+                    case 'mentee': _color = 'rgb(132,194,37)'; _textColor = 'black'; break;
+                    case 'coachee': _color = 'rgb(248,195,0)'; _textColor = 'black'; break;
+                }
+                var _textColor = 'black';//temp purpose
                 // var _idArray = [];
                 if (Object.keys(_category).length == 0) {
 
@@ -500,6 +510,9 @@ app.directive('ctcRole', function ($state, serverCommunication) {
                     _array.push({
                         "symbol": 'My Selection',
                         "size": 40,
+                        'color': 'black',
+                        "image": 'Images/photo.jpg',
+                        "className" : 'circleProfileImageClass',
                         "id": 0,
                         "bonds": 1
                     });
@@ -508,6 +521,10 @@ app.directive('ctcRole', function ($state, serverCommunication) {
                             "symbol": _key,
                             "size": 35,
                             "id": _count,
+                            "type" : 'C',
+                            'color': 'white',
+                            'textColor' : _textColor,
+                            'border' : _color,
                             "bonds": 1
                         });
                         _node.push({
@@ -527,6 +544,10 @@ app.directive('ctcRole', function ($state, serverCommunication) {
                                     "symbol": _topic,
                                     "size": 25,
                                     "id": _topicId,
+                                    "type": 'T',
+                                    'textColor': scope.skillRequired ? 'black' : _textColor, 
+                                    'color': scope.skillRequired ? 'white' : _color,
+                                    'border': _color,
                                     "bonds": 1
                                 });
 
@@ -546,14 +567,18 @@ app.directive('ctcRole', function ($state, serverCommunication) {
                                     var _finalLevelVaue = 0;
                                     for (var _skill in _category[_key].topic[_topic].skill) {
                                         var _skillId = _topicId + _levelSkill;
-
+                                            
                                         _array.push({
                                             "symbol": _skill,
                                             "size": 15,
                                             "id": _skillId,
+                                            "type": 'S',
+                                            'color': _color,
+                                            'textColor': _textColor,
+                                            'border': _color,
                                             "bonds": 1
                                         });
-
+                            
                                         _node.push({
                                             "source": _topicId,
                                             "target": _skillId,
@@ -865,59 +890,41 @@ app.directive('moleculeMap', function ($rootScope) {
                             // Add atom symbol
                             // Add atom symbol
                             if (d.image) {
-                                d3.select(this)
-                                 .append("image")
-                                 .attr("xlink:href", function (d) { return d.image; })
 
-                                 .attr("width", "75px")
-                                  .attr("height", "75px");
-                                d3.select(this)
-                                         .append("text")
-                                         .attr("dy", ".35em")
-                                         .attr("x", "20")
-                                         .attr("y", "20")
-                                         .attr("text-anchor", "middle")
-                                         .text(function (d) {
-                                             return d.symbol;
-                                         });
-                                //d3.select(this)
-                                //    .append("defs")
-                                //    .append("pattern")
-                                //    .attr("id", d.id)
-                                //    .attr("width", "50px")
-                                //    .attr("height", "50px")
-                                //    .attr("patternUnits", "userSpaceOnUse")
-                                //    .append("image")
-                                //    .attr("xlink:href", function (d) { return d.image;
-                                //    })
-                                //    .attr("width", "50px")
-                                //    .attr("height", "50px")
-                                //    .attr("x", "0")
-                                //    .attr("y", "0");
-
-                                //                                d3.select(this)
-                                //                                .append("circle")
-                                //                                .attr("r", function (d) {
-                                //return radius(d.size);
-                                //                                })
-                                //                                .style("fill", "url(#" +d.id + ")");
-
-                                // d3.select(this)
-                                // .append("image")
-                                // .attr("x", "-22px")
-                                // .attr("y", "-22px")
-                                // .attr("width", "50px")
-                                // .attr("height", "50px")
-                                // .style("fill", function (d) { return color(d.symbol); })
-                                //// .style("fill","url("+d.image+")")
-                                //.attr("xlink:href", function (d) { return d.image; });
-                                //       d3.select(this)
-                                //.append("image")
-                                //.attr("xlink:href", function (d) { return d.image; })
-                                //.attr("x", "-12px")
-                                //.attr("y", "-12px")
-                                //.attr("width", "24px")
-                                // .attr("height", "24px");
+                                if (d.className) {
+                                    var defs = d3.select(this).append("defs").attr("id", "imgdefs")
+                                    var clipPath = defs.append('clipPath').attr('id', 'clip-circle')
+                                        .append("circle")
+                                        .attr("r", function (d) {
+                                           return radius(d.size);
+                                        })
+                                        .attr("cy", 86)
+                                        .attr("cx", 100)
+                                        .style("stroke", "red")
+                                    d3.select(this).append("image")
+                                         .attr("x", 0)
+                                         .attr("y", 0)
+                                         .attr("height", 75)
+                                         .attr("width", 75)
+                                         .attr("xlink:href", function (d) { return d.image; })
+                                         .attr("clip-path", "url(#clip-circle)")
+                                } else {
+                                    d3.select(this)
+                                            .append("image")
+                                            .attr("xlink:href", function (d) { return d.image; })
+                                            .attr("width", "75px")
+                                            .attr("height", "75px");
+                                    d3.select(this)
+                                             .append("text")
+                                             .attr("dy", ".35em")
+                                             .attr("x", "20")
+                                             .attr("y", "20")
+                                             .attr("text-anchor", "middle")
+                                             .style("font-size", function(d) { return Math.min(2 * (radius(d.size)), (2 * d.r - 8) / this.getComputedTextLength() * 24) + "px"; })
+                                             .text(function (d) {
+                                                 return d.symbol;
+                                             });
+                                }                                                       
 
                             } else {
                                 d3.select(this)
@@ -925,14 +932,22 @@ app.directive('moleculeMap', function ($rootScope) {
                                  .attr("r", function (d) {
                                      return radius(d.size);
                                  })
+                                 .style("stroke-dasharray", function (d) {
+                                     return d.type == 'C' ? ("10,3") : ("0,0")
+                                 }) // make the stroke dashed
                                  .style("fill", function (d) {
-                                     return color(d.symbol);
-                                 });
-
+                                     return d.color ? d.color : color(d.symbol);
+                                 })
+                                
+                                 .style("stroke", d.border ? d.border : 'black');
                                 d3.select(this)
                                   .append("text")
                                   .attr("dy", ".35em")
+                                  .attr("x", 20)
+                                  .attr("y", 0)
                                   .attr("text-anchor", "middle")
+                                  .style('fill', d.textColor ? d.textColor : 'black')
+                                    .style("font-size", function (d) { return Math.min(2 * (radius(d.size)), (2 * d.r - 8) / this.getComputedTextLength() * 24) + "px"; })
                                   .text(function (d) {
                                       return d.symbol;
                                   });
