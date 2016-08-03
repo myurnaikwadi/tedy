@@ -163,7 +163,7 @@ app.factory('serverCommunication', function ($http) {
          */
         getMyCoacheeSelection: function (iObj) {
             console.error(iObj)
-            $http.get('/Mentor/GetTopics').then(iObj.successCallBack, iObj.failureCallBack);
+            $http.get('/Coachee/GetTopics').then(iObj.successCallBack, iObj.failureCallBack);
         },
         /**
           * @auther : MKN

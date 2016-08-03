@@ -13,7 +13,7 @@ namespace KindleSpur.WebApplication.Controllers
     public class CoacheeController : Controller
     {
         private readonly CTSRepository _ctsRepo = new CTSRepository();
-        private readonly CoacheeOrMenteeRepository _coachRepo = new CoacheeOrMenteeRepository();
+        private readonly CoacheeOrMenteeRepository _coacheeRepo = new CoacheeOrMenteeRepository();
         private readonly string UserId;
         public CoacheeController()
         {
@@ -29,19 +29,19 @@ namespace KindleSpur.WebApplication.Controllers
             if (_obj.Skills == null) _obj.Skills = new List<SkillOrTopic>();
             _obj.Skills.AddRange(selectedArray);
 
-            _coachRepo.AddNewCoacheeOrMentee(_obj);
+            _coacheeRepo.AddNewCoacheeOrMentee(_obj);
 
             return true;
         }
         public List<BsonDocument> GetRecommendedCoachee()
         {
-            return _coachRepo.GetRecommended("Coachee");
+            return _coacheeRepo.GetRecommended("Coachee");
 
         }
         public string GetCTS()
         {
 
-            List<SkillOrTopic> skills = _coachRepo.GetSkillsForCoachee(UserId);
+            List<SkillOrTopic> skills = _coacheeRepo.GetSkillsForCoachee(UserId);
             CTSRepository _ctsRepo = new CTSRepository();
             BsonDocument doc = new BsonDocument();
             if (skills != null)
@@ -60,7 +60,7 @@ namespace KindleSpur.WebApplication.Controllers
         }
         public string GetCoachs(CTSFilter ctsFilter)
         {
-            var result = _coachRepo.GetAllCoacheeOrMentee(ctsFilter);
+            var result = _coacheeRepo.GetAllCoacheeOrMentee(ctsFilter);
             return result.ToJson();
         }
         [HttpPost]
