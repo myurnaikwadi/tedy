@@ -511,7 +511,7 @@ app.directive('ctcRole', function ($state, serverCommunication) {
                         "symbol": 'My Selection',
                         "size": 40,
                         'color': 'black',
-                        "image": 'Images/photo.jpg',
+                        "image": 'Images/icons/profile.png',
                         "className" : 'circleProfileImageClass',
                         "id": 0,
                         "bonds": 1
