@@ -163,7 +163,7 @@ app.factory('serverCommunication', function ($http) {
          */
         getMyCoacheeSelection: function (iObj) {
             console.error(iObj)
-            $http.get('/Coachee/GetTopics').then(iObj.successCallBack, iObj.failureCallBack);
+            $http.get('/Coachee/GetCTS').then(iObj.successCallBack, iObj.failureCallBack);
         },
         /**
           * @auther : MKN
@@ -192,7 +192,7 @@ app.factory('serverCommunication', function ($http) {
             console.error(iObj)
             var _action = '/Coach/SaveSkills';
             if (iObj.role == 'coachee')
-                _action = '/coachee/SaveTopics';
+                _action = '/coachee/SaveSkills';
             $http.post(_action, iObj.selectedArray).then(iObj.successCallBack, iObj.failureCallBack);
         },
         /**

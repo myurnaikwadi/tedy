@@ -49,7 +49,7 @@
                     </div>
                     <div class="mainDashBoardWizardParent">
                         <div class="dashBoardMenuCoach">
-                            <div class="dashBoardMenuCoachRight genericPointerClas col-md-3 " ng-click="selectedOption($index,option)"  ng-repeat="option in rightSideDashBoardArray" }">
+                            <div class="dashBoardMenuCoachRight genericPointerClas col-md-3 " ng-click="selectedOption($index,option)" ng-repeat="option in rightSideDashBoardArray" }">
                                 <div class="dashBoardMenuCoachRightCircle">
 
                                     <div class="dashBoardMenuCoachRightCirclePart">
@@ -191,8 +191,8 @@
                             </div>
                             <div class="popupContainerThree">
                                 <!--	<img style="padding: 3%;float:left;" ng-click="feedBack.starSelected('1')" ng-src="{{ feedBack.selectedstar == '1' && '~/Images/communication/smallSelectedStar.png' || '~/Images/communication/smallStar.png'}}" ng-class="{ highlightedCompetitor :  feedBack.selectedstar == '1'}" src="~/Images/communication/smallStar.png">
-                        <img style="padding: 3%;float:left;" ng-click="feedBack.starSelected('2')" ng-src="{{ feedBack.selectedstar == '1' && '~/Images/communication/smallBigSelectedStar.png' || '~/Images/communication/smallBigStar.png'}}" ng-class="{ highlightedCompetitor :  feedBack.selectedstar == '2'}" src="~/Images/communication/smallBigStar.png">
-                        <img style="padding: 3%;float:left;" ng-click="feedBack.starSelected('3')" ng-src="{{ feedBack.selectedstar == '1' && '~/Images/communication/bigSelectedStar.png' || '~/Images/communication/bigStar.png'}}" ng-class="{ highlightedCompetitor :  feedBack.selectedstar == '3'}" src="~/Images/communication/bigStar.png">		-->
+                                <img style="padding: 3%;float:left;" ng-click="feedBack.starSelected('2')" ng-src="{{ feedBack.selectedstar == '1' && '~/Images/communication/smallBigSelectedStar.png' || '~/Images/communication/smallBigStar.png'}}" ng-class="{ highlightedCompetitor :  feedBack.selectedstar == '2'}" src="~/Images/communication/smallBigStar.png">
+                                <img style="padding: 3%;float:left;" ng-click="feedBack.starSelected('3')" ng-src="{{ feedBack.selectedstar == '1' && '~/Images/communication/bigSelectedStar.png' || '~/Images/communication/bigStar.png'}}" ng-class="{ highlightedCompetitor :  feedBack.selectedstar == '3'}" src="~/Images/communication/bigStar.png">		-->
 
                                 <img class="genericPointerClass" style="padding: 3%;float:left;" ng-click="feedBack.starSelected('1')" ng-class="{ highlightedCompetitor :  feedBack.selectedstar == '1'}" src="~/Images/communication/smallStar.png">
                                 <img class="genericPointerClass" style="padding: 3%;float:left;" ng-click="feedBack.starSelected('2')" ng-class="{ highlightedCompetitor :  feedBack.selectedstar == '2'}" src="~/Images/communication/smallBigStar.png">
@@ -362,7 +362,7 @@
                                         <h5 style="margin:auto auto;margin-left: 0;font-size: large;float: left;width: 88%;    font-weight: 700;    font-size: 15px;">{{conversation.name}}</h5>
                                         <div class="applicationNotiCount" title="5" style=" display flex; float:left; text-align center; height 15px; width
                                              15px;">
-                                            <h6 class="fontClass" style=" font-size:10px;display inline-block;text-align: center; text-overflow clip; margin auto auto;color:white;">5</h6>
+                                            <h6 class="fontClass" style=" font-size:10px;display inline-block;text-align center; text-overflow clip; margin auto auto;color:white;">5</h6>
                                         </div>
                                     </div>
                                 </div>
@@ -448,11 +448,11 @@
             </div>
             @*Select skills - 2*@
             <div class="parentRoleDetailRight" ng-if="selectedMenu == '2'">
-                <ctc-Role role="coach" skill-Required="true"></ctc-Role>
+                <ctc-Role role="coachee" skill-Required="true"></ctc-Role>
             </div>
             @*MY Rewards - 6 *@
             <div class="parentRoleDetailRight" ng-if="selectedMenu == '6'">
-              
+
             </div>
         </div>
     </div>
