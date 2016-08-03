@@ -52,4 +52,8 @@ app.config(['$stateProvider', '$urlRouterProvider','$locationProvider',function(
         url: '/menteeDashboard',
         templateUrl: '/Home/ksDashBoardMentee',
     })
+    .state('landingPage', {
+        url: '/home',
+        templateUrl: '/Home/ksLandingPage',
+    })
 }]);

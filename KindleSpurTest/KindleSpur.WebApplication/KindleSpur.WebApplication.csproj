@@ -461,6 +461,7 @@
     <Content Include="Views\Home\ksVcs.cshtml" />
     <Content Include="Views\Home\ksRssFeed.cshtml" />
     <Content Include="Views\Value\Index.cshtml" />
+    <Content Include="Views\Home\ksLandingPage.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
