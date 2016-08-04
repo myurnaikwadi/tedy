@@ -60,9 +60,13 @@
                  iOption.selected = true;                 
              }
          }
-
+         var _object = {
+             ImpactZone: $scope.selectButton.name,
+             StoryTitle: '',
+             StoryContent: ''
+         }
          serverCommunication.getDataRelatedIZFromServer({
-             impactZone: iOption,
+             ImpactZone: _object,
              successCallBack: function (iObj) {
                  console.error('In successCallBack', iObj);
              },
@@ -79,11 +83,11 @@
      };
 
      $scope.shareStoryClick = function () {
-
+     
          var _object = {
-             buttonName: $scope.selectButton.name,
-             subjectname: $scope.AddStory.SubjectName,
-             description: $scope.AddStory.Description
+             ImpactZone: $scope.selectButton.name,
+             StoryTitle: $scope.AddStory.SubjectName,
+             StoryContent: $scope.AddStory.Description
          }
          serverCommunication.sendStory({
              storyDetails: _object,
