@@ -189,8 +189,11 @@ app.factory('serverCommunication', function ($http) {
           * @Purpose : get topic and skill as per category selected
           */
         sendSelectedCTSDataToServer: function (iObj) {
-            console.error(iObj)
-            $http.post('/Coach/SaveSkills', iObj.selectedArray).then(iObj.successCallBack, iObj.failureCallBack);
+             console.error(iObj)
+            var _action = '/Coach/SaveSkills';
+            if (iObj.role == 'coachee')
+                _action = '/Coachee/SaveSkills';
+            $http.post(_action, iObj.selectedArray).then(iObj.successCallBack, iObj.failureCallBack);
         },
         /**
           * @auther : MKN

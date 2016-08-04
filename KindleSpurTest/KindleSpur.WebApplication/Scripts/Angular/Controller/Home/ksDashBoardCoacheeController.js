@@ -106,7 +106,7 @@
                          },
 
         ];
-        serverCommunication.getMySelection({
+        serverCommunication.getMyCoacheeSelection({
             successCallBack: function (iObj) {
                 console.error('In getMySelection', iObj);
                 _category = {
