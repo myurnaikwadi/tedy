@@ -45,25 +45,26 @@
 
             ];
      $scope.StoryDetailArray = [
-                {username:'P.sagar' ,description:'story description within two to three line'},
-                { username: 'J.ishwar', description: 'story description within two to three line' },
-                { username: 'Tushar', description: 'story description within two to three line' },
-                { username: 'Pranav', description: 'story description within two to three line' }
+                //{username:'P.sagar' ,description:'story description within two to three line'},
+                //{ username: 'J.ishwar', description: 'story description within two to three line' },
+                //{ username: 'Tushar', description: 'story description within two to three line' },
+                //{ username: 'Pranav', description: 'story description within two to three line' }
 
      ];
      $scope.selectButton=null;
      $scope.selectOption = function (iIndex, iOption) {
-         $scope.selectButton = iOption;
+         
          for (var k = 0 ; k < $scope.topButtonArray.length ; k++) {
              $scope.topButtonArray[k].selected = false;
              if (iOption.name == $scope.topButtonArray[k].name) {
                  iOption.selected = true;                 
              }
          }
+         $scope.selectButton = iOption;
          var _object = {
-             ImpactZone: $scope.selectButton.name,
-             StoryTitle: '',
-             StoryContent: ''
+             ImpactZone: iOption.name,
+             //StoryTitle: '',
+             //StoryContent: ''
          }
          serverCommunication.getDataRelatedIZFromServer({
              ImpactZone: _object,
@@ -89,17 +90,19 @@
              StoryTitle: $scope.AddStory.SubjectName,
              StoryContent: $scope.AddStory.Description
          }
+         $scope.StoryDetailArray.push(_object);
          serverCommunication.sendStory({
              storyDetails: _object,
              successCallBack: function (iObj) {
                  console.error('In successCallBack', iObj);
-                 //$scope.getPointsRecord();
+                 
              },
              failureCallBack: function (iObj) {
                  console.error('In failureCallBack', iObj);
              }
 
          });
+         $scope.closeaddStoryPopup();
      };
     
      $scope.init = function () {
