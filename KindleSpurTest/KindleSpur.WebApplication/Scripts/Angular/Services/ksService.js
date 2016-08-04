@@ -203,7 +203,7 @@ app.factory('serverCommunication', function ($http) {
         */
         getDataRelatedIZFromServer: function (iObj) {            
             console.error(iObj)
-            $http.post('/', iObj.impactZone).then(iObj.successCallBack, iObj.failureCallBack);
+            $http.post('/Value/GetValueFeedStories', iObj.storyDetails).then(iObj.successCallBack, iObj.failureCallBack);
         },
         
         /**
@@ -214,7 +214,7 @@ app.factory('serverCommunication', function ($http) {
         sendStory: function (iObj) {
             
             console.error(iObj)
-            $http.post('/', iObj.storyDetails).then(iObj.successCallBack, iObj.failureCallBack);
+            $http.post('/Value/SaveValueFeedStory', iObj.storyDetails).then(iObj.successCallBack, iObj.failureCallBack);
         },
         
         /**
@@ -382,7 +382,7 @@ app.factory('serverCommunication', function ($http) {
         */
         sendSelectedFeed: function (iObj) {
             console.error(iObj)
-            $http.post('', iObj.selectedFeed).then(iObj.successCallBack, iObj.failureCallBack);
+            $http.post('/Value/SaveValueFeedStory', iObj.selectedFeed).then(iObj.successCallBack, iObj.failureCallBack);
         },
 
 

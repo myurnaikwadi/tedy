@@ -67,7 +67,7 @@
              //StoryContent: ''
          }
          serverCommunication.getDataRelatedIZFromServer({
-             ImpactZone: _object.ImpactZone,
+             storyDetails: _object,
              successCallBack: function (iObj) {
                  console.error('In successCallBack', iObj);
              },

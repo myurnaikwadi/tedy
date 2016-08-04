@@ -392,8 +392,12 @@ namespace KindleSpur.Data
             var userDetail = _userCollection.FindOneAs<User>(Query.EQ("EmailAddress", emailAddress));
             try
             {
+                story.CreateDate = DateTime.Now;
+                story.UserId = emailAddress;
                 if (userDetail.ValueFeedStories == null) userDetail.ValueFeedStories = new List<ValueFeedStory>();
                 userDetail.ValueFeedStories.Add(story);
+                _userCollection.Save(userDetail);
+                
                 return true;
             }
             catch (Exception)
@@ -404,17 +408,26 @@ namespace KindleSpur.Data
 
         public string GetValueFeedStories(string ImpactZone)
         {
-            var matchMember = new BsonDocument("$match", new BsonDocument("ImpactZone", ImpactZone));
-            var unwindStories = new BsonDocument("$unwind", "$ValueFeedStories");
-            var sortOperation = new BsonDocument("$sort", new BsonDocument("CreateDate", 1));
-            var ProjectFinal = new BsonDocument("$project", new BsonDocument {{"_id", 0}, {"UserId", "EmailAddress"},{ "ValueFeedStories", "$ValueFeedStories" }});
-            IEnumerable<BsonDocument> pipeline = new[] { matchMember, unwindStories, sortOperation, ProjectFinal };
+            //var matchMember = new BsonDocument { { "$match", new BsonDocument { { "ValueFeedStories.ImpactZone", ImpactZone } } } };
+            //var unwindStories = new BsonDocument { { "$unwind", "$ValueFeedStories" } };
+            //var sortOperation = new BsonDocument { { "$sort", new BsonDocument { { "CreateDate", 1 } } } };
+            ////var ProjectFinal = new BsonDocument { { "$project", new BsonDocument { { "_id", 0 }, { "UserId", "EmailAddress" }, { "ValueFeedStories", "$ValueFeedStories" } } } };
+            //IEnumerable<BsonDocument> pipeline = new[] { matchMember, unwindStories, sortOperation };
 
-            var args = new AggregateArgs();
-            args.Pipeline = pipeline;
-            args.AllowDiskUse = true;
+            //var args = new AggregateArgs();
+            //args.Pipeline = pipeline;
+            //args.AllowDiskUse = true;
 
-            return _userCollection.Aggregate(args).ToJson();
+            //return _userCollection.Aggregate(args).ToJson();
+            //_userCollection = con.GetCollection("UserDetails");
+            MongoCursor<User> result = _userCollection.FindAs<User>(Query.EQ("ValueFeedStories.ImpactZone", ImpactZone));
+            ArrayList stories = new ArrayList();
+            foreach (var item in result)
+            {
+                var story = item.ValueFeedStories.Where(x => x.ImpactZone == ImpactZone).ToArray();
+                stories.AddRange(story);
+            }
+            return stories.ToJson();
 
         }
 
