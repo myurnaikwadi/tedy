@@ -163,7 +163,7 @@ app.factory('serverCommunication', function ($http) {
          */
         getMyCoacheeSelection: function (iObj) {
             console.error(iObj)
-            $http.get('/Mentor/GetTopics').then(iObj.successCallBack, iObj.failureCallBack);
+            $http.get('/Coachee/GetCTS').then(iObj.successCallBack, iObj.failureCallBack);
         },
         /**
           * @auther : MKN
@@ -189,8 +189,11 @@ app.factory('serverCommunication', function ($http) {
           * @Purpose : get topic and skill as per category selected
           */
         sendSelectedCTSDataToServer: function (iObj) {
-            console.error(iObj)
-            $http.post('/Coach/SaveSkills', iObj.selectedArray).then(iObj.successCallBack, iObj.failureCallBack);
+             console.error(iObj)
+            var _action = '/Coach/SaveSkills';
+            if (iObj.role == 'coachee')
+                _action = '/Coachee/SaveSkills';
+            $http.post(_action, iObj.selectedArray).then(iObj.successCallBack, iObj.failureCallBack);
         },
         /**
           * @auther : MKN
@@ -251,6 +254,26 @@ app.factory('serverCommunication', function ($http) {
             var req = {
                 method: 'POST',
                 url: '/Coach/GetCoachs',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                data: { ctsFilter: iObj.filter }
+            }
+            $http(req).then(iObj.successCallBack, iObj.failureCallBack);
+        },
+        /**
+         * @auther : MKN
+         * @date : 4/08/2016
+         * @Purpose :to search coachee
+         */
+        getRecommendedCoach: function (iObj) {
+            $http.get('/Coachee/GetRecommendedCoach').then(iObj.successCallBack, iObj.failureCallBack)
+        },
+
+        getCoaches: function (iObj) {
+            var req = {
+                method: 'POST',
+                url: '/Coachee/GetCoachs',
                 headers: {
                     'Content-Type': 'application/json'
                 },
