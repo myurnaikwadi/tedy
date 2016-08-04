@@ -303,7 +303,7 @@ namespace KindleSpur.Data
             }
 
             // RewardPointsGained = (RewardPointsGained - (RewardPointsGained % 10))/10;
-            string Id = (RewardPointsGained / 10).ToString();
+            string Id = (BalancePoints / 10).ToString();
             return _gamesCollection.FindOneAs<Game>(Query.EQ("GameId", Id));
         }
 
