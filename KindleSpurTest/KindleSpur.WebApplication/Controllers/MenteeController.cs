@@ -31,11 +31,12 @@ namespace KindleSpur.WebApplication.Controllers
             _obj.CreateDate = _obj.UpdateDate = DateTime.Today.ToShortDateString();//Convert.ToDateTime(DateTime.Today.ToShortDateString());
             if (_obj.Topics == null)
                 _obj.Topics = new List<string>();
-
+            if(selectedArray!=null)
+            { 
             var topicsList = selectedArray.Select(x => x.Name).ToList();
 
             _obj.Topics.AddRange(topicsList);
-
+            }
             _menteeRepo.AddNewCoacheeOrMentee(_obj);
 
             return true;
