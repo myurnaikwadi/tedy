@@ -43,7 +43,7 @@
                     <div class="roleRepeatWizardMain" ng-class="{ mentorThemeColor : wizard.name =='MENTOR',menteeThemeColor : wizard.name =='MENTEE',coachThemeColor : wizard.name =='COACH',coacheeThemeColor : wizard.name =='COACHEE'}" ng-click="roleClick($event,wizard)" ng-repeat="wizard in applicationRole">
                         <div class="rolelabelPart">
                             <div class="roleNameLabel">
-                                <h1 style="width: 80%;margin: 10%;" class="notificationWizName" ng-class="{ whiteBackground : wizard.name =='MENTOR' || wizard.name =='COACH' }">{{wizard.name}}</h1>
+                                <h1 style="width: 80%;margin: 10%; font-size:30px" class="notificationWizName" ng-class="{ whiteBackground : wizard.name =='MENTOR' || wizard.name =='COACH' }">{{wizard.name}}</h1>
                             </div>
                             <div class="roleImage">
                                 <img src={{wizard.img}} class="homePageLogo">
