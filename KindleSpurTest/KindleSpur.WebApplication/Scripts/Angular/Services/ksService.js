@@ -195,6 +195,22 @@ app.factory('serverCommunication', function ($http) {
                 _action = '/Coachee/SaveSkills';
             $http.post(_action, iObj.selectedArray).then(iObj.successCallBack, iObj.failureCallBack);
         },
+ /**
+         * @auther : piyush
+         * @date : 04/08/2016
+         * @Purpose : post story name and story description
+         */
+        sendStory: function (iObj) {
+            
+            console.error(iObj)
+            $http.post('/  /', iObj.selectedFeed).then(iObj.successCallBack, iObj.failureCallBack);
+        },
+        
+        /**
+        * @auther : piyush
+        * @date : 04/08/2016
+        * @Purpose : get story name and story description
+        */
         /**
           * @auther : MKN
           * @date : 10/06/2016
