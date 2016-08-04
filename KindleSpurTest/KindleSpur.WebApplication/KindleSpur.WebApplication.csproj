@@ -308,10 +308,14 @@
     <Content Include="Images\icons\books icon 5.png" />
     <Content Include="Images\icons\books icon 6.png" />
     <Content Include="Images\icons\call.png" />
+    <Content Include="Images\icons\coachee_logo.png" />
     <Content Include="Images\icons\coaching_status.png" />
+    <Content Include="Images\icons\coach_logo.png" />
     <Content Include="Images\icons\communication.png" />
     <Content Include="Images\icons\Knowledge_feed.png" />
     <Content Include="Images\icons\knowledge_garden.png" />
+    <Content Include="Images\icons\mentee_logo.png" />
+    <Content Include="Images\icons\mentor_logo.png" />
     <Content Include="Images\icons\my_rewords.png" />
     <Content Include="Images\icons\profile.png" />
     <Content Include="Images\icons\search_mentor_coach.png" />
