@@ -298,21 +298,25 @@
     <Content Include="Images\default-user.png" />
     <Content Include="Images\defaultImage.png" />
     <Content Include="Images\delete.png" />
+    <Content Include="Images\doorEntry.png" />
     <Content Include="Images\edit_Icon.png" />
-    <Content Include="Images\icons\book.png" />
+    <Content Include="Images\gameConsole.png" />
+    <Content Include="Images\icons\books icon 1.png" />
+    <Content Include="Images\icons\books icon 2.png" />
+    <Content Include="Images\icons\books icon 3.png" />
+    <Content Include="Images\icons\books icon 4.png" />
+    <Content Include="Images\icons\books icon 5.png" />
+    <Content Include="Images\icons\books icon 6.png" />
     <Content Include="Images\icons\call.png" />
-    <Content Include="Images\icons\coach.png" />
-    <Content Include="Images\icons\coachee.jpg" />
-    <Content Include="Images\icons\coachee.png" />
-    <Content Include="Images\icons\Knowledge.png" />
-    <Content Include="Images\icons\KnowledgeFeed.png" />
-    <Content Include="Images\icons\logo.png" />
-    <Content Include="Images\icons\mentee.png" />
-    <Content Include="Images\icons\mentor.png" />
+    <Content Include="Images\icons\coaching_status.png" />
+    <Content Include="Images\icons\communication.png" />
+    <Content Include="Images\icons\Knowledge_feed.png" />
+    <Content Include="Images\icons\knowledge_garden.png" />
+    <Content Include="Images\icons\my_rewords.png" />
     <Content Include="Images\icons\profile.png" />
-    <Content Include="Images\icons\Resources.png" />
-    <Content Include="Images\icons\Reword.png" />
-    <Content Include="Images\icons\tranding topic.png" />
+    <Content Include="Images\icons\search_mentor_coach.png" />
+    <Content Include="Images\icons\trending topics1.png" />
+    <Content Include="Images\icons\trending topics2.png" />
     <Content Include="Images\linkedIn.jpg" />
     <Content Include="Images\linkedin_square_gray.png" />
     <Content Include="Images\loginLanding.jpg" />
@@ -340,7 +344,9 @@
     <Content Include="Scripts\Angular\App\app.js" />
     <Content Include="Scripts\Angular\App\stateController.js" />
     <Content Include="Scripts\Angular\Controller\Home\ksDashBoardMentorController.js" />
+    <Content Include="Scripts\Angular\Controller\Home\ksHomePageController.js" />
     <Content Include="Scripts\Angular\Controller\Home\ksProfile\ksProfileController.js" />
+    <Content Include="Scripts\Angular\Controller\Home\ksVCGController.js" />
     <Content Include="Scripts\Angular\Controller\Home\ksVcsController.js" />
     <Content Include="Scripts\Angular\Controller\value\ksValueFeedsController.js" />
     <Content Include="Scripts\Angular\Services\ksGenericDirective.js" />
@@ -446,6 +452,8 @@
     <Content Include="Views\Home\ksVcs.cshtml" />
     <Content Include="Views\Home\ksRssFeed.cshtml" />
     <Content Include="Views\Value\Index.cshtml" />
+    <Content Include="Views\Home\ksLandingPage.cshtml" />
+    <Content Include="Views\Home\ksVCGameView.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

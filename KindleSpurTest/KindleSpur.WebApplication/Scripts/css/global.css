@@ -207,7 +207,6 @@ input[type=range]:focus::-ms-fill-upper {
 }
 
 .node circle {
-  stroke: #000;
   stroke-width: 1.5px;
 }
 

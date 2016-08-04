@@ -66,7 +66,7 @@ app.controller('ksLoginController', ['$scope', 'authentification', '$location', 
  	            alert('wrong id password');
  	            $state.go('login');
  	        } else {
- 	            $state.go('ksUserDashBoard');
+ 	            $state.go('landingPage');
  	        }
  	    }
         };
@@ -126,7 +126,7 @@ app.controller('ksLoginController', ['$scope', 'authentification', '$location', 
       * @Purpose : signup function  - send data to auth factory to send data to server.
       */
  	$scope.loginClick = function () {
- 	    //$state.go('ksUserDashBoard');
+ 	    //$state.go('landingPage');
         //return
  	    if ($scope.loginDetails.emailAddress == '' || $scope.loginDetails.password == '') {
  	        alert('Please enter emailAddress or Password')

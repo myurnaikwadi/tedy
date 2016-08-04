@@ -21,7 +21,7 @@ app.directive('vcsDir', function ($state, serverCommunication,$rootScope) {
                     , { name: 'Team Success' }
                     , { name: 'Subordinate Success' }
             ]
-            var _resetStyles = function () {//AKP
+            var _resetStyles = function () {
                 var txtBoxes = document.getElementsByTagName("INPUT");
                 for (var i = 0; i < txtBoxes.length; i++) {
                     if (txtBoxes[i].id == "userId") {
@@ -128,10 +128,11 @@ app.directive('vcsDir', function ($state, serverCommunication,$rootScope) {
                 $scope.activity.Tasks = [].concat($scope.dummyTaskArray);
                 $scope.activityMainArray.push($scope.activity);
                 serverCommunication.saveActivity({
-                    activity: $scope.activity,
+                    activity: angular.copy($scope.activity),
                     successCallBack: function (iObj) {
                         console.error('In Success CallBack', iObj);
-                      //  _createMoleculeStructure(iObj);
+                        //  _createMoleculeStructure(iObj);
+                      
                     },
                     failureCallBack: function (iObj) {
                         console.error('In failuregetMySelectionCallBack', iObj);
@@ -140,6 +141,7 @@ app.directive('vcsDir', function ($state, serverCommunication,$rootScope) {
                 });
                 $scope.activity = { eventTitle: '' };
                 $scope.dummyTaskArray = [];
+                
             };
 
 
@@ -154,7 +156,8 @@ app.directive('vcsDir', function ($state, serverCommunication,$rootScope) {
                     iObj.data = JSON.parse(iObj.data);
                 console.error(iObj.data)
                 //var _data = JSON.parse(_data);
-                $scope.activityMainArray = [].concat(iObj.data);
+                if (iObj.data)
+                    $scope.activityMainArray = [].concat(iObj.data);
             };
 
             var _init = function () {
