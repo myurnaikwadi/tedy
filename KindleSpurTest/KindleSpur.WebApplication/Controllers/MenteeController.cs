@@ -16,7 +16,7 @@ namespace KindleSpur.WebApplication.Controllers
         public MenteeController()
         {
             UserId = ((IUser)System.Web.HttpContext.Current.Session["User"]).EmailAddress;
-            GetKnowlegdeFeed();
+
         }
 
         [HttpPost]
@@ -68,6 +68,11 @@ namespace KindleSpur.WebApplication.Controllers
             return _coachRepo.addFeedback(UserId, feedback);
 
         }
-
+        public ActionResult GetKnowlegdeFeed()
+        {
+            CoacheeOrMenteeRepository _coachRepo = new CoacheeOrMenteeRepository();
+            var UserName = _coachRepo.GetTopicsForMentee(UserId);
+            return Json(new { UserName = UserName, Success = true }, JsonRequestBehavior.AllowGet);
+        }
     }
 }
