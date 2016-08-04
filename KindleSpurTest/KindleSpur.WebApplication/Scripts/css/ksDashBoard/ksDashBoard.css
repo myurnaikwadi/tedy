@@ -246,18 +246,81 @@ width: 20%;
 .landingPageStructure {
    margin : auto;
    width:  60%;
-   height: 80%;
-   border: 1px solid red;
-   background: -webkit-radial-gradient(rgb(226,226,226), white, white); /* For Safari 5.1 to 6.0 */
-    background: -o-radial-gradient(rgb(226,226,226), white, white); /* For Opera 11.6 to 12.0 */
-    background: -moz-radial-gradient(rgb(226,226,226), white, white); /* For Fx 3.6 to 15 */
-    background: radial-gradient(rgb(226,226,226), white, white); /* Standard syntax (must be last) */
+   float : left;
+   display: flex;
+   height: 95%;
+   background: radial-gradient(rgb(136, 136, 136), #f3f3f3, white); /* Standard syntax (must be last) */
 }
-.centerCircleWithBoxShadow {
-    background: -webkit-radial-gradient(rgb(226,226,226), white, white); /* For Safari 5.1 to 6.0 */
-    background: -o-radial-gradient(rgb(226,226,226), white, white); /* For Opera 11.6 to 12.0 */
-    background: -moz-radial-gradient(rgb(226,226,226), white, white); /* For Fx 3.6 to 15 */
-    background: radial-gradient(rgb(226,226,226), white, white); /* Standard syntax (must be last) */
+.barLandingPage {  
+     margin : auto;
+     float : left;
+     position:absolute;
+     width: 30%;
+}
+.vcsPanelClass {
+     margin : auto;
+     margin-bottom: 14%;
      width:  60%;
-     height: 80%;
+     float : left;
+     display: flex;
+     height: 27%;
+         z-index: 1;
+     -webkit-transition: all 0.7s ease;
+     transition: all 0.7s ease;
 }
+
+.vcsPanelClass:hover  {
+     -webkit-transform:scale(1.1);
+     transform:scale(1.1);
+     transition: all 0.7s ease;
+}
+.mentoringStatusClass {
+     margin : auto;
+     width:  60%;
+     display: flex;
+     height: 27%;
+         z-index: 1;
+     -webkit-transition: all 0.7s ease;
+     transition: all 0.7s ease;    
+}
+.mentoringStatusClass:hover  {
+     -webkit-transform:scale(1.1);
+     transform:scale(1.1);
+     transition: all 0.7s ease;
+}
+.mentoringStatusLable {
+    float: left;
+    margin: auto;
+    font-size: 17px;
+    font-weight: 600;
+    -webkit-transition: all 0.7s ease;
+    transition: all 0.7s ease;
+
+}
+.mentoringStatusImg {
+    margin: auto;
+    -webkit-transition: all 0.7s ease;
+   transition: all 0.7s ease;
+
+}
+
+.vcsPanelLable {
+   margin: auto;
+   float : left;
+   font-size: 17px;
+   font-weight: 600;
+   -webkit-transition: all 0.7s ease;
+   transition: all 0.7s ease;
+
+}
+.vcsPanelImg {
+   margin: auto;
+   -webkit-transition: all 0.7s ease;
+   transition: all 0.7s ease;
+}
+
+/*line :not(.marker-path), line {
+  fill:none;
+  stroke:url('#gradw');
+  stroke-width:1;
+}*/ 

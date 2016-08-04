@@ -58,6 +58,10 @@ namespace KindleSpur.WebApplication.Controllers
         {
             return View();
         }
+        public ActionResult ksVCGameView()
+        {
+            return View();
+        }
         public ActionResult ksLandingPage()
         {
             return View();

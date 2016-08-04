@@ -1,0 +1,30 @@
+﻿<div class="parentBody" ng-controller="ksVCGController">
+    <div class="applicationTopStrip">
+        <top-Main-Strip></top-Main-Strip>
+    </div>
+    <div class="applicationMiddleStripMain">
+        <div class="parentRoleDashboard">
+            <div class="parentRoleMenu coachThemeColor">
+                <div class="profileViewMode genericPointerClass" ng-click="GetPrfileView()">
+                    <div class="profileImagePart"></div>
+                    <div class="profileNamePart fontClass genericPointerClass">WELCOME {{loggedDetail.FirstName+" "+loggedDetail.LastName}}</div>
+                </div>
+                <div class="leftSideMenuMainDashBoard">
+                    <div class="leftSideMenuParent">
+                        <div class="leftSideMenu valueCreationColor" ng-repeat="option in leftSideMenus" ng-click="menuClick($index,option)">
+                            <h5 class="leftSideMenuLable fontClass genericPointerClass">{{option.name}}</h5>
+                            <h5 ng-if="option.name == 'Add Skills'" style="float: right;font-size: 25px;margin: 1%;" class="leftSideMenuLable fontClass genericPointerClass">+</h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            @*Value creation score - 0*@
+            <div class="parentRoleDetailRight" style="padding:1%;padding-bottom: 0;" ng-if="selectedMenu == '0'">
+                <vcs-Dir></vcs-Dir>
+            </div>
+            @*Value Feed - 1*@
+            <div class="parentRoleDetailRight" style="padding:1%;padding-bottom: 0;" ng-if="selectedMenu == '1'">
+            </div>
+        </div>
+   </div>
+</div>

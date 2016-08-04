@@ -56,4 +56,8 @@ app.config(['$stateProvider', '$urlRouterProvider','$locationProvider',function(
         url: '/home',
         templateUrl: '/Home/ksLandingPage',
     })
+    .state('VCGameView', {
+          url: '/vcs',
+          templateUrl: '/Home/ksVCGameView',
+    })
 }]);

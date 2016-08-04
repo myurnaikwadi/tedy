@@ -57,6 +57,7 @@ app.directive('topMainStrip', function ($state) {
                     case 1: $state.go('dashBoardCoach'); break;
                     case 2: $state.go('dashBoardMentee'); break;
                     case 3: $state.go('dashBoardMentor'); break;
+                    case 4: $state.go('landingPage'); break;//navigate to home page
                 }
             };
         }
