@@ -32,7 +32,7 @@
                             <h5 style="font-weight:bold;"> IMPACT ZONES</h5>
                             <div class="ImpactZoneButton">
                                 <div style="display: flex;">
-                                    <div class="valueFeedButton" ng-click="selectOption()" ng-repeat="option in topButtonArray">
+                                    <div class="valueFeedButton" ng-click="selectOption($index,option)" ng-repeat="option in topButtonArray">
                                         {{option.name}}
                                     </div>
                                 </div>

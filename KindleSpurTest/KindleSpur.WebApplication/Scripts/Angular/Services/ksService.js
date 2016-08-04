@@ -195,7 +195,18 @@ app.factory('serverCommunication', function ($http) {
                 _action = '/Coachee/SaveSkills';
             $http.post(_action, iObj.selectedArray).then(iObj.successCallBack, iObj.failureCallBack);
         },
- /**
+
+        /**
+        * @auther : piyush
+        * @date : 04/08/2016
+        * @Purpose : post story name and story description
+        */
+        getDataRelatedIZFromServer: function (iObj) {            
+            console.error(iObj)
+            $http.post('/', iObj.impactZone).then(iObj.successCallBack, iObj.failureCallBack);
+        },
+        
+        /**
          * @auther : piyush
          * @date : 04/08/2016
          * @Purpose : post story name and story description
@@ -203,7 +214,7 @@ app.factory('serverCommunication', function ($http) {
         sendStory: function (iObj) {
             
             console.error(iObj)
-            $http.post('/  /', iObj.selectedFeed).then(iObj.successCallBack, iObj.failureCallBack);
+            $http.post('/', iObj.storyDetails).then(iObj.successCallBack, iObj.failureCallBack);
         },
         
         /**

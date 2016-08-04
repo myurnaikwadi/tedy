@@ -30,19 +30,18 @@
         $scope.selectedMenu = iIndex;       
         switch (iIndex) {
            // case 0:  break;
-           // case 1:  break;
+            case 1: $scope.fetchFeedDataFromServer(); break;
         }
     };
 
-    
-     $scope.topButtonArray = [
-              { name: 'TYPOGRAPHY' },
-               { name: 'ILLUSTRATION' },
-                { name: 'INFOGRAPHICS' },
-               { name: 'TYPOGRAPHY' },
-               { name: 'ILLUSTRATION' },
-               { name: 'INFOGRAPHICS' },
-               { name: 'INFOGRAPHICS' }             
+      $scope.topButtonArray = [
+              { name: 'TYPOGRAPHY', selected  : false },
+               { name: 'ILLUSTRATION', selected  : false },
+                { name: 'INFOGRAPHICS', selected: false },
+               { name: 'TYPOGRAPHY', selected: false },
+               { name: 'ILLUSTRATION', selected: false },
+               { name: 'INFOGRAPHICS', selected: false },
+               { name: 'INFOGRAPHICS', selected: false }
 
             ];
      $scope.StoryDetailArray = [
@@ -53,46 +52,54 @@
 
      ];
      $scope.selectButton=null;
-     $scope.selectOption = function (Lindex, Loption) {
-         $scope.selectButton=Loption;
-         var _object = {
-             buttonNmae: Loption.name,
-            // subjectname: $scope.AddStory.SubjectName,
-            // description: $scope.AddStory.Description
+     $scope.selectOption = function (iIndex, iOption) {
+         $scope.selectButton = iOption;
+         for (var k = 0 ; k < $scope.topButtonArray.length ; k++) {
+             $scope.topButtonArray[k].selected = false;
+             if (iOption.name == $scope.topButtonArray[k].name) {
+                 iOption.selected = true;                 
+             }
          }
 
-         serverCommunication.getDetarelatedToimpoactzone({
-             selectedFeed: _object,
+         serverCommunication.getDataRelatedIZFromServer({
+             impactZone: iOption,
              successCallBack: function (iObj) {
                  console.error('In successCallBack', iObj);
-                },
+             },
              failureCallBack: function (iObj) {
                  console.error('In failureCallBack', iObj);
+             }
+         });
+     };
+           
 
+     $scope.fetchFeedDataFromServer = function () {
+         if ($scope.topButtonArray.length > 0)
+             $scope.selectOption(0, $scope.topButtonArray[0]);
+     };
+
+     $scope.shareStoryClick = function () {
+
+         var _object = {
+             buttonName: $scope.selectButton.name,
+             subjectname: $scope.AddStory.SubjectName,
+             description: $scope.AddStory.Description
+         }
+         serverCommunication.sendStory({
+             storyDetails: _object,
+             successCallBack: function (iObj) {
+                 console.error('In successCallBack', iObj);
+                 //$scope.getPointsRecord();
+             },
+             failureCallBack: function (iObj) {
+                 console.error('In failureCallBack', iObj);
              }
 
          });
-     }
-           
-              $scope.shareStoryClick = function(){
-                  
-                  var _object = {
-                  buttonName:$scope.selectButton.name,
-                  subjectname: $scope.AddStory.SubjectName,
-                 description: $scope.AddStory.Description
-             }
-              
-              serverCommunication.sendStory({
-                selectedFeed: _object,
-                successCallBack: function (iObj) {
-                console.error('In successCallBack', iObj);
-                $scope.getPointsRecord();
-        },
-                failureCallBack: function (iObj) {
-                console.error('In failureCallBack', iObj);
-
-                }
-             
-    });
-              }
+     };
+    
+     $scope.init = function () {
+        
+     };
+     $scope.init();
 });
