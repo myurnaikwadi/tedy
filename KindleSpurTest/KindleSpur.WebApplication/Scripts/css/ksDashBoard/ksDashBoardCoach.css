@@ -774,7 +774,7 @@ float: left;
 }
 .feedContainRepeatDiv{
  	float: left;
-	width: 268px;
+	width: 267px;
     height: 213px;
 	border : 1px solid lightgray;
     padding : 10px;
@@ -795,9 +795,6 @@ float: left;
 }
 .backgroundIamgeFeed {
     background : url('../../../Images/communication/feedLogo.png') no-repeat;
-    -webkit-background-size: 100%;
-    -moz-background-size: 100%;
-    -o-background-size: 100%;
     background-size: 100%;
 }
 

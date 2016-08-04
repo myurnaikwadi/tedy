@@ -1343,13 +1343,29 @@ app.directive('rssFeed', function ($state, serverCommunication, $timeout) {
                 .done(function (data) {
                      // alert("success");
                      console.error(data)
-                     $scope.feedContainArray = $scope.feedContainArray.concat(data.webPages.value);
-                    // $scope.feedContainArray.so
-                     $scope.feedContainArray.sort(function (a, b) {
+                    var _feedContainArray = $scope.feedContainArray.concat(data.webPages.value);
+                    // $scope.feedContainArray
+                     var _book = [
+                         'Images/icons/books icon 1.png',
+                         'Images/icons/books icon 2.png',
+                         'Images/icons/books icon 3.png',
+                         'Images/icons/books icon 4.png',
+                         'Images/icons/books icon 5.png',
+                         'Images/icons/books icon 6.png',
+                     ];
+                     
+                     _feedContainArray.sort(function(a, b) {
                          a = new Date(a.dateLastCrawled);
                          b = new Date(b.dateLastCrawled);
                          return a > b ? -1 : a < b ? 1 : 0;
                      });
+                     var _count = 0;
+                     for (var k = 0 ; k < _feedContainArray.length; k++) {
+                         _feedContainArray[k].imagePath = _book[_count];
+                         _count++;
+                         if (_count == 6) _count = 0;
+                     }
+                     $scope.feedContainArray = [].concat(_feedContainArray);
                      // if (!$scope.$$phase) $scope.$digest();
                      $timeout(function () { }, 0);
                  })
