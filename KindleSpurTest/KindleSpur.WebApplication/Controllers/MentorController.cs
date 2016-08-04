@@ -28,8 +28,8 @@ namespace KindleSpur.WebApplication.Controllers
             _obj.CreateDate = _obj.UpdateDate = DateTime.Now;
             if (_obj.Topics == null)
                 _obj.Topics = new List<SkillOrTopic>();
-            if(selectedArray != null)
-           _obj.Topics.AddRange(selectedArray);
+            if (selectedArray != null)
+                _obj.Topics.AddRange(selectedArray);
 
             _mentorRepo.AddNewCoachOrMentor(_obj);
 
@@ -47,9 +47,12 @@ namespace KindleSpur.WebApplication.Controllers
             BsonArray arr = new BsonArray();
             foreach (SkillOrTopic topic in topics)
             {
+                if (topic != null)
+                {
+                    BsonDocument result = _ctsRepo.GetMentorCategory(topic.Name);
+                    arr.Add(result);
+                }
 
-                BsonDocument result = _ctsRepo.GetMentorCategory(topic.Name);
-                arr.Add(result);
 
             }
             doc.Add("Categories", arr);
