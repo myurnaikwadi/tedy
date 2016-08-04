@@ -130,12 +130,13 @@ float: left;
     float: left;
     margin: 5%;
     margin-top: 3%;
-    opacity: 0.3;
+    opacity: 0.6;
     margin-right: 0;
     text-align: center;
     font-size: 10px;
     float : left;
     text-decoration: underline;
+    cursor:pointer;
 }
 .signInWith{
 	position: relative;

@@ -120,6 +120,7 @@
             margin-right: 0;
             text-align: center;
             text-decoration: underline;
+            cursor:pointer;
         }
 
         .signInWith {
