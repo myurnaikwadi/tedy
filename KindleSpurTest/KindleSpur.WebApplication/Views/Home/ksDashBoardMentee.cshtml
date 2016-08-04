@@ -110,7 +110,7 @@
                     </div>
                     <div class="mainDashBoardWizardParent">
                         <div class="dashBoardMenuCoach">
-                            <div class="dashBoardMenuCoachRight genericPointerClass  col-md-3" ng-repeat="option in rightSideDashBoardArray" ng-class="{'dashBoardMenuCoachBottom': $index == 3}">
+                            <div class="dashBoardMenuCoachRight genericPointerClass  col-md-3" ng-click="selectedOption($index,option)" ng-repeat="option in rightSideDashBoardArray" ng-class="{'dashBoardMenuCoachBottom': $index == 3}">
                                 <div class="dashBoardMenuCoachRightCircle">
                                     <div class="dashBoardMenuCoachRightCirclePart">
                                         <img src={{option.url}} class="dashBoardMenuCoachImage">
