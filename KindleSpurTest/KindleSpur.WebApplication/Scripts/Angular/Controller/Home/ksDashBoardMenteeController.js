@@ -66,64 +66,12 @@
 
         ];
 
-        serverCommunication.getMySelection({
+    };
+    $scope.getCoachRecord = function () {
+        serverCommunication.getCoachingWithStatus({
+            loggedUserDetails: $rootScope.loggedDetail,
             successCallBack: function (iObj) {
-                console.error('In getMySelection', iObj);
-                _category = {
-                };
-                _topics = {};
-                _skills = {
-                };
-                console.error(angular.copy(iObj.data));
-
-                if (iObj.data && iObj.data.Categories && iObj.data.Categories.length > 0) {
-                    for (var k = 0; k < iObj.data.Categories.length; k++) {
-                        if (Object.keys(iObj.data.Categories[k]).length > 0) {
-
-                            // _category[iObj.data.Categories[k].Category] = { Name: iObj.data.Categories[k].Category };
-                            if (iObj.data.Categories[k].Category) {
-                                if (_category[iObj.data.Categories[k].Category]) {//if category is already present
-                                    if (_category[iObj.data.Categories[k].Category].topic[iObj.data.Categories[k].Topic]) {//if topic is already present
-                                        //  _category[iObj.data.Categories[k].Category].topic[iObj.data.Categories[k].Topic] = { Name: iObj.data.Categories[k].Topic, skill: {} };
-                                        if (iObj.data.Categories[k].Skill) {
-                                            _skills[iObj.data.Categories[k].Skill] = { Name: iObj.data.Categories[k].Skill, profiLevel: iObj.data.Categories[k].profiLevel };
-                                            if (!_category[iObj.data.Categories[k].Category].topic[iObj.data.Categories[k].Topic].skill) _category[iObj.data.Categories[k].Category].topic[iObj.data.Categories[k].Topic].skill = {}
-                                            _category[iObj.data.Categories[k].Category].topic[iObj.data.Categories[k].Topic].skill[iObj.data.Categories[k].Skill] = {
-                                                Name: iObj.data.Categories[k].Skill, profiLevel: iObj.data.Categories[k].profiLevel
-                                            }
-                                        }
-                                    } else {
-                                        _topics[iObj.data.Categories[k].Topic] = {
-                                            Name: iObj.data.Categories[k].Topic, skill: {
-                                            }, profiLevel: iObj.data.Categories[k].profiLevel
-                                        };
-                                        _category[iObj.data.Categories[k].Category].topic[iObj.data.Categories[k].Topic] = { Name: iObj.data.Categories[k].Topic, skill: null, profiLevel: iObj.data.Categories[k].profiLevel };
-                                        if (iObj.data.Categories[k].Skill) {
-                                            _skills[iObj.data.Categories[k].Skill] = { Name: iObj.data.Categories[k].Skill, profiLevel: iObj.data.Categories[k].profiLevel };
-                                            if (!_category[iObj.data.Categories[k].Category].topic[iObj.data.Categories[k].Topic].skill) _category[iObj.data.Categories[k].Category].topic[iObj.data.Categories[k].Topic].skill = {}
-                                            _category[iObj.data.Categories[k].Category].topic[iObj.data.Categories[k].Topic].skill[iObj.data.Categories[k].Skill] = {
-                                                Name: iObj.data.Categories[k].Skill, profiLevel: iObj.data.Categories[k].profiLevel
-                                            }
-                                        }
-                                    }
-                                } else {
-                                    _category[iObj.data.Categories[k].Category] = {
-                                        Name: iObj.data.Categories[k].Category, topic: {}
-                                    };
-                                    _topics[iObj.data.Categories[k].Topic] = { Name: iObj.data.Categories[k].Topic, skill: null, profiLevel: iObj.data.Categories[k].profiLevel };
-                                    _category[iObj.data.Categories[k].Category].topic[iObj.data.Categories[k].Topic] = {
-                                        Name: iObj.data.Categories[k].Topic, skill: {
-                                        }, profiLevel: iObj.data.Categories[k].profiLevel
-                                    };
-                                    if (iObj.data.Categories[k].Skill) {
-                                        _skills[iObj.data.Categories[k].Skill] = { Name: iObj.data.Categories[k].Skill, profiLevel: iObj.data.Categories[k].profiLevel };
-                                        _category[iObj.data.Categories[k].Category].topic[iObj.data.Categories[k].Topic].skill = {}
-                                        _category[iObj.data.Categories[k].Category].topic[iObj.data.Categories[k].Topic].skill[iObj.data.Categories[k].Skill] = {
-                                            Name: iObj.data.Categories[k].Skill, profiLevel: iObj.data.Categories[k].profiLevel
-                                        }
-                                    }
-                                }
-                            }
+                console.error('In successCallBack', iObj);
 
                         }
                     }
