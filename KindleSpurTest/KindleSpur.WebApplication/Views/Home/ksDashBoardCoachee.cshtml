@@ -23,7 +23,7 @@
             @*DashBoard - 0*@
             <div class="parentRoleDetailRight" ng-show="selectedMenu == 0">
                 <div class="userNotificationParent">
-                    <div class="userRoleWizardParent" style="display: inline-flex;overflow: auto;float:left; overflow-x:scroll; overflow-y:hidden;width:96%;margin-left:2%;">
+                    <div class="userRoleWizardParent" >
                         <div class="notificationWiz " ng-repeat="notification in notifications">
                             <div ng-if="notification.notificationType == '1'">
                                 <h6 class="notificationWizReason">{{notification.name}}</h6>
@@ -49,7 +49,7 @@
                     </div>
                     <div class="mainDashBoardWizardParent">
                         <div class="dashBoardMenuCoach">
-                            <div class="dashBoardMenuCoachRight genericPointerClas col-md-3 " ng-click="selectedOption($index,option)" ng-repeat="option in rightSideDashBoardArray" }">
+                            <div class="dashBoardMenuCoachRight genericPointerClas col-md-3 " ng-click="selectedOption($index,option)" ng-repeat="option in rightSideDashBoardArray" ng-class="{'dashBoardMenuCoachBottom': $index == 3}">
                                 <div class="dashBoardMenuCoachRightCircle">
 
                                     <div class="dashBoardMenuCoachRightCirclePart">

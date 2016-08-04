@@ -29,7 +29,7 @@
             @*dashboard -0 *@
             <div class="parentRoleDetailRight" ng-if="selectedMenu == '0'">
                 <div class="userNotificationParent">
-                    <div class="userRoleWizardParent" style="display: inline-flex;overflow: auto;float:left; overflow-x:scroll; overflow-y:hidden;width:96%;margin-left:2%;">
+                    <div class="userRoleWizardParent" >
                         <div class="notificationWiz " ng-repeat="notification in notifications">
                             <div ng-if="notification.notificationType == '1'">
                                 <h6 class="notificationWizReason">{{notification.name}}</h6>

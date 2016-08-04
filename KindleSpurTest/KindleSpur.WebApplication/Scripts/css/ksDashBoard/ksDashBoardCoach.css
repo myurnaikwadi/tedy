@@ -140,8 +140,13 @@
 
         
         .userRoleWizardParent {
+            display: inline-flex;
+            overflow: auto;
             float: left;
-            width: 100%;
+            overflow-x: scroll;
+            overflow-y: hidden;
+            width: 96%;
+            margin-left: 2%;
             height: 100%;
         }
 
