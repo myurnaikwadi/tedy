@@ -22,11 +22,11 @@
     ]
     $scope.applicationRole = [{ name: 'COACHEE' }, { name: 'MENTEE' }, { name: 'COACH' }, { name: 'MENTOR' }]
     $scope.rightSideDashBoardArray = [
-               { name: 'SELECT TOPICS', url: '../../Images/icons/book.png ' },
-                { name: 'SEARCH MENTOR', url: '../../Images/icons/Knowledge.png ' },
-                { name: 'KNOWLEDGE FEED', url: '../../Images/icons/KnowledgeFeed.png ' },
-                { name: 'COMMUNICATION', url: '../../Images/icons/Resources.png ' },
-                { name: 'REWARDS', url: '../../Images/icons/Reword.png ' }
+               { name: 'SELECT TOPICS', url: '../../Images/icons/coaching_status.png ' },
+                { name: 'SEARCH MENTOR', url: '../../Images/icons/search_mentor_coach.png ' },
+                { name: 'KNOWLEDGE FEED', url: '../../Images/icons/Knowledge_feed.png ' },
+                { name: 'COMMUNICATION', url: '../../Images/icons/communication.png ' },
+                { name: 'MY REWARDS', url: '../../Images/icons/my_rewords.png ' }
     ]
     $scope.menuClick = function (iIndex, iOption) {
         $scope.selectedMenu = iIndex;

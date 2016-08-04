@@ -232,6 +232,7 @@
             margin: auto auto;
             border: 7px solid lightgray;
             border-radius: 100%;
+                display: flex;
         }
 
         .dashBoardMenuCoachRightlabel {
@@ -783,10 +784,9 @@ float: left;
     width: 30%
 }
 .dashBoardMenuCoachImage{
-   height: 70%;
-    width: 59%;
-    margin-left: 20%;
-    margin-top: 11%;
+  height: 65%;
+    width: 71%;
+    margin:auto;
 }
 .backgroundIamgeFeed {
     background : url('../../../Images/communication/feedLogo.png') no-repeat;

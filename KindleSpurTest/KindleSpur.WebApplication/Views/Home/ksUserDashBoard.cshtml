@@ -18,7 +18,7 @@
                 </div>
             </div>
             <div class="userRoleWizardParentMain">
-                <div class="userRoleWizardParent" style="display: inline-flex;overflow: auto;float:left; overflow-x:scroll; overflow-y:hidden;width:96%;margin-left:2%;">
+                <div class="userRoleWizardParent" style="display: inline-flex;overflow: auto;float:left; overflow-x:scroll; overflow-y:hidden;width:96%;">
                     <div class="notificationWiz" ng-repeat="notification in notificationsArr">
                         <div ng-if="notification.notificationType == '1'">
                             <h6 class="notificationWizReason">{{notification.name}}</h6>
@@ -61,10 +61,35 @@
                         </div>
 
                     </div>
+                   
+                    </div>
+                </div>
                     <h5 class="fontClass TrendingTopicsHeader">TRENDING TOPICS</h5>
-                    <div>
-                      <div class="roleRepeatWizardMain" ng-repeat="option in trendingTopicLeft">
-                          {{option.name}}
+            <div class="trandingTopicParent col-md-12" style="float:none;padding-top: 10px;">
+                <div class="roleImage" style="float: left; margin-top: 2%;    margin-right: 8px;">
+                   
+                    <img src="~/Images/icons/trending topics1.png"   class="TradingTopicsLogo" />
+                </div>
+                <div class="col-md-5" style="width: 40%;">
+                    <div class="trandingTopicLeftArray " ng-repeat="option in trendingTopicLeft">
+                        <div style="height:15px; font-size: 9px;font-weight:bold; text-decoration: underline;" class="">
+                            {{option.name | uppercase}}
+                        </div>
+                        <div style="height:30px; font-size: 9px;" class="col-md-12">
+                            {{option.description}}
+                        </div>
+                    </div>
+                </div>
+                <div class="roleImage" style="float: left; margin-top: 2%;    margin-right: 8px;">
+                   <img src="~/Images/icons/trending topics2.png"  class="TradingTopicsLogo" />
+                </div>
+                <div class="col-md-5" style="width:40%">
+                    <div class="trandingTopicLeftArray " ng-repeat="option in trendingTopicLeft">
+                        <div style="height:15px; font-size: 9px;font-weight:bold;text-decoration: underline;" class="col-md-12">
+                            {{option.name | uppercase}}
+                        </div>
+                        <div style="height:30px; font-size: 9px;" class="col-md-12">
+                            {{option.description}}
                       </div>
                     </div>
                 </div>
