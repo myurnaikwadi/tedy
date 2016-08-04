@@ -263,6 +263,26 @@ app.factory('serverCommunication', function ($http) {
         },
         /**
          * @auther : MKN
+         * @date : 4/08/2016
+         * @Purpose :to search coachee
+         */
+        getRecommendedCoach: function (iObj) {
+            $http.get('/Coachee/GetRecommendedCoach').then(iObj.successCallBack, iObj.failureCallBack)
+        },
+
+        getCoaches: function (iObj) {
+            var req = {
+                method: 'POST',
+                url: '/Coachee/GetCoachs',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                data: { ctsFilter: iObj.filter }
+            }
+            $http(req).then(iObj.successCallBack, iObj.failureCallBack);
+        },
+        /**
+         * @auther : MKN
          * @date : 15/06/2016
          * @Purpose :
          */
