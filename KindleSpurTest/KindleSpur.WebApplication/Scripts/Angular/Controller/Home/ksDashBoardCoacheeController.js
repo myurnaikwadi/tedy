@@ -88,24 +88,7 @@
     $scope.feedCategoryArray = [];
     $scope.getRssFeedData = function () {
         //feedback
-        $scope.feedCategoryArray = [
-                         {
-                             name: 'C', selected: false
-                         },
-                         {
-                             name: 'C++', selected: false
-                         },
-                         {
-                             name: 'JAVA', selected: false
-                         },
-                             {
-                                 name: 'C#', selected: false
-                             },
-                         {
-                             name: 'ANGULAR JS', selected: false
-                         },
-
-        ];
+        $scope.feedCategoryArray = [];
         serverCommunication.getMyCoacheeSelection({
             successCallBack: function (iObj) {
                 console.error('In getMySelection', iObj);
