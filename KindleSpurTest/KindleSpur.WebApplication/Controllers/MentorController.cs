@@ -26,7 +26,9 @@ namespace KindleSpur.WebApplication.Controllers
             _obj.UserId = UserId;
             _obj.Role = "Mentor";
             _obj.CreateDate = _obj.UpdateDate = DateTime.Now;
-            if (_obj.Topics == null) _obj.Topics = new List<SkillOrTopic>();
+            if (_obj.Topics == null)
+                _obj.Topics = new List<SkillOrTopic>();
+            if(selectedArray != null)
            _obj.Topics.AddRange(selectedArray);
 
             _mentorRepo.AddNewCoachOrMentor(_obj);

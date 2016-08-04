@@ -101,7 +101,8 @@
 .userRoleWizardParenWizard {
     margin: 0% auto;
     	display: table;
-    	width: 55%;
+    width: 64%;
+/*width: 55%;*/
     	height: 15%;
 }
 .roleRepeatWizardMain{
@@ -111,6 +112,15 @@
     /*height: 42%;*/
     margin: 1%;
     border: 1px solid lightgray;
+}
+.roleRepeatWizardMain:hover{
+    position: relative;
+    float: left;
+    width: 45%;
+    /*height: 42%;*/
+    margin: 1%;
+    border: 1px solid lightgray;
+    box-shadow:0px 0px 10px 2px;
 }
 .notificationWizard{
 	margin: 0% auto;
@@ -124,7 +134,7 @@
     width: 260px;
     height: 75px;
     overflow-x: auto;
-    margin-left: 2%;
+    margin-right: 2%;
     margin-top: 1%;
 }
 .notificationWizReason {
@@ -235,6 +245,13 @@ width: 20%;
     font-weight: bold;
 }
 
+.trandingTopicParent{
+    margin: 0% auto;
+    display: table;
+    width: 75%;
+border-top: 1px solid lightgray;
+    border-bottom: 1px solid lightgray;
+}
 /*Landing Page Css*/
 .middleLandingParent {
     position: relative;
@@ -324,3 +341,34 @@ width: 20%;
   stroke:url('#gradw');
   stroke-width:1;
 }*/ 
+.trandingTopicLeftArray{
+    position: relative;
+    float: left;
+    width: 50% !important;   
+   
+   
+}
+.col-md-5{
+        position: relative;
+    min-height: 1px;
+    padding-right: 0px;
+    padding-left: 0px;
+}
+.col-md-12{
+        position: relative;
+    min-height: 1px;
+    padding-right: 0px;
+    padding-left: 0px;
+}
+
+.trandingTopicRightArray {
+    position: relative;
+    float: right;
+   width: 34% !important;   
+
+}
+.TradingTopicsLogo{
+   width: 50px;
+    margin-top: 1%;
+    height: auto;
+}

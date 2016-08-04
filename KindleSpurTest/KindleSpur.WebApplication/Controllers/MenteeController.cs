@@ -16,6 +16,7 @@ namespace KindleSpur.WebApplication.Controllers
         public MenteeController()
         {
             UserId = ((IUser)System.Web.HttpContext.Current.Session["User"]).EmailAddress;
+
         }
 
         [HttpPost]
@@ -28,10 +29,12 @@ namespace KindleSpur.WebApplication.Controllers
             _obj.UserId = UserId;
             _obj.Role = "Mentee";
             _obj.CreateDate = _obj.UpdateDate = DateTime.Today.ToShortDateString();//Convert.ToDateTime(DateTime.Today.ToShortDateString());
-            if (_obj.Topics == null) _obj.Topics = new List<string>();
+            if (_obj.Topics == null)
+                _obj.Topics = new List<string>();
 
             var topicsList = selectedArray.Select(x => x.Name).ToList();
-           _obj.Topics.AddRange(topicsList);
+
+            _obj.Topics.AddRange(topicsList);
 
             _menteeRepo.AddNewCoacheeOrMentee(_obj);
 
@@ -65,12 +68,11 @@ namespace KindleSpur.WebApplication.Controllers
             return _coachRepo.addFeedback(UserId, feedback);
 
         }
-        public ActionResult GetCoachingStatus()
+        public ActionResult GetKnowlegdeFeed()
         {
             CoacheeOrMenteeRepository _coachRepo = new CoacheeOrMenteeRepository();
-            var filters = _coachRepo.GetCoachingStatus(UserId);
-            return Json(new { Filters = filters, Success = true }, JsonRequestBehavior.AllowGet);
+            var UserName = _coachRepo.GetTopicsForMentee(UserId);
+            return Json(new { UserName = UserName, Success = true }, JsonRequestBehavior.AllowGet);
         }
-
     }
 }
