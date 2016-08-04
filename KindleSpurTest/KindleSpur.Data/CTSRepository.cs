@@ -275,5 +275,15 @@ namespace KindleSpur.Data
             return _Category;
         }
 
+        public BsonDocument GetTrendingTopics()
+        {
+            BsonDocument _Category = new BsonDocument();
+
+            var _collection = _kindleDatabase.GetCollection("CoachOrMentor");
+            //var result = _collection.Find(Query.And(Query.EQ("UserId", Data.UserId), Query.EQ("Role", Data.Role))).ToList();
+
+            return _Category;
+        }
+
     }
 }

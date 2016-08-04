@@ -57,6 +57,7 @@
   <ItemGroup>
     <Compile Include="CoacheeOrMenteeRepository.cs" />
     <Compile Include="CoachOrMentorRepository.cs" />
+    <Compile Include="Connection.cs" />
     <Compile Include="CTSRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UserRepository.cs" />

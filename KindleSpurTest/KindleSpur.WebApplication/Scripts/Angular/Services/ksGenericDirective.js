@@ -72,16 +72,11 @@ app.directive('bottomMainStrip', function ($timeout) {
         link: function (scope, element, attrs) {
             console.error(scope);
             scope.bottomOptionArray = [
-               { name: 'UNKNOWN 2016' },
-                { name: 'USER AGREEMENT' },
+               { name: 'ABOUT' },
+                { name: 'FEEDBACK' },
                  { name: 'PRIVACY POLICY' },
-                { name: 'COMMUNITY GUIDELINES' },
-                { name: 'COOKIE POLICY' },
-                { name: 'COPIRIGHT POLICY' },
-                { name: 'QUEST CONTROLS' },
-                { name: 'LANGUAGE' },
-
-            ];
+                { name: 'TERMS AND CONDITIONS' },
+             ];
         }
     };
 });

@@ -247,11 +247,13 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\CoachController.cs" />
+    <Compile Include="Controllers\CoacheeController.cs" />
     <Compile Include="Controllers\CTSController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MenteeController.cs" />
     <Compile Include="Controllers\MentorController.cs" />
     <Compile Include="Controllers\UserController.cs" />
+    <Compile Include="Controllers\ValueController.cs" />
     <Compile Include="EmailHelper\EmailNotification.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -340,6 +342,7 @@
     <Content Include="Scripts\Angular\Controller\Home\ksDashBoardMentorController.js" />
     <Content Include="Scripts\Angular\Controller\Home\ksProfile\ksProfileController.js" />
     <Content Include="Scripts\Angular\Controller\Home\ksVcsController.js" />
+    <Content Include="Scripts\Angular\Controller\value\ksValueFeedsController.js" />
     <Content Include="Scripts\Angular\Services\ksGenericDirective.js" />
     <Content Include="Scripts\Angular\Services\msIsotope.js" />
     <Content Include="Scripts\bootstrap.js" />
@@ -381,6 +384,7 @@
     <Content Include="fonts\fontawesome-webfont.ttf" />
     <Content Include="fonts\fontawesome-webfont.svg" />
     <Content Include="fonts\fontawesome-webfont.eot" />
+    <Content Include="Scripts\css\ksValue\ksValueFeeds.css" />
     <Content Include="Scripts\d3.v3.js" />
     <Content Include="Scripts\d3.v3.min.js" />
     <Content Include="fonts\Roboto-Regular.ttf" />
@@ -441,11 +445,13 @@
     <Content Include="Views\Home\ksProfileTemplate.cshtml" />
     <Content Include="Views\Home\ksVcs.cshtml" />
     <Content Include="Views\Home\ksRssFeed.cshtml" />
+    <Content Include="Views\Value\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Img\" />
     <Folder Include="Models\" />
+    <Folder Include="Views\Coachee\" />
     <Folder Include="Views\Coach\" />
     <Folder Include="Views\Mentor\" />
     <Folder Include="Views\Shared\" />

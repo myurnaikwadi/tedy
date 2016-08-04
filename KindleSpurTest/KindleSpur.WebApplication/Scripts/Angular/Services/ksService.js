@@ -163,7 +163,7 @@ app.factory('serverCommunication', function ($http) {
          */
         getMyCoacheeSelection: function (iObj) {
             console.error(iObj)
-            $http.get('/Coachee/GetTopics').then(iObj.successCallBack, iObj.failureCallBack);
+            $http.get('/Mentor/GetTopics').then(iObj.successCallBack, iObj.failureCallBack);
         },
         /**
           * @auther : MKN
@@ -190,10 +190,7 @@ app.factory('serverCommunication', function ($http) {
           */
         sendSelectedCTSDataToServer: function (iObj) {
             console.error(iObj)
-            var _action = '/Coach/SaveSkills';
-            if (iObj.role == 'coachee')
-                _action = '/coachee/SaveTopics';
-            $http.post(_action, iObj.selectedArray).then(iObj.successCallBack, iObj.failureCallBack);
+            $http.post('/Coach/SaveSkills', iObj.selectedArray).then(iObj.successCallBack, iObj.failureCallBack);
         },
         /**
           * @auther : MKN

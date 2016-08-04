@@ -34,21 +34,26 @@
     ]
     $scope.leftSideMenus = [{ name: 'DASHBOARD' }
                 , { name: 'COACHING STATUS' }
+                 , { name: 'SELECT SKILLS' }
                 , { name: 'KNOWLEDGE GARDEN' }
+                 , { name: 'KNOWLEDGE FEED'  }
                 , { name: 'COMMUNICATION' }
-                , { name: 'KNOWLEDGE FEED' }
+             //   , { name: 'KNOWLEDGE FEED' }
               //  , { name: 'RESOURCES' }
-                , { name: 'ADD SKILLS' }
-                , { name: 'REWARDS' }
+             //   , { name: 'ADD SKILLS' }
+                , { name: 'MY REWARDS' }
                 // , { name: 'VCS' }
+               ,{name: 'VALUE FEEDS'}
     ]
     $scope.applicationRole = [{ name: 'COACHEE' }, { name: 'MENTEE' }, { name: 'COACH' }, { name: 'MENTOR' }]
     $scope.rightSideDashBoardArray = [
-                { name: 'COACHING STATUS', url: '../../Images/icons/book.png ' },
+
+                 { name: 'SELECT SKILLS', url: '../../Images/icons/book.png ' },
+            //    { name: 'COACHING STATUS', url: '../../Images/icons/book.png ' },
                 { name: 'KNOWLEDGE GARDEN', url: '../../Images/icons/Knowledge.png ' },
                 { name: 'KNOWLEDGE FEED', url: '../../Images/icons/KnowledgeFeed.png ' },
                 { name: 'COMMUNICATION', url: '../../Images/icons/Resources.png ' },
-                { name: 'REWARDS', url: '../../Images/icons/Reword.png ' }
+                { name: 'MY REWARDS', url: '../../Images/icons/Reword.png ' }
 
     ];
 
@@ -58,90 +63,106 @@
         $scope.feedContainArray =[];
         switch (iIndex) {
             case 1: $scope.getCoachRecord(); break;
-            case 2: $scope.generateGarden(); break;
+            case 3: $scope.generateGarden(); break;
             case 4: $scope.getRssFeedData(); break;
             case 6: $scope.getPointsRecord(); break;
         }
     };
 
+    $scope.selectedOption = function (iIndex, iCate) {
+        for (var k = 0; k < $scope.leftSideMenus.length; k++) {
+            if ($scope.leftSideMenus[k].name == iCate.name) {
+                $scope.menuClick(k, $scope.leftSideMenus[k]);
+             }
+         }
+    };
     $scope.feedCategoryArray =[];
     $scope.getRssFeedData = function () {
-        //feedback
-        $scope.feedCategoryArray = [
+            //feedback
+        $scope.feedCategoryArray =[
                        {
-                           name: 'C', selected: false
+        name: 'C', selected: false
                        },
                        {
-                           name: 'C++', selected: false
+        name: 'C++', selected: false
                        },
                        {
-                           name: 'JAVA', selected: false
+        name: 'JAVA', selected: false
                        },
                            {
-                               name: 'C#', selected: false
+        name: 'C#', selected: false
                            },
                        {
-                           name: 'ANGULAR JS', selected: false
+              name: 'ANGULAR JS', selected: false
                        },
 
-        ];
+                       ];
         serverCommunication.getMySelection({
-            successCallBack: function (iObj) {
+                successCallBack: function (iObj) {
                 console.error('In getMySelection', iObj);
-                _category = {};
-                _topics = {};
-                _skills = {};
+                _category = {
+        };
+                _topics = { };
+                _skills = {
+        };
                 console.error(angular.copy(iObj.data));
 
                 if (iObj.data && iObj.data.Categories && iObj.data.Categories.length > 0) {
-                    for (var k = 0; k < iObj.data.Categories.length ; k++) {
+                    for (var k = 0; k < iObj.data.Categories.length; k++) {
                         if (Object.keys(iObj.data.Categories[k]).length > 0) {
 
-                            // _category[iObj.data.Categories[k].Category] = { Name: iObj.data.Categories[k].Category };
+                        // _category[iObj.data.Categories[k].Category] = { Name: iObj.data.Categories[k].Category };
                             if (iObj.data.Categories[k].Category) {
                                 if (_category[iObj.data.Categories[k].Category]) {//if category is already present
                                     if (_category[iObj.data.Categories[k].Category].topic[iObj.data.Categories[k].Topic]) {//if topic is already present
-                                        //  _category[iObj.data.Categories[k].Category].topic[iObj.data.Categories[k].Topic] = { Name: iObj.data.Categories[k].Topic, skill: {} };
-                                        if (iObj.data.Categories[k].Skill) {
-                                            _skills[iObj.data.Categories[k].Skill] = { Name: iObj.data.Categories[k].Skill, profiLevel: iObj.data.Categories[k].profiLevel };
-                                            if (!_category[iObj.data.Categories[k].Category].topic[iObj.data.Categories[k].Topic].skill) _category[iObj.data.Categories[k].Category].topic[iObj.data.Categories[k].Topic].skill = {}
-                                            _category[iObj.data.Categories[k].Category].topic[iObj.data.Categories[k].Topic].skill[iObj.data.Categories[k].Skill] = { Name: iObj.data.Categories[k].Skill, profiLevel: iObj.data.Categories[k].profiLevel }
-                                        }
-                                    } else {
-                                        _topics[iObj.data.Categories[k].Topic] = { Name: iObj.data.Categories[k].Topic, skill: {}, profiLevel: iObj.data.Categories[k].profiLevel };
-                                        _category[iObj.data.Categories[k].Category].topic[iObj.data.Categories[k].Topic] = { Name: iObj.data.Categories[k].Topic, skill: null, profiLevel: iObj.data.Categories[k].profiLevel };
-                                        if (iObj.data.Categories[k].Skill) {
-                                            _skills[iObj.data.Categories[k].Skill] = { Name: iObj.data.Categories[k].Skill, profiLevel: iObj.data.Categories[k].profiLevel };
-                                            if (!_category[iObj.data.Categories[k].Category].topic[iObj.data.Categories[k].Topic].skill) _category[iObj.data.Categories[k].Category].topic[iObj.data.Categories[k].Topic].skill = {}
-                                            _category[iObj.data.Categories[k].Category].topic[iObj.data.Categories[k].Topic].skill[iObj.data.Categories[k].Skill] = { Name: iObj.data.Categories[k].Skill, profiLevel: iObj.data.Categories[k].profiLevel }
-                                        }
-                                    }
-                                } else {
-                                    _category[iObj.data.Categories[k].Category] = { Name: iObj.data.Categories[k].Category, topic: {} };
-                                    _topics[iObj.data.Categories[k].Topic] = { Name: iObj.data.Categories[k].Topic, skill: null, profiLevel: iObj.data.Categories[k].profiLevel };
-                                    _category[iObj.data.Categories[k].Category].topic[iObj.data.Categories[k].Topic] = { Name: iObj.data.Categories[k].Topic, skill: {}, profiLevel: iObj.data.Categories[k].profiLevel };
+                                    //  _category[iObj.data.Categories[k].Category].topic[iObj.data.Categories[k].Topic] = { Name: iObj.data.Categories[k].Topic, skill: {} };
                                     if (iObj.data.Categories[k].Skill) {
-                                        _skills[iObj.data.Categories[k].Skill] = { Name: iObj.data.Categories[k].Skill, profiLevel: iObj.data.Categories[k].profiLevel };
-                                        _category[iObj.data.Categories[k].Category].topic[iObj.data.Categories[k].Topic].skill = {}
-                                        _category[iObj.data.Categories[k].Category].topic[iObj.data.Categories[k].Topic].skill[iObj.data.Categories[k].Skill] = { Name: iObj.data.Categories[k].Skill, profiLevel: iObj.data.Categories[k].profiLevel }
-                                    }
+                                        _skills[iObj.data.Categories[k].Skill]= { Name: iObj.data.Categories[k].Skill, profiLevel: iObj.data.Categories[k].profiLevel };
+                                        if (!_category[iObj.data.Categories[k].Category].topic[iObj.data.Categories[k].Topic].skill) _category[iObj.data.Categories[k].Category].topic[iObj.data.Categories[k].Topic].skill = { }
+                                        _category[iObj.data.Categories[k].Category].topic[iObj.data.Categories[k].Topic].skill[iObj.data.Categories[k].Skill]= { Name: iObj.data.Categories[k].Skill, profiLevel: iObj.data.Categories[k].profiLevel
+                                }
+                                }
+                                    } else {
+                                        _topics[iObj.data.Categories[k].Topic]= { Name: iObj.data.Categories[k].Topic, skill: {
+                                }, profiLevel: iObj.data.Categories[k].profiLevel };
+                                _category[iObj.data.Categories[k].Category].topic[iObj.data.Categories[k].Topic]= { Name: iObj.data.Categories[k].Topic, skill: null, profiLevel: iObj.data.Categories[k].profiLevel };
+                                if (iObj.data.Categories[k].Skill) {
+                                    _skills[iObj.data.Categories[k].Skill]= { Name: iObj.data.Categories[k].Skill, profiLevel: iObj.data.Categories[k].profiLevel };
+                                    if (!_category[iObj.data.Categories[k].Category].topic[iObj.data.Categories[k].Topic].skill) _category[iObj.data.Categories[k].Category].topic[iObj.data.Categories[k].Topic].skill = { }
+                                    _category[iObj.data.Categories[k].Category].topic[iObj.data.Categories[k].Topic].skill[iObj.data.Categories[k].Skill]= { Name: iObj.data.Categories[k].Skill, profiLevel: iObj.data.Categories[k].profiLevel
                                 }
                             }
-
-                        }
+                            }
+                                } else {
+                                    _category[iObj.data.Categories[k].Category]= {
+                                Name: iObj.data.Categories[k].Category, topic: { } };
+                                _topics[iObj.data.Categories[k].Topic]= { Name: iObj.data.Categories[k].Topic, skill: null, profiLevel: iObj.data.Categories[k].profiLevel };
+                                _category[iObj.data.Categories[k].Category].topic[iObj.data.Categories[k].Topic]= { Name: iObj.data.Categories[k].Topic, skill: {
+                            }, profiLevel: iObj.data.Categories[k].profiLevel
+                            };
+                            if (iObj.data.Categories[k].Skill) {
+                                _skills[iObj.data.Categories[k].Skill]= { Name: iObj.data.Categories[k].Skill, profiLevel: iObj.data.Categories[k].profiLevel };
+                                _category[iObj.data.Categories[k].Category].topic[iObj.data.Categories[k].Topic].skill = { }
+                                _category[iObj.data.Categories[k].Category].topic[iObj.data.Categories[k].Topic].skill[iObj.data.Categories[k].Skill]= { Name: iObj.data.Categories[k].Skill, profiLevel: iObj.data.Categories[k].profiLevel
+                            }
                     }
                 }
+        }
+
+                        }
+                        }
+                        }
                 console.error('In getMySelection', _category, _topics, _skills);
                 if (Object.keys(_skills).length > 0) {
-                    $scope.feedCategoryArray = [];
+                    $scope.feedCategoryArray =[];
                 }
                 for (var _skill in _skills) {
                     $scope.feedCategoryArray.push({ selected: false, name: _skill });
-                }
+                       }
                 if (!$scope.$$phase) $scope.$digest();
             },
-            failureCallBack: function (iObj) {
-                console.error('In failuregetMySelectionCallBack', iObj);
+                failureCallBack: function (iObj) {
+   console.error('In failuregetMySelectionCallBack', iObj);
 
             }
         });
@@ -191,26 +212,26 @@
         serverCommunication.getCoachingWithStatus({
                 loggedUserDetails: $rootScope.loggedDetail,
                 successCallBack: function (iObj) {
-                console.error('In successCallBack', iObj);
-                $scope.coachingStatusArray = iObj.data.Filters;
+                     console.error('In successCallBack', iObj);
+                    $scope.coachingStatusArray = iObj.data.Filters;
 
-                var _array =[];
-                for (var k = 0; k < $scope.coachingStatusArray.length ; k++) {
-                    //$scope.coachingStatusArray[k]
-                        var _str = $scope.coachingStatusArray[k].FirstName +" "+$scope.coachingStatusArray[k].LastName;
-                        _array.push({
-                            "symbol": _str.toUpperCase(),
-                            "image": $scope.coachingStatusArray[k].TreeURL,
-                            "size": 25,
-                            "id": Math.random() +k,
-                            "bonds": 1
-                });
-                }
-                var _retu = {
-                    "3-iodo-3-methylhexan-1,4-diamine": {
-                        "nodes": _array,
-                        "links": []
-                }
+                    var _array =[];
+                    for (var k = 0; k < $scope.coachingStatusArray.length ; k++) {
+                        //$scope.coachingStatusArray[k]
+                            var _str = $scope.coachingStatusArray[k].FirstName +" "+$scope.coachingStatusArray[k].LastName;
+                            _array.push({
+                                "symbol": _str.toUpperCase(),
+                                "image": $scope.coachingStatusArray[k].TreeURL,
+                                "size": 25,
+                                "id": Math.random() +k,
+                                "bonds": 1
+                            });
+                    }
+                    var _retu = {
+                        "3-iodo-3-methylhexan-1,4-diamine": {
+                            "nodes": _array,
+                            "links": []
+                    }
                 }
                 console.error(_retu)
                 $scope.ctsDataForMolecule = _retu;
@@ -224,41 +245,17 @@
     };
     $scope.getCoachRecord = function () {
         serverCommunication.getCoachingWithStatus({
-                loggedUserDetails: $rootScope.loggedDetail,
-                successCallBack: function (iObj) {
-                console.error('In successCallBack', iObj);
-                $scope.coachingStatusArray = iObj.data.Filters;
-
-        },
-                failureCallBack: function (iObj) {
-                console.error('In failureCallBack', iObj);
-
-    }
-    });
+              loggedUserDetails: $rootScope.loggedDetail,
+              successCallBack: function (iObj) {
+                   console.error('In successCallBack', iObj);
+                   $scope.coachingStatusArray = iObj.data.Filters;
+             },
+             failureCallBack: function (iObj) {
+                 console.error('In failureCallBack', iObj);
+             }
+        });
     };
-    $scope.selectedOption = function (iIndex, iCate) {
-
-        if (iCate.name == 'BRAIN GAMES') {
-            iCate.selectedOption = !iCate.selectedOption;
-            serverCommunication.unlockGameCode({
-                //   loggedUserDetails: $rootScope.loggedDetail,
-                    successCallBack: function (iObj) {
-                        debugger;
-                    $scope.getPointsRecord();
-                        //alert(iObj.data);
-                    $scope.gameKey = iObj.data;
-                    console.error('In successCallBack', iObj);
-
-            },
-                    failureCallBack: function (iObj) {
-                    alert('Sorry......, You do not have sufficient point to unlock games!!!');
-                    console.error('In failureCallBack', iObj);
-
-    }
-    });
-    }
-    }
-
+   
     $scope.init = function () {
         console.error($scope.passedData)
         if($scope.passedData &&  $scope.passedData.param) {
@@ -399,7 +396,7 @@
             //   loggedUserDetails: $rootScope.loggedDetail,
                 redeemAction: $scope.redeemAction,
                 successCallBack: function (iObj) {
-                    $scope.menuClick(6);
+                    $scope.menuClick(7);
                     console.error('In successCallBack', iObj);
 
         },
@@ -412,6 +409,21 @@
 
     $scope.openRedeemPanel = function () {
         $scope.feedBack.askFeedback = true;
-        $scope.feedBack.formValue = '6';
+        $scope.feedBack.formValue = '7';
+    };
+
+    $scope.GetPrfileView = function () {
+        serverCommunication.getMySelection({
+            loggedUserDetails: $rootScope.loggedDetail,
+            successCallBack: function (iObj) {
+                console.error('In successCallBack', iObj);
+                $scope.coachingStatusArray = iObj.data.Filters;
+
+            },
+            failureCallBack: function (iObj) {
+                console.error('In failureCallBack', iObj);
+
+            }
+        });
     };
 });

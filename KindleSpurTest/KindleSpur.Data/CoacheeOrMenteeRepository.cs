@@ -90,18 +90,41 @@ namespace KindleSpur.Data
 
                 if (Data.Role == "Mentee")
                 {
+                   
+                    bool blnDelete = true;
+                    for (int i = _entity.Topics.Count - 1; i >= 0; i--)
+                    {
+
+                        foreach (string topic in Data.Topics)
+                        {
+                            if (!_entity.Topics.Contains(topic))
+                            {
+                                blnDelete = false;
+                                //   _entity.Topics.Add(topic);
+                                break;
+
+                            }
+                        }
+                        if (blnDelete) _entity.Topics.RemoveAt(i);
+                    }
                     foreach (string topic in Data.Topics)
                     {
+
                         if (!_entity.Topics.Contains(topic))
                         {
                             _entity.Topics.Add(topic);
+
                         }
                     }
+
                 }
+
+
+            
                 _entity.UpdateDate = DateTime.Today.ToShortDateString();
-                _collection.Save(_entity);
-                _transactionStatus = true;
-            }
+            _collection.Save(_entity);
+            _transactionStatus = true;
+        }
             catch (MongoException ex)
             {
                 _logCollection.Insert("{ Error : 'Failed at EditUser().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ");
@@ -110,193 +133,307 @@ namespace KindleSpur.Data
 
         }
 
-        public List<string> GetTopicsForMentee(string UserId)
+public List<string> GetTopicsForMentee(string UserId)
+{
+    var _collection = _kindleDatabase.GetCollection("CoacheeOrMentee");
+    var result = _collection.FindOneAs<CoacheeOrMentee>(Query.And(
+                                                            Query.EQ("UserId", UserId),
+                                                            Query.EQ("Role", "Mentee")
+                                                         ));
+    if (result != null)
+        return result.Topics;
+    else
+        return new List<string>();
+}
+
+public bool DeleteCoacheeOrMentee(string Id)
+{
+    bool _transactionStatus = false;
+    try
+    {
+        var _collection = _kindleDatabase.GetCollection("CoacheeOrMentee");
+        _collection.Remove(Query.EQ("_id", Id));
+        _transactionStatus = true;
+    }
+    catch (MongoException ex)
+    {
+        _logCollection.Insert("{ Error : 'Failed at AddNewCoacheeOrMentee().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ");
+        throw new MongoException("Signup failure!!!");
+    }
+    return _transactionStatus;
+}
+public List<BsonDocument> GetRecommended(string role)
+{
+    List<BsonDocument> result = new List<BsonDocument>();
+    try
+    {
+        var _collection = _kindleDatabase.GetCollection("CoacheeOrMentee");
+        result = _collection.Find(Query.EQ("Role", role)).SetFields(Fields.Exclude("_id")).ToList();
+    }
+    catch (Exception ex)
+    {
+        _logCollection.Insert("{ Error : 'Failed at EditUser().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ");
+    }
+
+    return result;
+}
+
+public void GetRewardPoints(string userId, ref Reward reward)
+{
+    bool _transactionStatus = false;
+    try
+    {
+        var _collection = _kindleDatabase.GetCollection("CoacheeOrMentee");
+        CoacheeOrMentee coachee = _collection.FindOneAs<CoacheeOrMentee>(Query.And(Query.EQ("UserId", userId),
+                                                                                     Query.EQ("Role", "Coachee")));
+        reward.CoacheeRewardPoints = (coachee != null ? coachee.RewardPointsGained : 0);
+        CoacheeOrMentee mentee = _collection.FindOneAs<CoacheeOrMentee>(Query.And(Query.EQ("UserId", userId),
+                                                                                      Query.EQ("Role", "Mentee")));
+
+        reward.MentorRewardPoints = (mentee != null ? mentee.RewardPointsGained : 0);
+
+        _transactionStatus = true;
+
+    }
+    catch (MongoException ex)
+    {
+        _logCollection.Insert("{ Error : 'Failed at AddNewCoacheeOrMentee().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ");
+        throw new MongoException("Signup failure!!!");
+    }
+
+}
+
+public List<ICoacheeOrMentee> GetAllCoacheeOrMenteeDetails()
+{
+    List<ICoacheeOrMentee> result = null;
+    try
+    {
+        var _collection = _kindleDatabase.GetCollection("CoacheeOrMentee");
+        result = _collection.FindAllAs<ICoacheeOrMentee>().ToList();
+    }
+    catch (MongoException ex)
+    {
+        _logCollection.Insert("{ Error : 'Failed at EditUser().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ");
+    }
+
+    return result;
+}
+
+public ICoacheeOrMentee GetCoacheeOrMenteeDetail(string Id)
+{
+    ICoacheeOrMentee result = null;
+    try
+    {
+        var _collection = _kindleDatabase.GetCollection("CoacheeOrMentee");
+        result = _collection.FindOneAs<ICoacheeOrMentee>(Query.EQ("_id", ObjectId.Parse(Id)));
+    }
+    catch (MongoException ex)
+    {
+        _logCollection.Insert("{ Error : 'Failed at EditUser().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ");
+    }
+
+    return result;
+}
+
+public List<BsonDocument> GetAllCoacheeOrMentee(CTSFilter ctsFilter)
+{
+    var coacheeOrMentees = _kindleDatabase.GetCollection("CoacheeOrMentee");
+    IQueryable<BsonDocument> coacheeEntities = default(IQueryable<BsonDocument>);
+    try
+    {
+        var res1 = new List<BsonDocument>();
+        if (ctsFilter.Type == FilterType.Skill)
         {
-            var _collection = _kindleDatabase.GetCollection("CoacheeOrMentee");
-            var result = _collection.FindOneAs<CoacheeOrMentee>(Query.And(
-                                                                    Query.EQ("UserId", UserId),
-                                                                    Query.EQ("Role", "Mentee")
-                                                                 ));
-            if (result != null)
-                return result.Topics;
-            else
-                return new List<string>();
+            coacheeEntities = coacheeOrMentees.Find(Query.ElemMatch("Skills", Query.EQ("Name", ctsFilter.Name))).AsQueryable();
+        }
+        if (ctsFilter.Type == FilterType.Topic || !(coacheeOrMentees.Count() > 0))
+            coacheeEntities = coacheeOrMentees.Find(Query.EQ("Topics", ctsFilter.Name)).AsQueryable();
+
+        if (ctsFilter.Type == FilterType.Category || !(coacheeOrMentees.Count() > 0))
+        {
+            //Get Topics -> Get Skills
+            coacheeEntities = new List<BsonDocument>().AsQueryable();
         }
 
-        public bool DeleteCoacheeOrMentee(string Id)
+    }
+    catch (Exception ex)
+    {
+
+        throw;
+    }
+
+    return coacheeEntities.ToList();
+}
+public int addFeedback(string UserId, Feedback feedback)
+{
+    bool _transactionStatus = false;
+    try
+    {
+        var coachOrMentors = _kindleDatabase.GetCollection("CoachOrMentor");
+        CoachOrMentor entity = coachOrMentors.FindOneAs<CoachOrMentor>(Query.And(Query.EQ("UserId", feedback.Sender), Query.EQ("Role", "Coach")));
+        entity.FeedbackPoints += ((feedback.customerSatisfactionRating + feedback.selectedAttractive.answer + feedback.selectedComparioson.answer) / 3);
+
+        if (entity.Feedbacks == null) entity.Feedbacks = new List<Feedback>();
+        feedback.Sender = UserId;
+        entity.Feedbacks.Add(feedback);
+        entity.RewardPointsGained += 1;
+        coachOrMentors.Save(entity);
+        var _users = _kindleDatabase.GetCollection("UserDetails");
+        User user = _users.FindOneAs<User>(Query.EQ("EmailAddress", UserId));
+        user.BalanceRewardPoints += 1;
+        user.TotalRewardPoints += 1;
+        _users.Save(user);
+        _transactionStatus = true;
+        return user.TotalRewardPoints;
+    }
+    catch (Exception e)
+    {
+        _transactionStatus = false;
+    }
+    return 0;
+
+}
+public List<SkillOrTopic> GetSkillsForCoachee(string UserId)
+{
+
+    var _collection = _kindleDatabase.GetCollection("CoacheeOrMentee");
+    var result = _collection.FindOneAs<CoacheeOrMentee>(Query.And(
+                                                            Query.EQ("UserId", UserId),
+                                                            Query.EQ("Role", "Coachee")
+                                                         ));
+    if (result != null)
+        return result.Skills;
+    else
+        return new List<SkillOrTopic>();
+}
+
+public List<BsonDocument> GetAllCoacheeOrMentees(CTSFilter ctsFilter)
+{
+    var coacheeOrMentees = _kindleDatabase.GetCollection("CoacheeOrMentee");
+    IQueryable<BsonDocument> coacheeEntities = default(IQueryable<BsonDocument>);
+    try
+    {
+        var res1 = new List<BsonDocument>();
+        if (ctsFilter.Type == FilterType.Skill)
         {
-            bool _transactionStatus = false;
-            try
-            {
-                var _collection = _kindleDatabase.GetCollection("CoacheeOrMentee");
-                _collection.Remove(Query.EQ("_id", Id));
-                _transactionStatus = true;
-            }
-            catch (MongoException ex)
-            {
-                _logCollection.Insert("{ Error : 'Failed at AddNewCoacheeOrMentee().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ");
-                throw new MongoException("Signup failure!!!");
-            }
-            return _transactionStatus;
+            coacheeEntities = coacheeOrMentees.Find(Query.ElemMatch("Skills", Query.EQ("Name", ctsFilter.Name))).AsQueryable();
+        }
+        if (ctsFilter.Type == FilterType.Topic || !(coacheeOrMentees.Count() > 0))
+            coacheeEntities = coacheeOrMentees.Find(Query.EQ("Topics", ctsFilter.Name)).AsQueryable();
+
+        if (ctsFilter.Type == FilterType.Category || !(coacheeOrMentees.Count() > 0))
+        {
+            //Get Topics -> Get Skills
+            coacheeEntities = new List<BsonDocument>().AsQueryable();
         }
 
-        public void GetRewardPoints(string userId, ref Reward reward)
+    }
+    catch (Exception ex)
+    {
+
+        throw;
+    }
+
+    return coacheeEntities.ToList();
+}
+
+public List<CoachStatus> GetCoachingStatus(string UserId)
+{
+    List<IFeedback> LstCochees = new List<IFeedback>();
+    List<CoachStatus> result = new List<CoachStatus>();
+    try
+    {
+        var FeedbackCollection = _kindleDatabase.GetCollection("CoachOrMentor");
+
+        CoacheeOrMentee coach = FeedbackCollection.FindOneAs<CoacheeOrMentee>(Query.EQ("UserId", UserId));
+        if (coach != null)
         {
-            bool _transactionStatus = false;
-            try
+            LstCochees = coach.Feedbacks;
+
+            if (LstCochees != null)
             {
-                var _collection = _kindleDatabase.GetCollection("CoacheeOrMentee");
-                CoacheeOrMentee coachee = _collection.FindOneAs<CoacheeOrMentee>(Query.And(Query.EQ("UserId", userId),
-                                                                                             Query.EQ("Role", "Coachee")));
-                reward.CoacheeRewardPoints = (coachee != null ? coachee.RewardPointsGained : 0);
-                CoacheeOrMentee mentee = _collection.FindOneAs<CoacheeOrMentee>(Query.And(Query.EQ("UserId", userId),
-                                                                                              Query.EQ("Role", "Mentee")));
+                result = (from t in LstCochees
+                          group t by new { t.Sender, t.Skill }
+                             into grp
+                          select new CoachStatus()
+                          {
+                              EmailAddress = grp.Key.Sender,
+                              Skill = grp.Key.Skill,
+                              FeedbackCount = grp.Count(),
+                              Rating = grp.OrderByDescending(t => t.customerSatisfactionRating).FirstOrDefault().customerSatisfactionRating
+                          }).ToList();
 
-                reward.MentorRewardPoints = (mentee != null ? mentee.RewardPointsGained : 0);
-
-                _transactionStatus = true;
-
-            }
-            catch (MongoException ex)
-            {
-                _logCollection.Insert("{ Error : 'Failed at AddNewCoacheeOrMentee().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ");
-                throw new MongoException("Signup failure!!!");
-            }
-
-        }
-
-        public List<ICoacheeOrMentee> GetAllCoacheeOrMenteeDetails()
-        {
-            List<ICoacheeOrMentee> result = null;
-            try
-            {
-                var _collection = _kindleDatabase.GetCollection("CoacheeOrMentee");
-                result = _collection.FindAllAs<ICoacheeOrMentee>().ToList();
-            }
-            catch (MongoException ex)
-            {
-                _logCollection.Insert("{ Error : 'Failed at EditUser().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ");
-            }
-
-            return result;
-        }
-
-        public ICoacheeOrMentee GetCoacheeOrMenteeDetail(string Id)
-        {
-            ICoacheeOrMentee result = null;
-            try
-            {
-                var _collection = _kindleDatabase.GetCollection("CoacheeOrMentee");
-                result = _collection.FindOneAs<ICoacheeOrMentee>(Query.EQ("_id", ObjectId.Parse(Id)));
-            }
-            catch (MongoException ex)
-            {
-                _logCollection.Insert("{ Error : 'Failed at EditUser().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ");
-            }
-
-            return result;
-        }
-
-        public List<BsonDocument> GetAllCoacheeOrMentee(CTSFilter ctsFilter)
-        {
-            var coacheeOrMentees = _kindleDatabase.GetCollection("CoacheeOrMentee");
-            IQueryable<BsonDocument> coacheeEntities = default(IQueryable<BsonDocument>);
-            try
-            {
-                var res1 = new List<BsonDocument>();
-                if (ctsFilter.Type == FilterType.Skill)
+                if (result.Count() > 0)
                 {
-                    coacheeEntities = coacheeOrMentees.Find(Query.ElemMatch("Skills", Query.EQ("Name", ctsFilter.Name))).AsQueryable();
+                    for (var i = 0; i < result.Count(); i++)
+                    {
+                        result[i] = GetCocheeDetails(result[i]);
+                        result[i].TreeURL = GetTreeURL(result[i].FeedbackCount, result[i].Rating);
+                    }
                 }
-                if (ctsFilter.Type == FilterType.Topic || !(coacheeOrMentees.Count() > 0))
-                    coacheeEntities = coacheeOrMentees.Find(Query.EQ("Topics", ctsFilter.Name)).AsQueryable();
-
-                if (ctsFilter.Type == FilterType.Category || !(coacheeOrMentees.Count() > 0))
-                {
-                    //Get Topics -> Get Skills
-                    coacheeEntities = new List<BsonDocument>().AsQueryable();
-                }
-
             }
-            catch (Exception ex)
-            {
-
-                throw;
-            }
-
-            return coacheeEntities.ToList();
-        }
-        public int addFeedback(string UserId, Feedback feedback)
-        {
-            bool _transactionStatus = false;
-            try
-            {
-                var coachOrMentors = _kindleDatabase.GetCollection("CoachOrMentor");
-                CoachOrMentor entity = coachOrMentors.FindOneAs<CoachOrMentor>(Query.And(Query.EQ("UserId", feedback.Sender), Query.EQ("Role", "Coach")));
-                entity.FeedbackPoints += ((feedback.customerSatisfactionRating + feedback.selectedAttractive.answer + feedback.selectedComparioson.answer) / 3);
-
-                if (entity.Feedback == null) entity.Feedback = new List<Feedback>();
-                feedback.Sender = UserId;
-                entity.Feedback.Add(feedback);
-                entity.RewardPointsGained += 1;
-                coachOrMentors.Save(entity);
-                var _users = _kindleDatabase.GetCollection("UserDetails");
-                User user = _users.FindOneAs<User>(Query.EQ("EmailAddress", UserId));
-                user.BalanceRewardPoints += 1;
-                user.TotalRewardPoints += 1;
-                _users.Save(user);
-                _transactionStatus = true;
-                return user.TotalRewardPoints;
-            }
-            catch (Exception e)
-            {
-                _transactionStatus = false;
-            }
-            return 0;
-
-        }
-        public List<SkillOrTopic> GetSkillsForCoachee(string UserId)
-        {
-
-            var _collection = _kindleDatabase.GetCollection("CoacheeOrMentee");
-            var result = _collection.FindOneAs<CoacheeOrMentee>(Query.And(
-                                                                    Query.EQ("UserId", UserId),
-                                                                    Query.EQ("Role", "Coachee")
-                                                                 ));
-            if (result != null)
-                return result.Skills;
-            else
-                return new List<SkillOrTopic>();
         }
 
-        public List<BsonDocument> GetAllCoacheeOrMentees(CTSFilter ctsFilter)
-        {
-            var coacheeOrMentees = _kindleDatabase.GetCollection("CoacheeOrMentee");
-            IQueryable<BsonDocument> coacheeEntities = default(IQueryable<BsonDocument>);
-            try
-            {
-                var res1 = new List<BsonDocument>();
-                if (ctsFilter.Type == FilterType.Skill)
-                {
-                    coacheeEntities = coacheeOrMentees.Find(Query.ElemMatch("Skills", Query.EQ("Name", ctsFilter.Name))).AsQueryable();
-                }
-                if (ctsFilter.Type == FilterType.Topic || !(coacheeOrMentees.Count() > 0))
-                    coacheeEntities = coacheeOrMentees.Find(Query.EQ("Topics", ctsFilter.Name)).AsQueryable();
+    }
+    catch (Exception ex)
+    {
 
-                if (ctsFilter.Type == FilterType.Category || !(coacheeOrMentees.Count() > 0))
-                {
-                    //Get Topics -> Get Skills
-                    coacheeEntities = new List<BsonDocument>().AsQueryable();
-                }
+        throw;
+    }
+    return result;
+}
+public CoachStatus GetCocheeDetails(CoachStatus c)
+{
+    if (c != null)
+    {
+        var _userCollection = _kindleDatabase.GetCollection("UserDetails");
+        User userDetail = _userCollection.FindOneAs<User>(Query.EQ("EmailAddress", c.EmailAddress));
+        c.FirstName = userDetail.FirstName;
+        c.LastName = userDetail.LastName;
+        c.PhotoURL = userDetail.Photo;
+        c.Mobile = userDetail.Mobile;
+        c.LinkdinURL = userDetail.LinkdinURL;
+        c.description = userDetail.description;
 
-            }
-            catch (Exception ex)
-            {
+        CoacheeOrMenteeRepository _coacheeRepo = new CoacheeOrMenteeRepository();
+        //c.topics = _coacheeRepo.GetTopicsForMentee(c.EmailAddress);
+        c.skills = _coacheeRepo.GetSkillsForCoachee(c.EmailAddress);
+    }
+    return c;
+}
+public string GetTreeURL(int FeedbackCount, int Rating)
+{
+    string TreeURL = "Images/Tree/Stage 1.png";
 
-                throw;
-            }
-
-            return coacheeEntities.ToList();
-        }
+    if (FeedbackCount == 1)
+    {
+        if (Rating >= 1 && Rating <= 3)
+            TreeURL = "Images/Tree/Stage 2.png";
+        else if (Rating >= 4 && Rating <= 5)
+            TreeURL = "Images/Tree/Stage 2 with water.png";
+    }
+    else if (FeedbackCount == 2)
+    {
+        if (Rating >= 1 && Rating <= 3)
+            TreeURL = "Images/Tree/Stage 3.png";
+        else if (Rating >= 4 && Rating <= 5)
+            TreeURL = "Images/Tree/Stage 3 with flower.png";
+    }
+    else if (FeedbackCount == 3)
+    {
+        if (Rating >= 1 && Rating <= 3)
+            TreeURL = "Images/Tree/Stage 4.png";
+        else if (Rating >= 4 && Rating <= 5)
+            TreeURL = "Images/Tree/Stage 4 with Fruits.png";
+    }
+    else if (FeedbackCount >= 4)
+    {
+        if (Rating >= 1 && Rating <= 3)
+            TreeURL = "Images/Tree/Stage 5.png";
+        else if (Rating >= 4 && Rating <= 5)
+            TreeURL = "Images/Tree/Stage 5 with Fruits.png";
+    }
+    return TreeURL;
+}
     }
 }

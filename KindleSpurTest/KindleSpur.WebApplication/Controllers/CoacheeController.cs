@@ -10,41 +10,39 @@ using System.Web.Mvc;
 
 namespace KindleSpur.WebApplication.Controllers
 {
-    public class CoachController : Controller
+    public class CoacheeController : Controller
     {
         private readonly CTSRepository _ctsRepo = new CTSRepository();
-        private readonly CoachOrMentorRepository _coachRepo = new CoachOrMentorRepository();
+        private readonly CoacheeOrMenteeRepository _coacheeRepo = new CoacheeOrMenteeRepository();
         private readonly string UserId;
-        public CoachController()
+        public CoacheeController()
         {
             UserId = ((IUser)System.Web.HttpContext.Current.Session["User"]).EmailAddress;
         }
-
         [HttpPost]
         public Boolean SaveSkills(List<Models.SkillOrTopic> selectedArray)
         {
-            KindleSpur.Models.CoachOrMentor _obj = new Models.CoachOrMentor();
+            KindleSpur.Models.CoacheeOrMentee _obj = new Models.CoacheeOrMentee();
             _obj.UserId = UserId;
-            _obj.Role = "Coach";
-            _obj.CreateDate = _obj.UpdateDate= DateTime.Now;
+            _obj.Role = "Coachee";
+            _obj.CreateDate = _obj.UpdateDate = DateTime.Now.ToString();
             if (_obj.Skills == null) _obj.Skills = new List<SkillOrTopic>();
+            if(selectedArray != null)
             _obj.Skills.AddRange(selectedArray);
 
-            _coachRepo.AddNewCoachOrMentor(_obj);
+            _coacheeRepo.AddNewCoacheeOrMentee(_obj);
 
             return true;
         }
-
-        public BsonDocument  GetRecommendedCoach()
+        public List<BsonDocument> GetRecommendedCoachee()
         {
-            return _coachRepo.GetRecommended("Coach");
-            
-        }
+            return _coacheeRepo.GetRecommended("Coachee");
 
+        }
         public string GetCTS()
         {
 
-            List<SkillOrTopic> skills = _coachRepo.GetSkillsForCoach(UserId);
+            List<SkillOrTopic> skills = _coacheeRepo.GetSkillsForCoachee(UserId);
             CTSRepository _ctsRepo = new CTSRepository();
             BsonDocument doc = new BsonDocument();
             if (skills != null)
@@ -61,25 +59,25 @@ namespace KindleSpur.WebApplication.Controllers
             }
             return doc.ToJson();
         }
-
         public string GetCoachs(CTSFilter ctsFilter)
         {
-            var result = _coachRepo.GetAllCoachOrMentors(ctsFilter);
+            var result = _coacheeRepo.GetAllCoacheeOrMentee(ctsFilter);
             return result.ToJson();
         }
-
         [HttpPost]
         public int SaveFeedBack(Feedback feedback)
         {
-            CoachOrMentorRepository _coachRepo = new CoachOrMentorRepository();
+            CoacheeOrMenteeRepository _coachRepo = new CoacheeOrMenteeRepository();
             return _coachRepo.addFeedback(UserId, feedback);
 
         }
-        public ActionResult GetCoachingStatus()
+       
+
+
+        // GET: Coachee
+        public ActionResult Index()
         {
-            CoachOrMentorRepository _coachRepo = new CoachOrMentorRepository();
-            var filters = _coachRepo.GetCoachingStatus(UserId);
-            return Json(new { Filters = filters, Success = true }, JsonRequestBehavior.AllowGet);
+            return View();
         }
     }
 }

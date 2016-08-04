@@ -5,7 +5,7 @@
     <div class="applicationMiddleStripMain">
         <div class="parentRoleDashboard">
             <div class="parentRoleMenu coachThemeColor">
-                <div class="profileViewMode genericPointerClass">
+                <div class="profileViewMode genericPointerClass" ng-click="GetPrfileView()">
                     <div class="profileImagePart"></div>
                     <div class="profileNamePart fontClass genericPointerClass">WELCOME {{loggedDetail.FirstName+" "+loggedDetail.LastName}}</div>
                 </div>
@@ -18,8 +18,8 @@
                     </div>
                 </div>
             </div>
-            @*Knowledge Garden*@
-            <div class="parentRoleDetailRight" style="padding:1%;padding-bottom: 0;" ng-if="selectedMenu == '2'">
+            @*Knowledge Garden - 3*@
+            <div class="parentRoleDetailRight" style="padding:1%;padding-bottom: 0;" ng-if="selectedMenu == '3'">
                 <div class="homeLabelInChat" style="height:7%;border-bottom:1px solid lightgray;">
                     <h5 class="fontClass" style="font-size: 16px;">KNOWLEDGE GARDERN</h5>
                 </div>
@@ -30,16 +30,20 @@
                     <bottom-Main-Strip></bottom-Main-Strip>
                 </div>
             </div>
-            @*VCS*@
+            @*VCS - 8 *@
             <div class="parentRoleDetailRight" ng-if="selectedMenu == '8'">
                 <vcs-Dir></vcs-Dir>
             </div>
-            @*Add Skills*@
-            <div class="parentRoleDetailRight" ng-if="selectedMenu == '5'">
+            @*Add Skills -2 *@
+            <div class="parentRoleDetailRight" ng-if="selectedMenu == '2'">
                 <ctc-Role role="coach" skill-Required="true"></ctc-Role>
             </div>
-            @*Communication*@
-            <div class="parentRoleDetailRight" ng-if="selectedMenu == '3'">
+            @*Value feed temp purpose - 7 *@
+            <div class="parentRoleDetailRight" ng-if="selectedMenu == '7'">                
+                <value-Feed></value-Feed>
+            </div>
+            @*Communication - 5*@
+            <div class="parentRoleDetailRight" ng-if="selectedMenu == '5'">
                 <div class="homeLabelInChat" style="height:7%;border-bottom:1px solid lightgray;">
                     <h5 class="fontClass" style="font-size: 16px;margin-left:2%;">NOTIFICATIONS</h5>
                 </div>
@@ -338,7 +342,7 @@
 
 
             </div>
-            @*Coaching Status*@
+            @*Coaching Status - 1 *@
             <div class="parentRoleDetailRight" ng-if="selectedMenu == '1'">
 
                 <div class="hideCoacheeProfile" ng-class="{ showCoacheeProfileClass : showCoacheeProfile == true }">
@@ -391,7 +395,7 @@
                     <bottom-Main-Strip></bottom-Main-Strip>
                 </div>
             </div>
-            @*MY Rewards*@
+            @*MY Rewards - 6 *@
             <div class="parentRoleDetailRightRewardsPoint" ng-if="selectedMenu == '6'">
 
                 <div class="homeLabelInChat" style="display: flex;height:6%;">
@@ -555,7 +559,7 @@
                     <bottom-Main-Strip></bottom-Main-Strip>
                 </div>
             </div>
-            @*DashBoard*@
+            @*DashBoard - 0*@
             <div class="parentRoleDetailRight" style="padding:1%;padding-bottom: 0;"  ng-if="selectedMenu == '0'">
                 <div class="userNotificationParent">
                     <div class="userRoleWizardParent" style="display: inline-flex;overflow: auto;float:left; overflow-x:scroll; overflow-y:hidden;width:96%;margin-left:2%;">
@@ -619,12 +623,12 @@
                     <bottom-Main-Strip></bottom-Main-Strip>
                 </div>
             </div>
-            @*Knowledge feed*@
+            @*Knowledge feed - 4 *@
             <div class="parentRoleDetailRight" style="padding:1%;padding-bottom: 0;" ng-if="selectedMenu == '4'">
                 <rss-Feed ng-if="feedCategoryArray.length > 0" skill="feedCategoryArray"></rss-Feed>               
             </div>
-           
-        </div>
+          
+    </div>
     </div>
 </div>
 

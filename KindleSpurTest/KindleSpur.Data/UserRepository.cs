@@ -10,40 +10,42 @@ using System.Text;
 using System.Threading.Tasks;
 using MongoDB.Driver.Builders;
 using MongoDB.Bson;
+using System.Collections;
 
 namespace KindleSpur.Data
 {
     public class UserRepository : IUserRepository
     {
-        MongoClient _mongoClient;
-        MongoServer _mongoServer;
-        MongoDatabase _kindleDatabase;
-        MongoCollection _logCollection;
+        private Connection con = new Connection();
+        private MongoCollection _logCollection;
+        private MongoCollection _userCollection;
+        private string emailAddress;
 
         public UserRepository()
-        {
-           string mongoServerConfig = "mongodb://127.0.0.1:27017";
-               
+        {              
             try
             {
-               _mongoClient = new MongoClient(mongoServerConfig);
-               _mongoServer = _mongoClient.GetServer();
-               _kindleDatabase = _mongoServer.GetDatabase("KindleSpur");
-                _logCollection = _kindleDatabase.GetCollection("ErrorLogs");
+                _logCollection = con.GetCollection("ErrorLogs");
+                 _userCollection= con.GetCollection("UserDetails");
             }
             catch (MongoException ex)
             {
                 _logCollection.Insert("{ Error : 'Database connection failed.', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ");
             }
         }
+
+        public UserRepository(string emailAddress) : this()
+        {
+            this.emailAddress = emailAddress;
+        }
+
         public bool AddNewUser(IUser userData)
         {
             bool _transactionStatus = false;
 
             try
             {
-                var _userCollection = _kindleDatabase.GetCollection("UserDetails");
-                var result = _userCollection.Find(Query.EQ("EmailAddress", userData.EmailAddress));
+                var result = _userCollection.FindAs<IUser>(Query.EQ("EmailAddress", userData.EmailAddress));
 
                 if (result.Count() > 0)
                     return false;
@@ -67,7 +69,6 @@ namespace KindleSpur.Data
             bool _transactionStatus = false;
             try
             {
-                var _userCollection = _kindleDatabase.GetCollection("UserDetails");
                 var userDetail = _userCollection.FindOneAs<IUser>(Query.EQ("_id", ObjectId.Parse(userId)));
                 userDetail.EmailAddress = userData.EmailAddress;
                 userDetail.Password = userData.Password;
@@ -86,9 +87,7 @@ namespace KindleSpur.Data
         }
 
         public User SavePassword(string userId, IUser userData)
-        {
-
-                var _userCollection = _kindleDatabase.GetCollection("UserDetails");
+        { 
             User userDetail = _userCollection.FindOneAs<User>(Query.EQ("_id", ObjectId.Parse(userId)));
             userDetail.Password = userData.Password;
             userDetail.IsExternalAuthentication = userData.IsExternalAuthentication;
@@ -105,7 +104,6 @@ namespace KindleSpur.Data
         {
             try
             {
-                var _userCollection = _kindleDatabase.GetCollection("UserDetails");
                  return _userCollection.FindOneByIdAs<IUser>(userId);
             }
             catch (Exception ex)
@@ -117,7 +115,6 @@ namespace KindleSpur.Data
         {
             try
             {
-                var _userCollection = _kindleDatabase.GetCollection("UserDetails");
                 return _userCollection.FindOneAs<User>(Query.EQ("EmailAddress", EmailAddress));
             }
             catch (Exception ex)
@@ -131,7 +128,6 @@ namespace KindleSpur.Data
             bool _transactionStatus = false;
             try
             {
-                var _userCollection = _kindleDatabase.GetCollection("UserDetails");
                 //var userDetail = _userCollection.FindOneByIdAs<User>(userId);
                 var userDetail = _userCollection.FindOneAs<User>(Query.EQ("EmailAddress", EmailAddress));
                 userDetail.FirstName = userData.FirstName;
@@ -153,7 +149,6 @@ namespace KindleSpur.Data
             bool _transactionStatus = false;
             try
             {
-                var _userCollection = _kindleDatabase.GetCollection("UserDetails");
                 //var userDetail = _userCollection.FindOneByIdAs<IUser>(EmailAddress);
                 var userDetail = _userCollection.FindOneAs<User>(Query.EQ("EmailAddress", EmailAddress));
                 userDetail.description = description;
@@ -172,7 +167,6 @@ namespace KindleSpur.Data
             bool _transactionStatus = false;
             try
             {
-                var _userCollection = _kindleDatabase.GetCollection("UserDetails");
                 var userDetail = _userCollection.FindOneByIdAs<IUser>(userId);
                 userDetail.Photo = PhotoPath;
                 _userCollection.Save(userDetail);
@@ -190,7 +184,6 @@ namespace KindleSpur.Data
             bool _transactionStatus = false;
             try
             {
-                var _userCollection = _kindleDatabase.GetCollection("UserDetails");
                 var userDetail = _userCollection.FindOneAs<User>(Query.EQ("EmailAddress", EmailAddress));
                  reward.TotalRewardPoints = (userDetail.TotalRewardPoints.ToString() != null ? userDetail.TotalRewardPoints : 0);
                  reward.BalanceRewardPoints = (userDetail.BalanceRewardPoints.ToString() != null ? userDetail.BalanceRewardPoints : 0);
@@ -235,7 +228,6 @@ namespace KindleSpur.Data
             bool _transactionStatus = false;
             try
             {
-                var _userCollection = _kindleDatabase.GetCollection("UserDetails");
                 var userDetail = _userCollection.FindOneByIdAs<User>(userId);
                 
                 Game _game = UnlockGames(userDetail.TotalRewardPoints, userDetail.BalanceRewardPoints);
@@ -268,7 +260,6 @@ namespace KindleSpur.Data
             bool _transactionStatus = false;
             try
             {
-                var _userCollection = _kindleDatabase.GetCollection("UserDetails");
                 var userDetail = _userCollection.FindOneByIdAs<User>(userId);
 
                 Boolean _psr = UnlockPSR(userDetail.TotalRewardPoints, userDetail.BalanceRewardPoints);
@@ -304,7 +295,7 @@ namespace KindleSpur.Data
 
         private Game UnlockGames(int RewardPointsGained, int BalancePoints)
         {
-            var _gamesCollection = _kindleDatabase.GetCollection("BrainGames");
+            var _gamesCollection = con.GetCollection("BrainGames");
      
             if(RewardPointsGained < 10 || BalancePoints < 10)
             {
@@ -334,7 +325,6 @@ namespace KindleSpur.Data
             bool _transactionStatus = false;
             try
             {
-                var _userCollection = _kindleDatabase.GetCollection("UserDetails");
                 var userDetail = _userCollection.FindOneAs<User>(Query.EQ("EmailAddress", EmailAddress));
                 if (userDetail.ValueCreationActivity == null) userDetail.ValueCreationActivity = new List<VSCS>();
                 userDetail.ValueCreationActivity.Add(_vscs);
@@ -397,12 +387,41 @@ namespace KindleSpur.Data
             return (1 * type * measure);
         }
 
+        public bool SaveValueFeedStory(ValueFeedStory story)
+        {
+            var userDetail = _userCollection.FindOneAs<User>(Query.EQ("EmailAddress", emailAddress));
+            try
+            {
+                if (userDetail.ValueFeedStories == null) userDetail.ValueFeedStories = new List<ValueFeedStory>();
+                userDetail.ValueFeedStories.Add(story);
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }                   
+        }
+
+        public string GetValueFeedStories(string ImpactZone)
+        {
+            var matchMember = new BsonDocument("$match", new BsonDocument("ImpactZone", ImpactZone));
+            var unwindStories = new BsonDocument("$unwind", "$ValueFeedStories");
+            var sortOperation = new BsonDocument("$sort", new BsonDocument("CreateDate", 1));
+            var ProjectFinal = new BsonDocument("$project", new BsonDocument {{"_id", 0}, {"UserId", "EmailAddress"},{ "ValueFeedStories", "$ValueFeedStories" }});
+            IEnumerable<BsonDocument> pipeline = new[] { matchMember, unwindStories, sortOperation, ProjectFinal };
+
+            var args = new AggregateArgs();
+            args.Pipeline = pipeline;
+            args.AllowDiskUse = true;
+
+            return _userCollection.Aggregate(args).ToJson();
+
+        }
 
         public string GetVCSCActivity(string EmailAddress)
-        {
-            
-                var _userCollection = _kindleDatabase.GetCollection("UserDetails");
+        {           
                 var userDetail = _userCollection.FindOneAs<User>(Query.EQ("EmailAddress", EmailAddress));
+
             return userDetail.ValueCreationActivity.ToJson();
         }
     }
