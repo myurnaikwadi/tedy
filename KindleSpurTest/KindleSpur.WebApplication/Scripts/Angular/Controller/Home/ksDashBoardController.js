@@ -1,4 +1,4 @@
-app.controller('ksMainDashBoardController', function ($scope,$state,serverCommunication) {
+app.controller('ksMainDashBoardController', function ($scope, $state, serverCommunication, $rootScope) {
     console.error('Dashoard load successfully')
     $scope.notificationsArr = [
 			{ notificationType: '1', name: 'YOU HAVE COACHING INVITE  FROM', assignPerson: 'HARSHADA D.' },
