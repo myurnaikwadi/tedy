@@ -220,8 +220,13 @@ app.factory('serverCommunication', function ($http) {
         /**
         * @auther : piyush
         * @date : 04/08/2016
-        * @Purpose : get story name and story description
+        * @Purpose : get coach Tranding Topic
         */
+        getCoachTrandingTopic: function (iObj) {
+            console.error(iObj)
+            $http.get('/').then(iObj.successCallBack, iObj.failureCallBack);
+        },
+        
         /**
           * @auther : MKN
           * @date : 10/06/2016

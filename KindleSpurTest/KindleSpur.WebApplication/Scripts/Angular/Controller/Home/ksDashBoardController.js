@@ -36,7 +36,7 @@ app.controller('ksMainDashBoardController', function ($scope,$state,serverCommun
                 { name: 'Successful Virtual Teams' ,description: ''},
                 { name: 'Technology migration' ,description: ''}
 		];
-        
+
         $scope.navigateToProfile = function () {
             $state.go('profile');
         };
@@ -49,16 +49,16 @@ app.controller('ksMainDashBoardController', function ($scope,$state,serverCommun
 		};
 		$scope.init = function () {
 
-		    serverCommunication.getDashBoardData({
-		        successCallBack: function () {
-		            console.error('In successCallBack');
-
-		        },
-		        failureCallBack: function () {
-		            console.error('In failureCallBack');
-
-		        }
-		    });
+		    serverCommunication.getCoachTrandingTopic({
+             loggedUserDetails: $rootScope.loggedDetail,
+             successCallBack: function (iObj) {
+                 console.error('In successCallBack', iObj);
+                 $scope.StoryDetailArray =[].concat(iObj.data);
+             },
+             failureCallBack: function (iObj) {
+                 console.error('In failureCallBack', iObj);
+             }
+         });
 		};
 		$scope.init();
 });
