@@ -6,6 +6,7 @@
                 <h5 ng-hide="mySelection" style="font-size: 16px;padding: 6px;padding-left: 0;" class="fontClass">{{ categoryDisplay ? 'CATEGORIES' : selectedCategoryValue.Category | uppercase }}</h5>
                 
                 <img ng-show="mySelection" ng-class="{ coachGenericBackgroundBorder : role == 'coach' , coacheeGenericBackgroundBorder : role == 'coachee' , mentorGenericBackgroundBorder : role == 'mentor' , menteeGenericBackgroundBorder : role == 'mentee' }" style="border : 2px solid; width:35px;height : 35px;float:right;margin: auto auto;margin-right: 0;border-radius: 30px;padding: 5px;" ng-click="addSkill()" src="~/Images/addBold.png" />
+                <img ng-show="categoryDisplay && mySelection == false" style="border : 2px solid; width:35px;height : 35px;float:right;margin: auto auto;margin-right: 0;border-radius: 30px;padding: 5px;" ng-click="backButtonClick()" src="~/Images/cancel.png" />
             </div>
             <div class="ctsCategoryPanelMainPanel" ng-show="mySelection">
                 <molecule-Map ng-if="ctsDataForMolecule" cts-Data="ctsDataForMolecule"></molecule-Map>
@@ -47,7 +48,7 @@
                                                 <h5 ng-show="skillRequired == true || (skillRequired == true && topic.selected == true)" style="float:left;margin: auto 5px;font-size: 11px;"> {{topic.Name | uppercase}}</h5>
                                             </div>
 
-                                            <input ng-show="skillRequired == false && topic.selected == true" ng-click="$event.stopPropagation()" ng-model="topic.profiLevel" name="Proficiency Level" title="{{"Proficiency Level"+ (topic.profiLevel == 0 ? 'Basic' : (topic.profiLevel == 1 ? 'Intermediate' : 'Expert') )}}" min="0" step="1" max="2" style="float: left;margin: 2%; padding: 0; margin-right: 0;    width: 89%;" type="range" />
+                                            <input ng-show="skillRequired == false && topic.selected == true" ng-click="$event.stopPropagation()" ng-model="topic.profiLevel" name="Proficiency Level" title="{{'Proficiency Level - '+ (topic.profiLevel == 0 ? 'Basic' : (topic.profiLevel == 1 ? 'Intermediate' : 'Expert') )}}" min="0" step="1" max="2" style="float: left;margin: 2%; padding: 0; margin-right: 0;    width: 89%;" type="range" />
                                         </div>
                                     </div>
                                 </div>
@@ -72,14 +73,14 @@
                                         </div>
                                     
                                         <h5 ng-hide="skill.selected == true" class="tagTasks fontClass" style="float: left;margin: 2%; width: 89%;height: 28px;">{{skill.Name | uppercase}}</h5>
-                                        <input ng-show="skill.selected == true" ng-click="$event.stopPropagation()" ng-model="skill.profiLevel" name="Proficiency Level" title="{{ "Proficiency Level"+ (skill.profiLevel == 0 ? 'Basic' : (skill.profiLevel == 1 ? 'Intermediate' : 'Expert') )}}" min="0" step="1" max="2" style="float: left;margin: 2%; padding: 0; margin-right: 0;    width: 89%;" type="range" />
+                                        <input ng-show="skill.selected == true" ng-click="$event.stopPropagation()" ng-model="skill.profiLevel" name="Proficiency Level" title="{{ 'Proficiency Level - '+ (skill.profiLevel == 0 ? 'Basic' : (skill.profiLevel == 1 ? 'Intermediate' : 'Expert') )}}" min="0" step="1" max="2" style="float: left;margin: 2%; padding: 0; margin-right: 0;    width: 89%;" type="range" />
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="ctsCategoryActionPanel">
+                <div class="ctsCategoryActionPanel" ng-hide="categoryDisplay">
                     <div class="cateGoryFormDetails">
                         <button class="signupButton fontClass" ng-click="savepublishClick()" style="width: 90px;height: 30px;padding: 0;">{{categoryDisplay ? 'Publish' : 'Save' }}</button>
                         <h5 class="resetClass cancelLink fontClass" ng-click="backButtonClick()">Cancel</h5>

@@ -1278,7 +1278,8 @@ app.directive('moleculeMap', function ($rootScope) {
 app.directive('rssFeed', function ($state, serverCommunication, $timeout) {
     return {
         scope: {
-           skill: "=",
+            skill: "=",
+            role : "@"
         },
         templateUrl: '/Home/ksRssFeed',
         //scope: true,   // optionally create a child scope
