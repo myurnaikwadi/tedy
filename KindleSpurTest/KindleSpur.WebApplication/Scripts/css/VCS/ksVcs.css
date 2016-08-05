@@ -1,5 +1,4 @@
-﻿
-.addActivityStrip{
+﻿.addActivityStrip{
     float: left;
     width: 100%;
     height: 6%;
@@ -413,7 +412,7 @@ input:focus ~ .highlight {
     width: 100%;
     height: 10%;
    
-    padding: 7px;
+ 
     overflow: auto;
 }
 .tagTasks {
@@ -437,11 +436,22 @@ input:focus ~ .highlight {
     font-weight: bold;
         padding: 6px;
 }
-
+.valueFeedButton:hover{
+   color:white;
+   background-color:rgb(231,120,23);
+}
+    .valueFeedButton:focus {
+        color: white;
+        background-color: rgb(231,120,23);
+    }
+     .valueFeedButton:active {
+        color: white;
+        background-color: rgb(231,120,23);
+    }
 .storyTitle{
         font-size: 17px;
     font-weight: bold;
-    padding-top: 10%;
+    padding-top: 7%;
 }
 
 .storyDescription{
@@ -500,20 +510,27 @@ width: 100%;
     box-shadow:0px 0px 10px 0px;
 }
 .podcastsContainer{
-    width: 40%;
-    height: 100%;
-    margin-top: 7%;
+    
+ 
+    height: 547px;
+    margin-top: 3%;
     float:left;
-     margin-right:7%
+   
+}
+.podcastsContainer:hover{
+    background-color:lightgray;
 }
 .podcastsController:hover{
+  
     background-color:lightgray;
 }
 .podcastHeader{
-    height: 20%;
-    border-bottom: 2px solid lightgray;
+   
+    border-bottom: 1px solid gray;
 }
+
 .PodcasrPanel{
+   
     padding: 10%;
     height: 100%;
      overflow-x: hidden; 
@@ -522,10 +539,9 @@ width: 100%;
       padding-right:30%;
 }
 .storyContainerHeader{
-    float: left;
-     width: 100%;
-     border-bottom: 2px solid lightgray;
-     height: 9%;
+
+  
+     border-bottom: 1px solid gray;
      display: flex;
 }
 .StoryName{
@@ -534,20 +550,27 @@ width: 100%;
 }
 .AddStoryText
 {
-    width:98px ; 
+
+    width:109px ; 
      float: right;
       margin: auto auto;
       margin-right: 0;
+      font-size:12px;
 }
 .addStoryButton{
+   
     width: 14px;
      float: right;
      margin: auto auto;
      margin-right: 0;
+     color:rgb(248,195,0);
+}
+.addStoryButton:hover{
+    box-shadow:0px 0px 2px 2px;
 }
 .MainStoryPanel{
-    padding: 10%;
-    height: 100%; 
+    padding: 10px;
+    
     overflow-x: hidden;
      overflow-y: scroll;
 }
@@ -556,10 +579,35 @@ width: 100%;
      overflow:scroll;
 }
 .addStoryShareButton{
+
     width: 50%;
     float: right;
     margin-top: 3%;
 }
 .shareButton{
     width: 70px;height: 30px; padding:1%;
+}.videoTitle{
+ font-size: 17px;
+    font-weight: bold;
+    padding-top: 10%;
+display: inline-flex;
+    width: 100%;
+    }
+.videoName{
+    width: 100%;
+    height: auto;
+    float: left;
+}
+.storyDescription{
+    font-size: 10px;
+    width: 100%;
+    height: 51px;
+    white-space: pre-line;
+    
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.ImpactZoneChildDiv{
+    overflow:scroll;
+    height:500px;
 }

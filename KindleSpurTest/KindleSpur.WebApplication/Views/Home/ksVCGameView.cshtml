@@ -23,7 +23,7 @@
                 <vcs-Dir></vcs-Dir>
             </div>
             @*Value Feed - 1*@
-            <div class="parentRoleDetailRight" style="padding:1%;padding-bottom: 0;" ng-if="selectedMenu == '1'">
+            <div class="parentRoleDetailRight" style="padding-bottom: 0;" ng-if="selectedMenu == '1'">
                 <div class="parentBody">
 
                     <div class="parentRoleDashboard fontClass">
@@ -31,54 +31,53 @@
                         <div style="padding-left:5%;">
                             <h5 style="font-weight:bold;"> IMPACT ZONES</h5>
                             <div class="ImpactZoneButton">
-                                <div style="display: flex;">
+                                <div style="display: inline-flex;">
                                     <div class="valueFeedButton" ng-click="selectOption($index,option)" ng-repeat="option in topButtonArray">
-                                        {{option.name}}
+                                        {{option.name |uppercase}}
                                     </div>
                                 </div>
 
                             </div>
-                            <div style="width:100%">
-                                <div style="width: 40%;height: 100%;margin-top: 7%;float:left; margin-right:7%">
-                                    <div style="height: 20%;border-bottom: 2px solid lightgray;">
+                            <div style="width:100%" class="col-md-12">
+                                <div class="podcastsContainer col-md-5 col-sm-12">
+                                    <div class="podcastHeader">
                                         <h5 class="fontClass ValueFeedsHeade">PODCASTS</h5>
                                     </div>
-                                    <div style="padding: 10%;height: 100%; overflow-x: hidden; overflow-y: scroll; padding-left:30%;padding-right:30%" @*ng-repeat=""*@>
-                                        <video width="150" height="100" controls autoplay target="_blank">
-                                            <source src="/html5/foo.ogg" type="video/ogg" />
-                                            <source src="/html5/foo.mp4" type="video/mp4" />
-                                        </video>
-                                        <video width="150" height="100" controls autoplay>
-                                            <source src="/html5/foo.ogg" type="video/ogg" />
-                                            <source src="/html5/foo.mp4" type="video/mp4" />
-                                        </video>
-                                        <video width="150" height="100" controls autoplay>
-                                            <source src="/html5/foo.ogg" type="video/ogg" />
-                                            <source src="/html5/foo.mp4" type="video/mp4" />
-                                        </video>
+                                    <div class="ImpactZoneChildDiv">
+                                        <div class="MainStoryPanel" ng-repeat="option in AllVideoDetail">
+                                            <div class="videoTitle">
+                                                <p class="videoName">{{option.name}}</p>
+                                                <span class="glyphicon glyphicon-play" style="float:left;"></span>
+                                            </div>
+
+
                                     </div>
                                 </div>
-                                <div style="width: 40%;height: 100%;margin-top: 7%; float:left;margin-right:7%">
-                                    <div style="float: left; width: 100%;border-bottom: 2px solid lightgray;height: 9%;display: flex;">
+                                </div>
+                                <div class="col-md-1"></div>
+                                <div class="podcastsContainer col-md-5" >
+                                    <div class="storyContainerHeader">
                                         <h5 class="fontClass" style="font-size: 14px;padding-left: 0;">STORY</h5>
 
-                                        <h5 style="width:98px ;  float: right; margin: auto auto;margin-right: 0;" class="storyDescription">
+                                        <h5 class="AddStoryText ">
                                             Show yourStory
-                                            <div style="width: 14px; float: right;margin: auto auto;margin-right: 0;" ng-click="addStory()">
+                                            <div class="addStoryButton" ng-click="addStory()">
                                                 <span class="glyphicon glyphicon-plus" title="Add story"></span>
                                             </div>
 
                                         </h5>
                                     </div>
-                                    <div style="padding: 10%;height: 100%; overflow-x: hidden; overflow-y: scroll;" ng-repeat="story in StoryDetailArray">
+                                    <div class="ImpactZoneChildDiv">
+                                        <div class="MainStoryPanel" ng-repeat="story in StoryDetailArray">
                                         <div class="storyTitle">
                                             {{story.StoryTitle}}
                                         </div>
-                                        <div style="font-size: 10px;">
+                                            <div class="storyDescription">
                                             {{story.StoryContent}}
                                         </div>
 
                                     </div>
+                                </div>
                                 </div>
 
                             </div>
@@ -95,10 +94,10 @@
                                     <input type="text" placeholder="subject Name" class="storyTitleText" ng-model="AddStory.SubjectName" ng-required>
                                 </div>
                                 <div class="storyDescrionPanel">
-                                    <textarea rows="4" cols="50" style="width: 94%; overflow:scroll;" ng-model="AddStory.Description" placeholder="Write your experiance and difference you created in the selected impact zone" ng-required></textarea>
+                                    <textarea rows="4" cols="50" class="addStoryTextArea" ng-model="AddStory.Description" placeholder="Write your experiance and difference you created in the selected impact zone" ng-required></textarea>
                                 </div>
-                                <div style="width: 50%;float: right;margin-top: 3%;">
-                                    <button type="button" style="width: 70px;height: 30px; padding:1%;" class="signupButton fontClass btn btn-default" ng-click="shareStoryClick()">SHARE</button>
+                                <div class="addStoryShareButton">
+                                    <button type="button"  class="signupButton fontClass btn btn-default shareButton" ng-click="shareStoryClick()">SHARE</button>
                                 </div>
 
                             </div>

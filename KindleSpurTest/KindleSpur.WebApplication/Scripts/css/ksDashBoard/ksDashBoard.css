@@ -87,10 +87,12 @@
  	    display: table;
         background: url("/Images/icons/profile.png") center center;
         background-size: contain;
+        cursor:pointer;
 }
 .profileName{
     	margin: auto 0;
     	display: table;
+        cursor:pointer;
 }
 .userRoleWizardParentMain{
 	margin: 0% auto;
