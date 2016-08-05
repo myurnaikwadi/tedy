@@ -105,15 +105,24 @@ app.directive('vcsDir', function ($state, serverCommunication,$rootScope) {
                 console.error($scope.addTaskObject)
                 if ($scope.addTaskObject.eventTitle == '' || $scope.addTaskObject.description == '' || $scope.addTaskObject.typeImapact == -1 || $scope.addTaskObject.measureImapact == -1) {
                     alert('Please fill Blank field');
-                    return
+                    return;
                 }
                 $scope.addTaskObject.date = new Date().toJSON();
                 $scope.dummyTaskArray.push($scope.addTaskObject);
                 $scope.addTaskObject = { eventTitle: '', impactZone: -1, measureImapact: -1, typeImapact: -1, description: '' };
             }
 
+            $scope.toggleAddActivityPopup = function (iFlag) {
+             
+                $scope.addActivityShowFlag = iFlag;
+                $scope.editModeActivate = null;
+                $scope.dummyTaskArray = [];
+                $scope.activity = { eventTitle: '' };
+            };
+
             $scope.activity = { eventTitle: '' };
             $scope.activityMainArray = [];
+            $scope.editModeActivate = null;
             $scope.saveActvity = function () {
                 //console.error($scope.addTaskObject)
                 if ($scope.activity.eventTitle == '') {
@@ -121,12 +130,27 @@ app.directive('vcsDir', function ($state, serverCommunication,$rootScope) {
                     $scope.setFocusToActivityPart();
                     return;
                 }
-                if ($scope.dummyTaskArray.length == 0) {
+                if ($scope.dummyTaskArray.length == 0 ) {
                     alert('Please add atlist one score');
                     return;
                 }
+                var _counter = Math.floor((Math.random()*10)+1);
+                $scope.activity._id = $rootScope.loggedDetail.EmailAddress + (Date.now()) + _counter;
                 $scope.activity.Tasks = [].concat($scope.dummyTaskArray);
-                $scope.activityMainArray.push($scope.activity);
+                if ($scope.editModeActivate) {
+                    for (var k = 0 ; k < $scope.activityMainArray.length ; k++) {
+                        if ($scope.activityMainArray[k]._id == $scope.editModeActivate._id) {
+                            var _tempObj = angular.copy($scope.activityMainArray[k]);
+                            _tempObj.eventTitle = $scope.activity.eventTitle;
+                            _tempObj.Tasks = [].concat($scope.activity.Tasks);
+                            $scope.activityMainArray[k] = _tempObj;
+                            break;
+                        }
+                    }
+                } else {
+                    $scope.activityMainArray.push($scope.activity);
+                }
+                
                 serverCommunication.saveActivity({
                     activity: angular.copy($scope.activity),
                     successCallBack: function (iObj) {
@@ -139,12 +163,22 @@ app.directive('vcsDir', function ($state, serverCommunication,$rootScope) {
 
                     }
                 });
-                $scope.activity = { eventTitle: '' };
-                $scope.dummyTaskArray = [];
+                $scope.toggleAddActivityPopup(false);
                 
             };
 
+            $scope.editActivity = function (iActivity) {
 
+                $scope.addActivityShowFlag = true;
+                $scope.editModeActivate = angular.copy(iActivity);
+                $scope.activity.eventTitle = iActivity.eventTitle;
+                $scope.dummyTaskArray = [].concat(iActivity.Tasks);
+                $scope.setFocusToActivityPart();
+            };
+
+            $scope.deleteActivity = function (iActivity) {
+
+            };
             $scope.setFocusToActivityPart = function () {
                 setTimeout(function () {
                     _setElementFocus('userId');

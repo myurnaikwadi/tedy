@@ -1,4 +1,4 @@
-﻿<div class="addActivityStrip" ng-init="addActivityShowFlag = false" ng-click="addActivityShowFlag =! addActivityShowFlag;dummyTaskArray = [];setFocusToActivityPart()">
+﻿<div class="addActivityStrip" ng-init="addActivityShowFlag = false" ng-click="toggleAddActivityPopup(true);setFocusToActivityPart()">
     <div class="plusIconAddActivity">
         <h5 class="plusSymbolActivity">+</h5>
     </div>
@@ -16,7 +16,7 @@
         </div>
         <div class="taskLeveliCon">
             <img src="../../Images/save.png" title="Save" ng-click="saveActvity()" style="margin: auto auto;float: left;height: 20px;width: 20px;" />
-            <img src="../../Images/cancel.png" title="Cancel" ng-click="addActivityShowFlag = false;dummyTaskArray = [];" style="margin: auto auto;float: left;height: 20px;width: 20px;" />
+            <img src="../../Images/cancel.png" title="Cancel" ng-click="toggleAddActivityPopup(false)" style="margin: auto auto;float: left;height: 20px;width: 20px;" />
         </div>
     </div>
     <div class="taskListPanelDivShow">
@@ -45,8 +45,7 @@
                     <h5 class="labelAddActivity fontClass" style="color:#A4A4A4;margin: auto;">MEASURE OF IMPACT</h5>
                 </div>
                 <div class="impactZoneTag" style="display: flex;">
-                    <div style="float:left;margin:auto;width: 81%;
-    height: 100%;">
+                    <div style="float:left;margin:auto;width: 81%;height: 100%;">
                         <h5 class="tagTasks fontClass" style="float: left;margin: 10px;margin-bottom: 0;margin-right: 0;width: 131px;height: 28px;" ng-class="{ selectedZoneClass : addTaskObject.measureImapact == $index }" ng-click="measureOfImapactSelection($index,option)" ng-repeat="option in measureOfImpact">{{option.name | uppercase}}</h5>
                     </div>
                 </div>
@@ -56,8 +55,7 @@
                     <h5 class="labelAddActivity fontClass" style="color:#A4A4A4;    margin: auto;">TYPE OF IMPACT</h5>
                 </div>
                 <div class="impactZoneTag" style="display: flex;">
-                    <div style="float:left;margin:auto;width: 81%;
-    height: 100%;">
+                    <div style="float:left;margin:auto;width: 81%;height: 100%;">
                         <h5 class="tagTasks fontClass" style="float: left;margin: 10px;margin-bottom: 0;margin-right: 0;width: 131px;height: 28px;" ng-class="{ selectedZoneClass : addTaskObject.typeImapact == $index }" ng-click="typeOfImapactSelection($index,option)" ng-repeat="option in typeOfImpact">{{option.name | uppercase}}</h5>
                     </div>
                 </div>
@@ -107,11 +105,11 @@
 
 
 <div class="activityListPanelHide" ng-class="{ activityListPanelShow : addActivityShowFlag == true && dummyTaskArray.length == 0, dummyTaskListPanelShow	 : addActivityShowFlag == true && dummyTaskArray.length > 0}">
-
-
     <div class="parentDivForActivityListHide" ng-class="{ parentDivForActivityListShow : option.displayDetail == true }" ng-repeat="option in activityMainArray" ng-click="option.displayDetail =! option.displayDetail">
         <div class="activityNameDivHide" ng-class="{ activityNameDivShow : option.displayDetail == true }">
             <h5 class="labelAddActivity fontClass">{{option.eventTitle | uppercase}}</h5>
+            <img src="../../Images/edit_Icon.png" title="Edit" ng-click="editActivity(option)" style="margin: auto; margin-right: 0;float: left;height: 15px;width: 15px;" />
+            <img src="../../Images/delete.png" title="Delete" ng-click="deleteActivity(option)" style="margin: auto; margin-left: 1%; margin-right: 1%;float: left;height: 15px;width: 15px;" />
         </div>
         <div class="taskListPanelDivHide" ng-class="{ taskListPanelDivShow : option.displayDetail == true }">
             <div class="taskListPanelRepeatDiv" ng-repeat="tasks in option.Tasks">
