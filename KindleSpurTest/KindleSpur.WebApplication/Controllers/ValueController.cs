@@ -37,9 +37,9 @@ namespace KindleSpur.WebApplication.Controllers
             return response.ToJson();
         }
 
-        public string GetValueFeedStories(ValueFeedStorySearch search)
+        public JsonResult GetValueFeedStories(ValueFeedStorySearch search)
         {
-            return _userRepo.GetValueFeedStories(search.ImpactZone);
+            return this.Json(_userRepo.GetValueFeedStories(search.ImpactZone));
         }
     }
 }

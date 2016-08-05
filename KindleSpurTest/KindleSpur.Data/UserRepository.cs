@@ -406,7 +406,7 @@ namespace KindleSpur.Data
             }                   
         }
 
-        public string GetValueFeedStories(string ImpactZone)
+        public List<ValueFeedStory> GetValueFeedStories(string ImpactZone)
         {
             //var matchMember = new BsonDocument { { "$match", new BsonDocument { { "ValueFeedStories.ImpactZone", ImpactZone } } } };
             //var unwindStories = new BsonDocument { { "$unwind", "$ValueFeedStories" } };
@@ -421,13 +421,13 @@ namespace KindleSpur.Data
             //return _userCollection.Aggregate(args).ToJson();
             //_userCollection = con.GetCollection("UserDetails");
             MongoCursor<User> result = _userCollection.FindAs<User>(Query.EQ("ValueFeedStories.ImpactZone", ImpactZone));
-            ArrayList stories = new ArrayList();
+            List<ValueFeedStory> stories = new List<ValueFeedStory>();
             foreach (var item in result)
             {
                 var story = item.ValueFeedStories.Where(x => x.ImpactZone == ImpactZone).ToArray();
                 stories.AddRange(story);
             }
-            return stories.ToJson();
+            return stories;
 
         }
 
