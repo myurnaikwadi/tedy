@@ -13,6 +13,7 @@ namespace KindleSpur.Data
 {
     public class CoacheeOrMenteeRepository
     {
+        Connection con = new Connection();
         MongoClient _mongoClient;
         MongoServer _mongoServer;
         MongoDatabase _kindleDatabase;

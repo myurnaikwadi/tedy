@@ -203,7 +203,7 @@ app.factory('serverCommunication', function ($http) {
         */
         getDataRelatedIZFromServer: function (iObj) {            
             console.error(iObj)
-            $http.get('/Value/GetValueFeedStories', iObj.storyDetails).then(iObj.successCallBack, iObj.failureCallBack);
+            $http.post('/Value/GetValueFeedStories', iObj.storyDetails).then(iObj.successCallBack, iObj.failureCallBack);
         },
         
         /**
