@@ -1390,16 +1390,3 @@ app.directive('rssFeed', function ($state, serverCommunication, $timeout) {
         }
     }
 });
-
-app.directive('valueFeed', function ($state, serverCommunication) {
-    return {
-        scope: {
-
-        },
-        templateUrl: '/Home/ksCtcRole',
-        //scope: true,   // optionally create a child scope
-        link: function (scope, element, attrs) {
-            window.valueFeed = scope;
-        }
-    }
-});

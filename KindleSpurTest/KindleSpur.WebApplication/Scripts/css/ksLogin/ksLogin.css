@@ -225,11 +225,11 @@ float: left;
     padding-right: 15px
 }
 
-.hiddenClass{
-        margin-top: -20px;
+.hiddenErrorNotificationClass{
+        margin-top: -43px;
     margin-left: 30%;
     margin-right: 30%;
 }
-.showClass{
+.showErrorNotificationClass{
     margin-top:0px;
 }

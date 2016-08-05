@@ -43,7 +43,7 @@
              //   , { name: 'ADD SKILLS' }
                 , { name: 'MY REWARDS' }
                 // , { name: 'VCS' }
-               ,{name: 'VALUE FEEDS'}
+              
     ]
     $scope.applicationRole = [{ name: 'COACHEE' }, { name: 'MENTEE' }, { name: 'COACH' }, { name: 'MENTOR' }]
     $scope.rightSideDashBoardArray = [
