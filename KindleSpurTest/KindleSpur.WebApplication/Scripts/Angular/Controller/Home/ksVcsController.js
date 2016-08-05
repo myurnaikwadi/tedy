@@ -135,15 +135,16 @@ app.directive('vcsDir', function ($state, serverCommunication,$rootScope) {
                     return;
                 }
                 var _counter = Math.floor((Math.random()*10)+1);
-                $scope.activity._id = $rootScope.loggedDetail.EmailAddress + (Date.now()) + _counter;
+                $scope.activity.VSCSId = $rootScope.loggedDetail.EmailAddress + (Date.now()) + _counter;
                 $scope.activity.Tasks = [].concat($scope.dummyTaskArray);
                 if ($scope.editModeActivate) {
                     for (var k = 0 ; k < $scope.activityMainArray.length ; k++) {
-                        if ($scope.activityMainArray[k]._id == $scope.editModeActivate._id) {
+                        if ($scope.activityMainArray[k].VSCSId == $scope.editModeActivate.VSCSId) {
                             var _tempObj = angular.copy($scope.activityMainArray[k]);
                             _tempObj.eventTitle = $scope.activity.eventTitle;
                             _tempObj.Tasks = [].concat($scope.activity.Tasks);
-                            $scope.activityMainArray[k] = _tempObj;
+                            $scope.activity=$scope.activityMainArray[k] = _tempObj;
+
                             break;
                         }
                     }
@@ -176,8 +177,26 @@ app.directive('vcsDir', function ($state, serverCommunication,$rootScope) {
                 $scope.setFocusToActivityPart();
             };
 
-            $scope.deleteActivity = function (iActivity) {
+            $scope.deleteActivity = function (iIndex,iActivity) {
+                var x = confirm("Are you sure, Do you want to delete Activity");
+                if (x == true) {
+                   
+                    serverCommunication.deleteActivity({
+                        activity: angular.copy(iActivity),
+                        successCallBack: function (iObj) {
+                            console.error('In Success CallBack', iObj);
+                            //  _createMoleculeStructure(iObj);
 
+                        },
+                        failureCallBack: function (iObj) {
+                            console.error('In failuregetMySelectionCallBack', iObj);
+
+                        }
+                    });
+                    $scope.activityMainArray.splice(iIndex, 1);
+                } else {
+                   
+                }
             };
             $scope.setFocusToActivityPart = function () {
                 setTimeout(function () {

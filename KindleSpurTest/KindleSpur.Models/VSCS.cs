@@ -9,7 +9,7 @@ namespace KindleSpur.Models
     public class VSCS
     {
         public string eventTitle { get; set; }
-        public string Id { get; set; }
+        public string VSCSId { get; set; }
         public List<Tasks> Tasks { get; set; }
     }
 }

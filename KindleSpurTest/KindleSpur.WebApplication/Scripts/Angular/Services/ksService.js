@@ -379,6 +379,15 @@ app.factory('serverCommunication', function ($http) {
             console.error(iObj)
             $http.post('/User/AddVSCSActivity', iObj.activity).then(iObj.successCallBack, iObj.failureCallBack);
         },
+        /**
+         * @auther : MKN
+         * @date : 25/07/2016
+         * @Purpose :
+         */
+        deleteActivity: function (iObj) {
+            console.error(iObj)
+            $http.post('/User/RemoveVCSCActivity', iObj.activity).then(iObj.successCallBack, iObj.failureCallBack);
+        },
 
         /**
         * @auther : MKN

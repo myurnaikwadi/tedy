@@ -326,7 +326,7 @@ namespace KindleSpur.Data
             {
                 var userDetail = _userCollection.FindOneAs<User>(Query.EQ("EmailAddress", EmailAddress));
 
-                userDetail.ValueCreationActivity.RemoveAll(x => x.eventTitle == _vscs.eventTitle);
+                userDetail.ValueCreationActivity.RemoveAll(x => x.VSCSId == _vscs.VSCSId);
 
                 _userCollection.Save(userDetail);
 
@@ -353,12 +353,12 @@ namespace KindleSpur.Data
                 }
                 else
                 {
-                    VSCS _entity = userDetail.ValueCreationActivity.Where(x => x.eventTitle == _vscs.eventTitle).SingleOrDefault();
+                    VSCS _entity = userDetail.ValueCreationActivity.Where(x => x.VSCSId == _vscs.VSCSId).SingleOrDefault();
                     if (_entity == null)
                         userDetail.ValueCreationActivity.Add(_vscs);
                     else
                     {
-
+                        _entity.eventTitle = _vscs.eventTitle;
                         for (int i = _entity.Tasks.Count - 1; i >= 0; i--)
                         {
                             bool blnDelete = true;

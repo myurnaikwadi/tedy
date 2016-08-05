@@ -110,7 +110,7 @@
         <div class="activityNameDivHide" ng-class="{ activityNameDivShow : option.displayDetail == true }">
             <h5 class="labelAddActivity fontClass">{{option.eventTitle | uppercase}}</h5>
             <img src="../../Images/edit_Icon.png" title="Edit" ng-click="editActivity(option)" style="margin: auto; margin-right: 0;float: left;height: 15px;width: 15px;" />
-            <img src="../../Images/delete.png" title="Delete" ng-click="deleteActivity(option)" style="margin: auto; margin-left: 1%; margin-right: 1%;float: left;height: 15px;width: 15px;" />
+            <img src="../../Images/delete.png" title="Delete" ng-click="deleteActivity($index,option)" style="margin: auto; margin-left: 1%; margin-right: 1%;float: left;height: 15px;width: 15px;" />
         </div>
         <div class="taskListPanelDivHide" ng-class="{ taskListPanelDivShow : option.displayDetail == true }">
             <div class="taskListPanelRepeatDiv" ng-repeat="tasks in option.Tasks">

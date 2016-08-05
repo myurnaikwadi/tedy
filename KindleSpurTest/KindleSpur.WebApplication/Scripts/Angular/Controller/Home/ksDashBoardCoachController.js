@@ -170,7 +170,7 @@
             serverCommunication.getPointsRecord({
 
                     successCallBack: function (iObj) {
-                        // console.error('In successCallBack', iObj);
+                 console.error('In successCallBack', iObj);
                 $scope.rewardsPoints.mentorPoints = iObj.data.MentorRewardPoints;
                 $scope.rewardsPoints.menteePoints = iObj.data.MenteeRewardPoints;
                 $scope.rewardsPoints.coachPoints = iObj.data.CoachRewardPoints;
