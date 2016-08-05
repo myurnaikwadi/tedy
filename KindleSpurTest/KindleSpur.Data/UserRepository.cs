@@ -319,6 +319,25 @@ namespace KindleSpur.Data
             return true;
         }
 
+        public Boolean RemoveVCSCActivity(string EmailAddress, VSCS _vscs)
+        {
+            bool _transactionStatus = false;
+            try
+            {
+                var userDetail = _userCollection.FindOneAs<User>(Query.EQ("EmailAddress", EmailAddress));
+
+                userDetail.ValueCreationActivity.RemoveAll(x => x.eventTitle == _vscs.eventTitle);
+
+                _userCollection.Save(userDetail);
+
+                _transactionStatus = true;
+            }
+            catch (Exception ex)
+            {
+                _transactionStatus = false;
+            }
+            return _transactionStatus;
+        }
 
         public Boolean SaveVCSCActivity(string EmailAddress, VSCS _vscs)
         {
@@ -326,52 +345,54 @@ namespace KindleSpur.Data
             try
             {
                 var userDetail = _userCollection.FindOneAs<User>(Query.EQ("EmailAddress", EmailAddress));
-                if (userDetail.ValueCreationActivity == null) userDetail.ValueCreationActivity = new List<VSCS>();
-                userDetail.ValueCreationActivity.Add(_vscs);
-                //ValueCreationActivity _activity = new ValueCreationActivity();
+                
+                if (userDetail.ValueCreationActivity == null)
+                {
+                    userDetail.ValueCreationActivity = new List<VSCS>();
+                    userDetail.ValueCreationActivity.Add(_vscs);
+                }
+                else
+                {
+                    VSCS _entity = userDetail.ValueCreationActivity.Where(x => x.eventTitle == _vscs.eventTitle).SingleOrDefault();
+                    if (_entity == null)
+                        userDetail.ValueCreationActivity.Add(_vscs);
+                    else
+                    {
 
-                //if (_activity.Tasks == null) _activity.Tasks = new List<ValueCreationTasks>();
+                        for (int i = _entity.Tasks.Count - 1; i >= 0; i--)
+                        {
+                            bool blnDelete = true;
 
-                //ValueCreationTasks _vscsTasks = new ValueCreationTasks();
-                //_vscsTasks.TaskName = _vscs.TaskName;
-                //ValueCreationScore _vscsScore = new ValueCreationScore();
-                //_vscsScore.ImpactMeasure = _vscs.ImpactMeasure;
-                //_vscsScore.ImpactType = _vscs.ImpactType;
-                //_vscsScore.ImpactZone = _vscs.ImpactZone;
+                            foreach (Tasks item in _vscs.Tasks)
+                            {
+                                if (item.eventTitle == _entity.Tasks[i].eventTitle)
+                                {
+                                   
+                                    blnDelete = false;
+                                    break;
+                                }
+                            }
 
-                //int type = int.Parse(_vscs.ImpactType.ToString());
-                //int measure = int.Parse(_vscs.ImpactMeasure.ToString());
-                //_vscsScore.Score = CalculateScore(type, measure);
+                            if (blnDelete) _entity.Tasks.RemoveAt(i);
+                        }
 
-                //_vscsTasks.TaskScore += _vscsScore.Score;
-                //_activity.ActivityScore += _vscsScore.Score;
-                //if (_vscs.ImpactType == Enums.ImactType.Direct.ToString())
-                //{
-                    
-                //    if (_vscs.ImpactMeasure == Enums.ImactMeasure.Exceeding.ToString())
-                //    {
-                //        _vscsScore.Medal = "Gold"; 
-                //    }
-                //    else if(_vscs.ImpactMeasure == Enums.ImactMeasure.Concrete.ToString())
-                //    {
-                //        _vscsScore.Medal = "Silver";
-                //    }
-                //    else
-                //    {
-                //        _vscsScore.Medal = "Bronze";
-                //    }                   
-                //}
-                //else
-                //{
-                //    _vscsScore.Medal = "Bronze";
-                //    if (_vscs.ImpactMeasure == Enums.ImactMeasure.Exceeding.ToString())
-                //    {
-                //        _vscsScore.Medal = "Silver";
-                //    }
-                   
-                //}
-                //_vscsTasks.ValueCreationScore.Add(_vscsScore);
-                //_activity.Tasks.Add(_vscsTasks);
+                        foreach (Tasks item in _vscs.Tasks)
+                        {
+                            bool blnAdd = true;
+                            for (int i = _entity.Tasks.Count - 1; i >= 0; i--)
+                            {
+                                if (_entity.Tasks[i].eventTitle == item.eventTitle)
+                                {
+                                    blnAdd = false;
+                                    break;
+                                }
+                            }
+
+                            if (blnAdd) _entity.Tasks.Add(item);
+                        }
+                    }
+
+                }
                 _userCollection.Save(userDetail);
                 _transactionStatus = true;
             }
