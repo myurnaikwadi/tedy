@@ -34,16 +34,17 @@
         }
     };
 
-      $scope.topButtonArray = [
-              { name: 'TYPOGRAPHY', selected  : false },
-               { name: 'ILLUSTRATION', selected  : false },
-                { name: 'INFOGRAPHICS', selected: false },
-               { name: 'TYPOGRAPHY', selected: false },
-               { name: 'ILLUSTRATION', selected: false },
-               { name: 'INFOGRAPHICS', selected: false },
-               { name: 'INFOGRAPHICS', selected: false }
-
-            ];
+    $scope.topButtonArray = [{ name: 'Higher Revenue' }
+                  , { name: 'Lower costs' }
+                  , { name: 'KNOWLEDGE GARDEN' }
+                  , { name: 'Improved Brand' }
+                  , { name: 'Certainty of Success' }
+                  , { name: 'Turn Around' }
+                  , { name: 'Customer Delight' }
+                  , { name: 'Peer Success' }
+                  , { name: 'Team Success' }
+                  , { name: 'Subordinate Success' }
+    ]
      $scope.StoryDetailArray = [
                 //{username:'P.sagar' ,description:'story description within two to three line'},
                 //{ username: 'J.ishwar', description: 'story description within two to three line' },
@@ -51,6 +52,17 @@
                 //{ username: 'Pranav', description: 'story description within two to three line' }
 
      ];
+     $scope.AllVideoDetail = [
+         { name: 'Demo1' },
+         { name: 'Demo1' },
+         { name: 'Demo1' },
+         { name: 'Demo1' },
+         { name: 'Demo1' },
+           { name: 'Demo1' },
+         { name: 'Demo1' },
+           { name: 'Demo1' },
+         { name: 'Demo1' },
+     ]
      $scope.selectButton=null;
      $scope.selectOption = function (iIndex, iOption) {
          
@@ -70,6 +82,7 @@
              storyDetails: _object,
              successCallBack: function (iObj) {
                  console.error('In successCallBack', iObj);
+                 $scope.StoryDetailArray =[].concat(iObj.data);
              },
              failureCallBack: function (iObj) {
                  console.error('In failureCallBack', iObj);
