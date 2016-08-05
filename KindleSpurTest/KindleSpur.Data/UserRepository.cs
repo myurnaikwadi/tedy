@@ -162,12 +162,12 @@ namespace KindleSpur.Data
             return _transactionStatus;
         }
 
-        public bool UpdateUserPhoto(ObjectId userId, string PhotoPath)
+        public bool UpdateUserPhoto(string EmailAddress, string PhotoPath)
         {
             bool _transactionStatus = false;
             try
             {
-                var userDetail = _userCollection.FindOneByIdAs<IUser>(userId);
+                var userDetail = _userCollection.FindOneAs<User>(Query.EQ("EmailAddress", EmailAddress));
                 userDetail.Photo = PhotoPath;
                 _userCollection.Save(userDetail);
                 _transactionStatus = true;
