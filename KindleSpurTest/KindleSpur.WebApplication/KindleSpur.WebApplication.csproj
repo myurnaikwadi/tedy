@@ -312,6 +312,7 @@
     <Content Include="Images\icons\coaching_status.png" />
     <Content Include="Images\icons\coach_logo.png" />
     <Content Include="Images\icons\communication.png" />
+    <Content Include="Images\icons\Game2.png" />
     <Content Include="Images\icons\kindlespurlogo.png" />
     <Content Include="Images\icons\Knowledge_feed.png" />
     <Content Include="Images\icons\knowledge_garden.png" />
@@ -322,6 +323,7 @@
     <Content Include="Images\icons\search_mentor_coach.png" />
     <Content Include="Images\icons\trending topics1.png" />
     <Content Include="Images\icons\trending topics2.png" />
+    <Content Include="Images\icons\verticle.png" />
     <Content Include="Images\linkedIn.jpg" />
     <Content Include="Images\linkedin_square_gray.png" />
     <Content Include="Images\loginLanding.jpg" />

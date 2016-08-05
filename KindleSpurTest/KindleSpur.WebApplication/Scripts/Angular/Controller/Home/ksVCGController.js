@@ -58,10 +58,7 @@
          { name: 'Demo1' },
          { name: 'Demo1' },
          { name: 'Demo1' },
-           { name: 'Demo1' },
-         { name: 'Demo1' },
-           { name: 'Demo1' },
-         { name: 'Demo1' },
+          
      ]
      $scope.selectButton=null;
      $scope.selectOption = function (iIndex, iOption) {

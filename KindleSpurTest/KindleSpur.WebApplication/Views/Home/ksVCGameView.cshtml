@@ -27,9 +27,9 @@
                 <div class="parentBody">
 
                     <div class="parentRoleDashboard fontClass">
-                        <h5 class="fontClass ValueFeedsHeader" style="visibility:hidden;">VALUE FEEDS</h5>
+                       
                         <div style="padding-left:5%;">
-                            <h5 style="font-weight:bold;"> IMPACT ZONES</h5>
+                            <h5 style="font-weight:bold;"> VALUE FEED</h5>
                             <div class="ImpactZoneButton">
                                 <div style="display: inline-flex;">
                                     <div class="valueFeedButton" ng-click="selectOption($index,option)" ng-repeat="option in topButtonArray">
@@ -54,7 +54,9 @@
                                     </div>
                                 </div>
                                 </div>
-                                <div class="col-md-1"></div>
+                                <div class="col-md-1">
+                                    <img src="~/Images/icons/verticle.png" width="61px" height="617px"/>
+                                </div>
                                 <div class="podcastsContainer col-md-5" >
                                     <div class="storyContainerHeader">
                                         <h5 class="fontClass" style="font-size: 14px;padding-left: 0;">STORY</h5>
@@ -84,9 +86,9 @@
 
                         </div>
 
-                        <div ng-show='valueFeeds.addStory' class="addStoryPanel fontClass" style="height: 45%;">
+                        <div ng-show='valueFeeds.addStory' class="addStoryPanel fontClass" style="height: 52%;">
 
-                            <!-- Screen 6 -->
+                            
                             <div class="addStoryContainer">
                                 <img ng-click="closeaddStoryPopup()" class="addStoryPopupCancleButton" title="Close" src="~/Images/cancel.png" />
                                 <div class="StoryTitlePanel">

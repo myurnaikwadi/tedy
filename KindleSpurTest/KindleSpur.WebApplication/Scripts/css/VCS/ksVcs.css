@@ -435,6 +435,8 @@ input:focus ~ .highlight {
         font-size: 12px;
     font-weight: bold;
         padding: 6px;
+        width: 150px;
+    margin-bottom: 10px;
 }
 .valueFeedButton:hover{
    color:white;
@@ -563,7 +565,7 @@ width: 100%;
      float: right;
      margin: auto auto;
      margin-right: 0;
-     color:rgb(248,195,0);
+     color:black;
 }
 .addStoryButton:hover{
     box-shadow:0px 0px 2px 2px;
@@ -609,6 +611,7 @@ display: inline-flex;
 }
 .ImpactZoneChildDiv{
     overflow:scroll;
+        margin-top: 10px;
     height:500px;
 }
 .GameThemeColor {
