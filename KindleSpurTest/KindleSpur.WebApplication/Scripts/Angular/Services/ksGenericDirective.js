@@ -41,8 +41,14 @@ app.directive('topMainStrip', function ($state) {
         templateUrl: '/Home/ksTopMainStrip',
         //scope: true,   // optionally create a child scope
         link: function (scope, element, attrs) {
+          
             scope.selectedRole = 0;
-            scope.notification = (scope.notification || scope.notification == false) ? scope.notification : true;
+                     if (scope.notification == 'false') {
+                scope.notification = false;
+            } else {          
+                scope.notification = true;
+            }
+          
             scope.logout = function () {
                 console.error(IN.User)
                 if (IN.User) IN.User.logout();
@@ -511,7 +517,7 @@ app.directive('ctcRole', function ($state, serverCommunication) {
                     _array.push({
                         "symbol": 'My Selection',
                         "size": 40,
-                        'color': 'black',
+                         'color': 'black',
                         "image": 'Images/icons/profile.png',
                         "className" : 'circleProfileImageClass',
                         "id": 0,
