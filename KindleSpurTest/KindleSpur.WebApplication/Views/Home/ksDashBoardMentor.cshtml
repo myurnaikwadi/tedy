@@ -29,7 +29,7 @@
             @*dashboard -0 *@
             <div class="parentRoleDetailRight" ng-if="selectedMenu == '0'">
                 <div class="userNotificationParent">
-                    <div class="userRoleWizardParent" >
+                    <div class="userRoleWizardParent">
                         <div class="notificationWiz " ng-repeat="notification in notifications">
                             <div ng-if="notification.notificationType == '1'">
                                 <h6 class="notificationWizReason">{{notification.name}}</h6>
@@ -72,177 +72,185 @@
                     </div>
                 </div>
             </div>
-           @*MY Rewards - 6 *@
-        <div class="parentRoleDetailRightRewardsPoint" ng-if="selectedMenu == '6'">
+            @*MY Rewards - 6 *@
+            <div class="parentRoleDetailRightRewardsPoint" ng-if="selectedMenu == '6'">
 
-            <div class="homeLabelInChat" style="display: flex;height:6%;">
-                <h5 class="fontClass" style="margin: auto 0;font-size: 16px;">POINT STATUS</h5>
-            </div>
-            <div ng-show='feedBack.askFeedback' class="feedbackPanel" style="height: 75%;">
-
-                <!-- Screen 6 -->
-                <div class="popupContainer" ng-show="feedBack.formValue == '6'">
-                    <img ng-click="feedBack.closeFeedBackPopup()" style="width: 15px;height: 15px;top:1%;right: 1%;bottom: 0;position: absolute;" title="Close" src="~/Images/cancel.png" />
-                    <div class="fivePopupContainerOne" style="height:21%;">
-                        <div class="" style="float: left;display:flex; width: 100%;height: 100%;">
-                            <h5 style="margin: auto auto;font-size: 19px;">REDEEM POINTS</h5>
-                        </div>
-                    </div>
-                    <div class="fivePopupContainerTwo" style="height:30%;">
-                        <img style="position:absolute;left: 46%;width: 60px;" src="~/Images/communication/moneyBag.png">
-                        <div class="" style="float: left;display:flex; width: 100%;height: 100%;">
-
-                            <div class="" style="border: 3px solid black;margin: 6% auto;float: left;display:flex; width: 55%;height: 60%;">
-                                <div class="" style="float: left; width: 100%;margin: auto auto;">
-                                    <h5 class="fontClass" style="font-size: 22px;text-align: center;font-weight: 600;margin: 2px;">{{rewardsPoints.balancePoints}} POINTS</h5>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="fivePopupContainerThree" style="height: 49%;">
-                        <div class="" style="float: left;width: 100%;height: 100%;">
-                            <div class="" style="float: left; width: 100%; height: 60%;display: flex;">
-                                <div class="partSubOne" style="margin: auto auto;height: 100%;margin-right: 3%;">
-                                    <div class="" style="float: left;display: flex;width: 100%;height: 25%;">
-                                        <input type="radio" ng-model="redeemAction.actionName" value="GAME" name="rm" style="margin: auto auto;float: left;height: 30px;width: 20px;">
-                                    </div>
-                                    <div class="" style="float: left;display: flex;width: 100%;height: 30%;">
-                                        <img style="float: left;margin: auto;margin-right: 0;width: 35px;" src="~/Images/communication/moneyBag.png">
-                                        <h5 class="fontClass" style="font-size: 27px;text-align: center;font-weight: 600;margin: 6px auto;margin: auto;margin-left: 3%;width: 35px;">{{rewardsPoints.balancePoints}}</h5>
-                                    </div>
-                                    <div class="" style="float: left;display: flex;width: 100%;height: 30%;">
-                                        <h5 class="fontClass" style="font-size: 14px;text-align: center;font-weight: 600;margin: auto auto;">3 Brain Games</h5>
-                                    </div>
-                                </div>
-                                <div class="partSubTwo" style="margin: auto auto;height: 100%;">
-                                    <div class="" style="float: left;display: flex;width: 100%;height: 25%;">
-                                        <input type="radio" ng-model="redeemAction.actionName" value="PSR" name="rm" style="margin: auto auto;float: left;height: 30px;width: 20px;">
-                                    </div>
-                                    <div class="" style="float: left;display: flex;width: 100%;height: 30%;">
-                                        <img style="float: left;margin: auto;margin-right: 0;width: 35px;" src="~/Images/communication/moneyBag.png">
-                                        <h5 class="fontClass" style="font-size: 27px;text-align: center;font-weight: 600;margin: 6px auto;margin: auto;margin-left: 3%;width: 35px;">{{rewardsPoints.balancePoints}}</h5>
-                                    </div>
-                                    <div class="" style="float: left;display: flex;width: 100%;height: 30%;">
-                                        <h5 class="fontClass" style="font-size: 14px;text-align: center;font-weight: 600;margin: auto auto;" ng-click="feedBack.formValue='8'">PSR</h5>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="" style="float: left; width: 100%; display: flex;height: 40%;">
-                                <button type="button" style="border-radius: 0;background : #D72A1A; margin: auto auto; padding: 6px;font-size: 11px;color:white;" ng-click="redeemPointsClick()" class="fontClass btn btn-default">REDEEM POINTS</button>
-                            </div>
-
-                        </div>
-                    </div>
+                <div class="homeLabelInChat" style="display: flex;height:6%;">
+                    <h5 class="fontClass" style="margin: auto 0;font-size: 16px;">POINT STATUS</h5>
                 </div>
+                <div ng-show='feedBack.askFeedback' class="feedbackPanel" style="height: 75%;">
 
-
-            </div>
-            <div class="pointStatusParents">
-                <div class="rewardsPointsPanel">
-                    <div class="progressReport">
-                        <img style="float: left;width: 140px;margin: auto;height: 100%;" src="~/Images/pointStatusPanel.png" />
-
-                    </div>
-                    <div class="rewardPointRecord">
-                        <div class="countRecordPartOne">
-                            <div class="totalPointsPanel">
-                                <h5 class="fontClass" style="float: left;font-size: 40px;color: orange;">{{rewardsPoints.totalPoints}}</h5>
-                                <h5 class="fontClass" style="float: left;font-size: 17px;text-align: center;width: 50%;color: lightgray;">TOTAL POINTS</h5>
-                            </div>
-                            <div class="redeemedPointsPanel">
-                                <h5 class="fontClass" style="float: left;font-size: 40px;color: green;">{{rewardsPoints.redeemedPoints}}</h5>
-                                <h5 class="fontClass" style="float: left;font-size: 17px;text-align: center;width: 50%;color: lightgray;">REDEEMED POINTS</h5>
-                            </div>
-                            <div class="balancePointsPanel">
-                                <h5 class="fontClass" style="float: left;font-size: 40px;color: skyblue;">{{rewardsPoints.balancePoints}}</h5>
-                                <h5 class="fontClass" style="float: left;font-size: 17px;text-align: center;width: 50%;color: lightgray;">BALANCE POINTS</h5>
+                    <!-- Screen 6 -->
+                    <div class="popupContainer" ng-show="feedBack.formValue == '6'">
+                        <img ng-click="feedBack.closeFeedBackPopup()" style="width: 15px;height: 15px;top:1%;right: 1%;bottom: 0;position: absolute;" title="Close" src="~/Images/cancel.png" />
+                        <div class="fivePopupContainerOne" style="height:21%;">
+                            <div class="" style="float: left;display:flex; width: 100%;height: 100%;">
+                                <h5 style="margin: auto auto;font-size: 19px;">REDEEM POINTS</h5>
                             </div>
                         </div>
-                        <div class="countRecordPartTwo">
-                            <div class="roleNamePointStatus">
-                                <div class="rolesPointStatus mentorThemeColor">
-                                    <h5 class="fontClass roleLabelPointStatus">MENTOR</h5>
-                                </div>
-                                <h5 class="fontClass" style="float: left;text-align: center;width: 100%;margin-top:15px;">{{rewardsPoints.mentorPoints}}</h5>
-                            </div>
-                            <div class="roleNamePointStatus">
-                                <div class="rolesPointStatus coachThemeColor">
-                                    <h5 class="fontClass roleLabelPointStatus">COACH</h5>
-                                </div>
-                                <h5 class="fontClass" style="float: left;text-align: center;width: 100%;margin-top:15px;">{{rewardsPoints.coachPoints}}</h5>
-                            </div>
-                            <div class="roleNamePointStatus">
-                                <div class="rolesPointStatus menteeThemeColor">
-                                    <h5 class="fontClass roleLabelPointStatus">MENTEE</h5>
-                                </div>
-                                <h5 class="fontClass" style="float: left;text-align: center;width: 100%;margin-top:15px;">{{rewardsPoints.menteePoints}}</h5>
-                            </div>
-                            <div class="roleNamePointStatus">
-                                <div class="rolesPointStatus coacheeThemeColor">
-                                    <h5 class="fontClass roleLabelPointStatus">COACHEE</h5>
-                                </div>
-                                <h5 class="fontClass" style="float: left;text-align: center;width: 100%;margin-top:15px;">{{rewardsPoints.coacheePoints}}</h5>
-                            </div>
+                        <div class="fivePopupContainerTwo" style="height:30%;">
+                            <img style="position:absolute;left: 46%;width: 60px;" src="~/Images/communication/moneyBag.png">
+                            <div class="" style="float: left;display:flex; width: 100%;height: 100%;">
 
-                        </div>
-                        <div class="countRecordPartThree">
-                            <button type="button" style="width: 90px;border-radius: 0;background : #D72A1A; margin: auto auto; padding: 3px;font-size: 11px;color:white;" class="fontClass btn btn-default" ng-click="openRedeemPanel()">REDEEM</button>
-                        </div>
-
-
-                    </div>
-                </div>
-                <div class="myRewardsPointsPanel">
-                    <div class="myRewardsPoints">
-                        <div class="myRewardsLabelParent">
-                            <h5 class="fontClass" style="margin: auto auto;font-weight: 700;">MY REWARDS</h5>
-                        </div>
-                        <div class="myRewardsPointParent">
-                            <div ng-show="myRewardsArray.length >0" class="myRewardsPointRepeatParent" ng-class="{ psrRewardColor : myRewards.PSR == true}" ng-repeat="myRewards in myRewardsArray">
-                                <div class="medalIconsMyReward">
-                                    <img ng-show="myRewards.PSR == true" style="float: left;height: 100%;" src="~/Images/psrPlant.png">
-                                    <img style="float: right;height: 100%;" src="~/Images/normalMedal.png">
-                                </div>
-                                <div class="rewardsLabelDivMyReward">
-                                    <h5 class="fontClass" style="margin: auto auto;margin-left:0;font-size: 16px;font-weight: 600;">{{myRewards.Name}}</h5>
-                                </div>
-                                <div class="rewardsDateDivMyReward">
-                                    <div class="unlockParent">
-                                        <h5 class="fontClass" style="margin: auto auto;margin-left:0;font-size: 9px;">Unlock Date</h5>
-                                        <h5 class="fontClass" style="margin: auto auto;margin-left:0;font-size: 12px;font-weight: 600;margin-top: 4%;">{{myRewards.date}}</h5>
+                                <div class="" style="border: 3px solid black;margin: 6% auto;float: left;display:flex; width: 55%;height: 60%;">
+                                    <div class="" style="float: left; width: 100%;margin: auto auto;">
+                                        <h5 class="fontClass" style="font-size: 22px;text-align: center;font-weight: 600;margin: 2px;">{{rewardsPoints.balancePoints}} POINTS</h5>
                                     </div>
-                                    <div class="unlockParent" style="float:right;width:40%;">
-                                        <h5 class="fontClass" style="margin: auto auto;margin-left:0;font-size: 9px;">Unlock Key</h5>
-                                        <h5 class="fontClass" style="margin: auto auto;margin-left:0;font-size: 12px;font-weight: 600;margin-top: 4%;">{{myRewards.Key}}</h5>
-                                    </div>
-
                                 </div>
-                                <div class="rewardsDateDivMyReward" style="height: auto;">
-                                    <h5 class="fontClass" style="margin: auto auto;margin-left:0;font-size: 9px;">Status : N/A</h5>
-                                </div>
-
                             </div>
-                            <div ng-show="myRewardsArray.length == 0" class="topicHeadingPlaceholdr">
-                                <h5 style="color:gray;margin: auto;font-size: 30px;" class="leftSideMenuLable fontClass">
-                                    No Rewards
-                                </h5>
+                        </div>
+                        <div class="fivePopupContainerThree" style="height: 49%;">
+                            <div class="" style="float: left;width: 100%;height: 100%;">
+                                <div class="" style="float: left; width: 100%; height: 60%;display: flex;">
+                                    <div class="partSubOne" style="margin: auto auto;height: 100%;margin-right: 3%;">
+                                        <div class="" style="float: left;display: flex;width: 100%;height: 25%;">
+                                            <input type="radio" ng-model="redeemAction.actionName" value="GAME" name="rm" style="margin: auto auto;float: left;height: 30px;width: 20px;">
+                                        </div>
+                                        <div class="" style="float: left;display: flex;width: 100%;height: 30%;">
+                                            <img style="float: left;margin: auto;margin-right: 0;width: 35px;" src="~/Images/communication/moneyBag.png">
+                                            <h5 class="fontClass" style="font-size: 27px;text-align: center;font-weight: 600;margin: 6px auto;margin: auto;margin-left: 3%;width: 35px;">{{rewardsPoints.balancePoints}}</h5>
+                                        </div>
+                                        <div class="" style="float: left;display: flex;width: 100%;height: 30%;">
+                                            <h5 class="fontClass" style="font-size: 14px;text-align: center;font-weight: 600;margin: auto auto;">3 Brain Games</h5>
+                                        </div>
+                                    </div>
+                                    <div class="partSubTwo" style="margin: auto auto;height: 100%;">
+                                        <div class="" style="float: left;display: flex;width: 100%;height: 25%;">
+                                            <input type="radio" ng-model="redeemAction.actionName" value="PSR" name="rm" style="margin: auto auto;float: left;height: 30px;width: 20px;">
+                                        </div>
+                                        <div class="" style="float: left;display: flex;width: 100%;height: 30%;">
+                                            <img style="float: left;margin: auto;margin-right: 0;width: 35px;" src="~/Images/communication/moneyBag.png">
+                                            <h5 class="fontClass" style="font-size: 27px;text-align: center;font-weight: 600;margin: 6px auto;margin: auto;margin-left: 3%;width: 35px;">{{rewardsPoints.balancePoints}}</h5>
+                                        </div>
+                                        <div class="" style="float: left;display: flex;width: 100%;height: 30%;">
+                                            <h5 class="fontClass" style="font-size: 14px;text-align: center;font-weight: 600;margin: auto auto;" ng-click="feedBack.formValue='8'">PSR</h5>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="" style="float: left; width: 100%; display: flex;height: 40%;">
+                                    <button type="button" style="border-radius: 0;background : #D72A1A; margin: auto auto; padding: 6px;font-size: 11px;color:white;" ng-click="redeemPointsClick()" class="fontClass btn btn-default">REDEEM POINTS</button>
+                                </div>
+
                             </div>
                         </div>
                     </div>
-                </div>
 
+
+                </div>
+                <div class="pointStatusParents">
+                    <div class="rewardsPointsPanel">
+                        <div class="progressReport">
+                            <img style="float: left;width: 140px;margin: auto;height: 100%;" src="~/Images/pointStatusPanel.png" />
+
+                        </div>
+                        <div class="rewardPointRecord">
+                            <div class="countRecordPartOne">
+                                <div class="totalPointsPanel">
+                                    <h5 class="fontClass" style="float: left;font-size: 40px;color: orange;">{{rewardsPoints.totalPoints}}</h5>
+                                    <h5 class="fontClass" style="float: left;font-size: 17px;text-align: center;width: 50%;color: lightgray;">TOTAL POINTS</h5>
+                                </div>
+                                <div class="redeemedPointsPanel">
+                                    <h5 class="fontClass" style="float: left;font-size: 40px;color: green;">{{rewardsPoints.redeemedPoints}}</h5>
+                                    <h5 class="fontClass" style="float: left;font-size: 17px;text-align: center;width: 50%;color: lightgray;">REDEEMED POINTS</h5>
+                                </div>
+                                <div class="balancePointsPanel">
+                                    <h5 class="fontClass" style="float: left;font-size: 40px;color: skyblue;">{{rewardsPoints.balancePoints}}</h5>
+                                    <h5 class="fontClass" style="float: left;font-size: 17px;text-align: center;width: 50%;color: lightgray;">BALANCE POINTS</h5>
+                                </div>
+                            </div>
+                            <div class="countRecordPartTwo">
+                                <div class="roleNamePointStatus">
+                                    <div class="rolesPointStatus mentorThemeColor">
+                                        <h5 class="fontClass roleLabelPointStatus">MENTOR</h5>
+                                    </div>
+                                    <h5 class="fontClass" style="float: left;text-align: center;width: 100%;margin-top:15px;">{{rewardsPoints.mentorPoints}}</h5>
+                                </div>
+                                <div class="roleNamePointStatus">
+                                    <div class="rolesPointStatus coachThemeColor">
+                                        <h5 class="fontClass roleLabelPointStatus">COACH</h5>
+                                    </div>
+                                    <h5 class="fontClass" style="float: left;text-align: center;width: 100%;margin-top:15px;">{{rewardsPoints.coachPoints}}</h5>
+                                </div>
+                                <div class="roleNamePointStatus">
+                                    <div class="rolesPointStatus menteeThemeColor">
+                                        <h5 class="fontClass roleLabelPointStatus">MENTEE</h5>
+                                    </div>
+                                    <h5 class="fontClass" style="float: left;text-align: center;width: 100%;margin-top:15px;">{{rewardsPoints.menteePoints}}</h5>
+                                </div>
+                                <div class="roleNamePointStatus">
+                                    <div class="rolesPointStatus coacheeThemeColor">
+                                        <h5 class="fontClass roleLabelPointStatus">COACHEE</h5>
+                                    </div>
+                                    <h5 class="fontClass" style="float: left;text-align: center;width: 100%;margin-top:15px;">{{rewardsPoints.coacheePoints}}</h5>
+                                </div>
+
+                            </div>
+                            <div class="countRecordPartThree">
+                                <button type="button" style="width: 90px;border-radius: 0;background : #D72A1A; margin: auto auto; padding: 3px;font-size: 11px;color:white;" class="fontClass btn btn-default" ng-click="openRedeemPanel()">REDEEM</button>
+                            </div>
+
+
+                        </div>
+                    </div>
+                    <div class="myRewardsPointsPanel">
+                        <div class="myRewardsPoints">
+                            <div class="myRewardsLabelParent">
+                                <h5 class="fontClass" style="margin: auto auto;font-weight: 700;">MY REWARDS</h5>
+                            </div>
+                            <div class="myRewardsPointParent">
+                                <div ng-show="myRewardsArray.length >0" class="myRewardsPointRepeatParent" ng-class="{ psrRewardColor : myRewards.PSR == true}" ng-repeat="myRewards in myRewardsArray">
+                                    <div class="medalIconsMyReward">
+                                        <img ng-show="myRewards.PSR == true" style="float: left;height: 100%;" src="~/Images/psrPlant.png">
+                                        <img style="float: right;height: 100%;" src="~/Images/normalMedal.png">
+                                    </div>
+                                    <div class="rewardsLabelDivMyReward">
+                                        <h5 class="fontClass" style="margin: auto auto;margin-left:0;font-size: 16px;font-weight: 600;">{{myRewards.Name}}</h5>
+                                    </div>
+                                    <div class="rewardsDateDivMyReward">
+                                        <div class="unlockParent">
+                                            <h5 class="fontClass" style="margin: auto auto;margin-left:0;font-size: 9px;">Unlock Date</h5>
+                                            <h5 class="fontClass" style="margin: auto auto;margin-left:0;font-size: 12px;font-weight: 600;margin-top: 4%;">{{myRewards.date}}</h5>
+                                        </div>
+                                        <div class="unlockParent" style="float:right;width:40%;">
+                                            <h5 class="fontClass" style="margin: auto auto;margin-left:0;font-size: 9px;">Unlock Key</h5>
+                                            <h5 class="fontClass" style="margin: auto auto;margin-left:0;font-size: 12px;font-weight: 600;margin-top: 4%;">{{myRewards.Key}}</h5>
+                                        </div>
+
+                                    </div>
+                                    <div class="rewardsDateDivMyReward" style="height: auto;">
+                                        <h5 class="fontClass" style="margin: auto auto;margin-left:0;font-size: 9px;">Status : N/A</h5>
+                                    </div>
+
+                                </div>
+                                <div ng-show="myRewardsArray.length == 0" class="topicHeadingPlaceholdr">
+                                    <h5 style="color:gray;margin: auto;font-size: 30px;" class="leftSideMenuLable fontClass">
+                                        No Rewards
+                                    </h5>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="applicationBottomStrip">
+                    <bottom-Main-Strip></bottom-Main-Strip>
+                </div>
             </div>
-            <div class="applicationBottomStrip">
-                <bottom-Main-Strip></bottom-Main-Strip>
-            </div>
-        </div>
             @*Mentoring Status - 1 *@
             <div class="parentRoleDetailRight" ng-if="selectedMenu == '1'">
 
             </div>
             @* Knowledge garden - 3 *@
-            <div class="parentRoleDetailRight" ng-if="selectedMenu == '6'">
-
+            <div class="parentRoleDetailRight" style="padding:1%;padding-bottom: 0;" ng-if="selectedMenu == '3'">
+                <div class="homeLabelInChat" style="height:7%;border-bottom:1px solid lightgray;">
+                    <h5 class="fontClass" style="font-size: 16px;">KNOWLEDGE GARDEN</h5>
+                </div>
+                <div class="" style="float:left;width:100%;height:86%;">
+                    <molecule-Map ng-if="ctsDataForMolecule" cts-Data="ctsDataForMolecule"></molecule-Map>
+                </div>
+                <div class="applicationBottomStrip">
+                    <bottom-Main-Strip></bottom-Main-Strip>
+                </div>
             </div>
             @*Communication - 5*@
             <div class="parentRoleDetailRight" ng-if="selectedMenu == '5'">
@@ -305,8 +313,8 @@
                             </div>
                             <div class="popupContainerThree">
                                 <!--	<img style="padding: 3%;float:left;" ng-click="feedBack.starSelected('1')" ng-src="{{ feedBack.selectedstar == '1' && '~/Images/communication/smallSelectedStar.png' || '~/Images/communication/smallStar.png'}}" ng-class="{ highlightedCompetitor :  feedBack.selectedstar == '1'}" src="~/Images/communication/smallStar.png">
-                        <img style="padding: 3%;float:left;" ng-click="feedBack.starSelected('2')" ng-src="{{ feedBack.selectedstar == '1' && '~/Images/communication/smallBigSelectedStar.png' || '~/Images/communication/smallBigStar.png'}}" ng-class="{ highlightedCompetitor :  feedBack.selectedstar == '2'}" src="~/Images/communication/smallBigStar.png">
-                        <img style="padding: 3%;float:left;" ng-click="feedBack.starSelected('3')" ng-src="{{ feedBack.selectedstar == '1' && '~/Images/communication/bigSelectedStar.png' || '~/Images/communication/bigStar.png'}}" ng-class="{ highlightedCompetitor :  feedBack.selectedstar == '3'}" src="~/Images/communication/bigStar.png">		-->
+                                <img style="padding: 3%;float:left;" ng-click="feedBack.starSelected('2')" ng-src="{{ feedBack.selectedstar == '1' && '~/Images/communication/smallBigSelectedStar.png' || '~/Images/communication/smallBigStar.png'}}" ng-class="{ highlightedCompetitor :  feedBack.selectedstar == '2'}" src="~/Images/communication/smallBigStar.png">
+                                <img style="padding: 3%;float:left;" ng-click="feedBack.starSelected('3')" ng-src="{{ feedBack.selectedstar == '1' && '~/Images/communication/bigSelectedStar.png' || '~/Images/communication/bigStar.png'}}" ng-class="{ highlightedCompetitor :  feedBack.selectedstar == '3'}" src="~/Images/communication/bigStar.png">		-->
 
                                 <img class="genericPointerClass" style="padding: 3%;float:left;" ng-click="feedBack.starSelected('1')" ng-class="{ highlightedCompetitor :  feedBack.selectedstar == '1'}" src="~/Images/communication/smallStar.png">
                                 <img class="genericPointerClass" style="padding: 3%;float:left;" ng-click="feedBack.starSelected('2')" ng-class="{ highlightedCompetitor :  feedBack.selectedstar == '2'}" src="~/Images/communication/smallBigStar.png">
@@ -475,7 +483,7 @@
                                         <h5 style="margin:auto auto;margin-left: 0;font-size: large;float: left;width: 88%;    font-weight: 700;    font-size: 15px;">{{conversation.name}}</h5>
                                         <div class="applicationNotiCount" title="5" style=" display flex; float:left; text-align center; height 15px; width
                                              15px;">
-                                            <h6 class="fontClass" style=" font-size:10px;display inline-block;text-align: center; text-overflow clip; margin auto auto;color:white;">5</h6>
+                                            <h6 class="fontClass" style=" font-size:10px;display inline-block;text-align center; text-overflow clip; margin auto auto;color:white;">5</h6>
                                         </div>
                                     </div>
                                 </div>
