@@ -199,11 +199,11 @@ app.factory('serverCommunication', function ($http) {
         /**
         * @auther : piyush
         * @date : 04/08/2016
-        * @Purpose : post story name and story description
+        * @Purpose :get story name and story description
         */
         getDataRelatedIZFromServer: function (iObj) {            
             console.error(iObj)
-            $http.post('/Value/GetValueFeedStories', iObj.storyDetails).then(iObj.successCallBack, iObj.failureCallBack);
+            $http.get('/Value/GetValueFeedStories', iObj.storyDetails).then(iObj.successCallBack, iObj.failureCallBack);
         },
         
         /**
