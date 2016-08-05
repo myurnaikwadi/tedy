@@ -81,12 +81,36 @@ namespace KindleSpur.Data
 
                 if (Data.Role == "Coachee")
                 {
+                    bool blnDelete = true;
+                    for (int i = _entity.Skills.Count - 1; i >= 0; i--)
+                    {
+
+                        foreach (SkillOrTopic item in Data.Skills)
+                        {
+                             if (item.Id == _entity.Skills[i].Id)
+                                {
+                                    blnDelete = false;
+                                    break;
+                                }
+
+                            
+                        }
+                        if (blnDelete) _entity.Skills.RemoveAt(i);
+                    }
+
                     foreach (SkillOrTopic skill in Data.Skills)
                     {
-                        if (!_entity.Skills.Contains(skill))
+                        bool blnAdd = true;
+                        for (int i = _entity.Skills.Count - 1; i >= 0; i--)
                         {
-                            _entity.Skills.Add(skill);
+                            if (_entity.Skills[i].Id == skill.Id)
+                            {
+                                blnAdd = false;
+                                break;
+                            }
                         }
+
+                        if (blnAdd) _entity.Skills.Add(skill);
                     }
                 }
 
