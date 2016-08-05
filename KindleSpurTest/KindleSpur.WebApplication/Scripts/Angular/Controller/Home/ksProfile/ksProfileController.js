@@ -74,26 +74,42 @@
             fileInputId: "fileInputIdRv"
         }
         uploadImageOnPage(obj, function (imagePath) {
+            //var valueFile = document.getElementById("fileInputIdRv").files;
+            //if (iProfile) {
+            //    $scope.myInfo.profileImage = valueFile[0];
+            //} else {
+            //    $scope.myInfo.profileBackgroundImage = valueFile[0];
+            //}
+
+            //console.error(valueFile)
+            //var _object = {
+            //    file: valueFile[0],
+            //    successCallBack: function () {
+            //        console.error('In successCallBack');
+
+            //    },
+            //    failureCallBack: function () {
+            //        console.error('In failureCallBack');
+
+            //    }
+            //}
+
+            var data = new FormData();
+            //angular.forEach(scope.item, function (value, key) {
+            //    if (key == "files") {
+            //        for (var i = 0; i < value.length; i++) {
+            //            data.append(value[i].name, value[i]); // Filename:File
+            //        }
+            //    } else {
+            //        data.append(key, value);
+            //    }
+            //});
+
             var valueFile = document.getElementById("fileInputIdRv").files;
-            if (iProfile) {
-                $scope.myInfo.profileImage = valueFile[0];
-            } else {
-                $scope.myInfo.profileBackgroundImage = valueFile[0];
-            }
+            data.append(valueFile[0].Name, valueFile[0]);
 
-            console.error(valueFile)
-            var _object = {
-                file: valueFile[0],
-                successCallBack: function () {
-                    console.error('In successCallBack');
-
-                },
-                failureCallBack: function () {
-                    console.error('In failureCallBack');
-
-                }
-            }
-            serverCommunication.changeProfileImageDetails(_object);
+            console.error(data);
+            serverCommunication.changeProfileImageDetails(data);
             document.getElementById("fileInputIdRv").value = "";
             $scope.$apply();
         });

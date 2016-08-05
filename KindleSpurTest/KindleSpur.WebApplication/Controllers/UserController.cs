@@ -76,7 +76,7 @@ namespace KindleSpur.WebApplication.Controllers
                     response.FailureCallBack("UserId does not exists!!!");
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 response.FailureCallBack(ex.Message);
             }
@@ -87,9 +87,9 @@ namespace KindleSpur.WebApplication.Controllers
         public ActionResult SavePassword(User signupObject)
         {
             UserRepository _repo = new UserRepository();
-        
-            User obj= _repo.SavePassword(TempData["UserId"].ToString(), signupObject);
-            
+
+            User obj = _repo.SavePassword(TempData["UserId"].ToString(), signupObject);
+
             return View();
         }
 
@@ -144,7 +144,7 @@ namespace KindleSpur.WebApplication.Controllers
 
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 response.FailureCallBack(ex.Message);
             }
@@ -172,12 +172,13 @@ namespace KindleSpur.WebApplication.Controllers
         }
 
         [HttpPost]
-        public ActionResult UpdateUserPhoto(HttpPostedFileBase file)
+        public ActionResult UpdateUserPhoto(SubmitImage model)
         {
             UserRepository _repo = new UserRepository();
             var allowedExtensions = new[] {
                     ".Jpg", ".png", ".jpg", "jpeg"
                 };
+            var file = Request.Files[0];
             var fileName = Path.GetFileName(file.FileName); //getting only file name(ex-ganesh.jpg)  
             var ext = Path.GetExtension(file.FileName); //getting the extension(ex-.jpg)  
             if (allowedExtensions.Contains(ext)) //check what type of extension  
@@ -187,7 +188,7 @@ namespace KindleSpur.WebApplication.Controllers
                                             // store the file inside ~/project folder(Img)  
                 var path = Path.Combine(Server.MapPath("~/Img"), myfile);
                 file.SaveAs(path);
-                if (_repo.UpdateUserPhoto(((IUser)System.Web.HttpContext.Current.Session["User"]).Id, path))
+                if (_repo.UpdateUserPhoto(((IUser)System.Web.HttpContext.Current.Session["User"]).EmailAddress, string.Format("~/Img/{0}", myfile)))
                 {
                 }
             }
@@ -197,13 +198,12 @@ namespace KindleSpur.WebApplication.Controllers
             }
             return View();
         }
-                
         public string UnlockGame()
         {
             UserRepository _repo = new UserRepository();
             ObjectId userId = ((IUser)System.Web.HttpContext.Current.Session["User"]).Id;
-              return _repo.GamesUnLocked(userId);
-            
+            return _repo.GamesUnLocked(userId);
+
         }
 
         public string UnlockPSR()
@@ -232,7 +232,7 @@ namespace KindleSpur.WebApplication.Controllers
         [HttpPost]
         public void AddVSCSActivity(VSCS _vscs)
         {
-            
+
             UserRepository _userRepo = new UserRepository();
             string EmailAddress = ((IUser)System.Web.HttpContext.Current.Session["User"]).EmailAddress;
             _userRepo.SaveVCSCActivity(EmailAddress, _vscs);
@@ -243,7 +243,7 @@ namespace KindleSpur.WebApplication.Controllers
 
             UserRepository _userRepo = new UserRepository();
             string EmailAddress = ((IUser)System.Web.HttpContext.Current.Session["User"]).EmailAddress;
-            return ( _userRepo.GetVCSCActivity(EmailAddress));
+            return (_userRepo.GetVCSCActivity(EmailAddress));
         }
 
         [HttpPost]

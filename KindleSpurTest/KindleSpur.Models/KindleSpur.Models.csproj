@@ -46,6 +46,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -82,6 +83,7 @@
     <Compile Include="ResponseMessage.cs" />
     <Compile Include="Reward.cs" />
     <Compile Include="Skill.cs" />
+    <Compile Include="SubmitImage.cs" />
     <Compile Include="Tasks.cs" />
     <Compile Include="User.cs" />
     <Compile Include="ValueCreation.cs" />
