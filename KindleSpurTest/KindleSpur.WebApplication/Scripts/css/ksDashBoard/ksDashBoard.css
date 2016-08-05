@@ -251,7 +251,10 @@ width: 20%;
 .trandingTopicParent{
     margin: 0% auto;
     display: table;
-    width: 75%;
+    width: 62%;
+    margin-right: 20%;
+    float:none;
+    padding-top: 5px;
 border-top: 1px solid lightgray;
     border-bottom: 1px solid lightgray;
 }
@@ -347,7 +350,7 @@ border-top: 1px solid lightgray;
 .trandingTopicLeftArray{
     position: relative;
     float: left;
-    width: 50% !important;   
+    width: 40% !important;   
    
    
 }
@@ -372,6 +375,33 @@ border-top: 1px solid lightgray;
 }
 .TradingTopicsLogo{
    width: 50px;
-    margin-top: 1%;
+    margin-top: 30%;
     height: auto;
+}
+.col-md-6{
+    position: relative;
+    min-height: 1px;
+    padding-right: 0px;
+    padding-left: 0px;
+}
+.col-md-4{
+position: relative;
+    min-height: 1px;
+     padding-right: 0px; 
+     padding-left: 0px; 
+    }
+.roleImage{
+    float: left;
+     margin-top: 2%;
+     height:96px;
+}
+.TrendingTopicName{
+    height:15px; 
+    font-size: 9px;
+    font-weight:bold;
+     text-decoration: underline;
+}
+.TrandingTopicDescription{
+    height:30px;
+     font-size: 9px;
 }

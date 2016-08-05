@@ -22,12 +22,19 @@ app.controller('ksMainDashBoardController', function ($scope,$state,serverCommun
 		    }
 		
 		};
-		$scope.trendingTopicLeft = [
-            { name: 'Strategic Management ' },
-            { name: 'Finance for non-finance managers' },
-            { name: 'Bid Solutioning' },
-            { name: 'Successful Virtual Teams' },
-            { name: 'Technology migration' }
+		$scope.trendingTopicLeftArray = [
+            { name: 'Strategic Management ' ,description: ' this is a demo description'},
+            { name: 'non-finance managers', description: '' },
+            { name: 'Bid Solutioning' ,description: ''},
+            { name: 'Successful Virtual Teams' ,description: ''},
+            { name: 'Technology migration' ,description: ''}
+		];
+		$scope.trendingTopicRightArray = [
+                { name: 'Strategic Management ' ,description: ''},
+                { name: 'non-finance managers' ,description: ''},
+                { name: 'Bid Solutioning' ,description: ''},
+                { name: 'Successful Virtual Teams' ,description: ''},
+                { name: 'Technology migration' ,description: ''}
 		];
         
         $scope.navigateToProfile = function () {

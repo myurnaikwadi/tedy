@@ -65,32 +65,32 @@
                     </div>
                 </div>
                     <h5 class="fontClass TrendingTopicsHeader">TRENDING TOPICS</h5>
-            <div class="trandingTopicParent col-md-12" style="float:none;padding-top: 10px;">
+            <div class="trandingTopicParent col-md-12" >
                
-                <div class="col-md-5" style="width: 50%;">
-                    <div class="roleImage" style="float: left; margin-top: 2%;    margin-right: 8px;">
+                <div class="col-md-6" >
+                    <div class="roleImage col-md-2">
 
                         <img src="~/Images/icons/trending topics1.png" class="TradingTopicsLogo" />
                     </div>
-                    <div class="trandingTopicLeftArray " ng-repeat="option in trendingTopicLeft">
-                        <div style="height:15px; font-size: 9px;font-weight:bold; text-decoration: underline;" class="">
+                    <div class="trandingTopicLeftArray col-md-4" ng-repeat="option in trendingTopicLeftArray">
+                        <div class="TrendingTopicName">
                             {{option.name | uppercase}}
                         </div>
-                        <div style="height:30px; font-size: 9px;" class="col-md-12">
+                        <div class="col-md-12 TrandingTopicDescription">
                             {{option.description}}
                         </div>
                     </div>
                 </div>
                 
-                <div class="col-md-5" style="width:50%">
-                    <div class="roleImage" style="float: left; margin-top: 2%;    margin-right: 8px;">
+                <div class="col-md-6" >
+                    <div class="roleImage col-md-2" style="float: left; margin-top: 2%;height:96px;" >
                         <img src="~/Images/icons/trending topics2.png" class="TradingTopicsLogo" />
                     </div>
-                    <div class="trandingTopicLeftArray " ng-repeat="option in trendingTopicLeft">
-                        <div style="height:15px; font-size: 9px;font-weight:bold;text-decoration: underline;" class="col-md-12">
+                    <div class="trandingTopicLeftArray col-md-4" ng-repeat="option in trendingTopicRightArray">
+                        <div class="TrendingTopicName" >
                             {{option.name | uppercase}}
                         </div>
-                        <div style="height:30px; font-size: 9px;" class="col-md-12">
+                        <div style="height:30px; font-size: 9px;" >
                             {{option.description}}
                       </div>
                     </div>
