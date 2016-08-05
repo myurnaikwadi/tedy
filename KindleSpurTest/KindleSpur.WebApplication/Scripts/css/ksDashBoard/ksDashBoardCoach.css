@@ -436,12 +436,13 @@
 }
 .cancelLink{
     float: left;
-    opacity: 0.3;
+    opacity: 0.6;
     margin-right: 0;
     text-align: center;
     margin-left: 10%;
     margin-top: 1%;
     text-decoration: underline;
+    cursor:pointer;
 }
 .topicSkillPanel {
      float: left;
