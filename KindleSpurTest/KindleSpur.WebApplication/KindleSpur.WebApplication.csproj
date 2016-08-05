@@ -309,9 +309,11 @@
     <Content Include="Images\icons\books icon 6.png" />
     <Content Include="Images\icons\call.png" />
     <Content Include="Images\icons\coachee_logo.png" />
+    <Content Include="Images\icons\coaching.png" />
     <Content Include="Images\icons\coaching_status.png" />
     <Content Include="Images\icons\coach_logo.png" />
     <Content Include="Images\icons\communication.png" />
+    <Content Include="Images\icons\delete.png" />
     <Content Include="Images\icons\Game2.png" />
     <Content Include="Images\icons\kindlespurlogo.png" />
     <Content Include="Images\icons\Knowledge_feed.png" />
