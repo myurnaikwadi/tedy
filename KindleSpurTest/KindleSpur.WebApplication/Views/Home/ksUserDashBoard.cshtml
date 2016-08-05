@@ -66,11 +66,12 @@
                 </div>
                     <h5 class="fontClass TrendingTopicsHeader">TRENDING TOPICS</h5>
             <div class="trandingTopicParent col-md-12" style="float:none;padding-top: 10px;">
-                <div class="roleImage" style="float: left; margin-top: 2%;    margin-right: 8px;">
-                   
-                    <img src="~/Images/icons/trending topics1.png"   class="TradingTopicsLogo" />
-                </div>
+               
                 <div class="col-md-5" style="width: 40%;">
+                    <div class="roleImage" style="float: left; margin-top: 2%;    margin-right: 8px;">
+
+                        <img src="~/Images/icons/trending topics1.png" class="TradingTopicsLogo" />
+                    </div>
                     <div class="trandingTopicLeftArray " ng-repeat="option in trendingTopicLeft">
                         <div style="height:15px; font-size: 9px;font-weight:bold; text-decoration: underline;" class="">
                             {{option.name | uppercase}}

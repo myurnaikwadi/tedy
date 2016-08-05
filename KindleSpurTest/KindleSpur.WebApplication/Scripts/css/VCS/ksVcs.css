@@ -611,3 +611,6 @@ display: inline-flex;
     overflow:scroll;
     height:500px;
 }
+.GameThemeColor {
+    background-color: darkgray !important;
+}
