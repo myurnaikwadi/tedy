@@ -102,7 +102,7 @@
         .dashBoardWizard {
             position: relative;
             float: left;
-            height: 85%;
+            height: 77%;
             width: 100%;
         }
 
@@ -239,7 +239,9 @@
             border-radius: 100%;
                 display: flex;
         }
-
+.dashBoardMenuCoachRightCirclePart:hover {
+    box-shadow: 0px 0px 10px 2px;
+}
         .dashBoardMenuCoachRightlabel {
             float: left;
             width: 100%;
@@ -561,7 +563,9 @@ border-bottom: 1px solid white;
    display: flex;
     margin-left: 2%;
 }
-
+.ngRepeatDivForStatus:hover{
+    box-shadow:0px 0px 10px 2px;
+}
 .profileImageCoachingStatus{
     float: left;
     width: 7%;
