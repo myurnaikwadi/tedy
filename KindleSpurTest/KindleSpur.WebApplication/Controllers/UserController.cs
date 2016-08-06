@@ -17,6 +17,7 @@ namespace KindleSpur.WebApplication.Controllers
     {
         private ResponseMessage response;
         // GET: User
+       
         public ActionResult Login()
         {
             Session.Abandon();
@@ -247,6 +248,15 @@ namespace KindleSpur.WebApplication.Controllers
 
         //    return PartialView();
         //}
+        public ActionResult GetSkills()
+        {
+            ConversationRepository repo = new ConversationRepository();
+            if (repo.GetSkillsForConversation().Count > 0)
+            {
 
+
+            }
+            return View();
+        }
     }
 }

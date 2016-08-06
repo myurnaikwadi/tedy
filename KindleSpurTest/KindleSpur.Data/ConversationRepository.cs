@@ -131,14 +131,14 @@ namespace KindleSpur.Data
                 else
                 {
                     var _query1 = //Query.Or(
-                   // Query.And(
-                   //             Query<Conversation>.EQ(p => p.SenderEmail, loggedEmail), Query<Conversation>.EQ(p => p.IsVerified, true)),
+                                  // Query.And(
+                                  //             Query<Conversation>.EQ(p => p.SenderEmail, loggedEmail), Query<Conversation>.EQ(p => p.IsVerified, true)),
                     Query.And(
                                 Query<Conversation>.EQ(p => p.ReceiverEmail, loggedEmail), Query<Conversation>.EQ(p => p.IsVerified, true))
                         ;
                     _categories = _conversationCollection.Find(
                     _query1
-                    ).SetFields(Fields.Exclude("_id").Include("ReceiverEmail")).Distinct().ToList();
+                    ).SetFields(Fields.Exclude("_id").Include("SenderEmail")).Distinct().ToList();
                 }
 
 
@@ -286,6 +286,18 @@ namespace KindleSpur.Data
             var _conversationCollection = _kindleDatabase.GetCollection("Conversations");
             return _conversationCollection.FindOneAs<Conversation>(Query.EQ("message", message));
         }
+        public  List<BsonDocument> GetSkillsForConversation()
+        {
+            List<BsonDocument> bsn = new List<BsonDocument>();
+            Conversation cvrs = new Conversation();
+            var _conversationCollection = _kindleDatabase.GetCollection("Conversations");
+            var query = Query.EQ("skill", cvrs.skill);
+            var sortBy = SortBy.Descending("skill");
+            // var count = _conversationCollection.Count(Query.EQ("skill", cvrs.skill));
+            bsn = _conversationCollection.FindAs<BsonDocument>(query).SetSortOrder(sortBy).SetLimit(5).ToList();
+            return bsn;
+        }
+
 
     }
 }

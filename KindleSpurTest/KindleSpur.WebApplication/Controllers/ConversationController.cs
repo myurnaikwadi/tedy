@@ -52,7 +52,7 @@ namespace KindleSpur.WebApplication.Controllers
             UserRepository ur = new UserRepository();
             foreach (var value in _repo.ListConversation(((IUser)Session["User"]).EmailAddress))
             {
-                var recevicedetails = ur.GetUserDetail(value["ReceiverEmail"].ToString());
+                var recevicedetails = ur.GetUserDetail(value[0].ToString());
                 result.Add((IUser)recevicedetails);
             }
             
