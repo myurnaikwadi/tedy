@@ -248,8 +248,10 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\CoachController.cs" />
     <Compile Include="Controllers\CoacheeController.cs" />
+    <Compile Include="Controllers\ConversationController.cs" />
     <Compile Include="Controllers\CTSController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\MeetingSchedularController.cs" />
     <Compile Include="Controllers\MenteeController.cs" />
     <Compile Include="Controllers\MentorController.cs" />
     <Compile Include="Controllers\UserController.cs" />
@@ -276,6 +278,7 @@
     <Content Include="Images\addBold.png" />
     <Content Include="Images\camera.png" />
     <Content Include="Images\cancel.png" />
+    <Content Include="Images\coaching 2.png" />
     <Content Include="Images\communication\betterCompetitors.png" />
     <Content Include="Images\communication\bigSelectedStar.png" />
     <Content Include="Images\communication\bigStar.png" />
@@ -326,6 +329,7 @@
     <Content Include="Images\icons\trending topics1.png" />
     <Content Include="Images\icons\trending topics2.png" />
     <Content Include="Images\icons\verticle.png" />
+    <Content Include="Images\icons\If no Profile photo.png" />
     <Content Include="Images\linkedIn.jpg" />
     <Content Include="Images\linkedin_square_gray.png" />
     <Content Include="Images\loginLanding.jpg" />

@@ -109,7 +109,7 @@
             data.append(valueFile[0].Name, valueFile[0]);
 
             console.error(data);
-            serverCommunication.changeProfileImageDetails(data);
+            serverCommunication.changeProfileImageDetails({ Name: valueFile[0].name, File: valueFile[0], Files: angular.copy(valueFile)});
             document.getElementById("fileInputIdRv").value = "";
             $scope.$apply();
         });

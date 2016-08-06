@@ -168,9 +168,10 @@ width: 40%;
 }
 .chatMiddle{
 	width: 100%;
-    height: calc(100% - 150px);
+    height: calc(100% - 200px);
     overflow-x: hidden;
     overflow-y: auto;
+    margin-top: 10px;
 }
 .chatBottom{
 	background-color: #E1E1E1;
@@ -220,10 +221,10 @@ width: 40%;
 	width : 100%;
 	height : auto;
 	float: left;
-	margin: 10px 0px;
+	margin: 0px 0px;
 }
 .chatSender{
-	padding : 10px;
+	padding : 0 10px;
 	background-color : #E2E2E2;
     min-width: 10%;
     max-width: 60%;
@@ -232,7 +233,7 @@ width: 40%;
 	 float :left;
 }
 .chatReceiver{
-	padding: 10px;
+	padding: 0 10px;
     background-color: #F6C500;
     min-width: 10%;
     max-width: 60%;
@@ -285,11 +286,25 @@ width: 40%;
 	width : 100%;
 	height :20px;
 	float : left;
+    margin-top: 3px;
+	font-size: 10px;
+    color: #a9a9a9;
+    text-transform: uppercase;
 }
 .chatTime h5{
 	font-size: 10px;
     color: #a9a9a9;
     text-transform: uppercase;
+}
+.chatTimeReceiver {
+	width : 100%;
+	height :20px;
+	float : left;
+    margin-top: 3px;
+	font-size: 10px;
+    color: #a9a9a9;
+    text-transform: uppercase;
+    text-align: right;
 }
 
 /*popup */
@@ -385,7 +400,7 @@ width: 40%;
     position: relative;
     float: left;
     width: 100%;
-    height: 9%;
+    /*height: 9%;*/
 }
 .feedbackPanel{
 	position: absolute;
@@ -405,13 +420,11 @@ width: 40%;
 .conversationList{
 	float : left;
 	width : 100%;
-		
-	height : 12%;
-	
+	height : 40px;	
 }
 .conversationListPanel{
     float : left;
-	width : 94%;
+	width : 92%;
 	height : 100%;
 	margin:auto auto;
 	margin-right: 0;
@@ -431,4 +444,98 @@ width: 40%;
 }
 .highlightedCompetitor {
 	border: 3px solid #ffd331;
+}
+.defaultClassSlider {
+    position: absolute;
+    top: 12%;
+    /* bottom: 50px; */
+    right: -19%;
+    height: 500px;
+    width: 250px;
+    border: solid;
+    padding: 0px 12px 0px 19px;
+    transition : 1s all ease;
+}
+.animationClassSlider {
+    position: absolute;
+    top: 12%;
+    right: 0% !important;
+    height: 500px;
+    width: 250px;
+    border: solid;
+    padding: 28px 9px 4px 26px;
+    transition : 1s all ease;
+        background:lightgray;
+}
+.defaultleftClassSlider {
+    position: absolute;
+    top: 12%;
+    /* bottom: 50px; */
+    left: -19%;
+    height: 500px;
+    width: 250px;
+    border: solid;
+    padding: 0px 12px 0px 19px;
+    transition : 1s all ease;
+}
+
+.animationleftClassSlider {
+    position: absolute;
+    top: 12%;
+    left: 0% !important;
+    height: 500px;
+    width: 250px;
+    border: solid;
+    padding: 46px 14px 0px 16px;
+    transition : 1s all ease;
+    background:#f3f3f3;
+}
+.lwpleftClassSlider {
+    position: absolute;
+    top: 12%;
+    /* bottom: 50px; */
+    left: -19%;
+    height: 500px;
+    width: 250px;
+    border: solid;
+    padding: 0px 12px 0px 19px;
+    transition : 1s all ease;
+}
+
+.lwpanimationleftClassSlider {
+    position: absolute;
+    top: 12%;
+    left: 0% !important;
+    height: 500px;
+    width: 250px;
+    border: solid;
+    padding: 46px 14px 0px 16px;
+    transition: 1s all ease;
+    background: #f3f3f3;
+    background-color: lightgray;
+    
+}
+.lwprighttClassSlider {
+   position: absolute;
+    top: 12%;
+    /* bottom: 50px; */
+    right: -19%;
+    height: 500px;
+    width: 250px;
+    border: solid;
+    padding: 0px 12px 0px 19px;
+    transition: 1s all ease;
+}
+
+.lwpanimationrightClassSlider {
+    position: absolute;
+    top: 12%;
+    right: 0% !important;
+    height: 500px;
+    width: 250px;
+    border: solid;
+    padding: 46px 14px 0px 16px;
+    transition : 1s all ease;
+    background-color: lightgray;
+
 }

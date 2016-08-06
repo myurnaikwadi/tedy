@@ -60,4 +60,8 @@ app.config(['$stateProvider', '$urlRouterProvider','$locationProvider',function(
           url: '/vcs',
           templateUrl: '/Home/ksVCGameView',
     })
+    .state('Conversation', {
+        url: '/Conversation',
+        templateUrl: '/Conversation/Index',
+    })
 }]);

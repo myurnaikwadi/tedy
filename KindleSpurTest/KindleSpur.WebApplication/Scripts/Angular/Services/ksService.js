@@ -398,6 +398,62 @@ app.factory('serverCommunication', function ($http) {
             console.error(iObj)
             $http.post('/Value/SaveValueFeedStory', iObj.selectedFeed).then(iObj.successCallBack, iObj.failureCallBack);
         },
+        getConversation: function (iObj) {
+            var req = {
+                method: 'POST',
+                url: '/Conversation/GetConversation',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                data: { loggedEmail: iObj.loggedEmail }
+            }
+            $http(req).then(iObj.successCallBack, iObj.failureCallBack);
+        },
+
+        getConversationDetails: function (iObj) {
+            console.log(iObj);
+            var req = {
+                method: 'POST',
+                url: '/Conversation/GetConversationDetails',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                data: { senderEmail: iObj.senderEmail, receiverEmail: iObj.receiverEmail }
+            }
+            $http(req).then(iObj.successCallBack, iObj.failureCallBack);
+        },
+
+        getConversationRequest: function (iObj) {
+            console.log(iObj);
+            $http.get('/Conversation/getConversationRequest').then(iObj.successCallBack, iObj.failureCallBack);
+            //var req = {
+            //    method: 'POST',
+            //    url: '/Conversation/getConversationRequest',
+            //    headers: {
+            //        'Content-Type': 'application/json'
+            //    },
+            //    data: { senderEmail: iObj.senderEmail, receiverEmail: iObj.receiverEmail }
+            //}
+            //$http(req).then(iObj.successCallBack, iObj.failureCallBack);
+        },
+
+        sendConversation: function (iObj) {
+            $http.post('/Conversation/Create', iObj.loggedUserDetails, iObj.ReceiverName, iObj.Role).then(iObj.successCallBack, iObj.failureCallBack)
+        },
+        updateConversation: function (iObj) {
+            $http.post('/Conversation/UpdateConversationStatus', iObj.loggedUserDetails, iObj.ReceiverName, iObj.Role).then(iObj.successCallBack, iObj.failureCallBack)
+        },
+
+        getAllMeetingRequest: function (iObj) {
+            console.error(iObj)
+            $http.get('/MeetingSchedular/GetAllMeetingRequest').then(iObj.successCallBack, iObj.failureCallBack)
+        },
+        saveMeeting: function (iObj) {
+            $http.post('/MeetingSchedular/Create', iObj.loggedUserDetails).then(iObj.successCallBack, iObj.failureCallBack)
+        },
+        updateMeeting: function (iObj) {
+            $http.post('/MeetingSchedular/UpdateMeetingStatus', iObj.loggedUserDetails, iObj.ReceiverName, iObj.Reason).then(iObj.successCallBack, iObj.failureCallBack)
+        }
 
 
     }

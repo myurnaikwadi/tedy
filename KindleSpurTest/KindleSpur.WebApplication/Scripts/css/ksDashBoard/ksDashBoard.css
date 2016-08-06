@@ -79,16 +79,16 @@
     	width: 70%;
 	display: flex;
 }
-.profileImage{
-	    border: 1px solid lightgray;
-    	margin: auto auto;  
-    	display: table;
-    	width: 55%;
-    	height: 50%;
- 	    display: table;
-        background: url("/Images/icons/profile.png") center center;
-        background-size: contain;
-        cursor:pointer;
+.profileImage {
+    /*border: 1px solid lightgray;*/
+    margin: auto auto;
+    display: table;
+    width: 55%;
+    height: 50%;
+    display: table;
+    background: url('../../../Images/icons/If no Profile photo.png') no-repeat center;
+    background-size: contain;
+    cursor: pointer;
 }
 .profileName{
     	margin: auto 0;

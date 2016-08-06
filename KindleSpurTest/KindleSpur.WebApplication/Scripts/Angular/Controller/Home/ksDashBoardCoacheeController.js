@@ -1,5 +1,10 @@
-﻿app.controller('ksDashBoardCoacheeController', function ($scope, serverCommunication) {
+﻿app.controller('ksDashBoardCoacheeController', function ($rootScope, $scope, serverCommunication) {
     window.cocc = $scope;
+    $scope.loggedEmail = $rootScope.loggedDetail.EmailAddress;
+    $scope.ApprovalName = $rootScope.loggedDetail.FirstName + " " + $rootScope.loggedDetail.LastName;
+    $scope.conversation = {};
+    $scope.ReceiverName = "";
+
     $scope.notifications = [
 
                 { notificationType: '1', name: 'YOU HAVE COACHING INVITE  FROM', assignPerson: 'HARSHADA D.' },
@@ -40,16 +45,16 @@
     $scope.applicationRole = [{ name: 'COACHEE' }, { name: 'MENTEE' }, { name: 'COACH' }, { name: 'MENTOR' }]
    
     $scope.Coaches = [
-       { Name: 'Amit Devgan', Skill: 'Storage Engineer', City: 'Pune', Country: 'India' },
-       { Name: 'Srinivas R', Skill: 'MVC Devloper', City: 'Pune', Country: 'India' },
-       { Name: 'Srinivas R', Skill: 'MVC Devloper', City: 'Pune', Country: 'India' },
-       { Name: 'Manjay D', Skill: 'ASP.NET', City: 'Pune', Country: 'India' },
-       { Name: 'Rajan', Skill: 'Networking', City: 'Pune', Country: 'India' },
-       { Name: 'Abhishek', Skill: 'Java', City: 'Pune', Country: 'India' },
-       { Name: 'Abhishek', Skill: 'Java', City: 'Pune', Country: 'India' },
-       { Name: 'Keerti', Skill: 'Pharma', City: 'Pune', Country: 'India' },
-       { Name: 'Kunal', Skill: 'Accounts', City: 'Pune', Country: 'India' },
-       { Name: 'Kunal', Skill: 'Accounts', City: 'Pune', Country: 'India' },
+       { Name: 'Amit Devgan', Skill: 'Storage Engineer', City: 'Pune', Country: 'India', Email: 'amit.devgan@gmail.com' },
+       { Name: 'Srinivas R', Skill: 'MVC Devloper', City: 'Pune', Country: 'India', Email: 'srinivasr@gmail.com' },
+       { Name: 'Sagar P', Skill: 'MVC Devloper', City: 'Pune', Country: 'India', Email: 'patilsagar28290@gmail.com' },
+       { Name: 'Manjay D', Skill: 'ASP.NET', City: 'Pune', Country: 'India', Email: 'amit.devgan@gmail.com' },
+       { Name: 'Rajan', Skill: 'Networking', City: 'Pune', Country: 'India', Email: 'rajan@gmail.com' },
+       { Name: 'Abhishek', Skill: 'Java', City: 'Pune', Country: 'India', Email: 'abhishek@gmail.com' },
+       { Name: 'Abhishek', Skill: 'Java', City: 'Pune', Country: 'India', Email: 'amit.devgan@gmail.com' },
+       { Name: 'Keerti', Skill: 'Pharma', City: 'Pune', Country: 'India', Email: 'amit.devgan@gmail.com' },
+       { Name: 'Kunal', Skill: 'Accounts', City: 'Pune', Country: 'India', Email: 'amit.devgan@gmail.com' },
+       { Name: 'Sweta', Skill: 'Accounts', City: 'Pune', Country: 'India', Email: 'shwetah28@gmail.com' },
        { Name: 'Gaurav', Skill: 'CA', City: 'Pune', Country: 'India' },
        { Name: 'Shankar', Skill: 'CA', City: 'Pune', Country: 'India' },
        { Name: 'Shankar', Skill: 'CA', City: 'Pune', Country: 'India' },
@@ -72,10 +77,20 @@
     $scope.menuClick = function (iIndex, iOption) {
         $scope.selectedMenu = iIndex;
         switch (iIndex) {
+            case 0: $scope.conversationStartData($scope.loggedEmail); break;
             case 4: $scope.getRssFeedData(); break;
             case 3: $scope.getCoachRecord(); break;
                 //case 2: $scope.generateGarden(); break;
                 //case 6: $scope.getPointsRecord(); break;
+            case 5:
+                if ($scope.conversationListNew.length > 0)
+                {
+                    $scope.ReceiverName = $scope.conversationListNew[0].FirstName + " " + $scope.conversationListNew[0].LastName;
+                    $scope.ReceiverEmail = $scope.conversationListNew[0].EmailAddress;
+                    $scope.conversationStartData($scope.loggedEmail);
+                    $scope.showSelectedConversation($scope.loggedEmail, $scope.ReceiverEmail);
+                }
+                    break;
         }
     };
     $scope.selectedOption = function (iIndex, iCate) {
@@ -215,6 +230,278 @@
             }
         });
     };
+
+    /*START: Conversation Module Code*/
+    $scope.conversationStartData = function (loggedEmail) {
+
+        serverCommunication.getConversation({
+            loggedEmail: loggedEmail,
+            successCallBack: function (iObj) {
+                console.debug('In successCallBack', iObj);
+                function ObjectId(id) { return id; }
+                function ISODate(d) { return d; }
+                $scope.conversationListNew = iObj.data.Result;
+
+                $scope.conversationListNew[0].selectedConversation = true;
+            },
+            failureCallBack: function (iObj) {
+                console.debug('In failureCallBack', iObj);
+            }
+        });
+
+        serverCommunication.getAllMeetingRequest({
+            successCallBack: function (iObj) {
+                console.debug('In successCallBack', iObj);
+
+                function ObjectId(id) { return id; }
+                function ISODate(d) {
+                    return d;
+                }
+
+                $scope.notificationRequestData = iObj.data.Result;
+            },
+            failureCallBack: function (iObj) {
+                console.debug('In failureCallBack', iObj);
+            }
+        });
+    };
+    
+    $scope.conversationLoad = function (iIndex, iCategory) {
+        for (var i = 0 ; i < $scope.conversationListNew.length ; i++) {
+            $scope.conversationListNew[i].selectedConversation = false;
+        }
+        if (iCategory.selectedConversation == true) {
+            iCategory.selectedConversation = false;
+        } else {
+            iCategory.selectedConversation = true;
+        }
+
+        if ($scope.ReceiverEmail !== "") {
+            $scope.ReceiverName = iCategory.FirstName + " " + iCategory.LastName;
+            $scope.ReceiverEmail = iCategory.EmailAddress;
+        }
+        else {
+            $scope.ReceiverName = $scope.conversationListNew[0].FirstName + " " + $scope.conversationListNew[0].LastName;
+            $scope.ReceiverEmail = $scope.conversationListNew[0].EmailAddress;
+        }
+
+        $scope.showSelectedConversation($scope.loggedEmail, $scope.ReceiverEmail);
+    };
+
+    $scope.showSelectedConversation = function (SenderEmail, ReceiverEmail) {
+        serverCommunication.getConversationDetails({
+            senderEmail: SenderEmail,
+            receiverEmail: ReceiverEmail,
+            successCallBack: function (iObj) {
+                console.debug('In successCallBack', iObj);
+
+                function ObjectId(id) { return id; }
+                function ISODate(d) {
+                    return d;
+                }
+
+                $scope.MailRecords = eval('(' + iObj.data.Result + ')');
+            },
+            failureCallBack: function (iObj) {
+                console.debug('In failureCallBack', iObj);
+            }
+        });
+    };
+
+
+    $scope.conversationRequest = function () {
+
+        serverCommunication.getConversationRequest({
+            successCallBack: function (iObj) {
+                console.debug('In successCallBack', iObj);
+
+                function ObjectId(id) { return id; }
+                function ISODate(d) {
+                    return d;
+                }
+
+                $scope.notificationData = iObj.data.Result;
+            },
+            failureCallBack: function (iObj) {
+                console.debug('In failureCallBack', iObj);
+            }
+        });
+
+        serverCommunication.getAllMeetingRequest({
+            successCallBack: function (iObj) {
+                console.debug('In successCallBack', iObj);
+
+                function ObjectId(id) { return id; }
+                function ISODate(d) {
+                    return d;
+                }
+
+                $scope.notificationRequestData = iObj.data.Result;
+            },
+            failureCallBack: function (iObj) {
+                console.debug('In failureCallBack', iObj);
+            }
+        });
+        
+    };
+
+    $scope.conversationClick = function (isVerified, emailId) {
+        $scope.conversation.SenderEmail = $scope.loggedEmail;
+        if (emailId != "")
+            $scope.conversation.ReceiverEmail = emailId;
+        else
+            $scope.conversation.ReceiverEmail = $scope.ReceiverEmail;
+
+        $scope.conversation.Content = $scope.conversation.Message;
+        $scope.conversation.SendOrReceive = "Send";
+        $scope.conversation.IsVerified = isVerified;
+        $scope.conversation.isRead = false;
+
+        if ($scope.conversation.SenderEmail === "" || $scope.conversation.ReceiverEmail === "")
+            return false;
+
+        var _object = {
+            Content: $scope.conversation.Content,
+            SenderEmail: $scope.conversation.SenderEmail,
+            ReceiverEmail: $scope.conversation.ReceiverEmail,
+            SendOrReceive: $scope.conversation.SendOrReceive,
+            IsVerified: $scope.conversation.IsVerified
+        }
+        console.debug(_object);
+
+        serverCommunication.sendConversation({
+            loggedUserDetails: _object,
+            ReceiverName: $scope.ReceiverName,
+            Role: 'Coachee',
+            successCallBack: function () {
+                $scope.conversation.Message = "";
+                if (_object.Content != null) {
+                    $scope.menuClick(5, "CONVERSATIONS");
+                    $scope.showSelectedConversation(_object.SenderEmail, _object.ReceiverEmail);
+                }
+                console.debug('In successCallBack');
+
+            },
+            failureCallBack: function () {
+
+                $scope.conversation.Message = "";
+                if (_object.Content != null) {
+                    $scope.menuClick(5, "CONVERSATIONS");
+                    $scope.showSelectedConversation(_object.SenderEmail, _object.ReceiverEmail);
+                }
+                console.debug('In failureCallBack');
+            }
+        });
+
+    };
+
+    $scope.updateConversation = function (isVerfied, SenderEmail, ReceiverEmail) {
+        $scope.conversation.IsVerified = isVerfied;
+        var contentText = "";
+        if (isVerfied != false)
+            contentText = 'SESSION REQUEST BY ' + $scope.ApprovalName + ' HAS BEEN ACCEPTED';
+        else
+            contentText = null;
+            
+        var _object = {
+            SenderEmail: SenderEmail,
+            ReceiverEmail: ReceiverEmail,
+            Content: contentText,
+            IsVerified: $scope.conversation.IsVerified
+        }
+
+        serverCommunication.updateConversation({
+            loggedUserDetails: _object,
+            ReceiverName: $scope.ApprovalName,
+            Role: 'Coachee',
+            successCallBack: function () {
+                $scope.menuClick(5, "CONVERSATIONS");
+                $scope.showSelectedConversation($scope.loggedEmail, $scope.ApprovalName);
+                console.debug('In successCallBack');
+
+            },
+            failureCallBack: function (e) {
+                console.debug('In failureCallBack' + e);
+            }
+        });
+    };
+
+    $scope.saveSchedular = function (isVerified, emailId) {
+        console.log("Test");
+        $scope.MeetingSchedular.SenderEmail = $scope.loggedEmail;
+        if (emailId != "")
+            $scope.MeetingSchedular.ReceiverEmail = $scope.ReceiverEmail;
+        else
+            $scope.MeetingSchedular.ReceiverEmail = emailId;
+
+        $scope.MeetingSchedular.Subject = $scope.MeetingSchedular.Subject;
+        $scope.MeetingSchedular.MeetingDate = $scope.MeetingSchedular.MeetingDate;
+        $scope.MeetingSchedular.TimeFrom = $scope.MeetingSchedular.TimeFrom;
+        $scope.MeetingSchedular.TimeTo = $scope.MeetingSchedular.TimeTo;
+        $scope.MeetingSchedular.PlatformType = $scope.MeetingSchedular.PlatformType;
+        $scope.MeetingSchedular.UserId = $scope.MeetingSchedular.UserId;
+        $scope.MeetingSchedular.Role = "Coachee";
+
+        $scope.MeetingSchedular.IsVerified = isVerified;
+
+        if ($scope.conversation.SenderEmail === "" || $scope.conversation.ReceiverEmail === "")
+            return false;
+
+        var _object = {
+            SenderEmail: $scope.MeetingSchedular.SenderEmail,
+            ReceiverEmail: $scope.MeetingSchedular.ReceiverEmail,
+            Subject: $scope.MeetingSchedular.Subject,
+            MeetingDate: $scope.MeetingSchedular.MeetingDate,
+            TimeFrom: $scope.MeetingSchedular.TimeFrom,
+            TimeTo: $scope.MeetingSchedular.TimeTo,
+            PlatformType: $scope.MeetingSchedular.PlatformType,
+            UserId: $scope.MeetingSchedular.UserId,
+            Role: $scope.MeetingSchedular.Role,
+            IsVerified: $scope.MeetingSchedular.IsVerified
+        }
+        console.log(_object);
+
+        serverCommunication.saveMeeting({
+            loggedUserDetails: _object,
+            successCallBack: function () {
+                console.log('In successCallBack');
+                $scope.myMeetingSchedular.close();
+            },
+            failureCallBack: function () {
+                console.log('In failureCallBack');
+
+            }
+        });
+    };
+
+    $scope.updateMeeting = function (isVerfied, SenderEmail, ReceiverEmail, Role) {
+        $scope.conversation.IsVerified = isVerfied;
+
+        var _object = {
+            SenderEmail: SenderEmail,
+            ReceiverEmail: ReceiverEmail,
+            Role: Role,
+            IsVerified: $scope.conversation.IsVerified
+        }
+
+        serverCommunication.updateMeeting({
+            loggedUserDetails: _object,
+            ReceiverName: $scope.ApprovalName,
+            Reason: "",
+            successCallBack: function () {
+                console.debug('In successCallBack');
+                $scope.conversationRequest();
+            },
+            failureCallBack: function (e) {
+                console.debug('In failureCallBack' + e);
+            }
+        });
+    };
+
+    $scope.conversationStartData($scope.loggedEmail);
+    $scope.conversationRequest();
+    /*END: Conversation Module Code*/
+
     $scope.init = function () {
         serverCommunication.getCTSFilters({
             successCallBack: function (result) {

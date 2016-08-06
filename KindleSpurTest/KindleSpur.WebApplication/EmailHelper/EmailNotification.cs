@@ -26,5 +26,29 @@ namespace KindleSpur.WebApplication.MessageHelper
             smtp.Send(message);
         }
 
+        public static void SendConversationEmail(Conversation _obj, string uri, string subject, string content)
+        {
+            MailMessage message = new MailMessage("proxyserver.myur@gmail.com", _obj.ReceiverEmail);
+            message.Subject = subject;
+            message.Body = content;
+            message.IsBodyHtml = true;
+            SmtpClient smtp = new SmtpClient("smtp.gmail.com", 587);
+            smtp.Credentials = new System.Net.NetworkCredential("proxyserver.myur@gmail.com", "mayu3337sis");
+            smtp.EnableSsl = true;
+            //smtp.Send(message);
+        }
+
+        public static void SendMeetingEmail(MeetingSchedular _obj, string uri, string subject, string content)
+        {
+            MailMessage message = new MailMessage("proxyserver.myur@gmail.com", _obj.ReceiverEmail);
+            message.Subject = subject;
+            message.Body = content;
+            message.IsBodyHtml = true;
+            SmtpClient smtp = new SmtpClient("smtp.gmail.com", 587);
+            smtp.Credentials = new System.Net.NetworkCredential("proxyserver.myur@gmail.com", "mayu3337sis");
+            smtp.EnableSsl = true;
+            //smtp.Send(message);
+        }
+
     }
 }
