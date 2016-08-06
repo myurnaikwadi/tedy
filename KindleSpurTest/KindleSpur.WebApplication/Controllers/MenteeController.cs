@@ -75,5 +75,12 @@ namespace KindleSpur.WebApplication.Controllers
             var UserName = _coachRepo.GetTopicsForMentee(UserId);
             return Json(new { UserName = UserName, Success = true }, JsonRequestBehavior.AllowGet);
         }
+
+        public ActionResult GetCoachingStatus()
+        {
+            CoacheeOrMenteeRepository _coachRepo = new CoacheeOrMenteeRepository();
+            var filters = _coachRepo.GetCoachingStatus(UserId,"Mentee");
+            return Json(new { Filters = filters, Success = true }, JsonRequestBehavior.AllowGet);
+        }
     }
 }

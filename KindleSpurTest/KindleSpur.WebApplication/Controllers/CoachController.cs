@@ -79,7 +79,7 @@ namespace KindleSpur.WebApplication.Controllers
         public ActionResult GetCoachingStatus()
         {
             CoachOrMentorRepository _coachRepo = new CoachOrMentorRepository();
-            var filters = _coachRepo.GetCoachingStatus(UserId);
+            var filters = _coachRepo.GetCoachingStatus(UserId,"Coach");
             return Json(new { Filters = filters, Success = true }, JsonRequestBehavior.AllowGet);
         }
     }

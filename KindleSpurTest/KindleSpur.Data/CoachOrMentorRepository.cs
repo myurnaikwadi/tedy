@@ -326,13 +326,13 @@ namespace KindleSpur.Data
             return coachEntities.ToList();
         }
 
-        public List<CoachStatus> GetCoachingStatus(string UserId)
+        public List<CoachStatus> GetCoachingStatus(string UserId,string Role)
         {
             List<Feedback> LstCochees = new List<Feedback>();
             List<CoachStatus> result = new List<CoachStatus>();
             try
             {
-                CoachOrMentor coach = _coachOrMentorCollection.FindOneAs<CoachOrMentor>(Query.EQ("UserId", UserId));
+                CoachOrMentor coach = _coachOrMentorCollection.FindOneAs<CoachOrMentor>(Query.And(Query.EQ("UserId", UserId), Query.EQ("Role", Role)));
                 if (coach != null)
                 {
                     LstCochees = coach.Feedbacks;
@@ -340,12 +340,13 @@ namespace KindleSpur.Data
                     if (LstCochees != null)
                     {
                         result = (from t in LstCochees
-                                  group t by new { t.Sender, t.Skill }
+                                  group t by new { t.Sender, t.Skill, t.FeedbackClosed }
                                      into grp
                                   select new CoachStatus()
                                   {
                                       EmailAddress = grp.Key.Sender,
                                       Skill = grp.Key.Skill,
+                                      FeedbackClosed = grp.Key.FeedbackClosed,
                                       FeedbackCount = grp.Count(),
                                       Rating = grp.OrderByDescending(t => t.customerSatisfactionRating).FirstOrDefault().customerSatisfactionRating
                                   }).ToList();
@@ -355,7 +356,7 @@ namespace KindleSpur.Data
                             for (var i = 0; i < result.Count(); i++)
                             {
                                 result[i] = GetCocheeDetails(result[i]);
-                                result[i].TreeURL = GetTreeURL(result[i].FeedbackCount, result[i].Rating);
+                                result[i].TreeURL = GetTreeURL(result[i].FeedbackCount, result[i].Rating, result[i].FeedbackClosed);
                             }
                         }
                     }
@@ -389,9 +390,12 @@ namespace KindleSpur.Data
             }
             return c;
         }
-        public string GetTreeURL(int FeedbackCount, int Rating)
+        public string GetTreeURL(int FeedbackCount, int Rating, bool closingStatus)
         {
+            
             string TreeURL = "Images/Tree/Stage 1.png";
+
+            if(closingStatus) return TreeURL = TreeURL = "Images/Tree/Stage 5 with Fruits.png";
 
             if (FeedbackCount == 1)
             {

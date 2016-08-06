@@ -916,8 +916,8 @@ app.directive('moleculeMap', function ($rootScope) {
                                     d3.select(this).append("image")
                                          .attr("x", 0)
                                          .attr("y", 0)
-                                         .attr("height", 75)
-                                         .attr("width", 75)
+                                         .attr("height", 100)
+                                         .attr("width", 100)
                                          .attr("xlink:href", function (d) { return d.image; })
                                          .attr("clip-path", "url(#clip-circle)")
                                 } else {
@@ -1475,7 +1475,7 @@ app.directive('feedbackPage', function ($state, serverCommunication, $timeout,$r
                 }
                 console.error(_rating)
                 serverCommunication.sendFeedback({
-                    loggedUserDetails: { FeedBackId: _id, FeedbackClosed: false, sender: "patilsagar28290@gmail.com", Skill: 'MVC Angular Js', customerSatisfactionRating: _rating },
+                    loggedUserDetails: { FeedBackId: _id, FeedbackClosed: false, sender: "patilsagar28290@gmail.com", Skill: 'Marketing Management', customerSatisfactionRating: _rating },
                     successCallBack: function (iObj) {
                         console.error('In successCallBack', iObj);
                         $scope.getPointsRecord ();

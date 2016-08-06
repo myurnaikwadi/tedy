@@ -97,5 +97,12 @@ namespace KindleSpur.WebApplication.Controllers
             }
             return null;
         }
+
+        public ActionResult GetCoachingStatus()
+        {
+            CoacheeOrMenteeRepository _coachRepo = new CoacheeOrMenteeRepository();
+            var filters = _coachRepo.GetCoachingStatus(UserId,"Coachee");
+            return Json(new { Filters = filters, Success = true }, JsonRequestBehavior.AllowGet);
+        }
     }
 }

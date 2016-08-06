@@ -1,4 +1,4 @@
-﻿app.controller('ksDashBoardMentorController', function ($scope, serverCommunication) {
+﻿app.controller('ksDashBoardMentorController', function ($scope, serverCommunication, $rootScope) {
     $scope.notifications = [
 
                 { notificationType: '1', name: 'YOU HAVE COACHING INVITE  FROM', assignPerson: 'HARSHADA D.' },
@@ -31,15 +31,30 @@
     $scope.menuClick = function (iIndex, iOption) {
         $scope.selectedMenu = iIndex;
         switch (iIndex) {
+            case 1 : $scope.getCoachRecord(); break;
             case 4: $scope.getRssFeedData(); break;
         }
     };
+
     $scope.selectedOption = function (iIndex, iCate) {
         for (var k = 0; k < $scope.leftSideMenus.length; k++) {
             if ($scope.leftSideMenus[k].name == iCate.name) {
                 $scope.menuClick(k, $scope.leftSideMenus[k]);
             }
         }
+    };
+      $scope.getCoachRecord = function () {
+        serverCommunication.getCoachingWithStatus({
+              role  : 'mentor',
+              loggedUserDetails: $rootScope.loggedDetail,
+              successCallBack: function (iObj) {
+                   console.error('In successCallBack', iObj);
+                   $scope.coachingStatusArray = iObj.data.Filters;
+             },
+             failureCallBack: function (iObj) {
+                 console.error('In failureCallBack', iObj);
+             }
+        });
     };
     $scope.feedCategoryArray = [];
     $scope.getRssFeedData = function () {

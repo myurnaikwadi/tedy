@@ -203,7 +203,7 @@
                             _array.push({
                                 "symbol": _str.toUpperCase(),
                                 "image": $scope.coachingStatusArray[k].TreeURL,
-                                "size": 25,
+                                "size": 45,
                                 "id": Math.random() +k,
                                 "bonds": 1
                             });
@@ -226,6 +226,7 @@
     };
     $scope.getCoachRecord = function () {
         serverCommunication.getCoachingWithStatus({
+              role  : 'coach',
               loggedUserDetails: $rootScope.loggedDetail,
               successCallBack: function (iObj) {
                    console.error('In successCallBack', iObj);

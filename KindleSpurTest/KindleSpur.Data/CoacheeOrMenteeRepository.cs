@@ -355,14 +355,14 @@ namespace KindleSpur.Data
             return coacheeEntities.ToList();
         }
 
-        public List<CoachStatus> GetCoachingStatus(string UserId)
+        public List<CoachStatus> GetCoachingStatus(string UserId,string Role)
         {
             List<IFeedback> LstCochees = new List<IFeedback>();
             List<CoachStatus> result = new List<CoachStatus>();
             try
             {
 
-                CoacheeOrMentee coach = _coacheeOrMenteeCollection.FindOneAs<CoacheeOrMentee>(Query.EQ("UserId", UserId));
+                CoacheeOrMentee coach = _coacheeOrMenteeCollection.FindOneAs<CoacheeOrMentee>(Query.And(Query.EQ("UserId", UserId), Query.EQ("Role", Role)));
                 if (coach != null)
                 {
                     LstCochees = coach.Feedbacks;

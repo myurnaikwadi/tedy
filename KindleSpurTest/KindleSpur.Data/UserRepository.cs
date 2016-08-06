@@ -49,7 +49,9 @@ namespace KindleSpur.Data
 
                 if (result.Count() > 0)
                     return false;
-
+                
+                userData.UpdateDate = DateTime.Now;
+                userData.IsVerified = true;
                 _userCollection.Insert(userData);
                 
                 _transactionStatus = true;

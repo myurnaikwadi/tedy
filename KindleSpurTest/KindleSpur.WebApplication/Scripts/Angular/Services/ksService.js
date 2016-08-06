@@ -330,7 +330,12 @@ app.factory('serverCommunication', function ($http) {
          * @Purpose :
          */
         getCoachingWithStatus: function (iObj) {
-            $http.get('/Mentor/GetCoachingStatus', iObj.loggedUserDetails).then(iObj.successCallBack, iObj.failureCallBack)
+        console.error(iObj)
+            var _action = '/Coach/GetCoachingStatus'
+            if (iObj.role == 'mentor') {
+                _action="/Mentor/GetCoachingStatus";
+            }
+            $http.get(_action, iObj.loggedUserDetails).then(iObj.successCallBack, iObj.failureCallBack)
         },
         /**
         * @auther : MKN

@@ -19,6 +19,7 @@ namespace KindleSpur.Models
         public int Rating { get; set; }
         public string TreeURL { get; set; }
         public int FeedbackCount { get; set; }
+        public Boolean FeedbackClosed { get; set; }
         public List<string> topics { get; set; }
         public List<SkillOrTopic> skills { get; set; }
     }
