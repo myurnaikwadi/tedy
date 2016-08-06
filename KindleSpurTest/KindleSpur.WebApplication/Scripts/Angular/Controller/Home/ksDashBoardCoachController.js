@@ -3,10 +3,6 @@
     $scope.passedData = $stateParams;
     $scope.redeemAction = { actionName: "GAME" };
     window.ddd = $scope;
-    $scope.loggedEmail = $rootScope.loggedDetail.EmailAddress;
-    $scope.ApprovalName = $rootScope.loggedDetail.FirstName + " " + $rootScope.loggedDetail.LastName;
-    $scope.conversation = {};
-
     $scope.coachingStatusArray = [{ Sender: '', FirstName: 'MAYUR', LastName: 'N', PhotoURL: '', Rating: '', TreeURL: '', FeedbackCount: 5, Skill: 'ANGULAR JS' }
 					, { Sender: '', FirstName: 'SAGAR N', LastName: 'N', PhotoURL: '', Rating: '', TreeURL: '', FeedbackCount: 3, Skill: 'C# MVC' }
 					, { Sender: '', FirstName: 'SAGAR P', LastName: 'P', PhotoURL: '', Rating: '', TreeURL: '', FeedbackCount: 1, Skill: 'C# MVC' }
@@ -64,20 +60,10 @@
         $scope.feedBack.closeFeedBackPopup();
         $scope.feedContainArray =[];
         switch (iIndex) {
-            case 0: $scope.conversationStartData($scope.loggedEmail); break;
             case 1: $scope.getCoachRecord(); break;
             case 3: $scope.generateGarden(); break;
             case 4: $scope.getRssFeedData(); break;
             case 6: $scope.getPointsRecord(); break;
-            case 5:
-                if ($scope.conversationListNew.length > 0)
-                {
-                    $scope.ReceiverName = $scope.conversationListNew[0].FirstName + " " + $scope.conversationListNew[0].LastName;
-                    $scope.ReceiverEmail = $scope.conversationListNew[0].EmailAddress;
-                    $scope.conversationStartData($scope.loggedEmail);
-                    $scope.showSelectedConversation($scope.loggedEmail, $scope.ReceiverEmail);
-                }
-                break;
         }
     };
 
@@ -185,14 +171,14 @@
 
                     successCallBack: function (iObj) {
                  console.error('In successCallBack', iObj);
-                $scope.rewardsPoints.mentorPoints = iObj.data.MentorRewardPoints;
-                $scope.rewardsPoints.menteePoints = iObj.data.MenteeRewardPoints;
-                $scope.rewardsPoints.coachPoints = iObj.data.CoachRewardPoints;
-                $scope.rewardsPoints.coacheePoints = iObj.data.CoacheeRewardPoints;
-                $scope.rewardsPoints.totalPoints = iObj.data.TotalRewardPoints;
-                $scope.rewardsPoints.balancePoints = iObj.data.BalanceRewardPoints;
-                $scope.rewardsPoints.redeemedPoints = iObj.data.RedeemedPoints;
-                $scope.myRewardsArray = iObj.data.PSRAndGames;
+                 $scope.rewardsPoints.mentorPoints = iObj.data.MentorRewardPoints ? iObj.data.MentorRewardPoints : 0;
+                 $scope.rewardsPoints.menteePoints = iObj.data.MenteeRewardPoints ? iObj.data.MenteeRewardPoints : 0;
+                $scope.rewardsPoints.coachPoints = iObj.data.CoachRewardPoints ? iObj.data.CoachRewardPoints : 0;
+                $scope.rewardsPoints.coacheePoints = iObj.data.CoacheeRewardPoints ? iObj.data.CoacheeRewardPoints : 0;
+                $scope.rewardsPoints.totalPoints = iObj.data.TotalRewardPoints ? iObj.data.TotalRewardPoints : 0;
+                $scope.rewardsPoints.balancePoints = iObj.data.BalanceRewardPoints ? iObj.data.BalanceRewardPoints : 0;
+                $scope.rewardsPoints.redeemedPoints = iObj.data.RedeemedPoints ? iObj.data.RedeemedPoints : 0;
+                $scope.myRewardsArray = iObj.data.PSRAndGames  ? iObj.data.PSRAndGames : [];
 
             },
                     failureCallBack: function (iObj) {
@@ -286,16 +272,16 @@
 
     ]
 
-    //$scope.conversationLoad = function (iIndex, iCategory) {
-    //    for (var i = 0; i < $scope.conversationList.length ; i++) {
-    //        $scope.conversationList[i].selectedConversation = false;
-    //}
-    //if (iCategory.selectedConversation == true) {
-    //        iCategory.selectedConversation = false;
-    //} else {
-    //        iCategory.selectedConversation = true;
-    //}
-    //};
+    $scope.conversationLoad = function (iIndex, iCategory) {
+        for (var i = 0; i < $scope.conversationList.length ; i++) {
+            $scope.conversationList[i].selectedConversation = false;
+    }
+    if (iCategory.selectedConversation == true) {
+            iCategory.selectedConversation = false;
+    } else {
+            iCategory.selectedConversation = true;
+    }
+    };
     $scope.feedBack = {
         selectedComparioson: 1,
         selectedAttractive: 1,
@@ -371,8 +357,52 @@
         $scope.feedBack.selectedAttractive = 1;
         $scope.feedBack.selectedstar = 1;
         $scope.feedBack.likeMostMessage = '';
-
+        $scope.feedBackloaded = { showLoad: false };
+        $scope.loadSlideData(1);
     }
+
+    $scope.array = [
+        { name: 'What do you appreciate the most in your interactions with the mentee ? ', type: 'textArea', showLoad  : false},
+        { name: 'Is the coachee/mentee able to grasp the ideas discussed?', type: 'rating', showLoad: false },
+        { name: 'What are the Strong Qualities of the Mentee/ Coachee ?', type: 'textArea', showLoad: false },
+        { name: 'What are the areas where the Mentee needs to Improve ? ', type: 'textArea', showLoad: false },
+        { name: 'Are there any critical areas where Mentee/ Coachee needs serious and urgent help/ support ?', type: 'textArea', showLoad: false },
+        { name: 'Do you believe that the Mentee will be Successful in the targeted areas after the Mentoring is complete ?', type: 'radio', showLoad: false },
+        { name: 'Was it worth your time, energy and interest ?', type: 'radio', showLoad: false },
+        { name: 'Rate the session', type: 'rating', showLoad: false },
+    ];
+
+    $scope.displayArray = [];
+    $scope.counter = 4;
+    $scope.loadSlideData = function (iMode) {
+        $scope.feedBackloaded.showLoad = false;
+        var _loadArray = [];
+        $scope.displayArray = [];
+        if (iMode == 0) {
+            for (var k = 0 ; k < $scope.counter ; k++) {
+                _loadArray.push(angular.copy($scope.array[k]));
+                if (_loadArray.length == $scope.counter) {
+                    break;
+                }
+            }
+        } else {
+            for (var k = 4 ; k < $scope.array.length ; k++) {
+                _loadArray.push(angular.copy($scope.array[k]));
+                if (_loadArray.length == $scope.counter) {
+                    break;
+                }
+            }
+            
+        }
+        console.error($scope.displayArray,_loadArray);
+        $scope.displayArray = [].concat(_loadArray);
+        setTimeout(function () {                 
+            for (var k = 0 ; k < $scope.displayArray.length ; k++) {
+                $scope.displayArray[k].showLoad = true;
+            }
+            $scope.$apply();
+        }, 500);
+    };
 
     $scope.feedBack.closeFeedBackPopup = function () {
         $scope.feedBack.askFeedback = false;
@@ -381,7 +411,7 @@
         $scope.feedBack.selectedAttractive = 1;
         $scope.feedBack.selectedstar = 1;
         $scope.feedBack.likeMostMessage = '';
-        };
+    };
 
 
     $scope.redeemPointsClick = function () {
@@ -391,7 +421,7 @@
             //   loggedUserDetails: $rootScope.loggedDetail,
                 redeemAction: $scope.redeemAction,
                 successCallBack: function (iObj) {
-                    $scope.menuClick(7);
+                    $scope.menuClick(6);
                     console.error('In successCallBack', iObj);
 
         },
@@ -402,6 +432,16 @@
 });
     };
 
+     $scope.feedBackSave = function () {
+         //alert('')
+         $scope.menuClick(6);
+    };
+     $scope.closeCallBack = function () {
+       //  alert('closeCallBack')
+
+         $scope.feedBack.closeFeedBackPopup()
+     };
+     
     $scope.openRedeemPanel = function () {
         $scope.feedBack.askFeedback = true;
         $scope.feedBack.formValue = '7';
@@ -421,275 +461,5 @@
             }
         });
     };
-
-    /*START: Conversation Module Code*/
-    $scope.conversationStartData = function (loggedEmail) {
-
-        serverCommunication.getConversation({
-            loggedEmail: loggedEmail,
-            successCallBack: function (iObj) {
-                console.debug('In successCallBack', iObj);
-                function ObjectId(id) { return id; }
-                function ISODate(d) { return d; }
-                $scope.conversationListNew = iObj.data.Result;
-
-                $scope.conversationListNew[0].selectedConversation = true;
-            },
-            failureCallBack: function (iObj) {
-                console.debug('In failureCallBack', iObj);
-            }
-        });
-
-        serverCommunication.getAllMeetingRequest({
-            successCallBack: function (iObj) {
-                console.debug('In successCallBack', iObj);
-
-                function ObjectId(id) { return id; }
-                function ISODate(d) {
-                    return d;
-                }
-
-                $scope.notificationRequestData = iObj.data.Result;
-            },
-            failureCallBack: function (iObj) {
-                console.debug('In failureCallBack', iObj);
-            }
-        });
-    };
-
-    $scope.conversationLoad = function (iIndex, iCategory) {
-        for (var i = 0 ; i < $scope.conversationListNew.length ; i++) {
-            $scope.conversationListNew[i].selectedConversation = false;
-        }
-        if (iCategory.selectedConversation == true) {
-            iCategory.selectedConversation = false;
-        } else {
-            iCategory.selectedConversation = true;
-        }
-
-        if ($scope.ReceiverEmail !== "") {
-            $scope.ReceiverName = iCategory.FirstName + " " + iCategory.LastName;
-            $scope.ReceiverEmail = iCategory.EmailAddress;
-        }
-        else {
-            $scope.ReceiverName = $scope.conversationListNew[0].FirstName + " " + $scope.conversationListNew[0].LastName;
-            $scope.ReceiverEmail = $scope.conversationListNew[0].EmailAddress;
-        }
-
-        $scope.showSelectedConversation($scope.loggedEmail, $scope.ReceiverEmail);
-    };
-
-    $scope.showSelectedConversation = function (SenderEmail, ReceiverEmail) {
-        serverCommunication.getConversationDetails({
-            senderEmail: SenderEmail,
-            receiverEmail: ReceiverEmail,
-            successCallBack: function (iObj) {
-                console.debug('In successCallBack', iObj);
-
-                function ObjectId(id) { return id; }
-                function ISODate(d) {
-                    return d;
-                }
-
-                $scope.MailRecords = eval('(' + iObj.data.Result + ')');
-            },
-            failureCallBack: function (iObj) {
-                console.debug('In failureCallBack', iObj);
-            }
-        });
-    };
-
-
-    $scope.conversationRequest = function () {
-
-        serverCommunication.getConversationRequest({
-            successCallBack: function (iObj) {
-                console.debug('In successCallBack', iObj);
-
-                function ObjectId(id) { return id; }
-                function ISODate(d) {
-                    return d;
-                }
-
-                $scope.notificationData = iObj.data.Result;
-            },
-            failureCallBack: function (iObj) {
-                console.debug('In failureCallBack', iObj);
-            }
-        });
-
-        serverCommunication.getAllMeetingRequest({
-            successCallBack: function (iObj) {
-                console.debug('In successCallBack', iObj);
-
-                function ObjectId(id) { return id; }
-                function ISODate(d) {
-                    return d;
-                }
-
-                $scope.notificationRequestData = iObj.data.Result;
-            },
-            failureCallBack: function (iObj) {
-                console.debug('In failureCallBack', iObj);
-            }
-        });
-        
-    };
-
-    $scope.conversationClick = function (isVerified, emailId) {
-        $scope.conversation.SenderEmail = $scope.loggedEmail;
-        if (emailId != "")
-            $scope.conversation.ReceiverEmail = emailId;
-        else
-            $scope.conversation.ReceiverEmail = $scope.ReceiverEmail;
-
-        $scope.conversation.Content = $scope.conversation.Message;
-        $scope.conversation.SendOrReceive = "Send";
-        $scope.conversation.IsVerified = isVerified;
-        $scope.conversation.isRead = false;
-
-        if ($scope.conversation.SenderEmail === "" || $scope.conversation.ReceiverEmail === "")
-            return false;
-
-        var _object = {
-            Content: $scope.conversation.Content,
-            SenderEmail: $scope.conversation.SenderEmail,
-            ReceiverEmail: $scope.conversation.ReceiverEmail,
-            SendOrReceive: $scope.conversation.SendOrReceive,
-            IsVerified: $scope.conversation.IsVerified
-        }
-        console.debug(_object);
-
-        serverCommunication.sendConversation({
-            loggedUserDetails: _object,
-            ReceiverName: $scope.ReceiverName,
-            Role: 'Coachee',
-            successCallBack: function () {
-                $scope.conversation.Message = "";
-                if (_object.Content != null) {
-                    $scope.menuClick(5, "CONVERSATIONS");
-                    $scope.showSelectedConversation(_object.SenderEmail, _object.ReceiverEmail);
-                }
-                console.debug('In successCallBack');
-
-            },
-            failureCallBack: function () {
-
-                $scope.conversation.Message = "";
-                if (_object.Content != null) {
-                    $scope.menuClick(5, "CONVERSATIONS");
-                    $scope.showSelectedConversation(_object.SenderEmail, _object.ReceiverEmail);
-                }
-                console.debug('In failureCallBack');
-            }
-        });
-
-    };
-
-    $scope.updateConversation = function (isVerfied, SenderEmail, ReceiverEmail) {
-        $scope.conversation.IsVerified = isVerfied;
-        var contentText = "";
-        if (isVerfied != false)
-            contentText = 'SESSION REQUEST BY ' + $scope.ApprovalName + ' HAS BEEN ACCEPTED';
-        else
-            contentText = null;
-
-        var _object = {
-            SenderEmail: SenderEmail,
-            ReceiverEmail: ReceiverEmail,
-            Content: contentText,
-            IsVerified: $scope.conversation.IsVerified
-        }
-
-        serverCommunication.updateConversation({
-            loggedUserDetails: _object,
-            ReceiverName: $scope.ApprovalName,
-            Role: 'Coachee',
-            successCallBack: function () {
-                $scope.menuClick(5, "CONVERSATIONS");
-                $scope.showSelectedConversation($scope.loggedEmail, $scope.ApprovalName);
-                console.debug('In successCallBack');
-
-            },
-            failureCallBack: function (e) {
-                console.debug('In failureCallBack' + e);
-            }
-        });
-    };
-
-    $scope.saveSchedular = function (isVerified, emailId) {
-        console.log("Test");
-        $scope.MeetingSchedular.SenderEmail = $scope.loggedEmail;
-        if (emailId != "")
-            $scope.MeetingSchedular.ReceiverEmail = $scope.ReceiverEmail;
-        else
-            $scope.MeetingSchedular.ReceiverEmail = emailId;
-
-        $scope.MeetingSchedular.Subject = $scope.MeetingSchedular.Subject;
-        $scope.MeetingSchedular.MeetingDate = $scope.MeetingSchedular.MeetingDate;
-        $scope.MeetingSchedular.TimeFrom = $scope.MeetingSchedular.TimeFrom;
-        $scope.MeetingSchedular.TimeTo = $scope.MeetingSchedular.TimeTo;
-        $scope.MeetingSchedular.PlatformType = $scope.MeetingSchedular.PlatformType;
-        $scope.MeetingSchedular.UserId = $scope.MeetingSchedular.UserId;
-        $scope.MeetingSchedular.Role = "Coach";
-
-        $scope.MeetingSchedular.IsVerified = isVerified;
-
-        if ($scope.conversation.SenderEmail === "" || $scope.conversation.ReceiverEmail === "")
-            return false;
-
-        var _object = {
-            SenderEmail: $scope.MeetingSchedular.SenderEmail,
-            ReceiverEmail: $scope.MeetingSchedular.ReceiverEmail,
-            Subject: $scope.MeetingSchedular.Subject,
-            MeetingDate: $scope.MeetingSchedular.MeetingDate,
-            TimeFrom: $scope.MeetingSchedular.TimeFrom,
-            TimeTo: $scope.MeetingSchedular.TimeTo,
-            PlatformType: $scope.MeetingSchedular.PlatformType,
-            UserId: $scope.MeetingSchedular.UserId,
-            Role: $scope.MeetingSchedular.Role,
-            IsVerified: $scope.MeetingSchedular.IsVerified
-        }
-        console.log(_object);
-
-        serverCommunication.saveMeeting({
-            loggedUserDetails: _object,
-            successCallBack: function () {
-                console.log('In successCallBack');
-                $scope.myMeetingSchedular.close();
-            },
-            failureCallBack: function () {
-                console.log('In failureCallBack');
-
-            }
-        });
-    };
-
-    $scope.updateMeeting = function (isVerfied, SenderEmail, ReceiverEmail, Role) {
-        $scope.conversation.IsVerified = isVerfied;
-
-        var _object = {
-            SenderEmail: SenderEmail,
-            ReceiverEmail: ReceiverEmail,
-            Role: Role,
-            IsVerified: $scope.conversation.IsVerified
-        }
-
-        serverCommunication.updateMeeting({
-            loggedUserDetails: _object,
-            ReceiverName: $scope.ApprovalName,
-            Reason: "",
-            successCallBack: function () {
-                console.debug('In successCallBack');
-                $scope.conversationRequest();
-            },
-            failureCallBack: function (e) {
-                console.debug('In failureCallBack' + e);
-            }
-        });
-    };
-
-    $scope.conversationStartData($scope.loggedEmail);
-    $scope.conversationRequest();
-    /*END: Conversation Module Code*/
+   
 });
