@@ -297,48 +297,43 @@ namespace KindleSpur.Data
             return result;
         }
 
-        public List<CoachOrMentor> GetAllCoachOrMentors(CTSFilter ctsFilter, string Role)
+        public List<SearchCoachOrMentor> GetAllCoachOrMentors(CTSFilter ctsFilter, string Role)
         {
-            IQueryable<CoachOrMentor> coachEntities = default(IQueryable<CoachOrMentor>);
+            List<CoachOrMentor> lstCoachOrMentor = new List<CoachOrMentor>();
             try
             {
-                var res1 = new List<BsonDocument>();
-                //if (ctsFilter.Type == FilterType.Skill)
-                //{
-                //    coachEntities = _coachOrMentorCollection.FindAs<CoachOrMentor>(Query.ElemMatch("Skills", Query.EQ("Name", ctsFilter.Name))).AsQueryable();
-                //}
-                //if (ctsFilter.Type == FilterType.Topic || !(_coachOrMentorCollection.Count() > 0))
-                //    coachEntities = _coachOrMentorCollection.FindAs<CoachOrMentor>(Query.ElemMatch("Topics", Query.EQ("Name", ctsFilter.Name))).AsQueryable();
-
-                //if (ctsFilter.Type == FilterType.Category || !(_coachOrMentorCollection.Count() > 0))
-                //{
-                //    //Get Topics -> Get Skills
-                //    coachEntities = new List<CoachOrMentor>().AsQueryable();
-                //}
-
-                if (ctsFilter.Type == FilterType.Skill)
-                {
-                    coachEntities = _coachOrMentorCollection.FindAs<CoachOrMentor>(Query.ElemMatch("Skills", Query.EQ("Name", ctsFilter.Name))).AsQueryable();
+                if (Role == "Coach")
+                { 
+                   if (ctsFilter.Type == FilterType.Skill)
+                    {
+                        lstCoachOrMentor.AddRange(_coachOrMentorCollection.FindAs<CoachOrMentor>(Query.And(Query.EQ("Skills.Name", ctsFilter.Name), Query.EQ("Role", Role))).SetFields(Fields.Exclude("Feedbacks")));
+                    }
+                    //else if (ctsFilter.Type == FilterType.Topic && _coachOrMentorCollection.Count() > 0)
+                    // {
+                    //     CTSRepository ctsrep = new CTSRepository();
+                    //     coachEntities = _coachOrMentorCollection.FindAs<CoachOrMentor>(Query.ElemMatch("Topics", Query.EQ("Name", ctsFilter.Name))).AsQueryable();
+                    // }
+                    //else if (ctsFilter.Type == FilterType.Category && _coachOrMentorCollection.Count() > 0)
+                    // {
+                    //     coachEntities = new List<CoachOrMentor>().AsQueryable();
+                    // }
                 }
-                else if (ctsFilter.Type == FilterType.Topic && _coachOrMentorCollection.Count() > 0)
+                else if (Role == "Mentor")
                 {
-                    CTSRepository ctsrep = new CTSRepository();
-                    coachEntities = _coachOrMentorCollection.FindAs<CoachOrMentor>(Query.ElemMatch("Topics", Query.EQ("Name", ctsFilter.Name))).AsQueryable();
+                   if (ctsFilter.Type == FilterType.Topic && _coachOrMentorCollection.Count() > 0)
+                    {
+                        lstCoachOrMentor.AddRange(_coachOrMentorCollection.FindAs<CoachOrMentor>(Query.And(Query.EQ("Topics.Name", ctsFilter.Name), Query.EQ("Role", Role))).SetFields(Fields.Exclude("Feedbacks"))); ;
+                    }
                 }
-                else if (ctsFilter.Type == FilterType.Category && _coachOrMentorCollection.Count() > 0)
-                {
-                    //Get Topics -> Get Skills
-                    coachEntities = new List<CoachOrMentor>().AsQueryable();
-                }
-
             }
             catch (Exception ex)
             {
-
                 throw;
             }
 
-            return coachEntities.ToList();
+            if(lstCoachOrMentor.Count >0)
+            return FillSerachData(lstCoachOrMentor);
+            return null;
         }
 
         public List<CoachStatus> GetCoachingStatus(string UserId,string Role)
@@ -446,30 +441,34 @@ namespace KindleSpur.Data
         public List<SearchCoachOrMentor> GetRecommendedCoachList(List<SkillOrTopic> lstSkillforCochee, string Role)
         {
             List<CoachOrMentor> lstCoach = new List<CoachOrMentor>();
-            List<SearchCoachOrMentor> lstSearchCoachOrMentor = new List<SearchCoachOrMentor>();
             foreach (SkillOrTopic s1 in lstSkillforCochee)
             {
-                lstCoach.AddRange(_coachOrMentorCollection.FindAs<CoachOrMentor>(Query.And(Query.EQ("Skills.Name", s1.Name), Query.EQ("Role", Role))));
+                lstCoach.AddRange(_coachOrMentorCollection.FindAs<CoachOrMentor>(Query.And(Query.EQ("Skills.Name", s1.Name), Query.EQ("Role", Role))).SetFields(Fields.Exclude("Feedbacks")));
             }
-
-            for (int i = 0; i < lstCoach.Count; i++)
-            {
-                lstSearchCoachOrMentor.Add(GetCoachOrMentorSearchDetails(lstCoach[i]));
-            }
-            return lstSearchCoachOrMentor;
+            if (lstCoach.Count > 0)
+                return FillSerachData(lstCoach);
+            return null;
         }
 
         public List<SearchCoachOrMentor> GetRecommendedMentorList(List<string> lstTopicforMentee, string Role)
         {
-            List<SearchCoachOrMentor> lstSearchCoachOrMentor = new List<SearchCoachOrMentor>();
             List<CoachOrMentor> lstMentor = new List<CoachOrMentor>();
             foreach (string s1 in lstTopicforMentee)
             {
-                lstMentor.AddRange(_coachOrMentorCollection.FindAs<CoachOrMentor>(Query.And(Query.EQ("Topics.Name", s1), Query.EQ("Role", Role))));
+                lstMentor.AddRange(_coachOrMentorCollection.FindAs<CoachOrMentor>(Query.And(Query.EQ("Topics.Name", s1), Query.EQ("Role", Role))).SetFields(Fields.Exclude("Feedbacks")));
             }
-            for (int i = 0; i < lstMentor.Count; i++)
+            if (lstMentor.Count > 0)
+                return FillSerachData(lstMentor);
+            return null;
+        }
+
+        private List<SearchCoachOrMentor> FillSerachData(List<CoachOrMentor> lstCoachOrMentor)
+        {
+            List<SearchCoachOrMentor> lstSearchCoachOrMentor = new List<SearchCoachOrMentor>();
+
+            for (int i = 0; i < lstCoachOrMentor.Count; i++)
             {
-                lstSearchCoachOrMentor.Add(GetCoachOrMentorSearchDetails(lstMentor[i]));
+                lstSearchCoachOrMentor.Add(GetCoachOrMentorSearchDetails(lstCoachOrMentor[i]));
             }
             return lstSearchCoachOrMentor;
         }
