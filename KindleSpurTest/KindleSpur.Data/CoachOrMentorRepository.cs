@@ -417,6 +417,16 @@ namespace KindleSpur.Data
             }
             return TreeURL;
         }
+
+        public List<CoachOrMentor> GetRecommendedCoachList(List<SkillOrTopic> lstSkillforCochee, string Role)
+        {
+            List<CoachOrMentor> lstCoachOrMentor = new List<CoachOrMentor>();
+            foreach (SkillOrTopic s1 in lstSkillforCochee)
+            {
+                lstCoachOrMentor.AddRange(_coachOrMentorCollection.FindAs<CoachOrMentor>(Query.And(Query.EQ("Skills.Name", s1.Name), Query.EQ("Role", Role))));
+            }
+            return lstCoachOrMentor;
+        }
     }
 }
 

@@ -80,5 +80,22 @@ namespace KindleSpur.WebApplication.Controllers
         {
             return View();
         }
+
+        [HttpPost]
+        public JsonResult GetRecommendedCoach(UserRole UserRole)
+        {
+            if (UserRole.Role != null)
+            {
+                CoacheeOrMenteeRepository _coacheeRepo = new CoacheeOrMenteeRepository();
+                List<SkillOrTopic> lstSkillforCochee = new List<SkillOrTopic>();
+                lstSkillforCochee = _coacheeRepo.GetSkillsForCoachee(UserId);
+                if (lstSkillforCochee != null || lstSkillforCochee.Count > 0)
+                {
+                    CoachOrMentorRepository _coachRepo = new CoachOrMentorRepository();
+                    return this.Json(_coachRepo.GetRecommendedCoachList(lstSkillforCochee, UserRole.Role));
+                }
+            }
+            return null;
+        }
     }
 }

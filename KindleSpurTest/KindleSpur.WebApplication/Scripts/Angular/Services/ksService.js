@@ -287,9 +287,6 @@ app.factory('serverCommunication', function ($http) {
             $http.get('/CTS/GetCTSFilters').then(iObj.successCallBack, iObj.failureCallBack)
         },
         
-        getRecommendedCoach: function (iObj) {
-            $http.get('/Coach/GetRecommendedCoach').then(iObj.successCallBack, iObj.failureCallBack)
-        },
         
         getCoaches: function (iObj) {
             var req = {
@@ -308,7 +305,12 @@ app.factory('serverCommunication', function ($http) {
          * @Purpose :to search coachee
          */
         getRecommendedCoach: function (iObj) {
-            $http.get('/Coachee/GetRecommendedCoach').then(iObj.successCallBack, iObj.failureCallBack)
+            console.error(iObj)
+            var UserRole = {};
+            UserRole.Role = iObj.Role;
+            console.error(UserRole)
+            console.error(JSON.stringify(UserRole))
+            $http.post('/Coachee/GetRecommendedCoach', iObj).then(iObj.successCallBack, iObj.failureCallBack)
         },
 
         getCoaches: function (iObj) {
