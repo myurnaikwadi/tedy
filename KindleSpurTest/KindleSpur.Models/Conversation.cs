@@ -22,5 +22,6 @@ namespace KindleSpur.Models
         public Boolean IsVerified { get; set; }
         public string CreateDate { get; set; }
         public DateTime UpdateDate { get; set; }
+        public string skill { get; set; }
     }
 }
