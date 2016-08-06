@@ -271,7 +271,11 @@ app.factory('serverCommunication', function ($http) {
             //data: message // your original form data,
             //transformRequest: formDataObject  // this sends your data to the formDataObject provider that we are defining below.
             //headers: {'Content-Type': 'multipart/form-data'}
-            $http.post('/User/UpdateUserPhoto', iObj).then(iObj.successCallBack, iObj.failureCallBack);
+            $http.post('/User/UpdateUserPhoto', iObj, {
+                withCredentials: true,
+                headers: { 'Content-Type': undefined },
+                transformRequest: angular.identity
+            }).then(iObj.successCallBack, iObj.failureCallBack);
         },
 
         getCTSFilters: function (iObj) {
