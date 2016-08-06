@@ -92,6 +92,7 @@
     <Compile Include="SubmitImage.cs" />
     <Compile Include="Tasks.cs" />
     <Compile Include="User.cs" />
+    <Compile Include="UserRole.cs" />
     <Compile Include="ValueCreation.cs" />
     <Compile Include="ValueCreationScore.cs" />
     <Compile Include="ValueCreationTasks.cs" />

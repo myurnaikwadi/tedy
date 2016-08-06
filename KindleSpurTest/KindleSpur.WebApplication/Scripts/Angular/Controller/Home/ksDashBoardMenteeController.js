@@ -32,7 +32,7 @@
         $scope.selectedMenu = iIndex;
        // $scope.askFeedback = false;
         switch (iIndex) {
-           // case 3: $scope.getCoachRecord(); break;
+            case 3: $scope.getCoachRecord(); break;
             case 4: $scope.getRssFeedData(); break;
             case 6: $scope.getPointsRecord(); break;
         }
@@ -44,6 +44,21 @@
             }
         }
     };
+
+    $scope.getCoachRecord = function () {
+        serverCommunication.getRecommendedCoach({
+            Role: 'Mentor',
+            successCallBack: function (result) {
+                console.error(result);
+
+            },
+            failureCallBack: function () {
+                // console.error('In failureCallBack');
+
+            }
+        });
+    };
+
     $scope.feedCategoryArray = [];
     $scope.getRssFeedData = function () {
         //feedback

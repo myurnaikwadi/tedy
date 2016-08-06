@@ -220,6 +220,7 @@
 
     $scope.getCoachRecord = function () {
         serverCommunication.getRecommendedCoach({
+            Role : 'Coach',
             successCallBack: function (result) {
                 console.error(result);
 
