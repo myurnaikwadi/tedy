@@ -15,6 +15,6 @@ namespace KindleSpur.Models.Interfaces.Repository
 
         ICoachOrMentor GetCoachOrMentorDetail(string Id);
 
-        List<CoachOrMentor> GetAllCoachOrMentors(CTSFilter ctsFilter, string Role);
+        List<SearchCoachOrMentor> GetAllCoachOrMentors(CTSFilter ctsFilter, string Role);
     }
 }

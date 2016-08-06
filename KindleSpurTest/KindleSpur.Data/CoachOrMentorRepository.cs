@@ -308,11 +308,12 @@ namespace KindleSpur.Data
                     {
                         lstCoachOrMentor.AddRange(_coachOrMentorCollection.FindAs<CoachOrMentor>(Query.And(Query.EQ("Skills.Name", ctsFilter.Name), Query.EQ("Role", Role))).SetFields(Fields.Exclude("Feedbacks")));
                     }
-                    //else if (ctsFilter.Type == FilterType.Topic && _coachOrMentorCollection.Count() > 0)
-                    // {
-                    //     CTSRepository ctsrep = new CTSRepository();
-                    //     coachEntities = _coachOrMentorCollection.FindAs<CoachOrMentor>(Query.ElemMatch("Topics", Query.EQ("Name", ctsFilter.Name))).AsQueryable();
-                    // }
+                    else if (ctsFilter.Type == FilterType.Topic && _coachOrMentorCollection.Count() > 0)
+                    {
+                        CTSRepository ctsrep = new CTSRepository();
+                        ctsrep.GetSkillsForTopic(ctsFilter.Name);
+                        //coachEntities = _coachOrMentorCollection.FindAs<CoachOrMentor>(Query.ElemMatch("Topics", Query.EQ("Name", ctsFilter.Name))).AsQueryable();
+                    }
                     //else if (ctsFilter.Type == FilterType.Category && _coachOrMentorCollection.Count() > 0)
                     // {
                     //     coachEntities = new List<CoachOrMentor>().AsQueryable();
