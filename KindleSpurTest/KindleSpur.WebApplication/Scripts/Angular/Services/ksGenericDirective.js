@@ -1393,7 +1393,7 @@ app.directive('rssFeed', function ($state, serverCommunication, $timeout) {
 });
 
 
-app.directive('feedbackPage', function ($state, serverCommunication, $timeout) {
+app.directive('feedbackPage', function ($state, serverCommunication, $timeout,$rootScope) {
     return {
         scope: {
             question: "=",
@@ -1459,9 +1459,18 @@ app.directive('feedbackPage', function ($state, serverCommunication, $timeout) {
                     $scope.feedBack.feedBackDetails[$scope.displayArray[k].name] = $scope.displayArray[k];
                 };
                 console.error($scope.feedBack.feedBackDetails, $scope.displayArray);
-               // return
+                // return
+                var _counter = Math.floor((Math.random()*10)+1);
+                var _id = $rootScope.loggedDetail.EmailAddress +(Date.now()) +_counter;
+                var _rating = 1;
+                for(var _key in $scope.feedBack.feedBackDetails){
+                    if($scope.feedBack.feedBackDetails[_key].sessionRating){
+                        _rating = $scope.feedBack.feedBackDetails[_key].actionValue;
+                    }
+                }
+                console.error(_rating)
                 serverCommunication.sendFeedback({
-                    loggedUserDetails: $scope.feedBack.feedBackDetails,
+                    loggedUserDetails: { FeedBackId: _id, FeedbackClosed: false, sender: "patilsagar28290@gmail.com", Skill: 'MVC Angular Js', customerSatisfactionRating: _rating },
                     successCallBack: function (iObj) {
                         console.error('In successCallBack', iObj);
                         $scope.getPointsRecord ();

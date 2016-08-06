@@ -62,12 +62,13 @@ namespace KindleSpur.Data
         {
             bool _transactionStatus = false;
             try {
-                CoachOrMentor entity = _coachOrMentorCollection.FindOneAs<CoachOrMentor>(Query.And(Query.EQ("UserId", feedback.Sender), Query.EQ("Role", "Coach")));                   
-                entity.FeedbackPoints += ((feedback.customerSatisfactionRating + feedback.selectedAttractive.answer + feedback.selectedComparioson.answer)/3);
+                CoachOrMentor entity = _coachOrMentorCollection.FindOneAs<CoachOrMentor>(Query.And(Query.EQ("UserId", feedback.Sender), Query.EQ("Role", "Coach")));
+                entity.FeedbackPoints += feedback.customerSatisfactionRating;
 
                 if (entity.Feedbacks == null) entity.Feedbacks = new List<Feedback>();
                 feedback.Sender = UserId;
-                feedback.Skill = feedback.FeedbackText;
+                feedback.CreateDate = DateTime.Now;
+                feedback.Skill = feedback.Skill;
                 entity.Feedbacks.Add(feedback);
                 entity.RewardPointsGained += 5;           
                 _coachOrMentorCollection.Save(entity);

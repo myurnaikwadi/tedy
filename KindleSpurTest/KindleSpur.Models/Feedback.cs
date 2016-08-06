@@ -9,10 +9,10 @@ namespace KindleSpur.Models
     public class Feedback : IFeedback
     {
         public string Sender { get; set; }
-        public QueAndAns selectedComparioson { get; set; }
-        public QueAndAns selectedAttractive { get; set; }
-        public string FeedbackText { get; set; }
         public DateTime CreateDate { get; set; }
+
+        public Boolean FeedbackClosed { get; set; }
+        public string FeedBackId { get; set; }
         public string Skill { get; set; }
         public int customerSatisfactionRating { get; set; }
     }
