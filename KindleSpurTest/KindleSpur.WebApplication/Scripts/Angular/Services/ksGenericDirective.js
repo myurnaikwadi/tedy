@@ -1286,7 +1286,7 @@ app.directive('rssFeed', function ($state, serverCommunication, $timeout) {
             skill: "=",
             role : "@"
         },
-        templateUrl: '/Home/',
+        templateUrl: '/Home/ksRssFeed',
         //scope: true,   // optionally create a child scope
         link: function ($scope, element, attrs) {
             window.rss = $scope;
