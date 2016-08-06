@@ -17,6 +17,7 @@ namespace KindleSpur.WebApplication.Controllers
         private readonly string UserId;
         public CoacheeController()
         {
+          
             UserId = ((IUser)System.Web.HttpContext.Current.Session["User"]).EmailAddress;
         }
         [HttpPost]
