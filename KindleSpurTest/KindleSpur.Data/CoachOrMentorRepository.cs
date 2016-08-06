@@ -144,12 +144,15 @@ namespace KindleSpur.Data
                 {
                     for (int i = _entity.Skills.Count - 1; i >= 0; i--)
                     {
+
                         bool blnDelete = true;
 
                         foreach (SkillOrTopic item in Data.Skills)
                         {
+                           
                             if (item.Id == _entity.Skills[i].Id)
                             {
+                                _entity.Skills[i].profiLevel = item.profiLevel;
                                 blnDelete = false;
                                 break;
                             }
@@ -165,6 +168,7 @@ namespace KindleSpur.Data
                         {
                             if (_entity.Skills[i].Id == skill.Id)
                             {
+                               
                                 blnAdd = false;
                                 break;
                             }
@@ -187,6 +191,7 @@ namespace KindleSpur.Data
                         {
                             if (item.Id == _entity.Topics[i].Id)
                             {
+                                _entity.Topics[i].profiLevel = item.profiLevel;
                                 blnDelete = false;
                                 break;
                             }

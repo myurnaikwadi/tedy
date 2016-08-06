@@ -143,6 +143,8 @@ app.directive('ctcRole', function ($state, serverCommunication) {
                     if (_topics[scope.topicArray[k].Name]) {
                         //console.error('12')
                         scope.topicArray[k].alreadySelected = true;
+                        if (_topics[scope.topicArray[k].Name].profiLevel)
+                            scope.topicArray[k].profiLevel = _topics[scope.topicArray[k].Name].profiLevel
                         scope.topicSelection(iEvent, k, scope.topicArray[k]);
                     }
 
@@ -201,6 +203,9 @@ app.directive('ctcRole', function ($state, serverCommunication) {
                             if (!iTopic.Skills[k].profiLevel) iTopic.Skills[k].profiLevel = '0';
                             if (_skills[iTopic.Skills[k].Name]) {
                                 iTopic.Skills[k].alreadySelected = true;
+                                if (_skills[iTopic.Skills[k].Name].profiLevel)
+                                    iTopic.Skills[k].profiLevel = _skills[iTopic.Skills[k].Name].profiLevel;
+
                                 if (_deleteArray[iTopic.Skills[k].Name]) {
                                     delete _deleteArray[iTopic.Skills[k].Name];
                                 } else {
