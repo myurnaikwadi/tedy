@@ -362,14 +362,14 @@
     }
 
     $scope.array = [
-        { name: 'What do you appreciate the most in your interactions with the mentee ? ', type: 'textArea', showLoad  : false},
-        { name: 'Is the coachee/mentee able to grasp the ideas discussed?', type: 'rating', showLoad: false },
-        { name: 'What are the Strong Qualities of the Mentee/ Coachee ?', type: 'textArea', showLoad: false },
-        { name: 'What are the areas where the Mentee needs to Improve ? ', type: 'textArea', showLoad: false },
-        { name: 'Are there any critical areas where Mentee/ Coachee needs serious and urgent help/ support ?', type: 'textArea', showLoad: false },
-        { name: 'Do you believe that the Mentee will be Successful in the targeted areas after the Mentoring is complete ?', type: 'radio', showLoad: false },
-        { name: 'Was it worth your time, energy and interest ?', type: 'radio', showLoad: false },
-        { name: 'Rate the session', type: 'rating', showLoad: false },
+        { name: 'What do you appreciate the most in your interactions with the mentee ? ', actionValue : '', type: 'textArea', showLoad: false },
+        { name: 'Is the coachee/mentee able to grasp the ideas discussed?', actionValue: '1', type: 'rating', showLoad: false },
+        { name: 'What are the Strong Qualities of the Mentee/ Coachee ?', actionValue: '', type: 'textArea', showLoad: false },
+        { name: 'What are the areas where the Mentee needs to Improve ? ', actionValue: '', type: 'textArea', showLoad: false },
+        { name: 'Are there any critical areas where Mentee/ Coachee needs serious and urgent help/ support ?', actionValue: '', type: 'textArea', showLoad: false },
+        { name: 'Do you believe that the Mentee will be Successful in the targeted areas after the Mentoring is complete ?', actionValue: '', type: 'radio', showLoad: false },
+        { name: 'Was it worth your time, energy and interest ?', type: 'radio', showLoad: false ,actionValue : '', },
+        { name: 'Rate the session', type: 'rating', showLoad: false,actionValue : '',  },
     ];
 
     $scope.displayArray = [];
