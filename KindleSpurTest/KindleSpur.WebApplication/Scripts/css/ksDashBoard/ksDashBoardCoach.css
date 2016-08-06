@@ -785,10 +785,6 @@ float: left;
 	border : 1px solid lightgray;
     padding : 10px;
     margin:2px;
-  
-box-shadow: inset 0 0 1em gold;
-/*box-shadow: inset 0 0 1em gold, 0 0 1em red;*/
-  
 }
 
 .dashBoardMenuCoachBottom {
@@ -806,8 +802,184 @@ box-shadow: inset 0 0 1em gold;
 .backgroundIamgeFeed {
     background : url('../../../Images/communication/feedLogo.png') no-repeat;
     background-size: 100%;
-
 }
 
 
 /*--------------------*/
+
+/*-----------New FeedBAck---------*/
+.feedBackParent{
+  width: 100%;
+  height: 100%;  
+  float:left;
+}
+.feedBackLabel{
+  float:left;
+  width:100%;
+  height:5%;
+  display:flex;
+}
+
+.feedBackLabel h5 {
+  margin:auto;
+margin-bottom: 0;
+}
+.feedbackPanelCom{
+  float:left;
+  width:100%;
+  height:85%;
+}
+
+.pageNavigateView{
+ float:left;
+  width:100%;
+  height:5%;
+
+}
+.questionBox{
+  float: left;
+  width: 45%;
+  height: 42%;
+  
+  margin: 3%;
+  margin-right: 0;
+  margin-bottom: 0;
+	display:flex;
+
+}
+.questionLabel{
+  float: left;
+  width: 100%;
+  height: 50%;
+  display: flex;
+}
+.questionLabel h5 {
+  margin:auto;
+  font-size: 16px;
+  width: 90%;
+}
+.questionAnswer{
+  float: left;
+  width: 100%;
+  height: 50%;
+  display: flex;
+}
+
+.questionAnswer textArea{
+  resize: none;
+  margin: auto;
+  width: 84%;
+  height: 60%;
+
+}
+.questionBoxparentHide{
+	transition:all 1s ease;
+	margin:auto;	
+	width: 0%;
+	height: 0%;
+	overflow:hidden;
+}
+.questionBoxparentShow{
+	transition:all 1s ease;
+	margin:auto;
+  background:#F8C301;
+border: 1px solid #999;
+  box-shadow:0px 0px 10px 2px;
+	width: 100% !important;
+	height: 100% !important;
+}
+.ratingFeedBack {
+
+}
+.ratingFeedBack img{
+}
+.ratingStarOne {
+}
+.ratingStarTwo {
+}
+.ratingStarThree {
+
+}
+.ratingStarFour {
+}
+.ratingStarFive {
+}
+/*------------------*/
+
+
+.radioFeedBack {
+    background-image: -webkit-linear-gradient(hsla(0,0%,0%,.1), hsla(0,0%,100%,.1)),
+        -webkit-linear-gradient(right, #b0c43c 50%, #999 50%);
+    background-size: 100% 100%, 200% 100%;
+    background-position: 0 0, 5px 0;
+    border-radius: 25px;
+    box-shadow: inset 0 1px 4px hsla(0,0%,0%,.5),
+                inset 0 0 10px hsla(0,0%,0%,.5),
+                0 0 0 1px hsla(0,0%,0%,.1),
+                0 -1px 2px 1px hsla(0,0%,0%,.25),
+                0 2px 2px 1px hsla(0,0%,100%,.5),
+                0 -2px 10px 2px hsla(0,0%,100%,.75),
+                0 2px 10px 2px hsla(0,0%,0%,.25);
+    cursor: pointer;
+    height: 30px;
+    padding-right: 10px;
+    position: relative;
+    width: 63px;
+    -webkit-appearance: none;
+    -webkit-transition: .15s;
+}
+
+.radioFeedBack:after {
+    background-color: #eee;
+    background-image: -webkit-linear-gradient(hsla(0,0%,100%,.1), hsla(0,0%,0%,.1));
+    box-shadow: inset 0 1px 1px 1px hsla(0,0%,100%,1),
+                inset 0 -1px 1px 1px hsla(0,0%,0%,.25),
+                0 1px 3px 1px hsla(0,0%,0%,.5),
+                0 0 2px hsla(0,0%,0%,.25);
+    content: '';
+    display: block;
+    height: 30px;
+    left: 0;
+    position: relative;
+    top: 0;
+    width: 30px;
+    border-radius: 100%;
+}
+.radioFeedBack:checked {
+    background-position: 0 0, 45px 0;
+    padding-left: 33px;
+    padding-right: 0;
+}
+.radioFeedBack:before {
+    color: #eee;
+    content: 'Yes';
+    font: 12.5px/20px sans-serif;
+    height: 20px;
+    left: 33px;
+    letter-spacing: 1px;
+    position: absolute;
+    text-align: center;
+    top: 6px;
+    width: 20px;
+    text-shadow: 0 -1px 1px rgba(0,0,0,0.5);
+}
+.radioFeedBack:checked:before {
+    content: 'Yes';
+    left: 9px;
+}
+.radioFeedBackNo:before {
+    color: #eee;
+    content: 'No';
+}|
+.radioFeedBackNo:checked:before {
+    content: 'No';
+    left: 9px;
+}
+.radioFeedBackNotApplicable:before {
+    color: #eee;
+    content: 'NA';
+}
+.radioFeedBackNotApplicable:checked:before {
+    content: 'NA';
+    left: 9px;
+}

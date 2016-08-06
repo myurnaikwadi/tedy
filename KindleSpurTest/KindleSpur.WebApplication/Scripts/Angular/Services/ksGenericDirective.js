@@ -1281,7 +1281,7 @@ app.directive('rssFeed', function ($state, serverCommunication, $timeout) {
             skill: "=",
             role : "@"
         },
-        templateUrl: '/Home/ksRssFeed',
+        templateUrl: '/Home/',
         //scope: true,   // optionally create a child scope
         link: function ($scope, element, attrs) {
             window.rss = $scope;
@@ -1391,3 +1391,161 @@ app.directive('rssFeed', function ($state, serverCommunication, $timeout) {
         }
     }
 });
+
+
+app.directive('feedbackPage', function ($state, serverCommunication, $timeout) {
+    return {
+        scope: {
+            question: "=",
+            submitFeedback: "&",
+            closeCallback: "&",
+
+        },
+        templateUrl: '/Home/ksFeedBackPanel',
+        //scope: true,   // optionally create a child scope
+        link: function ($scope, element, attrs) {
+            console.error($scope)
+            window.feedbackPage = $scope;
+            $scope.feedBack = {
+                selectedComparioson: 1,
+                selectedAttractive: 1,
+                selectedstar: 1,
+                likeMostMessage: '',
+
+                feedBackDetails: {}
+            };
+
+             $scope.rewardsPoints = {
+                mentorPoints: 0,
+                menteePoints: 0,
+                coachPoints: 0,
+                coacheePoints: 0,
+                balancePoints: 0,
+                redeemedPoints: 0,
+                totalPoints: 0
+            };
+            $scope.myRewardsArray =[
+                              //     { Name: 'www.yryr.com', date: '12/12/2011', Key: 'NUF783F', PSR: false
+            //},
+            ];
+
+
+     $scope.getPointsRecord = function () {
+        serverCommunication.getPointsRecord({
+
+            successCallBack: function (iObj) {
+                console.error('In successCallBack', iObj);
+                $scope.rewardsPoints.mentorPoints = iObj.data.MentorRewardPoints ? iObj.data.MentorRewardPoints : 0;
+                $scope.rewardsPoints.menteePoints = iObj.data.MenteeRewardPoints ? iObj.data.MenteeRewardPoints : 0;
+                $scope.rewardsPoints.coachPoints = iObj.data.CoachRewardPoints ? iObj.data.CoachRewardPoints : 0;
+                $scope.rewardsPoints.coacheePoints = iObj.data.CoacheeRewardPoints ? iObj.data.CoacheeRewardPoints : 0;
+                $scope.rewardsPoints.totalPoints = iObj.data.TotalRewardPoints ? iObj.data.TotalRewardPoints : 0;
+                $scope.rewardsPoints.balancePoints = iObj.data.BalanceRewardPoints ? iObj.data.BalanceRewardPoints : 0;
+                $scope.rewardsPoints.redeemedPoints = iObj.data.RedeemedPoints ? iObj.data.RedeemedPoints : 0;
+                $scope.myRewardsArray = iObj.data.PSRAndGames ? iObj.data.PSRAndGames : [];
+
+            },
+            failureCallBack: function (iObj) {
+                //console.error('In failureCallBack', iObj);
+
+            }
+        });
+    };
+            $scope.feedBack.sendFeedBackDetail = function () {
+                $scope.feedBack.feedBackDetails.sender = "patilsagar28290@gmail.com";
+                console.error($scope.feedBack.feedBackDetails)
+                
+                for (var k = 0 ; k < $scope.displayArray.length ; k++) {
+                    $scope.feedBack.feedBackDetails[$scope.displayArray[k].name] = $scope.displayArray[k];
+                };
+                console.error($scope.feedBack.feedBackDetails, $scope.displayArray);
+               // return
+                serverCommunication.sendFeedback({
+                    loggedUserDetails: $scope.feedBack.feedBackDetails,
+                    successCallBack: function (iObj) {
+                        console.error('In successCallBack', iObj);
+                        $scope.getPointsRecord ();
+                    },
+                    failureCallBack: function (iObj) {
+                        console.error('In failureCallBack', iObj);
+
+                    }
+                });
+            };
+            $scope.displayArray = [];
+            $scope.counter = 4;
+            
+            $scope.loadSlideData = function (iMode) {
+                console.error('111')
+                var _loadArray = [];
+              
+                for (var k = 0 ; k < $scope.displayArray.length ; k++) {
+                    $scope.feedBack.feedBackDetails[$scope.displayArray[k].name] = angular.copy($scope.displayArray[k]);
+                };
+                $scope.displayArray = [];
+                if (iMode == 0) {
+                    for (var k = 0 ; k < $scope.counter ; k++) {
+                        _loadArray.push(angular.copy($scope.question[k]));
+                        if (_loadArray.length == $scope.counter) {
+                            break;
+                        }
+                    }
+                } else {
+                    for (var k = 4 ; k < $scope.question.length ; k++) {
+                        _loadArray.push(angular.copy($scope.question[k]));
+                        if (_loadArray.length == $scope.counter) {
+                            break;
+                        }
+                    }
+
+                }
+                console.error($scope.question, _loadArray);
+                $scope.displayArray = [].concat(_loadArray);
+                setTimeout(function () {
+                    for (var k = 0 ; k < $scope.displayArray.length ; k++) {
+                        $scope.displayArray[k].showLoad = true;
+                    }
+                    $scope.$apply();
+                }, 500);
+            };
+
+            $scope.feedBack.closeFeedBackPopup = function () {
+                $scope.feedBack.askFeedback = false;
+                $scope.feedBack.formValue = '1';
+                $scope.closeCallback();
+            };
+
+
+            $scope.redeemPointsClick = function () {
+                $scope.feedBack.closeFeedBackPopup();
+                serverCommunication.unlockGameCode({
+                    //   loggedUserDetails: $rootScope.loggedDetail,
+                    redeemAction: $scope.redeemAction,
+                    successCallBack: function (iObj) {
+                        $scope.submitFeedback();
+                        console.error('In successCallBack', iObj);
+
+                    },
+                    failureCallBack: function (iObj) {
+                        console.error('In failureCallBack', iObj);
+
+                    }
+                });
+            };  
+
+            $scope.openRedeemPanel = function () {
+                $scope.feedBack.askFeedback = true;
+                $scope.feedBack.formValue = '7';
+            };
+
+            $scope.init = function () {
+                $scope.feedBack.askFeedback = true;
+                $scope.feedBack.formValue = '1';
+                // setTimeout(function () {
+                $scope.loadSlideData(0);
+                // }, 500);
+            };
+            $scope.init();
+        }
+    }
+}); 
