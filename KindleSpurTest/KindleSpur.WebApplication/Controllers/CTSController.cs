@@ -14,6 +14,12 @@ namespace KindleSpur.WebApplication.Controllers
 
         }
 
+        public string GetTopics()
+        {
+            return _ctsRepo.GetTopics().ToJson();
+
+        }
+
         public ActionResult GetCTSFilters()
         {
             var filters = _ctsRepo.GetCTSFilters();

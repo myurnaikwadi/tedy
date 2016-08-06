@@ -174,6 +174,11 @@ app.factory('serverCommunication', function ($http) {
             console.error(iObj)
             $http.get('/CTS/GetCTS').then(iObj.successCallBack, iObj.failureCallBack);
         },
+
+        getCategorysTopics: function (iObj) {
+            console.error(iObj)
+            $http.get('/CTS/GetTopics').then(iObj.successCallBack, iObj.failureCallBack);
+        },
         /**
       * @auther : MKN
       * @date : 10/06/2016

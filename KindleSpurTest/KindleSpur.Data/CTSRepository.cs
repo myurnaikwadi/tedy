@@ -39,7 +39,27 @@ namespace KindleSpur.Data
 
             try
             {
-                var _ctsCollection = _kindleDatabase.GetCollection("CTS");
+                var _ctsCollection = _kindleDatabase.GetCollection("CTSDataCoaching");
+                _categories = _ctsCollection.FindAll().SetFields(Fields.Exclude("_id")).ToList();
+            }
+            catch (MongoException ex)
+            {
+                _logCollection.Insert("{ Error : 'Failed at GetCategories().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ");
+                throw new MongoException("Signup failure!!!");
+            }
+
+            return _categories;
+
+        }
+
+        public List<BsonDocument> GetTopics()
+        {
+
+            List<BsonDocument> _categories = new List<BsonDocument>();
+
+            try
+            {
+                var _ctsCollection = _kindleDatabase.GetCollection("CTSDataMentoring");
                 _categories = _ctsCollection.FindAll().SetFields(Fields.Exclude("_id")).ToList();
             }
             catch (MongoException ex)
@@ -59,7 +79,7 @@ namespace KindleSpur.Data
 
             try
             {
-                var _ctsCollection = _kindleDatabase.GetCollection("CTS");
+                var _ctsCollection = _kindleDatabase.GetCollection("CTSDataCoaching");
                 _categories = _ctsCollection.Find(Query.EQ("Name", skills[0])).SetFields(Fields.Exclude("_id")).ToList();
             }
             catch (MongoException ex)
@@ -79,7 +99,7 @@ namespace KindleSpur.Data
 
             try
             {
-                var _ctsCollection = _kindleDatabase.GetCollection("CTS");
+                var _ctsCollection = _kindleDatabase.GetCollection("CTSDataCoaching");
                 _categories = _ctsCollection.FindAll().SetFields("Category").ToList();              
             }
             catch (MongoException ex)
@@ -98,7 +118,7 @@ namespace KindleSpur.Data
 
             try
             {
-                var _ctsCollection = _kindleDatabase.GetCollection("CTS");
+                var _ctsCollection = _kindleDatabase.GetCollection("CTSDataMentoring");
                 _topics = _ctsCollection.Find(Query.EQ("Category", category)).SetFields("Topic").ToList();
             }
             catch (MongoException ex)
@@ -116,7 +136,7 @@ namespace KindleSpur.Data
 
             try
             {
-                var _ctsCollection = _kindleDatabase.GetCollection("CTS");
+                var _ctsCollection = _kindleDatabase.GetCollection("CTSDataCoaching");
                 _skills = _ctsCollection.Find(Query.EQ("Category", category)).SetFields("Skill").ToList();
             }
             catch (MongoException ex)
@@ -134,7 +154,7 @@ namespace KindleSpur.Data
 
             try
             {
-                var _ctsCollection = _kindleDatabase.GetCollection("CTS");
+                var _ctsCollection = _kindleDatabase.GetCollection("CTSDataCoaching");
                 _skills = _ctsCollection.Find(Query.And(Query.EQ("Category",category),Query.EQ("Topic",topic))).SetFields("Skill").ToList();
             }
             catch (MongoException ex)
@@ -152,7 +172,7 @@ namespace KindleSpur.Data
 
             try
             {
-                var _ctsCollection = _kindleDatabase.GetCollection("CTS");
+                var _ctsCollection = _kindleDatabase.GetCollection("CTSDataMentoring");
                 if (topic != null)
                 {
                     var query = Query.EQ("Name", topic);
@@ -179,7 +199,7 @@ namespace KindleSpur.Data
 
             try
             {
-                var _ctsCollection = _kindleDatabase.GetCollection("CTS");
+                var _ctsCollection = _kindleDatabase.GetCollection("CTSDataCoaching");
                 if (skill != null)
                 {
                     var query = Query.EQ("Name", skill.Name);
@@ -213,7 +233,7 @@ namespace KindleSpur.Data
 
             try
             {
-                var _ctsCollection = _kindleDatabase.GetCollection("CTS");
+                var _ctsCollection = _kindleDatabase.GetCollection("CTSDataCoaching");
                 _categories = _ctsCollection.FindAll().SetFields(Fields.Exclude("_id")).ToList();
 
                 foreach (BsonDocument category in _categories)
@@ -252,7 +272,7 @@ namespace KindleSpur.Data
 
             try
             {
-                var _ctsCollection = _kindleDatabase.GetCollection("CTS");
+                var _ctsCollection = _kindleDatabase.GetCollection("CTSDataCoaching");
                 if (skill != null)
                 {
                     var query = Query.EQ("Name", skill.Name);

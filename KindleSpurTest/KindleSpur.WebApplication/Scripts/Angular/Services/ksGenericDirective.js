@@ -407,9 +407,9 @@ app.directive('ctcRole', function ($state, serverCommunication) {
                 scope.selectedSkills = -1;
                 scope.selectedCategoryValue = null;
                 scope.skillsArray = [];
-                if (scope.role == "mentor") {
+                if (scope.role == "mentor" || scope.role == "mentee") {
                     console.error('get data for mentor')
-                    serverCommunication.getCategorys({
+                    serverCommunication.getCategorysTopics({
                         successCallBack: function (iObj) {
                             console.error('In successCallBack', iObj);
                             var _data = iObj.data;
