@@ -138,7 +138,7 @@ namespace KindleSpur.Data
                         ;
                     _categories = _conversationCollection.Find(
                     _query1
-                    ).SetFields(Fields.Exclude("_id").Include("ReceiverEmail")).Distinct().ToList();
+                    ).SetFields(Fields.Exclude("_id").Include("SenderEmail")).Distinct().ToList();
                 }
 
 

@@ -25,13 +25,13 @@
                 <div class="userNotificationParent">
                     <div class="userRoleWizardParent" style="display: inline-flex;overflow: auto;float:left; overflow-x:scroll; overflow-y:hidden;width:96%;margin-left:2%;">
 
-                        <div class="notificationWiz" ng-repeat="notificationDash in notificationData | limitTo: 1 | orderBy: '-CreateDate'">
+                        <div class="notificationWiz" ng-repeat="notificationDash in notificationData">
                             <div>
                                 <h6 class="notificationWizReason">YOU HAVE COACHING INVITE FROM</h6>
                                 <h4 class="notificationWizName" style="text-transform: uppercase;">{{notificationDash.FirstName}} {{notificationDash.LastName}}</h4>
                                 <div class="notificationWizButton">
-                                    <button class="btnAcceptReject" ng-click="updateConversation(false, notificationDash.SenderEmail, notificationDash.ReceiverEmail)">R</button>
-                                    <button class="btnAcceptReject" ng-click="updateConversation(true, notificationDash.SenderEmail, notificationDash.ReceiverEmail)">A</button>
+                                    <button class="btnAcceptReject" ng-click="updateConversation(false, loggedEmail, notificationDash.EmailAddress)">R</button>
+                                    <button class="btnAcceptReject" ng-click="updateConversation(true, loggedEmail, notificationDash.EmailAddress)">A</button>
                                 </div>
                             </div>
                         </div>
