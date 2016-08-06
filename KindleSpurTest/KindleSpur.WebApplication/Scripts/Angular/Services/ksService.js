@@ -288,17 +288,17 @@ app.factory('serverCommunication', function ($http) {
         },
         
         
-        getCoaches: function (iObj) {
-            var req = {
-                method: 'POST',
-                url: '/Coach/GetCoachs',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                data: { ctsFilter: iObj.filter }
-            }
-            $http(req).then(iObj.successCallBack, iObj.failureCallBack);
-        },
+        //getCoaches: function (iObj) {
+        //    var req = {
+        //        method: 'POST',
+        //        url: '/Coach/GetCoachs',
+        //        headers: {
+        //            'Content-Type': 'application/json'
+        //        },
+        //        data: { ctsFilter: iObj.filter }
+        //    }
+        //    $http(req).then(iObj.successCallBack, iObj.failureCallBack);
+        //},
         /**
          * @auther : MKN
          * @date : 4/08/2016

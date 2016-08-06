@@ -305,5 +305,45 @@ namespace KindleSpur.Data
             return _Category;
         }
 
+        public List<CTSFilter> GetSkillforTopic(string topic1)
+        {
+            List<BsonDocument> _categories = new List<BsonDocument>();
+            var filters = new List<CTSFilter>();
+
+            try
+            {
+                var _ctsCollection = _kindleDatabase.GetCollection("CTSDataCoaching");
+                _categories = _ctsCollection.FindAll().SetFields(Fields.Exclude("_id")).ToList();
+
+                foreach (BsonDocument category in _categories)
+                {
+                    //filters.Add(new CTSFilter() { Id = category["Id"].ToString(), Name = category["Category"].ToString(), Type = FilterType.Category });
+                    //if (category.Contains("Topics"))
+                    //{
+                    //    BsonArray topics = (BsonArray)category["Topics"];
+                    //    foreach (BsonDocument topic in topics)
+                    //    {
+                    //        filters.Add(new CTSFilter() { Id = topic["Id"].ToString(), Name = topic["Name"].ToString(), Type = FilterType.Topic, ParentId = category["Id"].ToString() });
+                    //        if (topic.Contains("Skills"))
+                    //        {
+                    //            BsonArray skills = (BsonArray)topic["Skills"];
+                    //            foreach (BsonDocument skill in skills)
+                    //            {
+                    //                filters.Add(new CTSFilter() { Id = skill["Id"].ToString(), Name = skill["Name"].ToString(), Type = FilterType.Skill, ParentId = topic["Id"].ToString() });
+                    //            }
+                    //        }
+                    //    }
+                    //}
+                }
+            }
+            catch (MongoException ex)
+            {
+                _logCollection.Insert("{ Error : 'Failed at GetCategories().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ");
+                throw new MongoException("Signup failure!!!");
+            }
+
+            return filters;
+        }
+
     }
 }

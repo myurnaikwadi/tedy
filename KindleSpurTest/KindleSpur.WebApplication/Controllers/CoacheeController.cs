@@ -62,7 +62,9 @@ namespace KindleSpur.WebApplication.Controllers
         }
         public string GetCoachs(CTSFilter ctsFilter)
         {
-            var result = _coacheeRepo.GetAllCoacheeOrMentee(ctsFilter);
+            CoachOrMentorRepository _coachRep = new CoachOrMentorRepository();
+            // var result = _coacheeRepo.GetAllCoacheeOrMentee(ctsFilter);
+            var result = _coachRep.GetAllCoachOrMentors(ctsFilter, "Coach");
             return result.ToJson();
         }
         [HttpPost]
@@ -87,12 +89,25 @@ namespace KindleSpur.WebApplication.Controllers
             if (UserRole.Role != null)
             {
                 CoacheeOrMenteeRepository _coacheeRepo = new CoacheeOrMenteeRepository();
-                List<SkillOrTopic> lstSkillforCochee = new List<SkillOrTopic>();
-                lstSkillforCochee = _coacheeRepo.GetSkillsForCoachee(UserId);
-                if (lstSkillforCochee != null || lstSkillforCochee.Count > 0)
+                if (UserRole.Role == "Coach")
                 {
-                    CoachOrMentorRepository _coachRepo = new CoachOrMentorRepository();
-                    return this.Json(_coachRepo.GetRecommendedCoachList(lstSkillforCochee, UserRole.Role));
+                    List<SkillOrTopic> lstSkillforCochee = new List<SkillOrTopic>();
+                    lstSkillforCochee = _coacheeRepo.GetSkillsForCoachee(UserId);
+                    if (lstSkillforCochee != null || lstSkillforCochee.Count > 0)
+                    {
+                        CoachOrMentorRepository _coachRepo = new CoachOrMentorRepository();
+                        return this.Json(_coachRepo.GetRecommendedCoachList(lstSkillforCochee, UserRole.Role));
+                    }
+                }
+                else if (UserRole.Role == "Mentor")
+                {
+                    List<string> lstTopicforMentee = new List<string>();
+                    lstTopicforMentee = _coacheeRepo.GetTopicsForMentee(UserId);
+                    if (lstTopicforMentee != null || lstTopicforMentee.Count > 0)
+                    {
+                        CoachOrMentorRepository _coachRepo = new CoachOrMentorRepository();
+                        return this.Json(_coachRepo.GetRecommendedMentorList(lstTopicforMentee, UserRole.Role));
+                    }
                 }
             }
             return null;

@@ -88,6 +88,7 @@
     <Compile Include="QueAndAns.cs" />
     <Compile Include="ResponseMessage.cs" />
     <Compile Include="Reward.cs" />
+    <Compile Include="SearchCoachOrMentor.cs" />
     <Compile Include="Skill.cs" />
     <Compile Include="SubmitImage.cs" />
     <Compile Include="Tasks.cs" />

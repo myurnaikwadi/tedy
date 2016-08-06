@@ -297,25 +297,40 @@ namespace KindleSpur.Data
             return result;
         }
 
-        public List<CoachOrMentor> GetAllCoachOrMentors(CTSFilter ctsFilter)
+        public List<CoachOrMentor> GetAllCoachOrMentors(CTSFilter ctsFilter, string Role)
         {
             IQueryable<CoachOrMentor> coachEntities = default(IQueryable<CoachOrMentor>);
             try
             {
                 var res1 = new List<BsonDocument>();
+                //if (ctsFilter.Type == FilterType.Skill)
+                //{
+                //    coachEntities = _coachOrMentorCollection.FindAs<CoachOrMentor>(Query.ElemMatch("Skills", Query.EQ("Name", ctsFilter.Name))).AsQueryable();
+                //}
+                //if (ctsFilter.Type == FilterType.Topic || !(_coachOrMentorCollection.Count() > 0))
+                //    coachEntities = _coachOrMentorCollection.FindAs<CoachOrMentor>(Query.ElemMatch("Topics", Query.EQ("Name", ctsFilter.Name))).AsQueryable();
+
+                //if (ctsFilter.Type == FilterType.Category || !(_coachOrMentorCollection.Count() > 0))
+                //{
+                //    //Get Topics -> Get Skills
+                //    coachEntities = new List<CoachOrMentor>().AsQueryable();
+                //}
+
                 if (ctsFilter.Type == FilterType.Skill)
                 {
                     coachEntities = _coachOrMentorCollection.FindAs<CoachOrMentor>(Query.ElemMatch("Skills", Query.EQ("Name", ctsFilter.Name))).AsQueryable();
                 }
-                if (ctsFilter.Type == FilterType.Topic || !(_coachOrMentorCollection.Count() > 0))
+                else if (ctsFilter.Type == FilterType.Topic && _coachOrMentorCollection.Count() > 0)
+                {
+                    CTSRepository ctsrep = new CTSRepository();
                     coachEntities = _coachOrMentorCollection.FindAs<CoachOrMentor>(Query.ElemMatch("Topics", Query.EQ("Name", ctsFilter.Name))).AsQueryable();
-
-                if (ctsFilter.Type == FilterType.Category || !(_coachOrMentorCollection.Count() > 0))
+                }
+                else if (ctsFilter.Type == FilterType.Category && _coachOrMentorCollection.Count() > 0)
                 {
                     //Get Topics -> Get Skills
                     coachEntities = new List<CoachOrMentor>().AsQueryable();
                 }
-               
+
             }
             catch (Exception ex)
             {
@@ -428,14 +443,55 @@ namespace KindleSpur.Data
             return TreeURL;
         }
 
-        public List<CoachOrMentor> GetRecommendedCoachList(List<SkillOrTopic> lstSkillforCochee, string Role)
+        public List<SearchCoachOrMentor> GetRecommendedCoachList(List<SkillOrTopic> lstSkillforCochee, string Role)
         {
-            List<CoachOrMentor> lstCoachOrMentor = new List<CoachOrMentor>();
+            List<CoachOrMentor> lstCoach = new List<CoachOrMentor>();
+            List<SearchCoachOrMentor> lstSearchCoachOrMentor = new List<SearchCoachOrMentor>();
             foreach (SkillOrTopic s1 in lstSkillforCochee)
             {
-                lstCoachOrMentor.AddRange(_coachOrMentorCollection.FindAs<CoachOrMentor>(Query.And(Query.EQ("Skills.Name", s1.Name), Query.EQ("Role", Role))));
+                lstCoach.AddRange(_coachOrMentorCollection.FindAs<CoachOrMentor>(Query.And(Query.EQ("Skills.Name", s1.Name), Query.EQ("Role", Role))));
             }
-            return lstCoachOrMentor;
+
+            for (int i = 0; i < lstCoach.Count; i++)
+            {
+                lstSearchCoachOrMentor.Add(GetCoachOrMentorSearchDetails(lstCoach[i]));
+            }
+            return lstSearchCoachOrMentor;
+        }
+
+        public List<SearchCoachOrMentor> GetRecommendedMentorList(List<string> lstTopicforMentee, string Role)
+        {
+            List<SearchCoachOrMentor> lstSearchCoachOrMentor = new List<SearchCoachOrMentor>();
+            List<CoachOrMentor> lstMentor = new List<CoachOrMentor>();
+            foreach (string s1 in lstTopicforMentee)
+            {
+                lstMentor.AddRange(_coachOrMentorCollection.FindAs<CoachOrMentor>(Query.And(Query.EQ("Topics.Name", s1), Query.EQ("Role", Role))));
+            }
+            for (int i = 0; i < lstMentor.Count; i++)
+            {
+                lstSearchCoachOrMentor.Add(GetCoachOrMentorSearchDetails(lstMentor[i]));
+            }
+            return lstSearchCoachOrMentor;
+        }
+
+        private SearchCoachOrMentor GetCoachOrMentorSearchDetails(CoachOrMentor c)
+        {
+            SearchCoachOrMentor obj = new SearchCoachOrMentor();
+            obj.EmailAddress = c.UserId;
+            obj.Role = c.Role;
+            if (c.Role == "Coach")
+                obj.Skills = c.Skills;
+            else if (c.Role == "Mentor")
+                obj.Topics = c.Topics;
+            var _userCollection = con.GetCollection("UserDetails");
+            User userDetail = _userCollection.FindOneAs<User>(Query.EQ("EmailAddress", c.UserId));
+            obj.FirstName = userDetail.FirstName;
+            obj.LastName = userDetail.LastName;
+            obj.PhotoURL = userDetail.Photo;
+            obj.Mobile = userDetail.Mobile;
+            obj.LinkdinURL = userDetail.LinkdinURL;
+            obj.description = userDetail.description;
+            return obj;
         }
     }
 }

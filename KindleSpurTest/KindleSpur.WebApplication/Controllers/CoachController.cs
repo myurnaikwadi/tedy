@@ -65,7 +65,7 @@ namespace KindleSpur.WebApplication.Controllers
 
         public string GetCoachs(CTSFilter ctsFilter)
         {
-            var result = _coachRepo.GetAllCoachOrMentors(ctsFilter);
+            var result = _coachRepo.GetAllCoachOrMentors(ctsFilter, "Role");
             return result.ToJson();
         }
 
