@@ -70,6 +70,10 @@ namespace KindleSpur.WebApplication.Controllers
         {
             return View();
         }
+        public ActionResult ksMyReward()
+        {
+            return View();
+        }
         [HttpPost]
         public ActionResult UpdateUserPhoto(SubmitImage model)
         {

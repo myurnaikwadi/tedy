@@ -230,3 +230,71 @@ app.directive('vcsDir', function ($state, serverCommunication,$rootScope) {
         }
     }
 });
+
+app.directive('myReward', function ($state, serverCommunication, $rootScope) {
+    return {
+        scope: {
+            //role: "@",
+            //skillRequired: "=",
+        },
+        templateUrl: '/Home/ksMyReward',
+        //scope: true,   // optionally create a child scope
+        link: function ($scope, element, attrs) {
+            $scope.feedBack = {
+                redeemPoint: false,
+                redeemAction: {}
+            }
+            $scope.feedBack.redeemPointsClick = function () {
+                $scope.feedBack.closeFeedBackPopup();
+                $scope.init();
+            };
+            
+          //  $scope.redeemAction
+            $scope.feedBack.closeFeedBackPopup = function () {
+                $scope.feedBack.redeemPoint = false;
+                $scope.feedBack.formValue = '1';
+            };
+            $scope.rewardsPoints = {
+                mentorPoints    : 0,
+                menteePoints    : 0,
+                coachPoints     : 0,
+                coacheePoints   : 0,
+                balancePoints   : 0,
+                redeemedPoints  : 0,
+                totalPoints     : 0,
+                myRewardsArray  : []
+            };
+
+            $scope.feedBack.openRedeemPanel = function () {
+                $scope.feedBack.redeemPoint = true;
+                $scope.feedBack.formValue = '1';
+            };
+
+            $scope.getPointsRecord = function () {
+                serverCommunication.getPointsRecord({
+                    successCallBack: function (iObj) {
+                        console.error('In successCallBack', iObj);
+                        $scope.rewardsPoints.mentorPoints = iObj.data.MentorRewardPoints ? iObj.data.MentorRewardPoints : 0;
+                        $scope.rewardsPoints.menteePoints = iObj.data.MenteeRewardPoints ? iObj.data.MenteeRewardPoints : 0;
+                        $scope.rewardsPoints.coachPoints = iObj.data.CoachRewardPoints ? iObj.data.CoachRewardPoints : 0;
+                        $scope.rewardsPoints.coacheePoints = iObj.data.CoacheeRewardPoints ? iObj.data.CoacheeRewardPoints : 0;
+                        $scope.rewardsPoints.totalPoints = iObj.data.TotalRewardPoints ? iObj.data.TotalRewardPoints : 0;
+                        $scope.rewardsPoints.balancePoints = iObj.data.BalanceRewardPoints ? iObj.data.BalanceRewardPoints : 0;
+                        $scope.rewardsPoints.redeemedPoints = iObj.data.RedeemedPoints ? iObj.data.RedeemedPoints : 0;
+                        $scope.rewardsPoints.myRewardsArray = iObj.data.PSRAndGames ? iObj.data.PSRAndGames : [];
+
+                    },
+                    failureCallBack: function (iObj) {
+                        //console.error('In failureCallBack', iObj);
+                    }
+                });
+            };
+
+            $scope.init = function () {
+                $scope.getPointsRecord();
+            };
+            $scope.init();
+
+        }
+    }
+});

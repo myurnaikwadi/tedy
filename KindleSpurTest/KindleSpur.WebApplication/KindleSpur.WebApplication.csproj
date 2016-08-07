@@ -472,6 +472,7 @@
     <Content Include="Views\Home\ksLandingPage.cshtml" />
     <Content Include="Views\Home\ksVCGameView.cshtml" />
     <Content Include="Views\Home\ksFeedBackPanel.cshtml" />
+    <Content Include="Views\Home\ksMyReward.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
