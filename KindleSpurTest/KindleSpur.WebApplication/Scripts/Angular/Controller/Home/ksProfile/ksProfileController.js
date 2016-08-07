@@ -107,9 +107,15 @@
 
             var valueFile = document.getElementById("fileInputIdRv").files;
             data.append(valueFile[0].Name, valueFile[0]);
-            debugger;
+          //  debugger;
             console.error(data);
-            serverCommunication.changeProfileImageDetails(data);
+            if (iProfile) {
+                $scope.myInfo.profileImage = valueFile[0];
+                serverCommunication.changeProfileImageDetails(data);
+            } else {
+                $scope.myInfo.profileBackgroundImage = valueFile[0];
+                serverCommunication.changeProfileImageDetails(data,true);
+            }         
             document.getElementById("fileInputIdRv").value = "";
             $scope.$apply();
         });

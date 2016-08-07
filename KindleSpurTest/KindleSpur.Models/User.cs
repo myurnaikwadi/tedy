@@ -32,6 +32,7 @@ namespace KindleSpur.Models
         public string LinkdinURL { get; set; }
         public string description { get; set; }
         public string Photo { get; set; }
+        public string coverphoto { get; set; }
         public List<Game> Games { get; set; }
         public List<ValueFeedStory> ValueFeedStories { get; set; }
         public List<VSCS> ValueCreationActivity { get; set; }

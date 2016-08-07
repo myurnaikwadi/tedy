@@ -93,6 +93,7 @@
     <Compile Include="Skill.cs" />
     <Compile Include="SubmitImage.cs" />
     <Compile Include="Tasks.cs" />
+    <Compile Include="Uploadcoverimage.cs" />
     <Compile Include="User.cs" />
     <Compile Include="UserRole.cs" />
     <Compile Include="ValueCreation.cs" />

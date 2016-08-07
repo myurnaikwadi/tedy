@@ -33,6 +33,8 @@ namespace KindleSpur.Models.Interfaces
         string description { get; set; }
 
         string Photo { get; set; }
+        string coverphoto { get; set; }
+
         List<Game> Games { get; set; }
 
         Boolean IsExternalAuthentication { get; set; }

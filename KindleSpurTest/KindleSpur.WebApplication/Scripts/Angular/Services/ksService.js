@@ -269,14 +269,18 @@ app.factory('serverCommunication', function ($http) {
       * @date : 15/06/2016
       * @Purpose :
       */
-        changeProfileImageDetails: function (iObj) {
+        changeProfileImageDetails: function (iObj,iAction) {
             console.error(iObj)
             //method: 'POST',
             //url: '/resources/messages',
             //data: message // your original form data,
             //transformRequest: formDataObject  // this sends your data to the formDataObject provider that we are defining below.
             //headers: {'Content-Type': 'multipart/form-data'}
-            $http.post('/Home/UpdateUserPhoto', iObj, {
+            var _action = '/Home/UpdateUserPhoto';
+            if (iAction) {
+                _action = '/Home/UpdatecoverPhoto'
+            }
+            $http.post(_action, iObj, {
                 withCredentials: true,
                 headers: { 'Content-Type': undefined },
                 transformRequest: angular.identity
