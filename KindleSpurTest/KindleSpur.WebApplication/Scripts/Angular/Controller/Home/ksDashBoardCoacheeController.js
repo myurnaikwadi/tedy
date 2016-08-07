@@ -569,7 +569,7 @@
             ReceiverName: $scope.ApprovalName,
             Role: 'Coachee',
             successCallBack: function () {
-                //$scope.menuClick(5, "CONVERSATIONS");
+                $scope.menuClick(5, "CONVERSATIONS");
              //   $scope.showSelectedConversation($scope.loggedEmail, $scope.ApprovalName);
               //  console.debug('In successCallBack');
 
