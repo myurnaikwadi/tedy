@@ -279,6 +279,7 @@
     <Content Include="Images\camera.png" />
     <Content Include="Images\cancel.png" />
     <Content Include="Images\coaching 2.png" />
+    <Content Include="Images\Coaching1.png" />
     <Content Include="Images\communication\betterCompetitors.png" />
     <Content Include="Images\communication\bigSelectedStar.png" />
     <Content Include="Images\communication\bigStar.png" />
@@ -303,6 +304,7 @@
     <Content Include="Images\delete.png" />
     <Content Include="Images\doorEntry.png" />
     <Content Include="Images\edit_Icon.png" />
+    <Content Include="Images\Game2.png" />
     <Content Include="Images\gameConsole.png" />
     <Content Include="Images\icons\books icon 1.png" />
     <Content Include="Images\icons\books icon 2.png" />
