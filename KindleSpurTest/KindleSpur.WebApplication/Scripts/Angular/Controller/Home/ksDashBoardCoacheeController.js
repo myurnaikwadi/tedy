@@ -483,7 +483,7 @@
         else
             $scope.conversation.ReceiverEmail = $scope.ReceiverEmail;
 
-        $scope.conversation.Content = iCoach.Skill.Name;
+        $scope.conversation.Content = null;
         $scope.conversation.SendOrReceive = "Send";
         $scope.conversation.IsVerified = isVerified;
         $scope.conversation.isRead = false;
