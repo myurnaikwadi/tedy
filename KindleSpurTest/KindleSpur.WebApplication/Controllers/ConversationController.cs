@@ -69,19 +69,25 @@ namespace KindleSpur.WebApplication.Controllers
             //return Content(result);
         }
 
-        public ActionResult getConversationRequest()
+        public ActionResult getConversationRequest(string ConversationType)
         {
             ConversationRepository _repo = new ConversationRepository();
             //var result = _repo.GetConversationRequest(((IUser)Session["User"]).EmailAddress).ToJson();
-            List<Object> result = new List<Object>();
+            List<Request> result = new List<Request>();
 
             UserRepository ur = new UserRepository();
-            foreach (var value in _repo.GetConversationRequest(((IUser)Session["User"]).EmailAddress))
+            foreach (var value in _repo.GetConversationRequest(((IUser)Session["User"]).EmailAddress,ConversationType))
             {
-                BsonDocument recevicedetails = ur.GetUserDetail(value["SenderEmail"].ToString()).ToBsonDocument();
-                recevicedetails.Add(new BsonElement("skill", value["skill"].ToString()));
-                recevicedetails.Add(new BsonElement("ConversationType", value["ConversationType"].ToString()));    
-                result.Add(BsonSerializer.Deserialize<Object>(recevicedetails));
+                IUser recevicedetails = ur.GetUserDetail(value["SenderEmail"].ToString());
+                Request req = new Models.Request();
+                req.FirstName = recevicedetails.FirstName;
+                req.LastName = recevicedetails.LastName;
+                req.EmailAddress = recevicedetails.EmailAddress;
+                req.skill = value["skill"].ToString();
+                //req.ConversationType = value["ConversationType"].ToString();
+                //recevicedetails.Add(new BsonElement("skill", value["skill"].ToString()));
+                //recevicedetails.Add(new BsonElement("ConversationType", value["ConversationType"].ToString()));    
+                result.Add(req);
                 
             }
             return Json(new { Result = result }, JsonRequestBehavior.AllowGet);

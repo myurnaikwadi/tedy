@@ -441,7 +441,17 @@ app.factory('serverCommunication', function ($http) {
 
         getConversationRequest: function (iObj) {
             console.log(iObj);
-            $http.get('/Conversation/getConversationRequest').then(iObj.successCallBack, iObj.failureCallBack);
+            console.log(iObj);
+            var req = {
+                method: 'POST',
+                url: '/Conversation/getConversationRequest',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                data: { ConversationType: "Coaching" }
+            }
+            $http(req).then(iObj.successCallBack, iObj.failureCallBack);
+           // $http.get('/Conversation/getConversationRequest').then(iObj.successCallBack, iObj.failureCallBack);
             //var req = {
             //    method: 'POST',
             //    url: '/Conversation/getConversationRequest',
