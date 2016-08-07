@@ -43,7 +43,7 @@ namespace KindleSpur.Data
             try
             {
                 var _conversationCollection = _kindleDatabase.GetCollection("Conversations");
-                var result = _conversationCollection.Find(Query.And(Query.EQ("SenderEmail", conversationData.SenderEmail), Query.EQ("ReceiverEmail", conversationData.ReceiverEmail))).ToList();
+                var result = _conversationCollection.Find(Query.And(Query.EQ("SenderEmail", conversationData.SenderEmail), Query.EQ("ReceiverEmail", conversationData.ReceiverEmail), Query.EQ("skill", conversationData.skill))).ToList();
 
                 if (result.Count() > 0 && conversationData.Content == null)
                 {
