@@ -27,8 +27,8 @@
                                 <h6 class="notificationWizReason">YOU HAVE COACHING INVITE FROM</h6>
                                 <h4 class="notificationWizName" style="text-transform: uppercase;">{{notificationDash.FirstName}} {{notificationDash.LastName}}</h4>
                                 <div class="notificationWizButton">
-                                    <button class="btnAcceptReject" ng-click="updateConversation(false, loggedEmail, notificationDash.EmailAddress)">R</button>
-                                    <button class="btnAcceptReject" ng-click="updateConversation(true, loggedEmail, notificationDash.EmailAddress)">A</button>
+                                    <button class="btnAcceptReject" ng-click="updateConversation(false, loggedEmail, notificationDash.EmailAddress,notificationDash)">R</button>
+                                    <button class="btnAcceptReject" ng-click="updateConversation(true, loggedEmail, notificationDash.EmailAddress,notificationDash)">A</button>
                                 </div>
                             </div>
                         </div>
@@ -117,7 +117,7 @@
                                                         <button class="btn col-md-9 btn-gray" data-toggle="modal" data-target="#myModal" style="border-radius:0px;">View Profile</button>
                                                     </div>
                                                     <br />
-                                                    <button class="btn signupButton" style="margin-left: 30%;" ng-click="conversationClick(false, coach)">Request</button>
+                                                    <button class="btn signupButton" style="margin-left: 30%;" ng-click="sendCoachingRequest(false, coach)">Request</button>
                                                     <br />
                                                 </div>
                                             </div>
@@ -181,9 +181,6 @@
                             </div>
                             <div class="chatMiddle">
                                 <div class="chatOuterContainer" ng-repeat="MailRecord in MailRecords | limitTo: 5">
-                                    @*<div class="chatSender">
-                                        <h5>I would like to request couching from you.</h5>
-                        </div>*@
                                     <div class="" ng-class="{chatReceiver : MailRecord.SenderEmail === loggedEmail, chatSender : MailRecord.ReceiverEmail === loggedEmail}">
                                         <h5>{{MailRecord.Content}}</h5>
                                     </div>
