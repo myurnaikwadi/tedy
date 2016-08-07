@@ -250,13 +250,14 @@ namespace KindleSpur.Data
         }
 
 
-        public List<BsonDocument> GetConversationRequest(string senderEmail)
+        public List<BsonDocument> GetConversationRequest(string senderEmail,string ConversationType)
         {
             List<BsonDocument> _categories = new List<BsonDocument>();
 
             try
             {
-                var _query = Query.And(Query<Conversation>.EQ(p => p.Content, null), Query<Conversation>.EQ(p1 => p1.ReceiverEmail, senderEmail));
+                
+                var _query = Query.And(Query<Conversation>.EQ(p => p.Content, null), Query<Conversation>.EQ(p1 => p1.ReceiverEmail, senderEmail), Query<Conversation>.EQ(p1 => p1.ConversationType, ConversationType));
                 var _conversationCollection = _kindleDatabase.GetCollection("Conversations");
 
                 _categories = _conversationCollection.Find(

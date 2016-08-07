@@ -22,7 +22,7 @@ namespace KindleSpur.Models.Interfaces.Repository
 
         List<BsonDocument> GetConversation(string senderEmail, string receiverEmail);
 
-        List<BsonDocument> GetConversationRequest(string senderEmail);
+        List<BsonDocument> GetConversationRequest(string senderEmail,string RequestType);
     }
 
 }
