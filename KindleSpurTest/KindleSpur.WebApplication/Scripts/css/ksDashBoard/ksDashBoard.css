@@ -323,6 +323,7 @@ border-top: 1px solid lightgray;
 }
 .mentoringStatusImg {
     margin: auto;
+    height:100px;
     -webkit-transition: all 0.7s ease;
    transition: all 0.7s ease;
 
@@ -405,4 +406,49 @@ position: relative;
 .TrandingTopicDescription{
     height:30px;
      font-size: 9px;
+}
+.defaultClassSlider {
+    position: absolute;
+    top: 12%;
+    /* bottom: 50px; */
+    right: -19%;
+    height: 500px;
+    width: 250px;
+    border: solid;
+    padding: 0px 12px 0px 19px;
+    transition : 1s all ease;
+}
+.animationClassSlider {
+    position: absolute;
+    top: 12%;
+    right: 0% !important;
+    height: 500px;
+    width: 250px;
+    border: solid;
+    padding: 28px 9px 4px 26px;
+    transition : 1s all ease;
+        background:#f3f3f3;
+}
+.defaultleftClassSlider {
+    position: absolute;
+    top: 12%;
+    /* bottom: 50px; */
+    left: -19%;
+    height: 500px;
+    width: 250px;
+    border: solid;
+    padding: 0px 12px 0px 19px;
+    transition : 1s all ease;
+}
+
+.animationleftClassSlider {
+    position: absolute;
+    top: 12%;
+    left: 0% !important;
+    height: 500px;
+    width: 250px;
+    border: solid;
+    padding: 46px 14px 0px 16px;
+    transition : 1s all ease;
+    background:#f3f3f3;
 }
