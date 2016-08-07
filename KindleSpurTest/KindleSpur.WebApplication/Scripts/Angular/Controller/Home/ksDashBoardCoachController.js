@@ -282,18 +282,22 @@
                 $scope.conversationListNew = [];
                 var _coach = {};
                 for (var k = 0; k < iObj.data.Result.length; k++) {
-                    if (_coach[iObj.data.Result[k].skill]) {
-                        _coach[iObj.data.Result[k].skill].chatMesssage.push(iObj.data.Result[k]);
+                    if (_coach[iObj.data.Result[k].skill]) {                        
+                        _coach[iObj.data.Result[k].skill].user[iObj.data.Result[k].SenderEmail] = iObj.data.Result[k];
                     } else {
-                        _coach[iObj.data.Result[k].skill] = iObj.data.Result[k];
-                        _coach[iObj.data.Result[k].skill].chatMesssage = [iObj.data.Result[k]];
+                        _coach[iObj.data.Result[k].skill] = { user : {} };
+                        _coach[iObj.data.Result[k].skill].user[iObj.data.Result[k].SenderEmail] = iObj.data.Result[k];
                     }
                 }
 
-                console.error(_coach)
+               // console.error(_coach)
                 for (var _key in _coach) {
-                    var _con = angular.copy(_coach[_key])
-                    $scope.conversationListNew.push(_con);
+                    for (var _user in _coach[_key].user) {
+                        _coach[_key].user[_user].skillName = _key;
+                        $scope.conversationListNew.push(_coach[_key].user[_user]);
+                    }
+                    //var _con = angular.copy(_coach[_key])
+                   // $scope.conversationListNew.push(_con);
                 }
               //  $scope.conversationListNew = iObj.data.Result;
                 if ($scope.conversationListNew && $scope.conversationListNew.length > 0) {
