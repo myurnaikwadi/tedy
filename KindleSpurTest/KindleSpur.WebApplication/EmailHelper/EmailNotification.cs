@@ -9,22 +9,27 @@ namespace KindleSpur.WebApplication.MessageHelper
 {
     public class EmailNotification
     {
-        static string emailAddress = "pranav.suknale@livewireprojects.com";
-        static string password = "pranav2515";
+        static string emailAddress = "kindlespur@livewireprojects.com";
+        // static string emailAddress = "support@kindlespur.com";
+        static string password = "livewireprojects";
+        //static string password = "dreamwewillachieve";
         static MailAddress aliasemailsendername = new MailAddress(emailAddress.ToString(), "KindleSpur Support Team");
+        static int portNumber = 587;
+        //static string smtpServer = "smtpout.asia.secureserver.net";
+        static string smtpServer = "smtp.gmail.com";
 
         public static void SendEmail(User signupObject, string uri)
         {
-            
+
             MailMessage message = new MailMessage(aliasemailsendername.ToString(), signupObject.EmailAddress);
             message.Subject = "Account Activation";
             string body = "Hello " + signupObject.FirstName + ",";
             body += "<br/><br/>Please click the following link to activate your account<br/>";
-            body += "<br/><br/><a style='background:#000000; color:#fafafa; padding:10px 100px 10px 100px; width:350px; text-decoration:none; font-weight:bold; font-size:20px;' href = '" + uri  + "'>Click here to activate your account.</a>";
+            body += "<br/><br/><a style='background:#000000; color:#fafafa; padding:10px 100px 10px 100px; width:350px; text-decoration:none; font-weight:bold; font-size:20px;' href = '" + uri + "'>Click here to activate your account.</a>";
             body += "<br /><br />Thanks, <br/> KindleSpur Team.";
             message.Body = body;
             message.IsBodyHtml = true;
-            SmtpClient smtp = new SmtpClient("smtp.gmail.com", 587);
+            SmtpClient smtp = new SmtpClient(smtpServer.ToString(), portNumber);
             smtp.Credentials = new System.Net.NetworkCredential(emailAddress.ToString(), password.ToString());
             smtp.EnableSsl = true;
             smtp.Send(message);
@@ -32,7 +37,7 @@ namespace KindleSpur.WebApplication.MessageHelper
 
         public static void SendEmailForgotPassword(User signupObject, string uri)
         {
-           
+
             MailMessage message = new MailMessage(aliasemailsendername.ToString(), signupObject.EmailAddress);
             message.Subject = "Forgot Password";
             string body = "Hello " + signupObject.FirstName + ",";
@@ -41,7 +46,7 @@ namespace KindleSpur.WebApplication.MessageHelper
             body += "<br /><br />Thanks, <br/> KindleSpur Team.";
             message.Body = body;
             message.IsBodyHtml = true;
-            SmtpClient smtp = new SmtpClient("smtp.gmail.com", 587);
+            SmtpClient smtp = new SmtpClient(smtpServer.ToString(), portNumber);
             smtp.Credentials = new System.Net.NetworkCredential(emailAddress.ToString(), password.ToString());
             smtp.EnableSsl = true;
             smtp.Send(message);
@@ -53,7 +58,7 @@ namespace KindleSpur.WebApplication.MessageHelper
             message.Subject = subject;
             message.Body = content;
             message.IsBodyHtml = true;
-            SmtpClient smtp = new SmtpClient("smtp.gmail.com", 587);
+            SmtpClient smtp = new SmtpClient(smtpServer.ToString(), portNumber);
             smtp.Credentials = new System.Net.NetworkCredential(emailAddress.ToString(), password.ToString());
             smtp.EnableSsl = true;
             smtp.Send(message);
@@ -65,7 +70,7 @@ namespace KindleSpur.WebApplication.MessageHelper
             message.Subject = subject;
             message.Body = content;
             message.IsBodyHtml = true;
-            SmtpClient smtp = new SmtpClient("smtp.gmail.com", 587);
+            SmtpClient smtp = new SmtpClient(smtpServer.ToString(), portNumber);
             smtp.Credentials = new System.Net.NetworkCredential(emailAddress.ToString(), password.ToString());
             smtp.EnableSsl = true;
             smtp.Send(message);
