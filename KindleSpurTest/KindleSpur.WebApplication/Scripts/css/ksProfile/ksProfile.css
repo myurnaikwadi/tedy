@@ -11,6 +11,7 @@
 	height 	 : 50%;
 	float  	 : left;
 	display  : flex;
+    background: url('../../../Images/userprofile.png')
 }
 .profileDescSkillParent{
 	position : relative;
@@ -129,7 +130,7 @@ display: flex;
     margin: auto auto;
     border: 1px solid;
     display: flex;
-    background-image: url('~/Images/default-user.png');
+    background-image: url('~/Images/icons/If no Profile photo.png');
   
 }
 .userNameProfile{

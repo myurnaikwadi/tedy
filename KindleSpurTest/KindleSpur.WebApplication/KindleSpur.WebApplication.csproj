@@ -340,6 +340,7 @@
     <Content Include="Images\MedalImage\silverMedal.png" />
     <Content Include="Images\normalMedal.png" />
     <Content Include="Images\pointStatusPanel.png" />
+    <Content Include="Images\profile.png" />
     <Content Include="Images\psrPlant.png" />
     <Content Include="Images\save.png" />
     <Content Include="Images\Tree\Stage 1.png" />
@@ -352,6 +353,7 @@
     <Content Include="Images\Tree\Stage 5 with Fruits.png" />
     <Content Include="Images\Tree\Stage 5.png" />
     <Content Include="Images\tree_psr.png" />
+    <Content Include="Images\userprofile.png" />
     <Content Include="Scripts\ai.0.15.0-build58334.js" />
     <Content Include="Scripts\ai.0.15.0-build58334.min.js" />
     <Content Include="Scripts\angular.js" />
