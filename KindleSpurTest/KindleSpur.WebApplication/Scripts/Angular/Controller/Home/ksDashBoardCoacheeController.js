@@ -47,8 +47,8 @@
     $scope.Coaches = [];
 
     $scope.selectedMenu = 0;
-    var _chatMessageTime = 3000;
-    var _conversationTime = 6000;
+    var _chatMessageTime = 30000;
+    var _conversationTime = 60000;
     $scope.menuClick = function (iIndex, iOption) {
         $scope.selectedMenu = iIndex;
         $scope.stopFight();
