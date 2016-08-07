@@ -75,7 +75,6 @@
     <Compile Include="Interfaces\ISkill.cs" />
     <Compile Include="Interfaces\ITopic.cs" />
     <Compile Include="Interfaces\IUser.cs" />
-    <Compile Include="Interfaces\IUserConversation.cs" />
     <Compile Include="Interfaces\Repository\ICoacheeOrMenteeRepository.cs" />
     <Compile Include="Interfaces\Repository\ICoachOrMentorRepository.cs" />
     <Compile Include="Interfaces\Repository\IConversationRepository.cs" />
