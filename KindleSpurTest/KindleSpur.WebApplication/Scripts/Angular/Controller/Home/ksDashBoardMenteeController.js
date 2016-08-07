@@ -14,9 +14,9 @@
                   , { name: 'SEARCH MENTOR' }
                    , { name: 'KNOWLEDGE FEED' }
                  , { name: 'COMMUNICATION' }
-                
+
                //  , { name: 'RESOURCES' }
-                
+
                  , { name: 'MY REWARDS' }
                  //, { name: 'ADD TOPICS' }
     ]
@@ -63,7 +63,7 @@
     }
     $scope.menuClick = function (iIndex, iOption) {
         $scope.selectedMenu = iIndex;
-       // $scope.askFeedback = false;
+        // $scope.askFeedback = false;
         switch (iIndex) {
             case 3: $scope.getCoachRecord(); break;
             case 4: $scope.getRssFeedData(); break;
@@ -91,6 +91,99 @@
 
             }
         });
+    };
+    $scope.feedBack = {}
+    $scope.feedBack.askFeedback = false;
+    $scope.feedBack.formValue = '0';
+    $scope.askFeedBackFunc = function () {
+        $scope.feedBack.askFeedback = true;
+        $scope.feedBack.formValue = '1';
+        $scope.feedBack.selectedComparioson = 1;
+        $scope.feedBack.selectedAttractive = 1;
+        $scope.feedBack.selectedstar = 1;
+        $scope.feedBack.likeMostMessage = '';
+        $scope.feedBackloaded = { showLoad: false };
+        $scope.loadSlideData(1);
+    }
+    $scope.array = [
+        { name: 'Was the sessions objective achieved ?  ', actionValue: '', type: 'rating', showLoad: false },
+            {name: 'Was the session as per plan ? Was this session fine-tuned based on your previous session feedback ?', actionValue: '1', type: 'radio', showLoad: false},
+                {name: 'What should have been avoided / What should have been better ? Describe ', actionValue: '', type: 'textArea', showLoad: false},
+                        {name: 'What was best about the session ? Describe  ', actionValue: '', type: 'textArea', showLoad: false},
+                        {name: ' Is the Mentor using the best practice of - continuous review and improvement ? ', actionValue: '', type: 'radio', showLoad: false},
+                        {name: 'Did you gain in confidence after the session ?', actionValue: '', type: 'radio', showLoad: false},
+                        {name: 'Was it worth your time, energy and interest ?', type: 'radio', showLoad: false, actionValue: '',},
+                            {name: ' Rate the session ', sessionRating: true, type: 'rating', showLoad: false, actionValue: '',},
+    ];
+
+    $scope.displayArray = [];
+    $scope.counter = 4;
+    $scope.loadSlideData = function (iMode) {
+        $scope.feedBackloaded.showLoad = false;
+        var _loadArray = [];
+        $scope.displayArray = [];
+        if (iMode == 0) {
+            for (var k = 0; k < $scope.counter; k++) {
+                _loadArray.push(angular.copy($scope.array[k]));
+                if (_loadArray.length == $scope.counter) {
+                    break;
+                }
+            }
+        } else {
+            for (var k = 4; k < $scope.array.length; k++) {
+                _loadArray.push(angular.copy($scope.array[k]));
+                if (_loadArray.length == $scope.counter) {
+                    break;
+                }
+            }
+
+        }
+        console.error($scope.displayArray, _loadArray);
+        $scope.displayArray = [].concat(_loadArray);
+        setTimeout(function () {
+            for (var k = 0; k < $scope.displayArray.length; k++) {
+                $scope.displayArray[k].showLoad = true;
+            }
+            $scope.$apply();
+        }, 500);
+    };
+
+    $scope.feedBack.closeFeedBackPopup = function () {
+        $scope.feedBack.askFeedback = false;
+        $scope.feedBack.formValue = '1';
+        $scope.feedBack.selectedComparioson = 1;
+        $scope.feedBack.selectedAttractive = 1;
+        $scope.feedBack.selectedstar = 1;
+        $scope.feedBack.likeMostMessage = '';
+    };
+
+
+    $scope.redeemPointsClick = function () {
+
+        $scope.feedBack.closeFeedBackPopup();
+        serverCommunication.unlockGameCode({
+            //   loggedUserDetails: $rootScope.loggedDetail,
+            redeemAction: $scope.redeemAction,
+            successCallBack: function (iObj) {
+                $scope.menuClick(6);
+                console.error('In successCallBack', iObj);
+
+            },
+            failureCallBack: function (iObj) {
+                console.error('In failureCallBack', iObj);
+
+            }
+        });
+    };
+
+    $scope.feedBackSave = function () {
+        //alert('')
+        $scope.menuClick(6);
+    };
+    $scope.closeCallBack = function () {
+        //  alert('closeCallBack')
+
+        $scope.feedBack.closeFeedBackPopup()
     };
 
     $scope.feedCategoryArray = [];
@@ -200,7 +293,7 @@
     //    });
 
     //};
- 
+
     $scope.init = function () {
 
         serverCommunication.getCTSFilters({

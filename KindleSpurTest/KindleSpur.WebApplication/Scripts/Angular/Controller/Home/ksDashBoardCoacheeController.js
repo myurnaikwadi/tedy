@@ -43,7 +43,7 @@
     //];
 
     $scope.applicationRole = [{ name: 'COACHEE' }, { name: 'MENTEE' }, { name: 'COACH' }, { name: 'MENTOR' }]
-   
+
     $scope.Coaches = [];
 
     $scope.loadCommunication = function () {
@@ -60,14 +60,13 @@
                 //case 2: $scope.generateGarden(); break;
                 //case 6: $scope.getPointsRecord(); break;
             case 5:
-                if ($scope.conversationListNew.length > 0)
-                {
+                if ($scope.conversationListNew.length > 0) {
                     $scope.ReceiverName = $scope.conversationListNew[0].FirstName + " " + $scope.conversationListNew[0].LastName;
                     $scope.ReceiverEmail = $scope.conversationListNew[0].EmailAddress;
                     $scope.conversationStartData($scope.loggedEmail);
                     $scope.showSelectedConversation($scope.loggedEmail, $scope.ReceiverEmail);
                 }
-                    break;
+                break;
         }
     };
     $scope.selectedOption = function (iIndex, iCate) {
@@ -77,6 +76,100 @@
             }
         }
     };
+    $scope.feedBack = {}
+    $scope.feedBack.askFeedback = false;
+    $scope.feedBack.formValue = '0';
+    $scope.askFeedBackFunc = function () {
+        $scope.feedBack.askFeedback = true;
+        $scope.feedBack.formValue = '1';
+        $scope.feedBack.selectedComparioson = 1;
+        $scope.feedBack.selectedAttractive = 1;
+        $scope.feedBack.selectedstar = 1;
+        $scope.feedBack.likeMostMessage = '';
+        $scope.feedBackloaded = { showLoad: false };
+        $scope.loadSlideData(1);
+    }
+    $scope.array = [
+      { name: 'Was the sessions objective achieved ?  ', actionValue: '', type: 'rating', showLoad: false },
+       { name: 'Was the session as per plan ? Was this session fine-tuned based on your previous session feedback ?', actionValue: '1', type: 'radio', showLoad: false },
+       { name: 'What should have been avoided / What should have been better ? Describe ', actionValue: '', type: 'textArea', showLoad: false },
+       { name: 'What was best about the session ? Describe  ', actionValue: '', type: 'textArea', showLoad: false },
+       { name: ' Is the Mentor using the best practice of - continuous review and improvement ? ', actionValue: '', type: 'radio', showLoad: false },
+       { name: 'Did you gain in confidence after the session ?', actionValue: '', type: 'radio', showLoad: false },
+       { name: 'Was it worth your time, energy and interest ?', type: 'radio', showLoad: false, actionValue: '', },
+       { name: ' Rate the session ', sessionRating: true, type: 'rating', showLoad: false, actionValue: '', },
+    ];
+
+    $scope.displayArray = [];
+    $scope.counter = 4;
+    $scope.loadSlideData = function (iMode) {
+        $scope.feedBackloaded.showLoad = false;
+        var _loadArray = [];
+        $scope.displayArray = [];
+        if (iMode == 0) {
+            for (var k = 0 ; k < $scope.counter ; k++) {
+                _loadArray.push(angular.copy($scope.array[k]));
+                if (_loadArray.length == $scope.counter) {
+                    break;
+                }
+            }
+        } else {
+            for (var k = 4 ; k < $scope.array.length ; k++) {
+                _loadArray.push(angular.copy($scope.array[k]));
+                if (_loadArray.length == $scope.counter) {
+                    break;
+                }
+            }
+
+        }
+        console.error($scope.displayArray, _loadArray);
+        $scope.displayArray = [].concat(_loadArray);
+        setTimeout(function () {
+            for (var k = 0 ; k < $scope.displayArray.length ; k++) {
+                $scope.displayArray[k].showLoad = true;
+            }
+            $scope.$apply();
+        }, 500);
+    };
+
+    $scope.feedBack.closeFeedBackPopup = function () {
+        $scope.feedBack.askFeedback = false;
+        $scope.feedBack.formValue = '1';
+        $scope.feedBack.selectedComparioson = 1;
+        $scope.feedBack.selectedAttractive = 1;
+        $scope.feedBack.selectedstar = 1;
+        $scope.feedBack.likeMostMessage = '';
+    };
+
+
+    $scope.redeemPointsClick = function () {
+
+        $scope.feedBack.closeFeedBackPopup();
+        serverCommunication.unlockGameCode({
+            //   loggedUserDetails: $rootScope.loggedDetail,
+            redeemAction: $scope.redeemAction,
+            successCallBack: function (iObj) {
+                $scope.menuClick(6);
+                console.error('In successCallBack', iObj);
+
+            },
+            failureCallBack: function (iObj) {
+                console.error('In failureCallBack', iObj);
+
+            }
+        });
+    };
+
+    $scope.feedBackSave = function () {
+        //alert('')
+        $scope.menuClick(6);
+    };
+    $scope.closeCallBack = function () {
+        //  alert('closeCallBack')
+
+        $scope.feedBack.closeFeedBackPopup()
+    };
+
     $scope.feedCategoryArray = [];
     $scope.getRssFeedData = function () {
         //feedback
@@ -180,7 +273,7 @@
         $scope.searching = false;
         serverCommunication.getCoaches({
             filter: skill,
-            role : 'Coach',
+            role: 'Coach',
             successCallBack: function (result) {
                 console.log('Result - ', result);
                 if (result.data)
@@ -200,7 +293,7 @@
 
     $scope.getCoachRecord = function () {
         serverCommunication.getRecommendedCoach({
-            Role : 'Coach',
+            Role: 'Coach',
             successCallBack: function (result) {
                 console.error(result);
 
@@ -243,7 +336,7 @@
                 function ISODate(d) { return d; }
                 $scope.conversationListNew = iObj.data.Result;
                 if ($scope.conversationListNew && $scope.conversationListNew.length > 0)
-                     $scope.conversationListNew[0].selectedConversation = true;
+                    $scope.conversationListNew[0].selectedConversation = true;
             },
             failureCallBack: function (iObj) {
                 console.debug('In failureCallBack', iObj);
@@ -266,7 +359,7 @@
             }
         });
     };
-    
+
     $scope.conversationLoad = function (iIndex, iCategory) {
         for (var i = 0 ; i < $scope.conversationListNew.length ; i++) {
             $scope.conversationListNew[i].selectedConversation = false;
@@ -293,7 +386,7 @@
         serverCommunication.getConversationDetails({
             senderEmail: SenderEmail,
             receiverEmail: ReceiverEmail,
-            ConversationType :"Coaching",
+            ConversationType: "Coaching",
             successCallBack: function (iObj) {
                 console.debug('In successCallBack', iObj);
 
@@ -344,7 +437,7 @@
                 console.debug('In failureCallBack', iObj);
             }
         });
-        
+
     };
 
     $scope.conversationClick = function (isVerified, emailId) {
@@ -368,16 +461,16 @@
             ReceiverEmail: $scope.conversation.ReceiverEmail,
             SendOrReceive: $scope.conversation.SendOrReceive,
             IsVerified: $scope.conversation.IsVerified,
-            ConversationClosed : false,
-            ConversationType:"Coaching",
+            ConversationClosed: false,
+            ConversationType: "Coaching",
             Skill: 'Finance Management'
         }
         console.debug(_object);
-       // return
+        // return
         serverCommunication.sendConversation({
             loggedUserDetails: _object,
             ReceiverName: $scope.ReceiverName,
-            Role: 'Coachee',          
+            Role: 'Coachee',
             successCallBack: function () {
                 $scope.conversation.Message = "";
                 if (_object.Content != null) {
@@ -407,14 +500,14 @@
             contentText = 'SESSION REQUEST BY ' + $scope.ApprovalName + ' HAS BEEN ACCEPTED';
         else
             contentText = null;
-            
+
         var _object = {
             SenderEmail: SenderEmail,
             ReceiverEmail: ReceiverEmail,
             Content: contentText,
             IsVerified: $scope.conversation.IsVerified,
             ConversationClosed: false,
-            ConversationType:"Coaching",
+            ConversationType: "Coaching",
             Skill: 'Finance Management'
         }
 
@@ -512,7 +605,7 @@
 
     $scope.init = function () {
         serverCommunication.getMyCoacheeSelection({
-            Role : 'Coach',
+            Role: 'Coach',
             successCallBack: function (iObj) {
                 console.error('In getMyCoacheeSelection', iObj);
                 var _myCtsInfo = seperateDataAsPerCTS(iObj);
