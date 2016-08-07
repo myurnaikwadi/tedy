@@ -142,11 +142,11 @@ namespace KindleSpur.WebApplication.Controllers
 
                         string content = "Hello " + ReceiverName + ",";
                         if (Role == "Coachee")
-                            content += "<br/><br/>You have a coaching invite from " + senderName + " for Skill '" + _obj.Content + "'.<br/>";
+                            content += "<br/><br/>You have a coaching invite from " + senderName + " for Skill '" + _obj.skill + "'.<br/>";
                         else if (Role == "Mentee")
-                            content += "<br/><br/>You have a mentoring invite from " + senderName + " for Topic '" + _obj.Content + "'.<br/>";
+                            content += "<br/><br/>You have a mentoring invite from " + senderName + " for Topic '" + _obj.skill + "'.<br/>";
                         else
-                            content += "<br/><br/>You have a mentoring invite from " + senderName + " for Topic '" + _obj.Content + "'.<br/>";
+                            content += "<br/><br/>You have a mentoring invite from " + senderName + " for Topic '" + _obj.skill + "'.<br/>";
 
                         content += "<br/><br/>To accept or decline please click on the following link - <a href = '" + uri + "'>" + uri + "</a>";
                         content += "<br /><br />Regards, <br/> KindleSpur Team.";

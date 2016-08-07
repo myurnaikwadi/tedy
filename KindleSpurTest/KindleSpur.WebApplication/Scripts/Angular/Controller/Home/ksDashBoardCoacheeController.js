@@ -499,7 +499,7 @@
             IsVerified: $scope.conversation.IsVerified,
             ConversationClosed: false,
             ConversationType: "Coaching",
-            Skill: iCoach.Skill.Name
+            skill: iCoach.Skill.Name
         }
         console.debug(_object);
         // return
