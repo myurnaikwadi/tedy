@@ -429,9 +429,13 @@ app.factory('serverCommunication', function ($http) {
             $http.post('/Value/SaveValueFeedStory', iObj.selectedFeed).then(iObj.successCallBack, iObj.failureCallBack);
         },
         getConversation: function (iObj) {
+
+            var _action = '/Conversation/GetConversationForSender';
+            if (iObj.Role == 'Coach')
+                _action = '/Conversation/ListConversationForReceiver';
             var req = {
                 method: 'POST',
-                url: '/Conversation/GetConversation',
+                url: _action,
                 headers: {
                     'Content-Type': 'application/json'
                 },
