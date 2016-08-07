@@ -1,10 +1,10 @@
 ﻿<div class="parentBody">
     <div class="applicationProfilePanel" style="position : relative;width : 100%;height: 100%;float : left;">
         <img ng-show="editRequired == 'false'" ng-click="closeProfilePopup()" style="width: 15px;height: 15px;top:5px;right: 5px;bottom: 0;position: absolute;z-index:1;" title="Cancel" src="~/Images/cancel.png" />
-        <div class="profileBackgroundImageParent" style="background:gray;">
+        <div class="profileBackgroundImageParent" style="background: url('../../../Images/userprofile.png');">
             <!--displayBackgroundImage over here -->
             <div class="profileDetailsPickerParent">
-                <div class="profilePicker">
+                <div class="profilePicker">x
 
                     <img ng-hide="editRequired == 'false'" ng-click="triggerUpload()" style="width: 20px; height: 20px; float: right;margin: 1% auto;margin-right: 1%;" id="orgImage" src="~/Images/camera.png" />
                     <input type="file" name="Image" onchange="angular.element(this).scope().uploadFileFunction()" ng-model="acceptedFile" style="display: none" id="fileInputIdRv" name="filedata" />
@@ -12,7 +12,7 @@
                 </div>
                 <div class="profileDetails" style="background: white;">
                     <div class="profileImageParent">
-                        <div class="profileImageProfile" style="width: 85%;height: 82%;">
+                        <div class="profileImageProfile" style="background: url('../../../Images/icons/If no Profile photo.png') no-repeat center; width: 85%; height: 82%;">
 
                             <img ng-hide="editRequired == 'false'" ng-click="triggerUpload(true)" style="width: 20px; height: 20px; background: white;float: right;margin: 1% auto;margin-right: 1%;" id="orgImage" src="~/Images/camera.png" />
                             <input type="file" onchange="angular.element(this).scope().uploadFileFunction()" ng-model="acceptedFile" style="display: none" id="fileInputIdRv" name="filedata" />

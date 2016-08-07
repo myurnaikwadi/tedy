@@ -39,25 +39,20 @@
                         </div>
 
                     </div>
-                    @*<div class="barLandingPage">
+                    <div class="barLandingPage">
                         <svg height='100%' width='100%' viewBox='0 0 100 100' preserveAspectRatio='xMidYMin meet'>
-                            <defs>
-                                <linearGradient id='gradw'>
-                                    <stop stop-color='black' />
-                                    <stop offset='100%' stop-color='magenta' />
-                                </linearGradient>
-                            </defs>
+                           
                             <line id='line2' x1='95' y1='5' x2='5' y2='95' />
                         </svg>
-                    </div>*@
+                    </div>
                     <div class="defaultcentral" ng-class="{showpopup  :lwp == true}"></div>
                     <div class="mentoringStatusClass" ng-mouseleave="lwp=false;" ng-mouseover="lwp=true;" ng-click="loadMentoringView()">
                         <h5 class="mentoringStatusLable">MENTORING AND COACHING</h5>
-                        <img class="mentoringStatusImg" ng-src="{{ lwp == true ? 'Images/Coaching1.png' :  'Images/doorEntry.png' }}"/>
+                        <img class="mentoringStatusImg" ng-src="{{'Images/doorEntry.png' }}"/>
                     </div>
                     <div class="defaultlwpcentral" ng-class="{shownewpopup  :lwp2 == true}"></div>               
                     <div class="vcsPanelClass" ng-click="loadVcsView()" ng-mouseleave="lwp2=false;" ng-mouseover="lwp2=true;">
-                        <img class="vcsPanelImg" style="width: 135px;" ng-src="{{ lwp2 == true ? 'Images/Game2.png' : 'Images/gameConsole.png' }}" />
+                        <img class="vcsPanelImg" style="width: 135px;" ng-src= 'Images/gameConsole.png' }}" />
                         <h5 class="vcsPanelLable" style="">THE VALUE CREATION GAME</h5>
                     </div>           
                     <div class="defaultClassSlider" ng-class="{animationClassSlider  :lwp2 == true }">
