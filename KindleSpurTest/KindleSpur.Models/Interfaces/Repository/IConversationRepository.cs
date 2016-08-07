@@ -18,7 +18,7 @@ namespace KindleSpur.Models.Interfaces.Repository
 
         IConversation GetConversationDetail(int conversationId);
 
-        List<BsonDocument> ListConversation(string loggedEmail, string ConversationType);
+        List<BsonDocument> ListConversationForSender(string loggedEmail, string ConversationType);
 
         List<BsonDocument> GetConversation(string senderEmail, string receiverEmail, string ConversationType);
 

@@ -26,7 +26,8 @@ namespace KindleSpur.WebApplication.Controllers
         public ActionResult Index()
         {
             ConversationRepository _repo = new ConversationRepository();
-            _repo.ListConversation(((IUser)Session["User"]).EmailAddress,"Coaching");
+            _repo.ListConversationForSender(((IUser)Session["User"]).EmailAddress,"Coaching");
+            _repo.ListConversationForReceiver(((IUser)Session["User"]).EmailAddress, "Coaching");
             return View();
         }
 
@@ -44,14 +45,14 @@ namespace KindleSpur.WebApplication.Controllers
         //    return Json(new { Result = result }, JsonRequestBehavior.AllowGet);
         //}
 
-        public ActionResult GetConversation(string loggedEmail,string ConversationType)
+        public ActionResult GetConversationForSender(string loggedEmail,string ConversationType)
         {
 
             ConversationRepository _repo = new ConversationRepository();
             List<Request> result = new List<Request>(); 
 
             UserRepository ur = new UserRepository();
-            foreach (var value in _repo.ListConversation(((IUser)Session["User"]).EmailAddress, ConversationType))
+            foreach (var value in _repo.ListConversationForSender(((IUser)Session["User"]).EmailAddress, ConversationType))
             {
                 var recevicedetails = ur.GetUserDetail(value[0].ToString());
                 Request req = new Models.Request();
@@ -66,6 +67,31 @@ namespace KindleSpur.WebApplication.Controllers
                 result.Add(req);
             }
             
+            return Json(new { Result = result }, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult ListConversationForReceiver(string loggedEmail, string ConversationType)
+        {
+
+            ConversationRepository _repo = new ConversationRepository();
+            List<Request> result = new List<Request>();
+
+            UserRepository ur = new UserRepository();
+            foreach (var value in _repo.ListConversationForReceiver(((IUser)Session["User"]).EmailAddress, ConversationType))
+            {
+                var recevicedetails = ur.GetUserDetail(value[0].ToString());
+                Request req = new Models.Request();
+                req.FirstName = recevicedetails.FirstName;
+                req.LastName = recevicedetails.LastName;
+                req.EmailAddress = recevicedetails.EmailAddress;
+                req.skill = value["skill"].ToString();
+                req.ConversationType = value["ConversationType"].ToString();
+                if (value["ConversationId"] == null) { req.ConversationId = null; } else { req.ConversationId = value["ConversationId"].ToString(); }
+                if (value["ConversationParentId"] == null) { req.ConversationParentId = null; } else { req.ConversationParentId = value["ConversationParentId"].ToString(); }
+
+                result.Add(req);
+            }
+
             return Json(new { Result = result }, JsonRequestBehavior.AllowGet);
         }
 

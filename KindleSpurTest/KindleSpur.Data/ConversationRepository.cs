@@ -109,38 +109,66 @@ namespace KindleSpur.Data
             return _transactionStatus;
         }
 
-
-        public List<BsonDocument> ListConversation(string loggedEmail, string ConversationType)
+        public List<BsonDocument> ListConversationForReceiver(string loggedEmail, string ConversationType)
         {
             List<BsonDocument> _categories = new List<BsonDocument>();
             List<BsonDocument> _checkUser = new List<BsonDocument>();
 
             try
             {
-                var _query = Query.And(Query.Or(Query<Conversation>.EQ(p => p.SenderEmail, loggedEmail), Query<Conversation>.EQ(p => p.ReceiverEmail, loggedEmail)), Query<Conversation>.EQ(p => p.IsVerified, true), Query<Conversation>.EQ(p1 => p1.ConversationType, ConversationType));
+                //var _query = Query.And(Query.Or(Query<Conversation>.EQ(p => p.SenderEmail, loggedEmail), Query<Conversation>.EQ(p => p.ReceiverEmail, loggedEmail)), Query<Conversation>.EQ(p => p.IsVerified, true), Query<Conversation>.EQ(p1 => p1.ConversationType, ConversationType));
 
                 var _conversationCollection = _kindleDatabase.GetCollection("Conversations");
 
-                _checkUser = _conversationCollection.Find(_query).ToList();
-                if (_checkUser.Count() > 0)
-                {
-                    _categories = _conversationCollection.Find(
-                        Query.And(Query<Conversation>.EQ(p => p.SenderEmail, loggedEmail), Query<Conversation>.EQ(p => p.IsVerified, true), Query<Conversation>.EQ(p1 => p1.ConversationType, ConversationType))
-                        ).SetFields(Fields.Exclude("_id").Include("ReceiverEmail", "skill", "ConversationType", "ConversationId", "ConversationParentId")).Distinct().ToList();
-                }
-                else
-                {
-                    var _query1 = //Query.Or(
-                                  // Query.And(
-                                  //             Query<Conversation>.EQ(p => p.SenderEmail, loggedEmail), Query<Conversation>.EQ(p => p.IsVerified, true)),
-                    Query.And(
-                                Query<Conversation>.EQ(p => p.ReceiverEmail, loggedEmail), Query<Conversation>.EQ(p => p.IsVerified, true), Query<Conversation>.EQ(p1 => p1.ConversationType, ConversationType))
-                        ;
-                    _categories = _conversationCollection.Find(
-                    _query1
-                    ).SetFields(Fields.Exclude("_id").Include("SenderEmail", "skill", "ConversationType", "ConversationId", "ConversationParentId")).Distinct().ToList();
-                }
+                //_checkUser = _conversationCollection.Find(_query).ToList();
+                //if (_checkUser.Count() > 0)
+                //{
+                var _query1 = //Query.Or(
+                              // Query.And(
+                              //             Query<Conversation>.EQ(p => p.SenderEmail, loggedEmail), Query<Conversation>.EQ(p => p.IsVerified, true)),
+                   Query.And(
+                               Query<Conversation>.EQ(p => p.ReceiverEmail, loggedEmail), Query<Conversation>.EQ(p => p.IsVerified, true), Query<Conversation>.EQ(p1 => p1.ConversationType, ConversationType))
+                       ;
+                _categories = _conversationCollection.Find(
+                _query1
+                ).SetFields(Fields.Exclude("_id").Include("ReceiverEmail", "skill", "ConversationType", "ConversationId", "ConversationParentId")).Distinct().ToList();
 
+                //}
+                //else
+                //{
+                //    var _query1 = //Query.Or(
+                //                  // Query.And(
+                //                  //             Query<Conversation>.EQ(p => p.SenderEmail, loggedEmail), Query<Conversation>.EQ(p => p.IsVerified, true)),
+                //    Query.And(
+                //                Query<Conversation>.EQ(p => p.ReceiverEmail, loggedEmail), Query<Conversation>.EQ(p => p.IsVerified, true), Query<Conversation>.EQ(p1 => p1.ConversationType, ConversationType))
+                //        ;
+                //    _categories = _conversationCollection.Find(
+                //    _query1
+                //    ).SetFields(Fields.Exclude("_id").Include("SenderEmail", "skill", "ConversationType", "ConversationId", "ConversationParentId")).Distinct().ToList();
+                //}
+
+
+                //_categories = _conversationCollection.Find().SetFields(Fields.Exclude("_id")).ToList();
+            }
+            catch (MongoException ex)
+            {
+                _logCollection.Insert("{ Error : 'Failed at ListConversation().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ");
+            }
+
+            return _categories;
+        }
+        public List<BsonDocument> ListConversationForSender(string loggedEmail, string ConversationType)
+        {
+            List<BsonDocument> _categories = new List<BsonDocument>();
+            List<BsonDocument> _checkUser = new List<BsonDocument>();
+
+            try
+            {
+                var _conversationCollection = _kindleDatabase.GetCollection("Conversations");
+
+                _categories = _conversationCollection.Find(
+                      Query.And(Query<Conversation>.EQ(p => p.SenderEmail, loggedEmail), Query<Conversation>.EQ(p => p.IsVerified, true), Query<Conversation>.EQ(p1 => p1.ConversationType, ConversationType))
+                      ).SetFields(Fields.Exclude("_id").Include("SenderEmail", "skill", "ConversationType", "ConversationId", "ConversationParentId")).Distinct().ToList();
 
                 //_categories = _conversationCollection.Find().SetFields(Fields.Exclude("_id")).ToList();
             }
