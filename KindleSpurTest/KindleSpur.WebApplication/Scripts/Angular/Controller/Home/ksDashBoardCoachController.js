@@ -425,7 +425,7 @@
 
     $scope.updateConversation = function (isVerfied, SenderEmail, ReceiverEmail, iNotificationDash) {
         $scope.conversation.IsVerified = isVerfied;
-        console.error(iNotificationDash)
+        console.error(iNotificationDash);
         var contentText = "";
         if (isVerfied != false)
             contentText = 'SESSION REQUEST BY ' + $scope.ApprovalName + ' HAS BEEN ACCEPTED';
@@ -447,7 +447,7 @@
             ConversationParentId: iNotificationDash.ConversationId,
         }
 
-        return
+     //   return
         serverCommunication.updateConversation({
             loggedUserDetails: _object,
             ReceiverName: $scope.ApprovalName,

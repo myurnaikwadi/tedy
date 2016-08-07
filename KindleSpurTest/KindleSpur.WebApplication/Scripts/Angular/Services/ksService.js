@@ -485,6 +485,7 @@ app.factory('serverCommunication', function ($http) {
             $http.post('/Conversation/Create', iObj.loggedUserDetails, iObj.ReceiverName, iObj.Role).then(iObj.successCallBack, iObj.failureCallBack)
         },
         updateConversation: function (iObj) {
+            console.error(iObj)
             $http.post('/Conversation/UpdateConversationStatus', iObj.loggedUserDetails, iObj.ReceiverName, iObj.Role).then(iObj.successCallBack, iObj.failureCallBack)
         },
 
