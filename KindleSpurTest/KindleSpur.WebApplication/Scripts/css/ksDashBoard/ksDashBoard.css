@@ -320,13 +320,15 @@ border-top: 1px solid lightgray;
     font-weight: 600;
     -webkit-transition: all 0.7s ease;
     transition: all 0.7s ease;
+    cursor:pointer;
 
 }
 .mentoringStatusImg {
     margin: auto;
     height:100px;
     -webkit-transition: all 0.7s ease;
-   transition: all 0.7s ease;
+    transition: all 0.7s ease;
+    cursor:pointer;
 
 }
 
@@ -337,12 +339,14 @@ border-top: 1px solid lightgray;
    font-weight: 600;
    -webkit-transition: all 0.7s ease;
    transition: all 0.7s ease;
+   cursor:pointer;
 
 }
 .vcsPanelImg {
    margin: auto;
    -webkit-transition: all 0.7s ease;
    transition: all 0.7s ease;
+   cursor:pointer;
 }
 
 /*line :not(.marker-path), line {
@@ -428,7 +432,9 @@ position: relative;
     border: solid;
     padding: 28px 9px 4px 26px;
     transition : 1s all ease;
-        background:#f3f3f3;
+    background:#f3f3f3;
+    border-bottom-left-radius:77px 54px;
+
 }
 .defaultleftClassSlider {
     position: absolute;

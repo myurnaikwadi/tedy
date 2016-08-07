@@ -429,9 +429,13 @@ app.factory('serverCommunication', function ($http) {
             $http.post('/Value/SaveValueFeedStory', iObj.selectedFeed).then(iObj.successCallBack, iObj.failureCallBack);
         },
         getConversation: function (iObj) {
+
+            var _action = '/Conversation/GetConversationForSender';
+            if (iObj.Role == 'Coach')
+                _action = '/Conversation/ListConversationForReceiver';
             var req = {
                 method: 'POST',
-                url: '/Conversation/GetConversation',
+                url: _action,
                 headers: {
                     'Content-Type': 'application/json'
                 },
@@ -448,7 +452,7 @@ app.factory('serverCommunication', function ($http) {
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                data: { senderEmail: iObj.senderEmail, receiverEmail: iObj.receiverEmail, ConversationType : "Coaching"  }
+                data: {  ParentId: iObj.ParentId, ConversationType: "Coaching" }
             }
             $http(req).then(iObj.successCallBack, iObj.failureCallBack);
         },
@@ -481,6 +485,7 @@ app.factory('serverCommunication', function ($http) {
             $http.post('/Conversation/Create', iObj.loggedUserDetails, iObj.ReceiverName, iObj.Role).then(iObj.successCallBack, iObj.failureCallBack)
         },
         updateConversation: function (iObj) {
+            console.error(iObj)
             $http.post('/Conversation/UpdateConversationStatus', iObj.loggedUserDetails, iObj.ReceiverName, iObj.Role).then(iObj.successCallBack, iObj.failureCallBack)
         },
 

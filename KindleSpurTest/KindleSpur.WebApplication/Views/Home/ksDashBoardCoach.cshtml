@@ -59,7 +59,7 @@
                             <div class="conversationList " ng-click="conversationLoad($index,conversation)" ng-repeat="conversation in conversationListNew">
                                 <div class="conversationListPanel genericPointerClass" ng-class="{ highlightedGrayClass : conversation.selectedConversation == true }">
                                     <div style="float:left; margin: auto auto;width: 85%; text-transform: uppercase;">
-                                        <h5 style="margin:auto auto;margin-left: 0;font-size: large;float: left;width: 88%;    font-weight: 700;    font-size: 15px;">{{conversation.FirstName}} {{conversation.LastName}}</h5>
+                                        <h5 style="margin:auto auto;margin-left: 0;font-size: large;float: left;width: 88%;    font-weight: 700;    font-size: 15px;">{{conversation.FirstName+" "+conversation.LastName+" - "+conversation.skill}}</h5>
                                         <div class="applicationNotiCount" title="5" style=" display flex; float:left; text-align center; height 15px; width
                                              15px;">
                                             <h6 class="fontClass" style=" font-size:10px;display inline-block;text-align center; text-overflow clip; margin auto auto;color:white;">5</h6>
@@ -239,8 +239,8 @@
                                 <h6 class="notificationWizReason">YOU HAVE COACHING INVITE FROM</h6>
                                 <h4 class="notificationWizName" style="text-transform: uppercase;">{{notificationDash.FirstName}} {{notificationDash.LastName}}</h4>
                                 <div class="notificationWizButton">
-                                    <button class="btnAcceptReject" ng-click="updateConversation(false, loggedEmail, notificationDash.EmailAddress)">R</button>
-                                    <button class="btnAcceptReject" ng-click="updateConversation(true, loggedEmail, notificationDash.EmailAddress)">A</button>
+                                    <button class="btnAcceptReject" ng-click="notificationData.splice($index,1);updateConversation(false, loggedEmail, notificationDash.EmailAddress,notificationDash)">R</button>
+                                    <button class="btnAcceptReject" ng-click="notificationData.splice($index,1);updateConversation(true, loggedEmail, notificationDash.EmailAddress,notificationDash)">A</button>
                                 </div>
                             </div>
                         </div>
@@ -249,8 +249,8 @@
                                 <h6 class="notificationWizReason">YOU HAVE SESSION INVITE FROM</h6>
                                 <h4 class="notificationWizName" style="text-transform: uppercase;">{{notificationRequest.FirstName}} {{notificationRequest.LastName}}</h4>
                                 <div class="notificationWizButton">
-                                    <button class="btnAcceptReject" ng-click="updateMeeting(false, notificationRequest.EmailAddress, loggedEmail, 'Coachee')">R</button>
-                                    <button class="btnAcceptReject" ng-click="updateMeeting(true, notificationRequest.EmailAddress, loggedEmail, 'Coachee')">A</button>
+                                    <button class="btnAcceptReject" ng-click="notificationData.splice($index,1);updateMeeting(false, notificationRequest.EmailAddress, loggedEmail, 'Coachee')">R</button>
+                                    <button class="btnAcceptReject" ng-click="notificationData.splice($index,1);updateMeeting(true, notificationRequest.EmailAddress, loggedEmail, 'Coachee')">A</button>
                                 </div>
                             </div>
                         </div>

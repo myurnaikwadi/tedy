@@ -13,8 +13,9 @@ namespace KindleSpur.Models
         public string EmailAddress { get; set; }
         public string skill { get; set; }
         public string ConversationType { get; set; }
-
         public string ConversationId { get; set; }
+        public string ReceiverEmail { get; set; }
+        public string SenderEmail { get; set; }
         public string ConversationParentId { get; set; }
     }
 }
