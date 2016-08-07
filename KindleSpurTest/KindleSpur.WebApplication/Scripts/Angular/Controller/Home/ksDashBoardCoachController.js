@@ -612,7 +612,10 @@
             SenderEmail: $scope.conversation.SenderEmail,
             ReceiverEmail: $scope.conversation.ReceiverEmail,
             SendOrReceive: $scope.conversation.SendOrReceive,
-            IsVerified: $scope.conversation.IsVerified
+            IsVerified: $scope.conversation.IsVerified,
+            ConversationClosed: false,
+            ConversationType:'Coaching',
+            Skill: 'Finance Management'
         }
         console.debug(_object);
 
@@ -654,7 +657,10 @@
             SenderEmail: SenderEmail,
             ReceiverEmail: ReceiverEmail,
             Content: contentText,
-            IsVerified: $scope.conversation.IsVerified
+            IsVerified: $scope.conversation.IsVerified,
+            ConversationClosed: false,
+            ConversationType:'Coaching',
+            Skill: 'Finance Management'
         }
 
         serverCommunication.updateConversation({

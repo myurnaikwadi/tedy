@@ -23,5 +23,7 @@ namespace KindleSpur.Models
         public string CreateDate { get; set; }
         public DateTime UpdateDate { get; set; }
         public string skill { get; set; }
+        public string ConversationClosed { get; set; }
+        public string ConversationType { get; set; }
     }
 }

@@ -314,7 +314,7 @@
 
         serverCommunication.getConversationRequest({
             successCallBack: function (iObj) {
-                console.debug('In successCallBack', iObj);
+                console.debug('In successCallBack getConversationRequest', iObj);
 
                 function ObjectId(id) { return id; }
                 function ISODate(d) {
@@ -366,14 +366,17 @@
             SenderEmail: $scope.conversation.SenderEmail,
             ReceiverEmail: $scope.conversation.ReceiverEmail,
             SendOrReceive: $scope.conversation.SendOrReceive,
-            IsVerified: $scope.conversation.IsVerified
+            IsVerified: $scope.conversation.IsVerified,
+            ConversationClosed : false,
+            ConversationType:'Coaching',
+            Skill: 'Finance Management'
         }
         console.debug(_object);
 
         serverCommunication.sendConversation({
             loggedUserDetails: _object,
             ReceiverName: $scope.ReceiverName,
-            Role: 'Coachee',
+            Role: 'Coachee',          
             successCallBack: function () {
                 $scope.conversation.Message = "";
                 if (_object.Content != null) {
@@ -408,7 +411,10 @@
             SenderEmail: SenderEmail,
             ReceiverEmail: ReceiverEmail,
             Content: contentText,
-            IsVerified: $scope.conversation.IsVerified
+            IsVerified: $scope.conversation.IsVerified,
+            ConversationClosed: false,
+            ConversationType:'Coaching',
+            Skill: 'Finance Management'
         }
 
         serverCommunication.updateConversation({

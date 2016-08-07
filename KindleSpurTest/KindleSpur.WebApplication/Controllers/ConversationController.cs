@@ -10,6 +10,7 @@ using System.Net.Mail;
 using KindleSpur.WebApplication.MessageHelper;
 using MongoDB.Bson;
 using MongoDB.Driver;
+using MongoDB.Bson.Serialization;
 
 namespace KindleSpur.WebApplication.Controllers
 {
@@ -72,13 +73,16 @@ namespace KindleSpur.WebApplication.Controllers
         {
             ConversationRepository _repo = new ConversationRepository();
             //var result = _repo.GetConversationRequest(((IUser)Session["User"]).EmailAddress).ToJson();
-            List<IUser> result = new List<IUser>();
+            List<Object> result = new List<Object>();
 
             UserRepository ur = new UserRepository();
             foreach (var value in _repo.GetConversationRequest(((IUser)Session["User"]).EmailAddress))
             {
-                var recevicedetails = ur.GetUserDetail(value["SenderEmail"].ToString());
-                result.Add((IUser)recevicedetails);
+                BsonDocument recevicedetails = ur.GetUserDetail(value["SenderEmail"].ToString()).ToBsonDocument();
+                recevicedetails.Add(new BsonElement("skill", value["skill"].ToString()));
+                recevicedetails.Add(new BsonElement("ConversationType", value["ConversationType"].ToString()));    
+                result.Add(BsonSerializer.Deserialize<Object>(recevicedetails));
+                
             }
             return Json(new { Result = result }, JsonRequestBehavior.AllowGet);
             //return Content(result);
