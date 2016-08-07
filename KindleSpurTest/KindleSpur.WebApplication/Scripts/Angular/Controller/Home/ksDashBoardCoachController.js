@@ -433,19 +433,7 @@
     $scope.redeemPointsClick = function () {
 
         $scope.feedBack.closeFeedBackPopup();
-        serverCommunication.unlockGameCode({
-            //   loggedUserDetails: $rootScope.loggedDetail,
-                redeemAction: $scope.redeemAction,
-                successCallBack: function (iObj) {
-                    $scope.menuClick(6);
-                    console.error('In successCallBack', iObj);
-
-        },
-                failureCallBack: function (iObj) {
-                    console.error('In failureCallBack', iObj);
-
-}
-});
+        $scope.menuClick(6);
     };
 
      $scope.feedBackSave = function () {
