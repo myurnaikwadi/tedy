@@ -442,12 +442,19 @@ namespace KindleSpur.Data
         public List<SearchCoachOrMentor> GetRecommendedCoachList(List<SkillOrTopic> lstSkillforCochee, string Role)
         {
             List<CoachOrMentor> lstCoach = new List<CoachOrMentor>();
+            List<string> lstTopicOrSkill = new List<string>();
+
+            foreach (SkillOrTopic s1 in lstSkillforCochee)
+            {
+                lstTopicOrSkill.Add(s1.Name);
+            }
             foreach (SkillOrTopic s1 in lstSkillforCochee)
             {
                 lstCoach.AddRange(_coachOrMentorCollection.FindAs<CoachOrMentor>(Query.And(Query.EQ("Skills.Name", s1.Name), Query.EQ("Role", Role))).SetFields(Fields.Exclude("Feedbacks")));
-            }
+             }
             if (lstCoach.Count > 0)
-                return FillSerachData(lstCoach);
+                //  return FillSerachData(lstCoach);
+                return RecommendedFillSerachData(lstCoach, lstTopicOrSkill);
             return null;
         }
 
@@ -459,7 +466,7 @@ namespace KindleSpur.Data
                 lstMentor.AddRange(_coachOrMentorCollection.FindAs<CoachOrMentor>(Query.And(Query.EQ("Topics.Name", s1), Query.EQ("Role", Role))).SetFields(Fields.Exclude("Feedbacks")));
             }
             if (lstMentor.Count > 0)
-                return FillSerachData(lstMentor);
+                return RecommendedFillSerachData(lstMentor, lstTopicforMentee);
             return null;
         }
 
@@ -467,9 +474,15 @@ namespace KindleSpur.Data
         {
             List<SearchCoachOrMentor> lstSearchCoachOrMentor = new List<SearchCoachOrMentor>();
 
-            for (int i = 0; i < lstCoachOrMentor.Count; i++)
-            {
-                lstSearchCoachOrMentor.Add(GetCoachOrMentorSearchDetails(lstCoachOrMentor[i]));
+            lstCoachOrMentor = lstCoachOrMentor.GroupBy(test => test.UserId)
+                  .Select(grp => grp.First())
+                  .ToList();
+            if(lstCoachOrMentor.Count>0)
+            { 
+                for (int i = 0; i < lstCoachOrMentor.Count; i++)
+                {
+                    lstSearchCoachOrMentor.Add(GetCoachOrMentorSearchDetails(lstCoachOrMentor[i]));
+                }
             }
             return lstSearchCoachOrMentor;
         }
@@ -483,6 +496,52 @@ namespace KindleSpur.Data
                 obj.Skills = c.Skills;
             else if (c.Role == "Mentor")
                 obj.Topics = c.Topics;
+            var _userCollection = con.GetCollection("UserDetails");
+            User userDetail = _userCollection.FindOneAs<User>(Query.EQ("EmailAddress", c.UserId));
+            obj.FirstName = userDetail.FirstName;
+            obj.LastName = userDetail.LastName;
+            obj.PhotoURL = userDetail.Photo;
+            obj.Mobile = userDetail.Mobile;
+            obj.LinkdinURL = userDetail.LinkdinURL;
+            obj.description = userDetail.description;
+            return obj;
+        }
+
+        private List<SearchCoachOrMentor> RecommendedFillSerachData(List<CoachOrMentor> lstCoachOrMentor, List<string> lstTopicOrSkill)
+        {
+            List<SearchCoachOrMentor> lstSearchCoachOrMentor = new List<SearchCoachOrMentor>();
+
+           
+            lstCoachOrMentor = lstCoachOrMentor.GroupBy(test => test.UserId)
+                   .Select(grp => grp.First())
+                   .ToList();
+
+            if (lstCoachOrMentor.Count>0)
+            { 
+
+                for (int i = 0; i < lstCoachOrMentor.Count; i++)
+                {
+                    lstSearchCoachOrMentor.Add(GetRecommendedCoachOrMentorSearchDetails(lstCoachOrMentor[i], lstTopicOrSkill));
+                }
+            }
+            return lstSearchCoachOrMentor;
+        }
+
+        private SearchCoachOrMentor GetRecommendedCoachOrMentorSearchDetails(CoachOrMentor c, List<string> lstTopicOrSkill)
+        {
+            SearchCoachOrMentor obj = new SearchCoachOrMentor();
+            obj.EmailAddress = c.UserId;
+            obj.Role = c.Role;
+            if (c.Role == "Coach")
+            {
+                c.Skills = c.Skills.Where(i => lstTopicOrSkill.Contains(i.Name)).ToList();
+                obj.Skills = c.Skills;
+            }
+            else if (c.Role == "Mentor")
+            {
+                c.Topics = c.Topics.Where(i => lstTopicOrSkill.Contains(i.Name)).ToList();
+                obj.Topics = c.Topics;
+            }
             var _userCollection = con.GetCollection("UserDetails");
             User userDetail = _userCollection.FindOneAs<User>(Query.EQ("EmailAddress", c.UserId));
             obj.FirstName = userDetail.FirstName;

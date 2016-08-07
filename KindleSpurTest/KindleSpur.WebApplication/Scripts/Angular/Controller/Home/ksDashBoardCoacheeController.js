@@ -296,15 +296,50 @@
             Role: 'Coach',
             successCallBack: function (result) {
                 console.error(result);
+                var _mySkill = [];
+                if($rootScope.loggedDetail.coachee){
+                    for(var _key in $rootScope.loggedDetail.coachee.skills){
+                        _mySkill.push(_key);
+                    }
+                   // _mySkill = [].concat(angular.copy($rootScope.loggedDetail.coachee.skills));
+                }
+                if (result.data) {           
+                    $scope.timeSlots = [];
+                    var _coachFinalArr = [];
+                    for (var k = 0; k < result.data.length; k++) {                                            
 
-                if (result.data) {
-                    $scope.Coaches = [].concat(result.data);
+                        for (var i = 0; i < result.data[k].Skills.length; i++) {
+                            var _coach = angular.copy(result.data[k]);
+                            _coach.Skill = {};
+                            _coach.Skill = angular.copy(result.data[k].Skills[i]);
+                            //  _coach.Skill = Object.assign(_coach.Skill, result.data[k].Skills[i]);
+                            if ($scope.timeSlots.length > 0) {
+                                $scope.flag = true;
+                                var _index = $scope.timeSlots.indexOf(result.data[k].Skills[i].Name);
+                                if (_index > -1) {
+                                    $scope.flag = false;
+                                }
+                                if ($scope.flag == true) {
+                                    $scope.timeSlots.push(result.data[k].Skills[i].Name);
+                                    $scope.flag = false;
+                                }
+                            } else {
+                                $scope.flag = false;
+                                $scope.timeSlots.push(result.data[k].Skills[i].Name);
+                            }
+                            _coachFinalArr.push(_coach);
+                        }
+                         
+                    }
+                     
+                    console.error(_coachFinalArr, $scope.timeSlots)
+                    $scope.Coaches = [].concat(_coachFinalArr);
                 }
                 serverCommunication.getCTSFilters({
                     Role: 'Coach',
-                    successCallBack: function (result) {
-                        console.error(result)
-                        result.data.Filters.some(function (iCts) {
+                    successCallBack: function (iResult) {
+                        console.error(iResult)
+                        iResult.data.Filters.some(function (iCts) {
                             if (iCts.Type == 2) {
                                 $scope.availableSkills.push(iCts);
                             }
@@ -440,14 +475,15 @@
 
     };
 
-    $scope.conversationClick = function (isVerified, emailId) {
+    $scope.conversationClick = function (isVerified, iCoach) {
         $scope.conversation.SenderEmail = $scope.loggedEmail;
-        if (emailId != "")
-            $scope.conversation.ReceiverEmail = emailId;
+        var _emailId = iCoach.EmailAddress;
+        if (_emailId != "")
+            $scope.ReceiverEmail = $scope.conversation.ReceiverEmail = _emailId;
         else
             $scope.conversation.ReceiverEmail = $scope.ReceiverEmail;
 
-        $scope.conversation.Content = $scope.conversation.Message;
+        $scope.conversation.Content = iCoach.Skill.Name;
         $scope.conversation.SendOrReceive = "Send";
         $scope.conversation.IsVerified = isVerified;
         $scope.conversation.isRead = false;
@@ -463,13 +499,13 @@
             IsVerified: $scope.conversation.IsVerified,
             ConversationClosed: false,
             ConversationType: "Coaching",
-            Skill: 'Finance Management'
+            Skill: iCoach.Skill.Name
         }
         console.debug(_object);
         // return
         serverCommunication.sendConversation({
             loggedUserDetails: _object,
-            ReceiverName: $scope.ReceiverName,
+            ReceiverName: $scope.conversation.ReceiverEmail,
             Role: 'Coachee',
             successCallBack: function () {
                 $scope.conversation.Message = "";

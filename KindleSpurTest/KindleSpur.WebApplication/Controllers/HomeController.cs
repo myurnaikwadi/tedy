@@ -91,7 +91,7 @@ namespace KindleSpur.WebApplication.Controllers
                                             // store the file inside ~/project folder(Img)  
                 var path = Path.Combine(Server.MapPath("~/Img"), myfile);
                 file.SaveAs(path);
-                if (_repo.UpdateUserPhoto(((IUser)System.Web.HttpContext.Current.Session["User"]).EmailAddress, string.Format("~/Img/{0}", myfile)))
+                if (_repo.UpdateUserPhoto(((IUser)System.Web.HttpContext.Current.Session["User"]).EmailAddress, string.Format("Img/{0}", myfile)))
                 {
                 }
             }
@@ -122,7 +122,7 @@ namespace KindleSpur.WebApplication.Controllers
                                             // store the file inside ~/project folder(Img)  
                 var path = Path.Combine(Server.MapPath("~/Img"), myfile);
                 file.SaveAs(path);
-                if (_repo.UpdateUserPhoto(((IUser)System.Web.HttpContext.Current.Session["User"]).EmailAddress, string.Format("~/Img/{0}", myfile)))
+                if (_repo.UpdateUserPhoto(((IUser)System.Web.HttpContext.Current.Session["User"]).EmailAddress, string.Format("Img/{0}", myfile)))
                 {
                 }
             }

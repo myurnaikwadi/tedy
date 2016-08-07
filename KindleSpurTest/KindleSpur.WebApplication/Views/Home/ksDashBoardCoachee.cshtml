@@ -102,13 +102,13 @@
                                             <div class="mentor-card" ng-repeat="coach in Coaches" cts-mentor-card>
                                                 <div class="mentor-info">
                                                     <span class="profile-close" style="float:right;top:10px;right:10px;"><i class="fa fa-times"></i></span>
-                                                    <div class="profile-image">
-                                                        <img src="https://www.abeautifulsite.net/content/uploads/2014/08/rounded-image-250x250.png" class="img-circle" />
+                                                    <div class="profile-image">                                                        
+                                                        <img ng-src="{{coach.PhotoURL ? coach.PhotoURL : '~/Images/icons/If no Profile photo.png'}}" class="img-circle" />
                                                     </div>
                                                     <div class="profile-info">
                                                         <p class="mentor-name">{{ coach.FirstName +" "+coach.LastName }}</p>
-                                                        <p class="mentor-skils">{{coach.Skill}}</p>
-                                                        <p class="mentor-location">{{coach.City ? coach.City : Maharshtra }} <b>|</b> {{coach.Country ? coach.Country : 'India'}}</p>
+                                                        <p class="mentor-skils">{{coach.Skill.Name}}</p>
+                                                        <p class="mentor-location"> {{coach.Country ? coach.Country : 'India'}}</p>
                                                     </div>
                                                 </div>
                                                 <div class="mentor-actions" style="display:none; position:absolute">
@@ -117,7 +117,7 @@
                                                         <button class="btn col-md-9 btn-gray" data-toggle="modal" data-target="#myModal" style="border-radius:0px;">View Profile</button>
                                                     </div>
                                                     <br />
-                                                    <button class="btn signupButton" style="margin-left: 30%;" ng-click="conversationClick(false, coach.Email)">Request</button>
+                                                    <button class="btn signupButton" style="margin-left: 30%;" ng-click="conversationClick(false, coach)">Request</button>
                                                     <br />
                                                 </div>
                                             </div>

@@ -135,6 +135,7 @@ namespace KindleSpur.WebApplication.Controllers
                 if (_repo.AddNewConversation(_obj))
                 {
                     if(_obj.Content == null) {
+
                         string uri = Request.Url.AbsoluteUri.ToString();
                         string senderName = ((IUser)System.Web.HttpContext.Current.Session["User"]).FirstName + " " + ((IUser)System.Web.HttpContext.Current.Session["User"]).LastName;
                         string subject = "Communication Request from " + senderName;
