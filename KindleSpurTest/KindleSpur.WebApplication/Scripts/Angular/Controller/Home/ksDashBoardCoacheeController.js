@@ -333,7 +333,22 @@
                 console.debug('In successCallBack', iObj);
                 function ObjectId(id) { return id; }
                 function ISODate(d) { return d; }
-                $scope.conversationListNew = iObj.data.Result;
+                $scope.conversationListNew = [];
+                var _coach = {};
+                for (var k = 0; k < iObj.data.Result.length; k++) {
+                    if (_coach[iObj.data.Result[k].skill]) {
+                        _coach[iObj.data.Result[k].skill].chatMesssage.push(iObj.data.Result[k]);
+                    } else {
+                        _coach[iObj.data.Result[k].skill] = iObj.data.Result[k];
+                        _coach[iObj.data.Result[k].skill].chatMesssage = [iObj.data.Result[k]];
+                    }
+                }
+
+                console.error(_coach)
+                for (var _key in _coach) {
+                    var _con = angular.copy(_coach[_key])
+                    $scope.conversationListNew.push(_con);
+                }
                 if ($scope.conversationListNew && $scope.conversationListNew.length > 0) {                  
                         $scope.conversationLoad(0, $scope.conversationListNew[0]);                    
                 }
@@ -371,9 +386,10 @@
 
     $scope.showSelectedConversation = function (SenderEmail, ReceiverEmail) {
         serverCommunication.getConversationDetails({
-            senderEmail: SenderEmail,
-            receiverEmail: ReceiverEmail,
+            //senderEmail: SenderEmail,
+            //receiverEmail: ReceiverEmail,
             ConversationType: "Coaching",
+            ParentId: $scope.openConversation.ConversationParentId,
             successCallBack: function (iObj) {
                 console.debug('In successCallBack', iObj);
 
@@ -553,9 +569,9 @@
             ReceiverName: $scope.ApprovalName,
             Role: 'Coachee',
             successCallBack: function () {
-                $scope.menuClick(5, "CONVERSATIONS");
-                $scope.showSelectedConversation($scope.loggedEmail, $scope.ApprovalName);
-                console.debug('In successCallBack');
+                //$scope.menuClick(5, "CONVERSATIONS");
+             //   $scope.showSelectedConversation($scope.loggedEmail, $scope.ApprovalName);
+              //  console.debug('In successCallBack');
 
             },
             failureCallBack: function (e) {

@@ -452,7 +452,7 @@ app.factory('serverCommunication', function ($http) {
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                data: { senderEmail: iObj.senderEmail, receiverEmail: iObj.receiverEmail, ConversationType : "Coaching"  }
+                data: {  ParentId: iObj.ParentId, ConversationType: "Coaching" }
             }
             $http(req).then(iObj.successCallBack, iObj.failureCallBack);
         },
