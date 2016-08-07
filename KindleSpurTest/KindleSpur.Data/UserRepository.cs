@@ -170,7 +170,7 @@ namespace KindleSpur.Data
             try
             {
                 var userDetail = _userCollection.FindOneAs<User>(Query.EQ("EmailAddress", EmailAddress));
-                userDetail.Photo = PhotoPath;
+                userDetail.coverphoto = PhotoPath;
                 _userCollection.Save(userDetail);
                 _transactionStatus = true;
             }
