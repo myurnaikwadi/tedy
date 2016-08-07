@@ -163,12 +163,11 @@ namespace KindleSpur.WebApplication.Controllers
         //
         // POST: /Coversation/Create
         [HttpPost]
-        public JsonResult Create(Conversation _obj, string ReceiverName, string Role)
+        public ActionResult Create(Conversation _obj, string ReceiverName, string Role)
         {
 
             try
             {
-                ResponseMessage res = new ResponseMessage();
                 //ConversationRepository _repo = new ConversationRepository();
                 //_obj.CreateDate = _obj.UpdateDate = DateTime.Now;
                 //_repo.AddNewConversation(_obj);
@@ -202,9 +201,9 @@ namespace KindleSpur.WebApplication.Controllers
                 }
                 else
                 {
-                    res.FailureCallBack("Conversation is already initiated!!!");
+                    TempData["ErrorMessage"] = "Conversation is already initiated!!!";
                 }
-                return this.Json(res);
+                return RedirectToAction("Index");
             }
             catch (Exception Ex)
             {
