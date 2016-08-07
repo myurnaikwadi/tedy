@@ -126,6 +126,7 @@ namespace KindleSpur.WebApplication.Controllers
                 req.SenderEmail = value["SenderEmail"].ToString();
                 req.ReceiverEmail = value["ReceiverEmail"].ToString();
                 req.ConversationType = value["ConversationType"].ToString();
+
                 if (value["ConversationId"] == null) { req.ConversationId = null; } else { req.ConversationId = value["ConversationId"].ToString(); }
                 if (value["ConversationParentId"] == null) { req.ConversationParentId = null; } else { req.ConversationParentId = value["ConversationParentId"].ToString(); }   
                 //req.ConversationType = value["ConversationType"].ToString();
@@ -217,7 +218,7 @@ namespace KindleSpur.WebApplication.Controllers
         public void UpdateConversationStatus(Conversation _obj, string ReceiverName, string Role)
         {
             ConversationRepository _repo = new ConversationRepository();
-            if (_repo.UpdateConversationStatus(_obj.SenderEmail, _obj.ReceiverEmail, _obj.Content, _obj.IsVerified,_obj.ConversationType, _obj.ConversationParentId))
+            if (_repo.UpdateConversationStatus(_obj.SenderEmail, _obj.ReceiverEmail, _obj.Content, _obj.IsVerified,_obj.ConversationType, _obj.ConversationParentId,_obj.skill))
             {
                 string uri = Request.Url.AbsoluteUri.ToString();
                 string senderName = ((IUser)System.Web.HttpContext.Current.Session["User"]).FirstName + " " + ((IUser)System.Web.HttpContext.Current.Session["User"]).LastName;
