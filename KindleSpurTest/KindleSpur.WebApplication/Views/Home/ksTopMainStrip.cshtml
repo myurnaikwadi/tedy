@@ -1,10 +1,14 @@
 ﻿<div class="applicationLogo">
-    <img ng-click="navigateAsPerRole(4)" class="genericPointerClass" src="~/Images/icons/kindlespurlogo.png"  alt="logo" style="height: auto; width: 95%;margin-left: 12%;margin-top: 1%;" />
+    <img ng-click="navigateAsPerRole(4)" class="genericPointerClass" src="~/Images/icons/kindlespurlogo.png" alt="logo" style="height: auto; width: 95%;margin-left: 12%;margin-top: 1%;" />
 </div>
 @*<div class="applicationSearch">
         <input class="applicationSearchTag" type="search" placeholder="SEARCH">
     </div>*@
 <div class="applicationRightCornerStrip">
+    @*<div class="profileNamePartMain fontClass">
+            <h6 class="profileName">WELCOME</h6>
+            <h6 class="profileName">&nbsp{{loggedDetail.FirstName}}</h6>
+        </div>*@
     <div class="logoutOption">
         <div class="logoutOptionParent">
             <h5 class="fontClass genericPointerClass" ng-click="logout()">LOGOUT</h5>
@@ -18,7 +22,7 @@
             </div>
         </div>
     </div>
-    <div class="roleIcons"  ng-show="notification == true">
+    <div class="roleIcons" ng-show="notification == true">
         <div class="roleIconCircle coacheeBorderColor genericPointerClass" ng-click="navigateAsPerRole(0)"></div>
         <div class="roleIconCircle coachBorderColor genericPointerClass" ng-click="navigateAsPerRole(1)"></div>
         <div class="roleIconCircle menteeBorderColor genericPointerClass" ng-click="navigateAsPerRole(2)"></div>

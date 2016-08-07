@@ -47,7 +47,7 @@ overflow: hidden;
 	width:4%;	
 	height:100%;
 	float: left;
-	background:rgb(231,120,23);
+	background:rgb(215, 44, 40);
 }
 .plusSymbolActivity{
 	float: left;
@@ -370,7 +370,7 @@ input:focus ~ .highlight {
 }
 .impactLabel{ 
     float: left;
-    width: 100%;
+    width: 93%;
     height: 14%;
     display:flex;
 }
@@ -380,7 +380,7 @@ input:focus ~ .highlight {
     height: 86%;
 }
 .selectedZoneClass{
-	border:1px solid #F8C713; background:#F8C713;
+	border:1px solid #F8C713; background:#F8C713;color:white;
 }
 
 .parentBody {
@@ -424,6 +424,7 @@ input:focus ~ .highlight {
     overflow: hidden;
     border: 1px solid #CCCCCC;
     text-overflow: ellipsis;
+    padding:3px;
 }
 .genericPointerClass {
     cursor: pointer;

@@ -27,7 +27,7 @@
                 <div class="parentBody">
 
                     <div class="parentRoleDashboard fontClass">
-                       
+
                         <div style="padding-left:5%;">
                             <h5 style="font-weight:bold;"> VALUE FEED</h5>
                             <div class="ImpactZoneButton">
@@ -51,18 +51,18 @@
                                             </div>
 
 
+                                        </div>
                                     </div>
                                 </div>
-                                </div>
                                 <div class="col-md-1">
-                                    <img src="~/Images/icons/verticle.png" width="61px" height="617px"/>
+                                    <img src="~/Images/icons/verticle.png" width="61px" height="617px" />
                                 </div>
-                                <div class="podcastsContainer col-md-5" >
+                                <div class="podcastsContainer col-md-5">
                                     <div class="storyContainerHeader">
                                         <h5 class="fontClass" style="font-size: 14px;padding-left: 0;">STORY</h5>
 
                                         <h5 class="AddStoryText ">
-                                            Show yourStory
+                                            SHOW YOUR STORY
                                             <div class="addStoryButton" ng-click="addStory()">
                                                 <span class="glyphicon glyphicon-plus" title="Add story"></span>
                                             </div>
@@ -71,15 +71,15 @@
                                     </div>
                                     <div class="ImpactZoneChildDiv">
                                         <div class="MainStoryPanel" ng-repeat="story in StoryDetailArray">
-                                        <div class="storyTitle">
-                                            {{story.StoryTitle}}
-                                        </div>
+                                            <div class="storyTitle">
+                                                {{story.StoryTitle}}
+                                            </div>
                                             <div class="storyDescription">
-                                            {{story.StoryContent}}
-                                        </div>
+                                                {{story.StoryContent}}
+                                            </div>
 
+                                        </div>
                                     </div>
-                                </div>
                                 </div>
 
                             </div>
@@ -88,7 +88,7 @@
 
                         <div ng-show='valueFeeds.addStory' class="addStoryPanel fontClass" style="height: 52%;">
 
-                            
+
                             <div class="addStoryContainer">
                                 <img ng-click="closeaddStoryPopup()" class="addStoryPopupCancleButton" title="Close" src="~/Images/cancel.png" />
                                 <div class="StoryTitlePanel">
@@ -99,7 +99,7 @@
                                     <textarea rows="4" cols="50" class="addStoryTextArea" ng-model="AddStory.Description" placeholder="Write your experiance and difference you created in the selected impact zone" ng-required></textarea>
                                 </div>
                                 <div class="addStoryShareButton">
-                                    <button type="button"  class="signupButton fontClass btn btn-default shareButton" ng-click="shareStoryClick()">SHARE</button>
+                                    <button type="button" class="signupButton fontClass btn btn-default shareButton" ng-click="shareStoryClick()">SHARE</button>
                                 </div>
 
                             </div>
@@ -109,5 +109,5 @@
                 </div>
             </div>
         </div>
-   </div>
+    </div>
 </div>

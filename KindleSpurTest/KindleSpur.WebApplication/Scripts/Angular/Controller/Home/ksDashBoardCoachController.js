@@ -488,8 +488,8 @@
                 function ObjectId(id) { return id; }
                 function ISODate(d) { return d; }
                 $scope.conversationListNew = iObj.data.Result;
-
-                $scope.conversationListNew[0].selectedConversation = true;
+                if ($scope.conversationListNew && $scope.conversationListNew.length > 0)
+                     $scope.conversationListNew[0].selectedConversation = true;
             },
             failureCallBack: function (iObj) {
                 console.debug('In failureCallBack', iObj);

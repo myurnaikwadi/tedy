@@ -44,30 +44,7 @@
 
     $scope.applicationRole = [{ name: 'COACHEE' }, { name: 'MENTEE' }, { name: 'COACH' }, { name: 'MENTOR' }]
    
-    $scope.Coaches = [
-       { Name: 'Amit Devgan', Skill: 'Storage Engineer', City: 'Pune', Country: 'India', Email: 'amit.devgan@gmail.com' },
-       { Name: 'Srinivas R', Skill: 'MVC Devloper', City: 'Pune', Country: 'India', Email: 'srinivasr@gmail.com' },
-       { Name: 'Sagar P', Skill: 'MVC Devloper', City: 'Pune', Country: 'India', Email: 'patilsagar28290@gmail.com' },
-       { Name: 'Manjay D', Skill: 'ASP.NET', City: 'Pune', Country: 'India', Email: 'amit.devgan@gmail.com' },
-       { Name: 'Rajan', Skill: 'Networking', City: 'Pune', Country: 'India', Email: 'rajan@gmail.com' },
-       { Name: 'Abhishek', Skill: 'Java', City: 'Pune', Country: 'India', Email: 'abhishek@gmail.com' },
-       { Name: 'Abhishek', Skill: 'Java', City: 'Pune', Country: 'India', Email: 'amit.devgan@gmail.com' },
-       { Name: 'Keerti', Skill: 'Pharma', City: 'Pune', Country: 'India', Email: 'amit.devgan@gmail.com' },
-       { Name: 'Kunal', Skill: 'Accounts', City: 'Pune', Country: 'India', Email: 'amit.devgan@gmail.com' },
-       { Name: 'Sweta', Skill: 'Accounts', City: 'Pune', Country: 'India', Email: 'shwetah28@gmail.com' },
-       { Name: 'Gaurav', Skill: 'CA', City: 'Pune', Country: 'India' },
-       { Name: 'Shankar', Skill: 'CA', City: 'Pune', Country: 'India' },
-       { Name: 'Shankar', Skill: 'CA', City: 'Pune', Country: 'India' },
-       { Name: 'Shankar', Skill: 'CA', City: 'Pune', Country: 'India' },
-       { Name: 'Shankar', Skill: 'CA', City: 'Pune', Country: 'India' },
-       { Name: 'Shankar', Skill: 'CA', City: 'Pune', Country: 'India' },
-       { Name: 'Shankar', Skill: 'CA', City: 'Pune', Country: 'India' },
-       { Name: 'Shankar', Skill: 'CA', City: 'Pune', Country: 'India' },
-       { Name: 'Shankar', Skill: 'CA', City: 'Pune', Country: 'India' },
-       { Name: 'Shankar', Skill: 'CA', City: 'Pune', Country: 'India' },
-       { Name: 'Shankar', Skill: 'CA', City: 'Pune', Country: 'India' },
-       { Name: 'Shankar', Skill: 'CA', City: 'Pune', Country: 'India' },
-    ];
+    $scope.Coaches = [];
 
     $scope.loadCommunication = function () {
         $scope.menuClick(3);
@@ -203,8 +180,11 @@
         $scope.searching = false;
         serverCommunication.getCoaches({
             filter: skill,
+            role : 'Coach',
             successCallBack: function (result) {
-                console.log('Result - ' , result);
+                console.log('Result - ', result);
+                if (result.data)
+                    $scope.Coaches = [].concat(result.data);
             },
             failureCallBack: function () {
                 console.error('In failureCallBack');
@@ -223,7 +203,8 @@
             Role : 'Coach',
             successCallBack: function (result) {
                 console.error(result);
-
+                if (result.data)
+                    $scope.Coaches = [].concat(result.data);
             },
             failureCallBack: function () {
                 // console.error('In failureCallBack');
@@ -242,8 +223,8 @@
                 function ObjectId(id) { return id; }
                 function ISODate(d) { return d; }
                 $scope.conversationListNew = iObj.data.Result;
-
-                $scope.conversationListNew[0].selectedConversation = true;
+                if ($scope.conversationListNew && $scope.conversationListNew.length > 0)
+                     $scope.conversationListNew[0].selectedConversation = true;
             },
             failureCallBack: function (iObj) {
                 console.debug('In failureCallBack', iObj);
@@ -512,10 +493,16 @@
 
     $scope.init = function () {
         serverCommunication.getCTSFilters({
+            Role: 'Mentor',
             successCallBack: function (result) {
                 console.error(result)
-                $scope.availableSkills.splice(0, $scope.availableSkills.length);
-                $scope.availableSkills.push.apply($scope.availableSkills, result.data.Filters);
+                result.data.Filters.some(function (iCts) {
+                    if (iCts.Type == 2) {
+                        $scope.availableSkills.push(iCts);
+                    }
+                });
+               // $scope.availableSkills.splice(0, $scope.availableSkills.length);
+                //$scope.availableSkills.push.apply($scope.availableSkills, result.data.Filters);
             },
             failureCallBack: function () {
                 // console.error('In failureCallBack');

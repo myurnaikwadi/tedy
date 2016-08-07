@@ -1,7 +1,4 @@
-﻿<link href="~/Content/Styles/FindCoach.css" rel="stylesheet" />
-@*<link href="~/Content/bootstrap.min.css" rel="stylesheet" />*@
-
-<div class="parentBody" ng-controller="ksDashBoardCoacheeController">
+﻿<div class="parentBody" ng-controller="ksDashBoardCoacheeController">
     <div class="applicationTopStrip">
         <top-main-strip></top-main-strip>
     </div>
@@ -109,9 +106,9 @@
                                                         <img src="https://www.abeautifulsite.net/content/uploads/2014/08/rounded-image-250x250.png" class="img-circle" />
                                                     </div>
                                                     <div class="profile-info">
-                                                        <p class="mentor-name">{{coach.Name}}</p>
+                                                        <p class="mentor-name">{{ coach.FirstName +" "+coach.LastName }}</p>
                                                         <p class="mentor-skils">{{coach.Skill}}</p>
-                                                        <p class="mentor-location">{{coach.City}} <b>|</b> {{coach.Country}}</p>
+                                                        <p class="mentor-location">{{coach.City ? coach.City : Maharshtra }} <b>|</b> {{coach.Country ? coach.Country : 'India'}}</p>
                                                     </div>
                                                 </div>
                                                 <div class="mentor-actions" style="display:none; position:absolute">
@@ -120,7 +117,7 @@
                                                         <button class="btn col-md-9 btn-gray" data-toggle="modal" data-target="#myModal" style="border-radius:0px;">View Profile</button>
                                                     </div>
                                                     <br />
-                                                    <button class="btn signupButton" ng-click="conversationClick(false, coach.Email)">Request</button>
+                                                    <button class="btn signupButton" style="margin-left: 30%;" ng-click="conversationClick(false, coach.Email)">Request</button>
                                                     <br />
                                                 </div>
                                             </div>
