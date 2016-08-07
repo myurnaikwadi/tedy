@@ -27,7 +27,40 @@
                 { name: 'KNOWLEDGE FEED', url: '../../Images/icons/Knowledge_feed.png ' },
                 { name: 'COMMUNICATION', url: '../../Images/icons/communication.png ' },
                 { name: 'MY REWARDS', url: '../../Images/icons/my_rewords.png ' }
-    ]
+    ];
+
+    $scope.availableSkills = [];
+    $scope.searchKey = '';
+    $scope.searching = false;
+    $scope.selectedSkill = {};
+    $scope.skillFilter = function (skill) {
+        var regExp = new RegExp($scope.searchKey, 'i');
+        return !$scope.searchKey || regExp.test(skill.Name);
+    };
+
+    $scope.selectSkill = function (skill) {
+        $scope.selectedSkill = skill;
+        $scope.searchKey = skill.Name;
+        $scope.searching = false;
+        serverCommunication.getCoaches({
+            filter: skill,
+            role: 'Coach',
+            successCallBack: function (result) {
+                console.log('Result - ', result);
+                if (result.data)
+                    $scope.Coaches = [].concat(result.data);
+            },
+            failureCallBack: function () {
+                console.error('In failureCallBack');
+            }
+        });
+    };
+
+    $scope.clearSearch = function (skill) {
+        $scope.searchKey = '';
+        $scope.selectedSkill = {};
+        $scope.searching = true;
+    }
     $scope.menuClick = function (iIndex, iOption) {
         $scope.selectedMenu = iIndex;
        // $scope.askFeedback = false;
@@ -44,13 +77,14 @@
             }
         }
     };
-
+    $scope.Coaches = [];
     $scope.getCoachRecord = function () {
         serverCommunication.getRecommendedCoach({
             Role: 'Mentor',
             successCallBack: function (result) {
                 console.error(result);
-
+                if (result.data)
+                    $scope.Coaches = [].concat(result.data);
             },
             failureCallBack: function () {
                 // console.error('In failureCallBack');
@@ -169,13 +203,20 @@
  
     $scope.init = function () {
 
-        serverCommunication.getMenteeData({
-            successCallBack: function () {
-                console.error('In successCallBack');
-
+        serverCommunication.getCTSFilters({
+            Role: 'Mentor',
+            successCallBack: function (result) {
+                console.error(result)
+                result.data.Filters.some(function (iCts) {
+                    if (iCts.Type == 1) {
+                        $scope.availableSkills.push(iCts);
+                    }
+                });
+                // $scope.availableSkills.splice(0, $scope.availableSkills.length);
+                //$scope.availableSkills.push.apply($scope.availableSkills, result.data.Filters);
             },
             failureCallBack: function () {
-                console.error('In failureCallBack');
+                // console.error('In failureCallBack');
 
             }
         });

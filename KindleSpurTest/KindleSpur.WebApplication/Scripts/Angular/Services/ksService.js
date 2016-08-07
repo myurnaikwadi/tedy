@@ -284,7 +284,7 @@ app.factory('serverCommunication', function ($http) {
         },
 
         getCTSFilters: function (iObj) {
-            $http.get('/CTS/GetCTSFilters').then(iObj.successCallBack, iObj.failureCallBack)
+            $http.get('/CTS/GetCTSFilters', iObj).then(iObj.successCallBack, iObj.failureCallBack)
         },
         
         

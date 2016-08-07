@@ -55,9 +55,9 @@
                                                         <img src="https://www.abeautifulsite.net/content/uploads/2014/08/rounded-image-250x250.png" class="img-circle" />
                                                     </div>
                                                     <div class="profile-info">
-                                                        <p class="mentor-name">{{coach.Name}}</p>
+                                                        <p class="mentor-name">{{ coach.FirstName +" "+coach.LastName }}</p>
                                                         <p class="mentor-skils">{{coach.Skill}}</p>
-                                                        <p class="mentor-location">{{coach.City}} <b>|</b> {{coach.Country}}</p>
+                                                        <p class="mentor-location">{{coach.City ? coach.City : Maharshtra }} <b>|</b> {{coach.Country ? coach.Country : 'India'}}</p>
                                                     </div>
                                                 </div>
                                                 <div class="mentor-actions" style="display:none; position:absolute">
