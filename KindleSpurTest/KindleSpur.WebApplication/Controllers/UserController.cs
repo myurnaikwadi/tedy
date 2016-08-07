@@ -70,7 +70,7 @@ namespace KindleSpur.WebApplication.Controllers
                 if (u != null)
                 {
                     string uri = Request.Url.AbsoluteUri.Replace("/User/ForgotPasswordEmail", "/User/PasswordPromp?UserId=" + u.Id);
-                    EmailNotification.SendEmail(signupObject, uri);
+                    EmailNotification.SendEmailForgotPassword(signupObject, uri);
                 }
                 else
                 {
