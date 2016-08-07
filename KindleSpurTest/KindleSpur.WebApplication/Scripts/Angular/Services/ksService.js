@@ -421,7 +421,7 @@ app.factory('serverCommunication', function ($http) {
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                data: { loggedEmail: iObj.loggedEmail }
+                data: { loggedEmail: iObj.loggedEmail, ConversationType : "Coaching" }
             }
             $http(req).then(iObj.successCallBack, iObj.failureCallBack);
         },
@@ -434,7 +434,7 @@ app.factory('serverCommunication', function ($http) {
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                data: { senderEmail: iObj.senderEmail, receiverEmail: iObj.receiverEmail }
+                data: { senderEmail: iObj.senderEmail, receiverEmail: iObj.receiverEmail, ConversationType : "Coaching"  }
             }
             $http(req).then(iObj.successCallBack, iObj.failureCallBack);
         },

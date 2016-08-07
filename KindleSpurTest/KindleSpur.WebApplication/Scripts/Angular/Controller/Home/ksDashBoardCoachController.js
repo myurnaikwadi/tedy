@@ -539,6 +539,7 @@
         serverCommunication.getConversationDetails({
             senderEmail: SenderEmail,
             receiverEmail: ReceiverEmail,
+            ConversationType: "Coaching",
             successCallBack: function (iObj) {
                 console.debug('In successCallBack', iObj);
 
@@ -614,7 +615,7 @@
             SendOrReceive: $scope.conversation.SendOrReceive,
             IsVerified: $scope.conversation.IsVerified,
             ConversationClosed: false,
-            ConversationType:'Coaching',
+            ConversationType:"Coaching",
             Skill: 'Finance Management'
         }
         console.debug(_object);
@@ -659,7 +660,7 @@
             Content: contentText,
             IsVerified: $scope.conversation.IsVerified,
             ConversationClosed: false,
-            ConversationType:'Coaching',
+            ConversationType:"Coaching",
             Skill: 'Finance Management'
         }
 

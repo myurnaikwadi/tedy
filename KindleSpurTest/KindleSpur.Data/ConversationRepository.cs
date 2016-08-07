@@ -86,14 +86,14 @@ namespace KindleSpur.Data
             return _transactionStatus;
         }
 
-        public bool UpdateConversationStatus(string senderEmail, string receiverEmail, string content, bool isVerified)
+        public bool UpdateConversationStatus(string senderEmail, string receiverEmail, string content, bool isVerified, string ConversationType)
         {
             bool _transactionStatus = false;
             try
             {
                 var _conversationCollection = _kindleDatabase.GetCollection("Conversations");
 
-                var conversationDetail = _conversationCollection.FindOneAs<IConversation>(Query.And(Query.EQ("SenderEmail", receiverEmail), Query.EQ("ReceiverEmail", senderEmail)));
+                var conversationDetail = _conversationCollection.FindOneAs<IConversation>(Query.And(Query.EQ("SenderEmail", receiverEmail), Query.EQ("ReceiverEmail", senderEmail), Query.EQ("ConversationType", ConversationType)));
 
                 conversationDetail.IsVerified = isVerified;
                 conversationDetail.Content = content;
@@ -110,22 +110,22 @@ namespace KindleSpur.Data
         }
 
 
-        public List<BsonDocument> ListConversation(string loggedEmail)
+        public List<BsonDocument> ListConversation(string loggedEmail, string ConversationType)
         {
             List<BsonDocument> _categories = new List<BsonDocument>();
             List<BsonDocument> _checkUser = new List<BsonDocument>();
 
             try
             {
-                var _query = Query.And(Query<Conversation>.EQ(p => p.SenderEmail, loggedEmail), Query<Conversation>.EQ(p => p.ReceiverEmail, loggedEmail), Query<Conversation>.EQ(p => p.IsVerified, true));
+                var _query = Query.And(Query.Or(Query<Conversation>.EQ(p => p.SenderEmail, loggedEmail), Query<Conversation>.EQ(p => p.ReceiverEmail, loggedEmail)), Query<Conversation>.EQ(p => p.IsVerified, true), Query<Conversation>.EQ(p1 => p1.ConversationType, ConversationType));
 
                 var _conversationCollection = _kindleDatabase.GetCollection("Conversations");
 
                 _checkUser = _conversationCollection.Find(_query).ToList();
-                if (_checkUser.Count() > 1)
+                if (_checkUser.Count() > 0)
                 {
                     _categories = _conversationCollection.Find(
-                        Query.And(Query<Conversation>.EQ(p => p.SenderEmail, loggedEmail), Query<Conversation>.EQ(p => p.IsVerified, true))
+                        Query.And(Query<Conversation>.EQ(p => p.SenderEmail, loggedEmail), Query<Conversation>.EQ(p => p.IsVerified, true), Query<Conversation>.EQ(p1 => p1.ConversationType, ConversationType))
                         ).SetFields(Fields.Exclude("_id").Include("ReceiverEmail")).Distinct().ToList();
                 }
                 else
@@ -134,7 +134,7 @@ namespace KindleSpur.Data
                                   // Query.And(
                                   //             Query<Conversation>.EQ(p => p.SenderEmail, loggedEmail), Query<Conversation>.EQ(p => p.IsVerified, true)),
                     Query.And(
-                                Query<Conversation>.EQ(p => p.ReceiverEmail, loggedEmail), Query<Conversation>.EQ(p => p.IsVerified, true))
+                                Query<Conversation>.EQ(p => p.ReceiverEmail, loggedEmail), Query<Conversation>.EQ(p => p.IsVerified, true), Query<Conversation>.EQ(p1 => p1.ConversationType, ConversationType))
                         ;
                     _categories = _conversationCollection.Find(
                     _query1
@@ -187,7 +187,7 @@ namespace KindleSpur.Data
         //    return result;
         //}
 
-        public List<BsonDocument> GetConversation(string senderEmail, string receiverEmail)
+        public List<BsonDocument> GetConversation(string senderEmail, string receiverEmail,string ConversationType)
         {
             List<BsonDocument> _categories = new List<BsonDocument>();
 
@@ -203,9 +203,9 @@ namespace KindleSpur.Data
 
                 var _query = Query.Or(
                     Query.And(
-                                Query<Conversation>.EQ(p => p.SenderEmail, senderEmail), Query<Conversation>.EQ(p => p.ReceiverEmail, receiverEmail), Query<Conversation>.EQ(p => p.IsVerified, true)),
+                                Query<Conversation>.EQ(p => p.SenderEmail, senderEmail), Query<Conversation>.EQ(p => p.ReceiverEmail, receiverEmail), Query<Conversation>.EQ(p => p.IsVerified, true), Query<Conversation>.EQ(p1 => p1.ConversationType, ConversationType)),
                     Query.And(
-                                Query<Conversation>.EQ(p => p.SenderEmail, receiverEmail), Query<Conversation>.EQ(p => p.ReceiverEmail, senderEmail), Query<Conversation>.EQ(p => p.IsVerified, true))
+                                Query<Conversation>.EQ(p => p.SenderEmail, receiverEmail), Query<Conversation>.EQ(p => p.ReceiverEmail, senderEmail), Query<Conversation>.EQ(p => p.IsVerified, true), Query<Conversation>.EQ(p1 => p1.ConversationType, ConversationType))
                         );
 
                 //MongoCursor<Conversation> cursor = _convCollection.Find(_query);
