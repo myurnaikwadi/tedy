@@ -131,7 +131,7 @@ namespace KindleSpur.Data
                        ;
                 _categories = _conversationCollection.Find(
                 _query1
-                ).SetFields(Fields.Exclude("_id").Include("ReceiverEmail", "skill", "ConversationType", "ConversationId", "ConversationParentId")).Distinct().ToList();
+                ).SetFields(Fields.Exclude("_id").Include("ReceiverEmail", "SenderEmail", "skill", "ConversationType", "ConversationId", "ConversationParentId")).Distinct().ToList();
 
                 //}
                 //else
@@ -168,7 +168,7 @@ namespace KindleSpur.Data
 
                 _categories = _conversationCollection.Find(
                       Query.And(Query<Conversation>.EQ(p => p.SenderEmail, loggedEmail), Query<Conversation>.EQ(p => p.IsVerified, true), Query<Conversation>.EQ(p1 => p1.ConversationType, ConversationType))
-                      ).SetFields(Fields.Exclude("_id").Include("SenderEmail", "skill", "ConversationType", "ConversationId", "ConversationParentId")).Distinct().ToList();
+                      ).SetFields(Fields.Exclude("_id").Include("SenderEmail", "ReceiverEmail", "skill", "ConversationType", "ConversationId", "ConversationParentId")).Distinct().ToList();
 
                 //_categories = _conversationCollection.Find().SetFields(Fields.Exclude("_id")).ToList();
             }

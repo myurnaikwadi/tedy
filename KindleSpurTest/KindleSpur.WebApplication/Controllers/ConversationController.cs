@@ -59,6 +59,8 @@ namespace KindleSpur.WebApplication.Controllers
                 req.FirstName = recevicedetails.FirstName;
                 req.LastName = recevicedetails.LastName;
                 req.EmailAddress = recevicedetails.EmailAddress;
+                req.SenderEmail = value["SenderEmail"].ToString();
+                req.ReceiverEmail = value["ReceiverEmail"].ToString();
                 req.skill = value["skill"].ToString();
                 req.ConversationType = value["ConversationType"].ToString();
                 if (value["ConversationId"] == null) { req.ConversationId = null; } else { req.ConversationId = value["ConversationId"].ToString(); }
@@ -84,6 +86,8 @@ namespace KindleSpur.WebApplication.Controllers
                 req.FirstName = recevicedetails.FirstName;
                 req.LastName = recevicedetails.LastName;
                 req.EmailAddress = recevicedetails.EmailAddress;
+                req.SenderEmail = value["SenderEmail"].ToString();
+                req.ReceiverEmail = value["ReceiverEmail"].ToString();
                 req.skill = value["skill"].ToString();
                 req.ConversationType = value["ConversationType"].ToString();
                 if (value["ConversationId"] == null) { req.ConversationId = null; } else { req.ConversationId = value["ConversationId"].ToString(); }
@@ -119,6 +123,8 @@ namespace KindleSpur.WebApplication.Controllers
                 req.LastName = recevicedetails.LastName;
                 req.EmailAddress = recevicedetails.EmailAddress;
                 req.skill = value["skill"].ToString();
+                req.SenderEmail = value["SenderEmail"].ToString();
+                req.ReceiverEmail = value["ReceiverEmail"].ToString();
                 req.ConversationType = value["ConversationType"].ToString();
                 if (value["ConversationId"] == null) { req.ConversationId = null; } else { req.ConversationId = value["ConversationId"].ToString(); }
                 if (value["ConversationParentId"] == null) { req.ConversationParentId = null; } else { req.ConversationParentId = value["ConversationParentId"].ToString(); }   
