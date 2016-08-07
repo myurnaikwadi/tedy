@@ -2,7 +2,7 @@
     <div class="ctsParentMain">
         <div class="ctsParentMainPanel">
             <div class="ctsCategoryHeading">
-                <h5 ng-show="mySelection" style="font-size: 16px;padding: 6px;padding-left: 0;" class="fontClass">MY SELECTION</h5>
+                <h5 ng-show="mySelection" style="font-size: 16px;padding: 6px;padding-left: 0;" class="fontClass" margin-top:15px;>MY SELECTION</h5>
                 <h5 ng-hide="mySelection" style="font-size: 16px;padding: 6px;padding-left: 0;" class="fontClass">{{ categoryDisplay ? 'CATEGORIES' : selectedCategoryValue.Category | uppercase }}</h5>
                 
                 <img ng-show="mySelection" ng-class="{ coachGenericBackgroundBorder : role == 'coach' , coacheeGenericBackgroundBorder : role == 'coachee' , mentorGenericBackgroundBorder : role == 'mentor' , menteeGenericBackgroundBorder : role == 'mentee' }" style="border : 2px solid; width:35px;height : 35px;float:right;margin: auto auto;margin-right: 0;border-radius: 30px;padding: 5px;" ng-click="addSkill()" src="~/Images/addBold.png" />
