@@ -25,5 +25,7 @@ namespace KindleSpur.Models
         public string skill { get; set; }
         public string ConversationClosed { get; set; }
         public string ConversationType { get; set; }
+        public string ConversationId { get; set; }
+        public string ConversationParentId { get; set; }
     }
 }

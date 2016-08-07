@@ -48,13 +48,18 @@ namespace KindleSpur.WebApplication.Controllers
         {
 
             ConversationRepository _repo = new ConversationRepository();
-            List<IUser> result = new List<IUser>(); 
+            List<Request> result = new List<Request>(); 
 
             UserRepository ur = new UserRepository();
             foreach (var value in _repo.ListConversation(((IUser)Session["User"]).EmailAddress, ConversationType))
             {
                 var recevicedetails = ur.GetUserDetail(value[0].ToString());
-                result.Add((IUser)recevicedetails);
+                Request req = new Models.Request();
+                req.FirstName = recevicedetails.FirstName;
+                req.LastName = recevicedetails.LastName;
+                req.EmailAddress = recevicedetails.EmailAddress;
+                req.skill = value["skill"].ToString();
+                result.Add(req);
             }
             
             return Json(new { Result = result }, JsonRequestBehavior.AllowGet);
