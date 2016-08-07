@@ -122,7 +122,7 @@ namespace KindleSpur.Data
                 var _conversationCollection = _kindleDatabase.GetCollection("Conversations");
 
                 _checkUser = _conversationCollection.Find(_query).ToList();
-                if (_checkUser.Count() > 0)
+                if (_checkUser.Count() > 1)
                 {
                     _categories = _conversationCollection.Find(
                         Query.And(Query<Conversation>.EQ(p => p.SenderEmail, loggedEmail), Query<Conversation>.EQ(p => p.IsVerified, true), Query<Conversation>.EQ(p1 => p1.ConversationType, ConversationType))
