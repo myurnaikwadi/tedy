@@ -38,33 +38,40 @@
                     </div>
                 </div>
             </div>
-            <div class="userRolesParent">
-                <div class="userRoleWizardParenWizard">
-                    <div class="roleRepeatWizardMain" ng-class="{ mentorThemeColor : wizard.name =='MENTOR',menteeThemeColor : wizard.name =='MENTEE',coachThemeColor : wizard.name =='COACH',coacheeThemeColor : wizard.name =='COACHEE'}" ng-click="roleClick($event,wizard)" ng-repeat="wizard in applicationRole">
-                        <div class="rolelabelPart">
-                            <div class="roleNameLabel">
-                                <h1 style="width: 80%;margin: 10%; font-size:30px" class="notificationWizName" ng-class="{ whiteBackground : wizard.name =='MENTOR' || wizard.name =='COACH' }">{{wizard.name}}</h1>
-                            </div>
-                            <div class="roleImage">
-                                <img src={{wizard.img}} class="homePageLogo">
-                            </div>
-                        </div>
-                        <div class="roleCountPart">
-                            <div class="fullWidthHeightClass" style="float:left;">
-                                <div class='roleWiseClass'>
-                                    <!--<div class="homeIcon"></div>
-                                    <div class="notificationIcon"></div>
-                                    <div class="roleRequestIcon"></div>
-                                    <div class="addRoleIcon"></div>-->
-                                </div>
-                            </div>
-                        </div>
+            <div class="userRolesParent" style="height: 60%;">
+                 <div style="margin:auto;width: 65%;height: 91%;">
+                     <div class="roleRepeatWizardMain" ng-mouseover="wizard.selectedOption = true" ng-mouseout="wizard.selectedOption = false" ng-class="{ flipper : wizard.selectedOption == true  ,mentorThemeColor : wizard.name =='MENTOR',menteeThemeColor : wizard.name =='MENTEE',coachThemeColor : wizard.name =='COACH',coacheeThemeColor : wizard.name =='COACHEE'}" ng-click="roleClick($event,wizard)" ng-repeat="wizard in applicationRole">
+                         <div class="flipper" style="float: left; width : 100%; height : 100%;">
+                             <div class="front">
+                                 <!-- front content -->
+                                 <div style="display:flex;width:100%;height:100%;">                                   
+                                     <h5 class="fontClass" ng-class="{ whiteBackground : wizard.name =='MENTOR' || wizard.name =='COACH' }" style="margin:auto;width: 70%;font-size: 14px;">{{wizard.message}}</h5>
+                                 </div>
+                             </div>
+                             <div class="back">
+                                 <!-- back content -->
+                                 <div class="rolelabelPart">
+                                     <div class="roleNameLabel">
+                                         <h1 style="width: 80%;margin: 10%; font-size:30px" class="notificationWizName" ng-class="{ whiteBackground : wizard.name =='MENTOR' || wizard.name =='COACH' }">{{wizard.name}}</h1>
+                                     </div>
+                                     <div class="roleImage">
+                                         <img src={{wizard.img}} class="homePageLogo">
+                                     </div>
+                                 </div>
+                                 <div class="roleCountPart">
+                                     <div class="fullWidthHeightClass" style="float:left;">
+                                         <div class='roleWiseClass'>
 
-                    </div>
-                   
-                    </div>
-                </div>
-                    <h5 class="fontClass TrendingTopicsHeader">TRENDING TOPICS</h5>
+                                         </div>
+                                     </div>
+                                 </div>
+                             </div>
+                         </div>
+                     </div>
+                  </div>  
+                
+            </div>
+            <h5 class="fontClass TrendingTopicsHeader">TRENDING TOPICS</h5>
             <div class="trandingTopicParent col-md-12" >
                
                 <div class="col-md-6" >

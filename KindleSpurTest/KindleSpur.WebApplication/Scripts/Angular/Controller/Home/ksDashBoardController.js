@@ -7,7 +7,7 @@ app.controller('ksMainDashBoardController', function ($scope, $state, serverComm
 			
     ];
 		$scope.leftSideMenus = [{ name : 'DashBoard'},{ name : 'Profile'}]
-		$scope.applicationRole = [{ name: 'COACHEE', img: '../../Images/icons/coachee_logo.png' }, { name: 'MENTEE', img: '../../Images/icons/mentee_logo.png' }, { name: 'COACH', img: '../../Images/icons/coach_logo.png' }, { name: 'MENTOR', img: '../../Images/icons/mentor_logo.png' }]
+		$scope.applicationRole = [{ name: 'COACHEE', img: '../../Images/icons/coachee_logo.png', message: 'You need to be good, no, you need to be great at a skill, subject or sport'}, { name: 'MENTEE', img: '../../Images/icons/mentee_logo.png', message: 'You wish to take the certain and efficient path to your success, handling all the changes and surprises on the way'}, { name: 'COACH', img: '../../Images/icons/coach_logo.png', message: 'You help someone learn, improve and maximize at a skill, subject or sport'}, { name: 'MENTOR', img: '../../Images/icons/mentor_logo.png', message: 'As an expert, you advise and develop a roadmap for people to make the right choices, to overcome, to grow and to be successful'}]
 		$scope.roleClick = function (iEvent, iObj) {
 		    
 		    switch(iObj.name){
