@@ -5,6 +5,7 @@ using KindleSpur.WebApplication.MessageHelper;
 using MongoDB.Bson;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Web;
@@ -66,11 +67,13 @@ namespace KindleSpur.WebApplication.Controllers
             UserRepository _repo = new UserRepository();
             try
             {
-                IUser u = _repo.GetUserDetail(signupObject.EmailAddress);
+                User u = (User)_repo.GetUserDetail(signupObject.EmailAddress);
+                u.FirstName = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(u.FirstName.ToLower());
+                u.LastName = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(u.LastName.ToLower());
                 if (u != null)
                 {
                     string uri = Request.Url.AbsoluteUri.Replace("/User/ForgotPasswordEmail", "/User/PasswordPromp?UserId=" + u.Id);
-                    EmailNotification.SendEmailForgotPassword(signupObject, uri);
+                    EmailNotification.SendEmailForgotPassword(u, uri);
                 }
                 else
                 {

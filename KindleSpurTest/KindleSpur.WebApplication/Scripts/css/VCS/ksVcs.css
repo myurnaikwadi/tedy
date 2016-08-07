@@ -53,7 +53,8 @@ overflow: hidden;
 	float: left;
 	margin: auto auto;
 	font-size: 16px;
-   	 font-weight: bolder;
+   	font-weight: bolder;
+    cursor:pointer;
 
 }
 .addActivityStripLabel{
@@ -567,6 +568,7 @@ width: 100%;
      margin: auto auto;
      margin-right: 0;
      color:black;
+     cursor:pointer;
 }
 .addStoryButton:hover{
     box-shadow:0px 0px 2px 2px;

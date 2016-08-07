@@ -24,9 +24,10 @@ namespace KindleSpur.WebApplication.MessageHelper
             MailMessage message = new MailMessage(aliasemailsendername.ToString(), signupObject.EmailAddress);
             message.Subject = "Account Activation";
             string body = "Hello " + signupObject.FirstName + ",";
-            body += "<br/><br/>Please click the following link to activate your account<br/>";
-            body += "<br/><br/><a style='background:#000000; color:#fafafa; padding:10px 100px 10px 100px; width:350px; text-decoration:none; font-weight:bold; font-size:20px;' href = '" + uri + "'>Click here to activate your account.</a>";
-            body += "<br /><br />Thanks, <br/> KindleSpur Team.";
+            body += "<br/><br/>";
+            // body += "<br/><br/>Please click the following link to activate your account<br/>";
+            body += "<br/><br/><a style='background:#808080; color:#fafafa; padding:10px 100px 10px 100px; width:350px; text-decoration:none; text-transform: capitalize; font-weight:bold; font-size:13px;' href = '" + uri + "'>CLICK HERE TO ACTIVATE YOUR KINDLESPUR ACCOUNT.</a>";
+            body += "<br /><br /><br/>Thanks, <br/> KindleSpur Team.";
             message.Body = body;
             message.IsBodyHtml = true;
             SmtpClient smtp = new SmtpClient(smtpServer.ToString(), portNumber);
@@ -41,9 +42,10 @@ namespace KindleSpur.WebApplication.MessageHelper
             MailMessage message = new MailMessage(aliasemailsendername.ToString(), signupObject.EmailAddress);
             message.Subject = "Forgot Password";
             string body = "Hello " + signupObject.FirstName + ",";
-            body += "<br/><br/>Please click the following link to enter new password<br/>";
-            body += "<br/><br/><a style='background:#000000; color:#fafafa; padding:10px 100px 10px 100px; width:350px; text-decoration:none; font-weight:bold; font-size:20px;' href = '" + uri + "'>Click here to enter new password.</a>";
-            body += "<br /><br />Thanks, <br/> KindleSpur Team.";
+            body += "<br/>";
+          //  body += "<br/><br/>Please click to enter new password<br/>";
+            body += "<br/><br/><a style='background:#808080; color:#fafafa; padding:10px 100px 10px 100px; width:350px; text-decoration:none;  text-transform: capitalize; font-weight:bold; font-size:13px;' href = '" + uri + "'>CLICK HERE TO ENTER NEW PASSWORD FOR KINDLESPUR ACCOUNT.</a>";
+            body += "<br /><br /><br/>Thanks, <br/> KindleSpur Team.";
             message.Body = body;
             message.IsBodyHtml = true;
             SmtpClient smtp = new SmtpClient(smtpServer.ToString(), portNumber);
