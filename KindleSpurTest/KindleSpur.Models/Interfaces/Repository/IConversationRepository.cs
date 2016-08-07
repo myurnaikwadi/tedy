@@ -14,13 +14,13 @@ namespace KindleSpur.Models.Interfaces.Repository
 
         bool EditConversation(string id, IConversation conversationData);
 
-        bool UpdateConversationStatus(string senderEmail, string receiverEmail, string content, bool isVerified, string ConversationType);
+        bool UpdateConversationStatus(string senderEmail, string receiverEmail, string content, bool isVerified, string ConversationType,string ParentId);
 
         IConversation GetConversationDetail(int conversationId);
 
         List<BsonDocument> ListConversationForSender(string loggedEmail, string ConversationType);
 
-        List<BsonDocument> GetConversation(string senderEmail, string receiverEmail, string ConversationType);
+        List<BsonDocument> GetConversation(string ParentId, string ConversationType);
 
         List<BsonDocument> GetConversationRequest(string senderEmail,string ConversationType);
     }

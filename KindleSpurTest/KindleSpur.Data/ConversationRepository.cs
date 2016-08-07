@@ -86,19 +86,19 @@ namespace KindleSpur.Data
             return _transactionStatus;
         }
 
-        public bool UpdateConversationStatus(string senderEmail, string receiverEmail, string content, bool isVerified, string ConversationType)
+        public bool UpdateConversationStatus(string senderEmail, string receiverEmail, string content, bool isVerified, string ConversationType,string ParentId)
         {
             bool _transactionStatus = false;
             try
             {
                 var _conversationCollection = _kindleDatabase.GetCollection("Conversations");
 
-                var conversationDetail = _conversationCollection.FindOneAs<IConversation>(Query.And(Query.EQ("SenderEmail", receiverEmail), Query.EQ("ReceiverEmail", senderEmail), Query.EQ("ConversationType", ConversationType)));
+                var conversationDetail = _conversationCollection.FindOneAs<Conversation>(Query.And(Query.EQ("SenderEmail", receiverEmail), Query.EQ("ReceiverEmail", senderEmail), Query.EQ("ConversationType", ConversationType)));
 
                 conversationDetail.IsVerified = isVerified;
                 conversationDetail.Content = content;
                 conversationDetail.UpdateDate = DateTime.Now;
-
+                conversationDetail.ConversationParentId = ParentId;
                 _conversationCollection.Save(conversationDetail);
                 _transactionStatus = true;
             }
@@ -215,7 +215,7 @@ namespace KindleSpur.Data
         //    return result;
         //}
 
-        public List<BsonDocument> GetConversation(string senderEmail, string receiverEmail,string ConversationType)
+        public List<BsonDocument> GetConversation(string ParentId,string ConversationType)
         {
             List<BsonDocument> _categories = new List<BsonDocument>();
 
@@ -229,12 +229,12 @@ namespace KindleSpur.Data
                 //                        Query<Conversation>.EQ(p => p.ReceiverEmail, senderEmail), Query<Conversation>.EQ(p => p.SenderEmail, receiverEmail))
                 //                );
 
-                var _query = Query.Or(
-                    Query.And(
-                                Query<Conversation>.EQ(p => p.SenderEmail, senderEmail), Query<Conversation>.EQ(p => p.ReceiverEmail, receiverEmail), Query<Conversation>.EQ(p => p.IsVerified, true), Query<Conversation>.EQ(p1 => p1.ConversationType, ConversationType)),
-                    Query.And(
-                                Query<Conversation>.EQ(p => p.SenderEmail, receiverEmail), Query<Conversation>.EQ(p => p.ReceiverEmail, senderEmail), Query<Conversation>.EQ(p => p.IsVerified, true), Query<Conversation>.EQ(p1 => p1.ConversationType, ConversationType))
-                        );
+                //var _query = Query.Or(
+                //    Query.And(
+                //                Query<Conversation>.EQ(p => p.SenderEmail, senderEmail), Query<Conversation>.EQ(p => p.ReceiverEmail, receiverEmail), Query<Conversation>.EQ(p => p.IsVerified, true), Query<Conversation>.EQ(p1 => p1.ConversationType, ConversationType)),
+                //    Query.And(
+                //                Query<Conversation>.EQ(p => p.SenderEmail, receiverEmail), Query<Conversation>.EQ(p => p.ReceiverEmail, senderEmail), Query<Conversation>.EQ(p => p.IsVerified, true), Query<Conversation>.EQ(p1 => p1.ConversationType, ConversationType))
+                //        );
 
                 //MongoCursor<Conversation> cursor = _convCollection.Find(_query);
 
@@ -242,7 +242,8 @@ namespace KindleSpur.Data
                 //_categories = _conversationCollection.FindAll().SetFields(Fields.Exclude("_id")).ToList();
 
                 _categories = _conversationCollection.Find(
-                    _query
+                   Query.And( Query.EQ("ConversationParentId", ParentId), Query.EQ("ConversationType", ConversationType))
+                    //_query
                     //Query.And(
                     //    Query.Or(
                     //                Query<Conversation>.EQ(p => p.SenderEmail, senderEmail), Query<Conversation>.EQ(p => p.SenderEmail, receiverEmail)),

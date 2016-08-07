@@ -99,11 +99,11 @@ namespace KindleSpur.WebApplication.Controllers
             return Json(new { Result = result }, JsonRequestBehavior.AllowGet);
         }
 
-        public ActionResult GetConversationDetails(string senderEmail, string receiverEmail, string ConversationType)
+        public ActionResult GetConversationDetails(string ParentId,string ConversationType)
         {
 
             ConversationRepository _repo = new ConversationRepository();
-            var result = _repo.GetConversation(senderEmail, receiverEmail, ConversationType).ToJson();
+            var result = _repo.GetConversation(ParentId, ConversationType).ToJson();
             return Json(new { Result = result }, JsonRequestBehavior.AllowGet);
             //return Content(result);
         }
@@ -217,7 +217,7 @@ namespace KindleSpur.WebApplication.Controllers
         public void UpdateConversationStatus(Conversation _obj, string ReceiverName, string Role)
         {
             ConversationRepository _repo = new ConversationRepository();
-            if (_repo.UpdateConversationStatus(_obj.SenderEmail, _obj.ReceiverEmail, _obj.Content, _obj.IsVerified,_obj.ConversationType))
+            if (_repo.UpdateConversationStatus(_obj.SenderEmail, _obj.ReceiverEmail, _obj.Content, _obj.IsVerified,_obj.ConversationType, _obj.ConversationParentId))
             {
                 string uri = Request.Url.AbsoluteUri.ToString();
                 string senderName = ((IUser)System.Web.HttpContext.Current.Session["User"]).FirstName + " " + ((IUser)System.Web.HttpContext.Current.Session["User"]).LastName;
