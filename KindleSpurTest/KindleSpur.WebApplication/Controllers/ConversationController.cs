@@ -60,8 +60,9 @@ namespace KindleSpur.WebApplication.Controllers
                 req.EmailAddress = recevicedetails.EmailAddress;
                 req.skill = value["skill"].ToString();
                 req.ConversationType = value["ConversationType"].ToString();
-                req.ConversationId = value["ConversationId"].ToString();
-                req.ConversationParentId = value["ConversationParentId"].ToString();
+                if (value["ConversationId"] == null) { req.ConversationId = null; } else { req.ConversationId = value["ConversationId"].ToString(); }
+                if (value["ConversationParentId"] == null) { req.ConversationParentId = null; } else { req.ConversationParentId = value["ConversationParentId"].ToString(); }
+
                 result.Add(req);
             }
             
@@ -93,8 +94,8 @@ namespace KindleSpur.WebApplication.Controllers
                 req.EmailAddress = recevicedetails.EmailAddress;
                 req.skill = value["skill"].ToString();
                 req.ConversationType = value["ConversationType"].ToString();
-                req.ConversationId = value["ConversationId"].ToString();
-                req.ConversationParentId = value["ConversationParentId"].ToString();
+                if (value["ConversationId"] == null) { req.ConversationId = null; } else { req.ConversationId = value["ConversationId"].ToString(); }
+                if (value["ConversationParentId"] == null) { req.ConversationParentId = null; } else { req.ConversationParentId = value["ConversationParentId"].ToString(); }   
                 //req.ConversationType = value["ConversationType"].ToString();
                 //recevicedetails.Add(new BsonElement("skill", value["skill"].ToString()));
                 //recevicedetails.Add(new BsonElement("ConversationType", value["ConversationType"].ToString()));    
