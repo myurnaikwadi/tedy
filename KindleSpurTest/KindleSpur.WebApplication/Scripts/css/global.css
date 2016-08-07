@@ -12,7 +12,13 @@ ul,h1,h2,h3,h4,h5,h6{
 }
 .genericPointerClass {
             cursor: pointer;
-        }
+}
+.eliipsisClass {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
 .fontClass {
 	font-family: Roboto-Regular !important;
 }
