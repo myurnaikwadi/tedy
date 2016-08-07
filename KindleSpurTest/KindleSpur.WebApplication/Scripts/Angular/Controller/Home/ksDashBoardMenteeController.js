@@ -44,7 +44,7 @@
         $scope.searching = false;
         serverCommunication.getCoaches({
             filter: skill,
-            role: 'Coach',
+            Role: 'Mentor',
             successCallBack: function (result) {
                 console.log('Result - ', result);
                 if (result.data)

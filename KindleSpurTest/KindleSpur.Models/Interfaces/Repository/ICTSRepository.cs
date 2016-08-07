@@ -13,6 +13,6 @@ namespace KindleSpur.Models.Interfaces.Repository
 
         List<BsonDocument> GetSkills(string category, string topic);
 
-        List<CTSFilter> GetCTSFilters();
+        List<CTSFilter> GetCTSFilters(string Role);
     }
 }

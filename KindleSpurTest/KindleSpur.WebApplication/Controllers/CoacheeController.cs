@@ -60,11 +60,11 @@ namespace KindleSpur.WebApplication.Controllers
             }
             return doc.ToJson();
         }
-        public string GetCoachs(CTSFilter ctsFilter)
+        public string GetCoachs(CTSFilter ctsFilter,string Role)
         {
             CoachOrMentorRepository _coachRep = new CoachOrMentorRepository();
             // var result = _coacheeRepo.GetAllCoacheeOrMentee(ctsFilter);
-            var result = _coachRep.GetAllCoachOrMentors(ctsFilter, "Coach");
+            var result = _coachRep.GetAllCoachOrMentors(ctsFilter, Role);
             return result.ToJson();
         }
         [HttpPost]

@@ -226,32 +226,53 @@ namespace KindleSpur.Data
             return _Category;
         }
 
-        public List<CTSFilter> GetCTSFilters()
+        public List<CTSFilter> GetCTSFilters(string Role)
         {
             List<BsonDocument> _categories = new List<BsonDocument>();
             var filters = new List<CTSFilter>();
 
             try
             {
-                var _ctsCollection = _kindleDatabase.GetCollection("CTSDataCoaching");
-                _categories = _ctsCollection.FindAll().SetFields(Fields.Exclude("_id")).ToList();
+                if(Role=="Coach")
+                { 
+                    var _ctsCollection = _kindleDatabase.GetCollection("CTSDataCoaching");
+                    _categories = _ctsCollection.FindAll().SetFields(Fields.Exclude("_id")).ToList();
 
-                foreach (BsonDocument category in _categories)
-                {
-                    filters.Add(new CTSFilter() { Id = category["Id"].ToString(), Name = category["Category"].ToString(), Type = FilterType.Category });
-                    if (category.Contains("Topics"))
+                    foreach (BsonDocument category in _categories)
                     {
-                        BsonArray topics = (BsonArray)category["Topics"];
-                        foreach (BsonDocument topic in topics)
+                       // filters.Add(new CTSFilter() { Id = category["Id"].ToString(), Name = category["Category"].ToString(), Type = FilterType.Category });
+                        if (category.Contains("Topics"))
                         {
-                            filters.Add(new CTSFilter() { Id = topic["Id"].ToString(), Name = topic["Name"].ToString(), Type = FilterType.Topic, ParentId = category["Id"].ToString() });
-                            if (topic.Contains("Skills"))
+                            BsonArray topics = (BsonArray)category["Topics"];
+                            foreach (BsonDocument topic in topics)
                             {
-                                BsonArray skills = (BsonArray)topic["Skills"];
-                                foreach (BsonDocument skill in skills)
+                               // filters.Add(new CTSFilter() { Id = topic["Id"].ToString(), Name = topic["Name"].ToString(), Type = FilterType.Topic, ParentId = category["Id"].ToString() });
+                                if (topic.Contains("Skills"))
                                 {
-                                    filters.Add(new CTSFilter() { Id = skill["Id"].ToString(), Name = skill["Name"].ToString(), Type = FilterType.Skill, ParentId = topic["Id"].ToString() });
+                                    BsonArray skills = (BsonArray)topic["Skills"];
+                                    foreach (BsonDocument skill in skills)
+                                    {
+                                        filters.Add(new CTSFilter() { Id = skill["Id"].ToString(), Name = skill["Name"].ToString(), Type = FilterType.Skill, ParentId = topic["Id"].ToString() });
+                                    }
                                 }
+                            }
+                        }
+                    }
+                }
+                else if (Role == "Mentor")
+                {
+                    var _ctsCollection = _kindleDatabase.GetCollection("CTSDataMentoring");
+                    _categories = _ctsCollection.FindAll().SetFields(Fields.Exclude("_id")).ToList();
+
+                    foreach (BsonDocument category in _categories)
+                    {
+                        // filters.Add(new CTSFilter() { Id = category["Id"].ToString(), Name = category["Category"].ToString(), Type = FilterType.Category });
+                        if (category.Contains("Topics"))
+                        {
+                            BsonArray topics = (BsonArray)category["Topics"];
+                            foreach (BsonDocument topic in topics)
+                            {
+                               filters.Add(new CTSFilter() { Id = topic["Id"].ToString(), Name = topic["Name"].ToString(), Type = FilterType.Topic, ParentId = category["Id"].ToString() });
                             }
                         }
                     }

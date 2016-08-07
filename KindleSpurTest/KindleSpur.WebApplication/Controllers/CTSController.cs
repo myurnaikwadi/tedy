@@ -20,9 +20,10 @@ namespace KindleSpur.WebApplication.Controllers
 
         }
 
-        public ActionResult GetCTSFilters()
+        [HttpPost]
+        public ActionResult GetCTSFilters(string Role)
         {
-            var filters = _ctsRepo.GetCTSFilters();
+            var filters = _ctsRepo.GetCTSFilters(Role);
             return Json(new { Filters = filters, Success = true }, JsonRequestBehavior.AllowGet);
         }
 

@@ -63,9 +63,9 @@
         },
 
          successLinkedCallBack: function(iObj){
-             if (!iObj.data.Result) {
-                 alert(iObj.data.Message);
-             }
+            if (!iObj.data.Result) {
+                alert(iObj.data.Message);
+            }
         }
 
     }
@@ -194,7 +194,7 @@ app.factory('serverCommunication', function ($http) {
           * @Purpose : get topic and skill as per category selected
           */
         sendSelectedCTSDataToServer: function (iObj) {
-             console.error(iObj)
+            console.error(iObj)
             var _action = '/Coach/SaveSkills';
             if (iObj.role == 'coachee')
                 _action = '/Coachee/SaveSkills';
@@ -206,22 +206,22 @@ app.factory('serverCommunication', function ($http) {
         * @date : 04/08/2016
         * @Purpose :get story name and story description
         */
-        getDataRelatedIZFromServer: function (iObj) {            
+        getDataRelatedIZFromServer: function (iObj) {
             console.error(iObj)
             $http.post('/Value/GetValueFeedStories', iObj.storyDetails).then(iObj.successCallBack, iObj.failureCallBack);
         },
-        
+
         /**
          * @auther : piyush
          * @date : 04/08/2016
          * @Purpose : post story name and story description
          */
         sendStory: function (iObj) {
-            
+
             console.error(iObj)
             $http.post('/Value/SaveValueFeedStory', iObj.storyDetails).then(iObj.successCallBack, iObj.failureCallBack);
         },
-        
+
         /**
         * @auther : piyush
         * @date : 04/08/2016
@@ -231,7 +231,7 @@ app.factory('serverCommunication', function ($http) {
             console.error(iObj)
             $http.get('/').then(iObj.successCallBack, iObj.failureCallBack);
         },
-        
+
         /**
           * @auther : MKN
           * @date : 10/06/2016
@@ -284,10 +284,20 @@ app.factory('serverCommunication', function ($http) {
         },
 
         getCTSFilters: function (iObj) {
-            $http.get('/CTS/GetCTSFilters', iObj).then(iObj.successCallBack, iObj.failureCallBack)
+            console.error(iObj);
+            // $http.get('/CTS/GetCTSFilters').then(iObj.successCallBack, iObj.failureCallBack)
+            var req = {
+                method: 'POST',
+                url: '/CTS/GetCTSFilters',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                data: iObj
+            }
+            $http(req).then(iObj.successCallBack, iObj.failureCallBack);
         },
-        
-        
+
+
         //getCoaches: function (iObj) {
         //    var req = {
         //        method: 'POST',
@@ -320,7 +330,7 @@ app.factory('serverCommunication', function ($http) {
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                data: { ctsFilter: iObj.filter }
+                data: { ctsFilter: iObj.filter, Role: iObj.Role }
             }
             $http(req).then(iObj.successCallBack, iObj.failureCallBack);
         },
@@ -330,10 +340,10 @@ app.factory('serverCommunication', function ($http) {
          * @Purpose :
          */
         getCoachingWithStatus: function (iObj) {
-        console.error(iObj)
+            console.error(iObj)
             var _action = '/Coach/GetCoachingStatus'
             if (iObj.role == 'mentor') {
-                _action="/Mentor/GetCoachingStatus";
+                _action = "/Mentor/GetCoachingStatus";
             }
             $http.get(_action, iObj.loggedUserDetails).then(iObj.successCallBack, iObj.failureCallBack)
         },
@@ -451,7 +461,7 @@ app.factory('serverCommunication', function ($http) {
                 data: { ConversationType: "Coaching" }
             }
             $http(req).then(iObj.successCallBack, iObj.failureCallBack);
-           // $http.get('/Conversation/getConversationRequest').then(iObj.successCallBack, iObj.failureCallBack);
+            // $http.get('/Conversation/getConversationRequest').then(iObj.successCallBack, iObj.failureCallBack);
             //var req = {
             //    method: 'POST',
             //    url: '/Conversation/getConversationRequest',
@@ -552,4 +562,3 @@ function seperateDataAsPerCTS(iObj) {
     console.error('In getMySelection', _category, _topics, _skills);
     return { category: _category, topics: _topics, skills: _skills }
 };
-

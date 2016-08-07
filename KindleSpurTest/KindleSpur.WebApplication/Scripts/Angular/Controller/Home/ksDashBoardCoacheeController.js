@@ -208,7 +208,7 @@
                     $scope.Coaches = [].concat(result.data);
                 }
                 serverCommunication.getCTSFilters({
-                    Role: 'Mentor',
+                    Role: 'Coach',
                     successCallBack: function (result) {
                         console.error(result)
                         result.data.Filters.some(function (iCts) {
@@ -512,6 +512,7 @@
 
     $scope.init = function () {
         serverCommunication.getMyCoacheeSelection({
+            Role : 'Coach',
             successCallBack: function (iObj) {
                 console.error('In getMyCoacheeSelection', iObj);
                 var _myCtsInfo = seperateDataAsPerCTS(iObj);
