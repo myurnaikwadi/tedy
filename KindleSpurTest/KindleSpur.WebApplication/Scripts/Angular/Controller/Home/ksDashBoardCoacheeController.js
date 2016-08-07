@@ -476,7 +476,7 @@
 
         if ($scope.openConversation) {
 
-            $scope.conversation.ReceiverEmail = $scope.openConversation.EmailAddress;
+            $scope.conversation.ReceiverEmail = $scope.openConversation.ReceiverEmail;
             $scope.conversation.SenderEmail = $scope.loggedEmail;
             $scope.conversation.Content = $scope.conversation.Message;
             $scope.conversation.SendOrReceive = "Send";

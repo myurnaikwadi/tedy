@@ -278,6 +278,8 @@
                 console.debug('In successCallBack', iObj);
                 function ObjectId(id) { return id; }
                 function ISODate(d) { return d; }
+
+                //for(var j = 0 ; j < iObj.data.Result.length)
                 $scope.conversationListNew = iObj.data.Result;
                 if ($scope.conversationListNew && $scope.conversationListNew.length > 0) {
                     $scope.conversationLoad(0, $scope.conversationListNew[0]);
@@ -376,7 +378,7 @@
       
         if ($scope.openConversation) {
             
-            $scope.conversation.ReceiverEmail = $scope.openConversation.EmailAddress;
+            $scope.conversation.ReceiverEmail = $scope.openConversation.SenderEmail;
             $scope.conversation.SenderEmail = $scope.loggedEmail;
             $scope.conversation.Content = $scope.conversation.Message;
             $scope.conversation.SendOrReceive = "Send";
