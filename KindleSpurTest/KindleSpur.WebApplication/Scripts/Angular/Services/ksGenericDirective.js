@@ -155,11 +155,11 @@ app.directive('ctcRole', function ($state, serverCommunication) {
             scope.topicSelection = function (iEvent, iIndex, iTopic) {
                 iEvent.stopPropagation();
                 iTopic.type = 'T';
-                //debugger                               
+                                          
 
                 if (iTopic.selected) {
                     iTopic.selected = false;
-                    if (iTopic.alreadySelected == true) {//make delete array
+                    if (iTopic.alreadySelected == true && !scope.skillRequired) {//make delete array
                         _deleteArray[iTopic.Name] = iTopic;
                     }
                     //if (_updateArray[iTopic.Name]) {
@@ -180,7 +180,7 @@ app.directive('ctcRole', function ($state, serverCommunication) {
                                     }
                                 }
                             }
-                            // console.error(_deleteArray)
+                            console.error(_deleteArray);
                             _deleteArr.sort(function (a, b) { return b - a })
                             for (var z = 0 ; z < _deleteArr.length ; z++) {
                                 scope.skillsArray.splice(_deleteArr[z], 1);
@@ -191,7 +191,7 @@ app.directive('ctcRole', function ($state, serverCommunication) {
                 else {
                     iTopic.selected = true;
 
-                    if (iTopic.alreadySelected == true) {
+                    if (iTopic.alreadySelected == true && !scope.skillRequired) {
                         if (_deleteArray[iTopic.Name]) delete _deleteArray[iTopic.Name];
                         //    if (_updateArray[iTopic.Name]) delete _updateArray[iTopic.Name];
                     } //else {                    
@@ -276,7 +276,7 @@ app.directive('ctcRole', function ($state, serverCommunication) {
 
             scope.savepublishClick = function () {
                 console.error(_updateArray, _deleteArray);
-                //  return 
+                //  debugger 
                 if (scope.categoryDisplay) {
                     //publish check
                 } else {
@@ -285,7 +285,7 @@ app.directive('ctcRole', function ($state, serverCommunication) {
                     var _dataArray = [];
                     var _dd = [];
                     for (var l = 0 ; l < scope.skillsArray.length; l++) {
-                        console.error(scope.skillsArray[l].Name)
+                        //console.error(scope.skillsArray[l].Name)
                         if (scope.skillsArray[l].selected) {
                             _dataArray.push(scope.skillsArray[l]);
                         } else {
@@ -307,10 +307,20 @@ app.directive('ctcRole', function ($state, serverCommunication) {
                         }
 
                     }
-                    console.error(_dd)
-                    console.error(_category);
-                    console.error(_topics);
-                    console.error(_skills);
+                    var _deleteArr =[];
+                    for (var j = 0 ; j < _dd.length ; j++) {
+                        if (_deleteArray[_dd[j].Name]){
+                            _deleteArr.push(j);
+                        }
+                    }
+                    _deleteArr.sort(function (a, b) { return b - a })
+                    for (var z = 0 ; z < _deleteArr.length ; z++) {
+                        _dd.splice(_deleteArr[z], 1);
+                    }
+                    //console.error(_dd)
+                    //console.error(_category);
+                    //console.error(_topics);
+                    //console.error(_skills);
 
                     _dataArray = _dataArray.concat(_dd);
                     //return
