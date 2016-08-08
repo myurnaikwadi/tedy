@@ -78,7 +78,7 @@
                                         <span class="chatHalfContainerSpan">
                                             <h5>{{ReceiverName}}</h5>
                                         </span>
-                                        <span class="chatHalfContainerSpanNxt">
+                                        <span ng-hide="openConversation.sessionClosed" class="chatHalfContainerSpanNxt">
                                             <h6 class="genericPointerClass" ng-click="askFeedBackFunc(true)">Close Session</h6>
                                             <h6 class="genericPointerClass" ng-click="askFeedBackFunc(false)">Ask Feedback</h6>
                                         </span>
@@ -97,7 +97,7 @@
                                     <div class="" ng-class="{chatReceiver : MailRecord.SenderEmail === loggedEmail, chatSender : MailRecord.ReceiverEmail === loggedEmail}">
                                         <h5>{{MailRecord.Content}}</h5>
                                     </div>
-                                    <div class="" ng-class="{chatTimeReceiver : MailRecord.SenderEmail === loggedEmail, chatTime : MailRecord.ReceiverEmail === loggedEmail}">02/20</div>
+                                    <div class="" ng-class="{chatTimeReceiver : MailRecord.SenderEmail === loggedEmail, chatTime : MailRecord.ReceiverEmail === loggedEmail}">{{MailRecord.UpdateDate | date:'yyyy-MM-dd HH:mm a' }}</div>
                                    
                                   
                             </div>
