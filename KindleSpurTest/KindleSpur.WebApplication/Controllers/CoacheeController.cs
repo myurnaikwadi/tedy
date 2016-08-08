@@ -96,7 +96,7 @@ namespace KindleSpur.WebApplication.Controllers
                     if (lstSkillforCochee != null || lstSkillforCochee.Count > 0)
                     {
                         CoachOrMentorRepository _coachRepo = new CoachOrMentorRepository();
-                        return this.Json(_coachRepo.GetRecommendedCoachList(lstSkillforCochee, UserRole.Role));
+                        return this.Json(_coachRepo.GetRecommendedCoachList(lstSkillforCochee, UserRole.Role, UserId));
                     }
                 }
                 else if (UserRole.Role == "Mentor")
@@ -106,7 +106,7 @@ namespace KindleSpur.WebApplication.Controllers
                     if (lstTopicforMentee != null || lstTopicforMentee.Count > 0)
                     {
                         CoachOrMentorRepository _coachRepo = new CoachOrMentorRepository();
-                        return this.Json(_coachRepo.GetRecommendedMentorList(lstTopicforMentee, UserRole.Role));
+                        return this.Json(_coachRepo.GetRecommendedMentorList(lstTopicforMentee, UserRole.Role, UserId));
                     }
                 }
             }

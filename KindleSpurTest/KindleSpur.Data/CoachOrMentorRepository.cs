@@ -439,7 +439,7 @@ namespace KindleSpur.Data
             return TreeURL;
         }
 
-        public List<SearchCoachOrMentor> GetRecommendedCoachList(List<SkillOrTopic> lstSkillforCochee, string Role)
+        public List<SearchCoachOrMentor> GetRecommendedCoachList(List<SkillOrTopic> lstSkillforCochee, string Role, string UserId)
         {
             List<CoachOrMentor> lstCoach = new List<CoachOrMentor>();
             List<string> lstTopicOrSkill = new List<string>();
@@ -454,11 +454,11 @@ namespace KindleSpur.Data
              }
             if (lstCoach.Count > 0)
                 //  return FillSerachData(lstCoach);
-                return RecommendedFillSerachData(lstCoach, lstTopicOrSkill);
+                return RecommendedFillSerachData(lstCoach, lstTopicOrSkill, UserId);
             return null;
         }
 
-        public List<SearchCoachOrMentor> GetRecommendedMentorList(List<SkillOrTopic> lstTopicforMentee, string Role)
+        public List<SearchCoachOrMentor> GetRecommendedMentorList(List<SkillOrTopic> lstTopicforMentee, string Role, string UserId)
         {
             List<CoachOrMentor> lstCoach = new List<CoachOrMentor>();
             List<string> lstTopicOrSkill = new List<string>();
@@ -472,7 +472,7 @@ namespace KindleSpur.Data
             }
             if (lstCoach.Count > 0)
                 //  return FillSerachData(lstCoach);
-                return RecommendedFillSerachData(lstCoach, lstTopicOrSkill);
+                return RecommendedFillSerachData(lstCoach, lstTopicOrSkill, UserId);
             return null;
         }
 
@@ -513,12 +513,13 @@ namespace KindleSpur.Data
             return obj;
         }
 
-        private List<SearchCoachOrMentor> RecommendedFillSerachData(List<CoachOrMentor> lstCoachOrMentor, List<string> lstTopicOrSkill)
+        private List<SearchCoachOrMentor> RecommendedFillSerachData(List<CoachOrMentor> lstCoachOrMentor, List<string> lstTopicOrSkill,string UserId)
         {
             List<SearchCoachOrMentor> lstSearchCoachOrMentor = new List<SearchCoachOrMentor>();
 
            
-            lstCoachOrMentor = lstCoachOrMentor.GroupBy(test => test.UserId)
+            lstCoachOrMentor = lstCoachOrMentor.Where(t=>t.UserId != UserId)
+                    .GroupBy(test => test.UserId)                  
                    .Select(grp => grp.First())
                    .ToList();
 
