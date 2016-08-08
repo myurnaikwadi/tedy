@@ -163,7 +163,7 @@ namespace KindleSpur.WebApplication.Controllers
         //
         // POST: /Coversation/Create
         [HttpPost]
-        public ActionResult Create(Conversation _obj, string ReceiverName, string Role)
+        public void Create(Conversation _obj, string ReceiverName, string Role)
         {
 
             try
@@ -199,15 +199,9 @@ namespace KindleSpur.WebApplication.Controllers
                         TempData["StatusMessage"] = "Please check your mail to start conversation!!!";
                     }
                 }
-                else
-                {
-                    TempData["ErrorMessage"] = "Conversation is already initiated!!!";
-                }
-                return RedirectToAction("Index");
             }
             catch (Exception Ex)
             {
-                throw Ex;
 
                 //return View();
             }

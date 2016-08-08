@@ -324,7 +324,7 @@ namespace KindleSpur.Data
             var query = Query.EQ("skill", cvrs.skill);
             var sortBy = SortBy.Descending("skill");
             // var count = _conversationCollection.Count(Query.EQ("skill", cvrs.skill));
-            bsn = _conversationCollection.FindAs<BsonDocument>(query).SetSortOrder(sortBy).SetLimit(5).ToList();
+            bsn = _conversationCollection.FindAs<BsonDocument>(query).SetSortOrder(sortBy).ToList();
             return bsn;
         }
 
