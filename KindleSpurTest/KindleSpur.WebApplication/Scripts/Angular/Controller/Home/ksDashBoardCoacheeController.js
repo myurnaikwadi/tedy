@@ -79,15 +79,17 @@
     $scope.feedBack = {}
     $scope.feedBack.askFeedback = false;
     $scope.feedBack.formValue = '0';
-    $scope.askFeedBackFunc = function () {
+    $scope.feedBack.icloseFeedBack = false;        
+    $scope.askFeedBackFunc = function (icloseFeedBack) {
         $scope.feedBack.askFeedback = true;
         $scope.feedBack.formValue = '1';
+        $scope.feedBack.icloseFeedBack = icloseFeedBack;        
         $scope.feedBack.selectedComparioson = 1;
         $scope.feedBack.selectedAttractive = 1;
         $scope.feedBack.selectedstar = 1;
         $scope.feedBack.likeMostMessage = '';
         $scope.feedBackloaded = { showLoad: false };
-        $scope.loadSlideData(1);
+        //$scope.loadSlideData(1);
     }
     $scope.array = [
       { name: 'Was the sessions objective achieved ?  ', actionValue: '', type: 'rating', showLoad: false },
@@ -103,6 +105,7 @@
     $scope.feedBack.closeFeedBackPopup = function () {
         $scope.feedBack.askFeedback = false;
         $scope.feedBack.formValue = '1';
+        $scope.feedBack.icloseFeedBack  = false;
         $scope.feedBack.selectedComparioson = 1;
         $scope.feedBack.selectedAttractive = 1;
         $scope.feedBack.selectedstar = 1;
@@ -381,7 +384,19 @@
                     // $scope.conversationListNew.push(_con);
                 }
                 if ($scope.conversationListNew && $scope.conversationListNew.length > 0) {
-                    $scope.conversationLoad(0, $scope.conversationListNew[0]);
+                    if ($scope.openConversation) {
+                        for (var i = 0 ; i < $scope.conversationListNew.length ; i++) {
+                            if ($scope.conversationListNew[i].ConversationParentId == $scope.openConversation.ConversationParentId) {
+                                $scope.conversationLoad(i, $scope.conversationListNew[i]);
+                                break;
+                            }                           
+                        }
+                      
+                    } else {
+                        $scope.conversationLoad(0, $scope.conversationListNew[0]);
+                    }
+
+                    
                 }
             },
             failureCallBack: function (iObj) {
@@ -694,7 +709,6 @@
         serverCommunication.getMyCoacheeSelection({
             Role: 'Coach',
             successCallBack: function (iObj) {
-
                 console.error('In getMyCoacheeSelection', iObj);
                 var _myCtsInfo = seperateDataAsPerCTS(iObj);
                 $rootScope.loggedDetail['coachee'] = _myCtsInfo;
@@ -707,6 +721,10 @@
         });
     };
     $scope.init();
+
+    $scope.$on("$destroy", function handleDestroyEvent() {
+        $scope.stopFight();
+    });
 })
 
 app.directive('ctsDropdown', function () {

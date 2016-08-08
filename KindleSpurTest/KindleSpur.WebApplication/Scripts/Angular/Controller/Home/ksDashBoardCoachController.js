@@ -216,12 +216,14 @@
     $scope.feedBack = {};
     $scope.catogoryArray = [];
     $scope.feedBack.askFeedback = false;
+    $scope.feedBack.icloseFeedBack = false
     $scope.feedBack.formValue = '0';
-    $scope.askFeedBackFunc = function () {
+    $scope.askFeedBackFunc = function (icloseFeedBack) {
         $scope.feedBack.askFeedback = true;
         $scope.feedBack.formValue = '1';
+        $scope.feedBack.icloseFeedBack = icloseFeedBack;
         $scope.feedBackloaded = { showLoad: false };
-        $scope.loadSlideData(1);
+       // $scope.loadSlideData(1);
     }
 
     $scope.array = [
@@ -238,6 +240,7 @@
     $scope.feedBack.closeFeedBackPopup = function () {
         $scope.feedBack.askFeedback = false;
         $scope.feedBack.formValue = '1';
+        $scope.feedBack.icloseFeedBack = false;
         $scope.feedBack.selectedComparioson = 1;
         $scope.feedBack.selectedAttractive = 1;
         $scope.feedBack.selectedstar = 1;
@@ -334,7 +337,17 @@
                 }
                 //  $scope.conversationListNew = iObj.data.Result;
                 if ($scope.conversationListNew && $scope.conversationListNew.length > 0) {
-                    $scope.conversationLoad(0, $scope.conversationListNew[0]);
+                    if ($scope.openConversation) {
+                        for (var i = 0 ; i < $scope.conversationListNew.length ; i++) {
+                            if ($scope.conversationListNew[i].ConversationParentId == $scope.openConversation.ConversationParentId) {
+                                $scope.conversationLoad(i, $scope.conversationListNew[i]);
+                                break;
+                            }
+                        }
+
+                    } else {
+                        $scope.conversationLoad(0, $scope.conversationListNew[0]);
+                    }
                 }
             },
             failureCallBack: function (iObj) {
@@ -607,5 +620,9 @@
 
     $scope.init();
     /*END: Conversation Module Code*/
+
+    $scope.$on("$destroy",function handleDestroyEvent() {
+        $scope.stopFight();
+    });
 
 });

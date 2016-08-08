@@ -1404,13 +1404,20 @@ app.directive('feedbackPage', function ($state, serverCommunication, $timeout,$r
             question: "=",
             submitFeedback: "&",
             closeCallback: "&",
-
+            convObject: "=",
+            feedbackClosed: "=",
         },
         templateUrl: '/Home/ksFeedBackPanel',
         //scope: true,   // optionally create a child scope
         link: function ($scope, element, attrs) {
             console.error($scope)
+
+            $scope.sender = ($scope.convObject.SenderEmail == $rootScope.loggedDetail.EmailAddress) ? $scope.convObject.ReceiverEmail : $scope.convObject.SenderEmail;
             window.feedbackPage = $scope;
+            
+            if (typeof $scope.feedbackClosed === 'undefined') {
+                $scope.feedbackClosed = false;
+            }
             $scope.feedBack = {
                 selectedComparioson: 1,
                 selectedAttractive: 1,
@@ -1457,7 +1464,7 @@ app.directive('feedbackPage', function ($state, serverCommunication, $timeout,$r
         });
     };
             $scope.feedBack.sendFeedBackDetail = function () {
-                $scope.feedBack.feedBackDetails.sender = "patilsagar28290@gmail.com";
+                $scope.feedBack.feedBackDetails.sender = $scope.sender;
                 console.error($scope.feedBack.feedBackDetails)
                 
                 for (var k = 0 ; k < $scope.displayArray.length ; k++) {
@@ -1475,7 +1482,7 @@ app.directive('feedbackPage', function ($state, serverCommunication, $timeout,$r
                 }
                 console.error(_rating)
                 serverCommunication.sendFeedback({
-                    loggedUserDetails: { FeedBackId: _id, FeedbackClosed: false, sender: "patilsagar28290@gmail.com", Skill: 'Marketing Management', customerSatisfactionRating: _rating },
+                    loggedUserDetails: { FeedBackId: _id, FeedbackClosed: $scope.feedbackClosed, sender: $scope.sender, Skill: $scope.convObject.skill, customerSatisfactionRating: _rating },
                     successCallBack: function (iObj) {
                         console.error('In successCallBack', iObj);
                         $scope.getPointsRecord ();
