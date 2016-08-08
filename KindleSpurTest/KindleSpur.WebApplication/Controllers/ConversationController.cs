@@ -163,9 +163,9 @@ namespace KindleSpur.WebApplication.Controllers
         //
         // POST: /Coversation/Create
         [HttpPost]
-        public void Create(Conversation _obj, string ReceiverName, string Role)
+        public JsonResult Create(Conversation _obj, string ReceiverName, string Role)
         {
-
+            ResponseMessage response = new ResponseMessage();
             try
             {
                 //ConversationRepository _repo = new ConversationRepository();
@@ -198,6 +198,14 @@ namespace KindleSpur.WebApplication.Controllers
                         EmailNotification.SendConversationEmail(_obj, uri, subject, content);
                         TempData["StatusMessage"] = "Please check your mail to start conversation!!!";
                     }
+                    else
+                    {
+                        response.FailureCallBack("Request pending with Coach/Mentor!!!");
+                    }
+                }
+                else
+                {
+                    response.FailureCallBack("Request already send to Coach/Mentor!!!");
                 }
             }
             catch (Exception Ex)
@@ -205,6 +213,7 @@ namespace KindleSpur.WebApplication.Controllers
 
                 //return View();
             }
+            return this.Json(response);
         }
 
         // POST: Coversation/UpdateConversationStatus

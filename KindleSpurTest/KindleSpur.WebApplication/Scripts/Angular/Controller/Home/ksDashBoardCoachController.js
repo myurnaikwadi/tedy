@@ -1,12 +1,11 @@
 ﻿app.controller('ksDashBoardCoachController', function ($rootScope, $scope, serverCommunication, $stateParams, $interval) {
     console.error($stateParams)
     $scope.passedData = $stateParams;
-    $scope.redeemAction = { actionName: "GAME" };
+   // $scope.redeemAction = { actionName: "GAME" };
 
     $scope.loggedEmail = $rootScope.loggedDetail.EmailAddress;
     $scope.ApprovalName = $rootScope.loggedDetail.FirstName + " " +$rootScope.loggedDetail.LastName;
-    $scope.conversation = {
-    };
+    $scope.conversation = { };
     window.ddd = $scope;
     $scope.coachingStatusArray = [{ Sender: '', FirstName: 'MAYUR', LastName: 'N', PhotoURL: '', Rating: '', TreeURL: '', FeedbackCount: 5, Skill: 'ANGULAR JS' }
 					, { Sender: '', FirstName: 'SAGAR N', LastName: 'N', PhotoURL: '', Rating: '', TreeURL: '', FeedbackCount: 3, Skill: 'C# MVC' }
@@ -241,10 +240,7 @@
         $scope.feedBack.askFeedback = false;
         $scope.feedBack.formValue = '1';
         $scope.feedBack.icloseFeedBack = false;
-        $scope.feedBack.selectedComparioson = 1;
-        $scope.feedBack.selectedAttractive = 1;
-        $scope.feedBack.selectedstar = 1;
-        $scope.feedBack.likeMostMessage = '';
+        
     };
 
 
@@ -309,6 +305,7 @@
         console.error('ge');
         serverCommunication.getConversation({
             Role: "Coach",
+            ConversationType : "Coaching",
             loggedEmail: $scope.loggedEmail,
             successCallBack: function (iObj) {
                 console.debug('In successCallBack', iObj);
@@ -425,6 +422,7 @@
     $scope.conversationRequest = function () {
         console.error('Conversation Request Call');
         serverCommunication.getConversationRequest({
+            ConversationType: "Coaching",
             successCallBack: function (iObj) {
                 console.debug('Conversation Request Call', iObj);
 
@@ -441,6 +439,7 @@
         });
 
         serverCommunication.getAllMeetingRequest({
+            ConversationType: "Coaching",
             successCallBack: function (iObj) {
                 console.debug('In getAllMeetingRequest', iObj);
 
@@ -515,7 +514,7 @@
         console.error(iNotificationDash);
         var contentText = "";
         if (isVerfied != false)
-            contentText = 'SESSION REQUEST BY ' + $scope.ApprovalName + ' HAS BEEN ACCEPTED';
+            contentText = 'COACHING REQUEST BY ' +$scope.ApprovalName + ' HAS BEEN ACCEPTED';
         else
             contentText = null;
         var _id = iNotificationDash.ConversationId + ":CHT#" + (Date.now()) + (Math.floor((Math.random() * 10) + 1));
