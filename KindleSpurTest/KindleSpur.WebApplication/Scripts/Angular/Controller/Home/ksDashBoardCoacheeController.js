@@ -556,9 +556,9 @@
             loggedUserDetails: _object,
             ReceiverName: $scope.conversation.ReceiverEmail,
             Role: 'Coachee',
-            successCallBack: function () {
+            successCallBack: function (iObj) {
                 $scope.conversation.Message = "";
-
+                console.error(iObj)
 
             },
             failureCallBack: function () {
