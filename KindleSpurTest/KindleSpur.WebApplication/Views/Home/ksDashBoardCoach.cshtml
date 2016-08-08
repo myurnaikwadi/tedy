@@ -85,7 +85,7 @@
                                     </div>
                                     <div class="chatHalfContainer">
                                         <span class="chatHalfContainerSpanNxt" style="align-items: center;">
-                                            <h6 style="padding: 0px;">UI-UX Designer | PUNE AREA | INDIA</h6>
+                                            <h6 style="padding: 0px;">{{openConversation.skill}} </h6>
                                         </span>
                                     </div>
                                 </div>
@@ -93,31 +93,17 @@
 
                             </div>
                             <div class="chatMiddle">
-                                <div class="chatOuterContainer" ng-repeat="MailRecord in MailRecords">
-                                    @*<div class="chatSender">
-                                                <h5>I would like to request couching from you.</h5>
-                                </div>*@
+                                <div class="chatOuterContainer" ng-repeat="MailRecord in MailRecords">                              
                                     <div class="" ng-class="{chatReceiver : MailRecord.SenderEmail === loggedEmail, chatSender : MailRecord.ReceiverEmail === loggedEmail}">
                                         <h5>{{MailRecord.Content}}</h5>
                                     </div>
                                     <div class="" ng-class="{chatTimeReceiver : MailRecord.SenderEmail === loggedEmail, chatTime : MailRecord.ReceiverEmail === loggedEmail}">02/20</div>
-                                    @*<div class="chatReceiver">
-                                                <h5>Couching Request from Paresh has been accepted</h5>
-                                </div>*@
-                                    @*<div class="chatReceiver" ng-show="MailRecord.SendOrReceive == 'Receive'">
-                                    <h5>{{MailRecord.Content}}</h5>
-                                            </div>
-                                <div class="chatTimeReceiver" ng-show="MailRecord.SendOrReceive == 'Receive'">02/20</div>*@
-                                </div>
-                                @*<div class="chatOuterContainer" ng-show="MailRecord.SendOrReceive == 'Receive'">
-                                <div class="chatReceiver">
-                                    <h5>{{MailRecord.Content}}</h5>
-                                        </div>
-                            </div>*@
+                                   
+                                  
                             </div>
                             <div class="chatBottom">
                                 <div class="chatBottomOne">
-                                    <textarea placeholder="CLICK HERE TO TYPE MESSAGE" required ng-model="conversation.Message"></textarea>
+                                    <textarea ng-disabled="openConversation.sessionClosed" placeholder="{{ openConversation.sessionClosed ? 'SESSION CLOSED' : 'CLICK HERE TO TYPE MESSAGE'}}" required ng-model="conversation.Message"></textarea>
                                 </div>
                                 <div class="chatBottomTwo">
                                     <div class="iconContainer">
@@ -125,7 +111,7 @@
                                         <div class="fa fa-phone" style="padding: 0px 8px;" data-toggle="modal" data-target="#myMeetingSchedular"></div>
                                     </div>
                                     <div class="iconContainer">
-                                        <button type="submit" ng-click="conversationClick(true, '')">Send</button>
+                                        <button type="submit"  ng-disabled="openConversation.sessionClosed" ng-click="conversationClick(true, '')">Send</button>
                                     </div>
 
                                 </div>

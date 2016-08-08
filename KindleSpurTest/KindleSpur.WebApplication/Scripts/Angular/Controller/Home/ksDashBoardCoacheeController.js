@@ -446,7 +446,10 @@
                 var MailRecords = eval('(' + iObj.data.Result + ')');
 
                 MailRecords.some(function (dd) {
-
+                    if (dd.ConversationClosed || dd.ConversationClosed == 'True') {
+                        $scope.openConversation.sessionClosed = true;
+                        console.error('ssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss')
+                    }
                     $scope.MailRecords.push(angular.copy(dd));
                 });
                 $scope.MailRecords.sort(function (a, b) {

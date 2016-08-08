@@ -1421,51 +1421,83 @@ app.directive('feedbackPage', function ($state, serverCommunication, $timeout,$r
             if (typeof $scope.feedbackClosed === 'undefined') {
                 $scope.feedbackClosed = false;
             }
+
             $scope.feedBack = {
                 selectedComparioson: 1,
                 selectedAttractive: 1,
                 selectedstar: 1,
                 likeMostMessage: '',
-
                 feedBackDetails: {}
             };
 
              $scope.rewardsPoints = {
-                mentorPoints: 0,
-                menteePoints: 0,
-                coachPoints: 0,
-                coacheePoints: 0,
-                balancePoints: 0,
-                redeemedPoints: 0,
-                totalPoints: 0
+                        mentorPoints: 0,
+                        menteePoints: 0,
+                        coachPoints: 0,
+                        coacheePoints: 0,
+                        balancePoints: 0,
+                        redeemedPoints: 0,
+                        totalPoints: 0
             };
-            $scope.myRewardsArray =[
-                              //     { Name: 'www.yryr.com', date: '12/12/2011', Key: 'NUF783F', PSR: false
-            //},
-            ];
+            $scope.myRewardsArray =[];
+            $scope.getPointsRecord = function () {
+                serverCommunication.getPointsRecord({
+                    successCallBack: function (iObj) {
+                        console.error('In successCallBack', iObj);
+                        $scope.rewardsPoints.mentorPoints = iObj.data.MentorRewardPoints ? iObj.data.MentorRewardPoints : 0;
+                        $scope.rewardsPoints.menteePoints = iObj.data.MenteeRewardPoints ? iObj.data.MenteeRewardPoints : 0;
+                        $scope.rewardsPoints.coachPoints = iObj.data.CoachRewardPoints ? iObj.data.CoachRewardPoints : 0;
+                        $scope.rewardsPoints.coacheePoints = iObj.data.CoacheeRewardPoints ? iObj.data.CoacheeRewardPoints : 0;
+                        $scope.rewardsPoints.totalPoints = iObj.data.TotalRewardPoints ? iObj.data.TotalRewardPoints : 0;
+                        $scope.rewardsPoints.balancePoints = iObj.data.BalanceRewardPoints ? iObj.data.BalanceRewardPoints : 0;
+                        $scope.rewardsPoints.redeemedPoints = iObj.data.RedeemedPoints ? iObj.data.RedeemedPoints : 0;
+                        $scope.myRewardsArray = iObj.data.PSRAndGames ? iObj.data.PSRAndGames : [];
 
+                    },
+                    failureCallBack: function (iObj) {
+                        //console.error('In failureCallBack', iObj);
 
-     $scope.getPointsRecord = function () {
-        serverCommunication.getPointsRecord({
+                    }
+                });
+            };
 
-            successCallBack: function (iObj) {
-                console.error('In successCallBack', iObj);
-                $scope.rewardsPoints.mentorPoints = iObj.data.MentorRewardPoints ? iObj.data.MentorRewardPoints : 0;
-                $scope.rewardsPoints.menteePoints = iObj.data.MenteeRewardPoints ? iObj.data.MenteeRewardPoints : 0;
-                $scope.rewardsPoints.coachPoints = iObj.data.CoachRewardPoints ? iObj.data.CoachRewardPoints : 0;
-                $scope.rewardsPoints.coacheePoints = iObj.data.CoacheeRewardPoints ? iObj.data.CoacheeRewardPoints : 0;
-                $scope.rewardsPoints.totalPoints = iObj.data.TotalRewardPoints ? iObj.data.TotalRewardPoints : 0;
-                $scope.rewardsPoints.balancePoints = iObj.data.BalanceRewardPoints ? iObj.data.BalanceRewardPoints : 0;
-                $scope.rewardsPoints.redeemedPoints = iObj.data.RedeemedPoints ? iObj.data.RedeemedPoints : 0;
-                $scope.myRewardsArray = iObj.data.PSRAndGames ? iObj.data.PSRAndGames : [];
+            $scope.generateSesstionClosedEntry = function () {
+                var _parentId = $scope.convObject.ConversationParentId ? $scope.convObject.ConversationParentId : $scope.convObject.ConversationId;
+          
+                var _id = _parentId + ":CHT#" + (Date.now()) + (Math.floor((Math.random() * 10) + 1));
+               
+                var _object = {
+                    Content: 'SESSION HAS BEEN CLOSED',
+                    SenderEmail: $rootScope.loggedDetail.EmailAddress,
+                    ReceiverEmail: $scope.sender,
+                    SendOrReceive: 'Send',
+                    IsVerified: true,
+                    ConversationClosed: true,
+                    ConversationType: $scope.convObject.ConversationType,
+                    Skill: $scope.convObject.skill,
+                    ConversationId: _id,
+                    ConversationParentId: _parentId,
+                }
+                // console.debug(_object);
+                var _replica = angular.copy(_object)
+                _replica.UpdateDate = new Date().toJSON();
+               // $scope.MailRecords.push(_replica);
+                // $scope.MailRecords.push(_object);
+                serverCommunication.sendConversation({
+                    loggedUserDetails: _object,
+                    ReceiverName: $scope.ReceiverName,
+                    Role: 'Coachee',
+                    successCallBack: function () {
+                        $scope.conversation.Message = "";
+                       // console.debug('In successCallBack');
+                    },
+                    failureCallBack: function () {
+                       // $scope.conversation.Message = "";
+                        console.debug('In failureCallBack');
+                    }
+                });
+            };
 
-            },
-            failureCallBack: function (iObj) {
-                //console.error('In failureCallBack', iObj);
-
-            }
-        });
-    };
             $scope.feedBack.sendFeedBackDetail = function () {
                 $scope.feedBack.feedBackDetails.sender = $scope.sender;
                 console.error($scope.feedBack.feedBackDetails)
@@ -1488,7 +1520,11 @@ app.directive('feedbackPage', function ($state, serverCommunication, $timeout,$r
                     loggedUserDetails: { FeedBackId: _id, FeedbackClosed: $scope.feedbackClosed, sender: $scope.sender, Skill: $scope.convObject.skill, customerSatisfactionRating: _rating },
                     successCallBack: function (iObj) {
                         console.error('In successCallBack', iObj);
-                        $scope.getPointsRecord ();
+                        if ($scope.feedbackClosed) {
+                            $scope.generateSesstionClosedEntry();
+                        }
+                        $scope.getPointsRecord();
+                       
                     },
                     failureCallBack: function (iObj) {
                         console.error('In failureCallBack', iObj);
