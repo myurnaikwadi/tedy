@@ -111,7 +111,7 @@ namespace KindleSpur.WebApplication.Controllers
             return View();
         }
         [HttpPost]
-        public ActionResult UpdatecoverPhoto(Uploadcoverimage model)
+        public string UpdatecoverPhoto(Uploadcoverimage model)
         {
             UserRepository _repo = new UserRepository();
             var allowedExtensions = new[] {
@@ -135,7 +135,8 @@ namespace KindleSpur.WebApplication.Controllers
             {
                 ViewBag.message = "Please choose only Image file";
             }
-            return View();
+            IUser user = _repo.GetUserDetail(((IUser)System.Web.HttpContext.Current.Session["User"]).EmailAddress);
+            return user.ToJson();
         }
 
 
