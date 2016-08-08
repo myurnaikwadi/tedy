@@ -338,7 +338,9 @@
     <Content Include="Images\MedalImage\bronzeMedal.png" />
     <Content Include="Images\MedalImage\goldMedal.png" />
     <Content Include="Images\MedalImage\silverMedal.png" />
+    <Content Include="Images\MinusValueScoreCard.png" />
     <Content Include="Images\normalMedal.png" />
+    <Content Include="Images\PlusValueScoreCard.png" />
     <Content Include="Images\pointStatusPanel.png" />
     <Content Include="Images\profile.png" />
     <Content Include="Images\psrPlant.png" />
