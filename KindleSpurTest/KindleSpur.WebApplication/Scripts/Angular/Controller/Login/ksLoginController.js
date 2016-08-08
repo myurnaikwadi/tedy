@@ -51,7 +51,10 @@ app.controller('ksLoginController', ['$scope', 'authentification', '$location', 
         console.error('In _successCallBack', iObject);
         //  window.$cookieStore = $cookieStore 	    
         if (!iObject.data.Result) {
-            alert(iObject.data.Message);
+            //alert();
+            $scope.displayAlert.showAlert = true;
+            $scope.displayAlert.message = iObject.data.Message;
+            $scope.displayAlert.formatType = '1';
             //to access in html displayAlert.showAlert 
             //$scope.displayAlert.showAlert = true;
             //$scope.displayAlert.message = iObject.data.Message;
@@ -314,12 +317,13 @@ app.controller('ksLoginController', ['$scope', 'authentification', '$location', 
 							        $rootScope.loggedDetail = {};
 							        $rootScope.loggedDetail.FirstName = userprofile.firstName;
 							        $rootScope.loggedDetail.LastName = userprofile.lastName;
-							        $rootScope.loggedDetail.Photo = userprofile.pictureUrl;
-							        $rootScope.loggedDetail.publicProfileUrl = userprofile.publicProfileUrl;
+							        $rootScope.loggedDetail.Photo = userprofile.pictureUrl ? userprofile.pictureUrl : '';
+							       // coverphoto
+							       // $rootScope.loggedDetail.publicProfileUrl = userprofile.publicProfileUrl;
 							        $rootScope.loggedDetail.EmailAddress = userprofile.emailAddress;
-							        $rootScope.loggedDetail.LinkdinURL = userprofile.id;
+							        $rootScope.loggedDetail.LinkdinURL = userprofile.publicProfileUrl;
 							        authentification.linkedInClick({
-							            loginObject: $rootScope.loggedDetail, successCallBack: _successLoginCallBack, failureCallBack: _failureLoginCallBack
+							            loginObject: userprofile, successCallBack: _successLoginCallBack, failureCallBack: _failureLoginCallBack
 							        });
 							        //go to main
 							        //  $location.path("/main");

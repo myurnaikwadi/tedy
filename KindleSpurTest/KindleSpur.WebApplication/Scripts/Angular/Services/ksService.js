@@ -51,11 +51,12 @@
             var _obj = {
                 FirstName: iObj.loginObject.firstName,
                 LastName: iObj.loginObject.lastName,
-                img: iObj.loginObject.pictureUrl,
-                publicUrl: iObj.loginObject.publicProfileUrl,
+                Photo: iObj.loginObject.pictureUrl ? iObj.loginObject.pictureUrl : '',
+                LinkdinURL: iObj.loginObject.publicProfileUrl,
                 EmailAddress: iObj.loginObject.emailAddress,
                 IsExternalAuthentication: true
             }
+            console.error(_obj)
             $http.post('/User/linkedIn', _obj).then(iObj.successLinkedCallBack, iObj.failureCallBack);
         },
         logout: function (iObj) {
