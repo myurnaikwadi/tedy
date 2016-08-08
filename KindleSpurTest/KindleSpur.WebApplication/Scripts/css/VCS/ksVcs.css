@@ -381,7 +381,7 @@ input:focus ~ .highlight {
     height: 86%;
 }
 .selectedZoneClass{
-	border:1px solid #F8C713; background:#F8C713;color:white;
+	border:1px solid #F8C713;color:black; background:#d3d3d3;font-weight:bolder;
 }
 
 .parentBody {
@@ -442,15 +442,15 @@ input:focus ~ .highlight {
 }
 .valueFeedButton:hover{
    color:white;
-   background-color:rgb(231,120,23);
+ 
 }
     .valueFeedButton:focus {
         color: white;
-        background-color: rgb(231,120,23);
+       
     }
      .valueFeedButton:active {
         color: white;
-        background-color: rgb(231,120,23);
+       
     }
 .storyTitle{
         font-size: 17px;
@@ -508,7 +508,8 @@ width: 100%;
     top:1%;
     right: 1%;
     bottom: 0;
-     position: absolute;
+    position: absolute;
+    cursor:pointer;
 }
 .addStoryPopupCancleButton:hover{
     box-shadow:0px 0px 10px 0px;
