@@ -89,11 +89,17 @@
             transition: all 0.7s ease;
         }
 
-        .leftSideMenuLable {
+      .leftSideMenuLable {
             position: relative;
             float: left;
             color: white;
             margin: 3%;
+            /*text-shadow: 0px 0 35px #555;*/
+                /*-webkit-transition: all 0.7s ease;*/
+                 transition: all 0.7s ease;
+           transition: all 0.7s ease;
+           filter:progid:DXImageTransform.Microsoft.Glow(Strength, Color, Enabled);
+          
         }
 
         .requestRoleParent {
