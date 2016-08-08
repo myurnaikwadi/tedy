@@ -211,7 +211,7 @@
                                 </div>
                             </div>
                             <div class="statusCoachingStatus">
-                                <h5 class="fontClass" style="color:#A9A9A9;margin: auto auto;float: left;margin-left: 0;">{{option.FeedbackCount == 1 ? "JUST STARTED" : (option.FeedbackCount == 6) ? 'SESSION OVER' : 'IN PROGRESS'}}</h5>
+                                <h5 class="fontClass" style="color:#A9A9A9;margin: auto auto;float: left;margin-left: 0;">{{option.FeedbackCount == 1 ? "JUST STARTED" : (option.FeedbackCount == 6 || option.FeedbackClosed == true) ? 'SESSION OVER' : 'IN PROGRESS'}}</h5>
                             </div>
                             <div class="treeCoachingStatus">
                                 <img ng-src="{{option.TreeURL}}" style="margin: auto auto;float: left;height: 45px;width: 45px;" />

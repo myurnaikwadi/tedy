@@ -351,13 +351,13 @@ namespace KindleSpur.Data
                     if (LstCochees != null)
                     {
                         result = (from t in LstCochees
-                                  group t by new { t.Sender, t.Skill, t.FeedbackClosed }
+                                  group t by new { t.Sender, t.Skill}
                                      into grp
                                   select new CoachStatus()
                                   {
                                       EmailAddress = grp.Key.Sender,
                                       Skill = grp.Key.Skill,
-                                      FeedbackClosed = grp.Key.FeedbackClosed,
+                                      FeedbackClosed = grp.OrderByDescending(t=>t.CreateDate).FirstOrDefault().FeedbackClosed,
                                       FeedbackCount = grp.Count(),
                                       Rating = grp.OrderByDescending(t => t.customerSatisfactionRating).FirstOrDefault().customerSatisfactionRating
                                   }).ToList();
