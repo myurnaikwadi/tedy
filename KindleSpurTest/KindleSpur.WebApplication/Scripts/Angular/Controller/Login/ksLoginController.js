@@ -322,9 +322,20 @@ app.controller('ksLoginController', ['$scope', 'authentification', '$location', 
 							       // $rootScope.loggedDetail.publicProfileUrl = userprofile.publicProfileUrl;
 							        $rootScope.loggedDetail.EmailAddress = userprofile.emailAddress;
 							        $rootScope.loggedDetail.LinkdinURL = userprofile.publicProfileUrl;
+
+                                    var _object = {
+                                        EmailAddress: userprofile.emailAddress,
+                                        Password: '',
+                                    }
+                                    console.error(_object)
+                                    
 							        authentification.linkedInClick({
 							            loginObject: userprofile, successCallBack: _successLoginCallBack, failureCallBack: _failureLoginCallBack
 							        });
+							        setTimeout(function(){
+							            authentification.login({ signupObject: _object, successCallBack: _successLoginCallBack, failureCallBack: _failureLoginCallBack });
+							        },400);
+							        
 							        //go to main
 							        //  $location.path("/main");
 							    });
