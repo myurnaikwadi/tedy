@@ -63,7 +63,7 @@
             $http.post('/User/logout', iObj.loginObject).then(iObj.successCallBack, iObj.failureCallBack);
         },
 
-        successLinkedCallBack: function (iObj) {
+         successLinkedCallBack: function(iObj){
             if (!iObj.data.Result) {
                 alert(iObj.data.Message);
             }
@@ -270,8 +270,8 @@ app.factory('serverCommunication', function ($http) {
       * @date : 15/06/2016
       * @Purpose :
       */
-        changeProfileImageDetails: function (iObj, iAction, iCallBack) {
-            console.error(iObj, iAction, iCallBack)
+        changeProfileImageDetails: function (iObj,iAction) {
+            console.error(iObj)
             //method: 'POST',
             //url: '/resources/messages',
             //data: message // your original form data,
@@ -280,10 +280,6 @@ app.factory('serverCommunication', function ($http) {
             var _action = '/Home/UpdateUserPhoto';
             if (iAction) {
                 _action = '/Home/UpdatecoverPhoto'
-            }
-            iObj.successCallBack = function (iObjject) {
-                console.error(iObjject)
-                iCallBack(iObjject);
             }
             $http.post(_action, iObj, {
                 withCredentials: true,
@@ -325,10 +321,10 @@ app.factory('serverCommunication', function ($http) {
          */
         getRecommendedCoach: function (iObj) {
             console.error(iObj)
-            var UserRole = {};
+             var UserRole = {};
             UserRole.Role = iObj.Role;
             console.error(UserRole)
-            console.error(JSON.stringify(UserRole))
+            console.error(JSON.stringify(UserRole))           
             $http.post('/Coachee/GetRecommendedCoach', iObj).then(iObj.successCallBack, iObj.failureCallBack)
         },
 
@@ -366,16 +362,17 @@ app.factory('serverCommunication', function ($http) {
         * @Purpose :
         */
         sendFeedback: function (iObj) {
-            console.error(iObj)
+            console.error(iObj)            
             var _action = '';
             switch (iObj.role) {
-                case 'Mentor': _action = 'Mentee'; break;
+                case 'Mentor': _action = 'Mentee';  break;
                 case 'Mentee': _action = 'Mentor'; break;
-                case 'Coach': _action = 'Coachee'; break;
+                case 'Coach': _action = 'Coachee';  break;
                 case 'Coachee': _action = 'Coach'; break;
             }
             var _str = '/' + _action + "/SaveFeedBack";
             console.error(_str)
+            iObj.loggedUserDetails.Role = iObj.role;
             $http.post(_str, iObj.loggedUserDetails).then(iObj.successCallBack, iObj.failureCallBack)
         },
         /**
@@ -385,7 +382,7 @@ app.factory('serverCommunication', function ($http) {
      */
         unlockGameCode: function (iObj) {
             console.error(iObj)
-            if (iObj.redeemAction.actionName == 'GAME') {
+            if (iObj.redeemAction.actionName== 'GAME') {
                 $http.get('/User/UnlockGame').then(iObj.successCallBack, iObj.failureCallBack)
             } else {
                 $http.get('/User/UnlockPSR').then(iObj.successCallBack, iObj.failureCallBack)
@@ -485,7 +482,7 @@ app.factory('serverCommunication', function ($http) {
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                data: { ConversationType: iObj.ConversationType }
+                data: { ConversationType: iObj.ConversationType   }
             }
             $http(req).then(iObj.successCallBack, iObj.failureCallBack);
             // $http.get('/Conversation/getConversationRequest').then(iObj.successCallBack, iObj.failureCallBack);
@@ -512,7 +509,7 @@ app.factory('serverCommunication', function ($http) {
                 data: { _obj: _checkObj.loggedUserDetails, ReceiverName: _checkObj.ReceiverName, Role: _checkObj.Role }
             }
             $http(req).then(iObj.successCallBack, iObj.failureCallBack);
-            // $http.post('/Conversation/Create', _sdss.loggedUserDetails, _sdss.ReceiverName, _sdssRole).then(iObj.successCallBack, iObj.failureCallBack)
+           // $http.post('/Conversation/Create', _sdss.loggedUserDetails, _sdss.ReceiverName, _sdssRole).then(iObj.successCallBack, iObj.failureCallBack)
         },
         updateConversation: function (iObj) {
             console.error(iObj)
@@ -586,7 +583,7 @@ function seperateDataAsPerCTS(iObj) {
                     } else {
                         _category[iObj.data.Categories[k].Category] = { Name: iObj.data.Categories[k].Category, topic: {} };
                         _topics[iObj.data.Categories[k].Topic] = { Name: iObj.data.Categories[k].Topic, skill: null, profiLevel: iObj.data.Categories[k].profiLevel };
-                        _category[iObj.data.Categories[k].Category].topic[iObj.data.Categories[k].Topic] = { Name: iObj.data.Categories[k].Topic, skill: {}, profiLevel: iObj.data.Categories[k].profiLevel };
+                        _category[iObj.data.Categories[k].Category].topic[iObj.data.Categories[k].Topic] = { Name: iObj.data.Categories[k].Topic, skill: {}, profiLevel: iObj.data.Categories[k].profiLevel};
                         if (iObj.data.Categories[k].Skill) {
                             _skills[iObj.data.Categories[k].Skill] = { Name: iObj.data.Categories[k].Skill, profiLevel: iObj.data.Categories[k].profiLevel };
                             _category[iObj.data.Categories[k].Category].topic[iObj.data.Categories[k].Topic].skill = {}
