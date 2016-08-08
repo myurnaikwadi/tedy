@@ -1,13 +1,9 @@
 ﻿
-		.parentBody {
-			position : absolute;
-			width  	 : 100%;
-			height 	 : 100%;
-		}
+
 		.fullWidthHeightClass {
 			position : relative;
 			width  	 : 100%;
-			height 	 : 100%;
+			height 	 : 94%;
 		}
 		.applicationTopStrip {
 			position : relative;
@@ -22,6 +18,13 @@
 			height 	 : 85%;
 			float  	 : left;
 		}
+.parentBody {
+    position: absolute;
+    width: 100%;
+            height: 90%;
+
+
+}
 .applicationBottomStrip {
 			position : relative;
 			width  	 : 100%;
