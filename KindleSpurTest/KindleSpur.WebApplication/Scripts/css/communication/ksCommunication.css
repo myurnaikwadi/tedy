@@ -280,6 +280,7 @@ width: 40%;
     font-style: normal;
     font-weight: normal;
     text-decoration: inherit;
+    cursor:pointer;
    
 }
 .chatTime{
