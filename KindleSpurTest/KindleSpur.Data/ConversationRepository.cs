@@ -316,16 +316,18 @@ namespace KindleSpur.Data
             var _conversationCollection = _kindleDatabase.GetCollection("Conversations");
             return _conversationCollection.FindOneAs<Conversation>(Query.EQ("message", message));
         }
-        public  List<BsonDocument> GetSkillsForConversation()
+        public  List<string> GetSkillsForConversation()
         {
-            List<BsonDocument> bsn = new List<BsonDocument>();
-            Conversation cvrs = new Conversation();
-            var _conversationCollection = _kindleDatabase.GetCollection("Conversations");
-            var query = Query.EQ("skill", cvrs.skill);
-            var sortBy = SortBy.Descending("skill");
-            // var count = _conversationCollection.Count(Query.EQ("skill", cvrs.skill));
-            bsn = _conversationCollection.FindAs<BsonDocument>(query).SetSortOrder(sortBy).ToList();
-            return bsn;
+            List<string> result = new List<string>();
+            var _conversationCollection =_kindleDatabase.GetCollection("Conversations");
+            List<string> typeCoaching =_conversationCollection.AsQueryable<Conversation>().Where<Conversation>(sb => sb.ConversationType =="Coaching" && sb.Content.StartsWith("COACHING REQUEST BY")).Select(x=>x.skill).Take(5).ToList();
+            List < string > typeMentoring =_conversationCollection.AsQueryable<Conversation>().Where<Conversation>(sb => sb.ConversationType =="Mentoring" && sb.Content.StartsWith("MENTORING REQUEST BY")).Select(x => x.skill).Take(5).ToList();
+
+            result.AddRange(typeCoaching);
+            result.AddRange(typeMentoring);
+
+            return result;
+
         }
 
 

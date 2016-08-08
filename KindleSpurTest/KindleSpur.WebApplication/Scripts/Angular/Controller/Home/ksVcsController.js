@@ -12,9 +12,9 @@ app.directive('vcsDir', function ($state, serverCommunication,$rootScope) {
             window.vcs = $scope;//mkn
             $scope.leftSideMenus = [{ name: 'Higher Revenue' }
 					, { name: 'Lower costs' }
-					, { name: 'KNOWLEDGE GARDEN' }
 					, { name: 'Improved Brand' }
 					, { name: 'Certainty of Success' }
+                    , { name: 'Scale of Successs' }
 					, { name: 'Turn Around' }
 					, { name: 'Customer Delight' }
                     , { name: 'Peer Success' }
