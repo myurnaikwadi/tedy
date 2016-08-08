@@ -449,6 +449,11 @@
 
                     $scope.MailRecords.push(angular.copy(dd));
                 });
+                $scope.MailRecords.sort(function (a, b) {
+                    a = new Date(a.UpdateDate);
+                    b = new Date(b.UpdateDate);
+                    return a - b;
+                });
             },
             failureCallBack: function (iObj) {
                 console.debug('In failureCallBack', iObj);
@@ -570,6 +575,7 @@
             
          //   console.debug(_object);
             var _replica = angular.copy(_object)
+            _replica.UpdateDate = new Date().toJSON();
             $scope.MailRecords.push(_replica);
           //  console.error($scope.MailRecords)
           //  return;
