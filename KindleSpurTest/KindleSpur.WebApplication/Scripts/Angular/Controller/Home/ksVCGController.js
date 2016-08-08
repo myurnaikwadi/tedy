@@ -4,7 +4,7 @@
         Description: ''
     }
     $scope.leftSideMenus = [
-               { name: 'VALUE SCORE' },
+               { name: 'VALUE SCORE CARD' },
                { name: 'VALUE FEEDS' }
     ];
     //$scope.rightSideDashBoardArray = [
@@ -36,9 +36,9 @@
 
     $scope.topButtonArray = [{ name: 'Higher Revenue' }
                   , { name: 'Lower costs' }
-                  , { name: 'KNOWLEDGE GARDEN' }
                   , { name: 'Improved Brand' }
                   , { name: 'Certainty of Success' }
+                  , { name: 'Scale of Success' }
                   , { name: 'Turn Around' }
                   , { name: 'Customer Delight' }
                   , { name: 'Peer Success' }
