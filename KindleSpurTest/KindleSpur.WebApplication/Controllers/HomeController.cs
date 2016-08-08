@@ -1,6 +1,7 @@
 ﻿using KindleSpur.Data;
 using KindleSpur.Models;
 using KindleSpur.Models.Interfaces;
+using MongoDB.Bson;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -13,6 +14,7 @@ namespace KindleSpur.WebApplication.Controllers
     public class HomeController : Controller
     {
         public ActionResult Index()
+
 
         {
             return View();
@@ -75,7 +77,7 @@ namespace KindleSpur.WebApplication.Controllers
             return View();
         }
         [HttpPost]
-        public ActionResult UpdateUserPhoto(SubmitImage model)
+        public string UpdateUserPhoto(SubmitImage model)
         {
             UserRepository _repo = new UserRepository();
             var allowedExtensions = new[] {
@@ -84,12 +86,13 @@ namespace KindleSpur.WebApplication.Controllers
             var file = Request.Files[0];
             var fileName = Path.GetFileName(file.FileName); //getting only file name(ex-ganesh.jpg)  
             var ext = Path.GetExtension(file.FileName); //getting the extension(ex-.jpg)  
+            var path = "";
             if (allowedExtensions.Contains(ext)) //check what type of extension  
             {
                 string name = Path.GetFileNameWithoutExtension(fileName); //getting file name without extension  
                 string myfile = name + ext; //appending the name with id  
                                             // store the file inside ~/project folder(Img)  
-                var path = Path.Combine(Server.MapPath("~/Img"), myfile);
+                path = Path.Combine(Server.MapPath("~/Img"), myfile);
                 file.SaveAs(path);
                 if (_repo.UpdateUserPhoto(((IUser)System.Web.HttpContext.Current.Session["User"]).EmailAddress, string.Format("Img/{0}", myfile)))
                 {
@@ -99,7 +102,9 @@ namespace KindleSpur.WebApplication.Controllers
             {
                 ViewBag.message = "Please choose only Image file";
             }
-            return View();
+
+            IUser user = _repo.GetUserDetail(((IUser)System.Web.HttpContext.Current.Session["User"]).EmailAddress);
+            return user.ToJson();
         }
         public ActionResult ksFeedBackPanel()
         {
@@ -120,9 +125,9 @@ namespace KindleSpur.WebApplication.Controllers
                 string name = Path.GetFileNameWithoutExtension(fileName); //getting file name without extension  
                 string myfile = name + ext; //appending the name with id  
                                             // store the file inside ~/project folder(Img)  
-                var path = Path.Combine(Server.MapPath("~/Img"), myfile);
+                var path = Path.Combine(Server.MapPath("~/coverimg"), myfile);
                 file.SaveAs(path);
-                if (_repo.UpdateUserPhoto(((IUser)System.Web.HttpContext.Current.Session["User"]).EmailAddress, string.Format("Img/{0}", myfile)))
+                if (_repo.UpdatecoverPhoto(((IUser)System.Web.HttpContext.Current.Session["User"]).EmailAddress, string.Format("img/{0}", myfile)))
                 {
                 }
             }

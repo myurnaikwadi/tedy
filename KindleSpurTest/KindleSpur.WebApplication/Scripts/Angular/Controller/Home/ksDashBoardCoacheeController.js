@@ -522,7 +522,11 @@
         });
 
     };
-
+    $scope.displayAlert = {
+        showAlert: false,
+        message: '',
+        formatType: '1'
+    };
     $scope.sendCoachingRequest = function (isVerified, iCoach) {
 
         $scope.conversation.SenderEmail = $scope.loggedEmail;
@@ -559,6 +563,11 @@
             successCallBack: function (iObj) {
                 $scope.conversation.Message = "";
                 console.error(iObj)
+                if (iObj.data && iObj.data && iObj.data.Message && iObj.data.Message != '') {
+                    $scope.displayAlert.showAlert = true;
+                    $scope.displayAlert.message = iObj.data.Message;
+                    $scope.displayAlert.formatType = '1';
+                }       
 
             },
             failureCallBack: function () {

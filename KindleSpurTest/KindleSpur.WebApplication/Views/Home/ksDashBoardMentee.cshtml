@@ -1,5 +1,18 @@
-﻿<div class="parentBody" ng-controller="ksDashBoardMenteeController">
+﻿<div class="parentBody" ng-controller="ksDashBoardMenteeController">    
     <div class="applicationTopStrip">
+        <div style="position:absolute;" class="hiddenErrorNotificationClass" ng-class="{ 'showErrorNotificationClass' : displayAlert.showAlert  == true}">
+            <div class="alert-message success" ng-show="displayAlert.formatType == '1'">
+                <a class="close" href="#" ng-click="displayAlert.showAlert = false">×</a>
+                <p>{{displayAlert.message}}</p>
+            </div>
+            @*Green*@
+
+            <div class="alert-message error" ng-show="displayAlert.formatType == '2'">
+                <a class="close" href="#" ng-click="displayAlert.showAlert = false">×</a>
+                <p>{{displayAlert.message}}</p>
+            </div>
+            @*red*@
+        </div>
         <top-Main-Strip></top-Main-Strip>
     </div>
     <div class="applicationMiddleStripMain">
@@ -44,7 +57,7 @@
                                 </div>
                             </div>
                             <div class="ctsCategoryPanelMainPanel" style="overflow-y:scroll;">
-                                <h5 class="margin-small">Recommended Coaches</h5>
+                                <h5 class="margin-small">Recommended Mentors</h5>
                                 <div class="filterListContainer">
                                     <div class="mentor-list">
                                         <div class="row" style="margin:0px;">

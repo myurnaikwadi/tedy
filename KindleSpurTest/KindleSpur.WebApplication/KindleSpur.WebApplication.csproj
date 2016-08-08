@@ -412,7 +412,7 @@
     <Content Include="Scripts\css\ksValue\ksValueFeeds.css" />
     <Content Include="Scripts\d3.v3.js" />
     <Content Include="Scripts\d3.v3.min.js" />
-    <Content Include="fonts\Roboto-Regular.ttf" />
+    <Content Include="fonts\Roboto-Regular.ttf" />    
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\css\ksDashBoard\ksDashBoard.css" />
     <Content Include="Scripts\css\ksDashBoard\ksDashBoardCoach.css" />
@@ -477,6 +477,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="coverimg\" />
     <Folder Include="Img\" />
     <Folder Include="Models\" />
     <Folder Include="Views\Coachee\" />

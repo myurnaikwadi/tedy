@@ -110,11 +110,17 @@
           //  debugger;
             console.error(data);
             if (iProfile) {
-                $scope.myInfo.profileImage = valueFile[0];
-                serverCommunication.changeProfileImageDetails(data);
+               // $scope.myInfo.profileImage = valueFile[0];
+                serverCommunication.changeProfileImageDetails(data,null, function (iPath) {
+                    console.error(iPath)
+                   // $scope.myInfo.profileImage = iPath.data;
+                });
             } else {
-                $scope.myInfo.profileBackgroundImage = valueFile[0];
-                serverCommunication.changeProfileImageDetails(data,true);
+               
+                serverCommunication.changeProfileImageDetails(data, true, function (iPath) {
+                    console.error(iPath)
+                    $scope.myInfo.profileBackgroundImage = iPath.data;
+                });
             }         
             document.getElementById("fileInputIdRv").value = "";
             $scope.$apply();
