@@ -170,22 +170,6 @@ namespace KindleSpur.Data
             try
             {
                 var userDetail = _userCollection.FindOneAs<User>(Query.EQ("EmailAddress", EmailAddress));
-                userDetail.coverphoto = PhotoPath;
-                _userCollection.Save(userDetail);
-                _transactionStatus = true;
-            }
-            catch (Exception ex)
-            {
-                _logCollection.Insert("{ Error : 'Failed at EditUser().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ");
-            }
-            return _transactionStatus;
-        }
-        public bool UpdatecoverPhoto(string EmailAddress, string PhotoPath)
-        {
-            bool _transactionStatus = false;
-            try
-            {
-                var userDetail = _userCollection.FindOneAs<User>(Query.EQ("EmailAddress", EmailAddress));
                 userDetail.Photo = PhotoPath;
                 _userCollection.Save(userDetail);
                 _transactionStatus = true;
@@ -196,6 +180,23 @@ namespace KindleSpur.Data
             }
             return _transactionStatus;
         }
+        public bool UpdatecoverPhoto(string EmailAddress, string coverPhotoPath)
+        {
+            bool _transactionStatus = false;
+            try
+            {
+                var userDetail = _userCollection.FindOneAs<User>(Query.EQ("EmailAddress", EmailAddress));
+                userDetail.coverphoto = coverPhotoPath;
+                _userCollection.Save(userDetail);
+                _transactionStatus = true;
+            }
+            catch (Exception ex)
+            {
+                _logCollection.Insert("{ Error : 'Failed at EditUser().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ");
+            }
+            return _transactionStatus;
+        }
+
 
         public void GetRewardPoints(string EmailAddress, ref Reward reward)
         {
