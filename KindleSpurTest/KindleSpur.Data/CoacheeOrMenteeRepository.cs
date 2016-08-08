@@ -292,12 +292,16 @@ namespace KindleSpur.Data
 
             return coacheeEntities.ToList();
         }
-        public int addFeedback(string UserId, Feedback feedback)
+        public int addFeedback(string UserId, Feedback feedback, string Role)
         {
             bool _transactionStatus = false;
+            CoacheeOrMentee entity = new CoacheeOrMentee();
             try
             {
-                CoacheeOrMentee entity = _coacheeOrMenteeCollection.FindOneAs<CoacheeOrMentee>(Query.And(Query.EQ("UserId", feedback.Sender), Query.EQ("Role", "Coach")));
+                if (Role == "Coachee")
+                 entity = _coacheeOrMenteeCollection.FindOneAs<CoacheeOrMentee>(Query.And(Query.EQ("UserId", feedback.Sender), Query.EQ("Role", Role)));
+                else if (Role == "Mentee")
+                  entity = _coacheeOrMenteeCollection.FindOneAs<CoacheeOrMentee>(Query.And(Query.EQ("UserId", feedback.Sender), Query.EQ("Role", Role)));
                 entity.FeedbackPoints += feedback.customerSatisfactionRating;
 
                 if (entity.Feedbacks == null) entity.Feedbacks = new List<IFeedback>();

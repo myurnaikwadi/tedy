@@ -231,9 +231,10 @@ float: left;
 }
 
 .hiddenErrorNotificationClass{
-        margin-top: -43px;
+    margin-top: -60px;       
     margin-left: 30%;
     margin-right: 30%;
+    position :absolute;
 }
 .showErrorNotificationClass{
     margin-top:0px;

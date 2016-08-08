@@ -372,6 +372,7 @@ app.factory('serverCommunication', function ($http) {
             }
             var _str = '/' + _action + "/SaveFeedBack";
             console.error(_str)
+            iObj.loggedUserDetails.Role = iObj.role;
             $http.post(_str, iObj.loggedUserDetails).then(iObj.successCallBack, iObj.failureCallBack)
         },
         /**

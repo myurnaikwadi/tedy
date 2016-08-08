@@ -63,10 +63,10 @@ namespace KindleSpur.WebApplication.Controllers
         }
 
         [HttpPost]
-        public int SaveFeedBack(Feedback feedback)
+        public int SaveFeedBack(Feedback feedback,string Role)
         {
             CoacheeOrMenteeRepository _coachRepo = new CoacheeOrMenteeRepository();
-            return _coachRepo.addFeedback(UserId, feedback);
+            return _coachRepo.addFeedback(UserId, feedback, Role);
 
         }
         public ActionResult GetKnowlegdeFeed()
