@@ -122,26 +122,33 @@ namespace KindleSpur.Data
                     for (int i = _entity.Topics.Count - 1; i >= 0; i--)
                     {
 
-                        foreach (string topic in Data.Topics)
+                        foreach (SkillOrTopic item in Data.Topics)
                         {
-                            if (!_entity.Topics.Contains(topic))
+                            if (item.Id == _entity.Topics[i].Id)
                             {
+                                _entity.Topics[i].profiLevel = item.profiLevel;
                                 blnDelete = false;
-                                //   _entity.Topics.Add(topic);
                                 break;
-
                             }
+
+
                         }
                         if (blnDelete) _entity.Topics.RemoveAt(i);
                     }
-                    foreach (string topic in Data.Topics)
+
+                    foreach (SkillOrTopic Topics in Data.Topics)
                     {
-
-                        if (!_entity.Topics.Contains(topic))
+                        bool blnAdd = true;
+                        for (int i = _entity.Topics.Count - 1; i >= 0; i--)
                         {
-                            _entity.Topics.Add(topic);
-
+                            if (_entity.Topics[i].Id == Topics.Id)
+                            {
+                                blnAdd = false;
+                                break;
+                            }
                         }
+
+                        if (blnAdd) _entity.Topics.Add(Topics);
                     }
 
                 }
@@ -160,7 +167,7 @@ namespace KindleSpur.Data
 
         }
 
-        public List<string> GetTopicsForMentee(string UserId)
+        public List<SkillOrTopic> GetTopicsForMentee(string UserId)
         {
             // var _collection = _kindleDatabase.GetCollection("CoacheeOrMentee");
             var result = _coacheeOrMenteeCollection.FindOneAs<CoacheeOrMentee>(Query.And(
@@ -170,7 +177,7 @@ namespace KindleSpur.Data
             if (result != null)
                 return result.Topics;
             else
-                return new List<string>();
+                return new List<SkillOrTopic>();
         }
 
         public bool DeleteCoacheeOrMentee(string Id)
