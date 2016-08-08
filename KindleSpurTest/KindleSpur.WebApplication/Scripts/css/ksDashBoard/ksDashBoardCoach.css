@@ -72,7 +72,7 @@
             width: 100%;
         }
 
-        .leftSideMenu:hover {
+        .leftSideMenu{
             position: relative;
             float: left;
             width: 100%;
