@@ -56,7 +56,7 @@
             case 0: $scope.autoSyncRoutine(_conversationTime); $scope.conversationRequest(); break;
             case 4: $scope.getRssFeedData(); break;
             case 3: $scope.getCoachRecord(); break;
-                //case 2: $scope.generateGarden(); break;
+            case 1: $scope.generateGarden(); break;
                 //case 6: $scope.getPointsRecord(); break;
             case 5: $scope.autoSyncRoutine(_chatMessageTime); $scope.conversationLoading(); break;
                 //case 5:
@@ -106,29 +106,14 @@
         $scope.feedBack.askFeedback = false;
         $scope.feedBack.formValue = '1';
         $scope.feedBack.icloseFeedBack  = false;
-        $scope.feedBack.selectedComparioson = 1;
-        $scope.feedBack.selectedAttractive = 1;
-        $scope.feedBack.selectedstar = 1;
-        $scope.feedBack.likeMostMessage = '';
+
     };
 
 
     $scope.redeemPointsClick = function () {
 
         $scope.feedBack.closeFeedBackPopup();
-        serverCommunication.unlockGameCode({
-            //   loggedUserDetails: $rootScope.loggedDetail,
-            redeemAction: $scope.redeemAction,
-            successCallBack: function (iObj) {
-                $scope.menuClick(6);
-                console.error('In successCallBack', iObj);
-
-            },
-            failureCallBack: function (iObj) {
-                console.error('In failureCallBack', iObj);
-
-            }
-        });
+        $scope.menuClick(6);
     };
 
     $scope.feedBackSave = function () {
@@ -258,7 +243,41 @@
         $scope.selectedSkill = {};
         $scope.searching = true;
     }
+    $scope.generateGarden = function () {
+        $scope.ctsDataForMolecule = null;
+        serverCommunication.getCoachingWithStatus({
+            loggedUserDetails: $rootScope.loggedDetail,
+            role : 'coachee',
+            successCallBack: function (iObj) {
+                console.error('In successCallBack', iObj);
+                $scope.coachingStatusArray = iObj.data.Filters;
+                var _array = [];
+                for (var k = 0; k < $scope.coachingStatusArray.length ; k++) {
+                    var _str = $scope.coachingStatusArray[k].FirstName + " " + $scope.coachingStatusArray[k].LastName;
+                    _array.push({
+                        "symbol": _str.toUpperCase(),
+                        "image": $scope.coachingStatusArray[k].TreeURL,
+                        "size": 45,
+                        "id": Math.random() + k,
+                        "bonds": 1
+                    });
+                }
+                var _retu = {
+                    "3-iodo-3-methylhexan-1,4-diamine": {
+                        "nodes": _array,
+                        "links": []
+                    }
+                }
+                console.error(_retu)
+                $scope.ctsDataForMolecule = _retu;
 
+            },
+            failureCallBack: function (iObj) {
+                console.error('In failureCallBack', iObj);
+
+            }
+        });
+    };
     $scope.getCoachRecord = function () {
         serverCommunication.getRecommendedCoach({
             Role: 'Coach',
@@ -358,6 +377,7 @@
         serverCommunication.getConversation({
             loggedEmail: $scope.loggedEmail,
             Role: "Coachee",
+            ConversationType: 'Coaching',
             successCallBack: function (iObj) {
                 console.debug('In successCallBack', iObj);
                 function ObjectId(id) { return id; }
@@ -609,7 +629,7 @@
         $scope.conversation.IsVerified = isVerfied;
         var contentText = "";
         if (isVerfied != false)
-            contentText = 'SESSION REQUEST BY ' + $scope.ApprovalName + ' HAS BEEN ACCEPTED';
+            contentText = 'COACHING REQUEST BY ' + $scope.ApprovalName + ' HAS BEEN ACCEPTED';
         else
             contentText = null;
         var _id = iNotificationDash.ConversationId + ":CHT#" + (Date.now()) + (Math.floor((Math.random() * 10) + 1));

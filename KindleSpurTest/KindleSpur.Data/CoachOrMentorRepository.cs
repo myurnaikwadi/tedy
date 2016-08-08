@@ -468,7 +468,7 @@ namespace KindleSpur.Data
             }
             foreach (SkillOrTopic s1 in lstTopicforMentee)
             {
-                lstCoach.AddRange(_coachOrMentorCollection.FindAs<CoachOrMentor>(Query.And(Query.EQ("Skills.Name", s1.Name), Query.EQ("Role", Role))).SetFields(Fields.Exclude("Feedbacks")));
+                lstCoach.AddRange(_coachOrMentorCollection.FindAs<CoachOrMentor>(Query.And(Query.EQ("Topics.Name", s1.Name), Query.EQ("Role", Role))).SetFields(Fields.Exclude("Feedbacks")));
             }
             if (lstCoach.Count > 0)
                 //  return FillSerachData(lstCoach);

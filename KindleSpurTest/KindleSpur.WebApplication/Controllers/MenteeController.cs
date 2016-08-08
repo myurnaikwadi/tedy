@@ -82,5 +82,11 @@ namespace KindleSpur.WebApplication.Controllers
             var filters = _coachRepo.GetCoachingStatus(UserId,"Mentee");
             return Json(new { Filters = filters, Success = true }, JsonRequestBehavior.AllowGet);
         }
+        public BsonDocument GetRecommendedMentor()
+        {
+            CoachOrMentorRepository _coachRepo = new CoachOrMentorRepository();
+            return _coachRepo.GetRecommended("Mentor");
+
+        }
     }
 }

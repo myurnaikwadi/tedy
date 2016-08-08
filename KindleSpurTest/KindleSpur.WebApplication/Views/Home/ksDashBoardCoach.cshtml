@@ -54,7 +54,7 @@
                     </div>
                     <div class="communicationMainPanel" ng-hide="conversationListNew.length == 0">
                         <div ng-if='feedBack.askFeedback' class="feedbackPanel" style="height: 75%;">
-                            <feedback-Page question="array" feedback-Closed="feedBack.icloseFeedBack" conv-Object="openConversation" submit-Feedback="feedBackSave()" close-Callback="closeCallBack()"></feedback-Page>
+                            <feedback-Page role="Coach" question="array" feedback-Closed="feedBack.icloseFeedBack" conv-Object="openConversation" submit-Feedback="feedBackSave()" close-Callback="closeCallBack()"></feedback-Page>
                         </div>
                     
 
@@ -171,9 +171,8 @@
                 <div class="hideCoacheeProfile" ng-class="{ showCoacheeProfileClass : showCoacheeProfile == true }">
                     <profile-Page ng-if="showCoacheeProfile && userInfo" user-Info="userInfo" close-Popup="closeProfilePic()" edit-Required="false"></profile-Page>
                 </div>
-                <div class="homeLabelInMainDB style="height:7%;border-bottom:1px solid lightgray;">
-                    <h5 class="fontClass" style="font-size: 16px;padding: 6px;
-    padding-left: 0;">
+                <div class="homeLabelInMainDB" style="height:7%;border-bottom:1px solid lightgray;">
+                    <h5 class="fontClass" style="font-size: 16px;padding: 6px;padding-left: 0;">
                         COACHING STATUS
                     </h5>
                 </div>
@@ -294,7 +293,7 @@
             </div>
             @*Knowledge feed - 4 *@
             <div class="parentRoleDetailRight" style="padding:1%;padding-bottom: 0;" ng-if="selectedMenu == '4'">
-                <rss-Feed ng-if="feedCategoryArray.length > 0" role="coach" skill="feedCategoryArray"></rss-Feed>
+                <rss-Feed role="coach" skill="feedCategoryArray"></rss-Feed>
             </div>
 
         </div>
