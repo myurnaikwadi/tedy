@@ -39,8 +39,8 @@
         .profileImagePart {
             position: relative;
             float: left;
-           width: 43px;
-            margin: 7%;
+           width: 50px;
+            margin: 3%;
             /*border: 1px solid gray;*/
             background: url("/Images/icons/If no Profile photo.png")no-repeat  center;
             background-size: contain;
@@ -330,7 +330,7 @@
             float: right;
             width: 22%;
             display: flex;
-            color: lightgray;
+            color:darkgray;
             height: 100%;
         }
 

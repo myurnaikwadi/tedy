@@ -1,6 +1,7 @@
 ﻿using KindleSpur.Models;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Net.Mail;
 using System.Web;
@@ -23,9 +24,9 @@ namespace KindleSpur.WebApplication.MessageHelper
 
             MailMessage message = new MailMessage(aliasemailsendername.ToString(), signupObject.EmailAddress);
             message.Subject = "Account Activation";
-            string body = "Hello " + signupObject.FirstName + ",";
-            body += "<br/><br/>";
-            // body += "<br/><br/>Please click the following link to activate your account<br/>";
+            string firstName = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(signupObject.FirstName);
+            string body = "Hello " + firstName + ",";
+            body += "<br/>";
             body += "<br/><br/><a style='background:#808080; color:#fafafa; padding:10px 100px 10px 100px; width:350px; text-decoration:none; text-transform: capitalize; font-weight:bold; font-size:13px;' href = '" + uri + "'>CLICK HERE TO ACTIVATE YOUR KINDLESPUR ACCOUNT.</a>";
             body += "<br /><br /><br/>Thanks, <br/> KindleSpur Team.";
             message.Body = body;
@@ -41,9 +42,9 @@ namespace KindleSpur.WebApplication.MessageHelper
 
             MailMessage message = new MailMessage(aliasemailsendername.ToString(), signupObject.EmailAddress);
             message.Subject = "Forgot Password";
-            string body = "Hello " + signupObject.FirstName + ",";
+            string firstName = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(signupObject.FirstName);
+            string body = "Hello " + firstName + ",";
             body += "<br/>";
-          //  body += "<br/><br/>Please click to enter new password<br/>";
             body += "<br/><br/><a style='background:#808080; color:#fafafa; padding:10px 100px 10px 100px; width:350px; text-decoration:none;  text-transform: capitalize; font-weight:bold; font-size:13px;' href = '" + uri + "'>CLICK HERE TO ENTER NEW PASSWORD FOR KINDLESPUR ACCOUNT.</a>";
             body += "<br /><br /><br/>Thanks, <br/> KindleSpur Team.";
             message.Body = body;

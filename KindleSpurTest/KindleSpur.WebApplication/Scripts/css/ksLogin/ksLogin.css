@@ -133,7 +133,7 @@ float: left;
     opacity: 0.6;
     margin-right: 0;
     text-align: center;
-    font-size: 13px;
+    font-size: 12px;
     float : left;
     text-decoration: underline;
     cursor:pointer;
@@ -179,6 +179,7 @@ float: left;
     opacity : 0.9;
     margin: 5px;
     cursor:pointer;
+    padding: 31px 0px 0px 0px;
 }
 .invalidEmailNotify{
 	border:1px solid #FF0100;
