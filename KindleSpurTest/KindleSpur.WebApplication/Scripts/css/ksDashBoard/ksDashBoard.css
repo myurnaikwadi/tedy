@@ -112,7 +112,7 @@
     position: relative;
     float: left;
     width: 45%;
-    /*height: 42%;*/
+    height: 42%;
     margin: 1%;
     border: 1px solid lightgray;
 }
@@ -257,7 +257,7 @@ width: 20%;
     margin-right: 20%;
     float:none;
     padding-top: 5px;
-border-top: 1px solid lightgray;
+    border-top: 1px solid lightgray;
     border-bottom: 1px solid lightgray;
 }
 /*Landing Page Css*/

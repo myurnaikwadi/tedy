@@ -1,4 +1,4 @@
-﻿app.controller('ksDashBoardCoacheeController', function ($rootScope, $scope, serverCommunication) {
+﻿app.controller('ksDashBoardCoacheeController', function ($rootScope, $scope, serverCommunication, $interval) {
     window.cocc = $scope;
     $scope.loggedEmail = $rootScope.loggedDetail.EmailAddress;
     $scope.ApprovalName = $rootScope.loggedDetail.FirstName + " " + $rootScope.loggedDetail.LastName;
@@ -47,23 +47,26 @@
     $scope.Coaches = [];
 
     $scope.selectedMenu = 0;
+    var _chatMessageTime = 30000;
+    var _conversationTime = 60000;
     $scope.menuClick = function (iIndex, iOption) {
         $scope.selectedMenu = iIndex;
+        $scope.stopFight();
         switch (iIndex) {
-            case 0: $scope.conversationRequest(); break;
+            case 0: $scope.autoSyncRoutine(_conversationTime); $scope.conversationRequest(); break;
             case 4: $scope.getRssFeedData(); break;
             case 3: $scope.getCoachRecord(); break;
                 //case 2: $scope.generateGarden(); break;
                 //case 6: $scope.getPointsRecord(); break;
-            case 5: $scope.conversationLoading(); break;
-            //case 5:
-            //    if ($scope.conversationListNew.length > 0) {
-            //        $scope.ReceiverName = $scope.conversationListNew[0].FirstName + " " + $scope.conversationListNew[0].LastName;
-            //        $scope.ReceiverEmail = $scope.conversationListNew[0].EmailAddress;
-            //        $scope.conversationStartData($scope.loggedEmail);
-            //        $scope.showSelectedConversation($scope.loggedEmail, $scope.ReceiverEmail);
-            //    }
-            //    break;
+            case 5: $scope.autoSyncRoutine(_chatMessageTime); $scope.conversationLoading(); break;
+                //case 5:
+                //    if ($scope.conversationListNew.length > 0) {
+                //        $scope.ReceiverName = $scope.conversationListNew[0].FirstName + " " + $scope.conversationListNew[0].LastName;
+                //        $scope.ReceiverEmail = $scope.conversationListNew[0].EmailAddress;
+                //        $scope.conversationStartData($scope.loggedEmail);
+                //        $scope.showSelectedConversation($scope.loggedEmail, $scope.ReceiverEmail);
+                //    }
+                //    break;
         }
     };
     $scope.selectedOption = function (iIndex, iCate) {
@@ -76,15 +79,17 @@
     $scope.feedBack = {}
     $scope.feedBack.askFeedback = false;
     $scope.feedBack.formValue = '0';
-    $scope.askFeedBackFunc = function () {
+    $scope.feedBack.icloseFeedBack = false;        
+    $scope.askFeedBackFunc = function (icloseFeedBack) {
         $scope.feedBack.askFeedback = true;
         $scope.feedBack.formValue = '1';
+        $scope.feedBack.icloseFeedBack = icloseFeedBack;        
         $scope.feedBack.selectedComparioson = 1;
         $scope.feedBack.selectedAttractive = 1;
         $scope.feedBack.selectedstar = 1;
         $scope.feedBack.likeMostMessage = '';
         $scope.feedBackloaded = { showLoad: false };
-        $scope.loadSlideData(1);
+        //$scope.loadSlideData(1);
     }
     $scope.array = [
       { name: 'Was the sessions objective achieved ?  ', actionValue: '', type: 'rating', showLoad: false },
@@ -100,6 +105,7 @@
     $scope.feedBack.closeFeedBackPopup = function () {
         $scope.feedBack.askFeedback = false;
         $scope.feedBack.formValue = '1';
+        $scope.feedBack.icloseFeedBack  = false;
         $scope.feedBack.selectedComparioson = 1;
         $scope.feedBack.selectedAttractive = 1;
         $scope.feedBack.selectedstar = 1;
@@ -259,16 +265,16 @@
             successCallBack: function (result) {
                 console.error(result);
                 var _mySkill = [];
-                if($rootScope.loggedDetail.coachee){
-                    for(var _key in $rootScope.loggedDetail.coachee.skills){
+                if ($rootScope.loggedDetail.coachee) {
+                    for (var _key in $rootScope.loggedDetail.coachee.skills) {
                         _mySkill.push(_key);
                     }
-                   // _mySkill = [].concat(angular.copy($rootScope.loggedDetail.coachee.skills));
+                    // _mySkill = [].concat(angular.copy($rootScope.loggedDetail.coachee.skills));
                 }
-                if (result.data) {           
+                if (result.data) {
                     $scope.timeSlots = [];
                     var _coachFinalArr = [];
-                    for (var k = 0; k < result.data.length; k++) {                                            
+                    for (var k = 0; k < result.data.length; k++) {
 
                         for (var i = 0; i < result.data[k].Skills.length; i++) {
                             var _coach = angular.copy(result.data[k]);
@@ -291,9 +297,9 @@
                             }
                             _coachFinalArr.push(_coach);
                         }
-                         
+
                     }
-                     
+
                     console.error(_coachFinalArr, $scope.timeSlots)
                     $scope.Coaches = [].concat(_coachFinalArr);
                 }
@@ -322,35 +328,75 @@
         });
     };
 
-   
+
     /*START: Conversation Module Code*/
+
+    $scope.autoSyncCounter = null;
+    $scope.stopFight = function () {
+        if (angular.isDefined($scope.autoSyncCounter)) {
+            $interval.cancel($scope.autoSyncCounter);
+            $scope.autoSyncCounter = undefined;
+            }
+            };
+
+
+    $scope.autoSyncRoutine = function (iTime) {
+        console.error('autoSyncRoutine')
+        $scope.autoSyncCounter = $interval(function () {
+            console.error('autoSyncRoutine - CallBack -- ')
+            if (iTime == _chatMessageTime) {
+                console.error('auto sync call for chat Message');
+                $scope.conversationLoading();
+            } else {
+                console.error('auto sync call for conversation');
+                $scope.conversationRequest();
+            }
+        }, iTime);
+    };
     $scope.conversationLoading = function () {
         console.error('ge');
         serverCommunication.getConversation({
             loggedEmail: $scope.loggedEmail,
-            Role : "Coachee",
+            Role: "Coachee",
             successCallBack: function (iObj) {
                 console.debug('In successCallBack', iObj);
                 function ObjectId(id) { return id; }
                 function ISODate(d) { return d; }
                 $scope.conversationListNew = [];
+                $scope.conversationListNew = [];
                 var _coach = {};
                 for (var k = 0; k < iObj.data.Result.length; k++) {
                     if (_coach[iObj.data.Result[k].skill]) {
-                        _coach[iObj.data.Result[k].skill].chatMesssage.push(iObj.data.Result[k]);
+                        _coach[iObj.data.Result[k].skill].user[iObj.data.Result[k].SenderEmail] = iObj.data.Result[k];
                     } else {
-                        _coach[iObj.data.Result[k].skill] = iObj.data.Result[k];
-                        _coach[iObj.data.Result[k].skill].chatMesssage = [iObj.data.Result[k]];
+                        _coach[iObj.data.Result[k].skill] = { user: {} };
+                        _coach[iObj.data.Result[k].skill].user[iObj.data.Result[k].SenderEmail] = iObj.data.Result[k];
                     }
                 }
 
-                console.error(_coach)
+                // console.error(_coach)
                 for (var _key in _coach) {
-                    var _con = angular.copy(_coach[_key])
-                    $scope.conversationListNew.push(_con);
+                    for (var _user in _coach[_key].user) {
+                        _coach[_key].user[_user].skillName = _key;
+                        $scope.conversationListNew.push(_coach[_key].user[_user]);
+                    }
+                    //var _con = angular.copy(_coach[_key])
+                    // $scope.conversationListNew.push(_con);
                 }
-                if ($scope.conversationListNew && $scope.conversationListNew.length > 0) {                  
-                        $scope.conversationLoad(0, $scope.conversationListNew[0]);                    
+                if ($scope.conversationListNew && $scope.conversationListNew.length > 0) {
+                    if ($scope.openConversation) {
+                        for (var i = 0 ; i < $scope.conversationListNew.length ; i++) {
+                            if ($scope.conversationListNew[i].ConversationParentId == $scope.openConversation.ConversationParentId) {
+                                $scope.conversationLoad(i, $scope.conversationListNew[i]);
+                                break;
+                            }                           
+                        }
+                      
+                    } else {
+                        $scope.conversationLoad(0, $scope.conversationListNew[0]);
+                    }
+
+                    
                 }
             },
             failureCallBack: function (iObj) {
@@ -461,31 +507,31 @@
             return false;
         var _id = $rootScope.loggedDetail.EmailAddress + ":CON#" + (Date.now()) + (Math.floor((Math.random() * 10) + 1));
         var _object = {
-                Content: $scope.conversation.Content,
-                SenderEmail: $scope.conversation.SenderEmail,
-                ReceiverEmail: $scope.conversation.ReceiverEmail,
-                SendOrReceive: $scope.conversation.SendOrReceive,
-                IsVerified: $scope.conversation.IsVerified,
-                ConversationClosed: false,
-                ConversationId  : _id,
-                ConversationType: "Coaching",
-                skill: iCoach.Skill.Name
+            Content: $scope.conversation.Content,
+            SenderEmail: $scope.conversation.SenderEmail,
+            ReceiverEmail: $scope.conversation.ReceiverEmail,
+            SendOrReceive: $scope.conversation.SendOrReceive,
+            IsVerified: $scope.conversation.IsVerified,
+            ConversationClosed: false,
+            ConversationId: _id,
+            ConversationType: "Coaching",
+            skill: iCoach.Skill.Name
         }
         console.debug(_object);
         serverCommunication.sendConversation({
-                loggedUserDetails: _object,
-                ReceiverName: $scope.conversation.ReceiverEmail,
-                Role: 'Coachee',
-                successCallBack: function () {
-                    $scope.conversation.Message = "";
+            loggedUserDetails: _object,
+            ReceiverName: $scope.conversation.ReceiverEmail,
+            Role: 'Coachee',
+            successCallBack: function () {
+                $scope.conversation.Message = "";
 
 
-                },
-                failureCallBack: function () {
-                    $scope.conversation.Message = "";                
-                    console.debug('In failureCallBack');
-                }
-            });
+            },
+            failureCallBack: function () {
+                $scope.conversation.Message = "";
+                console.debug('In failureCallBack');
+            }
+        });
 
     };
     $scope.conversationClick = function (isVerified, iCoach) {
@@ -498,10 +544,10 @@
             $scope.conversation.SendOrReceive = "Send";
             $scope.conversation.IsVerified = isVerified;
             $scope.conversation.isRead = false;
-
+            var _parentId = $scope.openConversation.ConversationParentId ? $scope.openConversation.ConversationParentId : $scope.openConversation.ConversationId;
             if ($scope.conversation.SenderEmail === "" || $scope.conversation.ReceiverEmail === "")
                 return false;
-            var _id = $scope.openConversation.ConversationId + ":CHT#" + (Date.now()) + (Math.floor((Math.random() * 10) + 1));
+            var _id = _parentId + ":CHT#" + (Date.now()) + (Math.floor((Math.random() * 10) + 1));
             var _object = {
                 Content: $scope.conversation.Content,
                 SenderEmail: $scope.conversation.SenderEmail,
@@ -515,7 +561,7 @@
                 // CreateDate: (new Date().getMonth()+1)+"/"+new Date().getDate()+
                 //UpdateDate: "2016-08-07T11:58:13.867Z"
                 ConversationId: _id,
-                ConversationParentId: $scope.openConversation.ConversationId,
+                ConversationParentId: _parentId,
             }
             console.debug(_object);
             $scope.MailRecords.push(_object);
@@ -548,7 +594,7 @@
             contentText = 'SESSION REQUEST BY ' + $scope.ApprovalName + ' HAS BEEN ACCEPTED';
         else
             contentText = null;
-        var _id = iNotificationDash.ConversationId + ":CHT#" +(Date.now()) +(Math.floor((Math.random() * 10) +1));
+        var _id = iNotificationDash.ConversationId + ":CHT#" + (Date.now()) + (Math.floor((Math.random() * 10) + 1));
         var _object = {
             SenderEmail: SenderEmail,
             ReceiverEmail: ReceiverEmail,
@@ -569,9 +615,9 @@
             ReceiverName: $scope.ApprovalName,
             Role: 'Coachee',
             successCallBack: function () {
-                $scope.menuClick(5, "CONVERSATIONS");
-             //   $scope.showSelectedConversation($scope.loggedEmail, $scope.ApprovalName);
-              //  console.debug('In successCallBack');
+                //  $scope.menuClick(5, "CONVERSATIONS");
+                //   $scope.showSelectedConversation($scope.loggedEmail, $scope.ApprovalName);
+                //  console.debug('In successCallBack');
 
             },
             failureCallBack: function (e) {
@@ -658,10 +704,11 @@
 
     $scope.init = function () {
         $scope.conversationRequest();
+
+        $scope.autoSyncRoutine(_conversationTime);
         serverCommunication.getMyCoacheeSelection({
             Role: 'Coach',
-                successCallBack: function (iObj) {
-
+            successCallBack: function (iObj) {
                 console.error('In getMyCoacheeSelection', iObj);
                 var _myCtsInfo = seperateDataAsPerCTS(iObj);
                 $rootScope.loggedDetail['coachee'] = _myCtsInfo;
@@ -674,6 +721,10 @@
         });
     };
     $scope.init();
+
+    $scope.$on("$destroy", function handleDestroyEvent() {
+        $scope.stopFight();
+    });
 })
 
 app.directive('ctsDropdown', function () {

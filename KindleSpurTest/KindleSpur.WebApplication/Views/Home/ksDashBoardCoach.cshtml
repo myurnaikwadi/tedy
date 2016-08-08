@@ -49,8 +49,8 @@
                 </div>
 
                 <div class="communicationMainPanel">
-                    <div ng-show='feedBack.askFeedback' class="feedbackPanel" style="height: 75%;">
-                        <feedback-Page question="array" submit-Feedback="feedBackSave()" close-Callback="closeCallBack()"></feedback-Page>
+                    <div ng-if='feedBack.askFeedback' class="feedbackPanel" style="height: 75%;">
+                        <feedback-Page question="array" feedback-Closed="feedBack.icloseFeedBack" conv-Object="openConversation" submit-Feedback="feedBackSave()" close-Callback="closeCallBack()"></feedback-Page>
                     </div>
                     
 
@@ -77,6 +77,10 @@
                                     <div class="chatHalfContainer">
                                         <span class="chatHalfContainerSpan">
                                             <h5>{{ReceiverName}}</h5>
+                                        </span>
+                                        <span class="chatHalfContainerSpanNxt">
+                                            <h6 class="genericPointerClass" ng-click="askFeedBackFunc(true)">Close Session</h6>
+                                            <h6 class="genericPointerClass" ng-click="askFeedBackFunc(false)">Ask Feedback</h6>
                                         </span>
                                     </div>
                                     <div class="chatHalfContainer">

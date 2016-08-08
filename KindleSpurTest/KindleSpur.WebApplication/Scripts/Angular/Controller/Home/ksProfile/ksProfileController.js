@@ -7,8 +7,8 @@
         linkedInLink: $scope.userInfo.LinkdinURL ? $scope.userInfo.LinkdinURL : null,
         firstName: $scope.userInfo.FirstName.toUpperCase(),
         lastName: $scope.userInfo.LastName.toUpperCase(),
-        profileImage: '',
-        profileBackgroundImage: '',
+        profileImage            : $scope.userInfo.Photo ? $scope.userInfo.Photo : 'Images/icons/If no Profile photo.png',
+        profileBackgroundImage  : $scope.userInfo.coverphoto ? $scope.userInfo.coverphoto : 'Images/profile.png',
         descriptiontoDisplay : '',
         description:$scope.userInfo.description ? $scope.userInfo.description :  'No Description Available'
     }
