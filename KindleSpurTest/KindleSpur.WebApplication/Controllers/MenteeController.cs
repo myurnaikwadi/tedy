@@ -30,12 +30,12 @@ namespace KindleSpur.WebApplication.Controllers
             _obj.Role = "Mentee";
             _obj.CreateDate = _obj.UpdateDate = DateTime.Today.ToShortDateString();//Convert.ToDateTime(DateTime.Today.ToShortDateString());
             if (_obj.Topics == null)
-                _obj.Topics = new List<string>();
+                _obj.Topics = new List<SkillOrTopic>();
             if(selectedArray!=null)
             { 
-            var topicsList = selectedArray.Select(x => x.Name).ToList();
+           // var topicsList = selectedArray.Select(x => x.Name).ToList();
 
-            _obj.Topics.AddRange(topicsList);
+            _obj.Topics.AddRange(selectedArray);
             }
             _menteeRepo.AddNewCoacheeOrMentee(_obj);
 
@@ -47,11 +47,11 @@ namespace KindleSpur.WebApplication.Controllers
 
             CoacheeOrMenteeRepository _coacheeRepo = new CoacheeOrMenteeRepository();
 
-            List<string> topics = _coacheeRepo.GetTopicsForMentee(UserId);
+            List<SkillOrTopic> topics = _coacheeRepo.GetTopicsForMentee(UserId);
             CTSRepository _ctsRepo = new CTSRepository();
             BsonDocument doc = new BsonDocument();
             BsonArray arr = new BsonArray();
-            foreach (string topic in topics)
+            foreach (SkillOrTopic topic in topics)
             {
 
                 BsonDocument result = _ctsRepo.GetMentorCategory(topic);

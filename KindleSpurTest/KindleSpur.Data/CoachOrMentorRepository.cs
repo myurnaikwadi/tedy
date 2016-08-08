@@ -140,7 +140,7 @@ namespace KindleSpur.Data
                                                                    Query.EQ("Role", Data.Role)
                                                                 ));
 
-                if (Data.Role.ToLower() == "coach" || Data.Role.ToLower() == "coachee")
+                if (Data.Role.ToLower() == "coach")
                 {
                     for (int i = _entity.Skills.Count - 1; i >= 0; i--)
                     {
@@ -181,7 +181,7 @@ namespace KindleSpur.Data
 
                 }
 
-                if (Data.Role.ToLower() == "mentor" || Data.Role.ToLower() == "mentee")
+                if (Data.Role.ToLower() == "mentor")
                 {
                     for (int i = _entity.Topics.Count - 1; i >= 0; i--)
                     {
@@ -458,15 +458,21 @@ namespace KindleSpur.Data
             return null;
         }
 
-        public List<SearchCoachOrMentor> GetRecommendedMentorList(List<string> lstTopicforMentee, string Role)
+        public List<SearchCoachOrMentor> GetRecommendedMentorList(List<SkillOrTopic> lstTopicforMentee, string Role)
         {
-            List<CoachOrMentor> lstMentor = new List<CoachOrMentor>();
-            foreach (string s1 in lstTopicforMentee)
+            List<CoachOrMentor> lstCoach = new List<CoachOrMentor>();
+            List<string> lstTopicOrSkill = new List<string>();
+            foreach (SkillOrTopic s1 in lstTopicforMentee)
             {
-                lstMentor.AddRange(_coachOrMentorCollection.FindAs<CoachOrMentor>(Query.And(Query.EQ("Topics.Name", s1), Query.EQ("Role", Role))).SetFields(Fields.Exclude("Feedbacks")));
+                lstTopicOrSkill.Add(s1.Name);
             }
-            if (lstMentor.Count > 0)
-                return RecommendedFillSerachData(lstMentor, lstTopicforMentee);
+            foreach (SkillOrTopic s1 in lstTopicforMentee)
+            {
+                lstCoach.AddRange(_coachOrMentorCollection.FindAs<CoachOrMentor>(Query.And(Query.EQ("Skills.Name", s1.Name), Query.EQ("Role", Role))).SetFields(Fields.Exclude("Feedbacks")));
+            }
+            if (lstCoach.Count > 0)
+                //  return FillSerachData(lstCoach);
+                return RecommendedFillSerachData(lstCoach, lstTopicOrSkill);
             return null;
         }
 

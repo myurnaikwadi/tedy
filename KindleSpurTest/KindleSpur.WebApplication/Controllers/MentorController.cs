@@ -49,7 +49,7 @@ namespace KindleSpur.WebApplication.Controllers
             {
                 if (topic != null)
                 {
-                    BsonDocument result = _ctsRepo.GetMentorCategory(topic.Name);
+                    BsonDocument result = _ctsRepo.GetMentorCategory(topic);
                     arr.Add(result);
                 }
 

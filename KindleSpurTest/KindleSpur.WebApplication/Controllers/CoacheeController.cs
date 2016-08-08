@@ -101,7 +101,7 @@ namespace KindleSpur.WebApplication.Controllers
                 }
                 else if (UserRole.Role == "Mentor")
                 {
-                    List<string> lstTopicforMentee = new List<string>();
+                    List<SkillOrTopic> lstTopicforMentee = new List<SkillOrTopic>();
                     lstTopicforMentee = _coacheeRepo.GetTopicsForMentee(UserId);
                     if (lstTopicforMentee != null || lstTopicforMentee.Count > 0)
                     {

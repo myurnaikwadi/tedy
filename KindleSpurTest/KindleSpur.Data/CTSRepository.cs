@@ -166,7 +166,7 @@ namespace KindleSpur.Data
             return _skills;
         }
 
-        public BsonDocument GetMentorCategory(string topic)
+        public BsonDocument GetMentorCategory(SkillOrTopic topic)
         {
             BsonDocument _Category = new BsonDocument();
 
@@ -175,12 +175,13 @@ namespace KindleSpur.Data
                 var _ctsCollection = _kindleDatabase.GetCollection("CTSDataMentoring");
                 if (topic != null)
                 {
-                    var query = Query.EQ("Name", topic);
-                    BsonDocument result = _ctsCollection.Find(Query.ElemMatch("Topics", Query.EQ("Name", topic))).SetFields(Fields.Include("Category", "Topics.$")).ToList()[0];
+                    var query = Query.EQ("Name", topic.Name);
+                    BsonDocument result = _ctsCollection.Find(Query.ElemMatch("Topics", Query.EQ("Name", topic.Name))).SetFields(Fields.Include("Category", "Topics.$")).ToList()[0];
                     if (result != null)
                     {
                         _Category = _Category.Add(new BsonElement("Category", result["Category"].AsString));
-                        _Category = _Category.Add(new BsonElement("Topic", topic));
+                        _Category = _Category.Add(new BsonElement("Topic", topic.Name));
+                        _Category = _Category.Add(new BsonElement("profiLevel", topic.profiLevel));
                     }
                 }
             }
