@@ -230,7 +230,7 @@ app.factory('serverCommunication', function ($http) {
         */
         getCoachTrandingTopic: function (iObj) {
             console.error(iObj)
-            $http.get('/').then(iObj.successCallBack, iObj.failureCallBack);
+            $http.get('/User/GetSkills').then(iObj.successCallBack, iObj.failureCallBack);
         },
 
         /**
@@ -321,10 +321,10 @@ app.factory('serverCommunication', function ($http) {
          */
         getRecommendedCoach: function (iObj) {
             console.error(iObj)
-            var UserRole = {};
+             var UserRole = {};
             UserRole.Role = iObj.Role;
             console.error(UserRole)
-            console.error(JSON.stringify(UserRole))
+            console.error(JSON.stringify(UserRole))           
             $http.post('/Coachee/GetRecommendedCoach', iObj).then(iObj.successCallBack, iObj.failureCallBack)
         },
 
@@ -349,6 +349,10 @@ app.factory('serverCommunication', function ($http) {
             var _action = '/Coach/GetCoachingStatus'
             if (iObj.role == 'mentor') {
                 _action = "/Mentor/GetCoachingStatus";
+            } else if (iObj.role == 'mentee') {
+                _action = "/Mentee/GetCoachingStatus";
+            } else if (iObj.role == 'coachee') {
+                _action = "/Coachee/GetCoachingStatus";
             }
             $http.get(_action, iObj.loggedUserDetails).then(iObj.successCallBack, iObj.failureCallBack)
         },
@@ -359,7 +363,10 @@ app.factory('serverCommunication', function ($http) {
         */
         sendFeedback: function (iObj) {
             console.error(iObj)
-            $http.post('/Coach/SaveFeedBack', iObj.loggedUserDetails).then(iObj.successCallBack, iObj.failureCallBack)
+            //if (iObj.role == '')
+            var _str = '/' +iObj.role + "/SaveFeedBack";
+            console.error(_str)
+            $http.post(_str, iObj.loggedUserDetails).then(iObj.successCallBack, iObj.failureCallBack)
         },
         /**
         * @auther : MKN
@@ -432,7 +439,7 @@ app.factory('serverCommunication', function ($http) {
         getConversation: function (iObj) {
 
             var _action = '/Conversation/GetConversationForSender';
-            if (iObj.Role == 'Coach')
+            if (iObj.Role == 'Coach' || iObj.Role == 'Mentor')
                 _action = '/Conversation/ListConversationForReceiver';
             var req = {
                 method: 'POST',
@@ -440,8 +447,9 @@ app.factory('serverCommunication', function ($http) {
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                data: { loggedEmail: iObj.loggedEmail, ConversationType : "Coaching" }
+                data: { loggedEmail: iObj.loggedEmail, ConversationType: iObj.ConversationType }
             }
+            console.error(req);
             $http(req).then(iObj.successCallBack, iObj.failureCallBack);
         },
 
@@ -453,7 +461,7 @@ app.factory('serverCommunication', function ($http) {
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                data: {  ParentId: iObj.ParentId, ConversationType: "Coaching" }
+                data: { ParentId: iObj.ParentId, ConversationType: iObj.ConversationType }
             }
             $http(req).then(iObj.successCallBack, iObj.failureCallBack);
         },
@@ -467,7 +475,7 @@ app.factory('serverCommunication', function ($http) {
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                data: { ConversationType: "Coaching" }
+                data: { ConversationType: iObj.ConversationType   }
             }
             $http(req).then(iObj.successCallBack, iObj.failureCallBack);
             // $http.get('/Conversation/getConversationRequest').then(iObj.successCallBack, iObj.failureCallBack);
