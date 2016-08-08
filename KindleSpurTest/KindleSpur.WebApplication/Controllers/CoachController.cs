@@ -30,7 +30,7 @@ namespace KindleSpur.WebApplication.Controllers
             if (_obj.Skills == null) _obj.Skills = new List<SkillOrTopic>();
             if(selectedArray!=null)
             _obj.Skills.AddRange(selectedArray);
-            if (selectedArray != null)
+           // if (selectedArray != null)
                 _coachRepo.AddNewCoachOrMentor(_obj);
 
             return true;

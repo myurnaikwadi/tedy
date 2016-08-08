@@ -48,12 +48,20 @@ app.controller('ksMainDashBoardController', function ($scope, $state, serverComm
             authentification.logout({ loginObject : {}});
 		};
 		$scope.init = function () {
-
+		    $scope.trendingTopicLeftArray = [];
+		    $scope.trendingTopicRightArray = [];
 		    serverCommunication.getCoachTrandingTopic({
              loggedUserDetails: $rootScope.loggedDetail,
              successCallBack: function (iObj) {
                  console.error('In successCallBack', iObj);
-                 $scope.StoryDetailArray =[].concat(iObj.data);
+                 $scope.StoryDetailArray = [].concat(iObj.data);
+                 for (var k = 0 ; k < $scope.StoryDetailArray.length ; k++) {
+                     if ($scope.StoryDetailArray[k].ConversationType == "Coaching") {
+                         $scope.trendingTopicLeftArray.push($scope.StoryDetailArray[k]);
+                     } else if ($scope.StoryDetailArray[k].ConversationType == "Mentoring") {
+                         $scope.trendingTopicRightArray.push($scope.StoryDetailArray[k]);
+                     }
+                 }
              },
              failureCallBack: function (iObj) {
                  console.error('In failureCallBack', iObj);
