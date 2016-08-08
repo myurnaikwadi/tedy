@@ -444,9 +444,11 @@
                 }
                 $scope.MailRecords = []
                 var MailRecords = eval('(' + iObj.data.Result + ')');
-
+                console.error(MailRecords);
+                $scope.openConversation.sessionClosed = false;
                 MailRecords.some(function (dd) {
                     if (dd.ConversationClosed || dd.ConversationClosed == 'True') {
+                        console.error(dd.ConversationClosed)
                         $scope.openConversation.sessionClosed = true;
                         console.error('ssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss')
                     }
