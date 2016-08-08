@@ -363,7 +363,6 @@
                 function ObjectId(id) { return id; }
                 function ISODate(d) { return d; }
                 $scope.conversationListNew = [];
-                $scope.conversationListNew = [];
                 var _coach = {};
                 for (var k = 0; k < iObj.data.Result.length; k++) {
                     if (_coach[iObj.data.Result[k].skill]) {
@@ -443,8 +442,13 @@
                 function ISODate(d) {
                     return d;
                 }
+                $scope.MailRecords = []
+                var MailRecords = eval('(' + iObj.data.Result + ')');
 
-                $scope.MailRecords = eval('(' + iObj.data.Result + ')');
+                MailRecords.some(function (dd) {
+
+                    $scope.MailRecords.push(angular.copy(dd));
+                });
             },
             failureCallBack: function (iObj) {
                 console.debug('In failureCallBack', iObj);
@@ -563,9 +567,12 @@
                 ConversationId: _id,
                 ConversationParentId: _parentId,
             }
-            console.debug(_object);
-            $scope.MailRecords.push(_object);
-            //return
+            
+         //   console.debug(_object);
+            var _replica = angular.copy(_object)
+            $scope.MailRecords.push(_replica);
+          //  console.error($scope.MailRecords)
+          //  return;
             serverCommunication.sendConversation({
                 loggedUserDetails: _object,
                 ReceiverName: $scope.ReceiverName,

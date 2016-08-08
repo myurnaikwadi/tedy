@@ -180,24 +180,12 @@
 
                             </div>
                             <div class="chatMiddle">
-                                <div class="chatOuterContainer" ng-repeat="MailRecord in MailRecords | limitTo: 5">
+                                <div class="chatOuterContainer" ng-repeat="MailRecord in MailRecords">
                                     <div class="" ng-class="{chatReceiver : MailRecord.SenderEmail === loggedEmail, chatSender : MailRecord.ReceiverEmail === loggedEmail}">
                                         <h5>{{MailRecord.Content}}</h5>
                                     </div>
                                     <div class="" ng-class="{chatTimeReceiver : MailRecord.SenderEmail === loggedEmail, chatTime : MailRecord.ReceiverEmail === loggedEmail}">02/20</div>
-                                    @*<div class="chatReceiver">
-                                        <h5>Couching Request from Paresh has been accepted</h5>
-                        </div>*@
-                                    @*<div class="chatReceiver" ng-show="MailRecord.SendOrReceive == 'Receive'">
-                            <h5>{{MailRecord.Content}}</h5>
-                                    </div>
-                        <div class="chatTimeReceiver" ng-show="MailRecord.SendOrReceive == 'Receive'">02/20</div>*@
-                                    </div>
-                                @*<div class="chatOuterContainer" ng-show="MailRecord.SendOrReceive == 'Receive'">
-                        <div class="chatReceiver">
-                            <h5>{{MailRecord.Content}}</h5>
-                                </div>
-                    </div>*@
+                                
                             </div>
                             <div class="chatBottom">
                                 <div class="chatBottomOne">

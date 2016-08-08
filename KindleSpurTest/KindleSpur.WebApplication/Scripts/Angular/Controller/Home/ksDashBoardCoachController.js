@@ -397,7 +397,13 @@
                     return d;
                 }
 
-                $scope.MailRecords = eval('(' + iObj.data.Result + ')');
+                $scope.MailRecords = []
+                var MailRecords = eval('(' + iObj.data.Result + ')');
+
+                MailRecords.some(function (dd) {
+
+                    $scope.MailRecords.push(angular.copy(dd));
+                });
             },
             failureCallBack: function (iObj) {
                 console.debug('In failureCallBack', iObj);
@@ -472,8 +478,10 @@
                 ConversationId: _id,
                 ConversationParentId: _parentId,
             }
-            console.debug(_object);
-            $scope.MailRecords.push(_object);
+           // console.debug(_object);
+            var _replica = angular.copy(_object)
+            $scope.MailRecords.push(_replica);
+           // $scope.MailRecords.push(_object);
             serverCommunication.sendConversation({
                 loggedUserDetails: _object,
                 ReceiverName: $scope.ReceiverName,

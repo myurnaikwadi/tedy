@@ -482,8 +482,18 @@ app.factory('serverCommunication', function ($http) {
         },
 
         sendConversation: function (iObj) {
-            console.error('sendConversation --------------- ', iObj)
-            $http.post('/Conversation/Create', iObj.loggedUserDetails, iObj.ReceiverName, iObj.Role).then(iObj.successCallBack, iObj.failureCallBack)
+            console.error('sendConversation --------------- ', iObj);
+            var _checkObj = angular.copy(iObj);
+            var req = {
+                method: 'POST',
+                url: '/Conversation/Create',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                data: { _obj: _checkObj.loggedUserDetails, ReceiverName: _checkObj.ReceiverName, Role: _checkObj.Role }
+            }
+            $http(req).then(iObj.successCallBack, iObj.failureCallBack);
+           // $http.post('/Conversation/Create', _sdss.loggedUserDetails, _sdss.ReceiverName, _sdssRole).then(iObj.successCallBack, iObj.failureCallBack)
         },
         updateConversation: function (iObj) {
             console.error(iObj)
