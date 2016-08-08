@@ -362,9 +362,15 @@ app.factory('serverCommunication', function ($http) {
         * @Purpose :
         */
         sendFeedback: function (iObj) {
-            console.error(iObj)
-            //if (iObj.role == '')
-            var _str = '/' +iObj.role + "/SaveFeedBack";
+            console.error(iObj)            
+            var _action = '';
+            switch (iObj.role) {
+                case 'Mentor': _action = 'Mentee';  break;
+                case 'Mentee': _action = 'Mentor'; break;
+                case 'Coach': _action = 'Coachee';  break;
+                case 'Coachee': _action = 'Coach'; break;
+            }
+            var _str = '/' + _action + "/SaveFeedBack";
             console.error(_str)
             $http.post(_str, iObj.loggedUserDetails).then(iObj.successCallBack, iObj.failureCallBack)
         },
