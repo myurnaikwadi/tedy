@@ -24,7 +24,6 @@ namespace KindleSpur.Models
         public Boolean Published { get; set; }
         public string Role { get; set; }
         public string Bookmarks { get; set; }
-        //public List<Feedback> Feedback { get; set; }
         public int RewardPointsGained { get; set; }
         public int FeedbackPoints { get; set; }
 

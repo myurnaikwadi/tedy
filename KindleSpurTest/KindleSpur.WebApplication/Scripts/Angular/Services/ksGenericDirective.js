@@ -1416,6 +1416,7 @@ app.directive('feedbackPage', function ($state, serverCommunication, $timeout, $
         scope: {
             question: "=",
             submitFeedback: "&",
+            role: "@",
             closeCallback: "&",
             convObject: "=",
             feedbackClosed: "=",
@@ -1477,7 +1478,7 @@ app.directive('feedbackPage', function ($state, serverCommunication, $timeout, $
                 var _id = _parentId + ":CHT#" + (Date.now()) + (Math.floor((Math.random() * 10) + 1));
 
                 var _object = {
-                    Content: 'SESSION HAS BEEN CLOSED',
+                    Content: $scope.convObject.ConversationType.toUpperCase + '  $scope.convObject.skill WAS CLOSED',
                     SenderEmail: $rootScope.loggedDetail.EmailAddress,
                     ReceiverEmail: $scope.sender,
                     SendOrReceive: 'Send',
@@ -1496,7 +1497,7 @@ app.directive('feedbackPage', function ($state, serverCommunication, $timeout, $
                 serverCommunication.sendConversation({
                     loggedUserDetails: _object,
                     ReceiverName: $scope.ReceiverName,
-                    Role: 'Coachee',
+                    Role: $scope.role,
                     successCallBack: function () {
                         $scope.conversation.Message = "";
                         // console.debug('In successCallBack');
@@ -1527,6 +1528,7 @@ app.directive('feedbackPage', function ($state, serverCommunication, $timeout, $
                 }
                 console.error(_rating)
                 serverCommunication.sendFeedback({
+                    role: $scope.role,
                     loggedUserDetails: { FeedBackId: _id, FeedbackClosed: $scope.feedbackClosed, sender: $scope.sender, Skill: $scope.convObject.skill, customerSatisfactionRating: _rating },
                     successCallBack: function (iObj) {
                         console.error('In successCallBack', iObj);

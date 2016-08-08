@@ -80,6 +80,7 @@ namespace KindleSpur.Data
             try
             {
                 var _ctsCollection = _kindleDatabase.GetCollection("CTSDataCoaching");
+               
                 _categories = _ctsCollection.Find(Query.EQ("Name", skills[0])).SetFields(Fields.Exclude("_id")).ToList();
             }
             catch (MongoException ex)
