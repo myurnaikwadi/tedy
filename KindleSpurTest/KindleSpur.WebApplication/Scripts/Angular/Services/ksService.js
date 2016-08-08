@@ -230,7 +230,7 @@ app.factory('serverCommunication', function ($http) {
         */
         getCoachTrandingTopic: function (iObj) {
             console.error(iObj)
-            $http.get('/').then(iObj.successCallBack, iObj.failureCallBack);
+            $http.get('/User/GetSkills').then(iObj.successCallBack, iObj.failureCallBack);
         },
 
         /**
