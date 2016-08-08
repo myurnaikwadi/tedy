@@ -137,6 +137,13 @@ namespace KindleSpur.WebApplication.Controllers
 
                         Session["User"] = u;
                     }
+                    else if (u.IsExternalAuthentication)
+                    {
+                        cookie[u.EmailAddress] = new JavaScriptSerializer().Serialize(u);
+                        Response.SetCookie(cookie);
+
+                        Session["User"] = u;
+                    }
                     else
                     {
                         response.FailureCallBack("Wrong Password!!!");
