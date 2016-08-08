@@ -34,6 +34,8 @@
             height: 11%;
             float: left;
             display: flex;
+            font-size: 106%;
+           
         }
 
         .profileImagePart {
@@ -55,6 +57,9 @@
             margin-right: 0;
             margin-left: 0;
             width:100%;
+            font-size: 112%;
+            margin: auto;
+            padding: 0px 7px 1px 0px;
         }
 
         .leftSideMenuMainDashBoard {
@@ -89,17 +94,11 @@
             transition: all 0.7s ease;
         }
 
-      .leftSideMenuLable {
+        .leftSideMenuLable {
             position: relative;
             float: left;
             color: white;
             margin: 3%;
-            /*text-shadow: 0px 0 35px #555;*/
-                /*-webkit-transition: all 0.7s ease;*/
-                 transition: all 0.7s ease;
-           transition: all 0.7s ease;
-           filter:progid:DXImageTransform.Microsoft.Glow(Strength, Color, Enabled);
-          
         }
 
         .requestRoleParent {
@@ -228,9 +227,9 @@
 
         .dashBoardMenuCoachRight {
             float: left;
-            width: 30%;
-            height: 45%;
-            margin: 1%;
+            width: 32%;
+            height: 59%;
+            margin: -25px 7px 7px 2px;
         }
 
         .dashBoardMenuCoachRightCircle {
@@ -264,7 +263,7 @@
             float: left;
             width: 15%;
             height: 100%;
-            display: flex;
+              display: flex;
         }
 
         .applicationSearch {
@@ -805,7 +804,7 @@ float: left;
 }
 
 .col-md-3{
-    width: 30%
+   
 }
 .dashBoardMenuCoachImage{
   height: 65%;
@@ -902,9 +901,17 @@ border: 1px solid #999;
 	height: 100% !important;
 }
 .ratingFeedBack {
-
+        width: 85%;
+    height: 80%;
+    margin: auto;
+    display: flex;
+    
 }
 .ratingFeedBack img{
+    margin:auto;
+    width : 50px;
+    transition:all 1s ease;
+    cursor:pointer;
 }
 .ratingStarOne {
 }

@@ -41,14 +41,14 @@ app.directive('topMainStrip', function ($state) {
         templateUrl: '/Home/ksTopMainStrip',
         //scope: true,   // optionally create a child scope
         link: function (scope, element, attrs) {
-          
+
             scope.selectedRole = 0;
-                     if (scope.notification == 'false') {
+            if (scope.notification == 'false') {
                 scope.notification = false;
-            } else {          
+            } else {
                 scope.notification = true;
             }
-          
+
             scope.logout = function () {
                 console.error(IN.User)
                 if (IN.User) IN.User.logout();
@@ -83,7 +83,7 @@ app.directive('bottomMainStrip', function ($timeout) {
                { name: 'FEEDBACK' },
                { name: 'PRIVACY POLICY' },
                { name: 'TERMS AND CONDITIONS' },
-             ];
+            ];
         }
     };
 });
@@ -155,7 +155,7 @@ app.directive('ctcRole', function ($state, serverCommunication) {
             scope.topicSelection = function (iEvent, iIndex, iTopic) {
                 iEvent.stopPropagation();
                 iTopic.type = 'T';
-                                          
+
 
                 if (iTopic.selected) {
                     iTopic.selected = false;
@@ -307,9 +307,9 @@ app.directive('ctcRole', function ($state, serverCommunication) {
                         }
 
                     }
-                    var _deleteArr =[];
+                    var _deleteArr = [];
                     for (var j = 0 ; j < _dd.length ; j++) {
-                        if (_deleteArray[_dd[j].Name]){
+                        if (_deleteArray[_dd[j].Name]) {
                             _deleteArr.push(j);
                         }
                     }
@@ -342,7 +342,7 @@ app.directive('ctcRole', function ($state, serverCommunication) {
                                 console.error('In failureCallBack', iObj);
                             }
                         });
-                    } else {                       
+                    } else {
 
                         var _dataArray = [];
                         var _dd = [];
@@ -359,11 +359,11 @@ app.directive('ctcRole', function ($state, serverCommunication) {
                         for (var _key in _topics) {
                             for (var j = 0 ; j < scope.catogoryArray.length ; j++) {
                                 for (var y = 0; y < scope.catogoryArray[j].Topics.length; y++) {
-                                        if (_key == scope.catogoryArray[j].Topics[y].Name) {
-                                                _topics[_key].Id = scope.catogoryArray[j].Topics[y].Id;
-                                                _dd.push(_topics[_key]);
-                                         }
-                                   
+                                    if (_key == scope.catogoryArray[j].Topics[y].Name) {
+                                        _topics[_key].Id = scope.catogoryArray[j].Topics[y].Id;
+                                        _dd.push(_topics[_key]);
+                                    }
+
                                 }
                             }
 
@@ -374,7 +374,7 @@ app.directive('ctcRole', function ($state, serverCommunication) {
                         console.error(_category);
                         console.error(_topics);
                         console.error(_skills);
-                       // return
+                        // return
                         serverCommunication.sendSelectedCTSDataToServerMentor({
                             selectedArray: _dataArray,
                             role: scope.role,
@@ -499,7 +499,7 @@ app.directive('ctcRole', function ($state, serverCommunication) {
                                 } else {
                                     _category[iObj.data.Categories[k].Category] = { Name: iObj.data.Categories[k].Category, topic: {} };
                                     _topics[iObj.data.Categories[k].Topic] = { Name: iObj.data.Categories[k].Topic, skill: null, profiLevel: iObj.data.Categories[k].profiLevel };
-                                    _category[iObj.data.Categories[k].Category].topic[iObj.data.Categories[k].Topic] = { Name: iObj.data.Categories[k].Topic, skill: {}, profiLevel: iObj.data.Categories[k].profiLevel};
+                                    _category[iObj.data.Categories[k].Category].topic[iObj.data.Categories[k].Topic] = { Name: iObj.data.Categories[k].Topic, skill: {}, profiLevel: iObj.data.Categories[k].profiLevel };
                                     if (iObj.data.Categories[k].Skill) {
                                         _skills[iObj.data.Categories[k].Skill] = { Name: iObj.data.Categories[k].Skill, profiLevel: iObj.data.Categories[k].profiLevel };
                                         _category[iObj.data.Categories[k].Category].topic[iObj.data.Categories[k].Topic].skill = {}
@@ -517,10 +517,10 @@ app.directive('ctcRole', function ($state, serverCommunication) {
                 var _count = 1;
                 var _color = 'transparent';
                 var _textColor = 'black';
-                
+
                 switch (scope.role) {
                     case 'coach': _color = 'rgb(231,120,23)'; _textColor = 'white'; break;
-                    case 'mentor': _color = 'rgb(0,73,45)';  _textColor = 'white';  break;
+                    case 'mentor': _color = 'rgb(0,73,45)'; _textColor = 'white'; break;
                     case 'mentee': _color = 'rgb(132,194,37)'; _textColor = 'black'; break;
                     case 'coachee': _color = 'rgb(248,195,0)'; _textColor = 'black'; break;
                 }
@@ -532,9 +532,9 @@ app.directive('ctcRole', function ($state, serverCommunication) {
                     _array.push({
                         "symbol": 'My Selection',
                         "size": 40,
-                         'color': 'black',
-                         "image": 'Images/icons/If no Profile photo.png',
-                        "className" : 'circleProfileImageClass',
+                        'color': 'black',
+                        "image": 'Images/icons/If no Profile photo.png',
+                        "className": 'circleProfileImageClass',
                         "id": 0,
                         "bonds": 1
                     });
@@ -544,10 +544,10 @@ app.directive('ctcRole', function ($state, serverCommunication) {
                             "size": 35,
                             "id": _count,
                             "type": 'C',
-                          //  "image": 'Images/Tree/Stage 1.png',
+                            //  "image": 'Images/Tree/Stage 1.png',
                             'color': 'white',
-                            'textColor' : _textColor,
-                            'border' : _color,
+                            'textColor': _textColor,
+                            'border': _color,
                             "bonds": 1
                         });
                         _node.push({
@@ -567,9 +567,9 @@ app.directive('ctcRole', function ($state, serverCommunication) {
                                     "symbol": _topic,
                                     "size": 25,
                                     "id": _topicId,
-                                  //  "image": 'Images/Tree/Stage 1.png',
+                                    //  "image": 'Images/Tree/Stage 1.png',
                                     "type": 'T',
-                                    'textColor': scope.skillRequired ? 'black' : _textColor, 
+                                    'textColor': scope.skillRequired ? 'black' : _textColor,
                                     'color': scope.skillRequired ? 'white' : _color,
                                     'border': _color,
                                     "bonds": 1
@@ -591,19 +591,19 @@ app.directive('ctcRole', function ($state, serverCommunication) {
                                     var _finalLevelVaue = 0;
                                     for (var _skill in _category[_key].topic[_topic].skill) {
                                         var _skillId = _topicId + _levelSkill;
-                                            
+
                                         _array.push({
                                             "symbol": _skill,
                                             "size": 15,
                                             "id": _skillId,
                                             "type": 'S',
                                             'color': _color,
-                                          //  "image": 'Images/Tree/Stage 1.png',
+                                            //  "image": 'Images/Tree/Stage 1.png',
                                             'textColor': _textColor,
                                             'border': _color,
                                             "bonds": 1
                                         });
-                            
+
                                         _node.push({
                                             "source": _topicId,
                                             "target": _skillId,
@@ -655,30 +655,30 @@ app.directive('ctcRole', function ($state, serverCommunication) {
 
                 switch (scope.role) {
                     case 'coach':
-                            serverCommunication.getMySelection({
-                                successCallBack: function (iObj) {
-                                    console.error('In getMySelection', iObj);
-                                    _createMoleculeStructure(iObj);
-                                },
-                                failureCallBack: function (iObj) {
-                                    console.error('In failuregetMySelectionCallBack', iObj);
+                        serverCommunication.getMySelection({
+                            successCallBack: function (iObj) {
+                                console.error('In getMySelection', iObj);
+                                _createMoleculeStructure(iObj);
+                            },
+                            failureCallBack: function (iObj) {
+                                console.error('In failuregetMySelectionCallBack', iObj);
 
-                                }
-                            });
-                            break;
+                            }
+                        });
+                        break;
                     case 'mentor':
-                            console.error('get data for mentor')
-                            serverCommunication.getMyMentorSelection({
-                                successCallBack: function (iObj) {
-                                    console.error('In getMyMentorSelection', iObj);
-                                    _createMoleculeStructure(iObj);
-                                },
-                                failureCallBack: function (iObj) {
-                                    console.error('In failuregetMySelectionCallBack', iObj);
+                        console.error('get data for mentor')
+                        serverCommunication.getMyMentorSelection({
+                            successCallBack: function (iObj) {
+                                console.error('In getMyMentorSelection', iObj);
+                                _createMoleculeStructure(iObj);
+                            },
+                            failureCallBack: function (iObj) {
+                                console.error('In failuregetMySelectionCallBack', iObj);
 
-                                }
-                            });
-                         break;
+                            }
+                        });
+                        break;
                     case 'mentee':
                         serverCommunication.getMyMenteeSelection({
                             successCallBack: function (iObj) {
@@ -690,7 +690,7 @@ app.directive('ctcRole', function ($state, serverCommunication) {
 
                             }
                         });
-                                break;
+                        break;
                     case 'coachee':
                         serverCommunication.getMyCoacheeSelection({
                             successCallBack: function (iObj) {
@@ -703,7 +703,7 @@ app.directive('ctcRole', function ($state, serverCommunication) {
                             }
                         });
                         break;
-                }                
+                }
             };
             scope.init();
         }
@@ -921,7 +921,7 @@ app.directive('moleculeMap', function ($rootScope) {
                                     var clipPath = defs.append('clipPath').attr('id', 'clip-circle')
                                         .append("circle")
                                         .attr("r", function (d) {
-                                           return radius(d.size);
+                                            return radius(d.size);
                                         })
                                         .attr("cy", 86)
                                         .attr("cx", 100)
@@ -945,11 +945,11 @@ app.directive('moleculeMap', function ($rootScope) {
                                              .attr("x", "20")
                                              .attr("y", "20")
                                              .attr("text-anchor", "middle")
-                                             .style("font-size", function(d) { return Math.min(2 * (radius(d.size)), (2 * d.r - 8) / this.getComputedTextLength() * 24) + "px"; })
+                                             .style("font-size", function (d) { return Math.min(2 * (radius(d.size)), (2 * d.r - 8) / this.getComputedTextLength() * 24) + "px"; })
                                              .text(function (d) {
                                                  return d.symbol;
                                              });
-                                }                                                       
+                                }
 
                             } else {
                                 d3.select(this)
@@ -963,7 +963,7 @@ app.directive('moleculeMap', function ($rootScope) {
                                  .style("fill", function (d) {
                                      return d.color ? d.color : color(d.symbol);
                                  })
-                                
+
                                  .style("stroke", d.border ? d.border : 'black');
                                 d3.select(this)
                                   .append("text")
@@ -1297,24 +1297,24 @@ app.directive('rssFeed', function ($state, serverCommunication, $timeout) {
     return {
         scope: {
             skill: "=",
-            role : "@"
+            role: "@"
         },
         templateUrl: '/Home/ksRssFeed',
         //scope: true,   // optionally create a child scope
         link: function ($scope, element, attrs) {
             window.rss = $scope;
             $scope.feedContainArray = [];
-            
+
             //var _selectedTagFed = [];
             $scope.selectedFeedTag = function (iIndex, iOption) {
                 console.error(iOption.selected)
-               // _selectedTagFed = [];
+                // _selectedTagFed = [];
                 $scope.feedContainArray = [];
                 for (var k = 0 ; k < $scope.skill.length ; k++) {
                     $scope.skill[k].selected = false;
                     if (iOption.name == $scope.skill[k].name) {
                         iOption.selected = true;
-                        $scope.getRssFeedData(iOption.name);                        
+                        $scope.getRssFeedData(iOption.name);
                     }
                 }
                 //if (iOption.selected) {
@@ -1326,8 +1326,8 @@ app.directive('rssFeed', function ($state, serverCommunication, $timeout) {
                 //    _selectedTagFed.push(iOption.name);
                 //    iOption.selected = true;
                 //}
-               
-               
+
+
                 //var _rec = function (iArr, iNdex) {
                 //    $scope.getRssFeedData(iArr[iNdex]);
                 //    iNdex++;
@@ -1366,34 +1366,34 @@ app.directive('rssFeed', function ($state, serverCommunication, $timeout) {
                     data: "{body}",
                 })
                 .done(function (data) {
-                     // alert("success");
-                     console.error(data)
+                    // alert("success");
+                    console.error(data)
                     var _feedContainArray = $scope.feedContainArray.concat(data.webPages.value);
                     // $scope.feedContainArray
-                     var _book = [
-                         'Images/icons/books icon 1.png',
-                         'Images/icons/books icon 2.png',
-                         'Images/icons/books icon 3.png',
-                         'Images/icons/books icon 4.png',
-                         'Images/icons/books icon 5.png',
-                         'Images/icons/books icon 6.png',
-                     ];
-                     
-                     _feedContainArray.sort(function(a, b) {
-                         a = new Date(a.dateLastCrawled);
-                         b = new Date(b.dateLastCrawled);
-                         return a > b ? -1 : a < b ? 1 : 0;
-                     });
-                     var _count = 0;
-                     for (var k = 0 ; k < _feedContainArray.length; k++) {
-                         _feedContainArray[k].imagePath = _book[_count];
-                         _count++;
-                         if (_count == 6) _count = 0;
-                     }
-                     $scope.feedContainArray = [].concat(_feedContainArray);
-                     // if (!$scope.$$phase) $scope.$digest();
-                     $timeout(function () { }, 0);
-                 })
+                    var _book = [
+                        'Images/icons/books icon 1.png',
+                        'Images/icons/books icon 2.png',
+                        'Images/icons/books icon 3.png',
+                        'Images/icons/books icon 4.png',
+                        'Images/icons/books icon 5.png',
+                        'Images/icons/books icon 6.png',
+                    ];
+
+                    _feedContainArray.sort(function (a, b) {
+                        a = new Date(a.dateLastCrawled);
+                        b = new Date(b.dateLastCrawled);
+                        return a > b ? -1 : a < b ? 1 : 0;
+                    });
+                    var _count = 0;
+                    for (var k = 0 ; k < _feedContainArray.length; k++) {
+                        _feedContainArray[k].imagePath = _book[_count];
+                        _count++;
+                        if (_count == 6) _count = 0;
+                    }
+                    $scope.feedContainArray = [].concat(_feedContainArray);
+                    // if (!$scope.$$phase) $scope.$digest();
+                    $timeout(function () { }, 0);
+                })
                 .fail(function (data) {
                     //alert("error");
                     console.error(data)
@@ -1402,20 +1402,19 @@ app.directive('rssFeed', function ($state, serverCommunication, $timeout) {
 
             if ($scope.skill) {
                 if ($scope.skill.length > 0) {
-                    $scope.selectedFeedTag(0,$scope.skill[0]);
+                    $scope.selectedFeedTag(0, $scope.skill[0]);
                 }
             }
-            
+
         }
     }
 });
 
 
-app.directive('feedbackPage', function ($state, serverCommunication, $timeout,$rootScope) {
+app.directive('feedbackPage', function ($state, serverCommunication, $timeout, $rootScope) {
     return {
         scope: {
             question: "=",
-            role  : "@",
             submitFeedback: "&",
             closeCallback: "&",
             convObject: "=",
@@ -1428,7 +1427,7 @@ app.directive('feedbackPage', function ($state, serverCommunication, $timeout,$r
 
             $scope.sender = ($scope.convObject.SenderEmail == $rootScope.loggedDetail.EmailAddress) ? $scope.convObject.ReceiverEmail : $scope.convObject.SenderEmail;
             window.feedbackPage = $scope;
-            
+
             if (typeof $scope.feedbackClosed === 'undefined') {
                 $scope.feedbackClosed = false;
             }
@@ -1441,16 +1440,16 @@ app.directive('feedbackPage', function ($state, serverCommunication, $timeout,$r
                 feedBackDetails: {}
             };
 
-             $scope.rewardsPoints = {
-                        mentorPoints: 0,
-                        menteePoints: 0,
-                        coachPoints: 0,
-                        coacheePoints: 0,
-                        balancePoints: 0,
-                        redeemedPoints: 0,
-                        totalPoints: 0
+            $scope.rewardsPoints = {
+                mentorPoints: 0,
+                menteePoints: 0,
+                coachPoints: 0,
+                coacheePoints: 0,
+                balancePoints: 0,
+                redeemedPoints: 0,
+                totalPoints: 0
             };
-            $scope.myRewardsArray =[];
+            $scope.myRewardsArray = [];
             $scope.getPointsRecord = function () {
                 serverCommunication.getPointsRecord({
                     successCallBack: function (iObj) {
@@ -1474,11 +1473,11 @@ app.directive('feedbackPage', function ($state, serverCommunication, $timeout,$r
 
             $scope.generateSesstionClosedEntry = function () {
                 var _parentId = $scope.convObject.ConversationParentId ? $scope.convObject.ConversationParentId : $scope.convObject.ConversationId;
-          
+
                 var _id = _parentId + ":CHT#" + (Date.now()) + (Math.floor((Math.random() * 10) + 1));
-               
+
                 var _object = {
-                    Content: $scope.convObject.ConversationType.toUpperCase + '  $scope.convObject.skill WAS CLOSED',
+                    Content: 'SESSION HAS BEEN CLOSED',
                     SenderEmail: $rootScope.loggedDetail.EmailAddress,
                     ReceiverEmail: $scope.sender,
                     SendOrReceive: 'Send',
@@ -1492,18 +1491,18 @@ app.directive('feedbackPage', function ($state, serverCommunication, $timeout,$r
                 // console.debug(_object);
                 var _replica = angular.copy(_object)
                 _replica.UpdateDate = new Date().toJSON();
-               // $scope.MailRecords.push(_replica);
+                // $scope.MailRecords.push(_replica);
                 // $scope.MailRecords.push(_object);
                 serverCommunication.sendConversation({
                     loggedUserDetails: _object,
                     ReceiverName: $scope.ReceiverName,
-                    Role: $scope.role,
+                    Role: 'Coachee',
                     successCallBack: function () {
                         $scope.conversation.Message = "";
-                       // console.debug('In successCallBack');
+                        // console.debug('In successCallBack');
                     },
                     failureCallBack: function () {
-                       // $scope.conversation.Message = "";
+                        // $scope.conversation.Message = "";
                         console.debug('In failureCallBack');
                     }
                 });
@@ -1512,23 +1511,22 @@ app.directive('feedbackPage', function ($state, serverCommunication, $timeout,$r
             $scope.feedBack.sendFeedBackDetail = function () {
                 $scope.feedBack.feedBackDetails.sender = $scope.sender;
                 console.error($scope.feedBack.feedBackDetails)
-                
+
                 for (var k = 0 ; k < $scope.displayArray.length ; k++) {
                     $scope.feedBack.feedBackDetails[$scope.displayArray[k].name] = $scope.displayArray[k];
                 };
                 console.error($scope.feedBack.feedBackDetails, $scope.displayArray);
                 // return
-                var _counter = Math.floor((Math.random()*10)+1);
-                var _id = $rootScope.loggedDetail.EmailAddress +(Date.now()) +_counter;
+                var _counter = Math.floor((Math.random() * 10) + 1);
+                var _id = $rootScope.loggedDetail.EmailAddress + (Date.now()) + _counter;
                 var _rating = 1;
-                for(var _key in $scope.feedBack.feedBackDetails){
-                    if($scope.feedBack.feedBackDetails[_key].sessionRating){
+                for (var _key in $scope.feedBack.feedBackDetails) {
+                    if ($scope.feedBack.feedBackDetails[_key].sessionRating) {
                         _rating = $scope.feedBack.feedBackDetails[_key].actionValue;
                     }
                 }
                 console.error(_rating)
                 serverCommunication.sendFeedback({
-                    role : $scope.role,
                     loggedUserDetails: { FeedBackId: _id, FeedbackClosed: $scope.feedbackClosed, sender: $scope.sender, Skill: $scope.convObject.skill, customerSatisfactionRating: _rating },
                     successCallBack: function (iObj) {
                         console.error('In successCallBack', iObj);
@@ -1536,7 +1534,7 @@ app.directive('feedbackPage', function ($state, serverCommunication, $timeout,$r
                             $scope.generateSesstionClosedEntry();
                         }
                         $scope.getPointsRecord();
-                       
+
                     },
                     failureCallBack: function (iObj) {
                         console.error('In failureCallBack', iObj);
@@ -1546,11 +1544,11 @@ app.directive('feedbackPage', function ($state, serverCommunication, $timeout,$r
             };
             $scope.displayArray = [];
             $scope.counter = 4;
-            
+
             $scope.loadSlideData = function (iMode) {
                 console.error('111')
                 var _loadArray = [];
-              
+                $scope.indexArray = []
                 for (var k = 0 ; k < $scope.displayArray.length ; k++) {
                     $scope.feedBack.feedBackDetails[$scope.displayArray[k].name] = angular.copy($scope.displayArray[k]);
                 };
@@ -1603,7 +1601,33 @@ app.directive('feedbackPage', function ($state, serverCommunication, $timeout,$r
 
                     }
                 });
-            };  
+            };
+            $scope.indexArray = [];
+            $scope.showRatingColor = function (iIndex, iQuestion) {
+                console.error('showRatingColor')
+
+                $scope.indexArray = []
+                for (var j = 1 ; j <= iIndex ; j++) {
+                    if ($scope.indexArray.indexOf(j) == -1)
+                        $scope.indexArray.push(j);
+                }
+
+                iQuestion.actionValue = iIndex;
+                return
+                var _index = $scope.indexArray.indexOf(iIndex);
+                if (_index > -1) {
+                    // $scope.indexArray.splice(iIndex, 1);
+                    for (var j = 1 ; j <= iIndex ; j++) {
+                        $scope.indexArray.splice(j, 1);
+                    }
+                } else {
+                    for (var j = 1 ; j <= iIndex ; j++) {
+                        if ($scope.indexArray.indexOf(j) == -1)
+                            $scope.indexArray.push(j);
+                    }
+                }
+                $scope.indexArray.sort(function (a, b) { return b - a })
+            };
 
             $scope.openRedeemPanel = function () {
                 $scope.feedBack.askFeedback = true;
@@ -1620,4 +1644,4 @@ app.directive('feedbackPage', function ($state, serverCommunication, $timeout,$r
             $scope.init();
         }
     }
-}); 
+});

@@ -22,11 +22,11 @@
                                     </div>
                                     <textArea ng-show="question.type == 'textArea'" placeholder="Enter here Description"></textArea>
                                     <div class="ratingFeedBack" ng-show="question.type == 'rating'">
-                                        <img class="ratingStarOne" src="~/Images/communication/Star.png" />
-                                        <img class="ratingStarTwo" src="~/Images/communication/Star.png" />
-                                        <img class="ratingStarThree" src="~/Images/communication/Star.png" />
-                                        <img class="ratingStarFour" src="~/Images/communication/Star.png" />
-                                        <img class="ratingStarFive" src="~/Images/communication/Star.png" />
+                                        <img ng-click="showRatingColor(1,question)" ng-src="{{ indexArray.indexOf(1) > -1 ? 'Images/redstar.png' : 'Images/silverstar.png' }}" class="ratingStarOne" src="~/Images/silverstar.png" />
+                                        <img ng-click="showRatingColor(2,question)" ng-src="{{ indexArray.indexOf(2) > -1 ? 'Images/redstar.png' : 'Images/silverstar.png' }}" class="ratingStarTwo" src="~/Images/silverstar.png" />
+                                        <img ng-click="showRatingColor(3,question)" ng-src="{{ indexArray.indexOf(3) > -1 ? 'Images/redstar.png' : 'Images/silverstar.png' }}" class="ratingStarThree" src="~/Images/silverstar.png" />
+                                        <img ng-click="showRatingColor(4,question)" ng-src="{{ indexArray.indexOf(4) > -1 ? 'Images/redstar.png' : 'Images/silverstar.png' }}" class="ratingStarFour" src="~/Images/silverstar.png" />
+                                        <img ng-click="showRatingColor(5,question)" ng-src="{{ indexArray.indexOf(5) > -1 ? 'Images/redstar.png' : 'Images/silverstar.png' }}" class="ratingStarFive" src="~/Images/silverstar.png" />
                                     </div>
                                 </div>
                             </div>
@@ -59,11 +59,11 @@
                                     </div>
                                     <textArea ng-show="question.type == 'textArea'" ng-model="question.actionValue" placeholder="Enter here Description"></textArea>
                                     <div class="ratingFeedBack" ng-show="question.type == 'rating'">
-                                        <img ng-click="question.actionValue = 1" class="ratingStarOne" src="~/Images/communication/Star.png" />
-                                        <img ng-click="question.actionValue = 2"  class="ratingStarTwo" src="~/Images/communication/Star.png" />
-                                        <img ng-click="question.actionValue = 3"  class="ratingStarThree" src="~/Images/communication/Star.png" />
-                                        <img ng-click="question.actionValue = 4"  class="ratingStarFour" src="~/Images/communication/Star.png" />
-                                        <img ng-click="question.actionValue = 5"  class="ratingStarFive" src="~/Images/communication/Star.png" />
+                                        <img ng-click="showRatingColor(1,question)" ng-src="{{ indexArray.indexOf(1) > -1 ? 'Images/redstar.png' : 'Images/silverstar.png' }}" class="ratingStarOne" src="~/Images/silverstar.png" />
+                                        <img ng-click="showRatingColor(2,question)" ng-src="{{ indexArray.indexOf(2) > -1 ? 'Images/redstar.png' : 'Images/silverstar.png' }}" class="ratingStarTwo" src="~/Images/silverstar.png" />
+                                        <img ng-click="showRatingColor(3,question)" ng-src="{{ indexArray.indexOf(3) > -1 ? 'Images/redstar.png' : 'Images/silverstar.png' }}" class="ratingStarThree" src="~/Images/silverstar.png" />
+                                        <img ng-click="showRatingColor(4,question)" ng-src="{{ indexArray.indexOf(4) > -1 ? 'Images/redstar.png' : 'Images/silverstar.png' }}" class="ratingStarFour" src="~/Images/silverstar.png" />
+                                        <img ng-click="showRatingColor(5,question)" ng-src="{{ indexArray.indexOf(5) > -1 ? 'Images/redstar.png' : 'Images/silverstar.png' }}" class="ratingStarFive" src="~/Images/silverstar.png" />
                                     </div>
                                 </div>
                             </div>
