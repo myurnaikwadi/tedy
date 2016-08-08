@@ -87,13 +87,14 @@ namespace KindleSpur.Data
 
                         foreach (SkillOrTopic item in Data.Skills)
                         {
-                             if (item.Id == _entity.Skills[i].Id)
-                                {
-                                    blnDelete = false;
-                                    break;
-                                }
+                            if (item.Id == _entity.Skills[i].Id)
+                            {
+                                _entity.Skills[i].profiLevel = item.profiLevel;
+                                blnDelete = false;
+                                break;
+                            }
 
-                            
+
                         }
                         if (blnDelete) _entity.Skills.RemoveAt(i);
                     }
@@ -161,7 +162,7 @@ namespace KindleSpur.Data
 
         public List<string> GetTopicsForMentee(string UserId)
         {
-           // var _collection = _kindleDatabase.GetCollection("CoacheeOrMentee");
+            // var _collection = _kindleDatabase.GetCollection("CoacheeOrMentee");
             var result = _coacheeOrMenteeCollection.FindOneAs<CoacheeOrMentee>(Query.And(
                                                                     Query.EQ("UserId", UserId),
                                                                     Query.EQ("Role", "Mentee")
@@ -355,7 +356,7 @@ namespace KindleSpur.Data
             return coacheeEntities.ToList();
         }
 
-        public List<CoachStatus> GetCoachingStatus(string UserId,string Role)
+        public List<CoachStatus> GetCoachingStatus(string UserId, string Role)
         {
             List<IFeedback> LstCochees = new List<IFeedback>();
             List<CoachStatus> result = new List<CoachStatus>();
