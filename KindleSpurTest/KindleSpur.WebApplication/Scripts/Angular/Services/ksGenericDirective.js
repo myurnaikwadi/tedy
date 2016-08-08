@@ -534,7 +534,7 @@ app.directive('ctcRole', function ($state, serverCommunication) {
                             "size": 35,
                             "id": _count,
                             "type": 'C',
-                            "image": 'Images/Tree/Stage 1.png',
+                          //  "image": 'Images/Tree/Stage 1.png',
                             'color': 'white',
                             'textColor' : _textColor,
                             'border' : _color,
@@ -557,7 +557,7 @@ app.directive('ctcRole', function ($state, serverCommunication) {
                                     "symbol": _topic,
                                     "size": 25,
                                     "id": _topicId,
-                                    "image": 'Images/Tree/Stage 1.png',
+                                  //  "image": 'Images/Tree/Stage 1.png',
                                     "type": 'T',
                                     'textColor': scope.skillRequired ? 'black' : _textColor, 
                                     'color': scope.skillRequired ? 'white' : _color,
@@ -588,7 +588,7 @@ app.directive('ctcRole', function ($state, serverCommunication) {
                                             "id": _skillId,
                                             "type": 'S',
                                             'color': _color,
-                                            "image": 'Images/Tree/Stage 1.png',
+                                          //  "image": 'Images/Tree/Stage 1.png',
                                             'textColor': _textColor,
                                             'border': _color,
                                             "bonds": 1
@@ -611,7 +611,7 @@ app.directive('ctcRole', function ($state, serverCommunication) {
                                 }
                                 //console.error(Object.keys(_category[_key].topic).length)
                                 if (_dd == (Object.keys(_category[_key].topic).length - 1)) {
-                                    console.error(_skillId)
+                                    //console.error(_skillId)
                                     _count = _skillId;
                                 }
                                 // _level = _finalLevelVaue;

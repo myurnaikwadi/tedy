@@ -401,9 +401,15 @@
                 var MailRecords = eval('(' + iObj.data.Result + ')');
 
                 MailRecords.some(function (dd) {
-
-                    $scope.MailRecords.push(angular.copy(dd));
+                  $scope.MailRecords.push(angular.copy(dd));
                 });
+                
+                $scope.MailRecords.sort(function (a, b) {
+                    a = new Date(a.UpdateDate);
+                    b = new Date(b.UpdateDate);
+                    return a-b;
+                });
+                
             },
             failureCallBack: function (iObj) {
                 console.debug('In failureCallBack', iObj);
@@ -471,15 +477,13 @@
                 IsVerified: $scope.conversation.IsVerified,
                 ConversationClosed: false,
                 ConversationType: "Coaching",
-                Skill: $scope.openConversation.skill,
-                //"8/7/2016"
-                // CreateDate: (new Date().getMonth()+1)+"/"+new Date().getDate()+
-                //UpdateDate: "2016-08-07T11:58:13.867Z"
+                Skill: $scope.openConversation.skill,                
                 ConversationId: _id,
                 ConversationParentId: _parentId,
             }
            // console.debug(_object);
             var _replica = angular.copy(_object)
+            _replica.UpdateDate = new Date().toJSON();
             $scope.MailRecords.push(_replica);
            // $scope.MailRecords.push(_object);
             serverCommunication.sendConversation({
@@ -518,10 +522,7 @@
             IsVerified: $scope.conversation.IsVerified,
             ConversationClosed: false,
             ConversationType:"Coaching",
-            Skill: iNotificationDash.skill,
-            //"8/7/2016"
-            // CreateDate: (new Date().getMonth()+1)+"/"+new Date().getDate()+
-            //UpdateDate: "2016-08-07T11:58:13.867Z"
+            Skill: iNotificationDash.skill,           
             ConversationId: _id,
             ConversationParentId: iNotificationDash.ConversationId,
         }
