@@ -94,6 +94,9 @@ namespace KindleSpur.WebApplication.Controllers
 
             User obj = _repo.SavePassword(TempData["UserId"].ToString(), signupObject);
 
+            //string userId = (string)signupObject.Id.ToString();
+            // User obj = _repo.SavePassword(userId, signupObject);
+
             return View();
         }
 

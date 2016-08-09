@@ -143,7 +143,7 @@ app.controller('ksLoginController', ['$scope', 'authentification', '$location', 
     $scope.loginClick = function () {
         //$state.go('landingPage');
         //return
-        if ($scope.loginDetails.emailAddress == '') {
+        if (($scope.loginDetails.emailAddress == '')||($scope.loginDetails.password == '')) {
             //alert('Please enter emailAddress or Password')
             //formatType: '1'
             if ($scope.loginDetails.emailAddress == '' && $scope.loginDetails.password == '') {
@@ -161,8 +161,7 @@ app.controller('ksLoginController', ['$scope', 'authentification', '$location', 
                 $scope.displayAlert.message = 'Please enter password ';
                 $scope.displayAlert.formatType = '2';
             }
-
-            return
+           return
         }
         else if (($scope.loginDetails.password == '')) {
             if ($scope.loginDetails.emailAddress == '') {
@@ -201,11 +200,20 @@ app.controller('ksLoginController', ['$scope', 'authentification', '$location', 
         if ($scope.signupDetails.password == '') {
             // alert('Please enter Password')
             $scope.displayAlert.showAlert = true;
-            $scope.displayAlert.message = 'Please Enter Password';
+            $scope.displayAlert.message = 'Please enter Password';
             $scope.displayAlert.formatType = '2';
 
             return
         }
+        else if (($scope.signupDetails.password) != ($scope.signupDetails.confirmPassword))
+            {
+             
+            $scope.displayAlert.showAlert = true;
+            $scope.displayAlert.message = 'The Passwords are not same';
+            $scope.displayAlert.formatType = '2';
+            return;
+        }
+
         var _object = {
             Password: $scope.signupDetails.password
         }
@@ -224,6 +232,7 @@ app.controller('ksLoginController', ['$scope', 'authentification', '$location', 
      */
     $scope.signupClick = function () {
         if ($scope.signupDetails.FirstName == '') {
+           
             if ($scope.signupDetails.LastName == '' && $scope.signupDetails.EmailAddress == '') {
                 //alert('Please enter First,last name and Email address')
                 $scope.displayAlert.showAlert = true;
