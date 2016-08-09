@@ -13,7 +13,7 @@
 <div class="addActivityPanelHide" ng-class="{ addActivityPanelShow : addActivityShowFlag == true }">
     <div class="activityNameDivShow" style="height: 12% !important;">
         <div class="activityNameInputBox">
-            <input class="homeLogininput" type="text" required ng-keydown="autoCompleteEmailId($event);" ng-blur="resetAutoComplete();closeAlertMessage()" ng-change='selectedIndex=-1;showRecentlyLoggedName(credentials.username)' name="username" id="userId" ng-model="activity.eventTitle" tabindex="0" autocomplete="off">
+            <input class="homeLogininput fontClass" type="text" required ng-keydown="autoCompleteEmailId($event);" ng-blur="resetAutoComplete();closeAlertMessage()" ng-change='selectedIndex=-1;showRecentlyLoggedName(credentials.username)' name="username" id="userId" ng-model="activity.eventTitle" tabindex="0" autocomplete="off">
             <span class="highlight"></span>
             <span class="bar"></span>
             <label class="homeLoginlabel fontClass">ACTIVITY NAME</label>
@@ -26,7 +26,7 @@
     <div class="taskListPanelDivShow">
         <div class="addTaskInput">
             <div class="activityNameInputBox">
-                <input class="addTaskinputClass addTaskInputClass" type="text" required ng-keydown="autoCompleteEmailId($event);" ng-blur="resetAutoComplete();closeAlertMessage()" ng-change='selectedIndex=-1;showRecentlyLoggedName(credentials.username)' name="username" id="userIdTask" ng-model="addTaskObject.eventTitle" tabindex="0" autocomplete="off">
+                <input class="addTaskinputClass addTaskInputClass fontClass" type="text" required ng-keydown="autoCompleteEmailId($event);" ng-blur="resetAutoComplete();closeAlertMessage()" ng-change='selectedIndex=-1;showRecentlyLoggedName(credentials.username)' name="username" id="userIdTask" ng-model="addTaskObject.eventTitle" tabindex="0" autocomplete="off">
                 <span class="highlight"></span>
                 <span class="bar"></span>
                 <label class="addTaskLabel fontClass">TASK NAME</label>
@@ -101,7 +101,7 @@
             </div>
             <div class="taskLeveliCon">
                 <!--<img src="../../Images/MedalImage/bronzeMedal.png" style="margin: auto auto;float: left;height: 35px;width: 35px;" />-->
-                <img src="../../Images/delete.png" title="Delete" ng-click="dummyTaskArray.splice($index,1);" style="margin: auto auto;float: left;height: 35px;width: 35px;" />
+                <img src="../../Images/delete.png" title="Delete" ng-click="dummyTaskArray.splice($index,1);" style="margin: auto auto;float: left;height: 20px;width: 20px;" />
             </div>
         </div>
 
@@ -140,11 +140,7 @@
                         <img ng-show="tasks.measureImapact == 2 && tasks.typeImapact == 1 || tasks.measureImapact == 1 && tasks.typeImapact == 0" src="../../Images/MedalImage/silverMedal.png" style="margin: auto auto;float: left;height: 65px;width: 65px;" />
                         <img ng-show="tasks.measureImapact == 2 && tasks.typeImapact == 0" src="../../Images/MedalImage/goldMedal.png" style="margin: auto auto;float: left;height: 65px;width: 65px;" />
                     </div>
-                    <div class="taskLeveliCon">
-                        <img src="../../Images/MedalImage/bronzeMedal.png" style="margin: auto auto;float: left;height: 40px;width: 40px;" />
-                        <img src="../../Images/MedalImage/bronzeMedal.png" style="margin: auto auto;float: left;height: 40px;width: 40px;" />
-                    </div>
-                </div>
+                  </div>
 
 
 
