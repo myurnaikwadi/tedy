@@ -8,7 +8,7 @@
 .profileBackgroundImageParent {
     position: relative;
     width: 100%;
-    height: 76%;
+    height: 58%;
     float: left;
     display: flex;
     background: url('../../../Images/userprofile.png');

@@ -98,10 +98,8 @@
                         </div>
                     </div>
                     <div class="skillParent" style="float: left;width: 60%;margin-left: 16%;">
-                        <div class="topicsList" ng-repeat="topic in topicArray">
-                            <div class="topicsListParent fontClass coachThemeColor">
-                                <h5 style="float:left;margin: auto 5px;font-size: 11px;"> {{topic.Name | uppercase}}</h5>
-                            </div>
+                        <div class="impactZoneTag">
+                            <h5 class="tagTasks fontClass coachThemeColor eliipsisClass" style="float: left;margin: 10px;margin-bottom: 0;margin-right: 0;width: 131px;height: 28px;" ng-repeat="option in topicArray">{{option.Name | uppercase}}</h5>
                         </div>
                     </div>
                 </div>
