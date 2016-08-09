@@ -33,7 +33,7 @@ app.directive('focusMe', function ($timeout, $parse) {
     };
 });
 
-app.directive('topMainStrip', function ($state, $rootScope) {
+app.directive('topMainStrip', function ($state, $rootScope, authentification) {
     return {
         scope: {
             notification: '@'
@@ -54,8 +54,8 @@ app.directive('topMainStrip', function ($state, $rootScope) {
             scope.logout = function () {
                 console.error(IN.User)
                 if (IN.User) IN.User.logout();
-                $state.go('login');
                 authentification.logout({ loginObject: {} });
+                $state.go('login');             
             };
             scope.navigateAsPerRole = function (iRole) {
                 console.error(iRole);
