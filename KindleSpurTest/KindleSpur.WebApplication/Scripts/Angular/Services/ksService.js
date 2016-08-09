@@ -270,7 +270,7 @@ app.factory('serverCommunication', function ($http) {
       * @date : 15/06/2016
       * @Purpose :
       */
-        changeProfileImageDetails: function (iObj,iAction) {
+        changeProfileImageDetails: function (iObj,iAction,iCallBack) {
             console.error(iObj)
             //method: 'POST',
             //url: '/resources/messages',
@@ -280,6 +280,10 @@ app.factory('serverCommunication', function ($http) {
             var _action = '/Home/UpdateUserPhoto';
             if (iAction) {
                 _action = '/Home/UpdatecoverPhoto'
+            }
+            iObj.successCallBack = function (idata) {
+                console.error(idata)
+                iCallBack(idata);
             }
             $http.post(_action, iObj, {
                 withCredentials: true,

@@ -77,7 +77,7 @@ namespace KindleSpur.WebApplication.Controllers
             return View();
         }
         [HttpPost]
-        public string UpdateUserPhoto(SubmitImage model)
+        public JsonResult UpdateUserPhoto(SubmitImage model)
         {
             UserRepository _repo = new UserRepository();
             var allowedExtensions = new[] {
@@ -104,14 +104,14 @@ namespace KindleSpur.WebApplication.Controllers
             }
 
             IUser user = _repo.GetUserDetail(((IUser)System.Web.HttpContext.Current.Session["User"]).EmailAddress);
-            return user.ToJson();
+            return Json(user);
         }
         public ActionResult ksFeedBackPanel()
         {
             return View();
         }
         [HttpPost]
-        public string UpdatecoverPhoto(Uploadcoverimage model)
+        public JsonResult UpdatecoverPhoto(Uploadcoverimage model)
         {
             UserRepository _repo = new UserRepository();
             var allowedExtensions = new[] {
@@ -136,8 +136,9 @@ namespace KindleSpur.WebApplication.Controllers
                 ViewBag.message = "Please choose only Image file";
             }
             IUser user = _repo.GetUserDetail(((IUser)System.Web.HttpContext.Current.Session["User"]).EmailAddress);
-            return user.ToJson();
+            return Json(user); 
         }
+
 
 
     }

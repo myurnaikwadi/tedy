@@ -68,6 +68,7 @@
         }
         serverCommunication.changeProfileImageDetails(_object);
     }
+   
     $scope.triggerUpload = function (iProfile) {
         console.error('width: 42px;')
         var obj = {
@@ -112,14 +113,19 @@
             if (iProfile) {
                // $scope.myInfo.profileImage = valueFile[0];
                 serverCommunication.changeProfileImageDetails(data,null, function (iPath) {
-                    console.error(iPath)
-                   // $scope.myInfo.profileImage = iPath.data;
+                    $scope.myInfo.profileImage = $scope.userInfo.Photo = iPath.data.Photo;
+                    // console.error($scope.myInfo.profileImage)
+                    if ($rootScope.loggedDetail.EmailAddress == iPath.data.EmailAddress) {
+                        $rootScope.loggedDetail = iPath.data;
+                    }
                 });
             } else {
                
                 serverCommunication.changeProfileImageDetails(data, true, function (iPath) {
-                    console.error(iPath)
-                    $scope.myInfo.profileBackgroundImage = iPath.data;
+                    $scope.myInfo.profileBackgroundImage = $scope.userInfo.coverphoto = iPath.data.coverphoto;
+                    if ($rootScope.loggedDetail.EmailAddress == iPath.data.EmailAddress) {
+                        $rootScope.loggedDetail = iPath.data;
+                    }
                 });
             }         
             document.getElementById("fileInputIdRv").value = "";
