@@ -308,12 +308,12 @@ namespace KindleSpur.Data
                 feedback.Sender = UserId;
                 feedback.CreateDate = DateTime.Now;
                 entity.Feedbacks.Add(feedback);
-                entity.RewardPointsGained += 1;
+                entity.RewardPointsGained += 5;
                 _coacheeOrMenteeCollection.Save(entity);
                 var _users = _kindleDatabase.GetCollection("UserDetails");
                 User user = _users.FindOneAs<User>(Query.EQ("EmailAddress", UserId));
-                user.BalanceRewardPoints += 1;
-                user.TotalRewardPoints += 1;
+                user.BalanceRewardPoints += 5;
+                user.TotalRewardPoints += 5;
                 _users.Save(user);
                 _transactionStatus = true;
                 return user.TotalRewardPoints;
