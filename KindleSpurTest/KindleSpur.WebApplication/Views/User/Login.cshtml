@@ -4,17 +4,18 @@
                       <img ng-click="navigateAsPerRole(4)" class="genericPointerClass" src="~/Images/icons/kindlespurlogo.png" alt="logo" style="height: auto; width: 72%; margin: auto;" />
                   </div>
                   <div class="hiddenErrorNotificationClass" ng-class="{ 'showErrorNotificationClass' : displayAlert.showAlert  == true}">            
-                        <div class="alert-message success" ng-show="displayAlert.formatType == '1'">
-                            <a class="close" href="#" ng-click= "displayAlert.showAlert = false">×</a>
+                      -@*Green*@ <div class="alert-message success" ng-show="displayAlert.formatType == '1'">
+                      
                             <p>{{displayAlert.message}}</p>
+                            <a class="close" href="#" ng-click="displayAlert.showAlert = false">×</a>
                         </div>
-                        @*Green*@
-            
+                      
+                      @*red*@
                         <div class="alert-message error" ng-show="displayAlert.formatType == '2'">
-                            <h5 style="margin:0;padding:0;" class="close" ng-click= "displayAlert.showAlert = false" >×</h5>
-                            <h5 style="margin:0;padding:0;">{{displayAlert.message}}</h5>
+                           
+                            <h5 style="margin:0;padding:0; margin-top:4%">{{displayAlert.message}}</h5>
+                            <h5 style="margin:0;padding:0;" class="close" ng-click="displayAlert.showAlert = false">×</h5>
                         </div>
-                        @*red*@
                    </div>
               </div>
               <div class="applicationMiddleStrip">

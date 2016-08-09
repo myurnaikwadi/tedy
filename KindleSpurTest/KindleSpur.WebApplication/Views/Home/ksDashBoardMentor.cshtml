@@ -94,14 +94,14 @@
                 <div class="hideCoacheeProfile" ng-class="{ showCoacheeProfileClass : showCoacheeProfile == true }">
                     <profile-Page ng-if="showCoacheeProfile && userInfo" user-Info="userInfo" close-Popup="closeProfilePic()" edit-Required="false"></profile-Page>
                 </div>
-                <div class="homeLabelInMainDB" style="height:7%;border-bottom:1px solid lightgray;">
+                <div class="homeLabelInMainDB" style="height:10%;border-bottom:1px solid lightgray;">
                     <h5 class="fontClass" style="font-size: 16px;padding: 6px; padding-left: 0;">
                         MENTORING STATUS
                     </h5>
                 </div>
                 <div class="mainDashBoardWizardParent">
                     <div ng-show="coachingStatusArray.length == 0" class="topicHeadingPlaceholdr">
-                        <h5 style="color:gray;margin: auto;font-size: 30px;" class="leftSideMenuLable fontClass">
+                        <h5 style="color:gray;margin: auto;font-size: 14px;" class="leftSideMenuLable fontClass">
                             NO MENTEE AVAILABLE
                         </h5>
                     </div>
@@ -162,8 +162,8 @@
                     <h5 class="fontClass" style="font-size: 16px;margin-left:2%;">NOTIFICATIONS</h5>
                 </div>
                 <div ng-show="conversationListNew.length == 0" class="topicHeadingPlaceholdr">
-                    <h5 style="color:gray;margin: auto;font-size: 30px;" class="leftSideMenuLable fontClass">
-                        No Conversations
+                    <h5 style="color:gray;margin: auto;font-size: 14px;" class="leftSideMenuLable fontClass">
+                        NO CONVERSATIONS
                     </h5>
                 </div>
                 <div class="communicationMainPanel" ng-hide="conversationListNew.length == 0">

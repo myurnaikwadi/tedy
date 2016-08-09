@@ -148,7 +148,7 @@ app.controller('ksLoginController', ['$scope', 'authentification', '$location', 
             //formatType: '1'
             if ($scope.loginDetails.emailAddress == '' && $scope.loginDetails.password == '') {
                 $scope.displayAlert.showAlert = true;
-                $scope.displayAlert.message = 'Please enter emailAddress or Password ';
+                $scope.displayAlert.message = 'Please Enter Email Address Or Password ';
                 $scope.displayAlert.formatType = '2';
             }
             else if ($scope.loginDetails.emailAddress == '') {
@@ -236,17 +236,17 @@ app.controller('ksLoginController', ['$scope', 'authentification', '$location', 
             if ($scope.signupDetails.LastName == '' && $scope.signupDetails.EmailAddress == '') {
                 //alert('Please enter First,last name and Email address')
                 $scope.displayAlert.showAlert = true;
-                $scope.displayAlert.message = 'Please Enter First,Last Name and Email address';
+                $scope.displayAlert.message = 'Please Enter First,Last Name and Email Address';
                 $scope.displayAlert.formatType = '2';
 
             } else if ($scope.signupDetails.FirstName == '' && $scope.signupDetails.LastName == '') {
                 $scope.displayAlert.showAlert = true;
-                $scope.displayAlert.message = 'Please Enter First Name and Last Name';
+                $scope.displayAlert.message = 'Please Enter First Name and Last Name. ';
                 $scope.displayAlert.formatType = '2';
             }
             else if ($scope.signupDetails.FirstName == '' && $scope.signupDetails.EmailAddress == '') {
                 $scope.displayAlert.showAlert = true;
-                $scope.displayAlert.message = 'Please Enter First Name and EmailAddress';
+                $scope.displayAlert.message = 'Please Enter First Name and Email Address. ';
                 $scope.displayAlert.formatType = '2';
             }
             else if ($scope.signupDetails.FirstName == '') {
