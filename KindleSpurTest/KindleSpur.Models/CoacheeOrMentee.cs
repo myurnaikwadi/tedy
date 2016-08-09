@@ -8,6 +8,7 @@ using MongoDB.Bson.Serialization.Attributes;
 
 namespace KindleSpur.Models
 {
+    [BsonIgnoreExtraElements]
     public class CoacheeOrMentee : ICoacheeOrMentee
     {
         [BsonId]
@@ -26,9 +27,7 @@ namespace KindleSpur.Models
         public string Bookmarks { get; set; }
         public int RewardPointsGained { get; set; }
         public int FeedbackPoints { get; set; }
-
         public string CreateDate { get; set; }/**/
-
         public string UpdateDate { get; set; }/**/
         public List<IProgramConducted> ProgramsConducted { get; set; }
         public List<IFeedback> Feedbacks { get; set; }
