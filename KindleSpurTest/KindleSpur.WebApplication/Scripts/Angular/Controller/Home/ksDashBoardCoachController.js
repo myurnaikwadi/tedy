@@ -1,8 +1,10 @@
-﻿app.controller('ksDashBoardCoachController', function ($rootScope, $scope, serverCommunication, $stateParams, $interval) {
+﻿app.controller('ksDashBoardCoachController', function ($rootScope, $scope, serverCommunication, $stateParams, $interval, $state) {
     console.error($stateParams)
     $scope.passedData = $stateParams;
    // $scope.redeemAction = { actionName: "GAME" };
-
+    $scope.navigateToProfile = function () {
+        $state.go('profile');
+    };
     $scope.loggedEmail = $rootScope.loggedDetail.EmailAddress;
     $scope.ApprovalName = $rootScope.loggedDetail.FirstName + " " +$rootScope.loggedDetail.LastName;
     $scope.conversation = { };

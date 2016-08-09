@@ -129,7 +129,7 @@
             margin: 2%;
             margin-right: 0;
             margin-bottom: 0;
-            border: 1px solid;
+            //border: 1px solid;
         }
 
         .homeLabelInMainDB {
@@ -275,7 +275,7 @@
 
         .applicationRightCornerStrip {
             float: right;
-            width: 25%;
+            width: 70%;
             height: 100%;
         }
 
@@ -290,7 +290,7 @@
 
         .roleIcons {
             float: right;
-            width: 32%;
+            width: auto ;
             display: flex;
             height: 100%;
         }
@@ -334,7 +334,7 @@
 
         .logoutOption {
             float: right;
-            width: 22%;
+            width: 9%;
             display: flex;
             color:darkgray;
             height: 100%;
@@ -344,11 +344,13 @@
             float: left;
             margin: auto;
             width: 100%;
+                display: flex;
         }
 
         .roleIconCircle {
             float: left;
             margin: auto 4%;
+                width: 20px;
             border-radius: 100%;
         }
 
@@ -685,7 +687,7 @@ margin: auto auto;
 	z-index: 2;
 	/* for firefox 31 */
 	transform: rotateY(0deg);
-	border: 1px solid #BBB8B8;
+	//border: 1px solid #BBB8B8;
 }
 
 /* back, initially hidden pane */

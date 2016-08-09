@@ -1,10 +1,12 @@
-﻿app.controller('ksDashBoardCoacheeController', function ($rootScope, $scope, serverCommunication, $interval) {
+﻿app.controller('ksDashBoardCoacheeController', function ($rootScope, $scope, serverCommunication, $interval, $state) {
     window.cocc = $scope;
     $scope.loggedEmail = $rootScope.loggedDetail.EmailAddress;
     $scope.ApprovalName = $rootScope.loggedDetail.FirstName + " " + $rootScope.loggedDetail.LastName;
     $scope.conversation = {};
     $scope.ReceiverName = "";
-
+    $scope.navigateToProfile = function () {
+        $state.go('profile');
+    };
     $scope.notifications = [
 
                 { notificationType: '1', name: 'YOU HAVE COACHING INVITE  FROM', assignPerson: 'HARSHADA D.' },

@@ -4,19 +4,11 @@
     </div>
     <div class="applicationMiddleStripMain">
         <div class="parentRoleDashboard">
-            <div class="userImageParent">
+            @*<div class="userImageParent">
                 <div class="userImageParentcenter">
-                    <div class="profileViewModeMain">
-                        <div class="profileImagePartMain">
-                            <div class="profileImage" ng-click="navigateToProfile()" ></div>
-                        </div>
-                        <div class="profileNamePartMain fontClass" ng-click="navigateToProfile()">
-                            <h2 class="profileName">WELCOME</h2>
-                            <h2 class="profileName">&nbsp {{(loggedDetail.FirstName) | uppercase }}</h2>
-                        </div>
-                    </div>
+                   
                 </div>
-            </div>
+            </div>*@
             <div class="userRoleWizardParentMain">
                 <div class="userRoleWizardParent" style="display: inline-flex;overflow: auto;float:left; overflow-x:scroll; overflow-y:hidden;width:98%;margin-left: -16px;">
                     <div class="notificationWiz" ng-repeat="notification in notificationsArr">
@@ -38,8 +30,8 @@
                     </div>
                 </div>
             </div>
-            <div class="userRolesParent" style="height: 60%;">
-                 <div style="margin:auto;width: 65%;height: 91%;">
+            <div class="userRolesParent">
+                 <div style="margin:auto;width: 65%;height: 100%;">
                      <div class="roleRepeatWizardMain" ng-mouseover="wizard.selectedOption = true" ng-mouseout="wizard.selectedOption = false" ng-class="{ flipper : wizard.selectedOption == true  ,mentorThemeColor : wizard.name =='MENTOR',menteeThemeColor : wizard.name =='MENTEE',coachThemeColor : wizard.name =='COACH',coacheeThemeColor : wizard.name =='COACHEE'}" ng-click="roleClick($event,wizard)" ng-repeat="wizard in applicationRole">
                          <div class="flipper" style="float: left; width : 100%; height : 100%;">
                              <div class="front">
@@ -68,41 +60,42 @@
                              </div>
                          </div>
                      </div>
-                  </div>  
-                
-            </div>
-            <h5 class="fontClass TrendingTopicsHeader">TRENDING TOPICS</h5>
-            <div class="trandingTopicParent col-md-12" >
-               
-                <div class="col-md-6" >
-                    <div class="roleImage col-md-2">
+                  </div>                  
+            </div>           
+            <div class="" style="height: 22%; float: left; width: 100%;display:flex;" >
+                 <div style="margin:auto;width: 60%;">
+                     <h5 class="fontClass TrendingTopicsHeader" style="margin: 0;">TRENDING TOPICS</h5>
+                     <div class="col-md-6">
+                         <div class="roleImage col-md-2">
+                             <img src="~/Images/icons/trending topics1.png" class="TradingTopicsLogo" />
+                         </div>
+                         <div class="trandingTopicLeftArray col-md-4" ng-repeat="option in trendingTopicLeftArray">
+                             <div class="TrendingTopicName">
+                                 {{option.skill | uppercase}}
+                             </div>
+                             <div class="col-md-12 TrandingTopicDescription">
+                                 {{option.description}}
+                             </div>
+                         </div>
+                         
+                     </div>
 
-                        <img src="~/Images/icons/trending topics1.png" class="TradingTopicsLogo" />
-                    </div>
-                    <div class="trandingTopicLeftArray col-md-4" ng-repeat="option in trendingTopicLeftArray">
-                        <div class="TrendingTopicName">
-                            {{option.skill | uppercase}}
-                        </div>
-                        <div class="col-md-12 TrandingTopicDescription">
-                            {{option.description}}
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="col-md-6" >
-                    <div class="roleImage col-md-2" style="float: left; margin-top: 2%;height:96px;" >
-                        <img src="~/Images/icons/trending topics2.png" class="TradingTopicsLogo" />
-                    </div>
-                    <div class="trandingTopicLeftArray col-md-4" ng-repeat="option in trendingTopicRightArray">
-                        <div class="TrendingTopicName" >
-                            {{option.skill | uppercase}}
-                        </div>
-                        <div style="height:30px; font-size: 9px;" >
-                            {{option.description}}
-                      </div>
-                    </div>
-                </div>
+                     <div class="col-md-6">
+                         <div class="roleImage col-md-2" style="float: left; margin-top: 2%;height:96px;">
+                             <img src="~/Images/icons/trending topics2.png" class="TradingTopicsLogo" />
+                         </div>
+                         <div class="trandingTopicLeftArray col-md-4" ng-repeat="option in trendingTopicRightArray">
+                             <div class="TrendingTopicName">
+                                 {{option.skill | uppercase}}
+                             </div>
+                             <div style="height:30px; font-size: 9px;">
+                                 {{option.description}}
+                             </div>
+                         </div>
 
+                     </div>
+                                    
+                </div>
             </div>
             <div class="bottomStripParent">
                 <div class="applicationBottomStrip">

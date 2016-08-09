@@ -1,5 +1,6 @@
 app.controller('ksMainDashBoardController', function ($scope, $state, serverCommunication, $rootScope) {
     console.error('Dashoard load successfully')
+   
     $scope.notificationsArr = [
 			{ notificationType: '1', name: 'YOU HAVE COACHING INVITE  FROM', assignPerson: 'HARSHADA D.' },
 			{ notificationType: '2', role: 'mentor', name: 'YOUR MEETING HAS BEEN SCHEDULED WITH SAGAR N  ON', meetingDate: '20/05/2016', meetingTime: '11:00PM', meetingTimeDiff: '1 HOUR' },
@@ -36,10 +37,7 @@ app.controller('ksMainDashBoardController', function ($scope, $state, serverComm
                 { name: 'Successful Virtual Teams' ,description: ''},
                 { name: 'Technology migration' ,description: ''}
 		];
-
-        $scope.navigateToProfile = function () {
-            $state.go('profile');
-        };
+      
 		$scope.logout = function () {
 		   
             console.error(IN.User)  
@@ -47,7 +45,10 @@ app.controller('ksMainDashBoardController', function ($scope, $state, serverComm
             $state.go('login');
             authentification.logout({ loginObject : {}});
 		};
+
+		
 		$scope.init = function () {
+		   
 		    $scope.trendingTopicLeftArray = [];
 		    $scope.trendingTopicRightArray = [];
 		    serverCommunication.getCoachTrandingTopic({

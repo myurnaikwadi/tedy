@@ -39,7 +39,7 @@
 .userRolesParent{
 	position: relative;
 	width: 100%;
-	height: auto;
+	height: 55%;
 	float : left;
 	display: flex;
 }
@@ -59,33 +59,32 @@
 }
 .profileViewModeMain{
 	position: relative;
-	    margin-left: 10%;
-	float : left;
+	margin-left: 10%;
+	float : right;
 	height: 100%;
-    width: 90%;
+    
 }
 
 .profileImagePartMain{
 	position: relative;
 	float : left;
 	height: 100%;
-    	    width: 75px;
+    	    width: 50px;
 	display: flex;
 }
 .profileNamePartMain{
 	position: relative;
 	float : left;
 	height: 100%;
-    	width: 70%;
+    	    width: auto;
 	display: flex;
+  
 }
 .profileImage {
     /*border: 1px solid lightgray;*/
     margin: auto auto;
-    display: table;
-    width: 55%;
+    width: 48%;
     height: 50%;
-    display: table;
     background: url('../../../Images/icons/If no Profile photo.png') no-repeat center;
     background-size: contain;
     cursor: pointer;
@@ -94,12 +93,13 @@
     	margin: auto 0;
     	display: table;
         cursor:pointer;
+            font-size: 14px;
 }
 .userRoleWizardParentMain{
 	margin: 0% auto;
-    	display: table;
+    	
     	width: 60%;
-    	height: 15%;
+    	height: 18%;
 }
 .userRoleWizardParenWizard {
     margin: 0% auto;
@@ -139,7 +139,7 @@
     height: 75px;
     overflow-x: auto;
     margin-right: 2%;
-    margin-top: 1%;
+    margin-top: 3%;
 }
 .notificationWizReason {
     float: left;
@@ -280,7 +280,10 @@ width: 20%;
      margin : auto;
      float : left;
      position:absolute;
-     width: 30%;
+        width: 50%;
+    height: 100%;
+    left: 40%;
+    top: 10%;
 }
 .vcsPanelClass {
      margin : auto;

@@ -1,4 +1,4 @@
-﻿app.controller('ksDashBoardMentorController', function ($rootScope, $scope, serverCommunication, $interval) {
+﻿app.controller('ksDashBoardMentorController', function ($rootScope, $scope, serverCommunication, $interval,$state) {
     $scope.notifications = [
 
                 { notificationType: '1', name: 'YOU HAVE COACHING INVITE  FROM', assignPerson: 'HARSHADA D.' },
@@ -6,7 +6,9 @@
                 { notificationType: '2', role: 'coachee', name: 'YOUR MEETING HAS BEEN SCHEDULED WITH SAGAR N  ON', meetingDate: '25/05/2016', meetingTime: '08:00AM', meetingTimeDiff: '2 HOUR' },
 
     ];
-
+    $scope.navigateToProfile = function () {
+        $state.go('profile');
+    };
     $scope.loggedEmail = $rootScope.loggedDetail.EmailAddress;
     $scope.ApprovalName = $rootScope.loggedDetail.FirstName + " " + $rootScope.loggedDetail.LastName;
     $scope.conversation = {};
