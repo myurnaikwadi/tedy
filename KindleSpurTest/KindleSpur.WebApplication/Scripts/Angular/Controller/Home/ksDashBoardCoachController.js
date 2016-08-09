@@ -304,7 +304,7 @@
     };
 
     $scope.conversationLoading = function () {
-        console.error('ge');
+        $scope.conversationListNew = [];
         serverCommunication.getConversation({
             Role: "Coach",
             ConversationType : "Coaching",

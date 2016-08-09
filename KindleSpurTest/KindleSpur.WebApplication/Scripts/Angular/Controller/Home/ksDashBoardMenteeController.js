@@ -422,7 +422,7 @@
         }, iTime);
     };
     $scope.conversationLoading = function () {
-        console.error('ge');
+        $scope.conversationListNew = [];
         serverCommunication.getConversation({
             loggedEmail: $scope.loggedEmail,
             Role: "Mentee",

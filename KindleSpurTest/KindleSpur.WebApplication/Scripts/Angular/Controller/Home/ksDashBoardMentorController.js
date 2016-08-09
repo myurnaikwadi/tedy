@@ -303,7 +303,7 @@
     };
 
     $scope.conversationLoading = function () {
-        console.error('ge');
+        $scope.conversationListNew = [];
         serverCommunication.getConversation({
             Role: "Mentor",
             ConversationType: "Mentoring",
