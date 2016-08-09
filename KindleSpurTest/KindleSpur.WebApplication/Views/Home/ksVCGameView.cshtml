@@ -26,60 +26,47 @@
           
             <div class="parentRoleDetailRight" style="padding-bottom: 0;" ng-if="selectedMenu == '1'">
                 <div class="parentBody">
-                    <div class="labelInRightPanelVCG" style="height:7%;border-bottom:1px solid lightgray;">
-                        <h5 class="fontClass" style="font-size: 16px;">VALUE FEEDS</h5>
+                    <div class="labelInRightPanelVCG" style="height:7%;border-bottom:1px solid lightgray;display:flex;">
+                        <h5 class="fontClass" style="font-size: 16px;    margin: auto;margin-left: 2%;">VALUE FEEDS</h5>
                     </div>
                     <div class="parentRoleDashboard fontClass">
-                        <div style="padding-left:5%;">
-                            <div class="ImpactZoneButton">
-                                <div style="display: inline-flex;">
-                                    <div class="valueFeedButton" ng-click="selectOption($index,option)" ng-repeat="option in topButtonArray">
-                                        {{option.name |uppercase}}
-                                    </div>
+                        <div style="float: left; width: 100%;height: 100%">
+                            <div class="ImpactZoneButton" style="border-bottom: 1px solid lightgray;">                               
+                                <div class="impactZoneTag" style="overflow-x: auto;">
+                                    <h5 class="tagTasks fontClass eliipsisClass" style="float: left;margin: 10px;margin-bottom: 0;margin-right: 0;width: 131px;height: 28px;" ng-class="{ selectedZoneClass : option.selected == true }" ng-click="selectOption($index,option)" ng-repeat="option in topButtonArray">{{option.name | uppercase}}</h5>
                                 </div>
-
                             </div>
-                            <div style="width:100%" class="col-md-12">
+                            <div style="float: left;width: 100%;height: 90%;position: relative;" class="col-md-12">
                                 <div class="podcastsContainer col-md-5 col-sm-12">
                                     <div class="podcastHeader">
-                                        <h5 class="fontClass ValueFeedsHeade">PODCASTS</h5>
+                                        <h5 style="margin: auto;margin-left: 2%;" class="fontClass ValueFeedsHeade">PODCASTS</h5>
                                     </div>
                                     <div class="ImpactZoneChildDiv">
                                         <div class="MainStoryPanel" ng-repeat="option in AllVideoDetail">
                                             <div class="videoTitle">
-                                                <p class="videoName">{{option.name}}</p>
-                                                <span class="glyphicon glyphicon-play" style="float:left;"></span>
+                                                <h5 class="videoName fontClass" style="font-weight: bold;">{{option.name | uppercase}}</h5>
+                                                <span class="glyphicon glyphicon-play" style="top: 0px;float:left;margin: auto;"></span>
                                             </div>
-
-
                                         </div>
                                     </div>
-                                </div>
-                                <div class="col-md-1">
-                                    <img src="~/Images/icons/verticle.png" width="61px" height="617px" />
-                                </div>
+                                </div>                               
                                 <div class="podcastsContainer col-md-5">
-                                    <div class="storyContainerHeader">
-                                        <h5 class="fontClass" style="font-size: 14px;padding-left: 0;">STORY</h5>
-
-                                        <h5 class="AddStoryText ">
-                                            SHOW YOUR STORY
-                                            <div class="addStoryButton" ng-click="addStory()">
-                                                <span class="glyphicon glyphicon-plus" title="Add story"></span>
-                                            </div>
-
-                                        </h5>
+                                    <div class="podcastHeader">
+                                        <h5 class="fontClass" style="margin: auto;margin-left: 2%;font-size: 14px;padding-left: 0;">STORY</h5>
+                                        <div class="" style="width: 40%;display: flex;" ng-click="addStory()">
+                                            <h5 class="AddStoryText fontClass"> SHOW YOUR STORY</h5>
+                                            <span class="glyphicon glyphicon-plus" style="top: 0px;margin: auto;margin-right: 5%;"title="ADD STORY"></span>
+                                        </div>                                        
                                     </div>
                                     <div class="ImpactZoneChildDiv">
-                                        <div class="MainStoryPanel" ng-repeat="story in StoryDetailArray">
-                                            <div class="storyTitle">
-                                                {{story.StoryTitle}}
-                                            </div>
-                                            <div class="storyDescription">
-                                                {{story.StoryContent}}
-                                            </div>
-
+                                        <div class="MainStoryPanel" ng-repeat="option in StoryDetailArray">
+                                            <div class="videoTitle">
+                                                <div class="videoTitle" style="display:block;width: 94%;height: 58%;">
+                                                    <h5 class="videoName fontClass" style="font-weight: bold;">{{option.StoryTitle  | uppercase}}</h5>
+                                                    <h5 class="videoName fontClass eliipsisClass" style="color:#d3d3d3; font-size: 12px; margin-top: 5px;">{{option.StoryContent}}</h5>
+                                                </div>
                                         </div>
+                                        
                                     </div>
                                 </div>
 
@@ -90,11 +77,11 @@
                         <div ng-show='valueFeeds.addStory' class="addStoryPanel fontClass" style="height: 52%;">
 
 
-                            <div class="addStoryContainer">
+                            <div class="addStoryContainer" style="padding: 7%;">
                                 <img ng-click="closeaddStoryPopup()" class="addStoryPopupCancleButton" title="Close" src="~/Images/cancel.png" />
                                 <div class="StoryTitlePanel">
-                                    <h5 class="StoryName">Story Name</h5>
-                                    <input type="text" placeholder="subject Name" class="storyTitleText" ng-model="AddStory.SubjectName" ng-required>
+                                    <h5 class="StoryName" style="width: 20%;">Story Name</h5>
+                                    <input type="text" placeholder="subject Name" class="storyTitleText" style=|"padding: 5px;" ng-model="AddStory.SubjectName" ng-required>
                                 </div>
                                 <div class="storyDescrionPanel">
                                     <textarea rows="4" cols="50" class="addStoryTextArea" ng-model="AddStory.Description" placeholder="Write your experiance and difference you created in the selected impact zone" ng-required></textarea>

@@ -104,7 +104,6 @@ overflow: hidden;
 	float:left;
         background: #D0D0D0;
 	border-bottom: 2px solid white;
-   font-family: Roboto-Regular !important;
 }
 .activityNameDivHide{
 	width:100%;
@@ -230,8 +229,8 @@ float: left;
     background: transparent;
     color: white;
    
-    font-size: 14px !important;
-    font-weight: 400 !important;
+    font-size: 16.5px !important;
+    font-weight: 700 !important;
     letter-spacing: 2px;
     border-bottom: 1px solid #D2D2D2;
 }
@@ -392,7 +391,7 @@ input:focus ~ .highlight {
 .parentRoleDashboard {
     position: relative;
     width: 100%;
-    height: 100%;
+    height: 93%;
     float: left;
 }
 
@@ -418,7 +417,6 @@ input:focus ~ .highlight {
     overflow: hidden;
     border: 1px solid #CCCCCC;
     text-overflow: ellipsis;
-    padding:3px;
 }
 .genericPointerClass {
     cursor: pointer;
@@ -459,7 +457,7 @@ input:focus ~ .highlight {
     max-height: 0;
 }
 .addStoryContainer{
-width: 100%;
+    width: 100%;
     height: 100%;
     background-color: white;
     padding: 0px 14px;
@@ -473,7 +471,7 @@ width: 100%;
     width: 60%;
     height: 90%;
     right: 25%;
-    top:256px;
+    top:25%;
 }
 
 .storyTitleText{
@@ -508,22 +506,19 @@ width: 100%;
     box-shadow:0px 0px 10px 0px;
 }
 .podcastsContainer{
-    
- 
-    height: 547px;
-    margin-top: 3%;
+    width:50%;
+    height:100%;
     float:left;
-   
+    padding: 1%;
+   padding-top: 0;
 }
-.podcastsContainer:hover{
-    background-color:lightgray;
-}
-.podcastsController:hover{
-  
+.MainStoryPanel :hover{
     background-color:lightgray;
 }
 .podcastHeader{
-   
+       display: flex;
+    width: 100%;
+    height: 10%;
     border-bottom: 1px solid gray;
 }
 
@@ -549,29 +544,31 @@ width: 100%;
 .AddStoryText
 {
 
-    width:109px ; 
-     float: right;
+
+     float: left;
       margin: auto auto;
-      margin-right: 0;
+      margin-right: 2%;
       font-size:12px;
 }
 .addStoryButton{
    
-    width: 14px;
-     float: right;
-     margin: auto auto;
-     margin-right: 0;
+        margin: auto;
+    width: 36%;
+    margin-right: 0px;
+    display: flex;
      color:black;
      cursor:pointer;
 }
-.addStoryButton:hover{
+/*.addStoryButton:hover{
     box-shadow:0px 0px 2px 2px;
-}
+}*/
 .MainStoryPanel{
-    padding: 10px;
-    
+    width: 100%;
+    height: 15%;
+    float: left;
     overflow-x: hidden;
-     overflow-y: scroll;
+    overflow-y: scroll;
+        border-bottom: 1px solid lightgray;
 }
 .addStoryTextArea{
     width: 94%;
@@ -586,16 +583,17 @@ width: 100%;
 .shareButton{
     width: 70px;height: 30px; padding:1%;
 }.videoTitle{
- font-size: 17px;
-    font-weight: bold;
-    padding-top: 10%;
-display: inline-flex;
+    height: 99%;
+    margin: auto;
+    display: inline-flex;
     width: 100%;
-    }
+}
 .videoName{
-    width: 100%;
+    width: 87%;
     height: auto;
     float: left;
+        padding: 0;
+        margin: auto;
 }
 .storyDescription{
     font-size: 10px;
@@ -608,9 +606,11 @@ display: inline-flex;
 }
 .ImpactZoneChildDiv{
     overflow:scroll;
-        margin-top: 10px;
-    height:500px;
+     float: left;
+    width: 100%;
+    height: 90%;
 }
+
 .GameThemeColor {
     background-color: darkgray !important;
 }
