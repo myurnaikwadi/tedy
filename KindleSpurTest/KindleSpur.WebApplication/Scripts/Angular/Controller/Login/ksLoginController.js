@@ -87,13 +87,16 @@ app.controller('ksLoginController', ['$scope', 'authentification', '$location', 
     };
 
     var _successCallBack = function (iObj) {
-        console.error('In _successCallBack');
+        console.error('In _successCallBack',iObj);
         $scope.signupDetails.FirstName = "";
         $scope.signupDetails.LastName = "";
         $scope.signupDetails.EmailAddress = "";
 
         if (!iObj.data.Result) {
-            alert(iObj.data.Message);
+            $scope.displayAlert.showAlert = true;
+            $scope.displayAlert.message = iObj.data.Message;
+            $scope.displayAlert.formatType = '1';
+          //  alert(iObj.data.Message);
         }
         //$rootscope.$broadcast('alertBox', {
         //        showAlertBox: true,

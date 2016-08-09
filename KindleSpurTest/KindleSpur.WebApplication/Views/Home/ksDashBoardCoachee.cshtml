@@ -160,7 +160,7 @@
                     <h5 class="fontClass" style="font-size: 16px;margin-left:2%;">NOTIFICATIONS</h5>
                 </div>
 
-                <div ng-show="conversationListNew.length == 0" class="topicHeadingPlaceholdr">
+                <div ng-show="conversationListNew.length == 0" style="height:87%;" class="topicHeadingPlaceholdr">
                     <h5 style="color:gray;margin: auto;font-size: 14px;" class="leftSideMenuLable fontClass">
                         NO CONVERSATIONS
                     </h5>
@@ -175,9 +175,9 @@
                                 <div class="conversationListPanel genericPointerClass" ng-class="{ highlightedGrayClass : conversation.selectedConversation == true }">
                                     <div style="float:left; margin: auto auto;width: 85%; text-transform: uppercase;">
                                         <h5 style="margin:auto auto;margin-left: 0;font-size: large;float: left;width: 88%;    font-weight: 700;    font-size: 15px;">{{conversation.FirstName +" "+conversation.LastName+" - "+conversation.skill }}</h5>
-                                        <div class="applicationNotiCount" title="5" style="display:flex;float:left;text-align: center;height: 15px;width: 15px;">
+                                        @*<div class="applicationNotiCount" title="5" style="display:flex;float:left;text-align: center;height: 15px;width: 15px;">
                                             <h6 class="fontClass" style="font-size:10px;display:inline-block;text-align:center; text-overflow:clip; margin: auto auto;color:white;">5</h6>
-                                        </div>
+                                        </div>*@
                                     </div>
                                 </div>
                                 <div class="triangleArrowRight trangleOveRideBlack" ng-if="conversation.selectedConversation == true" style="float: left; margin-top: 9px;"></div>
@@ -185,7 +185,7 @@
                         </div>
                     </div>
                     <div class="communicationPanel">
-                        <div class="chatParent" style="height: 90%;">
+                        <div class="chatParent">
                             <div class="chatHeader">
                                 <div class="chatStrongHeader">
                                     <div class="chatHalfContainer">
@@ -276,7 +276,7 @@
            </div>
             @*Rss feed - 4*@
             <div class="parentRoleDetailRight" style="padding:1%;padding-bottom: 0;" ng-if="selectedMenu == '4'">
-                <rss-Feed ng-if="feedCategoryArray.length > 0" role="coachee" skill="feedCategoryArray"></rss-Feed>
+                <rss-Feed role="coachee" skill="feedCategoryArray"></rss-Feed>
             </div>
             @*Knowledge Garden - 1*@
             <div class="parentRoleDetailRight" style="padding:1%;padding-bottom: 0;" ng-if="selectedMenu == '1'">

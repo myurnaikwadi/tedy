@@ -374,9 +374,10 @@ app.factory('serverCommunication', function ($http) {
                 case 'Coach': _action = 'Coachee';  break;
                 case 'Coachee': _action = 'Coach'; break;
             }
+            console.error(_action)
             var _str = '/' + _action + "/SaveFeedBack";
             console.error(_str)
-            iObj.loggedUserDetails.Role = iObj.role;
+            iObj.loggedUserDetails.Role = _action;
             $http.post(_str, iObj.loggedUserDetails).then(iObj.successCallBack, iObj.failureCallBack)
         },
         /**

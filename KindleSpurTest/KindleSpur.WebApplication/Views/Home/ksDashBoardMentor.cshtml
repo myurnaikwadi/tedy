@@ -20,7 +20,7 @@
             </div>
             @*rss feed -4 *@
             <div class="parentRoleDetailRight" style="padding:1%;padding-bottom: 0;" ng-if="selectedMenu == '4'">
-                <rss-Feed ng-if="feedCategoryArray.length > 0" role="mentor" skill="feedCategoryArray"></rss-Feed>
+                <rss-Feed  role="mentor" skill="feedCategoryArray"></rss-Feed>
             </div>
             @*Add topics -2 *@
             <div class="parentRoleDetailRight" ng-if="selectedMenu == '2'">
@@ -79,9 +79,10 @@
                             </div>
                         </div>
                     </div>
-                    <div class="applicationBottomStrip">
-                        <bottom-Main-Strip></bottom-Main-Strip>
-                    </div>
+                  
+                </div>
+                <div class="applicationBottomStrip">
+                    <bottom-Main-Strip></bottom-Main-Strip>
                 </div>
             </div>
             @*MY Rewards - 6 *@
@@ -161,16 +162,15 @@
                 <div class="homeLabelInChat" style="height:7%;border-bottom:1px solid lightgray;">
                     <h5 class="fontClass" style="font-size: 16px;margin-left:2%;">NOTIFICATIONS</h5>
                 </div>
-                <div ng-show="conversationListNew.length == 0" class="topicHeadingPlaceholdr">
+                <div ng-show="conversationListNew.length == 0" style="height:87%;" class="topicHeadingPlaceholdr">
                     <h5 style="color:gray;margin: auto;font-size: 14px;" class="leftSideMenuLable fontClass">
                         NO CONVERSATIONS
                     </h5>
                 </div>
                 <div class="communicationMainPanel" ng-hide="conversationListNew.length == 0">
                     <div ng-if='feedBack.askFeedback' class="feedbackPanel" style="height: 75%;">
-                        <feedback-Page role="Mentee" question="array" feedback-Closed="feedBack.icloseFeedBack" conv-Object="openConversation" submit-Feedback="feedBackSave()" close-Callback="closeCallBack()"></feedback-Page>
+                        <feedback-Page role="Mentor" question="array" feedback-Closed="feedBack.icloseFeedBack" conv-Object="openConversation" submit-Feedback="feedBackSave()" close-Callback="closeCallBack()"></feedback-Page>
                     </div>
-
 
                     <div class="conversationPanel">
                         <div class="conversationPanelDiv">
@@ -189,7 +189,7 @@
                         </div>
                     </div>
                     <div class="communicationPanel">
-                        <div class="chatParent" style="height: 90%;">
+                        <div class="chatParent">
                             <div class="chatHeader">
                                 <div class="chatStrongHeader">
                                     <div class="chatHalfContainer">
@@ -238,6 +238,9 @@
 
                         </div>
                     </div>
+                </div>
+                <div class="applicationBottomStrip">
+                    <bottom-main-strip></bottom-main-strip>
                 </div>
             </div>
         </div>

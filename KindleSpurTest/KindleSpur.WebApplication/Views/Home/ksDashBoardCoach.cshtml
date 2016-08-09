@@ -47,7 +47,7 @@
                     <div class="homeLabelInChat" style="height:7%;display: flex;border-bottom:1px solid lightgray;">
                         <h5 class="fontClass" style="font-size: 16px;margin-left:2%;">NOTIFICATIONS</h5>
                     </div>
-                    <div ng-show="conversationListNew.length == 0" class="topicHeadingPlaceholdr">
+                    <div ng-show="conversationListNew.length == 0" style="height:87%;" class="topicHeadingPlaceholdr">
                         <h5 style="color:gray;margin: auto;font-size: 14px;" class="leftSideMenuLable fontClass">
                             NO CONVERSATIONS
                         </h5>
@@ -75,7 +75,7 @@
                             </div>
                         </div>
                         <div class="communicationPanel">
-                            <div class="chatParent" style="height: 90%;">
+                            <div class="chatParent">
                                 <div class="chatHeader">
                                     <div class="chatStrongHeader">
                                         <div class="chatHalfContainer">
@@ -120,51 +120,53 @@
 
                                     </div>
                                 </div>
+                              </div>
                             </div>
-
-                        </div>
+                        </div>                        
                     </div>
-                </div>
-           </div>
-            <div class="modal fade" id="myMeetingSchedular" tabindex="-1" role="dialog" aria-labelledby="myMeetingSchedularLabel">
-                <div class="modal-dialog">
-                    <div class="modal-content SchedularContent">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        </div>
-                        <div class="modal-body SchedularBody">
-                            <div>
-                                <textarea style="width: 100%;" placeholder="Subject Name" ng-model="MeetingSchedular.Subject" required></textarea>
+                    <div class="modal fade" id="myMeetingSchedular" tabindex="-1" role="dialog" aria-labelledby="myMeetingSchedularLabel">
+                        <div class="modal-dialog">
+                        <div class="modal-content SchedularContent">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                             </div>
-                            <div>
-                                <h4 style="width: 100%;" class="notificationWizName">Meeting schedule with <span class="SchedularProfile"></span>  <span style="text-transform: uppercase;">{{ReceiverName}}</span></h4>
-                            </div>
-                            <div>
-                                <div style="float: left; width: 40%; ">Date <input type="date" ng-model="MeetingSchedular.MeetingDate" required /></div>
-                                <div style="float: left; width: 25%; ">From <input type="time" ng-model="MeetingSchedular.TimeFrom" required /></div>
-                                <div style="float: left; width: 25%; ">To <input type="time" ng-model="MeetingSchedular.TimeTo" required /></div>
-                            </div>
-                            <div>
-                                <div style="float: left; width: 50%; ">
-                                    <fieldset data-role="controlgroup" data-type="horizontal">
-                                        <input type="radio" name="platformType" id="Skype" value="Skype" ng-model="MeetingSchedular.PlatformType" required>
-                                        <label for="Skype">Skype</label>
-                                        <input type="radio" name="platformType" id="Hangout" value="Hangout" ng-model="MeetingSchedular.PlatformType" required>
-                                        <label for="Hangout">Hangout</label>
-                                        <input type="radio" name="platformType" id="Other" value="Other" ng-model="MeetingSchedular.PlatformType" required>
-                                        <label for="Other">Other</label>
-                                    </fieldset>
+                            <div class="modal-body SchedularBody">
+                                <div>
+                                    <textarea style="width: 100%;" placeholder="Subject Name" ng-model="MeetingSchedular.Subject" required></textarea>
                                 </div>
-                                <div style="float: left; width: 50%; "><input type="text" placeholder="Mention Platform" ng-model="MeetingSchedular.UserId" required /></div>
+                                <div>
+                                    <h4 style="width: 100%;" class="notificationWizName">Meeting schedule with <span class="SchedularProfile"></span>  <span style="text-transform: uppercase;">{{ReceiverName}}</span></h4>
+                                </div>
+                                <div>
+                                    <div style="float: left; width: 40%; ">Date <input type="date" ng-model="MeetingSchedular.MeetingDate" required /></div>
+                                    <div style="float: left; width: 25%; ">From <input type="time" ng-model="MeetingSchedular.TimeFrom" required /></div>
+                                    <div style="float: left; width: 25%; ">To <input type="time" ng-model="MeetingSchedular.TimeTo" required /></div>
+                                </div>
+                                <div>
+                                    <div style="float: left; width: 50%; ">
+                                        <fieldset data-role="controlgroup" data-type="horizontal">
+                                            <input type="radio" name="platformType" id="Skype" value="Skype" ng-model="MeetingSchedular.PlatformType" required>
+                                            <label for="Skype">Skype</label>
+                                            <input type="radio" name="platformType" id="Hangout" value="Hangout" ng-model="MeetingSchedular.PlatformType" required>
+                                            <label for="Hangout">Hangout</label>
+                                            <input type="radio" name="platformType" id="Other" value="Other" ng-model="MeetingSchedular.PlatformType" required>
+                                            <label for="Other">Other</label>
+                                        </fieldset>
+                                    </div>
+                                    <div style="float: left; width: 50%; "><input type="text" placeholder="Mention Platform" ng-model="MeetingSchedular.UserId" required /></div>
+                                </div>
                             </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="submit" class="Schedular" ng-click="saveSchedular(false);">Send</button>
-                            @*<button type="button" class="btn btn-primary">Cancel</button>*@
+                            <div class="modal-footer">
+                                <button type="submit" class="Schedular" ng-click="saveSchedular(false);">Send</button>
+                                @*<button type="button" class="btn btn-primary">Cancel</button>*@
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
+                    <div class="applicationBottomStrip">
+                        <bottom-main-strip></bottom-main-strip>
+                    </div>
+            </div>            
             @*Coaching Status - 1 *@
             <div class="parentRoleDetailRight" ng-if="selectedMenu == '1'">
 

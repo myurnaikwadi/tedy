@@ -295,7 +295,7 @@
     $scope.feedCategoryArray = [];
     $scope.getRssFeedData = function () {
         //feedback
-        $scope.feedCategoryArray = [];
+      //  $scope.feedCategoryArray = [];
         serverCommunication.getMyMenteeSelection({
             successCallBack: function (iObj) {
                 console.error('In getMySelection', iObj);

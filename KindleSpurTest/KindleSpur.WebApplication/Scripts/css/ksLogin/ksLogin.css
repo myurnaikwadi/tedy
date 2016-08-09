@@ -178,7 +178,6 @@ float: left;
     opacity : 0.9;
     margin: 5px;
     cursor:pointer;
-    padding: 31px 0px 0px 0px;
 }
 .invalidEmailNotify{
 	border:1px solid #FF0100;

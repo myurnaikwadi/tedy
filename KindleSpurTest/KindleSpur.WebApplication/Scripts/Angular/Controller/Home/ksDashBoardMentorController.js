@@ -184,7 +184,7 @@
     $scope.feedCategoryArray = [];
     $scope.getRssFeedData = function () {
         //feedback
-        $scope.feedCategoryArray = [];
+      //  $scope.feedCategoryArray = [];
         serverCommunication.getMyMentorSelection({  
             successCallBack: function (iObj) {
                 console.error('In getMySelection', iObj);
