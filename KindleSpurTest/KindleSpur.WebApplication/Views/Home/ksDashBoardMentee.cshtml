@@ -98,13 +98,22 @@
             <div class="parentRoleDetailRight" ng-if="selectedMenu == '0'">
                 <div class="userNotificationParent">
                     <div class="userRoleWizardParent">
-                        <div class="notificationWiz" ng-repeat="notificationDash in notificationData">
-                            <div>
-                                <h6 class="notificationWizReason">YOU HAVE COACHING INVITE FROM</h6>
-                                <h4 class="notificationWizName" style="text-transform: uppercase;">{{notificationDash.FirstName}} {{notificationDash.LastName}}</h4>
+                        <div class="notificationWiz" ng-repeat="notification in notificationData">
+                            <div ng-if="true" style=" height 100%; width 100%;">
+                                <h6 class="notificationWizReason" style="margin: 8px;margin-bottom: 6px;">{{ notification.ConversationType | uppercase }} INVITE {{notification.skill | uppercase }} FROM </h6>
+                                <h5 class="notificationWizName" style="margin: 0 10px;width : 42%;">{{notification.FirstName+" "+notification.LastName}}</h5>
+                                @*<h6 class="notificationWizReason">FOR SKILL {{notification.skill}}</h6>*@
                                 <div class="notificationWizButton">
-                                    <button class="btnAcceptReject" ng-click="notificationData.splice($index,1);updateConversation(false, loggedEmail, notificationDash.EmailAddress,notificationDash)">R</button>
-                                    <button class="btnAcceptReject" ng-click="notificationData.splice($index,1);updateConversation(true, loggedEmail, notificationDash.EmailAddress,notificationDash)">A</button>
+                                    <button style="font-size: 10px;padding: 5px;    margin: auto;font-weight: bolder;" class="signupButton fontClass" ng-click="notificationData.splice($index,1);updateConversation(true, loggedEmail, notification.EmailAddress,notification)">ACCEPT</button>
+                                    <button style="font-size: 10px;padding: 5px;    margin: auto;font-weight: bolder;" class="signupButton fontClass" ng-click="notificationData.splice($index,1);updateConversation(false, loggedEmail, notification.EmailAddress,notification)">DECLINE</button>
+                                </div>
+                            </div>
+                            <div ng-class="{ mentorThemeColor : notification.role =='mentor',coacheeThemeColor : notification.role =='coachee'}" style="float: left;width: 100%;height: 100%;" ng-if="notification.notificationType == '2'">
+                                <div class="notificationWizReason" style="margin :4%;border:0px;color: white; padding : 0;">{{notification.name}}</div>
+                                <div class="notificationTimingPanel">
+                                    <h6 class="notificationTiming notificationDate">{{notification.meetingDate}}</h6>
+                                    <h6 class="notificationTiming notificationTime">{{notification.meetingTime}}</h6>
+                                    <h6 style="float:right;    margin-right: 8%;" class="notificationTiming notificationDiff">{{notification.meetingTimeDiff}}</h6>
                                 </div>
                             </div>
                         </div>

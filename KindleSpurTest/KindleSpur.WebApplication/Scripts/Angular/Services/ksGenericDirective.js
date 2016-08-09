@@ -1522,12 +1522,12 @@ app.directive('feedbackPage', function ($state, serverCommunication, $timeout, $
                 // return
                 var _counter = Math.floor((Math.random() * 10) + 1);
                 var _id = $rootScope.loggedDetail.EmailAddress + (Date.now()) + _counter;
-                var _rating = 1;
-                for (var _key in $scope.feedBack.feedBackDetails) {
-                    if ($scope.feedBack.feedBackDetails[_key].sessionRating) {
-                        _rating = $scope.feedBack.feedBackDetails[_key].actionValue;
-                    }
-                }
+                var _rating = 5;
+                //for (var _key in $scope.feedBack.feedBackDetails) {
+                //    if ($scope.feedBack.feedBackDetails[_key].sessionRating) {
+                //        _rating = $scope.feedBack.feedBackDetails[_key].actionValue;
+                //    }
+                //}
                 console.error(_rating)
                 serverCommunication.sendFeedback({
                     role: $scope.role,

@@ -135,11 +135,9 @@
     float: left;
     position: relative;
     display: table;
-    width: 260px;
+    width: 265px;
     height: 75px;
     overflow-x: auto;
-    margin-right: 2%;
-    margin-top: 3%;
 }
 .notificationWizReason {
     float: left;
@@ -161,7 +159,8 @@
 }
 .notificationWizButton{
 	float: left;
-	width: 34%;
+	width: 43%;
+    display:flex;
 }
 .signupButton {
 	background-color:#D60500;

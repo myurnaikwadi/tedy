@@ -11,12 +11,12 @@
             </div>*@
             <div class="userRoleWizardParentMain">
                 <div class="userRoleWizardParent" style="display: inline-flex;overflow: auto;float:left; overflow-x:scroll; overflow-y:hidden;width:98%;margin-left: -16px;">
-                    <div class="notificationWiz" ng-repeat="notification in notificationsArr">
+                    <div class="notificationWiz" style="display:none;" ng-repeat="notification in notificationsArr">
                         <div ng-if="notification.notificationType == '1'">
                             <h6 class="notificationWizReason">{{notification.name}}</h6>
                             <h4 class="notificationWizName">{{notification.assignPerson}}</h4>
                             <div class="notificationWizButton">
-                                <button style="width:100%;font-size: 10px;padding: 5px;font-weight: bolder;" class="signupButton fontClass">ACCEPT</button>
+                                <button style="width:100%;font-size: 10px;padding: 5px;    margin: auto;font-weight: bolder;" class="signupButton fontClass">ACCEPT</button>
                             </div>
                         </div>
                         <div ng-class="{ mentorThemeColor : notification.role =='mentor',coacheeThemeColor : notification.role =='coachee'}" style="float: left;width: 100%;height: 100%;" ng-if="notification.notificationType == '2'">
