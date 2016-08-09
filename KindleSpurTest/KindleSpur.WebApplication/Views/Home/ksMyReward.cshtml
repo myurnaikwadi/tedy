@@ -144,7 +144,7 @@
                 <h5 class="fontClass" style="font-weight: 700;">REDEEMED CARDS</h5>
             </div>
             <div class="myRewardsPointParent">
-                <div ng-show="myRewardsArray.length >0" class="myRewardsPointRepeatParent" ng-class="{ psrRewardColor : myRewards.PSR == true}" ng-repeat="myRewards in rewardsPoints.myRewardsArray">
+                <div ng-show="rewardsPoints.myRewardsArray.length >0" class="myRewardsPointRepeatParent" ng-class="{ psrRewardColor : myRewards.PSR == true}" ng-repeat="myRewards in rewardsPoints.myRewardsArray">
                     <div class="medalIconsMyReward">
                         <img ng-show="myRewards.PSR == true" style="float: left;height: 100%;" src="~/Images/psrPlant.png">
                         <img style="float: right;height: 100%;" src="~/Images/normalMedal.png">

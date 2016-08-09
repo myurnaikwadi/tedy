@@ -146,6 +146,7 @@ app.controller('ksLoginController', ['$scope', 'authentification', '$location', 
     $scope.loginClick = function () {
         //$state.go('landingPage');
         //return
+    //  debugger
         if (($scope.loginDetails.emailAddress == '')||($scope.loginDetails.password == '')) {
             //alert('Please enter emailAddress or Password')
             //formatType: '1'
@@ -164,7 +165,7 @@ app.controller('ksLoginController', ['$scope', 'authentification', '$location', 
                 $scope.displayAlert.message = 'Please enter password ';
                 $scope.displayAlert.formatType = '2';
             }
-           return
+            return;
         }
         else if (($scope.loginDetails.password == '')) {
             if ($scope.loginDetails.emailAddress == '') {
@@ -177,19 +178,16 @@ app.controller('ksLoginController', ['$scope', 'authentification', '$location', 
                 $scope.displayAlert.message = 'Please enter password ';
                 $scope.displayAlert.formatType = '2';
             }
+            return;
 
-        }
-
-
-
+        }     
 
         var _object = {
             EmailAddress: $scope.loginDetails.emailAddress,
             Password: $scope.loginDetails.password,
         }
         console.error(_object)
-
-        authentification.login({ signupObject: _object, successCallBack: _successLoginCallBack, failureCallBack: _failureLoginCallBack });
+         authentification.login({ signupObject: _object, successCallBack: _successLoginCallBack, failureCallBack: _failureLoginCallBack });
     };
 
     $scope.cancelClick = function () {
@@ -291,6 +289,14 @@ app.controller('ksLoginController', ['$scope', 'authentification', '$location', 
             $scope.displayAlert.formatType = '2';
             return
         }
+
+
+
+      
+            $scope.displayAlert.showAlert = true;
+            $scope.displayAlert.message = 'Account activation link sent to your registered email address';
+            $scope.displayAlert.formatType = '1';
+        
         var _object = {
             FirstName: $scope.signupDetails.FirstName,
             LastName: $scope.signupDetails.LastName,
