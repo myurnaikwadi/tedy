@@ -213,8 +213,8 @@ namespace KindleSpur.WebApplication.Controllers
             CoachOrMentorRepository _coachOrMentorRepo = new CoachOrMentorRepository();
             _coachOrMentorRepo.GetRewardPoints(EmailAddress, ref reward);
 
-            reward.CoacheeRewardPoints = 0;
-            reward.MenteeRewardPoints = 0;
+            CoacheeOrMenteeRepository _coacheeOrMenteeRepo = new CoacheeOrMenteeRepository();
+            _coacheeOrMenteeRepo.GetRewardPoints(EmailAddress, ref reward);
             return reward.ToJson();
         }
 
