@@ -104,6 +104,7 @@ overflow: hidden;
 	float:left;
         background: #D0D0D0;
 	border-bottom: 2px solid white;
+   font-family: Roboto-Regular !important;
 }
 .activityNameDivHide{
 	width:100%;
@@ -229,8 +230,8 @@ float: left;
     background: transparent;
     color: white;
    
-    font-size: 16.5px !important;
-    font-weight: 700 !important;
+    font-size: 14px !important;
+    font-weight: 400 !important;
     letter-spacing: 2px;
     border-bottom: 1px solid #D2D2D2;
 }

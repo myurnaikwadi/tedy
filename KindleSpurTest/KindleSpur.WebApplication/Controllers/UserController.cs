@@ -68,10 +68,11 @@ namespace KindleSpur.WebApplication.Controllers
             try
             {
                 User u = (User)_repo.GetUserDetail(signupObject.EmailAddress);
-                u.FirstName = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(u.FirstName.ToLower());
-                u.LastName = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(u.LastName.ToLower());
+               
                 if (u != null)
                 {
+                    u.FirstName = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(u.FirstName.ToLower());
+                    u.LastName = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(u.LastName.ToLower());
                     string uri = Request.Url.AbsoluteUri.Replace("/User/ForgotPasswordEmail", "/User/PasswordPromp?UserId=" + u.Id);
                     EmailNotification.SendEmailForgotPassword(u, uri);
                 }
