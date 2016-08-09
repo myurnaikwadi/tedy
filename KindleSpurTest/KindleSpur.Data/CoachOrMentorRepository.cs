@@ -58,11 +58,17 @@ namespace KindleSpur.Data
             return _transactionStatus;
         }
 
-        public int addFeedback(string UserId, Feedback feedback)
+        public int addFeedback(string UserId, Feedback feedback, string Role)
         {
             bool _transactionStatus = false;
+            CoachOrMentor entity = new CoachOrMentor();
             try {
-                CoachOrMentor entity = _coachOrMentorCollection.FindOneAs<CoachOrMentor>(Query.And(Query.EQ("UserId", feedback.Sender), Query.EQ("Role", "Coach")));
+               // CoachOrMentor entity = _coachOrMentorCollection.FindOneAs<CoachOrMentor>(Query.And(Query.EQ("UserId", feedback.Sender), Query.EQ("Role", "Coach")));
+                if (Role == "Coach")
+                    entity = _coachOrMentorCollection.FindOneAs<CoachOrMentor>(Query.And(Query.EQ("UserId", feedback.Sender), Query.EQ("Role", Role)));
+                else if (Role == "Mentor")
+                    entity = _coachOrMentorCollection.FindOneAs<CoachOrMentor>(Query.And(Query.EQ("UserId", feedback.Sender), Query.EQ("Role", Role)));
+
                 entity.FeedbackPoints += feedback.customerSatisfactionRating;
 
                 if (entity.Feedbacks == null)

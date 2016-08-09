@@ -73,7 +73,7 @@ namespace KindleSpur.WebApplication.Controllers
         public int SaveFeedBack(Feedback feedback)
         {
             CoachOrMentorRepository _coachRepo = new CoachOrMentorRepository();
-            return _coachRepo.addFeedback(UserId, feedback);
+            return _coachRepo.addFeedback(UserId, feedback, "Coach");
 
         }
         public ActionResult GetCoachingStatus()
