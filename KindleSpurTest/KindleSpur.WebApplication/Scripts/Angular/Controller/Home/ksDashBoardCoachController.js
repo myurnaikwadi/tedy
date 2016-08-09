@@ -623,7 +623,7 @@
     $scope.init = function () {
         console.error($scope.passedData)
         if ($scope.passedData && $scope.passedData.param) {
-            $scope.selectedMenu = '6';
+            $scope.selectedMenu = '2';
         } else {
             $scope.selectedMenu = '0';
             // $scope.conversationStartData($scope.loggedEmail);

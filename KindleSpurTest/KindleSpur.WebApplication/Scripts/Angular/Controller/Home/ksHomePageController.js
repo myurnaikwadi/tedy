@@ -10,7 +10,7 @@
     'It helps me set a definite and realistic goal' +
     'It prepares me for the desirable change/s to meet that goal' +
     'In the process, I grow as a better person, more open, more confident and of course, more successful than I was before' +
-    'The Mentor-Mentee or Coach-Coachee are Unique relationships and the beauty of these relationships is that,these are always mutually nurturing and rewarding !';
+   'The Mentor-Mentee or Coach-Coachee are Unique relationships and the beauty of these relationships is that,these are always mutually nurturing and rewarding !';
     $scope.fff = function () {
         console.error('222')
         $('[data-toggle="popover"]').popover();
