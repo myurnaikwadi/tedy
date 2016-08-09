@@ -301,7 +301,7 @@ app.controller('ksLoginController', ['$scope', 'authentification', '$location', 
         if ($scope.signupDetails.EmailAddress == '') {
             // alert('Please enter emailAddress')
             $scope.displayAlert.showAlert = true;
-            $scope.displayAlert.message = 'Please enter emailAddress';
+            $scope.displayAlert.message = 'Please enter email Address';
             $scope.displayAlert.formatType = '2';
             return
         }

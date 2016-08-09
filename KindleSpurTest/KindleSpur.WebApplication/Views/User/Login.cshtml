@@ -1,6 +1,8 @@
-﻿ <div class="parentBody" ng-controller="ksLoginController">
-   
+﻿ <div class="parentBody" ng-controller="ksLoginController">   
               <div class="applicationTopStrip">
+                  <div class="applicationLogo">
+                      <img ng-click="navigateAsPerRole(4)" class="genericPointerClass" src="~/Images/icons/kindlespurlogo.png" alt="logo" style="height: auto; width: 72%; margin: auto;" />
+                  </div>
                   <div class="hiddenErrorNotificationClass" ng-class="{ 'showErrorNotificationClass' : displayAlert.showAlert  == true}">            
                         <div class="alert-message success" ng-show="displayAlert.formatType == '1'">
                             <a class="close" href="#" ng-click= "displayAlert.showAlert = false">×</a>
@@ -74,29 +76,7 @@
               </div>
               <div class="applicationBottomStrip">
                   <bottom-Main-Strip></bottom-Main-Strip>
-              </div>
-     
-</div>
-
-
-
-
-<div class="modal fade" id="forgotPassword" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <p>Forgot your Password? </p>
-                <button class="close" data-dissmiss="modal">&times;</button>
-            </div>
-            <div class="modal-body">
-                <p>hello world</p>
-            </div>
-            <div class="modal-footer">
-                <a class="btn btn-primary" data-dissmiss="modal">Submit</a>
-                <a class="btn btn-default" data-dissmiss="modal">Close</a>
-            </div>
-        </div>
-    </div>
+              </div>     
 </div>
 <script src="~/Scripts/jquery-1.10.2.min.js"></script>
 <script src="~/Scripts/jquery-ui-1.10.4.custom.js"></script>
