@@ -263,7 +263,10 @@ app.directive('myReward', function ($state, serverCommunication, $rootScope) {
                 });
                
             };
-            
+            $scope.loadFeedOnNextTab = function (iFeed) {
+                console.error('http://www.brainhq.com/')
+                window.open('http://www.brainhq.com/');
+            };
           //  $scope.redeemAction
             $scope.feedBack.closeFeedBackPopup = function () {
                 $scope.feedBack.redeemPoint = false;
