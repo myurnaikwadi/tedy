@@ -33,7 +33,7 @@ app.directive('focusMe', function ($timeout, $parse) {
     };
 });
 
-app.directive('topMainStrip', function ($state) {
+app.directive('topMainStrip', function ($state, $rootScope) {
     return {
         scope: {
             notification: '@'
@@ -41,14 +41,16 @@ app.directive('topMainStrip', function ($state) {
         templateUrl: '/Home/ksTopMainStrip',
         //scope: true,   // optionally create a child scope
         link: function (scope, element, attrs) {
-
+            scope.loggedDetail  = $rootScope.loggedDetail;
             scope.selectedRole = 0;
             if (scope.notification == 'false') {
                 scope.notification = false;
             } else {
                 scope.notification = true;
             }
-
+            scope.navigateToProfile = function () {
+                $state.go('profile');
+            };
             scope.logout = function () {
                 console.error(IN.User)
                 if (IN.User) IN.User.logout();

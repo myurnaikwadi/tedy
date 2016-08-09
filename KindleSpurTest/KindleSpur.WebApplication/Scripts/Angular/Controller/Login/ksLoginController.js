@@ -54,7 +54,7 @@ app.controller('ksLoginController', ['$scope', 'authentification', '$location', 
             //alert();
             $scope.displayAlert.showAlert = true;
             $scope.displayAlert.message = iObject.data.Message;
-            $scope.displayAlert.formatType = '1';
+            $scope.displayAlert.formatType = '2 ';
             //to access in html displayAlert.showAlert 
             //$scope.displayAlert.showAlert = true;
             //$scope.displayAlert.message = iObject.data.Message;

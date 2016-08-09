@@ -5,8 +5,8 @@
     <div class="applicationMiddleStripMain">
         <div class="parentRoleDashboard">
             <div class="parentRoleMenu mentorThemeColor">
-                <div class="profileViewMode genericPointerClass">
-                    <div class="profileImagePart"></div>
+                <div class="profileViewMode genericPointerClass" ng-click="navigateToProfile()">
+                    <div class="profileImagePart" style="background: url({{ loggedDetail.Photo ?  loggedDetail.Photo  : '../../../Images/icons/If no Profile photo.png'}}) no-repeat;  "></div>
                     <div class="profileNamePart fontClass genericPointerClass">WELCOME {{(loggedDetail.FirstName) | uppercase }}</div>
                 </div>
                 <div class="leftSideMenuMainDashBoard">

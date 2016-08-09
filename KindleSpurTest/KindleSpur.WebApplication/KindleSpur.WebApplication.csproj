@@ -274,11 +274,11 @@
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Images\1.png" />
     <Content Include="Images\add.png" />
     <Content Include="Images\addBold.png" />
     <Content Include="Images\camera.png" />
     <Content Include="Images\cancel.png" />
-    <Content Include="Images\coaching 2.png" />
     <Content Include="Images\Coaching1.png" />
     <Content Include="Images\communication\betterCompetitors.png" />
     <Content Include="Images\communication\bigSelectedStar.png" />
@@ -412,7 +412,7 @@
     <Content Include="Scripts\css\ksValue\ksValueFeeds.css" />
     <Content Include="Scripts\d3.v3.js" />
     <Content Include="Scripts\d3.v3.min.js" />
-    <Content Include="fonts\Roboto-Regular.ttf" />    
+    <Content Include="fonts\Roboto-Regular.ttf" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\css\ksDashBoard\ksDashBoard.css" />
     <Content Include="Scripts\css\ksDashBoard\ksDashBoardCoach.css" />
@@ -513,16 +513,7 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>True</UseIIS>
-          <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>6396</DevelopmentServerPort>
-          <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:6396/</IISUrl>
-          <NTLMAuthentication>False</NTLMAuthentication>
-          <UseCustomServer>False</UseCustomServer>
-          <CustomServerUrl>
-          </CustomServerUrl>
-          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+          <SaveServerSettingsInUserFile>True</SaveServerSettingsInUserFile>
         </WebProjectProperties>
       </FlavorProperties>
     </VisualStudio>
