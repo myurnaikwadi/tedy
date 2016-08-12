@@ -133,13 +133,12 @@
 .notificationWiz{
     border: 1px solid lightgray;
     float: left;
+    margin-right: 7px;
     position: relative;
     display: table;
-    width: 260px;
+    width: 265px;
     height: 75px;
     overflow-x: auto;
-    margin-right: 2%;
-    margin-top: 3%;
 }
 .notificationWizReason {
     float: left;
@@ -161,7 +160,8 @@
 }
 .notificationWizButton{
 	float: left;
-	width: 34%;
+	width: 43%;
+    display:flex;
 }
 .signupButton {
 	background-color:#D60500;
@@ -395,21 +395,21 @@ width: 20%;
     padding-left: 0px;
 }
 .col-md-4{
-position: relative;
-    min-height: 1px;
+     position: relative;
+     min-height: 1px;
      padding-right: 0px; 
      padding-left: 0px; 
-    }
+}
 .roleImage{
     float: left;
-     margin-top: 2%;
+  margin-top: 2%;
      height:96px;
 }
 .TrendingTopicName{
     height:15px; 
     font-size: 9px;
     font-weight:bold;
-     text-decoration: underline;
+    text-decoration: underline;
 }
 .TrandingTopicDescription{
     height:30px;

@@ -54,7 +54,7 @@ app.controller('ksLoginController', ['$scope', 'authentification', '$location', 
             //alert();
             $scope.displayAlert.showAlert = true;
             $scope.displayAlert.message = iObject.data.Message;
-            $scope.displayAlert.formatType = '2 ';
+            $scope.displayAlert.formatType = '1 ';
             //to access in html displayAlert.showAlert 
             //$scope.displayAlert.showAlert = true;
             //$scope.displayAlert.message = iObject.data.Message;
@@ -87,13 +87,16 @@ app.controller('ksLoginController', ['$scope', 'authentification', '$location', 
     };
 
     var _successCallBack = function (iObj) {
-        console.error('In _successCallBack');
+        console.error('In _successCallBack',iObj);
         $scope.signupDetails.FirstName = "";
         $scope.signupDetails.LastName = "";
         $scope.signupDetails.EmailAddress = "";
 
         if (!iObj.data.Result) {
-            alert(iObj.data.Message);
+            $scope.displayAlert.showAlert = true;
+            $scope.displayAlert.message = iObj.data.Message;
+            $scope.displayAlert.formatType = '1';
+          //  alert(iObj.data.Message);
         }
         //$rootscope.$broadcast('alertBox', {
         //        showAlertBox: true,
@@ -143,12 +146,13 @@ app.controller('ksLoginController', ['$scope', 'authentification', '$location', 
     $scope.loginClick = function () {
         //$state.go('landingPage');
         //return
+    //  debugger
         if (($scope.loginDetails.emailAddress == '')||($scope.loginDetails.password == '')) {
             //alert('Please enter emailAddress or Password')
             //formatType: '1'
             if ($scope.loginDetails.emailAddress == '' && $scope.loginDetails.password == '') {
                 $scope.displayAlert.showAlert = true;
-                $scope.displayAlert.message = 'Please enter emailAddress or Password ';
+                $scope.displayAlert.message = 'Please Enter Email Address Or Password ';
                 $scope.displayAlert.formatType = '2';
             }
             else if ($scope.loginDetails.emailAddress == '') {
@@ -161,7 +165,7 @@ app.controller('ksLoginController', ['$scope', 'authentification', '$location', 
                 $scope.displayAlert.message = 'Please enter password ';
                 $scope.displayAlert.formatType = '2';
             }
-           return
+            return;
         }
         else if (($scope.loginDetails.password == '')) {
             if ($scope.loginDetails.emailAddress == '') {
@@ -174,19 +178,16 @@ app.controller('ksLoginController', ['$scope', 'authentification', '$location', 
                 $scope.displayAlert.message = 'Please enter password ';
                 $scope.displayAlert.formatType = '2';
             }
+            return;
 
-        }
-
-
-
+        }     
 
         var _object = {
             EmailAddress: $scope.loginDetails.emailAddress,
             Password: $scope.loginDetails.password,
         }
         console.error(_object)
-
-        authentification.login({ signupObject: _object, successCallBack: _successLoginCallBack, failureCallBack: _failureLoginCallBack });
+         authentification.login({ signupObject: _object, successCallBack: _successLoginCallBack, failureCallBack: _failureLoginCallBack });
     };
 
     $scope.cancelClick = function () {
@@ -236,17 +237,17 @@ app.controller('ksLoginController', ['$scope', 'authentification', '$location', 
             if ($scope.signupDetails.LastName == '' && $scope.signupDetails.EmailAddress == '') {
                 //alert('Please enter First,last name and Email address')
                 $scope.displayAlert.showAlert = true;
-                $scope.displayAlert.message = 'Please Enter First,Last Name and Email address';
+                $scope.displayAlert.message = 'Please Enter First,Last Name and Email Address';
                 $scope.displayAlert.formatType = '2';
 
             } else if ($scope.signupDetails.FirstName == '' && $scope.signupDetails.LastName == '') {
                 $scope.displayAlert.showAlert = true;
-                $scope.displayAlert.message = 'Please Enter First Name and Last Name';
+                $scope.displayAlert.message = 'Please Enter First Name and Last Name. ';
                 $scope.displayAlert.formatType = '2';
             }
             else if ($scope.signupDetails.FirstName == '' && $scope.signupDetails.EmailAddress == '') {
                 $scope.displayAlert.showAlert = true;
-                $scope.displayAlert.message = 'Please Enter First Name and EmailAddress';
+                $scope.displayAlert.message = 'Please Enter First Name and Email Address. ';
                 $scope.displayAlert.formatType = '2';
             }
             else if ($scope.signupDetails.FirstName == '') {
@@ -288,6 +289,14 @@ app.controller('ksLoginController', ['$scope', 'authentification', '$location', 
             $scope.displayAlert.formatType = '2';
             return
         }
+
+
+
+      
+            $scope.displayAlert.showAlert = true;
+            $scope.displayAlert.message = 'Account activation link sent to your registered email address';
+            $scope.displayAlert.formatType = '1';
+        
         var _object = {
             FirstName: $scope.signupDetails.FirstName,
             LastName: $scope.signupDetails.LastName,
@@ -301,7 +310,7 @@ app.controller('ksLoginController', ['$scope', 'authentification', '$location', 
         if ($scope.signupDetails.EmailAddress == '') {
             // alert('Please enter emailAddress')
             $scope.displayAlert.showAlert = true;
-            $scope.displayAlert.message = 'Please enter emailAddress';
+            $scope.displayAlert.message = 'Please enter email Address';
             $scope.displayAlert.formatType = '2';
             return
         }

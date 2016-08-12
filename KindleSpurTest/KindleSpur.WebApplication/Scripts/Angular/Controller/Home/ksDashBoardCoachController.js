@@ -87,7 +87,7 @@
     $scope.feedCategoryArray =[];
     $scope.getRssFeedData = function () {
         //feedback
-        $scope.feedCategoryArray = [];
+        
         serverCommunication.getMySelection({
             successCallBack: function (iObj) {
                 console.error('In getMySelection', iObj);

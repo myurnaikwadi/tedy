@@ -35,13 +35,22 @@
                 <div class="userNotificationParent">
                     <div class="userRoleWizardParent" style="display: inline-flex;overflow: auto;float:left; overflow-x:scroll; overflow-y:hidden;width:96%;margin-left:2%;">
 
-                        <div class="notificationWiz" ng-repeat="notificationDash in notificationData">
-                            <div>
-                                <h6 class="notificationWizReason">YOU HAVE COACHING INVITE FROM</h6>
-                                <h4 class="notificationWizName" style="text-transform: uppercase;">{{notificationDash.FirstName}} {{notificationDash.LastName}}</h4>
+                        <div class="notificationWiz" ng-repeat="notification in notificationData">
+                            <div ng-if="true" style=" height 100%; width 100%;">
+                                <h6 class="notificationWizReason" style="margin: 8px;margin-bottom: 6px;">{{ notification.ConversationType | uppercase }} INVITE {{notification.skill | uppercase }} FROM </h6>
+                                <h5 class="notificationWizName" style="margin: 0 10px;width : 42%;">{{notification.FirstName+" "+notification.LastName}}</h5>
+                                @*<h6 class="notificationWizReason">FOR SKILL {{notification.skill}}</h6>*@
                                 <div class="notificationWizButton">
-                                    <button class="btnAcceptReject" ng-click="notificationData.splice($index,1);updateConversation(false, loggedEmail, notificationDash.EmailAddress,notificationDash)">R</button>
-                                    <button class="btnAcceptReject" ng-click="notificationData.splice($index,1);updateConversation(true, loggedEmail, notificationDash.EmailAddress,notificationDash)">A</button>
+                                    <button style="font-size: 10px;padding: 5px;    margin: auto;font-weight: bolder;" class="signupButton fontClass" ng-click="notificationData.splice($index,1);updateConversation(true, loggedEmail, notification.EmailAddress,notification)">ACCEPT</button>
+                                    <button style="font-size: 10px;padding: 5px;    margin: auto;font-weight: bolder;" class="signupButton fontClass" ng-click="notificationData.splice($index,1);updateConversation(false, loggedEmail, notification.EmailAddress,notification)">DECLINE</button>
+                                </div>
+                            </div>
+                            <div ng-class="{ mentorThemeColor : notification.role =='mentor',coacheeThemeColor : notification.role =='coachee'}" style="float: left;width: 100%;height: 100%;" ng-if="notification.notificationType == '2'">
+                                <div class="notificationWizReason" style="margin :4%;border:0px;color: white; padding : 0;">{{notification.name}}</div>
+                                <div class="notificationTimingPanel">
+                                    <h6 class="notificationTiming notificationDate">{{notification.meetingDate}}</h6>
+                                    <h6 class="notificationTiming notificationTime">{{notification.meetingTime}}</h6>
+                                    <h6 style="float:right;    margin-right: 8%;" class="notificationTiming notificationDiff">{{notification.meetingTimeDiff}}</h6>
                                 </div>
                             </div>
                         </div>
@@ -88,7 +97,7 @@
                     <div class="ctsParentMain">
                         <div class="ctsParentMainPanel">
                             <div class="ctsCategoryHeading row">
-                                <div class="homeLabelInChat" style="height:7%;border-bottom:1px solid lightgray;">
+                                <div class="homeLabelInChat" style="height:7%;">
                                     <h5 class="fontClass" style="font-size: 16px;">SEARCH COACH</h5>
                                 </div>
                                 <div class="col-md-2 search-mentor">
@@ -108,7 +117,7 @@
                                 </div>
                             </div>
                             <div class="ctsCategoryPanelMainPanel" style="overflow-y:scroll;">
-                                <h5 class="margin-small">Recommended Coaches</h5>
+                                <h5 class="margin-small">RECOMMENDED COACHES</h5>
                                 <div class="filterListContainer">
                                     <div class="mentor-list">
                                         <div class="row" style="margin:0px;">
@@ -151,9 +160,9 @@
                     <h5 class="fontClass" style="font-size: 16px;margin-left:2%;">NOTIFICATIONS</h5>
                 </div>
 
-                <div ng-show="conversationListNew.length == 0" class="topicHeadingPlaceholdr">
-                    <h5 style="color:gray;margin: auto;font-size: 30px;" class="leftSideMenuLable fontClass">
-                        No Conversations
+                <div ng-show="conversationListNew.length == 0" style="height:87%;" class="topicHeadingPlaceholdr">
+                    <h5 style="color:gray;margin: auto;font-size: 14px;" class="leftSideMenuLable fontClass">
+                        NO CONVERSATIONS
                     </h5>
                 </div>
                 <div class="communicationMainPanel" ng-hide="conversationListNew.length == 0">
@@ -166,9 +175,9 @@
                                 <div class="conversationListPanel genericPointerClass" ng-class="{ highlightedGrayClass : conversation.selectedConversation == true }">
                                     <div style="float:left; margin: auto auto;width: 85%; text-transform: uppercase;">
                                         <h5 style="margin:auto auto;margin-left: 0;font-size: large;float: left;width: 88%;    font-weight: 700;    font-size: 15px;">{{conversation.FirstName +" "+conversation.LastName+" - "+conversation.skill }}</h5>
-                                        <div class="applicationNotiCount" title="5" style="display:flex;float:left;text-align: center;height: 15px;width: 15px;">
+                                        @*<div class="applicationNotiCount" title="5" style="display:flex;float:left;text-align: center;height: 15px;width: 15px;">
                                             <h6 class="fontClass" style="font-size:10px;display:inline-block;text-align:center; text-overflow:clip; margin: auto auto;color:white;">5</h6>
-                                        </div>
+                                        </div>*@
                                     </div>
                                 </div>
                                 <div class="triangleArrowRight trangleOveRideBlack" ng-if="conversation.selectedConversation == true" style="float: left; margin-top: 9px;"></div>
@@ -176,7 +185,7 @@
                         </div>
                     </div>
                     <div class="communicationPanel">
-                        <div class="chatParent" style="height: 90%;">
+                        <div class="chatParent">
                             <div class="chatHeader">
                                 <div class="chatStrongHeader">
                                     <div class="chatHalfContainer">
@@ -185,7 +194,7 @@
                                         </span>
                                         <span ng-hide="openConversation.sessionClosed" class="chatHalfContainerSpanNxt">
                                             <h6 class="genericPointerClass" ng-click="askFeedBackFunc(true)">Close Session</h6>
-                                            <h6 class="genericPointerClass" ng-click="askFeedBackFunc(false)">Ask Feedback</h6>
+                                            <h6 class="genericPointerClass" ng-click="askFeedBackFunc(false)">Give Feedback</h6>
                                         </span>
                                     </div>
                                     <div class="chatHalfContainer">
@@ -267,7 +276,7 @@
            </div>
             @*Rss feed - 4*@
             <div class="parentRoleDetailRight" style="padding:1%;padding-bottom: 0;" ng-if="selectedMenu == '4'">
-                <rss-Feed ng-if="feedCategoryArray.length > 0" role="coachee" skill="feedCategoryArray"></rss-Feed>
+                <rss-Feed role="coachee" skill="feedCategoryArray"></rss-Feed>
             </div>
             @*Knowledge Garden - 1*@
             <div class="parentRoleDetailRight" style="padding:1%;padding-bottom: 0;" ng-if="selectedMenu == '1'">

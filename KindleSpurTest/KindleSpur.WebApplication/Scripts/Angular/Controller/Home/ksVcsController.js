@@ -240,15 +240,33 @@ app.directive('myReward', function ($state, serverCommunication, $rootScope) {
         templateUrl: '/Home/ksMyReward',
         //scope: true,   // optionally create a child scope
         link: function ($scope, element, attrs) {
+            window.ff = $scope;
             $scope.feedBack = {
                 redeemPoint: false,
                 redeemAction: {}
             }
             $scope.feedBack.redeemPointsClick = function () {
                 $scope.feedBack.closeFeedBackPopup();
-                $scope.init();
+              //  console.error($scope.feedBack.redeemAction)
+                serverCommunication.unlockGameCode({
+                    //   loggedUserDetails: $rootScope.loggedDetail,
+                    redeemAction: $scope.feedBack.redeemAction,
+                    successCallBack: function (iObj) {
+                        $scope.init();
+                        console.error('In successCallBack', iObj);
+
+                    },
+                    failureCallBack: function (iObj) {
+                        console.error('In failureCallBack', iObj);
+
+                    }
+                });
+               
             };
-            
+            $scope.loadFeedOnNextTab = function (iFeed) {
+                console.error('http://www.brainhq.com/')
+                window.open('http://www.brainhq.com/');
+            };
           //  $scope.redeemAction
             $scope.feedBack.closeFeedBackPopup = function () {
                 $scope.feedBack.redeemPoint = false;

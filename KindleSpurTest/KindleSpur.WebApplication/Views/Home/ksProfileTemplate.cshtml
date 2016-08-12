@@ -24,7 +24,7 @@
                             <img ng-click="editModeProfile = true" ng-hide="editModeProfile || editRequired == 'false'" style="width: 15px;float: right;height: 15px;background: white;margin: auto 0;margin-left: 1%;right: 2%;position: absolute;" src="~/Images/edit_Icon.png" />
                             <div ng-hide="editModeProfile" class="userNameProfile">
                                 <h3 style="font-weight:bold;float:left;width:auto;max-width:100%;margin: auto 0;">{{ myInfo.firstName+" "+myInfo.lastName }}</h3>
-                                <img ng-hide="editRequired == 'false'" style="float: left;width: 15px;height: 15px;" ng-click="openValueScope()" src="~/Images/MedalImage/goldMedal.png" />
+                                <img ng-hide="editRequired == 'false'" style="float: left;width: 15px;height: 15px; display:none" ng-click="openValueScope()" src="~/Images/MedalImage/goldMedal.png" />
                             </div>
                             <div ng-show="editModeProfile" class="userNameProfile">
                                 <div style="margin : 0;" class="formDetails">
@@ -98,10 +98,8 @@
                         </div>
                     </div>
                     <div class="skillParent" style="float: left;width: 60%;margin-left: 16%;">
-                        <div class="topicsList" ng-repeat="topic in topicArray">
-                            <div class="topicsListParent fontClass coachThemeColor">
-                                <h5 style="float:left;margin: auto 5px;font-size: 11px;"> {{topic.Name | uppercase}}</h5>
-                            </div>
+                        <div class="impactZoneTag">
+                            <h5 class="tagTasks fontClass coachThemeColor eliipsisClass" style="float: left;margin: 10px;margin-bottom: 0;margin-right: 0;width: 131px;height: 28px;" ng-repeat="option in topicArray">{{option.Name | uppercase}}</h5>
                         </div>
                     </div>
                 </div>

@@ -33,7 +33,7 @@ app.directive('focusMe', function ($timeout, $parse) {
     };
 });
 
-app.directive('topMainStrip', function ($state, $rootScope) {
+app.directive('topMainStrip', function ($state, $rootScope, authentification) {
     return {
         scope: {
             notification: '@'
@@ -54,8 +54,8 @@ app.directive('topMainStrip', function ($state, $rootScope) {
             scope.logout = function () {
                 console.error(IN.User)
                 if (IN.User) IN.User.logout();
-                $state.go('login');
                 authentification.logout({ loginObject: {} });
+                $state.go('login');             
             };
             scope.navigateAsPerRole = function (iRole) {
                 console.error(iRole);
@@ -1480,7 +1480,7 @@ app.directive('feedbackPage', function ($state, serverCommunication, $timeout, $
                 var _id = _parentId + ":CHT#" + (Date.now()) + (Math.floor((Math.random() * 10) + 1));
 
                 var _object = {
-                    Content: $scope.convObject.ConversationType.toUpperCase + '  $scope.convObject.skill WAS CLOSED',
+                    Content: $scope.convObject.ConversationType.toUpperCase()+" " +$scope.convObject.skill+" "+ 'WAS CLOSED',
                     SenderEmail: $rootScope.loggedDetail.EmailAddress,
                     ReceiverEmail: $scope.sender,
                     SendOrReceive: 'Send',
@@ -1522,12 +1522,12 @@ app.directive('feedbackPage', function ($state, serverCommunication, $timeout, $
                 // return
                 var _counter = Math.floor((Math.random() * 10) + 1);
                 var _id = $rootScope.loggedDetail.EmailAddress + (Date.now()) + _counter;
-                var _rating = 1;
-                for (var _key in $scope.feedBack.feedBackDetails) {
-                    if ($scope.feedBack.feedBackDetails[_key].sessionRating) {
-                        _rating = $scope.feedBack.feedBackDetails[_key].actionValue;
-                    }
-                }
+                var _rating = 5;
+                //for (var _key in $scope.feedBack.feedBackDetails) {
+                //    if ($scope.feedBack.feedBackDetails[_key].sessionRating) {
+                //        _rating = $scope.feedBack.feedBackDetails[_key].actionValue;
+                //    }
+                //}
                 console.error(_rating)
                 serverCommunication.sendFeedback({
                     role: $scope.role,

@@ -57,7 +57,7 @@
                                         <input style="margin: auto;" ng-checked="question.actionValue=='no'" ng-true-value="'no'" ng-model="question.actionValue" title="No" class="radioFeedBack radioFeedBackNo" type="checkbox" unchecked>
                                         <input style="margin: auto;" ng-checked="question.actionValue=='na'" ng-true-value="'na'" ng-model="question.actionValue" title="Not Applicable" class="radioFeedBack radioFeedBackNotApplicable" type="checkbox" unchecked>
                                     </div>
-                                    <textArea ng-show="question.type == 'textArea'" ng-model="question.actionValue" placeholder="Enter here Description"></textArea>
+                                    <textArea ng-show="question.type == 'textArea'" ng-model="question.actionValue" placeholder="Enter here Description" style="font-size:12px"></textArea>
                                     <div class="ratingFeedBack" ng-show="question.type == 'rating'">
                                         <img ng-click="showRatingColor(1,question)" ng-src="{{ indexArray.indexOf(1) > -1 ? 'Images/redstar.png' : 'Images/silverstar.png' }}" class="ratingStarOne" src="~/Images/silverstar.png" />
                                         <img ng-click="showRatingColor(2,question)" ng-src="{{ indexArray.indexOf(2) > -1 ? 'Images/redstar.png' : 'Images/silverstar.png' }}" class="ratingStarTwo" src="~/Images/silverstar.png" />
@@ -109,12 +109,9 @@
     <div class="fivePopupContainerThree">
         <div class="" style="float: left;width: 100%;height: 100%;">
 
-            <div class="" style="float: left; width: 100%; height: 40%;">
-                <h5 class="fontClass" style="font-size: 19px;text-align: center;font-weight: 500;">PLANT A TREE</h5>
-            </div>
             <div class="" style="float: left; width: 100%; display: flex;">
                 <button type="button" style="margin: auto auto; margin-right: 10%; padding: 6px;width: 20%;" class="signupButton fontClass btn btn-default" ng-click="signupClick()">SHARE</button>
-                <button type="button" style="margin: auto auto; margin-left: 0%; padding: 6px;width: 20%;" class="signupButton fontClass btn btn-default" ng-click="feedBack.formValue = '6'">REDEEM POINTS</button>
+                <button type="button" style="margin: auto auto; margin-left: 0%; padding: 6px;width: 20%;" class="signupButton fontClass btn btn-default" ng-disabled="rewardsPoints.balancePoints < 10"  ng-click="feedBack.formValue = '6'">REDEEM POINTS</button>
             </div>
 
         </div>
@@ -149,7 +146,7 @@
                     </div>
                     <div class="" style="float: left;display: flex;width: 100%;height: 30%;">
                         <img style="float: left;margin: auto;margin-right: 0;width: 35px;" src="~/Images/communication/moneyBag.png">
-                        <h5 class="fontClass" style="font-size: 27px;text-align: center;font-weight: 600;margin: 6px auto;margin: auto;margin-left: 3%;width: 35px;">{{rewardsPoints.balancePoints}}</h5>
+                        <h5 class="fontClass" style="font-size: 27px;text-align: center;font-weight: 600;margin: 6px auto;margin: auto;margin-left: 3%;width: 35px;">10</h5>
                     </div>
                     <div class="" style="float: left;display: flex;width: 100%;height: 30%;">
                         <h5 class="fontClass" style="font-size: 14px;text-align: center;font-weight: 600;margin: auto auto;">3 Brain Games</h5>
@@ -161,7 +158,7 @@
                     </div>
                     <div class="" style="float: left;display: flex;width: 100%;height: 30%;">
                         <img style="float: left;margin: auto;margin-right: 0;width: 35px;" src="~/Images/communication/moneyBag.png">
-                        <h5 class="fontClass" style="font-size: 27px;text-align: center;font-weight: 600;margin: 6px auto;margin: auto;margin-left: 3%;width: 35px;">{{rewardsPoints.balancePoints}}</h5>
+                        <h5 class="fontClass" style="font-size: 27px;text-align: center;font-weight: 600;margin: 6px auto;margin: auto;margin-left: 3%;width: 35px;">10</h5>
                     </div>
                     <div class="" style="float: left;display: flex;width: 100%;height: 30%;">
                         <h5 class="fontClass" style="font-size: 14px;text-align: center;font-weight: 600;margin: auto auto;cursor:help;" ng-click="feedBack.formValue='8'">PSR</h5>
@@ -169,7 +166,7 @@
                 </div>
             </div>
             <div class="" style="float: left; width: 100%; display: flex;height: 40%;">
-                <button type="button" style="border-radius: 0;background : #D72A1A; margin: auto auto; padding: 6px;font-size: 11px;color:white;" ng-click="redeemPointsClick()" class="fontClass btn btn-default">REDEEM POINTS</button>
+                <button type="button" style="border-radius: 0;background : #D72A1A; margin: auto auto; padding: 6px;font-size: 11px;color:white;" ng-disabled="rewardsPoints.balancePoints < 10"  ng-click="redeemPointsClick()" class="fontClass btn btn-default">REDEEM POINTS</button>
             </div>
 
         </div>
