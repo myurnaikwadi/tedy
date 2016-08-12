@@ -1480,7 +1480,7 @@ app.directive('feedbackPage', function ($state, serverCommunication, $timeout, $
                 var _id = _parentId + ":CHT#" + (Date.now()) + (Math.floor((Math.random() * 10) + 1));
 
                 var _object = {
-                    Content: $scope.convObject.ConversationType.toUpperCase + '  $scope.convObject.skill WAS CLOSED',
+                    Content: $scope.convObject.ConversationType.toUpperCase()+" " +$scope.convObject.skill+" "+ 'WAS CLOSED',
                     SenderEmail: $rootScope.loggedDetail.EmailAddress,
                     ReceiverEmail: $scope.sender,
                     SendOrReceive: 'Send',
