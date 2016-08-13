@@ -12,9 +12,10 @@ namespace KindleSpur.WebApplication.Controllers
 {
     public class MenteeController : Controller
     {
-        private readonly string UserId;
+        private readonly string UserId=null;
         public MenteeController()
         {
+            
             UserId = ((IUser)System.Web.HttpContext.Current.Session["User"]).EmailAddress;
 
         }

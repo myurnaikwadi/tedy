@@ -158,8 +158,8 @@ width: 40%;
 	width : 98%;
 	height :100%;
 	border : 1px solid #CBCBCB;
-	background-color : #f3f3f3 !important;
-	padding: 0px 20px;
+    padding: 8px 12px;
+    margin: 4px 0 0 0;
 }
 .chatHeader{
 	width : 100%;
@@ -168,14 +168,19 @@ width: 40%;
 }
 .chatMiddle{
 	width: 100%;
-    height: calc(100% - 150px);
-    overflow-x: hidden;
-    overflow-y: auto;
+    height: calc(100% - 140px);
+    overflow : hidden; 
+    transition : all 1s;
+}
+
+.chatMiddle:hover {    overflow-x: hidden;
+    overflow-y: auto;  transition : all 1s;
 }
 .chatBottom{
 	background-color: #E1E1E1;
     width: 100%;
     height: 80px;
+    border: 1px solid #E0E0E0;
     margin-bottom: 10px;
 }
 .chatStrongHeader{
@@ -221,48 +226,64 @@ width: 40%;
 	height : auto;
 	float: left;
 	margin: 10px 0px;
+    transition: all 1s ease-out;
+
 }
 .chatSender{
 	padding : 10px;
-	background-color : #E2E2E2;
+	background-color : white;
     min-width: 10%;
     max-width: 60%;
     width: auto;
 	 width: auto;
 	 float :left;
+         margin-left: 1%;
+             box-shadow: 0 0 19px 0px #969595;
+}
+.chatSenderImage{
+	 float :left;
+     width:5%;
 }
 .chatReceiver{
 	padding: 10px;
-    background-color: #F6C500;
+    background-color: white;
     min-width: 10%;
     max-width: 60%;
     width: auto;
+    margin-right: 1%;
     float: right;
+        box-shadow: 0 0 19px 0px #969595;
+}
+.chatReceiverImage{
+	  float: right;
+      width:6%;
 }
 .chatBottomOne{
-	width: calc(100% - 300px);
+	width: calc(100% - 71px);
 	float : left;
 	height: 100%;
+        display: flex;
 }
 .chatBottomTwo{
-	width: 300px;
+	width: 71px;
 	float : left;
 	height: 100%;
 }
 .chatBottomOne textarea{
 	    resize: none;
-    width: 100%;
-    height: 100%;
-    background-color: #e1e1e1;
+    width: 97%;
+    height: 77%;
+   
     border: 0px;
     padding: 10px;
     font-size: 14px;
+    margin:auto;
 }
 .iconContainer{
 	display: flex;
     justify-content: flex-end;
     align-items: center;
-    height: 50%;
+    height: 46%;
 }
 .chatBottomTwo button{
 	    border: 0px;
@@ -284,7 +305,7 @@ width: 40%;
    
 }
 .chatTime{
-	width : 100%;
+	
 	height :20px;
 	float : left;
 }
@@ -365,14 +386,14 @@ width: 40%;
 }
 .conversationPanel{
 	float: left;
-	width: 20%;
+	width: 25%;
 	height : 100%;
 	margin:auto auto;
 	
 }
 .communicationPanel{
 	float: left;
-	width: 80%;
+	width: 75%;
 	height : 100%;
 	
 	margin:auto auto;
@@ -406,10 +427,10 @@ width: 40%;
 }
 .conversationList{
 	float : left;
-	width : 100%;
-		
-	height : 12%;
-	
+	width : 99%;
+	height : 13%;
+	border: 1px solid #ddd;
+    margin: 4px 0 0 0;
 }
 .conversationListPanel{
     float : left;
@@ -434,3 +455,56 @@ width: 40%;
 .highlightedCompetitor {
 	border: 3px solid #ffd331;
 }
+.conversationParentDiv {
+    float : left;
+	width : 100%;
+	height : 100%;
+}
+.imageConversation {
+    float : left;
+	width : 25%;
+	height : 100%;
+    margin:auto auto;    
+	display:flex;
+}
+.imageConversation img {  
+   padding: 2px;
+}
+.closeSessionClass {
+     border: 2px solid #D72A1A;
+}
+.activeSessionCLass {
+     border: 2px solid #4dc725;
+}
+.nameMessageConversation {
+    float : left;     
+	width : 74%;
+	height : 100%;
+    margin:auto auto;
+    display:flex;
+}
+.textFormatConversation {
+    float: left;
+    width: 100%;
+    font-weight: 700;
+    font-size: 15px;
+    line-height: 20px;
+    margin:0;
+     transform: none;
+}
+.highlightedSelctedConversation {
+	background: #4dc725;
+    border:1px solid #4dc725;
+    transition : all 1s;
+    width: 1%;
+    height: 100%;
+     float: left;
+}
+.highlightedSelctedConversationParent{
+    background: #F3F3F3;
+    border-right: 1px solid #4dc725;
+}
+.conversationList :hover {
+    background: #EEEEEE;
+}
+

@@ -48,7 +48,7 @@
 
     $scope.loggedEmail = $rootScope.loggedDetail.EmailAddress;
     $scope.ApprovalName = $rootScope.loggedDetail.FirstName + " " + $rootScope.loggedDetail.LastName;
-    $scope.conversation = {};
+    $scope.conversation = { Message: '' };
     $scope.ReceiverName = "";
 
 
@@ -448,6 +448,8 @@
                 $scope.conversationListNew = [];
                 var _coach = {};
                 for (var k = 0; k < iObj.data.Result.length; k++) {
+                    console.error(iObj.data.Result[k].ConversationClosed)
+                    console.error(iObj.data.Result[k])
                     if (_coach[iObj.data.Result[k].skill]) {
                         _coach[iObj.data.Result[k].skill].user[iObj.data.Result[k].SenderEmail] = iObj.data.Result[k];
                     } else {
@@ -456,10 +458,11 @@
                     }
                 }
 
-                // console.error(_coach)
+                console.error(_coach)
                 for (var _key in _coach) {
                     for (var _user in _coach[_key].user) {
                         _coach[_key].user[_user].skillName = _key;
+                        _coach[_key].user[_user].sessionClosed = false;
                         $scope.conversationListNew.push(_coach[_key].user[_user]);
                     }
                     //var _con = angular.copy(_coach[_key])
@@ -511,7 +514,54 @@
 
         $scope.showSelectedConversation($scope.loggedEmail, $scope.ReceiverEmail);
     };
+    var _getMonthNames = function (iMonth, iFull, iSingleMonth) {
+        var monthArray = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+        if (iFull == 1)
+            monthArray = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
+        if (iSingleMonth)
+            return monthArray[iMonth];
+        else
+            return monthArray;
+    };
+    var _setPrefixDate = function (iDate) {
+        var _prefix = 'th';
+        var _fun = function (iVal) {
+            switch (iVal) {
+                case "1": _prefix = 'st'; break;
+                case "2": _prefix = 'nd'; break;
+                case "3": _prefix = 'rd'; break;
+            }
+        };
+        if (iDate[1]) {
+            if (Number(iDate) >= 11 && Number(iDate) <= 20) {
+
+            } else {
+                _fun(iDate[1]);
+            }
+        } else {
+            _fun(iDate[0]);
+        }
+        return _prefix;
+    };
+    var _displayDate = function (iDate) {
+        var _getDate = {};
+        var _date = new Date(iDate);
+        var _currentDate = new Date();
+        var _yesterdaysDt = new Date();
+        _yesterdaysDt.setDate(_yesterdaysDt.getDate() - 1);
+        var _prefix = '';
+        if (new Date(_date).setHours(0, 0, 0, 0) == new Date(_currentDate).setHours(0, 0, 0, 0)) {
+            _prefix = "Today";
+        } else if (new Date(_date).setHours(0, 0, 0, 0) == _yesterdaysDt.setHours(0, 0, 0, 0)) {
+            _prefix = "Yesterday";
+        } else {
+            _getDate = _date.getDate().toString();
+            _prefix = _setPrefixDate(_getDate);
+            _prefix = _date.getDate() + _prefix + " " + _getMonthNames(_date.getMonth(), 1, 1) + "," + _date.getFullYear();
+        }
+        return _prefix;
+    };
     $scope.showSelectedConversation = function (SenderEmail, ReceiverEmail) {
         serverCommunication.getConversationDetails({
             //senderEmail: SenderEmail,
@@ -529,19 +579,44 @@
                 var MailRecords = eval('(' + iObj.data.Result + ')');
                 console.error(MailRecords);
                 $scope.openConversation.sessionClosed = false;
+                var _flag = false;
+                $scope.timeSlots = [];
                 MailRecords.some(function (dd) {
                     if (dd.ConversationClosed || dd.ConversationClosed == 'True') {
                         console.error(dd.ConversationClosed)
                         $scope.openConversation.sessionClosed = true;
-                        console.error('ssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss')
+
+                    }
+                    dd.displayDate = _displayDate(dd.UpdateDate);
+                    if ($scope.timeSlots.length > 0) {
+                        _flag = true;
+                        for (var j = 0; j < $scope.timeSlots.length; j++) {
+                            if (dd.displayDate == $scope.timeSlots[j].displayDate) {
+                                _flag = false;
+                            }
+                        }
+                        if (_flag == true) {
+                            $scope.timeSlots.push({ displayDate: dd.displayDate, compareDate: dd.UpdateDate });
+                            _flag = false;
+                        }
+                    } else {
+                        _flag = false;
+                        $scope.timeSlots.push({ displayDate: dd.displayDate, compareDate: dd.UpdateDate });
                     }
                     $scope.MailRecords.push(angular.copy(dd));
+                });
+                $scope.timeSlots.sort(function (a, b) {
+                    a = new Date(a.compareDate);
+                    b = new Date(b.compareDate);
+                    return a - b;
                 });
                 $scope.MailRecords.sort(function (a, b) {
                     a = new Date(a.UpdateDate);
                     b = new Date(b.UpdateDate);
                     return a - b;
                 });
+                //  console.error('ssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss')
+                _setScrollPosition();
             },
             failureCallBack: function (iObj) {
                 console.debug('In failureCallBack', iObj);
@@ -639,59 +714,108 @@
         });
 
     };
-    $scope.conversationClick = function (isVerified, iCoach) {
-
-        if ($scope.openConversation) {
-
-            $scope.conversation.ReceiverEmail = $scope.openConversation.ReceiverEmail;
-            $scope.conversation.SenderEmail = $scope.loggedEmail;
-            $scope.conversation.Content = $scope.conversation.Message;
-            $scope.conversation.SendOrReceive = "Send";
-            $scope.conversation.IsVerified = isVerified;
-            $scope.conversation.isRead = false;
-            var _parentId = $scope.openConversation.ConversationParentId ? $scope.openConversation.ConversationParentId : $scope.openConversation.ConversationId;
-            if ($scope.conversation.SenderEmail === "" || $scope.conversation.ReceiverEmail === "")
-                return false;
-            var _id = _parentId + ":CHT#" + (Date.now()) + (Math.floor((Math.random() * 10) + 1));
-            var _object = {
-                Content: $scope.conversation.Content,
-                SenderEmail: $scope.conversation.SenderEmail,
-                ReceiverEmail: $scope.conversation.ReceiverEmail,
-                SendOrReceive: $scope.conversation.SendOrReceive,
-                IsVerified: $scope.conversation.IsVerified,
-                ConversationClosed: false,
-                ConversationType: "Mentoring",
-                Skill: $scope.openConversation.skill,
-                //"8/7/2016"
-                // CreateDate: (new Date().getMonth()+1)+"/"+new Date().getDate()+
-                //UpdateDate: "2016-08-07T11:58:13.867Z"
-                ConversationId: _id,
-                ConversationParentId: _parentId,
-            }
-
-            //   console.debug(_object);
-            var _replica = angular.copy(_object)
-            _replica.UpdateDate = new Date().toJSON();
-            $scope.MailRecords.push(_replica);
-            //  console.error($scope.MailRecords)
-            //  return;
-            serverCommunication.sendConversation({
-                loggedUserDetails: _object,
-                ReceiverName: $scope.ReceiverName,
-                Role: 'Mentee',
-                successCallBack: function () {
-                    $scope.conversation.Message = "";
-
-                    console.debug('In successCallBack');
-
-                },
-                failureCallBack: function () {
-
-                    $scope.conversation.Message = "";
-
-                    console.debug('In failureCallBack');
+    var _setScrollPosition = function () {
+        setTimeout(function () {
+            var msgDiv = document.getElementById("messagebox");
+            msgDiv.scrollTop = msgDiv.scrollHeight;
+        }, 400);
+       
+    }
+    var _resizeDateFilter = function (iChatMessage) {
+        if ($scope.timeSlots.length > 0) {
+            _flag = true;
+            for (var j = 0; j < $scope.timeSlots.length; j++) {
+                if (iChatMessage.displayDate == $scope.timeSlots[j].displayDate) {
+                    _flag = false;
                 }
-            });
+            }
+            if (_flag == true) {
+                $scope.timeSlots.push({ displayDate: iChatMessage.displayDate, compareDate: iChatMessage.UpdateDate });
+                _flag = false;
+            }
+        } else {
+            _flag = false;
+            $scope.timeSlots.push({ displayDate: iChatMessage.displayDate, compareDate: iChatMessage.UpdateDate });
+        }
+    };
+    var _sortArray = function () {
+        $scope.timeSlots.sort(function (a, b) {
+            a = new Date(a.compareDate);
+            b = new Date(b.compareDate);
+            return a - b;
+        });
+        $scope.MailRecords.sort(function (a, b) {
+            a = new Date(a.UpdateDate);
+            b = new Date(b.UpdateDate);
+            return a - b;
+        });
+    };
+    $scope.conversationClick = function (iEvent, iClickFlag) {
+        iEvent && iEvent.stopPropagation();
+        console.error(arguments)
+        if ($scope.conversation.Message.trim() == '') {
+            return;
+        }
+        if ((iEvent && iEvent.keyCode == 13) || iClickFlag) {
+
+            if ($scope.openConversation) {
+
+                $scope.conversation.ReceiverEmail = $scope.openConversation.ReceiverEmail;
+                $scope.conversation.SenderEmail = $scope.loggedEmail;
+                $scope.conversation.Content = $scope.conversation.Message;
+                $scope.conversation.SendOrReceive = "Send";
+                $scope.conversation.IsVerified = true;
+                $scope.conversation.isRead = false;
+                var _parentId = $scope.openConversation.ConversationParentId ? $scope.openConversation.ConversationParentId : $scope.openConversation.ConversationId;
+                if ($scope.conversation.SenderEmail === "" || $scope.conversation.ReceiverEmail === "")
+                    return false;
+                var _id = _parentId + ":CHT#" + (Date.now()) + (Math.floor((Math.random() * 10) + 1));
+                var _object = {
+                    Content: $scope.conversation.Content,
+                    SenderEmail: $scope.conversation.SenderEmail,
+                    ReceiverEmail: $scope.conversation.ReceiverEmail,
+                    SendOrReceive: $scope.conversation.SendOrReceive,
+                    IsVerified: $scope.conversation.IsVerified,
+                    ConversationClosed: false,
+                    ConversationType: "Mentoring",
+                    Skill: $scope.openConversation.skill,
+                    //"8/7/2016"
+                    // CreateDate: (new Date().getMonth()+1)+"/"+new Date().getDate()+
+                    //UpdateDate: "2016-08-07T11:58:13.867Z"
+                    ConversationId: _id,
+                    ConversationParentId: _parentId,
+                }
+
+                //   console.debug(_object);
+                var _replica = angular.copy(_object);
+                _replica.UpdateDate = new Date();
+              //  _replica.UpdateDate.setDate(6);
+                _replica.UpdateDate = _replica.UpdateDate.toJSON();
+                _replica.displayDate = _displayDate(_replica.UpdateDate);
+                _resizeDateFilter(_replica);
+                $scope.MailRecords.push(_replica);
+                _sortArray();
+                _setScrollPosition();
+                //  console.error($scope.MailRecords)
+                //  return;
+                serverCommunication.sendConversation({
+                    loggedUserDetails: _object,
+                    ReceiverName: $scope.ReceiverName,
+                    Role: 'Mentee',
+                    successCallBack: function () {
+                        $scope.conversation.Message = "";
+
+                        console.debug('In successCallBack');
+
+                    },
+                    failureCallBack: function () {
+
+                        $scope.conversation.Message = "";
+
+                        console.debug('In failureCallBack');
+                    }
+                });
+            }
         }
 
     };
