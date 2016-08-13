@@ -124,29 +124,45 @@
                                 <div class="filterListContainer">
                                     <div class="mentor-list">
                                         <div class="row" style="margin:0px;">
-                                            <div class="mentor-card" ng-repeat="coach in Coaches" cts-mentor-card>
-                                                <div class="mentor-info">
-                                                    <span class="profile-close" style="float:right;top:10px;right:10px;"><i class="fa fa-times"></i></span>
-                                                    <div class="profile-image">                                                        
-                                                        <img ng-src="{{coach.PhotoURL ? coach.PhotoURL : '~/Images/icons/If no Profile photo.png'}}" class="img-circle" />
+                                            <div style="display: flex;width: 100%;height: 35px;" ng-repeat-start="timeSlot in timeSlots">
+                                                <div style="margin:auto;width: 100%;display: flex;">
+                                                    <div style="width:33.33%;height:100%;float:left;margin: auto;">
+                                                        <div style="height:1px;width:100%;border-bottom:1px solid rgba(214,214,214,.61);"></div>
                                                     </div>
-                                                    <div class="profile-info">
-                                                        <p class="mentor-name">{{ coach.FirstName +" "+coach.LastName }}</p>
-                                                        <p class="mentor-skils">{{coach.Skill.Name}}</p>
-                                                        <p class="mentor-location"> {{coach.Country ? coach.Country : 'India'}}</p>
+                                                    <div style="width:33.33%;height:100%;float:left;margin: auto;display:flex;">
+                                                        <h5 class="genericEventHeadings genericMarginZero genericEllipsis" style="margin: auto;color: #a9a9a9;font-size:13px;" title="{{timeSlot}}">{{timeSlot}}</h5>
                                                     </div>
+                                                    <div style="width:33.33%;height:100%;float:left;margin: auto;">
+                                                        <div style="height:1px;width:100%;border-bottom:1px solid rgba(214,214,214,.61);"></div>
+                                                    </div>
+
                                                 </div>
-                                                <div class="mentor-actions" style="display:none; position:absolute">
-                                                    <div class="row">
-                                                        <i class="btn col-md-2 fa fa-linkedin btn-blue" style="border-radius:0px;"></i>
-                                                        <button class="btn col-md-9 btn-gray"  ng-click="opencoachprofile(coach)" style="border-radius:0px;">View Profile</button>
+
+                                            </div>
+                                            <div class="mentor-card" ng-class="{ mentorCardAnimation : coach.showLoad == true }" ng-repeat-end="" ng-repeat="coach in Coaches" ng-if="coach.Skill.Name == timeSlot" cts-mentor-card>
+                                                    
+                                                    <div class="mentor-info">
+                                                        <span class="profile-close" ng-click="Coaches.splice($index,1);" style="float:right;top:10px;right:10px;"><i class="fa fa-times"></i></span>
+                                                        <div class="profile-image">
+                                                            <img ng-src="{{coach.PhotoURL ? coach.PhotoURL : 'Images/icons/If no Profile photo.png'}}" class="img-circle" />
+                                                        </div>
+                                                        <div class="profile-info">
+                                                            <p class="mentor-name">{{ (coach.FirstName +" "+coach.LastName) | uppercase }}</p>
+                                                            <p class="mentor-skils">{{coach.Skill.Name | uppercase}}</p>
+                                                            <p class="mentor-location"> {{coach.Country ? coach.Country : 'India'}}</p>
+                                                        </div>
                                                     </div>
-                                                    <br />
-                                                    <button class="btn signupButton" style="margin-left: 30%;" ng-click="sendCoachingRequest(false, coach)">Request</button>
-                                                    <br />
+                                                    <div class="mentor-actions" style="display:none; position:absolute">
+                                                        <div class="row">
+                                                            <i class="btn col-md-2 fa fa-linkedin btn-blue" style="border-radius:0px;"></i>
+                                                            <button class="btn col-md-9 btn-gray" ng-click="opencoachprofile(coach)" style="border-radius:0px;">View Profile</button>
+                                                        </div>
+                                                        <br />
+                                                        <button class="btn signupButton" style="margin-left: 30%;" ng-click="sendCoachingRequest(false, coach)">Request</button>
+                                                        <br />
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
                                     </div>
                                 </div>
                             </div>

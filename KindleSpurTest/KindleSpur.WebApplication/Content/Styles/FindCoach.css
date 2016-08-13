@@ -18,14 +18,14 @@
 }
 
 .mentor-name {
-    font-size: 1.1em;
+    font-size: 12px;
     padding: 0px 0;
     color: #e42c2c;
     margin: 2px 0px;
 }
 
 .mentor-skils {
-    font-size: .9em;
+    font-size: 11px;
     padding: 0px 0;
     color: #808080;
     margin: 2px 0px;
@@ -46,9 +46,17 @@
     border: 1px solid #d7d5d5;
     padding: 2px;
     margin: 5px;
+    margin-left: 40px;
     box-shadow: 0 4px 5px rgba(0, 0, 0, 0.15);
     display: inline-block;
     cursor:pointer;
+    transition: all 1s ease;  
+    opacity:0;
+}
+.mentorCardAnimation {
+    margin-left: 5px;
+    transition: all 1s ease;
+     opacity:1
 }
 
 .mentor-list {

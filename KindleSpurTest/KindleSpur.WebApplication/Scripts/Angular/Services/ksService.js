@@ -339,7 +339,7 @@ app.factory('serverCommunication', function ($http) {
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                data: { ctsFilter: iObj.filter, Role: iObj.Role }
+                data: { ctsFilter: iObj.filter, Role: iObj.role }
             }
             $http(req).then(iObj.successCallBack, iObj.failureCallBack);
         },
