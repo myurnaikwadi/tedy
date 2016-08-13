@@ -174,17 +174,19 @@
 
                     <div class="conversationPanel">
                         <div class="conversationPanelDiv">
-                            <div class="conversationList " ng-click="conversationLoad($index,conversation)" ng-repeat="conversation in conversationListNew">
-                                <div class="conversationListPanel genericPointerClass" ng-class="{ highlightedGrayClass : conversation.selectedConversation == true }">
-                                    <div style="float:left; margin: auto auto;width: 85%; text-transform: uppercase;">
-                                        <h5 style="margin:auto auto;margin-left: 0;font-size: large;float: left;width: 88%;    font-weight: 700;    font-size: 15px;">{{conversation.FirstName+" "+conversation.LastName+" - "+conversation.skill}}</h5>
-                                        <div class="applicationNotiCount" title="5" style=" display flex; float:left; text-align center; height 15px; width
-                                             15px;">
-                                            <h6 class="fontClass" style=" font-size:10px;display inline-block;text-align center; text-overflow clip; margin auto auto;color:white;">5</h6>
+                            <div class="conversationList" ng-class="{ highlightedSelctedConversationParent  : conversation.selectedConversation == true}" ng-click="conversationLoad($index,conversation)" ng-repeat="conversation in conversationListNew">
+                                <div class="conversationParentDiv">
+                                    <div class="imageConversation">
+                                        <img ng-class="{ activeSessionCLass :  conversation.sessionClosed == false, closeSessionClass :  conversation.sessionClosed == true }" style="margin:auto auto;width: 40px;height: 40px;border-radius: 50%;" src="~/Images/icons/If no Profile photo.png" />
+                                    </div>
+                                    <div class="nameMessageConversation">
+                                        <div style="margin:auto auto;float:left; width: 100%;height: 55%;">
+                                            <h5 class="textFormatConversation fontClass" style="color:#797979;">{{(conversation.FirstName +" "+conversation.LastName) | uppercase }}</h5>
+                                            <h5 class="textFormatConversation eliipsisClass fontClass" style="color:#aaa; font-size: 12px;font-weight: 100;" title="{{conversation.skill  | uppercase }}">{{conversation.skill  | uppercase }}</h5>
                                         </div>
                                     </div>
+                                    <div ng-show="conversation.selectedConversation == true" class="highlightedSelctedConversation"></div>
                                 </div>
-                                <div class="triangleArrowRight trangleOveRideBlack" ng-if="conversation.selectedConversation == true" style="float: left; margin-top: 9px;"></div>
                             </div>
                         </div>
                     </div>
@@ -193,12 +195,12 @@
                             <div class="chatHeader">
                                 <div class="chatStrongHeader">
                                     <div class="chatHalfContainer">
-                                        <span class="chatHalfContainerSpan">
-                                            <h5>{{ReceiverName}}</h5>
+                                        <span style="color:#797979;" class="chatHalfContainerSpan">
+                                            <h5  class="fontClass">{{ReceiverName}}</h5>
                                         </span>
                                         <span ng-hide="openConversation.sessionClosed" class="chatHalfContainerSpanNxt">
-                                            <h6 class="genericPointerClass" ng-click="askFeedBackFunc(true)">Close Session</h6>
-                                            <h6 class="genericPointerClass" ng-click="askFeedBackFunc(false)">Give Feedback</h6>
+                                            <h6 class="genericPointerClass class="fontClass"" ng-click="askFeedBackFunc(true)">Close Session</h6>
+                                            <h6 class="genericPointerClass class="fontClass"" ng-click="askFeedBackFunc(false)">Give Feedback</h6>
                                         </span>
                                     </div>
                                     <div class="chatHalfContainer">
@@ -210,29 +212,53 @@
 
 
                             </div>
-                            <div class="chatMiddle">
-                                <div class="chatOuterContainer" ng-repeat="MailRecord in MailRecords">
-                                    <div class="" ng-class="{chatReceiver : MailRecord.SenderEmail === loggedEmail, chatSender : MailRecord.ReceiverEmail === loggedEmail}">
-                                        <h5>{{MailRecord.Content}}</h5>
+                            <div class="chatMiddle" id="messagebox">
+                                <div style="display: flex;width: 100%;height: 35px;" ng-repeat-start="timeSlot in timeSlots">
+                                    <div style="margin:auto;width: 100%;display: flex;">
+                                        <div style="width:33.33%;height:100%;float:left;margin: auto;">
+                                            <div style="height:1px;width:100%;border-bottom:1px solid rgba(214,214,214,.61);"></div>
+                                        </div>
+                                        <div style="width:33.33%;height:100%;float:left;margin: auto;display:flex;">
+                                            <h5 class="genericEventHeadings genericMarginZero genericEllipsis" style="margin: auto;color: #a9a9a9;font-size:13px;" title="{{timeSlot.displayDate}}">{{timeSlot.displayDate}}</h5>
+                                        </div>
+                                        <div style="width:33.33%;height:100%;float:left;margin: auto;">
+                                            <div style="height:1px;width:100%;border-bottom:1px solid rgba(214,214,214,.61);"></div>
+                                        </div>
+
                                     </div>
-                                    <div class="" ng-class="{chatTimeReceiver : MailRecord.SenderEmail === loggedEmail, chatTime : MailRecord.ReceiverEmail === loggedEmail}">{{MailRecord.UpdateDate | date:'yyyy-MM-dd HH:mm a' }}</div>
+
+                                </div>
+                                <div class="chatOuterContainer" ng-repeat-end="" ng-repeat="MailRecord in MailRecords" ng-if="MailRecord.displayDate == timeSlot.displayDate">
+                                    <div class="" ng-class="{ chatReceiverImage : MailRecord.SenderEmail === loggedEmail, chatSenderImage : MailRecord.ReceiverEmail === loggedEmail }">
+                                        <div class="imageConversation" style="width: 100%;display: block;">
+                                            <img style="box-shadow: 0 0 19px 0px #969595;width: 40px;height: 40px;border-radius: 50%;" src="~/Images/tempImage.jpg" />
+                                            <h5 class="fontClass" style="margin: 0;width: 50px;color: #aaa;font-size: 10px;height: auto;margin-top:3px;">{{MailRecord.UpdateDate | date:'hh:mm a' }}</h5>
+                                        </div>
+                                    </div>
+                                    <div style="border-radius: 7px;display:flex;" ng-class="{chatReceiver : MailRecord.SenderEmail === loggedEmail, chatSender : MailRecord.ReceiverEmail === loggedEmail}">
+                                        <div style="margin:auto;float:left;">
+                                            <h5 class="fontClass" style="margin: 0;margin-bottom: 5px;color: #1d89cf;height: auto;font-size:11px;font-size: 10px;width: 100%;" ng-class="{chatTimeReceiver : MailRecord.SenderEmail === loggedEmail, chatTime : MailRecord.ReceiverEmail === loggedEmail}">{{('ALex Ward') | uppercase }} says</h5>
+                                            <h5 class="fontClass" style="margin: 0;margin-bottom: 5px;color: #555;">{{MailRecord.Content}}</h5>
+
+                                        </div>
+                                    </div>
 
 
                                 </div>
-                                <div class="chatBottom">
-                                    <div class="chatBottomOne">
-                                        <textarea ng-disabled="openConversation.sessionClosed" placeholder="{{ openConversation.sessionClosed ? 'SESSION CLOSED' : 'CLICK HERE TO TYPE MESSAGE'}}" required ng-model="conversation.Message"></textarea>
+                            </div>
+                            <div class="chatBottom">
+                                <div class="chatBottomOne">
+                                    <textarea ng-keypress="conversationClick($event)" ng-disabled="openConversation.sessionClosed" placeholder="{{ openConversation.sessionClosed ? 'SESSION CLOSED' : 'CLICK HERE TO TYPE MESSAGE'}}" required ng-model="conversation.Message"></textarea>
+                                </div>
+                                <div class="chatBottomTwo">
+                                    <div class="iconContainer">
+                                        <div class="fa fa-paperclip" style="padding: 0px 8px;"></div>
+                                        <div class="fa fa-phone" style="padding: 0px 8px;" data-toggle="modal" data-target="#myMeetingSchedular"></div>
                                     </div>
-                                    <div class="chatBottomTwo">
-                                        <div class="iconContainer">
-                                            <div class="fa fa-paperclip" style="padding: 0px 8px;"></div>
-                                            <div class="fa fa-phone" style="padding: 0px 8px;" data-toggle="modal" data-target="#myMeetingSchedular"></div>
-                                        </div>
-                                        <div class="iconContainer">
-                                            <button type="submit" ng-disabled="openConversation.sessionClosed" ng-click="conversationClick(true, '')">Send</button>
-                                        </div>
+                                    <div class="iconContainer">
+                                        <button type="submit" class="btn btn-default" ng-disabled="conversation.Message==''" ng-click="conversationClick($event, true)">Send</button>
+                                    </div>
 
-                                    </div>
                                 </div>
                             </div>
 

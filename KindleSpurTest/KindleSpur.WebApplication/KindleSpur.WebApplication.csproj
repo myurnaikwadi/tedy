@@ -350,6 +350,7 @@
     <Content Include="Images\profile.png" />
     <Content Include="Images\psrPlant.png" />
     <Content Include="Images\save.png" />
+    <Content Include="Images\tempImage.jpg" />
     <Content Include="Images\Tree\Stage 1.png" />
     <Content Include="Images\Tree\Stage 2 with water.png" />
     <Content Include="Images\Tree\Stage 2.png" />
