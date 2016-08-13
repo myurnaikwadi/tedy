@@ -24,6 +24,20 @@
                  //, { name: 'ADD TOPICS' }
     ]
     $scope.applicationRole = [{ name: 'COACHEE' }, { name: 'MENTEE' }, { name: 'COACH' }, { name: 'MENTOR' }]
+    $scope.showMenteeProfile = false;
+    $scope.userInfo = null;
+    $scope.openmentorprofile = function (iOption) {
+        $scope.showMenteeProfile = true;
+        $scope.userInfo = iOption;
+        console.log(iOption)
+    };
+
+
+    $scope.closeProfilePic = function () {
+        console.error('closeProfilePopup')
+        $scope.showMenteeProfile = false;
+        $scope.userInfo = null;
+    };
     $scope.rightSideDashBoardArray = [
                { name: 'SELECT TOPICS', url: '../../Images/icons/coaching_status.png ' },
                 { name: 'SEARCH MENTOR', url: '../../Images/icons/search_mentor_coach.png ' },

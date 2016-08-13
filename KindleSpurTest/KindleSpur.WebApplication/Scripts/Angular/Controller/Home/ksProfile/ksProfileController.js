@@ -183,57 +183,64 @@
     var _skillsArray = [];
     $scope.init = function () {
         $scope.ctsDataForMolecule = null;
-        serverCommunication.getMySelection({
-            successCallBack: function (iObj) {
-                console.error('In getMySelection', iObj);
-                _category = {};
-                _categoryArray = [];
-                _topicArray = [];
-                _skillsArray = [];
-                if (iObj.data && iObj.data.Categories && iObj.data.Categories.length > 0) {
-                    for (var k = 0; k < iObj.data.Categories.length ; k++) {
-                        if (Object.keys(iObj.data.Categories[k]).length > 0) {
-                            if (iObj.data.Categories[k].Category) {
-                                if (_category[iObj.data.Categories[k].Category]) {
+        if ($scope.userInfo.Skills) {
+            $scope.topicArray = [].concat($scope.userInfo.Skills);
+        } else if ($scope.userInfo.Topics) {
+            $scope.topicArray = [].concat($scope.userInfo.Topics);
+        } else {
+            serverCommunication.getMySelection({
+                successCallBack: function (iObj) {
+                    console.error('In getMySelection', iObj);
+                    _category = {};
+                    _categoryArray = [];
+                    _topicArray = [];
+                    _skillsArray = [];
+                    if (iObj.data && iObj.data.Categories && iObj.data.Categories.length > 0) {
+                        for (var k = 0; k < iObj.data.Categories.length ; k++) {
+                            if (Object.keys(iObj.data.Categories[k]).length > 0) {
+                                if (iObj.data.Categories[k].Category) {
+                                    if (_category[iObj.data.Categories[k].Category]) {
 
-                                } else {
-                                    _category[iObj.data.Categories[k].Category] = { Name: iObj.data.Categories[k].Category };
-                                    _categoryArray.push(_category[iObj.data.Categories[k].Category]);
+                                    } else {
+                                        _category[iObj.data.Categories[k].Category] = { Name: iObj.data.Categories[k].Category };
+                                        _categoryArray.push(_category[iObj.data.Categories[k].Category]);
+                                    }
                                 }
-                            }
 
-                            if (iObj.data.Categories[k].Topic) {
-                                if (_category[iObj.data.Categories[k].Topic]) {
+                                if (iObj.data.Categories[k].Topic) {
+                                    if (_category[iObj.data.Categories[k].Topic]) {
 
-                                } else {
-                                    _category[iObj.data.Categories[k].Topic] = { Name: iObj.data.Categories[k].Topic };
-                                    _topicArray.push(_category[iObj.data.Categories[k].Topic]);
+                                    } else {
+                                        _category[iObj.data.Categories[k].Topic] = { Name: iObj.data.Categories[k].Topic };
+                                        _topicArray.push(_category[iObj.data.Categories[k].Topic]);
+                                    }
                                 }
-                            }
 
-                            if (iObj.data.Categories[k].Skill) {
-                                if (_category[iObj.data.Categories[k].Skill]) {
+                                if (iObj.data.Categories[k].Skill) {
+                                    if (_category[iObj.data.Categories[k].Skill]) {
 
-                                } else {
-                                    _category[iObj.data.Categories[k].Skill] = { Name: iObj.data.Categories[k].Skill };
-                                    _skillsArray.push(_category[iObj.data.Categories[k].Skill]);
+                                    } else {
+                                        _category[iObj.data.Categories[k].Skill] = { Name: iObj.data.Categories[k].Skill };
+                                        _skillsArray.push(_category[iObj.data.Categories[k].Skill]);
+                                    }
                                 }
-                            }
 
+                            }
                         }
                     }
-                }
-                console.error('In getMySelection', _category, _categoryArray, _topicArray, _skillsArray);
-                $scope.topicArray = [];
-              //  $scope.topicArray =  $scope.topicArray.concat(_categoryArray);
-              //  $scope.topicArray =  $scope.topicArray.concat(_topicArray);
-                $scope.topicArray =  $scope.topicArray.concat(_skillsArray);
-            },
-            failureCallBack: function (iObj) {
-                console.error('In failuregetMySelectionCallBack', iObj);
+                    console.error('In getMySelection', _category, _categoryArray, _topicArray, _skillsArray);
+                    $scope.topicArray = [];
+                    //  $scope.topicArray =  $scope.topicArray.concat(_categoryArray);
+                    //  $scope.topicArray =  $scope.topicArray.concat(_topicArray);
+                    $scope.topicArray =  $scope.topicArray.concat(_skillsArray);
+                },
+                failureCallBack: function (iObj) {
+                    console.error('In failuregetMySelectionCallBack', iObj);
 
-            }
-        });
+                }
+            });
+        }
+      
 
 
 

@@ -44,8 +44,21 @@
     //                        { name: 'FIND COACH' }
     //];
 
-    $scope.applicationRole = [{ name: 'COACHEE' }, { name: 'MENTEE' }, { name: 'COACH' }, { name: 'MENTOR' }]
+    $scope.applicationRole = [{ name: 'COACHEE' }, { name: 'MENTEE' }, { name: 'COACH' }, { name: 'MENTOR' }];
+    $scope.showCoacheeProfile = false;
+    $scope.userInfo = null;
+    $scope.opencoachprofile = function (iOption) {
+        $scope.showCoacheeProfile = true;
+        $scope.userInfo = iOption;
+        console.log(iOption)
+    };
+    
 
+    $scope.closeProfilePic = function () {
+        console.error('closeProfilePopup')
+        $scope.showCoacheeProfile = false;
+        $scope.userInfo = null;
+    };
     $scope.Coaches = [];
 
     $scope.selectedMenu = 0;

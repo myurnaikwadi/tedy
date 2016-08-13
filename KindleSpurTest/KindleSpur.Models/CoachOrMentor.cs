@@ -8,6 +8,7 @@ using MongoDB.Bson.Serialization.Attributes;
 
 namespace KindleSpur.Models
 {
+    [BsonIgnoreExtraElements]
     public class CoachOrMentor  : ICoachOrMentor
     {
        public string AdditionalRef { get; set; }

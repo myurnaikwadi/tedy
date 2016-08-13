@@ -33,6 +33,9 @@
             </div>
             @*search mentor -3 *@
             <div class="parentRoleDetailRight" ng-show="selectedMenu == '3'">
+                <div class="hideCoacheeProfile" ng-class="{ showCoacheeProfileClass : showMenteeProfile == true }">
+                    <profile-Page ng-if="showMenteeProfile && userInfo" user-Info="userInfo" close-Popup="closeProfilePic()" edit-Required="false"></profile-Page>
+                </div>
                 <ddiv class="ctsParent">
                     <div class="ctsParentMain">
                         <div class="ctsParentMainPanel">
@@ -76,7 +79,7 @@
                                                 <div class="mentor-actions" style="display:none; position:absolute">
                                                     <div class="row">
                                                         <i class="btn col-md-2 fa fa-linkedin btn-blue" style="border-radius:0px;"></i>
-                                                        <button class="btn col-md-9 btn-gray" data-toggle="modal" data-target="#myModal" style="border-radius:0px;">View Profile</button>
+                                                        <button class="btn col-md-9 btn-gray" ng-click="openmentorprofile(coach)" style="border-radius:0px;">View Profile</button>
                                                     </div>
                                                     <br />
                                                     <button class="btn signupButton" style="margin-left: 30%;" ng-click="sendCoachingRequest(false, coach)">Request</button>
