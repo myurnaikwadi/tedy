@@ -542,7 +542,7 @@
     var _resizeDateFilter = function (iChatMessage) {
         if ($scope.timeSlots.length > 0) {
             _flag = true;
-            for (var j = 0; j < $scope.timeSlots.length; j++) 
+            for (var j = 0; j < $scope.timeSlots.length; j++) {
                
                 if (iChatMessage.displayDate == $scope.timeSlots[j].displayDate) {
                     _flag = false;
@@ -552,7 +552,7 @@
                 $scope.timeSlots.push({ displayDate: iChatMessage.displayDate, compareDate: iChatMessage.UpdateDate });
                 _flag = false;
             }
-        } else {
+        }else{
             _flag = false;
             $scope.timeSlots.push({ displayDate: iChatMessage.displayDate, compareDate: iChatMessage.UpdateDate });
         }
