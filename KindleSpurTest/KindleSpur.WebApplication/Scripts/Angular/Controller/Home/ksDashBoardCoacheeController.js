@@ -363,16 +363,16 @@
 
     $scope.autoSyncRoutine = function (iTime) {
         console.error('autoSyncRoutine')
-        //$scope.autoSyncCounter = $interval(function () {
-        //    console.error('autoSyncRoutine - CallBack -- ')
-        //    if (iTime == _chatMessageTime) {
-        //        console.error('auto sync call for chat Message');
-        //        $scope.conversationLoading();
-        //    } else {
-        //        console.error('auto sync call for conversation');
-        //        $scope.conversationRequest();
-        //    }
-        //}, iTime);
+        $scope.autoSyncCounter = $interval(function () {
+            console.error('autoSyncRoutine - CallBack -- ')
+            if (iTime == _chatMessageTime) {
+                console.error('auto sync call for chat Message');
+                $scope.conversationLoading();
+            } else {
+                console.error('auto sync call for conversation');
+                $scope.conversationRequest();
+            }
+        }, iTime);
     };
     $scope.conversationLoading = function () {
       //  console.error('ge');
