@@ -4,10 +4,11 @@
                       <img ng-click="navigateAsPerRole(4)" class="genericPointerClass" src="~/Images/icons/kindlespurlogo.png" alt="logo" style="height: auto; width: 72%; margin: auto;" />
                   </div>
                   <div class="hiddenErrorNotificationClass" ng-class="{ 'showErrorNotificationClass' : displayAlert.showAlert  == true}">            
-                      -@*Green*@ <div class="alert-message success" ng-show="displayAlert.formatType == '1'">
-                      
-                            <p>{{displayAlert.message}}</p>
-                            <a class="close" href="#" ng-click="displayAlert.showAlert = false">×</a>
+                      @*Green*@ 
+                      <div class="alert-message success" ng-show="displayAlert.formatType == '1'">
+                     
+                          <h5 style="margin:0;padding:0; margin-top:4%">{{displayAlert.message}}</h5>
+                          <h5 style="margin:0;padding:0;" class="close" ng-click="displayAlert.showAlert = false">×</h5>
                         </div>
                       
                       @*red*@
@@ -36,8 +37,8 @@
                               <h4 class="sigupLabel fontClass">SIGN UP!</h4>
                               <form name="myForm">
                                   <div class="formDetails">
-                                      <input class="inputTagStyle fontClass" type="text" ng-model="signupDetails.FirstName" placeholder="FIRST NAME" ng-required />
-                                      <input class="inputTagStyle fontClass" style="margin-left: 5%;" ng-model="signupDetails.LastName" type="text" placeholder="LAST NAME" ng-required />
+                                      <input class="inputTagStyle fontClass" allow-pattern="[a-z]" type="text" ng-model="signupDetails.FirstName" placeholder="FIRST NAME" ng-required />
+                                      <input class="inputTagStyle fontClass" allow-pattern="[a-z]" style="margin-left: 5%;" ng-model="signupDetails.LastName" type="text" placeholder="LAST NAME" ng-required />
                                   </div>
                                   <div class="formDetails">
                                       <input class="inputTagStyle fontClass" style="width: 94%;" type="email" ng-keyup="$event.keyCode == 13 && signupClick()" ng-class="{ invalidEmailNotify : emailValidate == false}"  focus-me set-Focus="false" blur="checkEmailFormat()" ng-model="signupDetails.EmailAddress" placeholder="E-MAIL ID" ng-required />

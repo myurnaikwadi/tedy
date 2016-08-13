@@ -65,7 +65,7 @@ app.directive('topMainStrip', function ($state, $rootScope, authentification) {
                     case 1: $state.go('dashBoardCoach'); break;
                     case 2: $state.go('dashBoardMentee'); break;
                     case 3: $state.go('dashBoardMentor'); break;
-                    case 4: $state.go('landingPage'); break;//navigate to home page
+                    case 4: $state.go('ksUserDashBoard'); break;//navigate to home page
                 }
             };
         }
@@ -1649,3 +1649,27 @@ app.directive('feedbackPage', function ($state, serverCommunication, $timeout, $
         }
     }
 });
+
+app.directive('allowPattern', [allowPatternDirective]);
+
+function allowPatternDirective() {
+    return {
+        restrict: "A",
+        compile: function (tElement, tAttrs) {
+            return function (scope, element, attrs) {
+                // I handle key events
+                element.bind("keypress", function (event) {
+                    var keyCode = event.which || event.keyCode; // I safely get the keyCode pressed from the event.
+                    var keyCodeChar = String.fromCharCode(keyCode); // I determine the char from the keyCode.
+
+                    // If the keyCode char does not match the allowed Regex Pattern, then don't allow the input into the field.
+                    if (!keyCodeChar.match(new RegExp(attrs.allowPattern, "i"))) {
+                        event.preventDefault();
+                        return false;
+                    }
+
+                });
+            };
+        }
+    }
+};
