@@ -632,7 +632,7 @@ app.directive('ctcRole', function ($state, serverCommunication) {
                                     //  "image": 'Images/Tree/Stage 1.png',
                                     "type": 'T',
                                     'textColor': scope.skillRequired ? 'black' : _textColor,
-                                    'color': scope.skillRequired ? 'white' : _color,
+                                    'color': scope.skillRequired ? 'white' : _colorArray[scope.role][_category[_key].topic[_topic].profiLevel],
                                     'border': _color,
                                     "bonds": 1
                                 });
@@ -659,7 +659,7 @@ app.directive('ctcRole', function ($state, serverCommunication) {
                                             "size": 15,
                                             "id": _skillId,
                                             "type": 'S',
-                                            'color': _color,
+                                            'color': _colorArray[scope.role][_category[_key].topic[_topic].skill[_skill].profiLevel],
                                             //  "image": 'Images/Tree/Stage 1.png',
                                             'textColor': _textColor,
                                             'border': _color,
