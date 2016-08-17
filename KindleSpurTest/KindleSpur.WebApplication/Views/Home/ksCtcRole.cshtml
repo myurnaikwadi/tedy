@@ -5,8 +5,8 @@
                 <h5 ng-show="mySelection" style="font-size: 16px;padding: 6px;padding-left: 0;" class="fontClass" margin-top:15px;>MY SELECTION</h5>
                 <h5 ng-hide="mySelection" style="font-size: 16px;padding: 6px;padding-left: 0;" class="fontClass">{{ categoryDisplay ? 'CATEGORIES' : selectedCategoryValue.Category | uppercase }}</h5>
                 
-                <img ng-show="mySelection" ng-class="{ coachGenericBackgroundBorder : role == 'coach' , coacheeGenericBackgroundBorder : role == 'coachee' , mentorGenericBackgroundBorder : role == 'mentor' , menteeGenericBackgroundBorder : role == 'mentee' }" style="border : 2px solid; width:35px;height : 35px;float:right;margin: auto auto;margin-right: 0;border-radius: 30px;padding: 5px;cursor:pointer;" ng-click="addSkill()" src="~/Images/addBold.png" />
-                <img ng-show="categoryDisplay && mySelection == false" style="border : 2px solid; width:35px;height : 35px;float:right;margin: auto auto;margin-right: 0;border-radius: 30px;padding: 5px;cursor:pointer;" ng-click="backButtonClick()" src="~/Images/cancel.png" />
+                <img ng-show="mySelection" ng-class="{ coachThemeColor : role == 'coach' , coacheeThemeColor : role == 'coachee' , mentorThemeColor : role == 'mentor' , menteeThemeColor : role == 'mentee' }" style=" width:35px;height : 35px;float:right;margin: auto auto;margin-right: 0;border-radius: 30px;padding: 5px;cursor:pointer;" ng-click="addSkill()" src="~/Images/add.png" />
+                <img ng-show="categoryDisplay && mySelection == false" ng-class="{ coachThemeColor : role == 'coach' , coacheeThemeColor : role == 'coachee' , mentorThemeColor : role == 'mentor' , menteeThemeColor : role == 'mentee' }"  style=" width:35px;height : 35px;float:right;margin: auto auto;margin-right: 0;border-radius: 30px;padding: 5px;cursor:pointer;" ng-click="backButtonClick()" src="~/Images/cancel.png" />
             </div>
             <div class="ctsCategoryPanelMainPanel" ng-show="mySelection">
                 <molecule-Map ng-if="ctsDataForMolecule" cts-Data="ctsDataForMolecule"></molecule-Map>

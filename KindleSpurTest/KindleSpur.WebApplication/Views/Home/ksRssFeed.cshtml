@@ -14,14 +14,14 @@
     <div class="feedParentArray" ng-hide="skill.length == 0">
         <div class="feedParentMainArray">
             <div class="feedContainRepeatDiv genericPointerClass" ng-click="loadFeedOnNextTab(feed)" ng-repeat="feed in feedContainArray">
-                <div class="backgroundIamgeFeed" style="background : url('{{feed.imagePath}}');float: left;display:flex; width: 100%;height: 50%;background-size: contain;background-position-x: 50%;background-repeat: no-repeat;">
+                <div class="backgroundIamgeFeed" style="background : url('{{feed.imagePath}}'); display:flex; width: 80%;height: 40%;background-size: contain;background-position-x: 72%;background-repeat: no-repeat;">
                     @*Image*@
 
                 </div>
                 <div class="" style="float: left; width: 100%;height: 20%;">
                     @*title*@
                 <div class="" style="width: 100%;float: left;display:flex;">
-                    <p style="float: left;font-weight: 700; font-size: 14px; white-space: inherit;word-break: break-all;margin: auto;">
+                    <p style="float: left;font-weight: 700; font-size: 12px; white-space: inherit;margin: auto;">
                         {{feed.name}}
                     </p>
                 </div>
@@ -29,7 +29,7 @@
             <div class="" style="float: left;display:flex; width: 100%;height: 30%;">
                 @*theory*@
             <div class="" style="width: auto;float: left;display:flex;overflow:auto;">
-                <p style="float: left;width: 100%;height: 100%;font-size: 14px; white-space: inherit;word-break: break-all;	margin: auto;">
+                <p style="float: left;width: 100%;height: 100%;font-size: 11px; white-space: inherit;word-break: break-all;	margin: auto;">
                     {{feed.snippet}}
                 </p>
             </div>
