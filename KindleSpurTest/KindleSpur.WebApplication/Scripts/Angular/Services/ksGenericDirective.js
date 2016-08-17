@@ -133,12 +133,7 @@ app.directive('ctcRole', function ($state, serverCommunication) {
             scope.createStyleArrayAsPerSelected = function (iSkill,iSelect) {
                 if (iSelect) {
                     //console.error(iSkill)
-                    var _width = 100;
-                    switch (iSkill.profiLevel) {
-                        case '0' : _width = 5; break;                         
-                        case '1' : _width = 50; break; 
-                        case '2' : _width = 100; break; 
-                    }
+                    var _width = 100;                   
                     var _color = 'transparent';
                     var _textColor = 'black';
                     switch (scope.role) {
@@ -147,14 +142,22 @@ app.directive('ctcRole', function ($state, serverCommunication) {
                         case 'mentee': _color = 'rgb(132,194,37)'; _textColor = 'black'; break;
                         case 'coachee': _color = 'rgb(248,195,0)'; _textColor = 'black'; break;
                     }
-                    console.error(_color)
-                    _color = _colorArray[scope.role][iSkill.profiLevel];
-                    console.error(_color)
-                    if (iSkill.profiLevel == '2')
-                        scope.styleToCTSText[iSkill.Name] = { 'color': _textColor, 'transition': 'all 0.7s ease' };
-                    else {
-                        scope.styleToCTSText[iSkill.Name] = { 'color': 'black', 'transition': 'all 0.7s ease' };
+                    switch (iSkill.profiLevel) {
+                        case '0': _width = 5; scope.styleToCTSText[iSkill.Name] = { 'color': 'black', 'transition': 'all 0.7s ease' }; break;
+                        case '1': _width = 50; scope.styleToCTSText[iSkill.Name] = { 'color': 'black', 'transition': 'all 0.7s ease' }; break;
+                        case '2': _width = 100; scope.styleToCTSText[iSkill.Name] = { 'color': _textColor, 'transition': 'all 0.7s ease' }; break;
                     }
+                    if (scope.skillRequired) {
+                        if (iSkill.type == 'T') {
+                            _width = 100;
+                            scope.styleToCTSText[iSkill.Name] = { 'color': _textColor, 'transition': 'all 0.7s ease' };
+                        } else {
+                            _color = _colorArray[scope.role][iSkill.profiLevel];
+                        }
+                    } else {
+                        _color = _colorArray[scope.role][iSkill.profiLevel];
+                    }
+
                     scope.styleToCTS[iSkill.Name] = { 'position': 'absolute', 'height': '28px', 'width': (_width + "%"), 'background': _color, 'transition': 'all 0.7s ease' };
                 }else{
                 // De select
@@ -211,6 +214,7 @@ app.directive('ctcRole', function ($state, serverCommunication) {
 
                 if (iTopic.selected) {
                     iTopic.selected = false;
+                    scope.styleToCTSText[iTopic.Name] = { 'color': 'black', 'transition': 'all 0.7s ease' };
                     if (iTopic.alreadySelected == true && !scope.skillRequired) {//make delete array
                         _deleteArray[iTopic.Name] = iTopic;
                     }
@@ -242,7 +246,7 @@ app.directive('ctcRole', function ($state, serverCommunication) {
                 }
                 else {
                     iTopic.selected = true;
-
+                    // scope.createStyleArrayAsPerSelected(iTopic, true);
                     if (iTopic.alreadySelected == true && !scope.skillRequired) {
                         if (_deleteArray[iTopic.Name]) delete _deleteArray[iTopic.Name];
                         //    if (_updateArray[iTopic.Name]) delete _updateArray[iTopic.Name];
@@ -250,7 +254,7 @@ app.directive('ctcRole', function ($state, serverCommunication) {
                     //        _updateArray[iTopic.Name] = iTopic;                     
                     //}
                     if (scope.skillRequired) {
-
+                        scope.createStyleArrayAsPerSelected(iTopic, true);
                         for (var k = 0; k < iTopic.Skills.length ; k++) {
                             if (!iTopic.Skills[k].profiLevel) iTopic.Skills[k].profiLevel = '0';
                             if (_skills[iTopic.Skills[k].Name]) {
@@ -282,6 +286,7 @@ app.directive('ctcRole', function ($state, serverCommunication) {
                 iSkills.type = 'S';
                 if (iSkills.selected) {
                     iSkills.selected = false;
+                    scope.styleToCTSText[iSkills.Name] = { 'color': 'black', 'transition': 'all 0.7s ease' };
                     iSkills.profiLevel = '0';
                     if (_updateArray[iSkills.Name]) {
                         delete _updateArray[iSkills.Name];

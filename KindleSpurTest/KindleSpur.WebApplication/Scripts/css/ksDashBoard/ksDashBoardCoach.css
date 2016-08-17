@@ -474,7 +474,7 @@
 }
 .topicHeadingSection {
        float: left;
-    width: 23%;
+    width: 15%;
     height: 100%;
     display: flex;
 }
@@ -487,7 +487,7 @@
 
 .topicListingSection {
     float: left;
-    width: 77%;
+    width: 85%;
     height: 100%;
     /*display: flex;*/
     overflow :auto;
@@ -510,7 +510,8 @@
        position: relative;
     float: left;
     width: 120px;
-    margin: 2%;
+    margin: 2%;   
+     margin-bottom: 0;
     margin-right: 0;
     height: 45px;
 }
