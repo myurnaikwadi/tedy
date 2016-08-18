@@ -71,6 +71,21 @@ app.directive('topMainStrip', function ($state, $rootScope, authentification) {
         }
     };
 });
+
+app.directive('cubeStrct', function ($timeout) {
+    return {
+        scope: {
+            loadingObject : '='
+        },
+        //template: '<div class="cubeContainer"><div id="cube" class="animate"><div></div><div></div><div></div><div></div><div></div><div></div></div><div style="margin-left: -25px;margin-top: 20px;"><h5 style="font-size: 11px;width: 100px;text-align: center;margin-top:5px;">{{loadingObject.loadingMessage}}</h5></div></div>',
+        template: '<div class="cubeContainer"><div id="cube" class="animate"><div></div><div></div><div></div><div></div><div></div><div></div></div><div style="margin-left: -15px;margin-top: 20px;width: 100px;"><div class="inner"><span>I</span><span>g</span><span>n</span><span>i</span><span>t</span><span>e</span> <span>u</span><span>r</span><span>g</span><span>e</span></div></div></div>',
+        //scope: true,   // optionally create a child scope
+        link: function (scope, element, attrs) {
+            console.error(scope);
+          //  scope.messageArray = loadingObject
+        }
+    };
+});
 app.directive('bottomMainStrip', function ($timeout) {
     return {
         scope: {
@@ -1366,12 +1381,13 @@ app.directive('rssFeed', function ($state, serverCommunication, $timeout) {
         link: function ($scope, element, attrs) {
             window.rss = $scope;
             $scope.feedContainArray = [];
-
+            $scope.loadingObject = { showLoading: true, loadingMessage: 'Loading Feed' };
             //var _selectedTagFed = [];
             $scope.selectedFeedTag = function (iIndex, iOption) {
                 console.error(iOption.selected)
                 // _selectedTagFed = [];
                 $scope.feedContainArray = [];
+                $scope.loadingObject = { showLoading: true, loadingMessage: 'Loading Feed' };
                 for (var k = 0 ; k < $scope.skill.length ; k++) {
                     $scope.skill[k].selected = false;
                     if (iOption.name == $scope.skill[k].name) {
@@ -1454,7 +1470,7 @@ app.directive('rssFeed', function ($state, serverCommunication, $timeout) {
                     }
                     $scope.feedContainArray = [].concat(_feedContainArray);
                     // if (!$scope.$$phase) $scope.$digest();
-                    $timeout(function () { }, 0);
+                    $timeout(function () { $scope.loadingObject = { showLoading: false, loadingMessage: 'Loading Feed' };  }, 0);
                 })
                 .fail(function (data) {
                     //alert("error");

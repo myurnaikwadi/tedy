@@ -2,6 +2,8 @@
     $scope.editModeProfile = false;
     console.error($scope.userInfo)
     window.profile = $scope;
+
+    $scope.profileMenuArr = [{ name: 'Overview' }, { name: 'My Review' }, { name: 'Setting' }];
     $scope.myInfo = {
         mobileNumber: $scope.userInfo.Mobile ? $scope.userInfo.Mobile : null,
         linkedInLink: $scope.userInfo.LinkdinURL ? $scope.userInfo.LinkdinURL : null,
