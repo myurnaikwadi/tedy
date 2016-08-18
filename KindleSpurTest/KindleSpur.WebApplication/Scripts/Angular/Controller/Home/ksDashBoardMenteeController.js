@@ -145,6 +145,43 @@
         });
     };
     $scope.Coaches = [];
+    var _createCoachArray = function (iResult) {
+        $scope.timeSlots = [];
+        var _coachFinalArr = [];
+        for (var k = 0; k < iResult.data.length; k++) {
+            for (var i = 0; i < iResult.data[k].Topics.length; i++) {
+                var _coach = angular.copy(iResult.data[k]);
+                _coach.Skill = {};
+                _coach.Skill = angular.copy(iResult.data[k].Topics[i]);
+                //  _coach.Skill = Object.assign(_coach.Skill, result.data[k].Skills[i]);
+                if ($scope.timeSlots.length > 0) {
+                    $scope.flag = true;
+                    var _index = $scope.timeSlots.indexOf(iResult.data[k].Topics[i].Name);
+                    if (_index > -1) {
+                        $scope.flag = false;
+                    }
+                    if ($scope.flag == true) {
+                        $scope.timeSlots.push(iResult.data[k].Topics[i].Name);
+                        $scope.flag = false;
+                    }
+                } else {
+                    $scope.flag = false;
+                    $scope.timeSlots.push(iResult.data[k].Topics[i].Name);
+                }
+                _coach.showLoad = false;
+                _coachFinalArr.push(_coach);
+            }
+        }
+        console.error(_coachFinalArr, $scope.timeSlots)
+        $scope.Coaches = [].concat(_coachFinalArr);
+        setTimeout(function () {
+            for (var k = 0; k < $scope.Coaches.length; k++) {
+                $scope.Coaches[k].showLoad = true;
+            }
+            $scope.$apply();
+        }, 500);
+    };
+
     $scope.getCoachRecord = function () {
         serverCommunication.getRecommendedCoach({
             Role: 'Mentor',
@@ -158,36 +195,7 @@
                     // _mySkill = [].concat(angular.copy($rootScope.loggedDetail.coachee.skills));
                 }
                 if (result.data) {
-                    $scope.timeSlots = [];
-                    var _coachFinalArr = [];
-                    for (var k = 0; k < result.data.length; k++) {
-
-                        for (var i = 0; i < result.data[k].Topics.length; i++) {
-                            var _coach = angular.copy(result.data[k]);
-                            _coach.Skill = {};
-                            _coach.Skill = angular.copy(result.data[k].Topics[i]);
-                            //  _coach.Skill = Object.assign(_coach.Skill, result.data[k].Skills[i]);
-                            if ($scope.timeSlots.length > 0) {
-                                $scope.flag = true;
-                                var _index = $scope.timeSlots.indexOf(result.data[k].Topics[i].Name);
-                                if (_index > -1) {
-                                    $scope.flag = false;
-                                }
-                                if ($scope.flag == true) {
-                                    $scope.timeSlots.push(result.data[k].Topics[i].Name);
-                                    $scope.flag = false;
-                                }
-                            } else {
-                                $scope.flag = false;
-                                $scope.timeSlots.push(result.data[k].Topics[i].Name);
-                            }
-                            _coachFinalArr.push(_coach);
-                        }
-
-                    }
-
-                    console.error(_coachFinalArr, $scope.timeSlots)
-                    $scope.Coaches = [].concat(_coachFinalArr);
+                    _createCoachArray(result);
                 }
                 serverCommunication.getCTSFilters({
                     Role: 'Mentor',
