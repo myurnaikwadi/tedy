@@ -7,32 +7,46 @@ namespace KindleSpur.Models.Interfaces
 {
    public interface ICommunication
     {
-        string RequestFrom { get; set; }
-        string RequestTo { get; set; }
+        string CommunicationId { get; set; }
+        string From { get; set; }
+        string To { get; set; }
         string Status { get; set; }
+        List<IRequest> Requests { get; set; }
         List<IChat> Chats { get; set; }
         List<IMeeting> Meetings { get; set; }
-        List<IDocument> Documents { get; set; }
-        DateTime CreateDate { get; set; }
-        DateTime UpdateDate { get; set; }
-        DateTime EndDate { get; set; }
+        List<IDocument> Documents { get; set; }       
     }
 
+    public interface IRequest
+    {
+        string RequestId { get; set; }
+        string Type { get; set; }   
+        string Content { get; set; }
+
+    }
+ 
     public interface IChat
     {
-        string SessionName { get; set; }
-        DateTime StartDate { get; set; }
+        string RequestId { get; set; }
+        string ChatId { get; set; }
+        string SkillName { get; set; }
+        string TopicName { get; set; }
+        string Role { get; set; }
         string Message { get; set; }
         string Sender { get; set; }
-        DateTime Date { get; set; } 
         Boolean ReadStatus { get; set; }
         String Progress { get; set; }
+        DateTime StartDate { get; set; }
+        DateTime CreateDate { get; set; }
+        DateTime EndDate { get; set; }
     }
 
     public interface IMeeting
     {
+        string MeetingId { get; set; }
         string Subject { get; set; }
-        List<string> Topics { get; set; }
+        string SkillName { get; set; }
+        string TopicName { get; set; }
         DateTime StartDate { get; set; }
         String TimeSlot { get; set; }
         DateTime EndDate { get; set; }
