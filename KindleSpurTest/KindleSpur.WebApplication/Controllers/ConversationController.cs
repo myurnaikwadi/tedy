@@ -197,15 +197,25 @@ namespace KindleSpur.WebApplication.Controllers
                         content += "<br /><br />Regards, <br/> KindleSpur Team.";
                         EmailNotification.SendConversationEmail(_obj, uri, subject, content);
                         TempData["StatusMessage"] = "Please check your mail to start conversation!!!";
+                        if (Role == "Coachee")
+                            response.FailureCallBack("Coaching invite sent");
+                        else if (Role == "Mentee")
+                            response.FailureCallBack("Mentoring invite sent");
                     }
                     else
                     {
-                        response.FailureCallBack("Request pending with Coach/Mentor!!!");
+                        if (Role == "Coachee")
+                            response.FailureCallBack("Request pending with Coach!!!");
+                        else if (Role == "Mentee")
+                            response.FailureCallBack("Request pending with Mentor!!!");
                     }
                 }
                 else
                 {
-                    response.FailureCallBack("Request already send to Coach/Mentor!!!");
+                    if (Role == "Coachee")
+                        response.FailureCallBack("Request already sent to Coach!!!");
+                    else if (Role == "Mentee")
+                        response.FailureCallBack("Request already sent to Mentor!!!");
                 }
             }
             catch (Exception Ex)
