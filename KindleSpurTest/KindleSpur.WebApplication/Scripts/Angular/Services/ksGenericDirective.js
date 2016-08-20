@@ -1476,14 +1476,13 @@ app.directive('rssFeed', function ($state, serverCommunication, $timeout) {
                     //alert("error");
                     console.error(data)
                 });
-            };
-
-            if ($scope.skill) {
+            };           
+            $scope.$watch('skill', function () {
+               // console.error('array is modified');
                 if ($scope.skill.length > 0) {
                     $scope.selectedFeedTag(0, $scope.skill[0]);
                 }
-            }
-
+            });          
         }
     }
 });
@@ -1497,6 +1496,7 @@ app.directive('feedbackPage', function ($state, serverCommunication, $timeout, $
             role: "@",
             closeCallback: "&",
             convObject: "=",
+            feedbackType: "=",
             feedbackClosed: "=",
         },
         templateUrl: '/Home/ksFeedBackPanel',
@@ -1511,11 +1511,7 @@ app.directive('feedbackPage', function ($state, serverCommunication, $timeout, $
                 $scope.feedbackClosed = false;
             }
 
-            $scope.feedBack = {
-                selectedComparioson: 1,
-                selectedAttractive: 1,
-                selectedstar: 1,
-                likeMostMessage: '',
+            $scope.feedBack = {              
                 feedBackDetails: {}
             };
 
@@ -1554,14 +1550,20 @@ app.directive('feedbackPage', function ($state, serverCommunication, $timeout, $
                 var _parentId = $scope.convObject.ConversationParentId ? $scope.convObject.ConversationParentId : $scope.convObject.ConversationId;
 
                 var _id = _parentId + ":CHT#" + (Date.now()) + (Math.floor((Math.random() * 10) + 1));
-
+                var _message = '';
+                
+                if ($scope.feedbackType == 'preSession') {
+                    _message = "Feedback Form has been filled by " +$rootScope.loggedDetail.EmailAddress;
+                } else if($scope.feedbackType == 'closeSession'){
+                    _message = $scope.convObject.ConversationType.toUpperCase()+" " +$scope.convObject.skill+" "+ 'WAS CLOSED';
+                }
                 var _object = {
-                    Content: $scope.convObject.ConversationType.toUpperCase()+" " +$scope.convObject.skill+" "+ 'WAS CLOSED',
+                    Content: _message,
                     SenderEmail: $rootScope.loggedDetail.EmailAddress,
                     ReceiverEmail: $scope.sender,
                     SendOrReceive: 'Send',
                     IsVerified: true,
-                    ConversationClosed: true,
+                    ConversationClosed: $scope.feedbackType == 'closeSession' ? true : false,
                     ConversationType: $scope.convObject.ConversationType,
                     Skill: $scope.convObject.skill,
                     ConversationId: _id,
@@ -1577,7 +1579,7 @@ app.directive('feedbackPage', function ($state, serverCommunication, $timeout, $
                     ReceiverName: $scope.ReceiverName,
                     Role: $scope.role,
                     successCallBack: function () {
-                        $scope.conversation.Message = "";
+                       // $scope.conversation.Message = "";
                         // console.debug('In successCallBack');
                     },
                     failureCallBack: function () {
@@ -1610,9 +1612,9 @@ app.directive('feedbackPage', function ($state, serverCommunication, $timeout, $
                     loggedUserDetails: { FeedBackId: _id, FeedbackClosed: $scope.feedbackClosed, sender: $scope.sender, Skill: $scope.convObject.skill, customerSatisfactionRating: _rating },
                     successCallBack: function (iObj) {
                         console.error('In successCallBack', iObj);
-                        if ($scope.feedbackClosed) {
+                       // if ($scope.feedbackClosed) {
                             $scope.generateSesstionClosedEntry();
-                        }
+                       // }
                         $scope.getPointsRecord();
 
                     },
@@ -1622,6 +1624,45 @@ app.directive('feedbackPage', function ($state, serverCommunication, $timeout, $
                     }
                 });
             };
+
+            $scope.feedBack.sendPreSessionDetail = function () {
+                $scope.feedBack.feedBackDetails.sender = $scope.sender;
+                console.error($scope.feedBack.feedBackDetails)
+               
+                for (var k = 0 ; k < $scope.displayArray.length ; k++) {
+                    $scope.feedBack.feedBackDetails[$scope.displayArray[k].name] = $scope.displayArray[k];
+                };
+                console.error($scope.feedBack.feedBackDetails, $scope.displayArray);
+                $scope.generateSesstionClosedEntry();
+                $scope.feedBack.closeFeedBackPopup()
+                 return
+               // var _counter = Math.floor((Math.random() * 10) + 1);
+               // var _id = $rootScope.loggedDetail.EmailAddress + (Date.now()) + _counter;
+                //var _rating = 5;
+                //for (var _key in $scope.feedBack.feedBackDetails) {
+                //    if ($scope.feedBack.feedBackDetails[_key].sessionRating) {
+                //        _rating = $scope.feedBack.feedBackDetails[_key].actionValue;
+                //    }
+                //}
+               // console.error(_rating)
+                //serverCommunication.sendFeedback({
+                //    role: $scope.role,
+                //    loggedUserDetails: { FeedBackId: _id, FeedbackClosed: $scope.feedbackClosed, sender: $scope.sender, Skill: $scope.convObject.skill, customerSatisfactionRating: _rating },
+                //    successCallBack: function (iObj) {
+                //        console.error('In successCallBack', iObj);
+                //        if ($scope.feedbackClosed) {
+                //            $scope.generateSesstionClosedEntry();
+                //        }
+                //        $scope.getPointsRecord();
+
+                //    },
+                //    failureCallBack: function (iObj) {
+                //        console.error('In failureCallBack', iObj);
+
+                //    }
+                //});
+            };
+
             $scope.displayArray = [];
             $scope.counter = 4;
 

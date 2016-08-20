@@ -143,10 +143,16 @@
           $scope.feedBack.formValue = '1';
           $scope.feedBack.icloseFeedBack = icloseFeedBack;         
           $scope.feedBackloaded = { showLoad: false };
-         // $scope.loadSlideData(1);
+          if (icloseFeedBack == 3) {
+              $scope.feedBack.feedBackType = 'preSession';
+              $scope.array = [].concat(angular.copy(_presessionQuestion));
+          } else {
+              $scope.feedBack.feedBackType = icloseFeedBack ? 'closeSession' : 'feedBack';
+              $scope.array = [].concat(angular.copy(_array));
+          }
       }
 
-      $scope.array = [
+      var _array = [
           { name: 'What do you appreciate the most in your interactions with the mentee ? ', actionValue: '', type: 'textArea', showLoad: false },
           { name: 'Is the coachee/mentee able to grasp the ideas discussed?', actionValue: '1', type: 'rating', showLoad: false },
           { name: 'What are the Strong Qualities of the Mentee/ Coachee ?', actionValue: '', type: 'textArea', showLoad: false },
@@ -156,7 +162,12 @@
           { name: 'Was it worth your time, energy and interest ?', type: 'radio', showLoad: false, actionValue: '', },
           { name: 'Rate the session', sessionRating: true, type: 'rating', showLoad: false, actionValue: '', },
       ];
-
+      var _presessionQuestion = [
+        { name: 'The broad level areas that will get covered under these sessions', actionValue: '', type: 'textArea', showLoad: false },
+        { name: 'Knowledge areas you would like the recipient to aware of before the session', actionValue: '', type: 'textArea', showLoad: false },
+        { name: 'Your preferred time and mode of communication', actionValue: '', type: 'checkBoxTime', showLoad: false },
+        { name: 'Five attributes that you would like your coachee/ mentee to know about you', actionValue: '', type: 'textArea', showLoad: false },
+      ];
 
       $scope.feedBack.closeFeedBackPopup = function () {
           $scope.feedBack.askFeedback = false;

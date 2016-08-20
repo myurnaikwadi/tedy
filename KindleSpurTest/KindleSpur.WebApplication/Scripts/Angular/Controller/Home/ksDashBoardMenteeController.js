@@ -260,14 +260,21 @@
     $scope.feedBack.askFeedback = false;
     $scope.feedBack.formValue = '0';
     $scope.feedBack.icloseFeedBack = false;
+    $scope.feedBack.feedBackType = 'feedBack';
     $scope.askFeedBackFunc = function (icloseFeedBack) {
         $scope.feedBack.askFeedback = true;
         $scope.feedBack.formValue = '1';
         $scope.feedBack.icloseFeedBack = false;
         $scope.feedBackloaded = { showLoad: false };
-       // $scope.loadSlideData(1);
+        if (icloseFeedBack == 3) {
+            $scope.feedBack.feedBackType = 'preSession';
+            $scope.array = [].concat(angular.copy(_presessionQuestion));
+        } else {
+            $scope.feedBack.feedBackType = icloseFeedBack ? 'closeSession' : 'feedBack';
+            $scope.array = [].concat(angular.copy(_array));
+        }
     }
-    $scope.array = [
+    var _array = [
         { name: 'Was the sessions objective achieved ?  ', actionValue: '', type: 'rating', showLoad: false },
             {name: 'Was the session as per plan ? Was this session fine-tuned based on your previous session feedback ?', actionValue: '1', type: 'radio', showLoad: false},
                 {name: 'What should have been avoided / What should have been better ? Describe ', actionValue: '', type: 'textArea', showLoad: false},
@@ -278,7 +285,12 @@
                             {name: ' Rate the session ', sessionRating: true, type: 'rating', showLoad: false, actionValue: '',},
     ];
 
-   
+    var _presessionQuestion = [
+        { name: 'What is the ultimate goal you want to accomplish by the end of this coaching/ mentoring session?', actionValue: '', type: 'textArea', showLoad: false },
+        { name: 'Any issue/challenge/problem you would like your coach/mentor to work with you on it? Any steps your have taken so far to tackle these problem areas?', actionValue: '', type: 'textArea', showLoad: false },
+        { name: 'Your preferred time and mode of communication', actionValue: '', type: 'checkBoxTime', showLoad: false },
+        { name: 'Five attributes that you would like your coach/ mentor to know about you', actionValue: '', type: 'textArea', showLoad: false },
+    ];
     $scope.feedBack.closeFeedBackPopup = function () {
         $scope.feedBack.askFeedback = false;
         $scope.feedBack.formValue = '1';

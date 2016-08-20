@@ -88,7 +88,7 @@
                  transition: all 0.7s ease;
            transition: all 0.7s ease;
         }
-        .leftSideMenu :hover , ngRepeatDivForStatus:hover {
+        .ngRepeatDivForStatus:hover {
             -webkit-transform:scale(1.1);
             transform:scale(1.1);
             transition: all 0.7s ease;
@@ -99,8 +99,13 @@
             float: left;
             color: white;
             margin: 3%;
+                transition: all 0.7s ease;
         }
-
+        .selectedLeftSideMenu {
+                background: rgba(0,0,0,.48);
+                 border-left : 6px solid #1ecc71;
+                 transition: all 0.7s ease;
+        }
         .requestRoleParent {
             position: relative;
             float: left;
@@ -868,7 +873,7 @@ margin-bottom: 0;
 }
 .questionLabel h5 {
   margin:auto;
-  font-size: 16px;
+  font-size: 13px;
   width: 90%;
 }
 .questionAnswer{
@@ -883,6 +888,7 @@ margin-bottom: 0;
   margin: auto;
   width: 84%;
   height: 60%;
+  font-size:13px;
 
 }
 .questionBoxparentHide{
@@ -895,7 +901,7 @@ margin-bottom: 0;
 .questionBoxparentShow{
 	transition:all 1s ease;
 	margin:auto;
-  background:#F8C301;
+  background-color:white;
 border: 1px solid #999;
   box-shadow:0px 0px 10px 2px;
 	width: 100% !important;
@@ -910,7 +916,7 @@ border: 1px solid #999;
 }
 .ratingFeedBack img{
     margin:auto;
-    width : 50px;
+    width : 40px;
     transition:all 1s ease;
     cursor:pointer;
 }
@@ -942,10 +948,10 @@ border: 1px solid #999;
                 0 -2px 10px 2px hsla(0,0%,100%,.75),
                 0 2px 10px 2px hsla(0,0%,0%,.25);
     cursor: pointer;
-    height: 30px;
+    height: 25px;
     padding-right: 10px;
     position: relative;
-    width: 63px;
+    width: 50px;
     -webkit-appearance: none;
     -webkit-transition: .15s;
 }

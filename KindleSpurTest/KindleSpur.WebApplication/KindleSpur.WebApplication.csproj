@@ -297,6 +297,7 @@
     <Content Include="Images\communication\lineDiag4.png" />
     <Content Include="Images\communication\location_feedBack.png" />
     <Content Include="Images\communication\moneyBag.png" />
+    <Content Include="Images\communication\preSessionIcon.png" />
     <Content Include="Images\communication\price_feedBack.png" />
     <Content Include="Images\communication\product_feedBack.png" />
     <Content Include="Images\communication\sameasCompetitors.png" />

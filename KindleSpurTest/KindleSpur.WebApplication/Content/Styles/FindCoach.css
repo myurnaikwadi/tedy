@@ -20,7 +20,8 @@
 .mentor-name {
     font-size: 12px;
     padding: 0px 0;
-    color: #e42c2c;
+    color: black;
+    font-weight:bold;
     margin: 2px 0px;
 }
 
