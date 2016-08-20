@@ -59,6 +59,10 @@
     <Compile Include="CoacheeOrMentee.cs" />
     <Compile Include="CoachOrMentor.cs" />
     <Compile Include="CoachStatus.cs" />
+    <Compile Include="Communication\Chat.cs" />
+    <Compile Include="Communication\Communication.cs" />
+    <Compile Include="Communication\Meeting.cs" />
+    <Compile Include="Communication\Request.cs" />
     <Compile Include="Conversation.cs" />
     <Compile Include="CTSFilter.cs" />
     <Compile Include="Enums.cs" />
