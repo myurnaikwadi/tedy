@@ -12,11 +12,9 @@ namespace KindleSpur.Models.Communication
         public DateTime EndDate { get; set; }
         public IFeedback Feedbacks { get; set; }
         public string MeetingId { get; set; }
-        public string SkillName { get; set; }
         public DateTime StartDate { get; set; }
         public string Status { get; set; }
         public string Subject { get; set; }
         public string TimeSlot { get; set; }
-        public string TopicName { get; set; }
     }
 }

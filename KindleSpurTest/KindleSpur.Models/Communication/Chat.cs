@@ -18,8 +18,6 @@ namespace KindleSpur.Models.Communication
         public string RequestId { get; set; }
         public string Role { get; set; }
         public string Sender { get; set; }
-        public string SkillName { get; set; }
         public DateTime StartDate { get; set; }
-        public string TopicName { get; set; }
     }
 }

@@ -11,10 +11,13 @@ namespace KindleSpur.Models.Interfaces
         string From { get; set; }
         string To { get; set; }
         string Status { get; set; }
+        string SkillName { get; set; }
+        string TopicName { get; set; }
         List<IRequest> Requests { get; set; }
         List<IChat> Chats { get; set; }
         List<IMeeting> Meetings { get; set; }
-        List<IDocument> Documents { get; set; }       
+        List<IDocument> Documents { get; set; }    
+        string Type { get; set; }
     }
 
     public interface IRequest
@@ -29,8 +32,6 @@ namespace KindleSpur.Models.Interfaces
     {
         string RequestId { get; set; }
         string ChatId { get; set; }
-        string SkillName { get; set; }
-        string TopicName { get; set; }
         string Role { get; set; }
         string Message { get; set; }
         string Sender { get; set; }
@@ -45,8 +46,6 @@ namespace KindleSpur.Models.Interfaces
     {
         string MeetingId { get; set; }
         string Subject { get; set; }
-        string SkillName { get; set; }
-        string TopicName { get; set; }
         DateTime StartDate { get; set; }
         String TimeSlot { get; set; }
         DateTime EndDate { get; set; }

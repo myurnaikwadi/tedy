@@ -15,7 +15,10 @@ namespace KindleSpur.Models.Communication
         public string From { get; set; }
         public List<IMeeting> Meetings { get; set; }
         public List<IRequest> Requests { get; set; }
+        public string SkillName { get; set; }
         public string Status { get; set; }
         public string To { get; set; }
+        public string TopicName { get; set; }
+        public string Type { get; set; }
     }
 }
