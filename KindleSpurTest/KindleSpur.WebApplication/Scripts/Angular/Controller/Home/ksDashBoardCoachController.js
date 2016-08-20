@@ -45,9 +45,10 @@
                  , { name: 'KNOWLEDGE FEED'  }
                 , { name: 'COMMUNICATION' }
              //   , { name: 'KNOWLEDGE FEED' }
-              //  , { name: 'RESOURCES' }
+             , {  name: 'MY REWARDS' }
+                 , { name: 'RESOURCES' }
              //   , { name: 'ADD SKILLS' }
-                , { name: 'MY REWARDS' }
+                
                 // , { name: 'VCS' }
 
     ]
@@ -57,7 +58,8 @@
                 { name: 'KNOWLEDGE GARDEN', url: '../../Images/icons/knowledge_garden.png ' },
                 { name: 'KNOWLEDGE FEED', url: '../../Images/icons/Knowledge_feed.png ' },
                 { name: 'COMMUNICATION', url: '../../Images/icons/communication.png ' },
-                { name: 'MY REWARDS', url: '../../Images/icons/my_rewords.png ' }
+                { name: 'MY REWARDS', url: '../../Images/icons/my_rewords.png ' },
+                 { name: 'RESOURCES', url: '../../Images/icons/resources1.png ' }
 
     ];
     var _chatMessageTime = 30000;

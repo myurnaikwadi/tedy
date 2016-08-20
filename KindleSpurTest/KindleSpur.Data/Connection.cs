@@ -25,7 +25,7 @@ namespace KindleSpur.Data
 
         public MongoCollection GetCollection(string collectionName)
         {
-            return _kindleDatabase.GetCollection(collectionName);
+             return _kindleDatabase.GetCollection(collectionName);
         }
     }
 }

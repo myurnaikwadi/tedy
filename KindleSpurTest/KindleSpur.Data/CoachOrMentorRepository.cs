@@ -6,6 +6,7 @@ using MongoDB.Driver;
 using MongoDB.Driver.Builders;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 
 namespace KindleSpur.Data
@@ -15,6 +16,7 @@ namespace KindleSpur.Data
         Connection con = new Connection();
         MongoCollection _logCollection;
         MongoCollection _coachOrMentorCollection;
+   
 
         public CoachOrMentorRepository()
         {
@@ -25,7 +27,21 @@ namespace KindleSpur.Data
             }
             catch (MongoException ex)
             {
-                _logCollection.Insert("{ Error : 'Database connection failed.', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ");
+                string message = "{ Error : 'Failed at CoachOrMentorRepository().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ";
+                _logCollection.Insert(message);
+                throw new MongoException("Signup failure!!!");
+                //_logCollection.Insert("{ Error : 'Database connection failed.', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ");
+            }
+            catch (Exception e)
+            {
+                Exceptionhandle em = new Exceptionhandle();
+                em.Error = "Failed at CoachOrMentorRepository()";
+                em.Log = e.Message.Replace("\r\n", "");
+                var st = new StackTrace(e, true);
+                var frame = st.GetFrame(0);
+                var line = frame.GetFileLineNumber();
+                _logCollection.Insert(em);
+                throw new MongoException("Signup failure!!!");
             }
         }
 
@@ -50,8 +66,24 @@ namespace KindleSpur.Data
             }
             catch (MongoException ex)
             {
-                _logCollection.Insert("{ Error : 'Failed at AddNewCoachOrMentor().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ");
+                string message = "{ Error : 'Failed at AddNewCoachOrMentor().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ";
+                _logCollection.Insert(message);
                 throw new MongoException("Signup failure!!!");
+            }
+            catch(Exception e)
+            {
+                Exceptionhandle em = new Exceptionhandle();
+                em.Error = "Failed at AddNewCoachOrMentor()";
+                em.Log = e.Message.Replace("\r\n", "");
+                var st = new StackTrace(e, true);
+                var frame = st.GetFrame(0);
+                var line = frame.GetFileLineNumber();
+                _logCollection.Insert(em);
+                throw new MongoException("Signup failure!!!");
+            }
+            finally
+            {
+                
             }
         
 
@@ -87,9 +119,27 @@ namespace KindleSpur.Data
                 _transactionStatus = true;
                 return user.TotalRewardPoints;
             }
-            catch(Exception e)
+            catch(MongoException ex)
             {
+                string message = "{ Error : 'Failed at addFeedback().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ";
+                _logCollection.Insert(message);
+                throw new MongoException("Signup failure!!!");
                 _transactionStatus = false;
+            }
+            catch (Exception e)
+            {
+                Exceptionhandle em = new Exceptionhandle();
+                em.Error = "Failed at addFeedback()";
+                em.Log = e.Message.Replace("\r\n", "");
+                var st = new StackTrace(e, true);
+                var frame = st.GetFrame(0);
+                var line = frame.GetFileLineNumber();
+                _logCollection.Insert(em);
+                throw new MongoException("Signup failure!!!");
+            }
+            finally
+            {
+
             }
             return 0;
 
@@ -130,8 +180,24 @@ namespace KindleSpur.Data
             }
             catch (MongoException ex)
             {
-                _logCollection.Insert("{ Error : 'Failed at AddNewCoachOrMentor().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ");
+                string message = "{ Error : 'Failed at GetTopicsForMentor().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ";
+                _logCollection.Insert(message);
                 throw new MongoException("Signup failure!!!");
+            }
+            catch (Exception e)
+            {
+                Exceptionhandle em = new Exceptionhandle();
+                em.Error = "Failed at GetTopicsForMentor()";
+                var st = new StackTrace(e, true);
+                var frame = st.GetFrame(0);
+                var line = frame.GetFileLineNumber();
+                em.Log = e.Message.Replace("\r\n", "");
+                _logCollection.Insert(em);
+                throw new MongoException("Signup failure!!!");
+            }
+            finally
+            {
+
             }
 
             return _transactionStatus;
@@ -228,7 +294,25 @@ namespace KindleSpur.Data
             }
             catch (MongoException ex)
             {
-                _logCollection.Insert("{ Error : 'Failed at EditUser().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ");
+                string message = "{ Error : 'Failed at EditCoachOrMentor().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ";
+                _logCollection.Insert(message);
+                throw new MongoException("Signup failure!!!");
+                //_logCollection.Insert("{ Error : 'Failed at EditUser().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ");
+            }
+            catch (Exception e)
+            {
+                Exceptionhandle em = new Exceptionhandle();
+                em.Error = "Failed at EditCoachOrMentor()";
+                em.Log = e.Message.Replace("\r\n", "");
+                var st = new StackTrace(e, true);
+                var frame = st.GetFrame(0);
+                var line = frame.GetFileLineNumber();
+                _logCollection.Insert(em);
+                throw new MongoException("Signup failure!!!");
+            }
+            finally
+            {
+
             }
             return _transactionStatus;
         
@@ -252,10 +336,28 @@ namespace KindleSpur.Data
             }
             catch (MongoException ex)
             {
-                _logCollection.Insert("{ Error : 'Failed at AddNewCoachOrMentor().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ");
+                string message = "{ Error : 'Failed at GetRewardPoints().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ";
+                _logCollection.Insert(message);
+                throw new MongoException("Signup failure!!!");
+                //_logCollection.Insert("{ Error : 'Failed at AddNewCoachOrMentor().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ");
+                //throw new MongoException("Signup failure!!!");
+            }
+            catch (Exception e)
+            {
+                Exceptionhandle em = new Exceptionhandle();
+                em.Error = "Failed at GetRewardPoints()";
+                em.Log = e.Message.Replace("\r\n", "");
+                var st = new StackTrace(e, true);
+                var frame = st.GetFrame(0);
+                var line = frame.GetFileLineNumber();
+                _logCollection.Insert(em);
                 throw new MongoException("Signup failure!!!");
             }
-            
+            finally
+            {
+
+            }
+
         }
 
         public List<ICoachOrMentor> GetAllCoachOrMentorDetails()
@@ -267,7 +369,25 @@ namespace KindleSpur.Data
             }
             catch (MongoException ex)
             {
-                _logCollection.Insert("{ Error : 'Failed at EditUser().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ");
+                string message = "{ Error : 'Failed at GetAllCoachOrMentorDetails().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ";
+                _logCollection.Insert(message);
+                throw new MongoException("Signup failure!!!");
+                // _logCollection.Insert("{ Error : 'Failed at EditUser().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ");
+            }
+            catch (Exception e)
+            {
+                Exceptionhandle em = new Exceptionhandle();
+                em.Error = "Failed at GetAllCoachOrMentorDetails()";
+                em.Log = e.Message.Replace("\r\n", "");
+                var st = new StackTrace(e, true);
+                var frame = st.GetFrame(0);
+                var line = frame.GetFileLineNumber();
+                _logCollection.Insert(em);
+                throw new MongoException("Signup failure!!!");
+            }
+            finally
+            {
+
             }
 
             return result;
@@ -281,9 +401,27 @@ namespace KindleSpur.Data
             {
                 result = _coachOrMentorCollection.FindAs<ICoachOrMentor>(Query.EQ("Role", role)).SetFields(Fields.Exclude("_id")).ToBsonDocument();
             }
-            catch (Exception ex)
+            catch (MongoException ex)
             {
-                _logCollection.Insert("{ Error : 'Failed at EditUser().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ");
+                string message = "{ Error : 'Failed at GetRecommended().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ";
+                _logCollection.Insert(message);
+                throw new MongoException("Signup failure!!!");
+                // _logCollection.Insert("{ Error : 'Failed at EditUser().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ");
+            }
+            catch (Exception e)
+            {
+                Exceptionhandle em = new Exceptionhandle();
+                em.Error = "Failed at GetRecommended()";
+                em.Log = e.Message.Replace("\r\n", "");
+                var st = new StackTrace(e, true);
+                var frame = st.GetFrame(0);
+                var line = frame.GetFileLineNumber();
+                _logCollection.Insert(em);
+                throw new MongoException("Signup failure!!!");
+            }
+            finally
+            {
+
             }
 
             return result;
@@ -298,7 +436,25 @@ namespace KindleSpur.Data
             }
             catch (MongoException ex)
             {
-                _logCollection.Insert("{ Error : 'Failed at EditUser().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ");
+                string message = "{ Error : 'Failed at GetCoachOrMentorDetail().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ";
+                _logCollection.Insert(message);
+                throw new MongoException("Signup failure!!!");
+                //_logCollection.Insert("{ Error : 'Failed at EditUser().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ");
+            }
+            catch (Exception e)
+            {
+                Exceptionhandle em = new Exceptionhandle();
+                em.Error = "Failed at GetCoachOrMentorDetail()";
+                em.Log = e.Message.Replace("\r\n", "");
+                var st = new StackTrace(e, true);
+                var frame = st.GetFrame(0);
+                var line = frame.GetFileLineNumber();
+                _logCollection.Insert(em);
+                throw new MongoException("Signup failure!!!");
+            }
+            finally
+            {
+
             }
 
             return result;
@@ -334,12 +490,32 @@ namespace KindleSpur.Data
                     }
                 }
             }
-            catch (Exception ex)
+            catch (MongoException ex)
             {
-                throw;
+                string message = "{ Error : 'Failed at GetAllCoachOrMentors().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ";
+                _logCollection.Insert(message);
+                throw new MongoException("Signup failure!!!");
+                // _logCollection.Insert("{ Error : 'Failed at  GetAllCoachOrMentors().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ");
+
+            }
+            catch (Exception e)
+            {
+                Exceptionhandle em = new Exceptionhandle();
+                em.Error = "Failed at GetAllCoachOrMentors()";
+                em.Log = e.Message.Replace("\r\n", "");
+                var st = new StackTrace(e, true);
+                var frame = st.GetFrame(0);
+                var line = frame.GetFileLineNumber();
+                _logCollection.Insert(em);
+                throw new MongoException("Signup failure!!!");
+            }
+            finally
+            {
+
             }
 
-            if(lstCoachOrMentor.Count >0)
+
+            if (lstCoachOrMentor.Count >0)
             return FillSerachData(lstCoachOrMentor);
             return null;
         }
@@ -381,10 +557,28 @@ namespace KindleSpur.Data
                 }
 
             }
-            catch (Exception ex)
+            catch (MongoException ex)
+            {
+                string message = "{ Error : 'Failed at GetCoachingStatus().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ";
+                _logCollection.Insert(message);
+                throw new MongoException("Signup failure!!!");
+                // _logCollection.Insert("{ Error : 'Failed at  GetAllCoachOrMentors().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ");
+
+            }
+            catch (Exception e)
+            {
+                Exceptionhandle em = new Exceptionhandle();
+                em.Error = "Failed at GetCoachingStatus()";
+                em.Log = e.Message.Replace("\r\n", "");
+                var st = new StackTrace(e, true);
+                var frame = st.GetFrame(0);
+                var line = frame.GetFileLineNumber();
+                _logCollection.Insert(em);
+                throw new MongoException("Signup failure!!!");
+            }
+            finally
             {
 
-                throw;
             }
             return result;
         }
@@ -450,15 +644,40 @@ namespace KindleSpur.Data
         {
             List<CoachOrMentor> lstCoach = new List<CoachOrMentor>();
             List<string> lstTopicOrSkill = new List<string>();
+            try
+            {
+                foreach (SkillOrTopic s1 in lstSkillforCochee)
+                {
+                    lstTopicOrSkill.Add(s1.Name);
+                }
+                foreach (SkillOrTopic s1 in lstSkillforCochee)
+                {
+                    lstCoach.AddRange(_coachOrMentorCollection.FindAs<CoachOrMentor>(Query.And(Query.EQ("Skills.Name", s1.Name), Query.EQ("Role", Role))).SetFields(Fields.Exclude("Feedbacks")));
+                }
 
-            foreach (SkillOrTopic s1 in lstSkillforCochee)
-            {
-                lstTopicOrSkill.Add(s1.Name);
             }
-            foreach (SkillOrTopic s1 in lstSkillforCochee)
+            catch (MongoException ex)
             {
-                lstCoach.AddRange(_coachOrMentorCollection.FindAs<CoachOrMentor>(Query.And(Query.EQ("Skills.Name", s1.Name), Query.EQ("Role", Role))).SetFields(Fields.Exclude("Feedbacks")));
-             }
+                string message = "{ Error : 'Failed at GetRecommendedCoachList().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ";
+                _logCollection.Insert(message);
+                throw new MongoException("Signup failure!!!");
+                // _logCollection.Insert("{ Error : 'Failed at  GetRecommendedCoachList().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ");
+            }
+            catch (Exception e)
+            {
+                Exceptionhandle em = new Exceptionhandle();
+                em.Error = "Failed at GetRecommendedCoachList()";
+                em.Log = e.Message.Replace("\r\n", "");
+                var st = new StackTrace(e, true);
+                var frame = st.GetFrame(0);
+                var line = frame.GetFileLineNumber();
+                _logCollection.Insert(em);
+                throw new MongoException("Signup failure!!!");
+            }
+            finally
+            {
+
+            }
             if (lstCoach.Count > 0)
                 //  return FillSerachData(lstCoach);
                 return RecommendedFillSerachData(lstCoach, lstTopicOrSkill, UserId);
@@ -469,13 +688,40 @@ namespace KindleSpur.Data
         {
             List<CoachOrMentor> lstCoach = new List<CoachOrMentor>();
             List<string> lstTopicOrSkill = new List<string>();
-            foreach (SkillOrTopic s1 in lstTopicforMentee)
+            try
             {
-                lstTopicOrSkill.Add(s1.Name);
+                foreach (SkillOrTopic s1 in lstTopicforMentee)
+                {
+                    lstTopicOrSkill.Add(s1.Name);
+                }
+                foreach (SkillOrTopic s1 in lstTopicforMentee)
+                {
+                    lstCoach.AddRange(_coachOrMentorCollection.FindAs<CoachOrMentor>(Query.And(Query.EQ("Topics.Name", s1.Name), Query.EQ("Role", Role))).SetFields(Fields.Exclude("Feedbacks")));
+                }
+
             }
-            foreach (SkillOrTopic s1 in lstTopicforMentee)
+            catch (MongoException ex)
             {
-                lstCoach.AddRange(_coachOrMentorCollection.FindAs<CoachOrMentor>(Query.And(Query.EQ("Topics.Name", s1.Name), Query.EQ("Role", Role))).SetFields(Fields.Exclude("Feedbacks")));
+                string message = "{ Error : 'Failed at GetRecommendedMentorList().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ";
+                _logCollection.Insert(message);
+                throw new MongoException("Signup failure!!!");
+
+                //_logCollection.Insert("{ Error : 'Failed at  GetRecommendedMentorList().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ");
+            }
+            catch (Exception e)
+            {
+                Exceptionhandle em = new Exceptionhandle();
+                em.Error = "Failed at GetRecommendedMentorList()";
+                em.Log = e.Message.Replace("\r\n", "");
+                var st = new StackTrace(e, true);
+                var frame = st.GetFrame(0);
+                var line = frame.GetFileLineNumber();
+                _logCollection.Insert(em);
+                throw new MongoException("Signup failure!!!");
+            }
+            finally
+            {
+
             }
             if (lstCoach.Count > 0)
                 //  return FillSerachData(lstCoach);
@@ -486,84 +732,174 @@ namespace KindleSpur.Data
         private List<SearchCoachOrMentor> FillSerachData(List<CoachOrMentor> lstCoachOrMentor)
         {
             List<SearchCoachOrMentor> lstSearchCoachOrMentor = new List<SearchCoachOrMentor>();
-
-            lstCoachOrMentor = lstCoachOrMentor.GroupBy(test => test.UserId)
-                  .Select(grp => grp.First())
-                  .ToList();
-            if(lstCoachOrMentor.Count>0)
-            { 
-                for (int i = 0; i < lstCoachOrMentor.Count; i++)
+            try
+            {
+                lstCoachOrMentor = lstCoachOrMentor.GroupBy(test => test.UserId)
+                           .Select(grp => grp.First())
+                           .ToList();
+                if (lstCoachOrMentor.Count > 0)
                 {
-                    lstSearchCoachOrMentor.Add(GetCoachOrMentorSearchDetails(lstCoachOrMentor[i]));
+                    for (int i = 0; i < lstCoachOrMentor.Count; i++)
+                    {
+                        lstSearchCoachOrMentor.Add(GetCoachOrMentorSearchDetails(lstCoachOrMentor[i]));
+                    }
                 }
             }
+            catch (MongoException ex)
+            {
+                string message = "{ Error : 'Failed at FillSerachData().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ";
+                _logCollection.Insert(message);
+                throw new MongoException("Signup failure!!!");
+                //_logCollection.Insert("{ Error : 'Failed at  FillSerachData().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ");
+            }
+            catch (Exception e)
+            {
+                Exceptionhandle em = new Exceptionhandle();
+                em.Error = "Failed at FillSerachData()";
+                em.Log = e.Message.Replace("\r\n", "");
+                var st = new StackTrace(e, true);
+                var frame = st.GetFrame(0);
+                var line = frame.GetFileLineNumber();
+                _logCollection.Insert(em);
+                throw new MongoException("Signup failure!!!");
+            }
+
+
             return lstSearchCoachOrMentor;
         }
 
         private SearchCoachOrMentor GetCoachOrMentorSearchDetails(CoachOrMentor c)
         {
             SearchCoachOrMentor obj = new SearchCoachOrMentor();
-            obj.EmailAddress = c.UserId;
-            obj.Role = c.Role;
-            if (c.Role == "Coach")
-                obj.Skills = c.Skills;
-            else if (c.Role == "Mentor")
-                obj.Topics = c.Topics;
-            var _userCollection = con.GetCollection("UserDetails");
-            User userDetail = _userCollection.FindOneAs<User>(Query.EQ("EmailAddress", c.UserId));
-            obj.FirstName = userDetail.FirstName;
-            obj.LastName = userDetail.LastName;
-            obj.PhotoURL = userDetail.Photo;
-            obj.Mobile = userDetail.Mobile;
-            obj.LinkdinURL = userDetail.LinkdinURL;
-            obj.description = userDetail.description;
+            try
+            {
+                obj.EmailAddress = c.UserId;
+                obj.Role = c.Role;
+                if (c.Role == "Coach")
+                    obj.Skills = c.Skills;
+                else if (c.Role == "Mentor")
+                    obj.Topics = c.Topics;
+                var _userCollection = con.GetCollection("UserDetails");
+                User userDetail = _userCollection.FindOneAs<User>(Query.EQ("EmailAddress", c.UserId));
+                obj.FirstName = userDetail.FirstName;
+                obj.LastName = userDetail.LastName;
+                obj.PhotoURL = userDetail.Photo;
+                obj.Mobile = userDetail.Mobile;
+                obj.LinkdinURL = userDetail.LinkdinURL;
+                obj.description = userDetail.description;
+
+            }
+            catch (MongoException ex) 
+            {
+
+                string message = "{ Error : 'Failed at GetCoachOrMentorSearchDetails().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ";
+                _logCollection.Insert(message);
+                throw new MongoException("Signup failure!!!");
+                // _logCollection.Insert("{ Error : 'Failed at  GetCoachOrMentorSearchDetails().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ");
+
+            }
+            catch (Exception e)
+            {
+                Exceptionhandle em = new Exceptionhandle();
+                em.Error = "Failed at GetCoachOrMentorSearchDetails()";
+                em.Log = e.Message.Replace("\r\n", "");
+                var st = new StackTrace(e, true);
+                var frame = st.GetFrame(0);
+                var line = frame.GetFileLineNumber();
+                _logCollection.Insert(em);
+                throw new MongoException("Signup failure!!!");
+            }
+
             return obj;
         }
 
         private List<SearchCoachOrMentor> RecommendedFillSerachData(List<CoachOrMentor> lstCoachOrMentor, List<string> lstTopicOrSkill,string UserId)
         {
             List<SearchCoachOrMentor> lstSearchCoachOrMentor = new List<SearchCoachOrMentor>();
+            try
+            {
+                lstCoachOrMentor = lstCoachOrMentor.Where(t => t.UserId != UserId)
+               .GroupBy(test => test.UserId)
+              .Select(grp => grp.First())
+              .ToList();
 
-           
-            lstCoachOrMentor = lstCoachOrMentor.Where(t=>t.UserId != UserId)
-                    .GroupBy(test => test.UserId)                  
-                   .Select(grp => grp.First())
-                   .ToList();
-
-            if (lstCoachOrMentor.Count>0)
-            { 
-
-                for (int i = 0; i < lstCoachOrMentor.Count; i++)
+                if (lstCoachOrMentor.Count > 0)
                 {
-                    lstSearchCoachOrMentor.Add(GetRecommendedCoachOrMentorSearchDetails(lstCoachOrMentor[i], lstTopicOrSkill));
+
+                    for (int i = 0; i < lstCoachOrMentor.Count; i++)
+                    {
+                        lstSearchCoachOrMentor.Add(GetRecommendedCoachOrMentorSearchDetails(lstCoachOrMentor[i], lstTopicOrSkill));
+                    }
                 }
             }
+            catch (MongoException ex)
+            {
+                string message = "{ Error : 'Failed at RecommendedFillSerachData().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ";
+                _logCollection.Insert(message);
+                throw new MongoException("Signup failure!!!");
+                // _logCollection.Insert("{ Error : 'Failed at  RecommendedFillSerachData().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ");
+            }
+            catch (Exception e)
+            {
+                Exceptionhandle em = new Exceptionhandle();
+                em.Error = "Failed at RecommendedFillSerachData()";
+                em.Log = e.Message.Replace("\r\n", "");
+                var st = new StackTrace(e, true);
+                var frame = st.GetFrame(0);
+                var line = frame.GetFileLineNumber();
+                _logCollection.Insert(em);
+                throw new MongoException("Signup failure!!!");
+            }
+
+
             return lstSearchCoachOrMentor;
         }
 
         private SearchCoachOrMentor GetRecommendedCoachOrMentorSearchDetails(CoachOrMentor c, List<string> lstTopicOrSkill)
         {
             SearchCoachOrMentor obj = new SearchCoachOrMentor();
-            obj.EmailAddress = c.UserId;
-            obj.Role = c.Role;
-            if (c.Role == "Coach")
+            try
             {
-                c.Skills = c.Skills.Where(i => lstTopicOrSkill.Contains(i.Name)).ToList();
-                obj.Skills = c.Skills;
+                obj.EmailAddress = c.UserId;
+                obj.Role = c.Role;
+                if (c.Role == "Coach")
+                {
+                    c.Skills = c.Skills.Where(i => lstTopicOrSkill.Contains(i.Name)).ToList();
+                    obj.Skills = c.Skills;
+                }
+                else if (c.Role == "Mentor")
+                {
+                    c.Topics = c.Topics.Where(i => lstTopicOrSkill.Contains(i.Name)).ToList();
+                    obj.Topics = c.Topics;
+                }
+                var _userCollection = con.GetCollection("UserDetails");
+                User userDetail = _userCollection.FindOneAs<User>(Query.EQ("EmailAddress", c.UserId));
+                obj.FirstName = userDetail.FirstName;
+                obj.LastName = userDetail.LastName;
+                obj.PhotoURL = userDetail.Photo;
+                obj.Mobile = userDetail.Mobile;
+                obj.LinkdinURL = userDetail.LinkdinURL;
+                obj.description = userDetail.description;
             }
-            else if (c.Role == "Mentor")
+            catch (MongoException ex)
             {
-                c.Topics = c.Topics.Where(i => lstTopicOrSkill.Contains(i.Name)).ToList();
-                obj.Topics = c.Topics;
+                string message = "{ Error : 'Failed at GetRecommendedCoachOrMentorSearchDetails().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ";
+                _logCollection.Insert(message);
+                throw new MongoException("Signup failure!!!");
+                // _logCollection.Insert("{ Error : 'Failed at  GetRecommendedCoachOrMentorSearchDetails().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ");
             }
-            var _userCollection = con.GetCollection("UserDetails");
-            User userDetail = _userCollection.FindOneAs<User>(Query.EQ("EmailAddress", c.UserId));
-            obj.FirstName = userDetail.FirstName;
-            obj.LastName = userDetail.LastName;
-            obj.PhotoURL = userDetail.Photo;
-            obj.Mobile = userDetail.Mobile;
-            obj.LinkdinURL = userDetail.LinkdinURL;
-            obj.description = userDetail.description;
+            catch (Exception e)
+            {
+                Exceptionhandle em = new Exceptionhandle();
+                em.Error = "Failed at GetRecommendedCoachOrMentorSearchDetails()";
+                em.Log = e.Message.Replace("\r\n", "");
+                var st = new StackTrace(e, true);
+                var frame = st.GetFrame(0);
+                var line = frame.GetFileLineNumber();
+                _logCollection.Insert(em);
+                throw new MongoException("Signup failure!!!");
+            }
+
             return obj;
         }
     }

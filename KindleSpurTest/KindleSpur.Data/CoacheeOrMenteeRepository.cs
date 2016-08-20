@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using KindleSpur.Models;
+using System.Diagnostics;
 
 namespace KindleSpur.Data
 {
@@ -61,8 +62,26 @@ namespace KindleSpur.Data
             }
             catch (MongoException ex)
             {
-                _logCollection.Insert("{ Error : 'Failed at AddNewCoacheeOrMentee().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ");
+                string message = "{ Error : 'Failed at AddNewCoacheeOrMentee().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ";
+                _logCollection.Insert(message);
                 throw new MongoException("Signup failure!!!");
+                // _logCollection.Insert("{ Error : 'Failed at AddNewCoacheeOrMentee().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ");
+                //throw new MongoException("Signup failure!!!");
+            }
+            catch (Exception e)
+            {
+                Exceptionhandle em = new Exceptionhandle();
+                em.Error = "Failed at AddNewCoacheeOrMentee()";
+                em.Log = e.Message.Replace("\r\n", "");
+                var st = new StackTrace(e, true);
+                var frame = st.GetFrame(0);
+                var line = frame.GetFileLineNumber();
+                _logCollection.Insert(em);
+                throw new MongoException("Signup failure!!!");
+            }
+            finally
+            {
+
             }
 
 
@@ -161,7 +180,25 @@ namespace KindleSpur.Data
             }
             catch (MongoException ex)
             {
-                _logCollection.Insert("{ Error : 'Failed at EditUser().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ");
+                string message = "{ Error : 'Failed at EditCoacheeOrMentee().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ";
+                _logCollection.Insert(message);
+                throw new MongoException("Signup failure!!!");
+                //_logCollection.Insert("{ Error : 'Failed at EditUser().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ");
+            }
+            catch (Exception e)
+            {
+                Exceptionhandle em = new Exceptionhandle();
+                em.Error = "Failed at EditCoacheeOrMentee()";
+                em.Log = e.Message.Replace("\r\n", "");
+                var st = new StackTrace(e, true);
+                var frame = st.GetFrame(0);
+                var line = frame.GetFileLineNumber();
+                _logCollection.Insert(em);
+                throw new MongoException("Signup failure!!!");
+            }
+            finally
+            {
+
             }
             return _transactionStatus;
 
@@ -190,8 +227,26 @@ namespace KindleSpur.Data
             }
             catch (MongoException ex)
             {
-                _logCollection.Insert("{ Error : 'Failed at AddNewCoacheeOrMentee().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ");
+                string message = "{ Error : 'Failed at DeleteCoacheeOrMentee().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ";
+                _logCollection.Insert(message);
                 throw new MongoException("Signup failure!!!");
+                //_logCollection.Insert("{ Error : 'Failed at AddNewCoacheeOrMentee().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ");
+                //throw new MongoException("Signup failure!!!");
+            }
+            catch (Exception e)
+            {
+                Exceptionhandle em = new Exceptionhandle();
+                em.Error = "Failed at DeleteCoacheeOrMentee()";
+                em.Log = e.Message.Replace("\r\n", "");
+                var st = new StackTrace(e, true);
+                var frame = st.GetFrame(0);
+                var line = frame.GetFileLineNumber();
+                _logCollection.Insert(em);
+                throw new MongoException("Signup failure!!!");
+            }
+            finally
+            {
+
             }
             return _transactionStatus;
         }
@@ -202,9 +257,27 @@ namespace KindleSpur.Data
             {
                 result = _coacheeOrMenteeCollection.FindAs<ICoacheeOrMentee>(Query.EQ("Role", role)).SetFields(Fields.Exclude("_id")).ToBsonDocument();
             }
-            catch (Exception ex)
+            catch (MongoException ex)
             {
-                _logCollection.Insert("{ Error : 'Failed at EditUser().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ");
+                string message = "{ Error : 'Failed at GetRecommended().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ";
+                _logCollection.Insert(message);
+                throw new MongoException("Signup failure!!!");
+                // _logCollection.Insert("{ Error : 'Failed at EditUser().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ");
+            }
+            catch (Exception e)
+            {
+                Exceptionhandle em = new Exceptionhandle();
+                em.Error = "Failed at GetRecommended()";
+                em.Log = e.Message.Replace("\r\n", "");
+                var st = new StackTrace(e, true);
+                var frame = st.GetFrame(0);
+                var line = frame.GetFileLineNumber();
+                _logCollection.Insert(em);
+                throw new MongoException("Signup failure!!!");
+            }
+            finally
+            {
+
             }
 
             return result;
@@ -228,8 +301,24 @@ namespace KindleSpur.Data
             }
             catch (MongoException ex)
             {
-                _logCollection.Insert("{ Error : 'Failed at AddNewCoacheeOrMentee().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ");
+                string message = "{ Error : 'Failed at GetRewardPoints().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ";
+                _logCollection.Insert(message);
                 throw new MongoException("Signup failure!!!");
+            }
+            catch (Exception e)
+            {
+                Exceptionhandle em = new Exceptionhandle();
+                em.Error = "Failed at GetRewardPoints()";
+                em.Log = e.Message.Replace("\r\n", "");
+                var st = new StackTrace(e, true);
+                var frame = st.GetFrame(0);
+                var line = frame.GetFileLineNumber();
+                _logCollection.Insert(em);
+                throw new MongoException("Signup failure!!!");
+            }
+            finally
+            {
+
             }
 
         }
@@ -258,7 +347,24 @@ namespace KindleSpur.Data
             }
             catch (MongoException ex)
             {
-                _logCollection.Insert("{ Error : 'Failed at EditUser().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ");
+                string message = "{ Error : 'Failed at GetCoacheeOrMenteeDetail().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ";
+                _logCollection.Insert(message);
+                throw new MongoException("Signup failure!!!");
+            }
+            catch (Exception e)
+            {
+                Exceptionhandle em = new Exceptionhandle();
+                em.Error = "Failed at GetCoacheeOrMenteeDetail()";
+                em.Log = e.Message.Replace("\r\n", "");
+                var st = new StackTrace(e, true);
+                var frame = st.GetFrame(0);
+                var line = frame.GetFileLineNumber();
+                _logCollection.Insert(em);
+                throw new MongoException("Signup failure!!!");
+            }
+            finally
+            {
+
             }
 
             return result;
@@ -284,10 +390,27 @@ namespace KindleSpur.Data
                 }
 
             }
-            catch (Exception ex)
+            catch (MongoException ex)
             {
 
-                throw;
+                string message = "{ Error : 'Failed at GetAllCoacheeOrMentee().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ";
+                _logCollection.Insert(message);
+                throw new MongoException("Signup failure!!!");
+            }
+            catch (Exception e)
+            {
+                Exceptionhandle em = new Exceptionhandle();
+                em.Error = "Failed at GetAllCoacheeOrMentee()";
+                em.Log = e.Message.Replace("\r\n", "");
+                var st = new StackTrace(e, true);
+                var frame = st.GetFrame(0);
+                var line = frame.GetFileLineNumber();
+                _logCollection.Insert(em);
+                throw new MongoException("Signup failure!!!");
+            }
+            finally
+            {
+
             }
 
             return coacheeEntities.ToList();
@@ -318,24 +441,66 @@ namespace KindleSpur.Data
                 _transactionStatus = true;
                 return user.TotalRewardPoints;
             }
+            catch (MongoException ex)
+            {
+                string message = "{ Error : 'Failed at addFeedback().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ";
+                _logCollection.Insert(message);
+                throw new MongoException("Signup failure!!!");
+                //_transactionStatus = false;
+            }
             catch (Exception e)
             {
-                _transactionStatus = false;
+                Exceptionhandle em = new Exceptionhandle();
+                em.Error = "Failed at addFeedback()";
+                em.Log = e.Message.Replace("\r\n", "");
+                var st = new StackTrace(e, true);
+                var frame = st.GetFrame(0);
+                var line = frame.GetFileLineNumber();
+                _logCollection.Insert(em);
+                throw new MongoException("Signup failure!!!");
+            }
+            finally
+            {
+
             }
             return 0;
 
         }
         public List<SkillOrTopic> GetSkillsForCoachee(string UserId)
         {
+            try
+            {
+                var result = _coacheeOrMenteeCollection.FindOneAs<CoacheeOrMentee>(Query.And(
+                                                                   Query.EQ("UserId", UserId),
+                                                                   Query.EQ("Role", "Coachee")
+                                                                ));
+                if (result != null)
+                    return result.Skills;
+                else
+                    return new List<SkillOrTopic>();
+            }
+            catch (MongoException ex)
+            {
 
-            var result = _coacheeOrMenteeCollection.FindOneAs<CoacheeOrMentee>(Query.And(
-                                                                    Query.EQ("UserId", UserId),
-                                                                    Query.EQ("Role", "Coachee")
-                                                                 ));
-            if (result != null)
-                return result.Skills;
-            else
-                return new List<SkillOrTopic>();
+                string message = "{ Error : 'Failed at GetSkillsForCoachee().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ";
+                _logCollection.Insert(message);
+                throw new MongoException("Signup failure!!!");
+            }
+            catch (Exception e)
+            {
+                Exceptionhandle em = new Exceptionhandle();
+                em.Error = "Failed at GetSkillsForCoachee()";
+                em.Log = e.Message.Replace("\r\n", "");
+                var st = new StackTrace(e, true);
+                var frame = st.GetFrame(0);
+                var line = frame.GetFileLineNumber();
+                _logCollection.Insert(em);
+                throw new MongoException("Signup failure!!!");
+            }
+            finally
+            {
+
+            }
         }
 
         public List<CoacheeOrMentee> GetAllCoacheeOrMentees(CTSFilter ctsFilter)
@@ -358,10 +523,26 @@ namespace KindleSpur.Data
                 }
 
             }
-            catch (Exception ex)
+            catch (MongoException ex)
+            {
+                string message = "{ Error : 'Failed at GetAllCoacheeOrMentees().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ";
+                _logCollection.Insert(message);
+                throw new MongoException("Signup failure!!!");
+            }
+            catch (Exception e)
+            {
+                Exceptionhandle em = new Exceptionhandle();
+                em.Error = "Failed at GetAllCoacheeOrMentees()";
+                em.Log = e.Message.Replace("\r\n", "");
+                var st = new StackTrace(e, true);
+                var frame = st.GetFrame(0);
+                var line = frame.GetFileLineNumber();
+                _logCollection.Insert(em);
+                throw new MongoException("Signup failure!!!");
+            }
+            finally
             {
 
-                throw;
             }
 
             return coacheeEntities.ToList();
@@ -404,10 +585,26 @@ namespace KindleSpur.Data
                 }
 
             }
-            catch (Exception ex)
+            catch (MongoException ex)
+            {
+                string message = "{ Error : 'Failed at GetCoachingStatus().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ";
+                _logCollection.Insert(message);
+                throw new MongoException("Signup failure!!!");
+            }
+            catch (Exception e)
+            {
+                Exceptionhandle em = new Exceptionhandle();
+                em.Error = "Failed at GetCoachingStatus()";
+                em.Log = e.Message.Replace("\r\n", "");
+                var st = new StackTrace(e, true);
+                var frame = st.GetFrame(0);
+                var line = frame.GetFileLineNumber();
+                _logCollection.Insert(em);
+                throw new MongoException("Signup failure!!!");
+            }
+            finally
             {
 
-                throw;
             }
             return result;
         }

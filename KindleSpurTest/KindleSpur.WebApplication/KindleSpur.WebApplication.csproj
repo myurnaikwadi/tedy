@@ -254,6 +254,7 @@
     <Compile Include="Controllers\MeetingSchedularController.cs" />
     <Compile Include="Controllers\MenteeController.cs" />
     <Compile Include="Controllers\MentorController.cs" />
+    <Compile Include="Controllers\ResourcesController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Controllers\ValueController.cs" />
     <Compile Include="EmailHelper\EmailNotification.cs" />
@@ -311,6 +312,8 @@
     <Content Include="Images\edit_Icon.png" />
     <Content Include="Images\Game2.png" />
     <Content Include="Images\gameConsole.png" />
+    <Content Include="Images\icons\1351182578_angelina-jolie-290.jpg" />
+    <Content Include="Images\icons\61391.png" />
     <Content Include="Images\icons\books icon 1.png" />
     <Content Include="Images\icons\books icon 2.png" />
     <Content Include="Images\icons\books icon 3.png" />
@@ -323,6 +326,7 @@
     <Content Include="Images\icons\coaching_status.png" />
     <Content Include="Images\icons\coach_logo.png" />
     <Content Include="Images\icons\communication.png" />
+    <Content Include="Images\icons\Dashboard6.png" />
     <Content Include="Images\icons\delete.png" />
     <Content Include="Images\icons\Game2.png" />
     <Content Include="Images\icons\kindlespurlogo.png" />
@@ -330,8 +334,11 @@
     <Content Include="Images\icons\knowledge_garden.png" />
     <Content Include="Images\icons\mentee_logo.png" />
     <Content Include="Images\icons\mentor_logo.png" />
+    <Content Include="Images\icons\microsoft-excel-icon.png" />
+    <Content Include="Images\icons\Microsoft_Word_2013_icon.png" />
     <Content Include="Images\icons\my_rewords.png" />
     <Content Include="Images\icons\profile.png" />
+    <Content Include="Images\icons\resources1.png" />
     <Content Include="Images\icons\search_mentor_coach.png" />
     <Content Include="Images\icons\trending topics1.png" />
     <Content Include="Images\icons\trending topics2.png" />
@@ -418,6 +425,7 @@
     <Content Include="fonts\fontawesome-webfont.ttf" />
     <Content Include="fonts\fontawesome-webfont.svg" />
     <Content Include="fonts\fontawesome-webfont.eot" />
+    <Content Include="Scripts\css\ksDashBoard\ksResources.css" />
     <Content Include="Scripts\css\ksValue\ksValueFeeds.css" />
     <Content Include="Scripts\d3.v3.js" />
     <Content Include="Scripts\d3.v3.min.js" />
@@ -483,6 +491,7 @@
     <Content Include="Views\Home\ksVCGameView.cshtml" />
     <Content Include="Views\Home\ksFeedBackPanel.cshtml" />
     <Content Include="Views\Home\ksMyReward.cshtml" />
+    <Content Include="Views\Home\ksResources.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -490,6 +499,7 @@
     <Folder Include="Views\Coachee\" />
     <Folder Include="Views\Coach\" />
     <Folder Include="Views\Mentor\" />
+    <Folder Include="Views\Resources\" />
     <Folder Include="Views\Shared\" />
   </ItemGroup>
   <ItemGroup>

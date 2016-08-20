@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using MongoDB.Driver.Builders;
 using MongoDB.Bson;
 using System.Collections;
+using System.Diagnostics;
 
 namespace KindleSpur.Data
 {
@@ -20,6 +21,7 @@ namespace KindleSpur.Data
         private MongoCollection _logCollection;
         private MongoCollection _userCollection;
         private string emailAddress;
+
 
         public UserRepository()
         {              
@@ -56,12 +58,28 @@ namespace KindleSpur.Data
                 
                 _transactionStatus = true;
             }
-            catch (Exception ex)
+            catch (MongoException ex)
             {
-                _logCollection.Insert("{ Error : 'Failed at AddNewUser().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ");
-                throw new Exception("Signup failure!!!");
+                string message = "{ Error : 'Failed at AddNewUser().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ";
+                _logCollection.Insert(message);
+                throw new MongoException("Signup failure!!!");
             }
-            
+            catch (Exception e)
+            {
+                Exceptionhandle em = new Exceptionhandle();
+                em.Error = "Failed at AddNewUser()";
+                em.Log = e.Message.Replace("\r\n", "");
+                var st = new StackTrace(e, true);
+                var frame = st.GetFrame(0);
+                var line = frame.GetFileLineNumber();
+                _logCollection.Insert(em);
+                throw new MongoException("Signup failure!!!");
+            }
+            finally
+            {
+
+            }
+
             return _transactionStatus;
 
         }
@@ -83,7 +101,24 @@ namespace KindleSpur.Data
             }
             catch (MongoException ex)
             {
-                _logCollection.Insert("{ Error : 'Failed at EditUser().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ");
+                string message = "{ Error : 'Failed at EditUser().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ";
+                _logCollection.Insert(message);
+                throw new MongoException("Signup failure!!!");
+            }
+            catch (Exception e)
+            {
+                Exceptionhandle em = new Exceptionhandle();
+                em.Error = "Failed at EditUser()";
+                em.Log = e.Message.Replace("\r\n", "");
+                var st = new StackTrace(e, true);
+                var frame = st.GetFrame(0);
+                var line = frame.GetFileLineNumber();
+                _logCollection.Insert(em);
+                throw new MongoException("Signup failure!!!");
+            }
+            finally
+            {
+
             }
             return _transactionStatus;
         }
@@ -108,9 +143,26 @@ namespace KindleSpur.Data
             {
                  return _userCollection.FindOneByIdAs<IUser>(userId);
             }
-            catch (Exception ex)
+            catch (MongoException ex)
             {
+                string message = "{ Error : 'Failed at GetUserDetail().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ";
+                _logCollection.Insert(message);
                 throw new Exception("User does not Exist!!!");
+            }
+            catch (Exception e)
+            {
+                Exceptionhandle em = new Exceptionhandle();
+                em.Error = "Failed at GetUserDetail()";
+                em.Log = e.Message.Replace("\r\n", "");
+                var st = new StackTrace(e, true);
+                var frame = st.GetFrame(0);
+                var line = frame.GetFileLineNumber();
+                _logCollection.Insert(em);
+                throw new MongoException("Signup failure!!!");
+            }
+            finally
+            {
+
             }
         }
         public IUser GetUserDetail(string EmailAddress)
@@ -119,9 +171,26 @@ namespace KindleSpur.Data
             {
                 return _userCollection.FindOneAs<User>(Query.EQ("EmailAddress", EmailAddress));
             }
-            catch (Exception ex)
+            catch (MongoException ex)
             {
+                string message = "{ Error : 'Failed at GetUserDetail().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ";
+                _logCollection.Insert(message);
                 throw new Exception("User does not Exist!!!");
+            }
+            catch (Exception e)
+            {
+                Exceptionhandle em = new Exceptionhandle();
+                em.Error = "Failed at GetUserDetail()";
+                em.Log = e.Message.Replace("\r\n", "");
+                var st = new StackTrace(e, true);
+                var frame = st.GetFrame(0);
+                var line = frame.GetFileLineNumber();
+                _logCollection.Insert(em);
+                throw new MongoException("Signup failure!!!");
+            }
+            finally
+            {
+
             }
         }
 
@@ -139,9 +208,26 @@ namespace KindleSpur.Data
                 _userCollection.Save(userDetail);
                 _transactionStatus = true;
             }
-            catch (Exception ex)
+            catch (MongoException ex)
             {
-                _logCollection.Insert("{ Error : 'Failed at EditUser().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ");
+                string message = "{ Error : 'Failed at UpdateUserDetails().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ";
+                _logCollection.Insert(message);
+                throw new Exception("User does not Exist!!!");
+            }
+            catch (Exception e)
+            {
+                Exceptionhandle em = new Exceptionhandle();
+                em.Error = "Failed at UpdateUserDetails()";
+                em.Log = e.Message.Replace("\r\n", "");
+                var st = new StackTrace(e, true);
+                var frame = st.GetFrame(0);
+                var line = frame.GetFileLineNumber();
+                _logCollection.Insert(em);
+                throw new MongoException("Signup failure!!!");
+            }
+            finally
+            {
+
             }
             return _transactionStatus;
         }
@@ -157,9 +243,26 @@ namespace KindleSpur.Data
                 _userCollection.Save(userDetail);
                 _transactionStatus = true;
             }
-            catch (Exception ex)
+            catch (MongoException ex)
             {
-                _logCollection.Insert("{ Error : 'Failed at EditUser().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ");
+                string message = "{ Error : 'Failed at UpdateUserDesc().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ";
+                _logCollection.Insert(message);
+                throw new Exception("User does not Exist!!!");
+            }
+            catch (Exception e)
+            {
+                Exceptionhandle em = new Exceptionhandle();
+                em.Error = "Failed at UpdateUserDesc()";
+                em.Log = e.Message.Replace("\r\n", "");
+                var st = new StackTrace(e, true);
+                var frame = st.GetFrame(0);
+                var line = frame.GetFileLineNumber();
+                _logCollection.Insert(em);
+                throw new MongoException("Signup failure!!!");
+            }
+            finally
+            {
+
             }
             return _transactionStatus;
         }
@@ -174,9 +277,26 @@ namespace KindleSpur.Data
                 _userCollection.Save(userDetail);
                 _transactionStatus = true;
             }
-            catch (Exception ex)
+            catch (MongoException ex)
             {
-                _logCollection.Insert("{ Error : 'Failed at EditUser().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ");
+                string message = "{ Error : 'Failed at UpdateUserPhoto().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ";
+                _logCollection.Insert(message);
+                throw new Exception("User does not Exist!!!");
+            }
+            catch (Exception e)
+            {
+                Exceptionhandle em = new Exceptionhandle();
+                em.Error = "Failed at UpdateUserPhoto()";
+                em.Log = e.Message.Replace("\r\n", "");
+                var st = new StackTrace(e, true);
+                var frame = st.GetFrame(0);
+                var line = frame.GetFileLineNumber();
+                _logCollection.Insert(em);
+                throw new MongoException("Signup failure!!!");
+            }
+            finally
+            {
+
             }
             return _transactionStatus;
         }
@@ -190,9 +310,26 @@ namespace KindleSpur.Data
                 _userCollection.Save(userDetail);
                 _transactionStatus = true;
             }
-            catch (Exception ex)
+            catch (MongoException ex)
             {
-                _logCollection.Insert("{ Error : 'Failed at EditUser().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ");
+                string message = "{ Error : 'Failed at UpdatecoverPhoto().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ";
+                _logCollection.Insert(message);
+                throw new Exception("User does not Exist!!!");
+            }
+            catch (Exception e)
+            {
+                Exceptionhandle em = new Exceptionhandle();
+                em.Error = "Failed at UpdatecoverPhoto()";
+                em.Log = e.Message.Replace("\r\n", "");
+                var st = new StackTrace(e, true);
+                var frame = st.GetFrame(0);
+                var line = frame.GetFileLineNumber();
+                _logCollection.Insert(em);
+                throw new MongoException("Signup failure!!!");
+            }
+            finally
+            {
+
             }
             return _transactionStatus;
         }
@@ -236,9 +373,27 @@ namespace KindleSpur.Data
                 }
                 _transactionStatus = true;
             }
-            catch (Exception ex)
+            catch (MongoException ex)
             {
-                _logCollection.Insert("{ Error : 'Failed at EditUser().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ");
+
+                string message = "{ Error : 'Failed at GetRewardPoints().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ";
+                _logCollection.Insert(message);
+                throw new Exception("User does not Exist!!!");
+            }
+            catch (Exception e)
+            {
+                Exceptionhandle em = new Exceptionhandle();
+                em.Error = "Failed at GetRewardPoints()";
+                em.Log = e.Message.Replace("\r\n", "");
+                var st = new StackTrace(e, true);
+                var frame = st.GetFrame(0);
+                var line = frame.GetFileLineNumber();
+                _logCollection.Insert(em);
+                throw new MongoException("Signup failure!!!");
+            }
+            finally
+            {
+
             }
         }
 
@@ -266,11 +421,28 @@ namespace KindleSpur.Data
                     return _game.Key;
                 }
             }
-            catch (Exception ex)
+            catch (MongoException ex)
             {
-                _logCollection.Insert("{ Error : 'Failed at EditUser().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ");
-                 throw ex;
+                string message = "{ Error : 'Failed at GamesUnLocked().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ";
+                _logCollection.Insert(message);
+                throw new Exception("User does not Exist!!!");
             }
+            catch (Exception e)
+            {
+                Exceptionhandle em = new Exceptionhandle();
+                em.Error = "Failed at GamesUnLocked()";
+                em.Log = e.Message.Replace("\r\n", "");
+                var st = new StackTrace(e, true);
+                var frame = st.GetFrame(0);
+                var line = frame.GetFileLineNumber();
+                _logCollection.Insert(em);
+                throw new MongoException("Signup failure!!!");
+            }
+            finally
+            {
+
+            }
+
             return "";
         }
 
@@ -304,10 +476,27 @@ namespace KindleSpur.Data
                     return _game.Key;
                 }
             }
-            catch (Exception ex)
+            catch (MongoException ex)
             {
-                _logCollection.Insert("{ Error : 'Failed at EditUser().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ");
-                throw ex;
+                string message = "{ Error : 'Failed at PSRUnLocked().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ";
+                _logCollection.Insert(message);
+                throw new Exception("User does not Exist!!!");
+            }
+            catch (Exception e)
+            {
+                Exceptionhandle em = new Exceptionhandle();
+                em.Error = "Failed at PSRUnLocked()";
+                em.Log = e.Message.Replace("\r\n", "");
+                var st = new StackTrace(e, true);
+                var frame = st.GetFrame(0);
+                var line = frame.GetFileLineNumber();
+                _logCollection.Insert(em);
+                throw new MongoException("Signup failure!!!");
+            }
+            finally
+            {
+                
+
             }
             return "";
         }
@@ -351,9 +540,28 @@ namespace KindleSpur.Data
 
                 _transactionStatus = true;
             }
-            catch (Exception ex)
+            catch (MongoException ex)
             {
+                string message = "{ Error : 'Failed at RemoveVCSCActivity().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ";
+                _logCollection.Insert(message);
+                throw new Exception("User does not Exist!!!");
                 _transactionStatus = false;
+            }
+            catch (Exception e)
+            {
+                Exceptionhandle em = new Exceptionhandle();
+                em.Error = "Failed at RemoveVCSCActivity()";
+                em.Log = e.Message.Replace("\r\n", "");
+                var st = new StackTrace(e, true);
+                var frame = st.GetFrame(0);
+                var line = frame.GetFileLineNumber();
+                _logCollection.Insert(em);
+                throw new MongoException("Signup failure!!!");
+            }
+            finally
+            {
+               
+
             }
             return _transactionStatus;
         }
@@ -415,9 +623,26 @@ namespace KindleSpur.Data
                 _userCollection.Save(userDetail);
                 _transactionStatus = true;
             }
-            catch (Exception ex)
+            catch (MongoException ex)
             {
-                _logCollection.Insert("{ Error : 'Failed at EditUser().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ");
+                string message = "{ Error : 'Failed at SaveVCSCActivity().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ";
+                _logCollection.Insert(message);
+                throw new Exception("User does not Exist!!!");
+            }
+            catch (Exception e)
+            {
+                Exceptionhandle em = new Exceptionhandle();
+                em.Error = "Failed at SaveVCSCActivity()";
+                em.Log = e.Message.Replace("\r\n", "");
+                var st = new StackTrace(e, true);
+                var frame = st.GetFrame(0);
+                var line = frame.GetFileLineNumber();
+                _logCollection.Insert(em);
+                throw new MongoException("Signup failure!!!");
+            }
+            finally
+            {
+
             }
             return _transactionStatus;
         }
@@ -440,10 +665,28 @@ namespace KindleSpur.Data
                 
                 return true;
             }
-            catch (Exception)
+            catch (MongoException ex)
             {
-                return false;
-            }                   
+                string message = "{ Error : 'Failed at SaveValueFeedStory().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ";
+                _logCollection.Insert(message);
+                throw new Exception("User does not Exist!!!");
+            }
+            catch (Exception e)
+            {
+                Exceptionhandle em = new Exceptionhandle();
+                em.Error = "Failed at SaveValueFeedStory()";
+                em.Log = e.Message.Replace("\r\n", "");
+                var st = new StackTrace(e, true);
+                var frame = st.GetFrame(0);
+                var line = frame.GetFileLineNumber();
+                _logCollection.Insert(em);
+                throw new MongoException("Signup failure!!!");
+            }
+            finally
+            {
+               
+
+            }
         }
 
         public List<ValueFeedStory> GetValueFeedStories(string ImpactZone)

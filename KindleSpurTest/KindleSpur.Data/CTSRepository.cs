@@ -3,7 +3,9 @@ using KindleSpur.Models.Interfaces.Repository;
 using MongoDB.Bson;
 using MongoDB.Driver;
 using MongoDB.Driver.Builders;
+using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 
 namespace KindleSpur.Data
@@ -44,8 +46,24 @@ namespace KindleSpur.Data
             }
             catch (MongoException ex)
             {
-                _logCollection.Insert("{ Error : 'Failed at GetCategories().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ");
+                string message = "{ Error : 'Failed at GetCTS().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ";
+                _logCollection.Insert(message);
                 throw new MongoException("Signup failure!!!");
+            }
+            catch (Exception e)
+            {
+                Exceptionhandle em = new Exceptionhandle();
+                em.Error = "Failed at GetCTS()";
+                em.Log = e.Message.Replace("\r\n", "");
+                var st = new StackTrace(e, true);
+                var frame = st.GetFrame(0);
+                var line = frame.GetFileLineNumber();
+                _logCollection.Insert(em);
+                throw new MongoException("Signup failure!!!");
+            }
+            finally
+            {
+
             }
 
             return _categories;
@@ -64,8 +82,24 @@ namespace KindleSpur.Data
             }
             catch (MongoException ex)
             {
-                _logCollection.Insert("{ Error : 'Failed at GetCategories().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ");
+                string message = "{ Error : 'Failed at GetTopics().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ";
+                _logCollection.Insert(message);
                 throw new MongoException("Signup failure!!!");
+            }
+            catch (Exception e)
+            {
+                Exceptionhandle em = new Exceptionhandle();
+                em.Error = "Failed at GetTopics()";
+                em.Log = e.Message.Replace("\r\n", "");
+                var st = new StackTrace(e, true);
+                var frame = st.GetFrame(0);
+                var line = frame.GetFileLineNumber();
+                _logCollection.Insert(em);
+                throw new MongoException("Signup failure!!!");
+            }
+            finally
+            {
+
             }
 
             return _categories;
@@ -85,8 +119,24 @@ namespace KindleSpur.Data
             }
             catch (MongoException ex)
             {
-                _logCollection.Insert("{ Error : 'Failed at GetCategories().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ");
+                string message = "{ Error : 'Failed at GetCTSCategoryAndTopic().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ";
+                _logCollection.Insert(message);
                 throw new MongoException("Signup failure!!!");
+            }
+            catch (Exception e)
+            {
+                Exceptionhandle em = new Exceptionhandle();
+                em.Error = "Failed at GetCTSCategoryAndTopic()";
+                em.Log = e.Message.Replace("\r\n", "");
+                var st = new StackTrace(e, true);
+                var frame = st.GetFrame(0);
+                var line = frame.GetFileLineNumber();
+                _logCollection.Insert(em);
+                throw new MongoException("Signup failure!!!");
+            }
+            finally
+            {
+
             }
 
             return _categories;
@@ -105,8 +155,24 @@ namespace KindleSpur.Data
             }
             catch (MongoException ex)
             {
-                _logCollection.Insert("{ Error : 'Failed at GetCategories().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ");
+                string message = "{ Error : 'Failed at GetCategories().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ";
+                _logCollection.Insert(message);
                 throw new MongoException("Signup failure!!!");
+            }
+            catch (Exception e)
+            {
+                Exceptionhandle em = new Exceptionhandle();
+                em.Error = "Failed at GetCategories()";
+                em.Log = e.Message.Replace("\r\n", "");
+                var st = new StackTrace(e, true);
+                var frame = st.GetFrame(0);
+                var line = frame.GetFileLineNumber();
+                _logCollection.Insert(em);
+                throw new MongoException("Signup failure!!!");
+            }
+            finally
+            {
+
             }
 
             return _categories;
@@ -124,8 +190,24 @@ namespace KindleSpur.Data
             }
             catch (MongoException ex)
             {
-                _logCollection.Insert("{ Error : 'Failed at GetTopics().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ");
+                string message = "{ Error : 'Failed at GetTopics().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ";
+                _logCollection.Insert(message);
                 throw new MongoException("Signup failure!!!");
+            }
+            catch (Exception e)
+            {
+                Exceptionhandle em = new Exceptionhandle();
+                em.Error = "Failed at GetTopics()";
+                em.Log = e.Message.Replace("\r\n", "");
+                var st = new StackTrace(e, true);
+                var frame = st.GetFrame(0);
+                var line = frame.GetFileLineNumber();
+                _logCollection.Insert(em);
+                throw new MongoException("Signup failure!!!");
+            }
+            finally
+            {
+
             }
 
             return _topics;
@@ -142,8 +224,24 @@ namespace KindleSpur.Data
             }
             catch (MongoException ex)
             {
-                _logCollection.Insert("{ Error : 'Failed at GetSkills().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ");
+                string message = "{ Error : 'Failed at GetSkills().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ";
+                _logCollection.Insert(message);
                 throw new MongoException("Signup failure!!!");
+            }
+            catch (Exception e)
+            {
+                Exceptionhandle em = new Exceptionhandle();
+                em.Error = "Failed at GetSkills()";
+                em.Log = e.Message.Replace("\r\n", "");
+                var st = new StackTrace(e, true);
+                var frame = st.GetFrame(0);
+                var line = frame.GetFileLineNumber();
+                _logCollection.Insert(em);
+                throw new MongoException("Signup failure!!!");
+            }
+            finally
+            {
+
             }
 
             return _skills;
@@ -160,8 +258,24 @@ namespace KindleSpur.Data
             }
             catch (MongoException ex)
             {
-                _logCollection.Insert("{ Error : 'Failed at GetSkills().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ");
+                string message = "{ Error : 'Failed at GetSkills().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ";
+                _logCollection.Insert(message);
+                throw new MongoException("Signup failure!!!"); ;
+            }
+            catch (Exception e)
+            {
+                Exceptionhandle em = new Exceptionhandle();
+                em.Error = "Failed at GetSkills()";
+                em.Log = e.Message.Replace("\r\n", "");
+                var st = new StackTrace(e, true);
+                var frame = st.GetFrame(0);
+                var line = frame.GetFileLineNumber();
+                _logCollection.Insert(em);
                 throw new MongoException("Signup failure!!!");
+            }
+            finally
+            {
+
             }
 
             return _skills;
@@ -188,8 +302,24 @@ namespace KindleSpur.Data
             }
             catch (MongoException ex)
             {
-                _logCollection.Insert("{ Error : 'Failed at GetCoachTopicAndCategory().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ");
+                string message = "{ Error : 'Failed at GetMentorCategory().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ";
+                _logCollection.Insert(message);
+                throw new MongoException("Signup failure!!!"); ;
+            }
+            catch (Exception e)
+            {
+                Exceptionhandle em = new Exceptionhandle();
+                em.Error = "Failed at GetMentorCategory()";
+                em.Log = e.Message.Replace("\r\n", "");
+                var st = new StackTrace(e, true);
+                var frame = st.GetFrame(0);
+                var line = frame.GetFileLineNumber();
+                _logCollection.Insert(em);
                 throw new MongoException("Signup failure!!!");
+            }
+            finally
+            {
+
             }
 
             return _Category;
@@ -221,8 +351,24 @@ namespace KindleSpur.Data
             }
             catch (MongoException ex)
             {
-                _logCollection.Insert("{ Error : 'Failed at GetCoachTopicAndCategory().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ");
+                string message = "{ Error : 'Failed at GetCoachTopicAndCategory().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ";
+                _logCollection.Insert(message);
+                throw new MongoException("Signup failure!!!"); ;
+            }
+            catch (Exception e)
+            {
+                Exceptionhandle em = new Exceptionhandle();
+                em.Error = "Failed at GetCoachTopicAndCategory()";
+                em.Log = e.Message.Replace("\r\n", "");
+                var st = new StackTrace(e, true);
+                var frame = st.GetFrame(0);
+                var line = frame.GetFileLineNumber();
+                _logCollection.Insert(em);
                 throw new MongoException("Signup failure!!!");
+            }
+            finally
+            {
+
             }
 
             return _Category;
@@ -282,8 +428,24 @@ namespace KindleSpur.Data
             }
             catch (MongoException ex)
             {
-                _logCollection.Insert("{ Error : 'Failed at GetCategories().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ");
+                string message = "{ Error : 'Failed at GetCTSFilters().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ";
+                _logCollection.Insert(message);
+                throw new MongoException("Signup failure!!!"); ;
+            }
+            catch (Exception e)
+            {
+                Exceptionhandle em = new Exceptionhandle();
+                em.Error = "Failed at GetCoachTopicAndCategory()";
+                em.Log = e.Message.Replace("\r\n", "");
+                var st = new StackTrace(e, true);
+                var frame = st.GetFrame(0);
+                var line = frame.GetFileLineNumber();
+                _logCollection.Insert(em);
                 throw new MongoException("Signup failure!!!");
+            }
+            finally
+            {
+
             }
 
             return filters;
@@ -311,8 +473,24 @@ namespace KindleSpur.Data
             }
             catch (MongoException ex)
             {
-                _logCollection.Insert("{ Error : 'Failed at GetCoacheeTopicAndCategory().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ");
+                string message = "{ Error : 'Failed at GetCoacheeTopicAndCategory().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ";
+                _logCollection.Insert(message);
+                throw new MongoException("Signup failure!!!"); 
+            }
+            catch (Exception e)
+            {
+                Exceptionhandle em = new Exceptionhandle();
+                em.Error = "Failed at GetCoacheeTopicAndCategory()";
+                em.Log = e.Message.Replace("\r\n", "");
+                var st = new StackTrace(e, true);
+                var frame = st.GetFrame(0);
+                var line = frame.GetFileLineNumber();
+                _logCollection.Insert(em);
                 throw new MongoException("Signup failure!!!");
+            }
+            finally
+            {
+
             }
 
             return _Category;
@@ -339,8 +517,24 @@ namespace KindleSpur.Data
             }
             catch (MongoException ex)
             {
-                _logCollection.Insert("{ Error : 'Failed at GetSkills().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ");
+                string message = "{ Error : 'Failed at GetSkillsForTopic().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ";
+                _logCollection.Insert(message);
                 throw new MongoException("Signup failure!!!");
+            }
+            catch (Exception e)
+            {
+                Exceptionhandle em = new Exceptionhandle();
+                em.Error = "Failed at GetSkillsForTopic()";
+                em.Log = e.Message.Replace("\r\n", "");
+                var st = new StackTrace(e, true);
+                var frame = st.GetFrame(0);
+                var line = frame.GetFileLineNumber();
+                _logCollection.Insert(em);
+                throw new MongoException("Signup failure!!!");
+            }
+            finally
+            {
+
             }
 
             return _skills;

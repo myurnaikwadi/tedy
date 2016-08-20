@@ -124,7 +124,8 @@ namespace KindleSpur.WebApplication.Controllers
 
         [HttpPost]
         public string LoginResult(User signupObject)
-        {
+         {
+            
             response = new ResponseMessage();
             UserRepository _repo = new UserRepository();
             HttpCookie cookie = new HttpCookie("ksUser");

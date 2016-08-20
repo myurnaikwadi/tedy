@@ -17,10 +17,8 @@
                   , { name: 'SEARCH MENTOR' }
                    , { name: 'KNOWLEDGE FEED' }
                  , { name: 'COMMUNICATION' }
-
-               //  , { name: 'RESOURCES' }
-
                  , { name: 'MY REWARDS' }
+                 , { name: 'RESOURCES' }
                  //, { name: 'ADD TOPICS' }
     ]
     $scope.applicationRole = [{ name: 'COACHEE' }, { name: 'MENTEE' }, { name: 'COACH' }, { name: 'MENTOR' }]
@@ -43,7 +41,9 @@
                 { name: 'SEARCH MENTOR', url: '../../Images/icons/search_mentor_coach.png ' },
                 { name: 'KNOWLEDGE FEED', url: '../../Images/icons/Knowledge_feed.png ' },
                 { name: 'COMMUNICATION', url: '../../Images/icons/communication.png ' },
-                { name: 'MY REWARDS', url: '../../Images/icons/my_rewords.png ' }
+                { name: 'MY REWARDS', url: '../../Images/icons/my_rewords.png ' },
+                { name: 'RESOURCES', url: '../../Images/icons/resources1.png ' }
+
     ];
 
     $scope.loggedEmail = $rootScope.loggedDetail.EmailAddress;

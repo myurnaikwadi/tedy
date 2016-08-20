@@ -9,9 +9,12 @@ using MongoDB.Driver;
 using MongoDB.Driver.Builders;
 using MongoDB.Bson;
 using MongoDB.Driver.Linq;
+using MongoDB.Bson.Serialization.Attributes;
+using System.Diagnostics;
 
 namespace KindleSpur.Data
 {
+    [BsonIgnoreExtraElements]
     public class ConversationRepository : IConversationRepository
     {
         MongoClient _mongoClient;
@@ -56,8 +59,24 @@ namespace KindleSpur.Data
             }
             catch (MongoException ex)
             {
-                _logCollection.Insert("{ Error : 'Failed at AddNewConversation().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ");
+                string message = "{ Error : 'Failed at GetCoachingStatus().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ";
+                _logCollection.Insert(message);
                 throw new MongoException("New Conversation failure!!!");
+            }
+            catch (Exception e)
+            {
+                Exceptionhandle em = new Exceptionhandle();
+                em.Error = "Failed at GetCoachingStatus()";
+                em.Log = e.Message.Replace("\r\n", "");
+                var st = new StackTrace(e, true);
+                var frame = st.GetFrame(0);
+                var line = frame.GetFileLineNumber();
+                _logCollection.Insert(em);
+                throw new MongoException("Signup failure!!!");
+            }
+            finally
+            {
+
             }
 
             return _transactionStatus;
@@ -81,7 +100,24 @@ namespace KindleSpur.Data
             }
             catch (MongoException ex)
             {
-                _logCollection.Insert("{ Error : 'Failed at EditConversation().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ");
+                string message = "{ Error : 'Failed at EditConversation().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ";
+                _logCollection.Insert(message);
+                throw new MongoException("New Conversation failure!!!");
+            }
+            catch (Exception e)
+            {
+                Exceptionhandle em = new Exceptionhandle();
+                em.Error = "Failed at EditConversation()";
+                em.Log = e.Message.Replace("\r\n", "");
+                var st = new StackTrace(e, true);
+                var frame = st.GetFrame(0);
+                var line = frame.GetFileLineNumber();
+                _logCollection.Insert(em);
+                throw new MongoException("Signup failure!!!");
+            }
+            finally
+            {
+
             }
             return _transactionStatus;
         }
@@ -104,7 +140,24 @@ namespace KindleSpur.Data
             }
             catch (MongoException ex)
             {
-                _logCollection.Insert("{ Error : 'Failed at UpdateConversationStatus().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ");
+                string message = "{ Error : 'Failed at UpdateConversationStatus().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ";
+                _logCollection.Insert(message);
+                throw new MongoException("New Conversation failure!!!");
+            }
+            catch (Exception e)
+            {
+                Exceptionhandle em = new Exceptionhandle();
+                em.Error = "Failed at UpdateConversationStatus()";
+                em.Log = e.Message.Replace("\r\n", "");
+                var st = new StackTrace(e, true);
+                var frame = st.GetFrame(0);
+                var line = frame.GetFileLineNumber();
+                _logCollection.Insert(em);
+                throw new MongoException("Signup failure!!!");
+            }
+            finally
+            {
+
             }
             return _transactionStatus;
         }
@@ -145,7 +198,24 @@ namespace KindleSpur.Data
             }
             catch (MongoException ex)
             {
-                _logCollection.Insert("{ Error : 'Failed at ListConversation().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ");
+                string message = "{ Error : 'Failed at ListConversationForReceiver().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ";
+                _logCollection.Insert(message);
+                throw new MongoException("New Conversation failure!!!");
+            }
+            catch (Exception e)
+            {
+                Exceptionhandle em = new Exceptionhandle();
+                em.Error = "Failed at ListConversationForReceiver()";
+                em.Log = e.Message.Replace("\r\n", "");
+                var st = new StackTrace(e, true);
+                var frame = st.GetFrame(0);
+                var line = frame.GetFileLineNumber();
+                _logCollection.Insert(em);
+                throw new MongoException("Signup failure!!!");
+            }
+            finally
+            {
+
             }
 
             return _categories;
@@ -165,7 +235,24 @@ namespace KindleSpur.Data
             }
             catch (MongoException ex)
             {
-                _logCollection.Insert("{ Error : 'Failed at ListConversation().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ");
+                string message = "{ Error : 'Failed at ListConversationForSender().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ";
+                _logCollection.Insert(message);
+                throw new MongoException("New Conversation failure!!!");
+            }
+            catch (Exception e)
+            {
+                Exceptionhandle em = new Exceptionhandle();
+                em.Error = "Failed at ListConversationForSender()";
+                em.Log = e.Message.Replace("\r\n", "");
+                var st = new StackTrace(e, true);
+                var frame = st.GetFrame(0);
+                var line = frame.GetFileLineNumber();
+                _logCollection.Insert(em);
+                throw new MongoException("Signup failure!!!");
+            }
+            finally
+            {
+
             }
 
             return _categories;
@@ -260,9 +347,25 @@ namespace KindleSpur.Data
             }
             catch (MongoException ex)
             {
-                _logCollection.Insert("{ Error : 'Failed at ListConversation().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ");
+                string message = "{ Error : 'Failed at GetConversation().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ";
+                _logCollection.Insert(message);
+                throw new MongoException("New Conversation failure!!!");
             }
+            catch (Exception e)
+            {
+                Exceptionhandle em = new Exceptionhandle();
+                em.Error = "Failed at GetConversation()";
+                em.Log = e.Message.Replace("\r\n", "");
+                var st = new StackTrace(e, true);
+                var frame = st.GetFrame(0);
+                var line = frame.GetFileLineNumber();
+                _logCollection.Insert(em);
+                throw new MongoException("Signup failure!!!");
+            }
+            finally
+            {
 
+            }
             return _categories;
 
 
@@ -285,7 +388,25 @@ namespace KindleSpur.Data
             }
             catch (MongoException ex)
             {
-                _logCollection.Insert("{ Error : 'Failed at GetConversationRequest().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ");
+
+                string message = "{ Error : 'Failed at GetConversationRequest().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ";
+                _logCollection.Insert(message);
+                throw new MongoException("New Conversation failure!!!");
+            }
+            catch (Exception e)
+            {
+                Exceptionhandle em = new Exceptionhandle();
+                em.Error = "Failed at GetConversationRequest()";
+                em.Log = e.Message.Replace("\r\n", "");
+                var st = new StackTrace(e, true);
+                var frame = st.GetFrame(0);
+                var line = frame.GetFileLineNumber();
+                _logCollection.Insert(em);
+                throw new MongoException("Signup failure!!!");
+            }
+            finally
+            {
+
             }
 
             return _categories;
@@ -307,13 +428,40 @@ namespace KindleSpur.Data
         public List<Conversation> GetSkillsForConversation()
         {
             List<Conversation> result = new List<Conversation>();
-            var _conversationCollection = _kindleDatabase.GetCollection("Conversations");
-            List<Conversation> typeCoaching = _conversationCollection.AsQueryable<Conversation>().Where<Conversation>(sb => sb.ConversationType == "Coaching" && sb.Content.StartsWith("COACHING REQUEST BY")).Take(5).ToList();
-            List<Conversation> typeMentoring = _conversationCollection.AsQueryable<Conversation>().Where<Conversation>(sb => sb.ConversationType == "Mentoring" && sb.Content.StartsWith("MENTORING REQUEST BY")).Take(5).ToList();
+            try
+            {
+               
+                var _conversationCollection = _kindleDatabase.GetCollection("Conversations");
+                List<Conversation> typeCoaching = _conversationCollection.AsQueryable<Conversation>().Where<Conversation>(sb => sb.ConversationType == "Coaching" && sb.Content.StartsWith("COACHING REQUEST BY")).Take(5).ToList();
+                List<Conversation> typeMentoring = _conversationCollection.AsQueryable<Conversation>().Where<Conversation>(sb => sb.ConversationType == "Mentoring" && sb.Content.StartsWith("MENTORING REQUEST BY")).Take(5).ToList();
 
-            result.AddRange(typeCoaching);
-            result.AddRange(typeMentoring);
-    
+                result.AddRange(typeCoaching);
+                result.AddRange(typeMentoring);
+
+            }
+            catch (MongoException ex)
+            {
+
+                string message = "{ Error : 'Failed at GetSkillsForConversation().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ";
+                _logCollection.Insert(message);
+                throw new MongoException("New Conversation failure!!!");
+            }
+            catch (Exception e)
+            {
+                Exceptionhandle em = new Exceptionhandle();
+                em.Error = "Failed at GetConversationRequest()";
+                em.Log = e.Message.Replace("\r\n", "");
+                var st = new StackTrace(e, true);
+                var frame = st.GetFrame(0);
+                var line = frame.GetFileLineNumber();
+                _logCollection.Insert(em);
+                throw new MongoException("Signup failure!!!");
+            }
+            finally
+            {
+
+            }
+
             return result;
 
         }

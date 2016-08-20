@@ -9,6 +9,7 @@ using MongoDB.Driver;
 using MongoDB.Driver.Builders;
 using MongoDB.Bson;
 using MongoDB.Driver.Linq;
+using System.Diagnostics;
 
 namespace KindleSpur.Data
 {
@@ -54,8 +55,24 @@ namespace KindleSpur.Data
             }
             catch (MongoException ex)
             {
-                _logCollection.Insert("{ Error : 'Failed at AddNewMeeting().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ");
-                throw new MongoException("New Conversation failure!!!");
+                string message = "{ Error : 'Failed at AddNewMeeting().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ";
+                _logCollection.Insert(message);
+                throw new MongoException("Signup failure!!!");
+            }
+            catch (Exception e)
+            {
+                Exceptionhandle em = new Exceptionhandle();
+                em.Error = "Failed at AddNewMeeting()";
+                em.Log = e.Message.Replace("\r\n", "");
+                var st = new StackTrace(e, true);
+                var frame = st.GetFrame(0);
+                var line = frame.GetFileLineNumber();
+                _logCollection.Insert(em);
+                throw new MongoException("Signup failure!!!");
+            }
+            finally
+            {
+
             }
 
             return _transactionStatus;

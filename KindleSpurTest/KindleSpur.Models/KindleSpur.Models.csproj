@@ -62,6 +62,7 @@
     <Compile Include="Conversation.cs" />
     <Compile Include="CTSFilter.cs" />
     <Compile Include="Enums.cs" />
+    <Compile Include="Exceptionhandle.cs" />
     <Compile Include="Feedback.cs" />
     <Compile Include="Game.cs" />
     <Compile Include="Interfaces\ICategory.cs" />

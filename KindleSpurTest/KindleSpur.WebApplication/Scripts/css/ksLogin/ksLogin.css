@@ -230,3 +230,15 @@ float: left;
     margin: auto;
     margin-left: 40%;
 }
+.mosuehover {
+    width: 40% !important;
+       margin: auto;
+}
+.mosuehover:hover{
+    border:1px solid;
+    background-color:white;
+     -webkit-transform:scale(1);
+       box-shadow:0px 0px 10px 2px;
+            transform:scale(1);
+            transition: all 0.7s ease;
+}
