@@ -320,6 +320,9 @@ app.controller('ksLoginController', ['$scope', 'authentification', '$location', 
             $scope.displayAlert.formatType = '2';
             return
         }
+        $scope.displayAlert.showAlert = true;
+        $scope.displayAlert.message ="Please check mail";
+        $scope.displayAlert.formatType = '1';
         var _object = {
             EmailAddress: $scope.signupDetails.EmailAddress
         }

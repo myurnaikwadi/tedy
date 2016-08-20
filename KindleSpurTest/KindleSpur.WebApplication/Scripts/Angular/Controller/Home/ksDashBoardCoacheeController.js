@@ -659,6 +659,10 @@
         $scope.conversation.IsVerified = isVerified;
         $scope.conversation.isRead = false;
 
+        $scope.displayAlert.showAlert = true;
+        $scope.displayAlert.message = "Your request has been sent";
+        $scope.displayAlert.formatType = '1';
+
         if ($scope.conversation.SenderEmail === "" || $scope.conversation.ReceiverEmail === "")
             return false;
         var _id = $rootScope.loggedDetail.EmailAddress + ":CON#" + (Date.now()) + (Math.floor((Math.random() * 10) + 1));

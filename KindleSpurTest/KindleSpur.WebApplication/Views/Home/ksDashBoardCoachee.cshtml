@@ -2,14 +2,16 @@
     <div class="applicationTopStrip">
         <div style="position:absolute;" class="hiddenErrorNotificationClass" ng-class="{ 'showErrorNotificationClass' : displayAlert.showAlert  == true}">
             <div class="alert-message success" ng-show="displayAlert.formatType == '1'">
-                <a class="close" href="#" ng-click="displayAlert.showAlert = false">×</a>
-                <p>{{displayAlert.message}}</p>
+                <p class="alert-message1">{{displayAlert.message}}</p>
+                <a class="closealert-padding close" href="#" ng-click="displayAlert.showAlert = false">×</a>
+               
             </div>
             @*Green*@
 
             <div class="alert-message error" ng-show="displayAlert.formatType == '2'">
-                <a class="close" href="#" ng-click="displayAlert.showAlert = false">×</a>
-                <p>{{displayAlert.message}}</p>
+                <p class="alert-message1">{{displayAlert.message}}</p>
+                <a class="closealert-padding close" href="#" ng-click="displayAlert.showAlert = false">×</a>
+                
             </div>
             @*red*@
         </div>
@@ -176,7 +178,7 @@
             @*Communication - 5*@
             <div class="parentRoleDetailRight" ng-if="selectedMenu == '5'">
                 <div class="homeLabelInChat" style="height:7%;border-bottom:1px solid lightgray;">
-                    <h5 class="fontClass" style="font-size: 16px;margin-left:2%;">NOTIFICATIONS</h5>
+                    <h5 class="fontClass" style="font-size: 16px;margin-left:2%;">COMMUNICATION</h5>
                 </div>
 
                 <div ng-show="conversationListNew.length == 0" style="height:87%;" class="topicHeadingPlaceholdr">
