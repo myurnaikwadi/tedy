@@ -1,4 +1,4 @@
-﻿<div class="popupContainer" ng-show="feedBack.formValue == '1'">
+﻿<div class="popupContainer" ng-class="{ coachThemeColor : role == 'Coach' , coacheeThemeColor : role == 'Coachee' , mentorThemeColor : role == 'Mentor' , menteeThemeColor : role == 'Mentee' }" ng-show="feedBack.formValue == '1'" >
     <div id="carousel-example-generic" class="carousel slide fullWidthHeightClass" data-slide-to="carousel" data-interval="false">
         <!-- Wrapper for slides -->
         <div class="carousel-inner fullWidthHeightClass" role="listbox">
@@ -20,7 +20,7 @@
                                         <input style="margin: auto;" ng-checked="selected=='no'" ng-true-value="'no'" ng-model="selected" title="No" class="radioFeedBack radioFeedBackNo" type="checkbox" unchecked>
                                         <input style="margin: auto;" ng-checked="selected=='na'" ng-true-value="'na'" ng-model="selected" title="Not Applicable" class="radioFeedBack radioFeedBackNotApplicable" type="checkbox" unchecked>
                                     </div>
-                                    <textArea ng-show="question.type == 'textArea'" placeholder="Enter here Description"></textArea>
+                                    <textArea class="fontClass" ng-show="question.type == 'textArea'" ng-model="question.actionValue" placeholder="Enter here Description"></textArea>
                                     <div class="ratingFeedBack" ng-show="question.type == 'rating'">
                                         <img ng-click="showRatingColor(1,question)" ng-src="{{ indexArray.indexOf(1) > -1 ? 'Images/redstar.png' : 'Images/silverstar.png' }}" class="ratingStarOne" src="~/Images/silverstar.png" />
                                         <img ng-click="showRatingColor(2,question)" ng-src="{{ indexArray.indexOf(2) > -1 ? 'Images/redstar.png' : 'Images/silverstar.png' }}" class="ratingStarTwo" src="~/Images/silverstar.png" />
@@ -28,13 +28,22 @@
                                         <img ng-click="showRatingColor(4,question)" ng-src="{{ indexArray.indexOf(4) > -1 ? 'Images/redstar.png' : 'Images/silverstar.png' }}" class="ratingStarFour" src="~/Images/silverstar.png" />
                                         <img ng-click="showRatingColor(5,question)" ng-src="{{ indexArray.indexOf(5) > -1 ? 'Images/redstar.png' : 'Images/silverstar.png' }}" class="ratingStarFive" src="~/Images/silverstar.png" />
                                     </div>
+                                    <div class="ratingFeedBack" ng-show="question.type == 'checkBoxTime'">
+                                        <img ng-click="showRatingColor(1,question)" ng-src="{{ indexArray.indexOf(1) > -1 ? 'Images/redstar.png' : 'Images/silverstar.png' }}" class="ratingStarOne" src="~/Images/silverstar.png" />
+                                        <img ng-click="showRatingColor(2,question)" ng-src="{{ indexArray.indexOf(2) > -1 ? 'Images/redstar.png' : 'Images/silverstar.png' }}" class="ratingStarTwo" src="~/Images/silverstar.png" />
+                                        <img ng-click="showRatingColor(3,question)" ng-src="{{ indexArray.indexOf(3) > -1 ? 'Images/redstar.png' : 'Images/silverstar.png' }}" class="ratingStarThree" src="~/Images/silverstar.png" />
+                                        <img ng-click="showRatingColor(4,question)" ng-src="{{ indexArray.indexOf(4) > -1 ? 'Images/redstar.png' : 'Images/silverstar.png' }}" class="ratingStarFour" src="~/Images/silverstar.png" />
+                                        <img ng-click="showRatingColor(5,question)" ng-src="{{ indexArray.indexOf(5) > -1 ? 'Images/redstar.png' : 'Images/silverstar.png' }}" class="ratingStarFive" src="~/Images/silverstar.png" />
+                                    </div>
+                                    
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="pageNavigateView">
                         <ul class="pager" style="margin: 0;">
-                            <li><a href="#carousel-example-generic" ng-click="loadSlideData(1)" data-slide="next">Next</a></li>
+                            <li ng-show="question.length > 4"><a href="#carousel-example-generic" ng-click="loadSlideData(1)" data-slide="next">Next</a></li>
+                            <li ng-hide="question.length > 4"><a style="background:#D60500;color: white;" href="" ng-click="feedBack.sendPreSessionDetail();">Submit</a></li>
                         </ul>
                     </div>
                 </div>
@@ -83,7 +92,7 @@
     </div>
 </div>
 <!-- Screen 5 -->
-<div class="popupContainer" ng-show="feedBack.formValue== '5'">
+<div class="popupContainer" ng-class="{ coachThemeColor : role == 'Coach' , coacheeThemeColor : role == 'Coachee' , mentorThemeColor : role == 'Mentor' , menteeThemeColor : role == 'Mentee' }" ng-show="feedBack.formValue== '5'">
     <img ng-click="feedBack.closeFeedBackPopup()" style="width: 15px;height: 15px;top:1%;right: 1%;bottom: 0;position: absolute;cursor:pointer;" title="Close" src="~/Images/cancel.png" />
     <div class="fivePopupContainerOne">
         <div class="" style="float: left;display:flex; width: 100%;">
@@ -95,7 +104,7 @@
 
 
     </div>
-    <div class="fivePopupContainerTwo">
+    <div class="fivePopupContainerTw">
         <img style="position:absolute;left: 46%;width: 60px;" src="~/Images/communication/moneyBag.png">
         <div class="" style="float: left;display:flex; width: 100%;height: 100%;">
             <div class="" style="border: 3px solid black;margin: auto auto;float: left;display:flex; width: 35%;height: 60%;margin-bottom: 4%;">

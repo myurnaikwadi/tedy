@@ -178,3 +178,14 @@ display: flex;
 .widthForFirstNameProfile{
     width: 21% !important;
 }
+.heightZeroClassProfile {
+     height:0% !important;
+     transition : all 1s ease;
+}
+.heightAnimationProfile {
+    height:85% !important;
+     transition : all 1s ease;
+}
+.selectedMenuColor {
+    color:#4dc725 !important;
+}

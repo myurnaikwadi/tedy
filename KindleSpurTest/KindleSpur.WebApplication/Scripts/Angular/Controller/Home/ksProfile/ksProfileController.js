@@ -1,7 +1,9 @@
-﻿app.controller('ksProfileController', function ($scope, commonFunction, serverCommunication, $rootScope, $state) {
+﻿app.controller('ksProfileController', function ($scope, commonFunction, serverCommunication, $rootScope, $state, $timeout) {
     $scope.editModeProfile = false;
     console.error($scope.userInfo)
     window.profile = $scope;
+
+    $scope.profileMenuArr = [{ name: 'Overview' }, { name: 'My Review' }, { name: 'Setting' }];
     $scope.myInfo = {
         mobileNumber: $scope.userInfo.Mobile ? $scope.userInfo.Mobile : null,
         linkedInLink: $scope.userInfo.LinkdinURL ? $scope.userInfo.LinkdinURL : null,
@@ -12,6 +14,47 @@
         descriptiontoDisplay : '',
         description:$scope.userInfo.description ? $scope.userInfo.description :  'No Description Available'
     }
+    $scope.selectedMenuIndex = -1;
+    $scope.selectedMenuProfile = function (iIndex) {
+        $scope.selectedMenuIndex = iIndex;
+        $scope.loadingObject = { showLoading: true, loadingMessage: 'Loading Feed' };
+        console.error( $scope.selectedMenuIndex)
+        switch (iIndex) {
+            case 0: $scope.loadPersonalInfoAndSkill(); break;
+            case 1: $scope.loadFeedBacks(); break;
+            case 2: break;
+        }
+    };
+  
+    $scope.loadPersonalInfoAndSkill = function () {
+        $timeout(function () { $scope.loadingObject = { showLoading: false, loadingMessage: 'Loading Feed' }; }, 1000);
+        $timeout(function () { $scope.animationActicvate = true; console.error($scope.animationActicvate) }, 2000);
+    };
+    $scope.loadFeedBacks = function () {
+       
+        $scope.feedBackArray = [
+             { name: 'What do you appreciate the most in your interactions with the mentee ? ', showLoad: false, rating: 4, AsPerRole: 'Coach', ratingArray : []},
+             { name: 'Is the coachee/mentee able to grasp the ideas discussed?', showLoad: false, rating: 3, AsPerRole: 'Mentee', ratingArray: [] },
+             { name: 'What are the Strong Qualities of the Mentee/ Coachee ?', showLoad: false, rating: 5, AsPerRole: 'Mentor', ratingArray: [] },
+             { name: 'What are the areas where the Mentee needs to Improve ? ', showLoad: false, rating: 2, AsPerRole: 'Coachee', ratingArray: [] },
+             { name: 'Are there any critical areas where Mentee/ Coachee needs serious and urgent help/ support ?', showLoad: false, rating: 1, AsPerRole: 'Coach', ratingArray: [] },
+             { name: 'Do you believe that the Mentee will be Successful in the targeted areas after the Mentoring is complete ?', showLoad: false, rating: 4, AsPerRole: 'Mentor', ratingArray: [] },
+             { name: 'Was it worth your time, energy and interest ?', showLoad: false, rating: 5, AsPerRole: 'Coach', ratingArray: [] },
+             { name: 'Rate the session', showLoad: false, rating: 5, AsPerRole: 'Coachee', ratingArray: [] },
+        ];
+        $scope.animationActicvate = false;
+        $timeout(function () { $scope.loadingObject = { showLoading: false, loadingMessage: 'Loading Feed' }; }, 1000);
+        
+        
+        for (var i = 0 ; i < $scope.feedBackArray.length ; i++) {
+            for (var j = 1 ; j <= $scope.feedBackArray[i].rating ; j++) {
+                if ($scope.feedBackArray[i].ratingArray.indexOf(j) == -1)
+                    $scope.feedBackArray[i].ratingArray.push(j);
+            }
+        }
+        
+    };
+    $scope.selectedMenuProfile(0);
     var uploadImageOnPage = function (iObj, iCallback) {
         var fileInputId = iObj.fileInputId;
         var imageElementId = iObj.imageElementId;

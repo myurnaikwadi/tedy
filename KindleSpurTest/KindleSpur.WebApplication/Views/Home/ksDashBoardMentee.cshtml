@@ -24,7 +24,7 @@
                 </div>
                 <div class="leftSideMenuMainDashBoard">
                     <div class="leftSideMenuParent">
-                        <div class="leftSideMenu MenteeColor" ng-repeat="option in leftSideMenus" ng-click="menuClick($index,option)">
+                        <div class="leftSideMenu" ng-class="{ selectedLeftSideMenu : selectedMenu == $index }" ng-repeat="option in leftSideMenus" ng-click="menuClick($index,option)">
                             <h5 class="leftSideMenuLable fontClass genericPointerClass">{{option.name}}</h5>
                             <h5 ng-if="option.name == 'Add Topics'" style="float: right;font-size: 25px;margin: 1%;" class="leftSideMenuLable fontClass genericPointerClass">@*+*@</h5>
                         </div>
@@ -64,10 +64,27 @@
                                 <div class="filterListContainer">
                                     <div class="mentor-list">
                                         <div class="row" style="margin:0px;">
-                                            <div class="mentor-card" ng-repeat="coach in Coaches" cts-mentor-card>
+                                            <div style="display: flex;width: 100%;height: 35px;" ng-repeat-start="timeSlot in timeSlots">
+                                                <div style="margin:auto;width: 100%;display: flex;">
+                                                    <div style="width:33.33%;height:100%;float:left;margin: auto;">
+                                                        <div style="height:1px;width:100%;border-bottom:1px solid rgba(214,214,214,.61);"></div>
+                                                    </div>
+                                                    <div style="width:33.33%;height:100%;float:left;margin: auto;display:flex;">
+                                                        <h5 class="genericEventHeadings genericMarginZero genericEllipsis" style="margin: auto;color: #a9a9a9;font-size:13px;" title="{{timeSlot}}">{{timeSlot}}</h5>
+                                                    </div>
+                                                    <div style="width:33.33%;height:100%;float:left;margin: auto;">
+                                                        <div style="height:1px;width:100%;border-bottom:1px solid rgba(214,214,214,.61);"></div>
+                                                    </div>
+
+                                                </div>
+
+                                            </div>
+
+
+                                            <div class="mentor-card" ng-class="{ mentorCardAnimation : coach.showLoad == true }" ng-repeat-end="" ng-repeat="coach in Coaches" ng-if="coach.Skill.Name == timeSlot" cts-mentor-card>
                                                 <div class="mentor-info">
                                                     <span class="profile-close" style="float:right;top:10px;right:10px;"><i class="fa fa-times"></i></span>
-                                                    <div class="profile-image">                                                        
+                                                    <div class="profile-image">
                                                         <img ng-src="{{coach.PhotoURL ? coach.PhotoURL : '~/Images/icons/If no Profile photo.png'}}" class="img-circle" />
                                                     </div>
                                                     <div class="profile-info">
@@ -78,7 +95,7 @@
                                                 </div>
                                                 <div class="mentor-actions" style="display:none; position:absolute">
                                                     <div class="row">
-                                                        <i class="btn col-md-2 fa fa-linkedin btn-blue" style="border-radius:0px;"></i>
+                                                        @*<i class="btn col-md-2 fa fa-linkedin btn-blue" style="border-radius:0px;"></i>*@
                                                         <button class="btn col-md-9 btn-gray" ng-click="openmentorprofile(coach)" style="border-radius:0px;">View Profile</button>
                                                     </div>
                                                     <br />
@@ -193,7 +210,7 @@
             </div>
             <div class="communicationMainPanel" ng-hide="conversationListNew.length == 0">
                 <div ng-if='feedBack.askFeedback' class="feedbackPanel" style="height: 75%;">
-                    <feedback-Page role="Mentee" question="array" feedback-Closed="feedBack.icloseFeedBack" conv-Object="openConversation" submit-Feedback="feedBackSave()" close-Callback="closeCallBack()"></feedback-Page>
+                    <feedback-Page role="Mentee" feedback-Type = "feedBack.feedBackType" question="array" feedback-Closed="feedBack.icloseFeedBack" conv-Object="openConversation" submit-Feedback="feedBackSave()" close-Callback="closeCallBack()"></feedback-Page>
                 </div>
                 <div class="conversationPanel">
                     <div class="conversationPanelDiv">
@@ -221,9 +238,15 @@
                                     <span style="color:#797979;" class="chatHalfContainerSpan">
                                         <h5 class="fontClass">{{ReceiverName}}</h5>
                                     </span>
-                                    <span ng-hide="openConversation.sessionClosed" class="chatHalfContainerSpanNxt">
-                                        <h6 class="genericPointerClass fontClass" ng-click="askFeedBackFunc(true)">Close Session</h6>
-                                        <h6 class="genericPointerClass fontClass" ng-click="askFeedBackFunc(false)">Give Feedback</h6>
+                                    <div style="margin: auto;margin-right: 0;width: 29px;">
+                                        <img ng-click="askFeedBackFunc(3)" class="mod model-1" style="width: 35px;height: 35px;" title="Pre Session Feedback" src="~/Images/communication/preSessionIcon.png" />
+                                        <section style="position: absolute;top: 4px;width: 44px;z-index: 1;background: transparent;" class="mod model-1">
+                                            <div class="spinner"></div>
+                                        </section>
+                                    </div>
+                                    <span style="margin: auto;height: 35px;margin-left: 0;margin-right: 0;" ng-hide="openConversation.sessionClosed" class="chatHalfContainerSpanNxt">
+                                        <h6 class="fontClass genericPointerClass" style="margin: auto;" ng-click="askFeedBackFunc(true)">Close Session</h6>
+                                        <h6 class="fontClass genericPointerClass" style="margin: auto;" ng-click="askFeedBackFunc(false)">Give Feedback</h6>
                                     </span>
                                 </div>
                                 <div class="chatHalfContainer">

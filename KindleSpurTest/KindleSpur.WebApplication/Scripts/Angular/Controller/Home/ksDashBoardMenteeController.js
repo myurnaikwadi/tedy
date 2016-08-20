@@ -145,6 +145,43 @@
         });
     };
     $scope.Coaches = [];
+    var _createCoachArray = function (iResult) {
+        $scope.timeSlots = [];
+        var _coachFinalArr = [];
+        for (var k = 0; k < iResult.data.length; k++) {
+            for (var i = 0; i < iResult.data[k].Topics.length; i++) {
+                var _coach = angular.copy(iResult.data[k]);
+                _coach.Skill = {};
+                _coach.Skill = angular.copy(iResult.data[k].Topics[i]);
+                //  _coach.Skill = Object.assign(_coach.Skill, result.data[k].Skills[i]);
+                if ($scope.timeSlots.length > 0) {
+                    $scope.flag = true;
+                    var _index = $scope.timeSlots.indexOf(iResult.data[k].Topics[i].Name);
+                    if (_index > -1) {
+                        $scope.flag = false;
+                    }
+                    if ($scope.flag == true) {
+                        $scope.timeSlots.push(iResult.data[k].Topics[i].Name);
+                        $scope.flag = false;
+                    }
+                } else {
+                    $scope.flag = false;
+                    $scope.timeSlots.push(iResult.data[k].Topics[i].Name);
+                }
+                _coach.showLoad = false;
+                _coachFinalArr.push(_coach);
+            }
+        }
+        console.error(_coachFinalArr, $scope.timeSlots)
+        $scope.Coaches = [].concat(_coachFinalArr);
+        setTimeout(function () {
+            for (var k = 0; k < $scope.Coaches.length; k++) {
+                $scope.Coaches[k].showLoad = true;
+            }
+            $scope.$apply();
+        }, 500);
+    };
+
     $scope.getCoachRecord = function () {
         serverCommunication.getRecommendedCoach({
             Role: 'Mentor',
@@ -158,36 +195,7 @@
                     // _mySkill = [].concat(angular.copy($rootScope.loggedDetail.coachee.skills));
                 }
                 if (result.data) {
-                    $scope.timeSlots = [];
-                    var _coachFinalArr = [];
-                    for (var k = 0; k < result.data.length; k++) {
-
-                        for (var i = 0; i < result.data[k].Topics.length; i++) {
-                            var _coach = angular.copy(result.data[k]);
-                            _coach.Skill = {};
-                            _coach.Skill = angular.copy(result.data[k].Topics[i]);
-                            //  _coach.Skill = Object.assign(_coach.Skill, result.data[k].Skills[i]);
-                            if ($scope.timeSlots.length > 0) {
-                                $scope.flag = true;
-                                var _index = $scope.timeSlots.indexOf(result.data[k].Topics[i].Name);
-                                if (_index > -1) {
-                                    $scope.flag = false;
-                                }
-                                if ($scope.flag == true) {
-                                    $scope.timeSlots.push(result.data[k].Topics[i].Name);
-                                    $scope.flag = false;
-                                }
-                            } else {
-                                $scope.flag = false;
-                                $scope.timeSlots.push(result.data[k].Topics[i].Name);
-                            }
-                            _coachFinalArr.push(_coach);
-                        }
-
-                    }
-
-                    console.error(_coachFinalArr, $scope.timeSlots)
-                    $scope.Coaches = [].concat(_coachFinalArr);
+                    _createCoachArray(result);
                 }
                 serverCommunication.getCTSFilters({
                     Role: 'Mentor',
@@ -252,14 +260,21 @@
     $scope.feedBack.askFeedback = false;
     $scope.feedBack.formValue = '0';
     $scope.feedBack.icloseFeedBack = false;
+    $scope.feedBack.feedBackType = 'feedBack';
     $scope.askFeedBackFunc = function (icloseFeedBack) {
         $scope.feedBack.askFeedback = true;
         $scope.feedBack.formValue = '1';
         $scope.feedBack.icloseFeedBack = false;
         $scope.feedBackloaded = { showLoad: false };
-       // $scope.loadSlideData(1);
+        if (icloseFeedBack == 3) {
+            $scope.feedBack.feedBackType = 'preSession';
+            $scope.array = [].concat(angular.copy(_presessionQuestion));
+        } else {
+            $scope.feedBack.feedBackType = icloseFeedBack ? 'closeSession' : 'feedBack';
+            $scope.array = [].concat(angular.copy(_array));
+        }
     }
-    $scope.array = [
+    var _array = [
         { name: 'Was the sessions objective achieved ?  ', actionValue: '', type: 'rating', showLoad: false },
             {name: 'Was the session as per plan ? Was this session fine-tuned based on your previous session feedback ?', actionValue: '1', type: 'radio', showLoad: false},
                 {name: 'What should have been avoided / What should have been better ? Describe ', actionValue: '', type: 'textArea', showLoad: false},
@@ -270,7 +285,12 @@
                             {name: ' Rate the session ', sessionRating: true, type: 'rating', showLoad: false, actionValue: '',},
     ];
 
-   
+    var _presessionQuestion = [
+        { name: 'What is the ultimate goal you want to accomplish by the end of this coaching/ mentoring session?', actionValue: '', type: 'textArea', showLoad: false },
+        { name: 'Any issue/challenge/problem you would like your coach/mentor to work with you on it? Any steps your have taken so far to tackle these problem areas?', actionValue: '', type: 'textArea', showLoad: false },
+        { name: 'Your preferred time and mode of communication', actionValue: '', type: 'checkBoxTime', showLoad: false },
+        { name: 'Five attributes that you would like your coach/ mentor to know about you', actionValue: '', type: 'textArea', showLoad: false },
+    ];
     $scope.feedBack.closeFeedBackPopup = function () {
         $scope.feedBack.askFeedback = false;
         $scope.feedBack.formValue = '1';

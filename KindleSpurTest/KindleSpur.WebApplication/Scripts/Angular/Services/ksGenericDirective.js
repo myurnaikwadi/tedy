@@ -71,6 +71,21 @@ app.directive('topMainStrip', function ($state, $rootScope, authentification) {
         }
     };
 });
+
+app.directive('cubeStrct', function ($timeout) {
+    return {
+        scope: {
+            loadingObject : '='
+        },
+        //template: '<div class="cubeContainer"><div id="cube" class="animate"><div></div><div></div><div></div><div></div><div></div><div></div></div><div style="margin-left: -25px;margin-top: 20px;"><h5 style="font-size: 11px;width: 100px;text-align: center;margin-top:5px;">{{loadingObject.loadingMessage}}</h5></div></div>',
+        template: '<div class="cubeContainer"><div id="cube" class="animate"><div></div><div></div><div></div><div></div><div></div><div></div></div><div style="margin-left: -15px;margin-top: 20px;width: 100px;"><div class="inner"><span>I</span><span>g</span><span>n</span><span>i</span><span>t</span><span>e</span> <span>u</span><span>r</span><span>g</span><span>e</span></div></div></div>',
+        //scope: true,   // optionally create a child scope
+        link: function (scope, element, attrs) {
+            console.error(scope);
+          //  scope.messageArray = loadingObject
+        }
+    };
+});
 app.directive('bottomMainStrip', function ($timeout) {
     return {
         scope: {
@@ -118,6 +133,53 @@ app.directive('ctcRole', function ($state, serverCommunication) {
             scope.categoryDisplay = true;
             var _deleteArray = {};
             var _updateArray = {};
+            scope.styleToCTS = {};
+            scope.styleToCTSText = {};
+            scope.changeslider = function (iSkill) {
+               // console.error(iSkill)
+                scope.createStyleArrayAsPerSelected(iSkill,true);
+            };
+            var _colorArray = {
+                'coach': { '0' : 'rgb(239,154,72)', '1' : 'rgb(231,120,23)','2': 'rgb(220,53,27)'},
+                'coachee': { '0' : 'rgb(255,249,116)', '1' :'rgb(248,195,0)' ,'2': 'rgb(241,164,0)'},
+                'mentor': { '0' : 'rgb(67,129,61)', '1' : 'rgb(0,73,45)','2': 'rgb(5,33,29)'},
+                'mentee': { '0' : 'rgb(187,217,0)' , '1' : 'rgb(132,194,37)','2': 'rgb(75,159,49)'},
+            };
+            scope.createStyleArrayAsPerSelected = function (iSkill,iSelect) {
+                if (iSelect) {
+                    //console.error(iSkill)
+                    var _width = 100;                   
+                    var _color = 'transparent';
+                    var _textColor = 'black';
+                    switch (scope.role) {
+                        case 'coach': _color = 'rgb(231,120,23)'; _textColor = 'white'; break;
+                        case 'mentor': _color = 'rgb(0,73,45)'; _textColor = 'white'; break;
+                        case 'mentee': _color = 'rgb(132,194,37)'; _textColor = 'black'; break;
+                        case 'coachee': _color = 'rgb(248,195,0)'; _textColor = 'black'; break;
+                    }
+                    switch (iSkill.profiLevel) {
+                        case '0': _width = 5; scope.styleToCTSText[iSkill.Name] = { 'color': 'black', 'transition': 'all 0.7s ease' }; break;
+                        case '1': _width = 50; scope.styleToCTSText[iSkill.Name] = { 'color': 'black', 'transition': 'all 0.7s ease' }; break;
+                        case '2': _width = 100; scope.styleToCTSText[iSkill.Name] = { 'color': _textColor, 'transition': 'all 0.7s ease' }; break;
+                    }
+                    if (scope.skillRequired) {
+                        if (iSkill.type == 'T') {
+                            _width = 100;
+                            scope.styleToCTSText[iSkill.Name] = { 'color': _textColor, 'transition': 'all 0.7s ease' };
+                        } else {
+                            _color = _colorArray[scope.role][iSkill.profiLevel];
+                        }
+                    } else {
+                        _color = _colorArray[scope.role][iSkill.profiLevel];
+                    }
+
+                    scope.styleToCTS[iSkill.Name] = { 'position': 'absolute', 'height': '28px', 'width': (_width + "%"), 'background': _color, 'transition': 'all 0.7s ease' };
+                }else{
+                // De select
+                }
+            };
+
+
             scope.categoryClick = function (iEvent, iIndex, iCategory) {
                 // scope.selectedCategory = iIndex;
                 iCategory.type = 'C';
@@ -146,9 +208,15 @@ app.directive('ctcRole', function ($state, serverCommunication) {
                         //console.error('12')
                         scope.topicArray[k].alreadySelected = true;
                         if (_topics[scope.topicArray[k].Name].profiLevel)
-                            scope.topicArray[k].profiLevel = _topics[scope.topicArray[k].Name].profiLevel
+                            scope.topicArray[k].profiLevel = _topics[scope.topicArray[k].Name].profiLevel;
+                        
+                        scope.createStyleArrayAsPerSelected(scope.topicArray[k],true);
                         scope.topicSelection(iEvent, k, scope.topicArray[k]);
+
+
                     }
+
+
 
                 }
             };
@@ -161,6 +229,7 @@ app.directive('ctcRole', function ($state, serverCommunication) {
 
                 if (iTopic.selected) {
                     iTopic.selected = false;
+                    scope.styleToCTSText[iTopic.Name] = { 'color': 'black', 'transition': 'all 0.7s ease' };
                     if (iTopic.alreadySelected == true && !scope.skillRequired) {//make delete array
                         _deleteArray[iTopic.Name] = iTopic;
                     }
@@ -192,7 +261,7 @@ app.directive('ctcRole', function ($state, serverCommunication) {
                 }
                 else {
                     iTopic.selected = true;
-
+                    // scope.createStyleArrayAsPerSelected(iTopic, true);
                     if (iTopic.alreadySelected == true && !scope.skillRequired) {
                         if (_deleteArray[iTopic.Name]) delete _deleteArray[iTopic.Name];
                         //    if (_updateArray[iTopic.Name]) delete _updateArray[iTopic.Name];
@@ -200,14 +269,15 @@ app.directive('ctcRole', function ($state, serverCommunication) {
                     //        _updateArray[iTopic.Name] = iTopic;                     
                     //}
                     if (scope.skillRequired) {
-
+                        scope.createStyleArrayAsPerSelected(iTopic, true);
                         for (var k = 0; k < iTopic.Skills.length ; k++) {
                             if (!iTopic.Skills[k].profiLevel) iTopic.Skills[k].profiLevel = '0';
                             if (_skills[iTopic.Skills[k].Name]) {
                                 iTopic.Skills[k].alreadySelected = true;
+
                                 if (_skills[iTopic.Skills[k].Name].profiLevel)
                                     iTopic.Skills[k].profiLevel = _skills[iTopic.Skills[k].Name].profiLevel;
-
+                                scope.createStyleArrayAsPerSelected(iTopic.Skills[k], true);
                                 if (_deleteArray[iTopic.Skills[k].Name]) {
                                     delete _deleteArray[iTopic.Skills[k].Name];
                                 } else {
@@ -220,6 +290,9 @@ app.directive('ctcRole', function ($state, serverCommunication) {
                             //}                           
                         }
                         scope.skillsArray = scope.skillsArray.concat(iTopic.Skills);
+                    } else {
+                        if (!iTopic.profiLevel) iTopic.profiLevel = '0';
+                        scope.createStyleArrayAsPerSelected(iTopic, true);
                     }
                 }
             };
@@ -228,7 +301,8 @@ app.directive('ctcRole', function ($state, serverCommunication) {
                 iSkills.type = 'S';
                 if (iSkills.selected) {
                     iSkills.selected = false;
-                    iSkills.profiLevel = 0;
+                    scope.styleToCTSText[iSkills.Name] = { 'color': 'black', 'transition': 'all 0.7s ease' };
+                    iSkills.profiLevel = '0';
                     if (_updateArray[iSkills.Name]) {
                         delete _updateArray[iSkills.Name];
                     }
@@ -237,7 +311,8 @@ app.directive('ctcRole', function ($state, serverCommunication) {
                     }
                 } else {
                     iSkills.selected = true;
-                    iSkills.profiLevel = 0;
+                    iSkills.profiLevel = '0';
+                    scope.createStyleArrayAsPerSelected(iSkills, true);
                     //  _updateArray[iSkills.Name] = iSkills;
                     if (iSkills.alreadySelected == true) {
                         if (_deleteArray[iSkills.Name]) delete _deleteArray[iSkills.Name];
@@ -572,7 +647,7 @@ app.directive('ctcRole', function ($state, serverCommunication) {
                                     //  "image": 'Images/Tree/Stage 1.png',
                                     "type": 'T',
                                     'textColor': scope.skillRequired ? 'black' : _textColor,
-                                    'color': scope.skillRequired ? 'white' : _color,
+                                    'color': scope.skillRequired ? 'white' : _colorArray[scope.role][_category[_key].topic[_topic].profiLevel],
                                     'border': _color,
                                     "bonds": 1
                                 });
@@ -599,7 +674,7 @@ app.directive('ctcRole', function ($state, serverCommunication) {
                                             "size": 15,
                                             "id": _skillId,
                                             "type": 'S',
-                                            'color': _color,
+                                            'color': _colorArray[scope.role][_category[_key].topic[_topic].skill[_skill].profiLevel],
                                             //  "image": 'Images/Tree/Stage 1.png',
                                             'textColor': _textColor,
                                             'border': _color,
@@ -1306,12 +1381,13 @@ app.directive('rssFeed', function ($state, serverCommunication, $timeout) {
         link: function ($scope, element, attrs) {
             window.rss = $scope;
             $scope.feedContainArray = [];
-
+            $scope.loadingObject = { showLoading: true, loadingMessage: 'Loading Feed' };
             //var _selectedTagFed = [];
             $scope.selectedFeedTag = function (iIndex, iOption) {
                 console.error(iOption.selected)
                 // _selectedTagFed = [];
                 $scope.feedContainArray = [];
+                $scope.loadingObject = { showLoading: true, loadingMessage: 'Loading Feed' };
                 for (var k = 0 ; k < $scope.skill.length ; k++) {
                     $scope.skill[k].selected = false;
                     if (iOption.name == $scope.skill[k].name) {
@@ -1394,20 +1470,19 @@ app.directive('rssFeed', function ($state, serverCommunication, $timeout) {
                     }
                     $scope.feedContainArray = [].concat(_feedContainArray);
                     // if (!$scope.$$phase) $scope.$digest();
-                    $timeout(function () { }, 0);
+                    $timeout(function () { $scope.loadingObject = { showLoading: false, loadingMessage: 'Loading Feed' };  }, 0);
                 })
                 .fail(function (data) {
                     //alert("error");
                     console.error(data)
                 });
-            };
-
-            if ($scope.skill) {
+            };           
+            $scope.$watch('skill', function () {
+               // console.error('array is modified');
                 if ($scope.skill.length > 0) {
                     $scope.selectedFeedTag(0, $scope.skill[0]);
                 }
-            }
-
+            });          
         }
     }
 });
@@ -1421,6 +1496,7 @@ app.directive('feedbackPage', function ($state, serverCommunication, $timeout, $
             role: "@",
             closeCallback: "&",
             convObject: "=",
+            feedbackType: "=",
             feedbackClosed: "=",
         },
         templateUrl: '/Home/ksFeedBackPanel',
@@ -1435,11 +1511,7 @@ app.directive('feedbackPage', function ($state, serverCommunication, $timeout, $
                 $scope.feedbackClosed = false;
             }
 
-            $scope.feedBack = {
-                selectedComparioson: 1,
-                selectedAttractive: 1,
-                selectedstar: 1,
-                likeMostMessage: '',
+            $scope.feedBack = {              
                 feedBackDetails: {}
             };
 
@@ -1478,14 +1550,20 @@ app.directive('feedbackPage', function ($state, serverCommunication, $timeout, $
                 var _parentId = $scope.convObject.ConversationParentId ? $scope.convObject.ConversationParentId : $scope.convObject.ConversationId;
 
                 var _id = _parentId + ":CHT#" + (Date.now()) + (Math.floor((Math.random() * 10) + 1));
-
+                var _message = '';
+                
+                if ($scope.feedbackType == 'preSession') {
+                    _message = "Feedback Form has been filled by " +$rootScope.loggedDetail.EmailAddress;
+                } else if($scope.feedbackType == 'closeSession'){
+                    _message = $scope.convObject.ConversationType.toUpperCase()+" " +$scope.convObject.skill+" "+ 'WAS CLOSED';
+                }
                 var _object = {
-                    Content: $scope.convObject.ConversationType.toUpperCase()+" " +$scope.convObject.skill+" "+ 'WAS CLOSED',
+                    Content: _message,
                     SenderEmail: $rootScope.loggedDetail.EmailAddress,
                     ReceiverEmail: $scope.sender,
                     SendOrReceive: 'Send',
                     IsVerified: true,
-                    ConversationClosed: true,
+                    ConversationClosed: $scope.feedbackType == 'closeSession' ? true : false,
                     ConversationType: $scope.convObject.ConversationType,
                     Skill: $scope.convObject.skill,
                     ConversationId: _id,
@@ -1501,7 +1579,7 @@ app.directive('feedbackPage', function ($state, serverCommunication, $timeout, $
                     ReceiverName: $scope.ReceiverName,
                     Role: $scope.role,
                     successCallBack: function () {
-                        $scope.conversation.Message = "";
+                       // $scope.conversation.Message = "";
                         // console.debug('In successCallBack');
                     },
                     failureCallBack: function () {
@@ -1534,9 +1612,9 @@ app.directive('feedbackPage', function ($state, serverCommunication, $timeout, $
                     loggedUserDetails: { FeedBackId: _id, FeedbackClosed: $scope.feedbackClosed, sender: $scope.sender, Skill: $scope.convObject.skill, customerSatisfactionRating: _rating },
                     successCallBack: function (iObj) {
                         console.error('In successCallBack', iObj);
-                        if ($scope.feedbackClosed) {
+                       // if ($scope.feedbackClosed) {
                             $scope.generateSesstionClosedEntry();
-                        }
+                       // }
                         $scope.getPointsRecord();
 
                     },
@@ -1546,6 +1624,45 @@ app.directive('feedbackPage', function ($state, serverCommunication, $timeout, $
                     }
                 });
             };
+
+            $scope.feedBack.sendPreSessionDetail = function () {
+                $scope.feedBack.feedBackDetails.sender = $scope.sender;
+                console.error($scope.feedBack.feedBackDetails)
+               
+                for (var k = 0 ; k < $scope.displayArray.length ; k++) {
+                    $scope.feedBack.feedBackDetails[$scope.displayArray[k].name] = $scope.displayArray[k];
+                };
+                console.error($scope.feedBack.feedBackDetails, $scope.displayArray);
+                $scope.generateSesstionClosedEntry();
+                $scope.feedBack.closeFeedBackPopup()
+                 return
+               // var _counter = Math.floor((Math.random() * 10) + 1);
+               // var _id = $rootScope.loggedDetail.EmailAddress + (Date.now()) + _counter;
+                //var _rating = 5;
+                //for (var _key in $scope.feedBack.feedBackDetails) {
+                //    if ($scope.feedBack.feedBackDetails[_key].sessionRating) {
+                //        _rating = $scope.feedBack.feedBackDetails[_key].actionValue;
+                //    }
+                //}
+               // console.error(_rating)
+                //serverCommunication.sendFeedback({
+                //    role: $scope.role,
+                //    loggedUserDetails: { FeedBackId: _id, FeedbackClosed: $scope.feedbackClosed, sender: $scope.sender, Skill: $scope.convObject.skill, customerSatisfactionRating: _rating },
+                //    successCallBack: function (iObj) {
+                //        console.error('In successCallBack', iObj);
+                //        if ($scope.feedbackClosed) {
+                //            $scope.generateSesstionClosedEntry();
+                //        }
+                //        $scope.getPointsRecord();
+
+                //    },
+                //    failureCallBack: function (iObj) {
+                //        console.error('In failureCallBack', iObj);
+
+                //    }
+                //});
+            };
+
             $scope.displayArray = [];
             $scope.counter = 4;
 

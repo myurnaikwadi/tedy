@@ -200,12 +200,18 @@ namespace KindleSpur.WebApplication.Controllers
                     }
                     else
                     {
-                        response.FailureCallBack("Request pending with Coach/Mentor!!!");
+                        if (Role == "Coachee")
+                            response.FailureCallBack("Request pending with Coach!!!");
+                        else if (Role == "Mentee")
+                            response.FailureCallBack("Request pending with Mentor!!!");
                     }
                 }
                 else
                 {
-                    response.FailureCallBack("Request already send to Coach/Mentor!!!");
+                    if (Role == "Coachee")
+                        response.FailureCallBack("Request already sent to Coach!!!");
+                    else if (Role == "Mentee")
+                        response.FailureCallBack("Request already sent to Mentor!!!");
                 }
             }
             catch (Exception Ex)

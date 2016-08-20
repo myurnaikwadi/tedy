@@ -5,8 +5,8 @@
                 <h5 ng-show="mySelection" style="font-size: 16px;padding: 6px;padding-left: 0;" class="fontClass" margin-top:15px;>MY SELECTION</h5>
                 <h5 ng-hide="mySelection" style="font-size: 16px;padding: 6px;padding-left: 0;" class="fontClass">{{ categoryDisplay ? 'CATEGORIES' : selectedCategoryValue.Category | uppercase }}</h5>
                 
-                <img ng-show="mySelection" ng-class="{ coachGenericBackgroundBorder : role == 'coach' , coacheeGenericBackgroundBorder : role == 'coachee' , mentorGenericBackgroundBorder : role == 'mentor' , menteeGenericBackgroundBorder : role == 'mentee' }" style="border : 2px solid; width:35px;height : 35px;float:right;margin: auto auto;margin-right: 0;border-radius: 30px;padding: 5px;cursor:pointer;" ng-click="addSkill()" src="~/Images/addBold.png" />
-                <img ng-show="categoryDisplay && mySelection == false" style="border : 2px solid; width:35px;height : 35px;float:right;margin: auto auto;margin-right: 0;border-radius: 30px;padding: 5px;cursor:pointer;" ng-click="backButtonClick()" src="~/Images/cancel.png" />
+                <img ng-show="mySelection" ng-class="{ coachThemeColor : role == 'coach' , coacheeThemeColor : role == 'coachee' , mentorThemeColor : role == 'mentor' , menteeThemeColor : role == 'mentee' }" style=" width:35px;height : 35px;float:right;margin: auto auto;margin-right: 0;border-radius: 30px;padding: 5px;cursor:pointer;" ng-click="addSkill()" src="~/Images/add.png" />
+                <img ng-show="categoryDisplay && mySelection == false" ng-class="{ coachThemeColor : role == 'coach' , coacheeThemeColor : role == 'coachee' , mentorThemeColor : role == 'mentor' , menteeThemeColor : role == 'mentee' }"  style=" width:35px;height : 35px;float:right;margin: auto auto;margin-right: 0;border-radius: 30px;padding: 5px;cursor:pointer;" ng-click="backButtonClick()" src="~/Images/cancel.png" />
             </div>
             <div class="ctsCategoryPanelMainPanel" ng-show="mySelection">
                 <molecule-Map ng-if="ctsDataForMolecule" cts-Data="ctsDataForMolecule"></molecule-Map>
@@ -28,7 +28,7 @@
                             </div>
                         </div>
                         <div class="topicSkillPanel" ng-if="categoryDisplay == false">
-                            <div class="topicClassParent" ng-class="{ heightTopicClass : skillRequired == false}">
+                            <div id="topicDynamic"  class="topicClassParent" ng-class="{ heightTopicClass : skillRequired == false}">
                                 <div class="topicHeadingSection">
                                     <h5 class="topicHeadingBar">TOPIC</h5>
                                 </div>
@@ -39,22 +39,16 @@
                                                 NO TOPIC SELECTED
                                             </h5>
                                         </div>
+                                        <div class="topicsList" title="{{skill.Tooltip}}" ng-repeat="skill in topicArray">
 
-                                        <div class="topicsList"  title="{{topic.Tooltip}}" ng-repeat="topic in topicArray" ng-click="topicSelection($event,$index,topic)">
-                                            <div class="topicsListParent fontClass" ng-class="{ coachThemeColor : topic.selected == true && role == 'coach' ,mentorThemeColor : topic.selected == true && role == 'mentor' ,menteeThemeColor : topic.selected == true && role == 'mentee',coacheeThemeColor : topic.selected == true && role == 'coachee'}">
-                                                <div ng-show="skillRequired == false || (skillRequired == false && topic.selected == true)" style="float:left;display: flex;height: 100%;" title="{{(topic.profiLevel == 0 ? 'Basic' : (topic.profiLevel == 1 ? 'Intermediate' : 'Expert') )}}" ng-class="{ zeroBackground : topic.profiLevel == 0 && role == 'coach' , fiftyBackground : topic.profiLevel == 1 && role == 'coach', hundredBackground  : topic.profiLevel == 2 && role == 'coach', zeroBackground : topic.profiLevel == 0 && role == 'coachee' , fiftyBackground : topic.profiLevel == 1 && role == 'coachee', hundredBackground  : topic.profiLevel == 2 && role == 'coachee',  zeroBackground : topic.profiLevel == 0 && role == 'mentee' , fiftyBackground : topic.profiLevel == 1 && role == 'mentee', hundredBackground  : topic.profiLevel == 2 && role == 'mentee',zeroBackgroundMentor : topic.profiLevel == 0 && role == 'mentor' , fiftyBackgroundMentor : topic.profiLevel == 1 && role == 'mentor', hundredBackgroundMentor  : topic.profiLevel == 2 && role == 'mentor' }">
-                                                    
-                                                </div>
-                                                <h5 class="eliipsisClass" ng-class="{ whiteBackground : skillRequired == false && topic.selected == true }" style="float:left;margin: auto 5px;font-size: 11px;"> {{topic.Name | uppercase}}</h5>
-                                                @*<h5 ng-show="skillRequired == true || (skillRequired == true && topic.selected == true)" style="float:left;margin: auto 5px;font-size: 11px;"> {{topic.Name | uppercase}}</h5>*@
-                                            </div>
-
-                                            <input ng-show="skillRequired == false && topic.selected == true" ng-click="$event.stopPropagation()" ng-model="topic.profiLevel" name="Proficiency Level" title="{{'Proficiency Level - '+ (topic.profiLevel == 0 ? 'Basic' : (topic.profiLevel == 1 ? 'Intermediate' : 'Expert') )}}" min="0" step="1" max="2" style="float: left;margin: 2%; padding: 0; margin-right: 0;    width: 89%;" type="range" />
+                                            <h5 ng-click="topicSelection($event,$index,skill)" class="tagTasks fontClass eliipsisClass" ng-style="styleToCTSText[skill.Name]" style="float: left;width: 100%;height: 28px;z-index: 2;position: relative;">{{skill.Name | uppercase}}</h5>
+                                            <div ng-show="skill.selected == true" ng-style="styleToCTS[skill.Name]"></div>
+                                            <input ng-show="skillRequired == false && skill.selected == true" ng-click="$event.stopPropagation()" ng-change="changeslider(skill)" ng-model="skill.profiLevel" name="Proficiency Level" title="{{ 'Proficiency Level - '+ (skill.profiLevel == 0 ? 'Basic' : (skill.profiLevel == 1 ? 'Intermediate' : 'Expert') )}}" min="0" step="1" max="2" style="float: left;padding: 0;width: 100%;margin-top: 5px;" type="range" />
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="skillsClassParent" ng-if="skillRequired">
+                            <div id="skillDynamic" class="skillsClassParent" ng-if="skillRequired">
                                 <div class="topicHeadingSection">
                                     <h5 class="topicHeadingBar">SKILLS</h5>
                                 </div>
@@ -65,16 +59,11 @@
                                         </h5>
                                     </div>
 
-                                    <div class="topicsList" title="{{skill.Tooltip}}" ng-repeat="skill in skillsArray" ng-click="skillSelection($event,$index,skill)">
-                                        <div ng-show="skill.selected == true" class="topicsListParent fontClass" ng-class="{ coachThemeColor : skill.selected == true && role == 'coach',menteeThemeColor : skill.selected == true && role == 'mentee',mentorThemeColor : skill.selected == true && role == 'mentor',coacheeThemeColor : skill.selected == true && role == 'coachee' }">
-                                            <div style="float:left;display: flex;height: 100%;" title="{{(skill.profiLevel == 0 ? 'Basic' : (skill.profiLevel == 1 ? 'Intermediate' : 'Expert') )}}" ng-class="{ zeroBackground : skill.profiLevel == 0 , fiftyBackground : skill.profiLevel == 1, hundredBackground  : skill.profiLevel == 2 ,zeroBackgroundMentor : topic.profiLevel == 0 && role == 'mentor' , fiftyBackgroundMentor : topic.profiLevel == 1 && role == 'mentor', hundredBackgroundMentor  : topic.profiLevel == 2 && role == 'mentor'}">
-                                                
-                                            </div>
-                                            <h5 class="eliipsisClass" ng-class="{ whiteBackground : skill.selected == true }" style="float:left;margin: auto 5px;font-size: 11px;"> {{skill.Name | uppercase}}</h5>
-                                        </div>
-                                    
-                                        <h5 ng-hide="skill.selected == true" class="tagTasks fontClass" style="float: left;margin: 2%; width: 89%;height: 28px;">{{skill.Name | uppercase}}</h5>
-                                        <input ng-show="skill.selected == true" ng-click="$event.stopPropagation()" ng-model="skill.profiLevel" name="Proficiency Level" title="{{ 'Proficiency Level - '+ (skill.profiLevel == 0 ? 'Basic' : (skill.profiLevel == 1 ? 'Intermediate' : 'Expert') )}}" min="0" step="1" max="2" style="float: left;margin: 2%; padding: 0; margin-right: 0;    width: 89%;" type="range" />
+                                    <div class="topicsList" title="{{skill.Tooltip}}" ng-repeat="skill in skillsArray" >
+                                                                  
+                                        <h5 ng-click="skillSelection($event,$index,skill)" class="tagTasks fontClass eliipsisClass" ng-style="styleToCTSText[skill.Name]" style="float: left;width: 100%;height: 28px;z-index: 2;position: relative;">{{skill.Name | uppercase}}</h5>
+                                        <div ng-show="skill.selected == true" ng-style="styleToCTS[skill.Name]"></div>  
+                                        <input ng-show="skill.selected == true" ng-click="$event.stopPropagation()" ng-change="changeslider(skill)" ng-model="skill.profiLevel" name="Proficiency Level" title="{{ 'Proficiency Level - '+ (skill.profiLevel == 0 ? 'Basic' : (skill.profiLevel == 1 ? 'Intermediate' : 'Expert') )}}" min="0" step="1" max="2" style="float: left;padding: 0;width: 100%;margin-top: 5px;" type="range" />
                                     </div>
                                 </div>
                             </div>
