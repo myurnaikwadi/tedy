@@ -225,12 +225,12 @@
                                         <div class="ImpactZoneChildDiv heightZeroClassProfile" ng-init="changeOccLogInfo = false" ng-class="{ heightAnimationProfile : animationActicvate == true }" style="border: 1px solid #ddd;margin: 7px;margin-top: 0;">
                                             <div class="userNameProfile" style="height: 30%;width: 100%;display:block;">
                                                 <h5 class="fontClass" style="float:left;width: 92%;margin: 15px;margin-bottom: 0;color: #777777;">New Password</h5>
-                                                <input ng-model="myInfo.Password" ng-change="changeOccLogInfo = true" class="inputTagStyle fontClass" style="height: 28px;padding:5px;width: 60% !important;margin: 15px;margin-bottom: 0;margin-right: 0;" type="password" />
+                                                <input ng-model="localModel.Password" ng-change="changeOccLogInfo = true" class="inputTagStyle fontClass" style="height: 28px;padding:5px;width: 60% !important;margin: 15px;margin-bottom: 0;margin-right: 0;" type="password" />
                                                 <span class="passwordIconWithInput"><img src="~/Images/camera.png" /></span>
                                             </div>
                                             <div class="userNameProfile" style="height: 30%;width: 100%;display:block;">
                                                 <h5 class="fontClass" style="float:left;width: 92%;margin: 15px;margin-bottom: 0;color: #777777;">Confirm New Password</h5>
-                                                <input ng-model="myInfo.ConfirmPassword" ng-change="changeOccLogInfo = true" class="inputTagStyle fontClass" style="height: 28px;padding:5px;width: 60% !important;margin: 15px;margin-bottom: 0;margin-right: 0;" type="password" />
+                                                <input ng-model="localModel.ConfirmPassword" ng-change="changeOccLogInfo = true" class="inputTagStyle fontClass" style="height: 28px;padding:5px;width: 60% !important;margin: 15px;margin-bottom: 0;margin-right: 0;" type="password" />
                                                 <span class="passwordIconWithInput"><img src="~/Images/camera.png" /></span>
                                             </div>
                                             @*<div class="userNameProfile" style="height: 20%;width: 100%;">

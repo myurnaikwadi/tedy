@@ -1,4 +1,4 @@
-﻿app.controller('ksProfileController', function ($scope, commonFunction, serverCommunication, $rootScope, $state, $timeout, $filter) {
+﻿app.controller('ksProfileController', function ($scope, commonFunction, serverCommunication, $rootScope, $state, $timeout, $filter,authentification) {
     $scope.editModeProfile = false;
     console.error($scope.userInfo)
     window.profile = $scope;
