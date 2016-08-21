@@ -180,12 +180,67 @@ display: flex;
 }
 .heightZeroClassProfile {
      height:0% !important;
-     transition : all 1s ease;
+     transition : all 0.7s ease;
 }
 .heightAnimationProfile {
     height:85% !important;
-     transition : all 1s ease;
+     transition : all 0.7s ease;
 }
 .selectedMenuColor {
     color:#4dc725 !important;
+}
+.passwordIconWithInput {
+    display: flex;
+    float: left;
+    width: 30px;
+    height: 28px;
+    border: 1px solid #999;
+    border-left: 0;
+    margin-top: 15px;
+    border-top-right-radius: 2px;
+    border-bottom-right-radius: 2px;
+}
+.passwordIconWithInput img {
+    width: 18px;
+    height: 18px;
+    margin: auto;
+}
+.profileInputTag{
+    color: #4f4f4f !important;font-size: 12px !important;letter-spacing: 1px; font-weight: 100 !important;
+    padding-bottom: 0 !important;
+    padding-top: 24px !important;
+}
+.loadProfileAnimation {
+     margin-left:0% !important;
+     transition : all 0.7s ease;
+     opacity:1 !important;
+}
+.loadProfileRightAnimation {
+     margin-left:0% !important;
+     transition : all 0.7s ease;
+     opacity:1 !important;
+     width: 75% !important;
+}
+.skillProfileParent {
+    float: left;
+    width: 30%;
+    height: 38%;
+    /*border: 1px solid #4f4f4f;*/
+    margin: 3%;
+    margin-right: 0;
+    display: flex;
+    margin-bottom: 0;
+    background: white;
+}
+.skillDisplayProfile{
+    margin: auto;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    transform: scale(0);
+    transition: 1s all ease;
+}
+.animationToSkillLoading {
+    transform: scale(1) !important;
+    transition: 1s all ease;
 }

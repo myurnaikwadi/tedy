@@ -1,39 +1,80 @@
-﻿app.controller('ksProfileController', function ($scope, commonFunction, serverCommunication, $rootScope, $state, $timeout) {
+﻿app.controller('ksProfileController', function ($scope, commonFunction, serverCommunication, $rootScope, $state, $timeout, $filter) {
     $scope.editModeProfile = false;
     console.error($scope.userInfo)
     window.profile = $scope;
-
-    $scope.profileMenuArr = [{ name: 'Overview' }, { name: 'My Review' }, { name: 'Setting' }];
+    $scope.topicArray = $scope.mySkill = [];
+    $scope.profileMenuArr = [{ name: 'OVERVIEW' }, { name: 'FEEDBACKS' }, { name: 'SETTINGS' }];
+    if ($scope.editRequired == 'false') {
+        $scope.profileMenuArr = [{ name: 'OVERVIEW' }, { name: 'FEEDBACKS' }];
+    }
+   // $scope.topicArray = [{ Name: 'OVERVIEW' }, { Name: 'OVERVIEW' }, { Name: 'OVERVIEW' }, { Name: 'OVERVIEW' }, { Name: 'OVERVIEW' }, { Name: 'OVERVIEW' },{ Name: 'OVERVIEW' }, { Name: 'FEEDBACKS' }, { Name: 'SETTINGS' }];
     $scope.myInfo = {
         mobileNumber: $scope.userInfo.Mobile ? $scope.userInfo.Mobile : null,
         linkedInLink: $scope.userInfo.LinkdinURL ? $scope.userInfo.LinkdinURL : null,
         firstName: $scope.userInfo.FirstName.toUpperCase(),
         lastName: $scope.userInfo.LastName.toUpperCase(),
-        profileImage            : $scope.userInfo.Photo ? $scope.userInfo.Photo : 'Images/icons/If no Profile photo.png',
-        profileBackgroundImage  : $scope.userInfo.coverphoto ? $scope.userInfo.coverphoto : 'Images/profile.png',
-        descriptiontoDisplay : '',
-        description:$scope.userInfo.description ? $scope.userInfo.description :  'No Description Available'
-    }
+        profileImage: $scope.userInfo.Photo ? $scope.userInfo.Photo : 'Images/icons/If no Profile photo.png',
+        profileBackgroundImage: $scope.userInfo.coverphoto ? $scope.userInfo.coverphoto : 'Images/profile.png',
+        descriptiontoDisplay: '',
+        description: $scope.userInfo.description ? $scope.userInfo.description : 'No Description Available'
+    };
+    $scope.displayAlert = {
+        showAlert: false,
+        message: '',
+        formatType: '1'
+    };
     $scope.selectedMenuIndex = -1;
+    $scope.switchRoleDropDown = 'All';
+    $scope.switchRoleDropDowns = { role: 'All' };
+    $scope.roleDropdownChange = function () {
+        //| myFormat:switchRoleDropDowns
+        for (var k = 0; k < $scope.mySkill.length ; k++) {
+            $scope.mySkill[k].showSkill = false;
+        }
+        console.error($scope.switchRoleDropDown)
+        $scope.switchRoleDropDowns = { role: $scope.switchRoleDropDown };
+        //console.error($scope.switchRoleDropDowns)
+        var _array = [].concat($filter('myFormat')($scope.topicArray, $scope.switchRoleDropDowns));
+        //$scope.mySkill = [].concat(_array);
+        $scope.mySkill = [].concat(angular.copy(_array));
+        $timeout(function () {           
+            for (var k = 0; k < $scope.mySkill.length ; k++) {
+                $scope.mySkill[k].showSkill = true;
+            }
+        }, 600);
+    };
+
     $scope.selectedMenuProfile = function (iIndex) {
         $scope.selectedMenuIndex = iIndex;
+        $scope.animationActicvate = false;
         $scope.loadingObject = { showLoading: true, loadingMessage: 'Loading Feed' };
-        console.error( $scope.selectedMenuIndex)
+        $scope.localModel = {};
+        for (var k = 0; k < $scope.topicArray.length ; k++) {
+            $scope.topicArray[k].showSkill = false;
+        }
+        //   console.error( $scope.selectedMenuIndex)
         switch (iIndex) {
             case 0: $scope.loadPersonalInfoAndSkill(); break;
             case 1: $scope.loadFeedBacks(); break;
-            case 2: break;
+            case 2: $scope.loadSettingDetail(); break;
         }
     };
-  
+
     $scope.loadPersonalInfoAndSkill = function () {
         $timeout(function () { $scope.loadingObject = { showLoading: false, loadingMessage: 'Loading Feed' }; }, 1000);
-        $timeout(function () { $scope.animationActicvate = true; console.error($scope.animationActicvate) }, 2000);
+        $timeout(function () { $scope.animationActicvate = true; console.error($scope.animationActicvate) }, 1500);
+        $scope.mySkill = [].concat(angular.copy($scope.topicArray));
+        $timeout(function () {           
+            for (var k = 0; k < $scope.mySkill.length ; k++) {
+                $scope.mySkill[k].showSkill = true;
+            }
+        }, 1900);
     };
+
     $scope.loadFeedBacks = function () {
-       
+
         $scope.feedBackArray = [
-             { name: 'What do you appreciate the most in your interactions with the mentee ? ', showLoad: false, rating: 4, AsPerRole: 'Coach', ratingArray : []},
+             { name: 'What do you appreciate the most in your interactions with the mentee ? ', showLoad: false, rating: 4, AsPerRole: 'Coach', ratingArray: [] },
              { name: 'Is the coachee/mentee able to grasp the ideas discussed?', showLoad: false, rating: 3, AsPerRole: 'Mentee', ratingArray: [] },
              { name: 'What are the Strong Qualities of the Mentee/ Coachee ?', showLoad: false, rating: 5, AsPerRole: 'Mentor', ratingArray: [] },
              { name: 'What are the areas where the Mentee needs to Improve ? ', showLoad: false, rating: 2, AsPerRole: 'Coachee', ratingArray: [] },
@@ -44,17 +85,91 @@
         ];
         $scope.animationActicvate = false;
         $timeout(function () { $scope.loadingObject = { showLoading: false, loadingMessage: 'Loading Feed' }; }, 1000);
-        
-        
+        $timeout(function () {
+            for (var k = 0; k < $scope.feedBackArray.length ; k++) {
+                $scope.feedBackArray[k].showFeed = true;
+            }
+        }, 1500);
+
+
         for (var i = 0 ; i < $scope.feedBackArray.length ; i++) {
             for (var j = 1 ; j <= $scope.feedBackArray[i].rating ; j++) {
                 if ($scope.feedBackArray[i].ratingArray.indexOf(j) == -1)
                     $scope.feedBackArray[i].ratingArray.push(j);
             }
         }
-        
     };
-    $scope.selectedMenuProfile(0);
+    $scope.localModel = {};
+    $scope.loadSettingDetail = function () {
+        $timeout(function () { $scope.loadingObject = { showLoading: false, loadingMessage: 'Loading Feed' }; }, 1000);
+        $timeout(function () {
+            $scope.animationActicvate = true;
+          //  console.error($scope.animationActicvate);
+            $scope.localModel = {};
+            $scope.localModel = angular.copy($scope.myInfo);
+            setTimeout(function () {
+                _setElementFocus('userId');
+            }, 400);
+        }, 1500);
+    };  
+
+    var _resetStyles = function (iSelectId) {
+        var txtBoxes = document.getElementsByTagName("INPUT");
+        for (var i = 0; i < txtBoxes.length; i++) {
+            if (txtBoxes[i].id == iSelectId) {
+                document.getElementById(iSelectId).style.borderColor = "#dcdcdc";
+            }
+        }
+    };
+    //focus on specific field
+    var _setElementFocus = function (elementId, iApplyClass) {//AKP
+        if (elementId && document.getElementById(elementId)) {
+            setTimeout(function () {
+                if (elementId && document.getElementById(elementId)) {
+                    document.getElementById(elementId).focus();
+                }
+            }, 40);
+        }
+    };
+    $scope.closeAlertMessage = function (iSelectId) {
+        _resetStyles(iSelectId);
+        //if ($scope.toFocusUserId == "true") {
+        //    _setElementFocus('userId'); //To set focus on UserId in login page when error occurred at UerId.  
+        //    $scope.toFocusUserId = "false";
+        //}
+        //else if ($scope.toFocusPwd == "true") {
+        //    _setElementFocus('userIdTask'); //to set focus on Password field in login page when error occurred at password.
+        //    $scope.toFocusPwd = "false";
+        //}
+    };
+
+    //autocomplete user name
+    $scope.resetAutoComplete = function (iSelectId) {
+        if ($scope.removedIdName != true) {
+            //$scope.recentlyLoggedUsersAutoSuggestArr = [];
+            $scope.selectedIndex = -1;
+        }
+        else {
+            _setElementFocus(iSelectId); //to set focus on Password field in login page when error occurred at password.	
+            $scope.removedIdName = false;
+        }
+    };
+
+    $scope.autoCompleteEmailId = function ($event, iSelectId) {
+        if ($event.keyCode === 9 || $event.keyCode === 27) {//tab/Esc key press
+            //if tab is  pressed, set selectedIndex value to userId & focus to password field
+            if ($event.keyCode === 9) {
+                if ($scope.selectedIndex != -1) {
+                    //  $scope.credentials.username= $scope.recentlyLoggedUsersAutoSuggestArr[$scope.selectedIndex];
+                    // $scope.recentlyLoggedUsersAutoSuggestArr = [];
+                    $scope.selectedIndex = -1;
+                }
+            }
+            $scope.resetAutoComplete(iSelectId);
+        }
+
+    };
+
     var uploadImageOnPage = function (iObj, iCallback) {
         var fileInputId = iObj.fileInputId;
         var imageElementId = iObj.imageElementId;
@@ -74,8 +189,8 @@
     };
 
     $scope.closeProfilePopup = function () {
-        console.error('dddddddddddddddddddddd')
-        console.error($scope.closePopup)
+        //console.error('dddddddddddddddddddddd')
+       // console.error($scope.closePopup)
         if ($scope.closePopup) $scope.closePopup();
     };
 
@@ -85,7 +200,7 @@
 
     $scope.editskills = function (iProfile) {
         // $scope.selectedMenu = true;
-        $state.go('dashBoardCoach',{ param: 'test' });
+        $state.go('dashBoardCoach', { param: 'test' });
     };
 
     $scope.uploadFileFunction = function () {
@@ -97,7 +212,7 @@
             $scope.myInfo.profileBackgroundImage = valueFile[0];
         }
 
-        console.error(valueFile)
+       // console.error(valueFile)
         var _object = {
             file: valueFile[0],
             successCallBack: function () {
@@ -111,9 +226,9 @@
         }
         serverCommunication.changeProfileImageDetails(_object);
     }
-   
+
     $scope.triggerUpload = function (iProfile) {
-        console.error('width: 42px;')
+        //console.error('width: 42px;')
         var obj = {
             fileInputId: "fileInputIdRv"
         }
@@ -151,11 +266,11 @@
 
             var valueFile = document.getElementById("fileInputIdRv").files;
             data.append(valueFile[0].Name, valueFile[0]);
-          //  debugger;
-            console.error(data);
+            //  debugger;
+           // console.error(data);
             if (iProfile) {
-               // $scope.myInfo.profileImage = valueFile[0];
-                serverCommunication.changeProfileImageDetails(data,null, function (iPath) {
+                // $scope.myInfo.profileImage = valueFile[0];
+                serverCommunication.changeProfileImageDetails(data, null, function (iPath) {
                     $scope.myInfo.profileImage = $scope.userInfo.Photo = iPath.data.Photo;
                     // console.error($scope.myInfo.profileImage)
                     if ($rootScope.loggedDetail.EmailAddress == iPath.data.EmailAddress) {
@@ -163,21 +278,22 @@
                     }
                 });
             } else {
-               
+
                 serverCommunication.changeProfileImageDetails(data, true, function (iPath) {
                     $scope.myInfo.profileBackgroundImage = $scope.userInfo.coverphoto = iPath.data.coverphoto;
                     if ($rootScope.loggedDetail.EmailAddress == iPath.data.EmailAddress) {
                         $rootScope.loggedDetail = iPath.data;
                     }
                 });
-            }         
+            }
             document.getElementById("fileInputIdRv").value = "";
             $scope.$apply();
         });
     };
     $scope.sendDetailsToServer = function () {
-        $scope.editModeProfile = false;
-        console.error($scope.myInfo)
+        $scope.editModeProfile = false;       
+        $scope.myInfo = angular.copy($scope.localModel);
+       // console.error($scope.myInfo)
         //if ($scope.userInfo.Mobile == $scope.myInfo.mobileNumber || $scope.userInfo.FirstName == $scope.myInfo.firstName || $scope.userInfo.LastName == $scope.myInfo.lastName) {
         //    return;
         //}
@@ -185,10 +301,16 @@
         $scope.userInfo.LastName = $scope.myInfo.lastName;
         $scope.userInfo.Mobile = $scope.myInfo.mobileNumber;
         $scope.userInfo.LinkdinURL = $scope.myInfo.linkedInLink;
-
+        //return
         var _object = {
             changeDetails: {
-                LinkdinURL: $scope.myInfo.linkedInLink, Mobile: $scope.myInfo.mobileNumber, FirstName: $scope.myInfo.firstName, LastName: $scope.myInfo.lastName
+                LinkdinURL: $scope.myInfo.linkedInLink,
+                Mobile: $scope.myInfo.mobileNumber,
+                FirstName: $scope.myInfo.firstName,
+                LastName: $scope.myInfo.lastName,
+                City: $scope.myInfo.City,
+                State: $scope.myInfo.State,
+                Country: $scope.myInfo.Country
             },
             successCallBack: function () {
                 console.error('In successCallBack');
@@ -201,15 +323,44 @@
         }
         serverCommunication.changeProgileDetails(_object);
     };
-    $scope.sendDescDetailsToServer = function() {
+
+    $scope.sendPasswordDetailsToServer = function () {
+       
+        //console.error($scope.localModel)
+        if (($scope.localModel.Password) != ($scope.localModel.ConfirmPassword)) {
+            $scope.displayAlert.showAlert = true;
+            $scope.displayAlert.message = 'The passwords are not same';
+            $scope.displayAlert.formatType = '2';
+            return;
+        }
+        //return;
+        var _object = {
+            signupObject: {
+                userId  :$scope.userInfo.EmailAddress,
+                Password: $scope.localModel.Password
+            },
+            successCallBack: function () {
+                console.error('In successCallBack');
+
+            },
+            failureCallBack: function () {
+                console.error('In failureCallBack');
+
+            }
+        }       
+        authentification.savePassword(_object);
+    };
+
+    $scope.sendDescDetailsToServer = function () {
         $scope.editDescription = false;
-        console.error($scope.myInfo)
+        $scope.myInfo = angular.copy($scope.localModel);
+      //  console.error($scope.myInfo)
         $scope.myInfo.description = $scope.myInfo.descriptiontoDisplay;
         var _object = {
             changeDetails: {
                 description: $scope.myInfo.description
             },
-            successCallBack: function() {
+            successCallBack: function () {
                 console.error('In successCallBack');
 
             },
@@ -226,6 +377,10 @@
     var _skillsArray = [];
     $scope.init = function () {
         $scope.ctsDataForMolecule = null;
+        $scope.loadAnimation = false;
+        $timeout(function () {
+            $scope.loadAnimation = true;
+        }, 500);
         if ($scope.userInfo.Skills) {
             $scope.topicArray = [].concat($scope.userInfo.Skills);
         } else if ($scope.userInfo.Topics) {
@@ -271,11 +426,17 @@
                             }
                         }
                     }
-                    console.error('In getMySelection', _category, _categoryArray, _topicArray, _skillsArray);
+                   // console.error('In getMySelection', _category, _categoryArray, _topicArray, _skillsArray);
                     $scope.topicArray = [];
                     //  $scope.topicArray =  $scope.topicArray.concat(_categoryArray);
                     //  $scope.topicArray =  $scope.topicArray.concat(_topicArray);
-                    $scope.topicArray =  $scope.topicArray.concat(_skillsArray);
+                    $scope.topicArray = $scope.topicArray.concat(_skillsArray);
+                    $scope.topicArray = [{ Name: 'OVERVIEW', role: 'Coach' }, { Name: 'OVERVIEW', role: 'Coachee' }, { Name: 'OVERVIEW', role: 'Mentor' }, { Name: 'OVERVIEW', role: 'Coach' },
+                                         { Name: 'OVERVIEW', role: 'Mentee' }, { Name: 'OVERVIEW', role: 'Coach' }, { Name: 'OVERVIEW', role: 'Coachee' },
+                                         { Name: 'FEEDBACKS', role: 'Coach' }, { Name: 'SETTINGS', role: 'Coachee' }];
+
+                    $scope.selectedMenuProfile(0);
+                    
                 },
                 failureCallBack: function (iObj) {
                     console.error('In failuregetMySelectionCallBack', iObj);
@@ -283,7 +444,7 @@
                 }
             });
         }
-      
+
 
 
 

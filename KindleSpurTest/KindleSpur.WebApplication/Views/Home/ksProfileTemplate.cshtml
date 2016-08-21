@@ -1,46 +1,62 @@
-﻿<div class="parentBody" style="display:flex;">
+﻿<div style="position:absolute;z-index:2;" class="hiddenErrorNotificationClass" ng-class="{ 'showErrorNotificationClass' : displayAlert.showAlert  == true}">
+    <div class="alert-message success" ng-show="displayAlert.formatType == '1'">
+        <p class="alert-message1">{{displayAlert.message}}</p>
+        <a class="closealert-padding close" href="#" ng-click="displayAlert.showAlert = false">×</a>
 
-    <div class="applicationProfilePanel" style="display:none;position : relative;width : 70%;height: 100%;float : left;margin:auto;">
+    </div>
+    @*Green*@
+
+    <div class="alert-message error" ng-show="displayAlert.formatType == '2'">
+        <p class="alert-message1">{{displayAlert.message}}</p>
+        <a class="closealert-padding close" href="#" ng-click="displayAlert.showAlert = false">×</a>
+
+    </div>
+    @*red*@
+</div>
+<img ng-show="editRequired == 'false'" ng-click="closeProfilePopup()" style="width: 15px;height: 15px;top:5px;right: 5px;bottom: 0;position: absolute;z-index:1;cursor:pointer;" title="Cancel" src="~/Images/cancel.png" />
+<div class="parentBody" style="display:flex;">
+
+    <div class="applicationProfilePanel" style="position : relative;width : 70%;height: 100%;float : left;margin:auto;">
         <div class="" style="position : relative;width : 100%;height: 40%;float : left;z-index: 1;">
-            <img style="width: 100%; height: 100%;float: left;padding: 5px;border: 3px solid lightgray;" ng-src="{{ myInfo.profileBackgroundImage ? myInfo.profileBackgroundImage : '../../../Images/userprofile.png'}}" />
+            <img style="width: 100%; height: 100%;float: left;padding: 5px;border: 1px solid #ddd;" ng-src="{{ myInfo.profileBackgroundImage ? myInfo.profileBackgroundImage : '../../../Images/userprofile.png'}}" />
 
             <div class="widthClassss">
-                <img style="width: 130px; height: 130px;float: left;border-radius:100%;border: 3px solid white; position: absolute;bottom: 30px;padding: 2px;left: 51px;" ng-src="{{ myInfo.profileImage ? myInfo.profileImage : '../../../Images/icons/If no Profile photo.png'}}" />
-                <h5 style="position: absolute;bottom: 11px;padding: 2px;left: 192px;color: white;font-size: 27px;">{{ (myInfo.firstName+" "+myInfo.lastName) | uppercase }}</h5>
+                <img style="width: 130px; height: 130px;float: left;border-radius:100%;border: 5px solid white; position: absolute;bottom: 30px;padding: 2px;left: 51px;" ng-src="{{ myInfo.profileImage ? myInfo.profileImage : '../../../Images/icons/If no Profile photo.png'}}" />
+                <h5 class="fontClass" style="position: absolute;bottom: 11px;padding: 2px;left: 192px;color: white;font-size: 27px;color:#4f4f4f;">{{ (myInfo.firstName+" "+myInfo.lastName) | uppercase }}</h5>
             </div>
 
         </div>
         <div class="" style="position : relative;width : 100%;height: 60%;float : left;">
             <div class="stripForMenuProfile" style="position : relative;width : 75%;margin-left:25%;height: 13%;float : left;display:flex;">
-                <div style="display:flex;margin:auto;margin-left: 0;margin-right: 5%;width:20%;height:100%;" ng-click="selectedMenuProfile($index)" ng-class="{ selectedMenu : selectedMenuIndex == $index }" ng-repeat="menu in profileMenuArr">
-                    <a style="float:left;margin:auto;color: black;" ng-class="{ selectedMenu : selectedMenuIndex == $index }" href="#carousel" data-slide-to="{{$index}}">{{menu.name}}</a>
-                </div>                
+                <div style="display:flex;margin:auto;margin-left: 0;margin-right: 0%;width:20%;height:100%;border-right: 1px solid #ddd;border-bottom: 1px solid #ddd;border-bottom-right-radius: 15px;border-bottom-left-radius: 15px;" ng-click="selectedMenuProfile($index)" ng-class="{ selectedMenu : selectedMenuIndex == $index }" ng-repeat="menu in profileMenuArr">
+                    <a class="fontClass" style="float:left;margin:auto;color: black;" href="#carousel" data-slide-to="{{$index}}">{{menu.name}}</a>
+                </div>
             </div>
-            <div class="optionLeftPanelProfile" style="position : relative;width : 25%;height: 88%;float : left;">
+            <div class="optionLeftPanelProfile" ng-class="{ loadProfileAnimation  : loadAnimation == true}" style="margin-left: 6%;opacity:0;position : relative;width : 25%;height: 88%;float : left;">
 
-                <div style="position:relative;width:85%; height:56%; padding: 8px;margin:auto;margin-top:5%;box-shadow: 0 0 19px 0px #969595;border-radius: 12px;">
+                <div style="position:relative;width:85%; height:56%; padding: 8px;margin:auto;margin-top:3%;border: 1px solid #ddd;">
                     <div class="podcastHeader" style="height: 20%;">
                         <h5 style="margin: auto;font-weight: bold;color:#696565;" class="fontClass ValueFeedsHeade">About Me</h5>
                     </div>
                     <div class="descriptionLabelMessage">
-                        <p ng-hide="editDescription" style="color:#696565;width: 100%;padding: 8px;max-height: 100%;" class="descriptionMessage">
+                        <p ng-hide="editDescription" style="color:#4f4f4f;width: 100%;padding: 8px;max-height: 100%;" class="fontClass descriptionMessage">
                             {{myInfo.description}}
                         </p>
                     </div>
                 </div>
-                <div style="position:relative;width:85%; height:30%; padding: 8px;margin:auto;    margin-top: 10%;box-shadow: 0 0 19px 0px #969595;border-radius: 12px;">
-                    <div class="podcastHeader" style="height: 33%;">
+                <div style="position:relative;width:85%; height:30%; padding: 8px;margin:auto;margin-top: 8%;border: 1px solid #ddd;">
+                    <div class="podcastHeader" style="height: 35%;">
                         <h5 style="margin: auto;font-weight: bold;color:#696565;" class="fontClass ValueFeedsHeade">Social</h5>
                     </div>
                     <div class="descriptionLabelMessage" style="height: 67%;">
                         <img style="width: 20px;float: left;height: 20px;background: white;margin: auto 0;" src="~/Images/linkedin_square_gray.png" />
-                        <h5 style="float: left;margin: auto 0;color: #696565;margin-left: 1%;font-size: 12px;">{{myInfo.linkedInLink ? myInfo.linkedInLink : 'Not Specified'}}</h5>
+                        <h5 class="fontClass" style="float: left;margin: auto 0;color: #696565;margin-left: 1%;font-size: 12px;">{{myInfo.linkedInLink ? myInfo.linkedInLink : 'Not Specified'}}</h5>
                     </div>
                 </div>
 
             </div>
 
-            <div class="rightPanelProfile" style="position : relative;width : 75%;height: 88%;float : left;">
+            <div class="rightPanelProfile" ng-class="{ loadProfileRightAnimation  : loadAnimation == true}" style="margin-left: 6%;opacity:0;position : relative;width : 65%;height: 88%;float : left;">
                 <div id="carousel" class="carousel slide fullWidthHeightClass" data-slide-to="carousel" data-interval="false">
                     <!-- Wrapper for slides -->
                     <div class="carousel-inner fullWidthHeightClass" role="listbox">
@@ -48,40 +64,59 @@
                             <cube-Strct class="cubeParentClass" ng-show="loadingObject.showLoading" loading-Object="loadingObject"></cube-Strct>
                             <div class="fullWidthHeightClass" ng-hide="loadingObject.showLoading">
                                 <div style="float: left;width: 100%;height: 100%;position: relative;" class="col-md-12">
-                                    <div class="podcastsContainer col-md-5 col-sm-12">
-                                        <div class="podcastHeader" style="border: 1px solid #ddd;height: 15%;box-shadow: 0 0 5px 0px #969595;margin: 7px;margin-bottom: 0;">
-                                            <h5 style="margin: auto;margin-left: 2%;" class="fontClass ValueFeedsHeade">Personal Information</h5>     
+                                    <div class="podcastsContainer" style="padding-left: 0;">
+                                        <div class="podcastHeader" style="border: 1px solid #ddd;border-bottom: 0;height: 15%;margin: 7px;margin-left: 0;margin-bottom: 0;">
+                                            <h5 style="margin: auto;margin-left: 2%;" class="fontClass ValueFeedsHeade">Personal Information</h5>
                                         </div>
-                                        <div class="ImpactZoneChildDiv heightZeroClassProfile" ng-class="{ heightAnimationProfile : animationActicvate == true }" style="border: 1px solid #ddd;margin: 7px;margin-top: 0;box-shadow: 0 0 5px 0px #969595;">
+                                        <div class="ImpactZoneChildDiv heightZeroClassProfile" ng-class="{ heightAnimationProfile : animationActicvate == true }" style="border: 1px solid #ddd;margin: 7px;margin-top: 0;margin-left: 0;">
                                             <div class="userNameProfile" style="height: 25%;display:block;width: 100%;">
-                                                <h5 style="float:left;width:95%;margin: 10px;margin-bottom: 0;color: #777777;">Full Name</h5>
-                                                <h5 style="float:left;width:95%;margin: 10px;margin-bottom: 0;color: #98a6ad;">{{myInfo.firstName+" "+myInfo.lastName}}</h5>
+                                                <h5 class="fontClass" style="float:left;width:95%;margin: 10px;margin-bottom: 0;color: #777777;">Full Name</h5>
+                                                <h5 class="fontClass" style="float:left;width:95%;margin: 10px;margin-bottom: 0;color: #98a6ad;">{{myInfo.firstName+" "+myInfo.lastName}}</h5>
                                             </div>
                                             <div class="userNameProfile" style="height: 25%;display:block;width: 100%;">
-                                                <h5 style="float:left;width:95%;margin: 10px;margin-bottom: 0;color: #777777;">Email</h5>
-                                                <h5 style="float:left;width:95%;margin: 10px;margin-bottom: 0;color: #98a6ad;">{{userInfo.EmailAddress}}</h5>                                                
+                                                <h5 class="fontClass" style="float:left;width:95%;margin: 10px;margin-bottom: 0;color: #777777;">Email</h5>
+                                                <h5 class="fontClass" style="float:left;width:95%;margin: 10px;margin-bottom: 0;color: #98a6ad;">{{userInfo.EmailAddress}}</h5>
                                             </div>
                                             <div class="userNameProfile" style="height: 25%;display:block;width: 100%;">
-                                                <h5 style="float:left;width:95%;margin: 10px;margin-bottom: 0;color: #777777;">Mobile</h5>
-                                                <h5 style="float:left;width:95%;margin: 10px;margin-bottom: 0;color: #98a6ad;">{{userInfo.EmailAddress}}</h5>                                                
+                                                <h5 class="fontClass" style="float:left;width:95%;margin: 10px;margin-bottom: 0;color: #777777;">Mobile</h5>
+                                                <h5 class="fontClass" style="float:left;width:95%;margin: 10px;margin-bottom: 0;color: #98a6ad;">{{myInfo.mobileNumber}}</h5>
                                             </div>
-                                       </div>
+                                            <div class="userNameProfile" style="height: 25%;display:block;width: 100%;">
+                                                <h5 class="fontClass" style="float:left;width:95%;margin: 10px;margin-bottom: 0;color: #777777;">Address</h5>
+                                                <h5 class="fontClass" style="float:left;width:95%;margin: 10px;margin-bottom: 0;color: #98a6ad;">London US</h5>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div class="podcastsContainer col-md-5">
-                                        <div class="podcastHeader" style="border: 1px solid #ddd;height: 15%;box-shadow: 0 0 5px 0px #969595;margin: 7px;margin-bottom: 0;">
-                                            <h5 class="fontClass" style="margin: auto;margin-left: 2%;font-size: 14px;padding-left: 0;">Skills</h5>                                            
+                                    <div class="podcastsContainer" style="padding-left: 0;">
+                                        <div class="podcastHeader" style="border: 1px solid #ddd;border-bottom: 0;height: 15%;margin: 7px;margin-bottom: 0;margin-left: 0;">
+                                            <h5 class="fontClass" style="margin: auto;margin-left: 2%;font-size: 14px;padding-left: 0;">Skills</h5>
+                                            <select style="border:0;margin: auto;margin-right: 4%;" ng-change="roleDropdownChange()" ng-model="switchRoleDropDown">
+                                                <option value="All">All</option>
+                                                <option value="Coach">By Coach</option>
+                                                <option value="Coachee">By Coachee</option>
+                                                <option value="Mentor">By Mentor</option>
+                                                <option value="Mentee">By Mentee</option>
+                                            </select>                                            
                                         </div>
-                                        <div class="ImpactZoneChildDiv heightZeroClassProfile" ng-class="{ heightAnimationProfile : animationActicvate == true }" style="border: 1px solid #ddd;margin: 7px;margin-top: 0;box-shadow: 0 0 5px 0px #969595;">
-                                            
+                                        <div class="ImpactZoneChildDiv heightZeroClassProfile" ng-class="{ heightAnimationProfile : animationActicvate == true }" style="border: 1px solid #ddd;margin: 7px; margin-left: 0;margin-top: 0;">
+                                            <div  class="skillProfileParent" ng-repeat="skill in mySkill">
+                                                <div class="mentor-actions" ng-class="{ mentorActionsActivate : coach.showOption == true}">
+                                                                                                 
+                                                </div>
+                                                <div ng-class="{ animationToSkillLoading : skill.showSkill == true ,coachThemeColor : skill.role == 'Coach' , coacheeThemeColor : skill.role == 'Coachee' , mentorThemeColor : skill.role == 'Mentor' , menteeThemeColor : skill.role == 'Mentee' }" class="skillDisplayProfile">
+                                                    <h5 class="fontClass" style="margin: auto;color: white;font-size:13px;" title="{{skill.Name}}">{{skill.Name}}</h5>      
+                                                </div>
+
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div class="item fullWidthHeightClass" style="overflow:auto;border-right: 1px solid #cccccc;border-left: 1px solid #cccccc;">
-                            
+
                             <cube-Strct class="cubeParentClass" ng-show="loadingObject.showLoading" loading-Object="loadingObject"></cube-Strct>
-                            <div ng-hide="loadingObject.showLoading" ng-class="{ coachColor : feedB.AsPerRole == 'Coach' , coacheeColor : feedB.AsPerRole == 'Coachee' , mentorColor : feedB.AsPerRole == 'Mentor' , menteeColor : feedB.AsPerRole == 'Mentee' }" style="display:flex;width: 95%;max-width: 95%; margin: 20px;margin-bottom:0; float: left;margin-right: 0;border: 1px solid #cccccc;border-left: 8px solid;box-shadow: none;" class="chatSender" ng-repeat="feedB in feedBackArray">
+                            <div ng-hide="loadingObject.showLoading" ng-class="{ animationToSkillLoading : feedB.showFeed == true, coachColor : feedB.AsPerRole == 'Coach' , coacheeColor : feedB.AsPerRole == 'Coachee' , mentorColor : feedB.AsPerRole == 'Mentor' , menteeColor : feedB.AsPerRole == 'Mentee' }" style="display:flex;width: 95%;max-width: 95%; margin: 18px;margin-top: 4px;margin-bottom:0; float: left;margin-right: 0;border: 1px solid #cccccc;border-left: 8px solid;box-shadow: none;transform: scale(0);transition: all 1s ease;" class="chatSender" ng-repeat="feedB in feedBackArray">
                                 <div style="float:left;width: 100%;height: 100%;">
                                     <div class="chatSenderImage" style="float:left;width: 6%;">
                                         <div class="imageConversation" style="width: 100%;display: block;">
@@ -91,13 +126,13 @@
                                     <div style="width: 94%;float:left;">
                                         <h5 class="fontClass" style="float:left;margin: 0;color: #333;text-align: left;font-size: 12px;margin-top: 2px;">Alex Ward</h5>
                                         <h5 class="fontClass" style="float:right;margin: 0;color: #aaa;text-align: left;font-size: 9px;margin-left: 7px; margin-top: 5px;font-weight: lighter;">on June 30,2016</h5>
-                                        <div class="" style="float:left;width: 100%;height: 22px;">                                            
+                                        <div class="" style="float:left;width: 100%;height: 22px;">
                                             @*<span ng-class="{ fillStarSpan : feedB.ratingArray.indexOf(1) > -1 }" class="starRatingSpan">&#9734</span>
-                                            <span ng-class="{ fillStarSpan : feedB.ratingArray.indexOf(2) > -1 }" class="starRatingSpan">&#9734</span>
-                                            <span ng-class="{ fillStarSpan : feedB.ratingArray.indexOf(3) > -1 }" class="starRatingSpan">&#9734</span>
-                                            <span ng-class="{ fillStarSpan : feedB.ratingArray.indexOf(4) > -1 }" class="starRatingSpan">&#9734</span>
-                                            <span ng-class="{ fillStarSpan : feedB.ratingArray.indexOf(5) > -1 }" class="starRatingSpan">&#9734</span>*@
-                                            
+                                                <span ng-class="{ fillStarSpan : feedB.ratingArray.indexOf(2) > -1 }" class="starRatingSpan">&#9734</span>
+                                                <span ng-class="{ fillStarSpan : feedB.ratingArray.indexOf(3) > -1 }" class="starRatingSpan">&#9734</span>
+                                                <span ng-class="{ fillStarSpan : feedB.ratingArray.indexOf(4) > -1 }" class="starRatingSpan">&#9734</span>
+                                                <span ng-class="{ fillStarSpan : feedB.ratingArray.indexOf(5) > -1 }" class="starRatingSpan">&#9734</span>*@
+
                                             <img ng-src="{{ feedB.ratingArray.indexOf(1) > -1 ? 'Images/redstar.png' : 'Images/silverstar.png' }}" class="" style="width: 15px;height: 15px;" src="~/Images/redstar.png" />
                                             <img ng-src="{{ feedB.ratingArray.indexOf(2) > -1 ? 'Images/redstar.png' : 'Images/silverstar.png' }}" class="" style="width: 15px;height: 15px;" src="~/Images/redstar.png" />
                                             <img ng-src="{{ feedB.ratingArray.indexOf(3) > -1 ? 'Images/redstar.png' : 'Images/silverstar.png' }}" class="" style="width: 15px;height: 15px;" src="~/Images/redstar.png" />
@@ -106,18 +141,116 @@
                                         </div>
                                     </div>
                                     <h5 class="fontClass" style="font-size: 12px;float:left;margin: 0;margin-top: 6px;margin-bottom: 5px;color: #555;">{{feedB.name}}</h5>
-                               </div>
+                                </div>
                             </div>
                         </div>
                         <div class="item fullWidthHeightClass">
                             <cube-Strct class="cubeParentClass" ng-show="loadingObject.showLoading" loading-Object="loadingObject"></cube-Strct>
+                            <div class="fullWidthHeightClass" ng-hide="loadingObject.showLoading">
+                                <div style="float: left;width: 100%;height: 100%;position: relative;" class="col-md-12">
+                                    <div class="podcastsContainer col-md-5 col-sm-12">
+                                        <div class="podcastHeader" style="border: 1px solid #ddd;border-bottom: 0;height: 15%;margin: 7px;margin-bottom: 0;">
+                                            <h5 class="fontClass" style="margin: auto;" class="fontClass ValueFeedsHeade">Personal Information</h5>
+                                        </div>
+                                        <div class="ImpactZoneChildDiv heightZeroClassProfile" ng-init="changeOccPerInfo = false" ng-class="{ heightAnimationProfile : animationActicvate == true }" style="border: 1px solid #ddd;margin: 7px;margin-top: 0;">
+                                            <div class="userNameProfile" style="height: 20%;display:block;width: 100%;">
+                                                <div class="activityNameInputBox" style="width: 49%;margin-right: 2%;">
+                                                    <input class="profileInputTag homeLogininput" style="color: #4f4f4f !important;font-size: 12px !important;letter-spacing: 1px; font-weight: 100 !important;" type="text" required ng-keydown="autoCompleteEmailId($event,'userId');" ng-blur="resetAutoComplete('userId');closeAlertMessage('userId')" ng-change='selectedIndex=-1;changeOccPerInfo = true' name="username" id="userId" ng-model="localModel.firstName" tabindex="0" autocomplete="off">
+                                                    <span class="highlight"></span>
+                                                    <span class="bar" style="background:rebeccapurple"></span>
+                                                    <label class="homeLoginlabel fontClass" style="">First Name</label>
+                                                </div>
+                                                <div class="activityNameInputBox" style="width: 49%;">
+                                                    <input class="profileInputTag homeLogininput" style="color: #4f4f4f !important;font-size: 12px !important;letter-spacing: 1px; font-weight: 100 !important;" type="text" required ng-keydown="autoCompleteEmailId($event,'lastName');" ng-blur="resetAutoComplete('lastName');closeAlertMessage('lastName')" ng-change='selectedIndexLN=-1;changeOccPerInfo = true' name="username" id="lastName" ng-model="localModel.lastName" tabindex="0" autocomplete="off">
+                                                    <span class="highlight"></span>
+                                                    <span class="bar" style="background:rebeccapurple"></span>
+                                                    <label class="homeLoginlabel fontClass" style="">Last Name</label>
+                                                </div>
+                                            </div>
+                                            <div class="userNameProfile" style="height: 20%;display:block;width: 100%;">
+                                                <div class="activityNameInputBox" style="width: 49%;margin-right: 2%;">
+                                                    <input class="profileInputTag homeLogininput" style="color: #4f4f4f !important;font-size: 12px !important;letter-spacing: 1px; font-weight: 100 !important;" type="text" required ng-keydown="autoCompleteEmailId($event,'mobile');" ng-blur="resetAutoComplete('mobile');closeAlertMessage('mobile')" ng-change='selectedIndexMobile=-1;changeOccPerInfo = true' name="username" id="mobile" ng-model="localModel.mobileNumber" tabindex="0" autocomplete="off">
+                                                    <span class="highlight"></span>
+                                                    <span class="bar" style="background:rebeccapurple"></span>
+                                                    <label class="homeLoginlabel fontClass" style="">Mobile</label>
+                                                </div>
+                                                <div class="activityNameInputBox" style="width: 49%;">
+                                                    <input class="profileInputTag homeLogininput" style="color: #4f4f4f !important;font-size: 12px !important;letter-spacing: 1px; font-weight: 100 !important;" type="text" required ng-keydown="autoCompleteEmailId($event,'City');" ng-blur="resetAutoComplete('City');closeAlertMessage('City')" ng-change='selectedIndexCity=-1;changeOccPerInfo = true' name="City" id="City" ng-model="localModel.City" tabindex="0" autocomplete="off">
+                                                    <span class="highlight"></span>
+                                                    <span class="bar" style="background:rebeccapurple"></span>
+                                                    <label class="homeLoginlabel fontClass" style="">City</label>
+                                                </div>
+                                            </div>
+                                            <div class="userNameProfile" style="height: 20%;width: 100%;">
+                                                @* <h5 style="float:left;width: 13%;margin: auto 15px;color: #777777;">City</h5>
+                                                    <input ng-model="myInfo.City" class="inputTagStyle fontClass" style="padding:5px;width: 60% !important; margin: auto 0;border-left: 0;border-right: 0;border-top: 0;border-bottom: 1px solid #ccc;" type="text" placeholder="City Name" />*@
+                                                
+                                                <div class="activityNameInputBox" style="width: 49%;margin-right: 2%;">
+                                                    <input class="profileInputTag homeLogininput" style="color: #4f4f4f !important;font-size: 12px !important;letter-spacing: 1px; font-weight: 100 !important;" type="text" required ng-keydown="autoCompleteEmailId($event,'State');" ng-blur="resetAutoComplete('State');closeAlertMessage('State')" ng-change='selectedIndexState=-1;changeOccPerInfo = true' name="State" id="State" ng-model="localModel.State" tabindex="0" autocomplete="off">
+                                                    <span class="highlight"></span>
+                                                    <span class="bar" style="background:rebeccapurple"></span>
+                                                    <label class="homeLoginlabel fontClass" style="">State</label>
+                                                </div>
+                                                <div class="activityNameInputBox" style="width: 49%;">
+                                                    <input class="profileInputTag homeLogininput" style="color: #4f4f4f !important;font-size: 12px !important;letter-spacing: 1px; font-weight: 100 !important;" type="text" required ng-keydown="autoCompleteEmailId($event,'Country');" ng-blur="resetAutoComplete('Country');closeAlertMessage('Country')" ng-change='selectedIndexState=-1;changeOccPerInfo = true' name="Country" id="Country" ng-model="localModel.Country" tabindex="0" autocomplete="off">
+                                                    <span class="highlight"></span>
+                                                    <span class="bar" style="background:rebeccapurple"></span>
+                                                    <label class="homeLoginlabel fontClass" style="">Country</label>
+                                                </div>
+                                            </div>
+                                            @*<div class="userNameProfile" style="height: 20%;width: 100%;">
+                                                    <h5 style="float:left;width: 13%;margin: auto 15px;color: #777777;">State</h5>
+                                                    <input ng-model="myInfo.State" class="inputTagStyle fontClass" style="padding:5px;width: 60% !important; margin: auto 0;border-left: 0;border-right: 0;border-top: 0;border-bottom: 1px solid #ccc;" type="text" placeholder="State Name" />
+                                                </div>*@
+                                            <div class="userNameProfile" style="height: 20%;width: 100%;">
+                                                @*<h5 style="float:left;width: 13%;margin: auto 15px;color: #777777;">Country</h5>
+                                                    <input ng-model="myInfo.Country" class="inputTagStyle fontClass" style="padding:5px;width: 60% !important; margin: auto 0;border-left: 0;border-right: 0;border-top: 0;border-bottom: 1px solid #ccc;" type="text" placeholder="Country Name" />*@
+                                                <div class="activityNameInputBox" style="width: 100%;">
+                                                    <input class="profileInputTag homeLogininput" style="color: #696565;font-size: 12px !important;letter-spacing: 1px;font-weight: 100;" type="text" required ng-keydown="autoCompleteEmailId($event,'linkedInLink');" ng-blur="resetAutoComplete('linkedInLink');closeAlertMessage('linkedInLink')" ng-change='selectedIndexState=-1;changeOccPerInfo = true' name="linkedIn" id="linkedInLink" ng-model="localModel.linkedInLink" tabindex="0" autocomplete="off">
+                                                    <span class="highlight"></span>
+                                                    <span class="bar" style="background:rebeccapurple"></span>
+                                                    <label class="homeLoginlabel fontClass" style="">LinkedIn Url</label>
+                                                </div>
+                                            </div>
+                                            <div class="userNameProfile" style="height: 20%;width: 100%;">
+                                                <button style="background: #D72C28;width: 70px; height: 30px;font-size: 10px;padding: 5px;font-weight: 100;margin: auto;margin-right: 0;" class="signupButton fontClass genericPointerClass" ng-click="">RESET</button>
+                                                <button ng-disabled="changeOccPerInfo == false" style="background: #D72C28;width: 70px; height: 30px;font-size: 10px;padding: 5px;font-weight: 100;margin: auto;margin-left: 10%;" class="signupButton fontClass genericPointerClass" ng-click="sendDetailsToServer()">SAVE</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="podcastsContainer col-md-5">
+                                        <div class="podcastHeader" style="border: 1px solid #ddd;border-bottom: 0;height: 15%;margin: 7px;margin-bottom: 0;">
+                                            <h5 class="fontClass" style="margin: auto;font-size: 14px;padding-left: 0;">Login Information</h5>
+                                        </div>
+                                        <div class="ImpactZoneChildDiv heightZeroClassProfile" ng-init="changeOccLogInfo = false" ng-class="{ heightAnimationProfile : animationActicvate == true }" style="border: 1px solid #ddd;margin: 7px;margin-top: 0;">
+                                            <div class="userNameProfile" style="height: 30%;width: 100%;display:block;">
+                                                <h5 class="fontClass" style="float:left;width: 92%;margin: 15px;margin-bottom: 0;color: #777777;">New Password</h5>
+                                                <input ng-model="myInfo.Password" ng-change="changeOccLogInfo = true" class="inputTagStyle fontClass" style="height: 28px;padding:5px;width: 60% !important;margin: 15px;margin-bottom: 0;margin-right: 0;" type="password" />
+                                                <span class="passwordIconWithInput"><img src="~/Images/camera.png" /></span>
+                                            </div>
+                                            <div class="userNameProfile" style="height: 30%;width: 100%;display:block;">
+                                                <h5 class="fontClass" style="float:left;width: 92%;margin: 15px;margin-bottom: 0;color: #777777;">Confirm New Password</h5>
+                                                <input ng-model="myInfo.ConfirmPassword" ng-change="changeOccLogInfo = true" class="inputTagStyle fontClass" style="height: 28px;padding:5px;width: 60% !important;margin: 15px;margin-bottom: 0;margin-right: 0;" type="password" />
+                                                <span class="passwordIconWithInput"><img src="~/Images/camera.png" /></span>
+                                            </div>
+                                            @*<div class="userNameProfile" style="height: 20%;width: 100%;">
+                                                    <input ng-model="myInfo.termCondition" class="inputTagStyle fontClass" style="padding:5px; margin: auto 0;" type="checkbox" />
+                                                    <h5 style="float:left;width: 60%;margin: auto 15px;color: #777777;">I accept term and condition</h5>
+                                                </div>*@
+                                            <div class="userNameProfile" style="height: 35%;width: 100%;">
+                                                <button ng-disabled="changeOccLogInfo == false" style="background: #D72C28;width: 70px; height: 30px;font-size: 10px;padding: 5px;font-weight: 100;margin: auto;" class="signupButton fontClass genericPointerClass" ng-click="sendPasswordDetailsToServer()">SAVE</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <div class="applicationProfilePanel" style="position : relative;width : 100%;height: 100%;float : left;">
+    <div class="applicationProfilePanel" style="display:none;position : relative;width : 100%;height: 100%;float : left;">
         <img ng-show="editRequired == 'false'" ng-click="closeProfilePopup()" style="width: 15px;height: 15px;top:5px;right: 5px;bottom: 0;position: absolute;z-index:1;cursor:pointer;" title="Cancel" src="~/Images/cancel.png" />
         <div class="profileBackgroundImageParent" style="background: url({{ myInfo.profileBackgroundImage ? myInfo.profileBackgroundImage : '../../../Images/userprofile.png'}});">
             <!--displayBackgroundImage over here -->

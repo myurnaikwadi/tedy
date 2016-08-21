@@ -1790,3 +1790,24 @@ function allowPatternDirective() {
         }
     }
 };
+
+app.filter('myFormat', function () {
+    return function (x,a) {
+     //   console.error(x, a)
+        var _array = [];
+        if (a.role == 'All') {
+            _array = [].concat(x);
+        } else {
+            x.some(function (iTopic) {
+               // console.error(iTopic.role, a.role)
+                if (iTopic.role == a.role) {
+                    iTopic.showSkill = false;
+                    _array.push(iTopic);
+                }
+            });
+        }
+
+        //console.error(_array)
+        return _array
+    };
+});
