@@ -68,6 +68,7 @@ float: left;
     position: relative;
     border-bottom: 1px solid;
     height: 38%;
+    margin-bottom: 4%;
  
 }
 .signupNewHereLabel{
@@ -107,13 +108,15 @@ float: left;
 	border:0px solid #FF0100;
 	display:inline-block;
 	cursor:pointer;
-	font-family: sans-serif;
+	font-family: Roboto-Regular;
 	color:#ffffff;
 	text-align: center;
     padding: 3px; 
     font-size: 11px;
     font-weight: 100;
     float : left;
+    width: 70px;
+    height: 30px;
 }
 
 .resetClass {
@@ -256,4 +259,10 @@ float: left;
     margin-left: 9%;
     font-size: 12px;
     margin:1%;
+}
+.login-Para{
+    margin:1%;
+    margin-left: 9%;
+    font-size: 12px;
+    font-family: Roboto-Regular;
 }
