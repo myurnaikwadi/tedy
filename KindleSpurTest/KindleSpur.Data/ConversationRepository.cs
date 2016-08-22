@@ -17,21 +17,20 @@ namespace KindleSpur.Data
     [BsonIgnoreExtraElements]
     public class ConversationRepository : IConversationRepository
     {
+        Connection con = new Connection();
         MongoClient _mongoClient;
         MongoServer _mongoServer;
         MongoDatabase _kindleDatabase;
         MongoCollection _logCollection;
+        MongoCollection _conversationCollection;
 
         public ConversationRepository()
         {
-            string mongoServerConfig = "mongodb://127.0.0.1:27017";
 
             try
             {
-                _mongoClient = new MongoClient(mongoServerConfig);
-                _mongoServer = _mongoClient.GetServer();
-                _kindleDatabase = _mongoServer.GetDatabase("KindleSpur");
-                _logCollection = _kindleDatabase.GetCollection("ErrorLogs");
+                _conversationCollection = con.GetCollection("Conversations");
+                _logCollection = con.GetCollection("ErrorLogs");
             }
             catch (MongoException ex)
             {
@@ -45,8 +44,7 @@ namespace KindleSpur.Data
 
             try
             {
-                var _conversationCollection = _kindleDatabase.GetCollection("Conversations");
-                var result = _conversationCollection.Find(Query.And(Query.EQ("SenderEmail", conversationData.SenderEmail), Query.EQ("ReceiverEmail", conversationData.ReceiverEmail), Query.EQ("skill", conversationData.skill))).ToList();
+                var result = _conversationCollection.FindAs<BsonDocument>(Query.And(Query.EQ("SenderEmail", conversationData.SenderEmail), Query.EQ("ReceiverEmail", conversationData.ReceiverEmail), Query.EQ("skill", conversationData.skill))).ToList();
 
                 if (result.Count() > 0 && conversationData.Content == null)
                 {
@@ -87,7 +85,6 @@ namespace KindleSpur.Data
             bool _transactionStatus = false;
             try
             {
-                var _conversationCollection = _kindleDatabase.GetCollection("Conversations");
                 var conversationDetail = _conversationCollection.FindOneAs<IConversation>(Query.EQ("_id", ObjectId.Parse(conversationId)));
                 conversationDetail.SenderEmail = conversationData.SenderEmail;
                 conversationDetail.ReceiverEmail = conversationData.ReceiverEmail;
@@ -127,7 +124,6 @@ namespace KindleSpur.Data
             bool _transactionStatus = false;
             try
             {
-                var _conversationCollection = _kindleDatabase.GetCollection("Conversations");
 
                 var conversationDetail = _conversationCollection.FindOneAs<Conversation>(Query.And(Query.EQ("SenderEmail", receiverEmail), Query.EQ("ReceiverEmail", senderEmail), Query.EQ("ConversationType", ConversationType), Query.EQ("skill", skill)));
 
@@ -171,13 +167,12 @@ namespace KindleSpur.Data
             {
                 //var _query = Query.And(Query.Or(Query<Conversation>.EQ(p => p.SenderEmail, loggedEmail), Query<Conversation>.EQ(p => p.ReceiverEmail, loggedEmail)), Query<Conversation>.EQ(p => p.IsVerified, true), Query<Conversation>.EQ(p1 => p1.ConversationType, ConversationType));
 
-                var _conversationCollection = _kindleDatabase.GetCollection("Conversations");
 
                 //_checkUser = _conversationCollection.Find(_query).ToList();
                 //if (_checkUser.Count() > 0)
                 //{
                 var _query1 = Query.And(Query<Conversation>.EQ(p => p.ReceiverEmail, loggedEmail), Query<Conversation>.EQ(p => p.IsVerified, true), Query<Conversation>.EQ(p1 => p1.ConversationType, ConversationType));
-                _categories = _conversationCollection.Find(_query1).SetFields(Fields.Exclude("_id").Include("ReceiverEmail", "SenderEmail", "skill", "ConversationType", "ConversationId", "ConversationParentId")).Distinct().ToList();
+                _categories = _conversationCollection.FindAs<BsonDocument>(_query1).SetFields(Fields.Exclude("_id").Include("ReceiverEmail", "SenderEmail", "skill", "ConversationType", "ConversationId", "ConversationParentId")).Distinct().ToList();
 
                 //}
                 //else
@@ -227,9 +222,8 @@ namespace KindleSpur.Data
 
             try
             {
-                var _conversationCollection = _kindleDatabase.GetCollection("Conversations");
 
-                _categories = _conversationCollection.Find(Query.And(Query<Conversation>.EQ(p => p.SenderEmail, loggedEmail), Query<Conversation>.EQ(p => p.IsVerified, true), Query<Conversation>.EQ(p1 => p1.ConversationType, ConversationType))).SetFields(Fields.Exclude("_id").Include("SenderEmail", "ReceiverEmail", "skill", "ConversationType", "ConversationId", "ConversationParentId")).Distinct().ToList();
+                _categories = _conversationCollection.FindAs<BsonDocument>(Query.And(Query<Conversation>.EQ(p => p.SenderEmail, loggedEmail), Query<Conversation>.EQ(p => p.IsVerified, true), Query<Conversation>.EQ(p1 => p1.ConversationType, ConversationType))).SetFields(Fields.Exclude("_id").Include("SenderEmail", "ReceiverEmail", "skill", "ConversationType", "ConversationId", "ConversationParentId")).Distinct().ToList();
 
                 //_categories = _conversationCollection.Find().SetFields(Fields.Exclude("_id")).ToList();
             }
@@ -316,10 +310,9 @@ namespace KindleSpur.Data
 
                 //MongoCursor<Conversation> cursor = _convCollection.Find(_query);
 
-                var _conversationCollection = _kindleDatabase.GetCollection("Conversations");
                 //_categories = _conversationCollection.FindAll().SetFields(Fields.Exclude("_id")).ToList();
 
-                _categories = _conversationCollection.Find(Query.And(Query.EQ("ConversationParentId", ParentId), Query.EQ("ConversationType", ConversationType))).ToList();
+                _categories = _conversationCollection.FindAs<BsonDocument>(Query.And(Query.EQ("ConversationParentId", ParentId), Query.EQ("ConversationType", ConversationType))).ToList();
                 //_query
                 //Query.And(
                 //    Query.Or(
@@ -380,9 +373,8 @@ namespace KindleSpur.Data
             {
 
                 var _query = Query.And(Query<Conversation>.EQ(p => p.Content, null), Query<Conversation>.EQ(p1 => p1.ReceiverEmail, senderEmail), Query<Conversation>.EQ(p1 => p1.ConversationType, ConversationType));
-                var _conversationCollection = _kindleDatabase.GetCollection("Conversations");
 
-                _categories = _conversationCollection.Find(_query).ToList();
+                _categories = _conversationCollection.FindAs<BsonDocument>(_query).ToList();
 
 
             }
@@ -416,27 +408,72 @@ namespace KindleSpur.Data
 
         public IConversation GetConversationDetail(int conversationId)
         {
-            var _conversationCollection = _kindleDatabase.GetCollection("Conversations");
             return _conversationCollection.FindOneByIdAs<IConversation>(conversationId);
         }
 
         public IConversation GetConversationDetail(string message)
         {
-            var _conversationCollection = _kindleDatabase.GetCollection("Conversations");
             return _conversationCollection.FindOneAs<Conversation>(Query.EQ("message", message));
         }
-        public List<Conversation> GetSkillsForConversation()
+        public List<object> GetSkillsForConversation()
         {
-            List<Conversation> result = new List<Conversation>();
+            var list = new List<object>();
             try
             {
-               
-                var _conversationCollection = _kindleDatabase.GetCollection("Conversations");
-                List<Conversation> typeCoaching = _conversationCollection.AsQueryable<Conversation>().Where<Conversation>(sb => sb.ConversationType == "Coaching" && sb.Content.StartsWith("COACHING REQUEST BY")).Take(5).ToList();
-                List<Conversation> typeMentoring = _conversationCollection.AsQueryable<Conversation>().Where<Conversation>(sb => sb.ConversationType == "Mentoring" && sb.Content.StartsWith("MENTORING REQUEST BY")).Take(5).ToList();
 
-                result.AddRange(typeCoaching);
-                result.AddRange(typeMentoring);
+
+                var _CoachOrMentorCollection = con.GetCollection("CoachOrMentor");
+                var _CoacheeOrMenteeCollection = con.GetCollection("CoacheeOrMentee");
+                //Coaching Skills
+                var Coach = (from c in _CoachOrMentorCollection.AsQueryable<CoachOrMentor>()
+                             where c.Role == "Coach"
+                             select (c.Skills.Select(r => r.Name).ToList())).ToList();
+
+                var Coachee = (from c in _CoacheeOrMenteeCollection.AsQueryable<CoacheeOrMentee>()
+                               where c.Role == "Coachee"
+                               select (c.Skills.Select(r => r.Name).ToList())).ToList();
+
+
+
+                var resultsCoaching = Coach.Concat(Coachee);
+                List<string> skillListCoaching = new List<string>();
+                foreach (var skills in resultsCoaching)
+                {
+                    foreach (var skill in skills)
+                    {
+                        skillListCoaching.Add(skill);
+                    }
+                }
+                List<string> SkillFilterListCoaching = skillListCoaching.Distinct().Take(5).ToList();
+
+
+                //Mentor SKill
+
+                var Mentor = (from c in _CoachOrMentorCollection.AsQueryable<CoachOrMentor>()
+                              where c.Role == "Mentor"
+                              select (c.Topics.Select(r => r.Name).ToList())).ToList();
+
+                var Mentee = (from c in _CoacheeOrMenteeCollection.AsQueryable<CoacheeOrMentee>()
+                              where c.Role == "Mentee"
+                              select (c.Topics.Select(r => r.Name).ToList())).ToList();
+
+                var resultsMentoring = Mentor.Concat(Mentee);
+                List<string> skillListMentoring = new List<string>();
+                foreach (var topics in resultsMentoring)
+                {
+                    foreach (var topic in topics)
+                    {
+                        skillListMentoring.Add(topic);
+                    }
+                }
+                List<string> TopicFilterListMentoring = skillListMentoring.Distinct().Take(5).ToList();
+
+
+              //  var list = new List<object>();
+                list.Add(SkillFilterListCoaching);
+                list.Add(TopicFilterListMentoring);
+
+
 
             }
             catch (MongoException ex)
@@ -462,7 +499,7 @@ namespace KindleSpur.Data
 
             }
 
-            return result;
+            return list;
 
         }
 

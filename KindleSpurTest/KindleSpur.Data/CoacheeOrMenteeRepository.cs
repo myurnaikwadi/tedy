@@ -15,21 +15,18 @@ namespace KindleSpur.Data
     public class CoacheeOrMenteeRepository
     {
         Connection con = new Connection();
-        MongoClient _mongoClient;
-        MongoServer _mongoServer;
-        MongoDatabase _kindleDatabase;
+        //MongoClient _mongoClient;
+        //MongoServer _mongoServer;
+    //    MongoDatabase _kindleDatabase;
         MongoCollection _logCollection;
         MongoCollection _coacheeOrMenteeCollection;
 
         public CoacheeOrMenteeRepository()
         {
-            string mongoServerConfig = "mongodb://127.0.0.1:27017";
+
 
             try
             {
-                _mongoClient = new MongoClient(mongoServerConfig);
-                _mongoServer = _mongoClient.GetServer();
-                _kindleDatabase = _mongoServer.GetDatabase("KindleSpur");
                 _logCollection = con.GetCollection("ErrorLogs");
                 _coacheeOrMenteeCollection = con.GetCollection("CoacheeOrMentee");
             }
@@ -422,9 +419,9 @@ namespace KindleSpur.Data
             try
             {
                 if (Role == "Coachee")
-                 entity = _coacheeOrMenteeCollection.FindOneAs<CoacheeOrMentee>(Query.And(Query.EQ("UserId", feedback.Sender), Query.EQ("Role", Role)));
+                    entity = _coacheeOrMenteeCollection.FindOneAs<CoacheeOrMentee>(Query.And(Query.EQ("UserId", feedback.Sender), Query.EQ("Role", Role)));
                 else if (Role == "Mentee")
-                  entity = _coacheeOrMenteeCollection.FindOneAs<CoacheeOrMentee>(Query.And(Query.EQ("UserId", feedback.Sender), Query.EQ("Role", Role)));
+                    entity = _coacheeOrMenteeCollection.FindOneAs<CoacheeOrMentee>(Query.And(Query.EQ("UserId", feedback.Sender), Query.EQ("Role", Role)));
                 entity.FeedbackPoints += feedback.customerSatisfactionRating;
 
                 if (entity.Feedbacks == null) entity.Feedbacks = new List<IFeedback>();
@@ -433,7 +430,7 @@ namespace KindleSpur.Data
                 entity.Feedbacks.Add(feedback);
                 entity.RewardPointsGained += 5;
                 _coacheeOrMenteeCollection.Save(entity);
-                var _users = _kindleDatabase.GetCollection("UserDetails");
+                var _users = con.GetCollection("UserDetails");
                 User user = _users.FindOneAs<User>(Query.EQ("EmailAddress", UserId));
                 user.BalanceRewardPoints += 5;
                 user.TotalRewardPoints += 5;
@@ -612,7 +609,7 @@ namespace KindleSpur.Data
         {
             if (c != null)
             {
-                var _userCollection = _kindleDatabase.GetCollection("UserDetails");
+                var _userCollection = con.GetCollection("UserDetails");
                 User userDetail = _userCollection.FindOneAs<User>(Query.EQ("EmailAddress", c.EmailAddress));
                 c.FirstName = userDetail.FirstName;
                 c.LastName = userDetail.LastName;

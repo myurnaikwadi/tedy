@@ -15,21 +15,20 @@ namespace KindleSpur.Data
 {
     public class MeetingSchedularRepository : IMeetingSchedularRepository
     {
+        Connection con = new Connection();
         MongoClient _mongoClient;
         MongoServer _mongoServer;
         MongoDatabase _kindleDatabase;
         MongoCollection _logCollection;
+        MongoCollection _meetingCollection;
 
         public MeetingSchedularRepository()
         {
-            string mongoServerConfig = "mongodb://127.0.0.1:27017";
 
             try
             {
-                _mongoClient = new MongoClient(mongoServerConfig);
-                _mongoServer = _mongoClient.GetServer();
-                _kindleDatabase = _mongoServer.GetDatabase("KindleSpur");
-                _logCollection = _kindleDatabase.GetCollection("ErrorLogs");
+                _meetingCollection = con.GetCollection("MeetingSchedulars");
+                _logCollection = con.GetCollection("ErrorLogs");
             }
             catch (MongoException ex)
             {
@@ -43,8 +42,7 @@ namespace KindleSpur.Data
 
             try
             {
-                var _meetingCollection = _kindleDatabase.GetCollection("MeetingSchedulars");
-                var result = _meetingCollection.Find(Query.And(Query.EQ("SenderEmail", meetingSchedularData.SenderEmail), Query.EQ("ReceiverEmail", meetingSchedularData.ReceiverEmail))).ToList();
+                var result = _meetingCollection.FindAs<MeetingSchedular>(Query.And(Query.EQ("SenderEmail", meetingSchedularData.SenderEmail), Query.EQ("ReceiverEmail", meetingSchedularData.ReceiverEmail))).ToList();
 
                 //if (result.Count() > 0)
                 //    return false;
@@ -85,9 +83,8 @@ namespace KindleSpur.Data
             try
             {
                 var _query = Query.And(Query<MeetingSchedular>.EQ(p => p.IsVerified, false), Query<MeetingSchedular>.NE(p => p.SenderEmail, userId), Query<MeetingSchedular>.EQ(p => p.ReceiverEmail, userId));
-                var _meetingCollection = _kindleDatabase.GetCollection("MeetingSchedulars");
 
-                _categories = _meetingCollection.Find(
+                _categories = _meetingCollection.FindAs<BsonDocument>(
                     _query
                     ).ToList();
 
@@ -107,7 +104,6 @@ namespace KindleSpur.Data
             bool _transactionStatus = false;
             try
             {
-                var _meetingCollection = _kindleDatabase.GetCollection("MeetingSchedulars");
 
                 var meetingDetail = _meetingCollection.FindOneAs<IMeetingSchedular>(Query.And(Query.EQ("SenderEmail", senderEmail), Query.EQ("ReceiverEmail", receiverEmail)));
 
@@ -131,8 +127,7 @@ namespace KindleSpur.Data
 
             try
             {
-                var _ctsCollection = _kindleDatabase.GetCollection("MeetingSchedulars");
-                _meeting = _ctsCollection.FindAll().SetFields(Fields.Exclude("_id")).ToList();
+                _meeting = _meetingCollection.FindAllAs<BsonDocument>().SetFields(Fields.Exclude("_id")).ToList();
             }
             catch (MongoException ex)
             {
@@ -157,9 +152,9 @@ namespace KindleSpur.Data
                         );
                 
 
-                var _conversationCollection = _kindleDatabase.GetCollection("Conversations");
+                var _conversationCollection = con.GetCollection("Conversations");
 
-                _meeting = _conversationCollection.Find(
+                _meeting = _conversationCollection.FindAs<BsonDocument>(
                     _query
                     ).ToList();
 
