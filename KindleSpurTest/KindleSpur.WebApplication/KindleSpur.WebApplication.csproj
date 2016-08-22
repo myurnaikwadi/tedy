@@ -283,6 +283,7 @@
     <Content Include="Images\1.png" />
     <Content Include="Images\add.png" />
     <Content Include="Images\addBold.png" />
+    <Content Include="Images\calendar.png" />
     <Content Include="Images\camera.png" />
     <Content Include="Images\cancel.png" />
     <Content Include="Images\Coaching1.png" />
@@ -345,6 +346,7 @@
     <Content Include="Images\icons\trending topics2.png" />
     <Content Include="Images\icons\verticle.png" />
     <Content Include="Images\icons\If no Profile photo.png" />
+    <Content Include="Images\leftSideIcon.png" />
     <Content Include="Images\linkedIn.jpg" />
     <Content Include="Images\linkedin_square_gray.png" />
     <Content Include="Images\loginLanding.jpg" />
@@ -357,6 +359,7 @@
     <Content Include="Images\pointStatusPanel.png" />
     <Content Include="Images\profile.png" />
     <Content Include="Images\psrPlant.png" />
+    <Content Include="Images\rightSideIcon.png" />
     <Content Include="Images\save.png" />
     <Content Include="Images\tempImage.jpg" />
     <Content Include="Images\Tree\Stage 1.png" />
@@ -386,7 +389,8 @@
     <Content Include="Scripts\Angular\Controller\Home\ksVcsController.js" />
     <Content Include="Scripts\Angular\Controller\value\ksValueFeedsController.js" />
     <Content Include="Scripts\Angular\Services\ksGenericDirective.js" />
-    <Content Include="Scripts\Angular\Services\msIsotope.js" />
+    <Content Include="Scripts\Angular\Services\ksIsotope.js" />
+    <Content Include="Scripts\Angular\Services\ksPluginService.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\css\communication\ksCommunication.css" />
@@ -454,7 +458,6 @@
     <Content Include="Scripts\jquery-2.2.3.min.map" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\jquery.validate.js" />
-    <Content Include="Views\Home\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
@@ -493,6 +496,8 @@
     <Content Include="Views\Home\ksFeedBackPanel.cshtml" />
     <Content Include="Views\Home\ksMyReward.cshtml" />
     <Content Include="Views\Home\ksResources.cshtml" />
+    <Content Include="Views\Home\ksMonthlyView.cshtml" />
+    <Content Include="Views\Home\ksMonthlyTemplate.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

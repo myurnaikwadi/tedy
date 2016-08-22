@@ -48,6 +48,11 @@ app.directive('topMainStrip', function ($state, $rootScope, authentification) {
             } else {
                 scope.notification = true;
             }
+
+            scope.loadCalendarView = function () {
+              $state.go('calendar');
+            };
+
             scope.navigateToProfile = function () {
                 $state.go('profile');
             };

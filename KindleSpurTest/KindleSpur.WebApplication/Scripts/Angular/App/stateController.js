@@ -64,4 +64,9 @@ app.config(['$stateProvider', '$urlRouterProvider','$locationProvider',function(
         url: '/Conversation',
         templateUrl: '/Conversation/Index',
     })
+    .state('calendar', {
+        url: '/calendar',
+        templateUrl: '/Home/ksMonthlyTemplate',
+    })
+
 }]);

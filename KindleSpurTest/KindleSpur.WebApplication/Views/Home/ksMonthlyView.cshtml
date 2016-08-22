@@ -1,0 +1,52 @@
+﻿<!-- <monthly style="float:left;width:100%;height:100%;"></monthly> -->
+<!-- monthly html code  -->
+<div style="width:100%;height:7%;float:left;display:flex;">
+    <div style="margin:auto;display:flex;margin-right: 1%;">
+        <img class="genericPointerClass" style="margin:auto;width: 20px;height: 20px;float: left;" ng-click="dateNavigation(0)" src="~/Images/leftSideIcon.png" />
+        <h5 class="monthlyWeekDayName fontClass" style="margin:auto;float: left;width: 85px;text-align: center;">{{monthDate | date : 'MMMM' }}</h5>
+        <img class="genericPointerClass" style="margin:auto;width: 20px;height: 20px;float: left;" ng-click="dateNavigation(1)" src="~/Images/rightSideIcon.png" />
+    </div>
+</div>
+<div style="width:100%;height:7%;float:left;border-top: 1px solid #ddd;border-bottom: 1px solid #ddd;">
+    <div class="genericTransition" ng-repeat="day in dayName track by $index" style="height:100%;border-left: 1px solid #ddd;float: left;" ng-style="{'width': 'calc(100%/7)' }">
+        <div style="width:100%;height:100%;float:left;">
+            <h5 class="monthlyWeekDayName fontClass" style="float: right;">{{day.name | uppercase}}</h5>
+        </div>
+    </div>
+</div>
+<div id="monthlycontroller" style="width:100%; height:86%;float:left;">
+    <div class="monthlyCell" ng-repeat="dateNumberArr in monthlyArray" ng-style="dateNumberArr.styleObj" >
+        <!-- ng-click="cellClickFunc(dateNumberArr,$index);ng-class="{removeClick : expandIndex != $index || expandIndex != -1}"" -->
+        <div style="height:100%;width:100%;position:relative;position: relative;" ng-click="cellClickFunc(dateNumberArr,$index)" >
+            <div class="monthDayInnerContainer" ng-class="{ makeItPast:dateNumberArr.flag == 0, monthDayInnerBorderForToday:dateNumberArr.value=='TODAY',selectedDateOnonthly: indexClickedOn == $index && dateNumberArr.value!='TODAY'}">
+                <div class="monthDayInnerRow" >                    
+                    <h4 class="fontClass" style="margin: auto;margin-right: 8%;padding:0;" ng-class="{monthDayInnerRowDayNameCurrentMonth:dateNumberArr.flag==1,monthDayInnerRowDayName:dateNumberArr.flag==0,monthDayInnerRowDayNameToday:dateNumberArr.value=='TODAY'}">
+                        {{dateNumberArr.dateNumber}}
+                    </h4>
+                </div>               
+                @*<div class="monthDayInnerRow" ng-show="dateNumberArr.value=='TODAY'">
+                    <h5 class="monthlyClassForTodayHeading fontClass">TODAY</h5>
+                </div>*@
+                <div class="monthDayInnerEventRow" ng-show="dateNumberArr.meetingArray.length>0">
+                    <h5 class="eliipsisClass fontClass" ng-repeat="request in dateNumberArr.meetingArray | limitTo : 3"  ng-class="{ coachThemeColor : request.role == 'Coach' , coacheeThemeColor : request.role == 'Coachee' , mentorThemeColor : request.role == 'Mentor' , menteeThemeColor : request.role == 'Mentee' }">
+                        {{request.Name}}
+                    </h5>                    
+                </div>          
+                <div class="monthDayInnerEventRow" style="height: 15px;display:flex;" ng-show="dateNumberArr.meetingArray.length > 3">
+                   <div style="display:flex;width:30%;margin:auto;">
+                       <h4 style="margin:auto;border: 3px solid #ddd;border-radius:100%;" class="eliipsisClass fontClass"></h4>
+                       <h4 style="margin:auto;border: 3px solid #ddd;border-radius:100%;" class="eliipsisClass fontClass"></h4>
+                       <h4 style="margin:auto;border: 3px solid #ddd;border-radius:100%;" class="eliipsisClass fontClass"></h4>
+                   </div>
+                </div>
+            </div>
+            <div ng-if="expandIndex == $index" class="monthlyExpandedDiv" style="transition:none;height:100%">
+                <div id="testDIV1" class="monthlyPopupMainContainer" style="display:inline-block;background-color:#FAFBFB;;transition:none;">
+                    <div ng-include src="'www/public/msStream/views/monthly/monthlyPopup.html'">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- monthly html code  -->

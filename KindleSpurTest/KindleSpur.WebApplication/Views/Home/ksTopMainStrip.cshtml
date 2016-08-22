@@ -29,7 +29,7 @@
         <div class="roleIconCircle mentorBorderColor genericPointerClass" ng-click="navigateAsPerRole(3)"></div>
         @*<div class="triangleArrowUp"></div>*@
     </div>
-    <div class="profileViewModeMain" ng-click="navigateToProfile()" ng-hide="notification == true" >
+    <div class="profileViewModeMain" style="margin-left: 0;" ng-click="navigateToProfile()" ng-hide="notification == true" >
         <div class="profileImagePartMain">
             <div class="profileImage"></div>
         </div>
@@ -37,5 +37,8 @@
             <h2 class="profileName" >WELCOME</h2>
             <h2 class="profileName">&nbsp {{(loggedDetail.FirstName) | uppercase }}</h2>
         </div>
+    </div>
+    <div class="profileViewModeMain" ng-hide="notification == true">
+        <div class="profileImagePartMain" style="width: 25px;"><img style="width: 30px; height: 30px; margin: auto; float: left;" ng-click="loadCalendarView()" src="~/Images/calendar.png" /></div>
     </div>
 </div>
