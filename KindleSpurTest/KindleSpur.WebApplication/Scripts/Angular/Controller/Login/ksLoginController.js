@@ -159,7 +159,7 @@ app.controller('ksLoginController', ['$scope', 'authentification', '$location', 
 
             if ($scope.loginDetails.emailAddress == '' && $scope.loginDetails.password == '') {
                 $scope.displayAlert.showAlert = true;
-                $scope.displayAlert.message = 'Please enter email address Or password ';
+                $scope.displayAlert.message = 'Please enter email address and password ';
                 $scope.displayAlert.formatType = '2';
             }
             else if ($scope.loginDetails.emailAddress == '') {
