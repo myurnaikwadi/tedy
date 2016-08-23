@@ -43,6 +43,10 @@
 	float : left;
 	display: flex;
 }
+.userRoleChild{
+    margin:auto;width: 65%;
+    height: 100%;
+}
 .bottomStripParent{
 	position: relative;
 	width: 100%;
@@ -951,6 +955,76 @@ width: 20%;
     height:100%;
     float:left;
     padding:0px;
+}
+.notificationaccept-Button{
+    width:100%;
+    font-size: 10px;
+    padding: 5px;    
+    margin: auto;
+    font-weight: bolder;
+}
+.flip-DataFront{
+    float: left;
+    width : 100%;
+    height : 100%;
+}
+.flip-DataBack{
+    display:flex;
+    width:100%;
+    height:100%;
+}
+.role-Name{
+    width: 80%;
+    margin: 10%; 
+    font-size:30px
+
+}
+.bottom-BodyParent{
+    height: 22%; 
+    float: left; 
+    width: 100%;
+    display:flex;
+}
+.bottom-BodyChild{
+    margin:auto;
+    width: 64%;
+    height:100%;
+}
+.trending-TopicDiv{
+    float:left;
+    width:100%;
+    height:25%;
+    display:flex;
+}
+.trending-Topic{
+    margin: auto;
+}
+.trending-TopicParent{
+    float:left;
+    width:100%;
+    height:75%;
+}
+.trending-TopicChildLeft{
+    float:left;
+    width:50%;
+    height:100%;
+}
+.trending-LogoLeft{
+    float:left; 
+    width:25%;
+    height:100%;
+    display:flex;
+}
+.trending-ToicChildRight{
+    float:left;
+    width:50%;
+    height:100%;
+}
+.trending-LogoRight{
+    float:left;
+    width:25%;
+    height:100%;
+    display:flex;
 }
 
     
