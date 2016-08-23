@@ -44,7 +44,7 @@
                                       <input class="inputTagStyle fontClass" allow-pattern="[a-z]" style="margin-left: 5%;" ng-model="signupDetails.LastName" type="text" placeholder="LAST NAME" ng-required />
                                   </div>
                                   <div class="formDetails">
-                                      <input class="inputTagStyle fontClass" style="width: 94%;" type="email" ng-keyup="$event.keyCode == 13 && signupClick()" ng-class="{ invalidEmailNotify : emailValidate == false}"  focus-me set-Focus="false" blur="checkEmailFormat()" ng-model="signupDetails.EmailAddress" placeholder="E-MAIL ID" ng-required />
+                                      <input class="email-inputTagStyle fontClass email-Textboxmsg" type="email" ng-keyup="$event.keyCode == 13 && signupClick()" ng-class="{ invalidEmailNotify : emailValidate == false}"  focus-me set-Focus="false" blur="checkEmailFormat()" ng-model="signupDetails.EmailAddress" placeholder="E-MAIL ID" ng-required />
                                   </div>
                                   <div class="formDetails">
                                       <button type="button" class="signupButton fontClass btn btn-default" ng-click="signupClick()">SIGN UP</button>
@@ -55,13 +55,13 @@
                               <h4 class="sigupLabel fontClass">SIGN IN!</h4>
                               <form name="myForm">
                                   <div class="formDetails">
-                                      <input class="inputTagStyle fontClass" style="width: 94%;" type="email" ng-class="{ invalidEmailNotify : emailValidate == false}"  focus-me set-Focus="true" blur="checkEmailFormat()" ng-model="loginDetails.emailAddress" placeholder="EMAIL ID" ng-required />
+                                      <input class="email-inputTagStyle fontClass" type="email" ng-class="{ invalidEmailNotify : emailValidate == false}"  focus-me set-Focus="true" blur="checkEmailFormat()" ng-model="loginDetails.emailAddress" placeholder="EMAIL ID" ng-required />
                                   </div>
                                   <div class="formDetails">
                                       <input type="password" class="inputTagStyle fontClass" ng-keyup="$event.keyCode == 13 && loginClick()" style="width: 94%;" ng-model="loginDetails.password" placeholder="PASSWORD" ng-required />
                                   </div>
                                   <div class="formDetails">
-                                      <button type="button" style="width: 70px;height: 30px;" class="signupButton fontClass btn btn-default" ng-click="loginClick()">SUBMIT</button>       
+                                      <button type="button"class="signupButton fontClass btn btn-default" ng-click="loginClick()">SUBMIT</button>       
                                       
                                       <h5 class="forgotPassword fontClass" style="margin: 10px;" ng-click="forgotPasswordClickFunc($event)">ForgotPassword</h5>
                                   </div>
