@@ -310,11 +310,10 @@ namespace KindleSpur.Data
 
                 //MongoCursor<Conversation> cursor = _convCollection.Find(_query);
 
-                var _conversationCollection = _kindleDatabase.GetCollection("Conversations");
                 //_categories = _conversationCollection.FindAll().SetFields(Fields.Exclude("_id")).ToList();
 
                 _categories = _conversationCollection.FindAs<BsonDocument>(Query.And(Query.EQ("ConversationParentId", ParentId), Query.EQ("ConversationType", ConversationType))).ToList();
-                var _userDetailsCollection = _kindleDatabase.GetCollection("UserDetails");
+                var _userDetailsCollection = con.GetCollection("UserDetails");
                 try
                 {
                     for (int i = 0; i < _categories.Count; i++)
