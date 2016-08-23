@@ -10,13 +10,13 @@
                 </div>
             </div>*@
             <div class="userRoleWizardParentMain">
-                <div class="userRoleWizardParent" style="display: inline-flex;overflow: auto;float:left; overflow-x:scroll; overflow-y:hidden;width:98%;margin-left: -16px;">
+                <div class="userRoleWizardParent">
                     <div class="notificationWiz" style="display:none;" ng-repeat="notification in notificationsArr">
                         <div ng-if="notification.notificationType == '1'">
                             <h6 class="notificationWizReason">{{notification.name}}</h6>
                             <h4 class="notificationWizName">{{notification.assignPerson}}</h4>
                             <div class="notificationWizButton">
-                                <button style="width:100%;font-size: 10px;padding: 5px;    margin: auto;font-weight: bolder;" class="signupButton fontClass">ACCEPT</button>
+                                <button style="width:100%;font-size: 10px;padding: 5px;    margin: auto;font-weight: bolder;" class="notificationaccept-Button signupButton fontClass">ACCEPT</button>
                             </div>
                         </div>
                         <div ng-class="{ mentorThemeColor : notification.role =='mentor',coacheeThemeColor : notification.role =='coachee'}" style="float: left;width: 100%;height: 100%;" ng-if="notification.notificationType == '2'">
@@ -31,12 +31,12 @@
                 </div>
             </div>
             <div class="userRolesParent">
-                 <div style="margin:auto;width: 65%;height: 100%;">
+                 <div class="userRoleChild">
                      <div class="roleRepeatWizardMain" ng-mouseover="wizard.selectedOption = true" ng-mouseout="wizard.selectedOption = false" ng-class="{ flipper : wizard.selectedOption == true  ,mentorThemeColor : wizard.name =='MENTOR',menteeThemeColor : wizard.name =='MENTEE',coachThemeColor : wizard.name =='COACH',coacheeThemeColor : wizard.name =='COACHEE'}" ng-click="roleClick($event,wizard)" ng-repeat="wizard in applicationRole">
-                         <div class="flipper" style="float: left; width : 100%; height : 100%;">
+                         <div class="flipper flip-DataFront">
                              <div class="front">
                                  <!-- front content -->
-                                 <div style="display:flex;width:100%;height:100%;">                                   
+                                 <div class="flip-DataBack">                                   
                                      <h5 class="fontClass" ng-class="{ whiteBackground : wizard.name =='MENTOR' || wizard.name =='COACH' }" style="margin:auto;width: 70%;font-size: 14px;">{{wizard.message}}</h5>
                                  </div>
                              </div>
@@ -44,7 +44,7 @@
                                  <!-- back content -->
                                  <div class="rolelabelPart">
                                      <div class="roleNameLabel">
-                                         <h1 style="width: 80%;margin: 10%; font-size:30px" class="notificationWizName" ng-class="{ whiteBackground : wizard.name =='MENTOR' || wizard.name =='COACH' }">{{wizard.name}}</h1>
+                                         <h1 class="notificationWizName role-Name" ng-class="{ whiteBackground : wizard.name =='MENTOR' || wizard.name =='COACH' }">{{wizard.name}}</h1>
                                      </div>
                                      <div class="roleImage">
                                          <img src={{wizard.img}} class="homePageLogo">
@@ -62,29 +62,29 @@
                      </div>
                   </div>                  
             </div>           
-            <div class="" style="height: 22%; float: left; width: 100%;display:flex;" >
-                 <div style="margin:auto;width: 64%;height:100%;">
-                     <div style="float:left;width:100%;height:25%;display:flex;">
-                         <h5 class="fontClass" style="margin: auto;">TRENDING TOPICS</h5>
+            <div class="bottom-BodyParent">
+                 <div class="bottom-BodyChild">
+                     <div class="trending-TopicDiv">
+                         <h5 class="fontClass trending-Topic">TRENDING TOPICS</h5>
                      </div>
-                     <div style="float:left;width:100%;height:75%;">
-                         <div style="float:left;width:50%;height:100%;">
-                             <div style="float:left; width:25%;height:100%;display:flex;">
+                     <div class="trending-TopicParent">
+                         <div class="trending-TopicChildLeft">
+                             <div class="trending-LogoLeft">
                                  <img style="margin: auto" src="~/Images/icons/trending topics1.png" class="TradingTopicsLogo" />
                              </div>
                              <div style="float:left; width:75%;height:100%;" >
-                                 <h5 class="fontClass eliipsisClass" style="    font-size: 9px;padding: 2px;font-weight: bold;float: left; width: 50%;height: auto;" ng-repeat="option in trendingTopicLeftArray">
+                                 <h5 class="fontClass eliipsisClass" style="font-size: 9px;padding: 2px;font-weight: bold;float: left;width: 50%;height: auto;" ng-repeat="option in trendingTopicLeftArray">
                                      {{option.skill | uppercase}}
                                  </h5>
                              </div>
 
                          </div>
-                         <div style="float:left;width:50%;height:100%;">
-                             <div style="float:left; width:25%;height:100%;display:flex;">
+                         <div class="trending-ToicChildRight">
+                             <div class="trending-LogoRight">
                                  <img style="margin: auto" src="~/Images/icons/trending topics2.png" class="TradingTopicsLogo" />
                              </div>
                              <div style="float:left; width:75%;height:100%;">
-                                 <h5 class="fontClass eliipsisClass" style="    font-size: 9px;padding: 2px;font-weight: bold;float: left; width: 50%;height: auto;" ng-repeat="option in trendingTopicRightArray">
+                                 <h5 class="fontClass eliipsisClass" style="font-size: 9px;padding: 2px;font-weight: bold;float: left; width: 50%;height: auto;" ng-repeat="option in trendingTopicRightArray">
                                      {{option.skill | uppercase}}
                                  </h5>
                              </div>
