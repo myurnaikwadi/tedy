@@ -537,7 +537,7 @@ app.factory('serverCommunication', function ($http) {
           * @date : 15/06/2016
           * @Purpose :
           */
-        sendUploadedFileToServer : function (iObj, iAction, iCallBack) {
+        sendUploadedFileToServer : function (iObj,iCallBack) {
             console.error(iObj)
             //method: 'POST',
             //url: '/resources/messages',

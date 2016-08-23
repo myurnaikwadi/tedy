@@ -26,14 +26,17 @@
             scope.loadUploadPopupFlag = false;
             scope.loadUploadPopup = function () {
                 scope.loadUploadPopupFlag = true;
-                data = [];
-            };
+                // data = [];
+                data = new FormData();
+            };           
             scope.uploadDataOnServer = function () {
                 console.error(data)
                 serverCommunication.sendUploadedFileToServer(data, null, function (iPath) {
-
+                    data = new FormData();
+                    scope.uploadAttachmentArray = [];
+                    scope.loadUploadPopupFlag = false;
                 });
-                scope.loadUploadPopupFlag = false;
+               
             };
             scope.triggerUpload = function (iId) {
                 console.error('iId --- ', iId)
@@ -44,8 +47,7 @@
                     
                     var valueFile = document.getElementById(iId).files;                   
                     //  debugger;
-                    console.error(valueFile);
-                    var data = new FormData()
+                    console.error(valueFile);                    
                     angular.forEach(valueFile, function (value, key) {
                         data.append(key, value);
                         console.error(key, value)
@@ -67,7 +69,7 @@
                     }
                     console.error(scope.uploadAttachmentArray);
                     //});                 
-                   document.getElementById(iId).value = "";
+                    document.getElementById(iId).value = "";
                     scope.$apply();
                 });
             };
