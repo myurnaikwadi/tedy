@@ -310,9 +310,27 @@ namespace KindleSpur.Data
 
                 //MongoCursor<Conversation> cursor = _convCollection.Find(_query);
 
+                var _conversationCollection = _kindleDatabase.GetCollection("Conversations");
                 //_categories = _conversationCollection.FindAll().SetFields(Fields.Exclude("_id")).ToList();
 
                 _categories = _conversationCollection.FindAs<BsonDocument>(Query.And(Query.EQ("ConversationParentId", ParentId), Query.EQ("ConversationType", ConversationType))).ToList();
+                var _userDetailsCollection = _kindleDatabase.GetCollection("UserDetails");
+                try
+                {
+                    for (int i = 0; i < _categories.Count; i++)
+                    {
+                        string sender = _categories[i].GetElement("SenderEmail").Value.ToString();
+                        BsonDocument result = _userDetailsCollection.FindAs<BsonDocument>(Query.EQ("EmailAddress", sender.ToString())).ToBsonDocument();
+                        _categories[i].Add(new BsonElement("Sender", result.GetElement("FirstName").Value + " " + result.GetElement("LastName").Value));
+                        string receiver = _categories[i].GetElement("ReceiverEmail").Value.ToString();
+                        BsonDocument result1 = _userDetailsCollection.FindAs<BsonDocument>(Query.EQ("EmailAddress", receiver)).ToBsonDocument();
+                        _categories[i].Add(new BsonElement("Receiver", result.GetElement("FirstName").Value + " " + result.GetElement("LastName").Value));
+                    }
+                }
+                catch (Exception ex)
+                {
+
+                }
                 //_query
                 //Query.And(
                 //    Query.Or(
@@ -340,25 +358,9 @@ namespace KindleSpur.Data
             }
             catch (MongoException ex)
             {
-                string message = "{ Error : 'Failed at GetConversation().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ";
-                _logCollection.Insert(message);
-                throw new MongoException("New Conversation failure!!!");
+                _logCollection.Insert("{ Error : 'Failed at ListConversation().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ");
             }
-            catch (Exception e)
-            {
-                Exceptionhandle em = new Exceptionhandle();
-                em.Error = "Failed at GetConversation()";
-                em.Log = e.Message.Replace("\r\n", "");
-                var st = new StackTrace(e, true);
-                var frame = st.GetFrame(0);
-                var line = frame.GetFileLineNumber();
-                _logCollection.Insert(em);
-                throw new MongoException("Signup failure!!!");
-            }
-            finally
-            {
 
-            }
             return _categories;
 
 
