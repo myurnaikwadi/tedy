@@ -22,6 +22,15 @@
             <div class="parentRoleDetailRight" style="padding:1%;padding-bottom: 0;" ng-if="selectedMenu == '4'">
                 <rss-Feed  role="mentor" skill="feedCategoryArray"></rss-Feed>
             </div>
+            @*RESOURCES - 7*@
+            <div class="parentRoleDetailRight" style="padding:1%;padding-bottom: 0;" ng-if="selectedMenu == '7'">
+                <div class="applicationMiddleStripMain" style="display:flex;height:93%;">
+                    <common-Repository role="mentor"></common-Repository>
+                </div>
+                <div class="applicationBottomStrip">
+                    <bottom-main-strip></bottom-main-strip>
+                </div>
+            </div>
             @*Add topics -2 *@
             <div class="parentRoleDetailRight" ng-if="selectedMenu == '2'">
                 <ctc-Role role="mentor" skill-Required="false"></ctc-Role>

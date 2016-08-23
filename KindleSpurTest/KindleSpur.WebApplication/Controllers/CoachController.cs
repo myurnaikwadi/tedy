@@ -18,6 +18,7 @@ namespace KindleSpur.WebApplication.Controllers
         public CoachController()
         {
             UserId = ((IUser)System.Web.HttpContext.Current.Session["User"]).EmailAddress;
+           // getfeedback();
         }
 
         [HttpPost]
@@ -82,5 +83,10 @@ namespace KindleSpur.WebApplication.Controllers
             var filters = _coachRepo.GetCoachingStatus(UserId,"Coach");
             return Json(new { Filters = filters, Success = true }, JsonRequestBehavior.AllowGet);
         }
+        //public  JsonResult getfeedback()
+        //{
+        //    CoachOrMentorRepository _coachRepo = new CoachOrMentorRepository();
+        //    return this.Json(_coachRepo.GetFeedback(UserId));
+        //}
     }
 }

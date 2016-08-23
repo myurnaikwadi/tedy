@@ -291,8 +291,6 @@ namespace KindleSpur.Data
         {
             List<BsonDocument> _categories = new List<BsonDocument>();
 
-            try
-            {
                 //var _convCollection = _kindleDatabase.GetCollection<Conversation>("Conversations");
                 //var _query = Query.And(
                 //            Query.Or(
@@ -326,7 +324,26 @@ namespace KindleSpur.Data
                         _categories[i].Add(new BsonElement("Receiver", result.GetElement("FirstName").Value + " " + result.GetElement("LastName").Value));
                     }
                 }
-                catch (Exception ex)
+
+                catch (MongoException ex)
+                {
+
+                    string message = "{ Error : 'Failed at GetConversation().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ";
+                    _logCollection.Insert(message);
+                    throw new MongoException("New Conversation failure!!!");
+                }
+                catch (Exception e)
+                {
+                    Exceptionhandle em = new Exceptionhandle();
+                    em.Error = "Failed at GetConversation()";
+                    em.Log = e.Message.Replace("\r\n", "");
+                    var st = new System.Diagnostics.StackTrace(e, true);
+                    var frame = st.GetFrame(0);
+                    var line = frame.GetFileLineNumber();
+                    _logCollection.Insert(em);
+                    throw new MongoException("Signup failure!!!");
+                }
+                finally
                 {
 
                 }
@@ -354,11 +371,9 @@ namespace KindleSpur.Data
 
                 //var _ctsCollection = _kindleDatabase.GetCollection("Conversations");
                 //_categories = _ctsCollection.FindAll().SetFields(Fields.Exclude("_id")).ToList();
-            }
-            catch (MongoException ex)
-            {
-                _logCollection.Insert("{ Error : 'Failed at ListConversation().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ");
-            }
+            
+            
+           
 
             return _categories;
 

@@ -1816,3 +1816,45 @@ app.filter('myFormat', function () {
         return _array
     };
 });
+
+var fireEvent = function (element, event, iOptions) {
+
+    var _bubble = true, _cancel = true;
+
+    if (iOptions && 'bubble' in iOptions)
+        _bubble = _bubble && iOptions.bubble;
+
+    if (iOptions && 'cancel' in iOptions)
+        _cancel = _cancel && iOptions.cancel;
+
+    if (element) {
+        if (event == "click" && (typeof InstallTrigger !== 'undefined')) {
+            element.click && element.click();
+            return;
+        }
+
+        if (document.createEvent) {
+            // dispatch for firefox + others
+            //console.log("in fireEvent");
+            var evt = document.createEvent("HTMLEvents");
+            evt.initEvent(event, _bubble, _cancel); // event type,bubbling,cancelable
+            return !element.dispatchEvent(evt);
+        } else {
+            // dispatch for IE
+            var evt = document.createEventObject();
+            return element.fireEvent('on' + event, evt)
+        }
+    }
+};
+
+var uploadImageOnPage = function (iObj, iCallback) {
+    var fileInputId = iObj.fileInputId;
+    var imageElementId = iObj.imageElementId;
+    var imagePath = "";
+    fireEvent(document.getElementById(fileInputId), "click", { bubble: false });
+    var _change = document.getElementById(fileInputId);
+    _change.onchange = function () {
+        if (iCallback) iCallback();
+    };
+
+};

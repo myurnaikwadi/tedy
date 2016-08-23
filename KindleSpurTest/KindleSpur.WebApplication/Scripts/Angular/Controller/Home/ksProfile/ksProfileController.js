@@ -173,18 +173,6 @@
 
     };
 
-    var uploadImageOnPage = function (iObj, iCallback) {
-        var fileInputId = iObj.fileInputId;
-        var imageElementId = iObj.imageElementId;
-        var imagePath = "";
-        commonFunction.fireEvent(document.getElementById(fileInputId), "click", { bubble: false });
-        var _change = document.getElementById(fileInputId);
-        _change.onchange = function () {
-            if (iCallback) iCallback();
-        };
-
-    };
-
     $scope.displayDes = function () {
         if ($scope.myInfo.description && ($scope.myInfo.description != '' && $scope.myInfo.description != 'No Description Available')) {
             $scope.myInfo.descriptiontoDisplay = $scope.myInfo.description;

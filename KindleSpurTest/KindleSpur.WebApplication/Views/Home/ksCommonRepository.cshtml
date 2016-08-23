@@ -1,0 +1,116 @@
+﻿<div class="fullWidthHeightClass">
+    <div class="labelInRightPanelVCG" style="height:7%;border-bottom:1px solid lightgray;display:flex;">
+        <h5 class="fontClass" style="font-size: 16px;margin: auto;margin-left: 2%;">RESOURCES</h5>
+    </div>
+
+    <div style="float: left;width: 100%;height: 93%;background-color: #f3f3f3;">
+        <div style="float: left;width: 100%;height: 100%;position: relative;display:flex;" class="col-md-12">
+            <div class="uploadPopup" ng-class="{ loadUploadPopup : loadUploadPopup == true}">
+                <div class="topStripPopup">
+                    <h5 style="margin: auto;margin-left:6%;" class="fontClass ValueFeedsHeade">UPLOAD FILES</h5>
+                    <button type="button" ng-click="triggerUpload('uploadInput')" style="margin: auto;width: 16%;padding: 0%;margin-right: 7%;height: 22px;font-size: 9px;" class="signupButton fontClass btn btn-default">SELECT FILE +</button>                  
+                    <input type="file" multiple ng-model="uploadedFile" style="display: none" id="uploadInput" name="filedata" />
+                </div>
+                <div class="middlteStripPopup">
+                    <div class="fullWidthHeightClass" style="margin: auto;width: 87%; height: 90%;overflow:auto;">
+                        <div ng-hide="uploadAttachmentArray.length == 0" class="uploadedAttachment" ng-repeat="attachment in uploadAttachmentArray">
+                            <div class="uploadDataTypeDiv">                                                            
+                                <img ng-show="attachment.fileType == 'document'" src="/Images/icons/Microsoft_Word_2013_icon.png" style="margin: auto auto;float: left;height: 30px;width: 30px;" />                               
+                                <img ng-show="attachment.fileType == 'sheet'" src="/Images/icons/microsoft-excel-icon.png" style="margin: auto auto;float: left;height: 30px;width: 30px;" />
+                                <img ng-show="attachment.fileType == 'default'" src="/Images/icons/microsoft-excel-icon.png" style="margin: auto auto;float: left;height: 30px;width: 30px;" />
+                            </div>
+                            <div class="uploadDataBarDiv">
+                                <div class="uploadBarDataParent">
+                                    <div class="uploadedDataHeading">
+                                        <h5 class="fontClass ValueFeedsHeade eliipsisClass">{{attachment.name}}</h5>
+                                        <progress class="progressBarUpload" value="22" max="100"></progress>
+                                        <h5 class="fontClass ValueFeedsHeade eliipsisClass" style="float:right;width: 8%;">30%</h5>
+                                    </div>
+                                    <div class="uploadedDataHeading" style="display:flex;">
+                                        <h5 style="width: 8%;" class="fontClass ValueFeedsHeade">TAG</h5>
+                                        <input ng-model="myInfo.lastName" class="inputTagStyle tagBarUploadProfile fontClass" style="padding:2px;margin-left: 2%;" type="text" placeholder="LAST NAME" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="" ng-hide="uploadAttachmentArray.length == 0">
+                            
+                        </div>
+                    </div>
+                </div>
+                <div class="bottomStripPopup" ng-hide="uploadAttachmentArray.length == 0">                    
+                    <button type="button" style="margin: auto;width: 15%;padding: 0%;margin-right: 7%;height: 22px;font-size: 9px;" ng-click="uploadDataOnServer()" class="signupButton fontClass btn btn-default">UPLOAD</button>                  
+                </div>
+
+            </div>
+            <div class="podcastsContainer col-md-5 col-sm-12 mosuehover"  style="background-color: #f3f3f3;width: 50%;padding-right: 0;">
+                <div class="podcastHeader">
+                    <h5 style="margin: auto;margin-left: 2%;" class="fontClass ValueFeedsHeade">ARTIFACTS</h5>
+                </div>
+                <div style="height:90%;width:100%;float:left">
+                    <div style="height: 91%;width: 100%;float:left;">
+                        <div class="ImpactZoneChildDiv mouseOverEffectDiv" ng-repeat="option in artifactsArray">
+                            <div class="profileImageCoachingStatus">
+                                <img ng-src="{{option.PhotoURL ? option.PhotoURL : '/Images/icons/Microsoft_Word_2013_icon.png' }}" style="margin: auto auto;float: left;height: 35px;width: 35px;" />                               
+                            </div>
+                            <div class="statusCoachingStatus" style="width: 50%;">
+                                <h5 class="fontClass" style="color:#A9A9A9;margin: auto auto;float: left;margin-left: 0;">{{option.Name}}</h5>                               
+                            </div>
+                            <div class="communicationsCoachingStatus" style="width: 14%;margin-right: 0;">                               
+                                <h5 class="fontClass" style="color:#A9A9A9;margin: auto auto;float: left;margin-left: 0;">{{option.size}}</h5>   
+                            </div>
+                            <div style="float: left;display: flex;width: 5%;height: 100%; position: relative;">
+                                <input style="float: left;margin: auto;" type="checkbox" />
+                            </div>
+                            <div class="profileImageCoachingStatus">                                
+                                <img src="/Images/icons/61391.png"style="margin: auto; float: left;height: 18px;width: 20px;opacity: 0.4;" />
+                            </div>
+                        </div>
+                    </div>
+                    <div style="height:9%;width: 53%;margin-left: 28%;float:left;display: flex;">
+                        <input class="signupButton fontClass btn btn-default" type="button" value="Share" style="margin: auto;width: 31%;" />
+                        <input class="signupButton fontClass btn btn-default" type="button" value="Upload" ng-click="loadUploadPopup()" style="margin: auto;width: 33%;" />
+                        <input class="signupButton fontClass btn btn-default" type="button" value="Delete" style="margin: auto;width: 28%;" />
+                    </div>
+                </div>
+
+            </div>
+            <div class="podcastsContainer col-md-5 mosuehover" style="background-color: #f3f3f3;">
+                <div class="podcastHeader">
+                    <h5 class="fontClass" style="margin:auto;margin-left: 2%;font-size:14px;padding-left: 0;">BOOKMARKS</h5>
+                </div>
+                <div class="ImpactZoneChildDiv" style="height: 90%;">
+                    <div style="height:100%;width:100%;float:left">
+                        <div style="height: 91%;width: 100%;float:left;">
+                            <div class="ImpactZoneChildDiv mouseOverEffectDiv" ng-repeat="option in bookMarkArray">
+                                <div class="profileImageCoachingStatus">
+                                    <img ng-src="{{option.PhotoURL ? option.PhotoURL : '/Images/icons/Microsoft_Word_2013_icon.png' }}" style="margin: auto auto;float: left;height: 35px;width: 35px;" />
+                                </div>
+                                <div class="statusCoachingStatus" style="width: 50%;">
+                                    <h5 class="fontClass" style="color:#A9A9A9;margin: auto auto;float: left;margin-left: 0;">{{option.Name}}</h5>
+                                </div>
+                                <div class="profileImageCoachingStatus">
+                                    <img ng-src="{{option.PhotoURL ? option.PhotoURL : '/Images/icons/Microsoft_Word_2013_icon.png' }}" style="margin: auto auto;float: left;height: 35px;width: 35px;" />
+                                </div>
+                                <div class="communicationsCoachingStatus" style="width: 14%;    margin-right: 0;">
+                                    <h5 class="fontClass" style="color:#A9A9A9;margin: auto auto;float: left;margin-left: 0;">{{option.size}}</h5>
+                                </div>
+                                <div style="float: left;display: flex;width: 5%;height: 100%; position: relative;">
+                                    <input style="float: left;margin: auto;" type="checkbox" />
+                                </div>
+                                <div class="profileImageCoachingStatus">
+                                    <img src="/Images/icons/61391.png" style="margin: auto; float: left;height: 18px;width: 20px;opacity: 0.4;" />
+                                </div>
+                            </div>                            
+                        </div>
+                        <div style="height:9%;width: 53%;float:left;display: flex;">
+                            <input class="signupButton fontClass btn btn-default" type="button" value="Share" style="margin: auto;width: 31%;" />
+                            <input class="signupButton fontClass btn btn-default" type="button" value="Upload" style="margin: auto;width: 33%;" />
+                            <input class="signupButton fontClass btn btn-default" type="button" value="Delete" style="margin: auto;width: 28%;" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

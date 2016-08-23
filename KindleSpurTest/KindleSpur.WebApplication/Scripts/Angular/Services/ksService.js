@@ -530,7 +530,31 @@ app.factory('serverCommunication', function ($http) {
         },
         updateMeeting: function (iObj) {
             $http.post('/MeetingSchedular/UpdateMeetingStatus', iObj.loggedUserDetails, iObj.ReceiverName, iObj.Reason).then(iObj.successCallBack, iObj.failureCallBack)
-        }
+        },
+        
+            /**
+          * @auther : MKN
+          * @date : 15/06/2016
+          * @Purpose :
+          */
+        sendUploadedFileToServer : function (iObj, iAction, iCallBack) {
+            console.error(iObj)
+            //method: 'POST',
+            //url: '/resources/messages',
+            //data: message // your original form data,
+            //transformRequest: formDataObject  // this sends your data to the formDataObject provider that we are defining below.
+            //headers: {'Content-Type': 'multipart/form-data'}
+            var _action = '';            
+            iObj.successCallBack = function (idata) {
+                console.error(idata)
+                iCallBack(idata);
+            }
+            $http.post(_action, iObj, {
+                withCredentials: true,
+                headers: { 'Content-Type': undefined },
+                transformRequest: angular.identity
+            }).then(iObj.successCallBack, iObj.failureCallBack);
+        },
 
 
     }

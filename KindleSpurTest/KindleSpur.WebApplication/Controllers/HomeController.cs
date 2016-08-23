@@ -103,6 +103,10 @@ namespace KindleSpur.WebApplication.Controllers
         {
             return View();
         }
+        public ActionResult ksCommonRepository()
+        {
+            return View();
+        }
         [HttpPost]
         public JsonResult UpdateUserPhoto(SubmitImage model)
         {

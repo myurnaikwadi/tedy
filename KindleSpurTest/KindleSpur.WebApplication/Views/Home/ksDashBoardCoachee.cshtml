@@ -132,7 +132,7 @@
                                                         <div style="height:1px;width:100%;border-bottom:1px solid rgba(214,214,214,.61);"></div>
                                                     </div>
                                                     <div style="width:33.33%;height:100%;float:left;margin: auto;display:flex;">
-                                                        <h5 class="genericEventHeadings genericMarginZero genericEllipsis" style="margin: auto;color: #a9a9a9;font-size:13px;" title="{{timeSlot}}">{{timeSlot}}</h5>
+                                                        <h5 class="" style="margin: auto;color: #a9a9a9;font-size:13px;" title="{{timeSlot}}">{{timeSlot}}</h5>
                                                     </div>
                                                     <div style="width:33.33%;height:100%;float:left;margin: auto;">
                                                         <div style="height:1px;width:100%;border-bottom:1px solid rgba(214,214,214,.61);"></div>
@@ -327,122 +327,11 @@
             </div>
             @*RESOURCES - 7*@
             <div class="parentRoleDetailRight" style="padding:1%;padding-bottom: 0;" ng-if="selectedMenu == '7'">
-                <div class="labelInRightPanelVCG" style="height:7%;border-bottom:1px solid lightgray;display:flex;">
-                    <h5 class="fontClass" style="font-size: 16px;margin: auto;margin-left: 2%;">RESOURCES</h5>
+                <div class="applicationMiddleStripMain" style="display:flex;height:93%;">
+                    <common-Repository role="coachee"></common-Repository>
                 </div>
-
-                <div style="float: left;width: 100%;height: 93%;background-color: #f3f3f3;">
-                    <div style="float: left;width: 100%;height: 90%;;position: relative;display:flex;" class="col-md-12">
-                        <div class="podcastsContainer col-md-5 col-sm-12 mosuehover">
-                            <div class="podcastHeader">
-                                <h5 style="margin: auto;margin-left: 2%;" class="fontClass ValueFeedsHeade">ARTIFACTS</h5>
-                            </div>
-                            <div style="height:90%;width:100%;float:left">
-                                <div style="height: 93%;width: 100%;float:left;">
-                                    <div class="ImpactZoneChildDiv" ng-repeat="option in leftSideMenus" style="height:10%;display: flex;">
-                                        <div class="profileImageCoachingStatus">
-                                            <img ng-show="$index==0" ng-src="{{option.PhotoURL ? option.PhotoURL : '/Images/icons/Microsoft_Word_2013_icon.png' }}" style="margin: auto auto;float: left;height: 35px;width: 35px;" />
-                                            <img ng-show="$index==1" ng-src="{{option.PhotoURL ? option.PhotoURL : '/Images/icons/microsoft-excel-icon.png' }}" style="margin: auto auto;float: left;height: 35px;width: 35px;" />
-                                            <img ng-show="$index==2" ng-src="{{option.PhotoURL ? option.PhotoURL : '/Images/icons/Microsoft_Word_2013_icon.png' }}" style="margin: auto auto;float: left;height: 35px;width: 35px;" />
-                                            <img ng-show="$index==3" ng-src="{{option.PhotoURL ? option.PhotoURL : '/Images/icons/Microsoft_Word_2013_icon.png' }}" style="margin: auto auto;float: left;height: 35px;width: 35px;" />
-                                            <img ng-show="$index==4" ng-src="{{option.PhotoURL ? option.PhotoURL : '/Images/icons/microsoft-excel-icon.png' }}" style="margin: auto auto;float: left;height: 35px;width: 35px;" />
-                                            <img ng-show="$index==5" ng-src="{{option.PhotoURL ? option.PhotoURL : '/Images/icons/Microsoft_Word_2013_icon.png' }}" style="margin: auto auto;float: left;height: 35px;width: 35px;" />
-                                            <img ng-show="$index==6" ng-src="{{option.PhotoURL ? option.PhotoURL : '/Images/icons/microsoft-excel-icon.png' }}" style="margin: auto auto;float: left;height: 35px;width: 35px;" />
-                                            <img ng-show="$index==7" ng-src="{{option.PhotoURL ? option.PhotoURL : '/Images/icons/Microsoft_Word_2013_icon.png' }}" style="margin: auto auto;float: left;height: 35px;width: 35px;" />
-                                        </div>
-                                        <div class="profileNameCoachingStatus">
-                                            <h5 class="textAlignCoachingStatus fontClass">{{option.FirstName+" "+option.LastName}}</h5>
-                                        </div>
-                                        <div class="statusCoachingStatus" style="width: 25%;">
-                                            <h5 ng-show="$index==0" class="fontClass" style="color:#A9A9A9;margin: auto auto;float: left;margin-left: 0;">{{option.FeedbackCount == 1 ? "JUST STARTED" : (option.FeedbackCount == 6 || option.FeedbackClosed == true) ? 'SESSION OVER' : 'DESIGN NOTES'}}</h5>
-                                            <h5 ng-show="$index==1" class="fontClass" style="color:#A9A9A9;margin: auto auto;float: left;margin-left: 0;">{{option.FeedbackCount == 1 ? "JUST STARTED" : (option.FeedbackCount == 6 || option.FeedbackClosed == true) ? 'SESSION OVER' : 'PORTFOLIO'}}</h5>
-                                            <h5 ng-show="$index==2" class="fontClass" style="color:#A9A9A9;margin: auto auto;float: left;margin-left: 0;">{{option.FeedbackCount == 1 ? "JUST STARTED" : (option.FeedbackCount == 6 || option.FeedbackClosed == true) ? 'SESSION OVER' : 'DESIGN NOTES'}}</h5>
-                                            <h5 ng-show="$index==3" class="fontClass" style="color:#A9A9A9;margin: auto auto;float: left;margin-left: 0;">{{option.FeedbackCount == 1 ? "JUST STARTED" : (option.FeedbackCount == 6 || option.FeedbackClosed == true) ? 'SESSION OVER' : 'PORTFOLIO'}}</h5>
-                                            <h5 ng-show="$index==4" class="fontClass" style="color:#A9A9A9;margin: auto auto;float: left;margin-left: 0;">{{option.FeedbackCount == 1 ? "JUST STARTED" : (option.FeedbackCount == 6 || option.FeedbackClosed == true) ? 'SESSION OVER' : 'DESIGN NOTES'}}</h5>
-                                            <h5 ng-show="$index==5" class="fontClass" style="color:#A9A9A9;margin: auto auto;float: left;margin-left: 0;">{{option.FeedbackCount == 1 ? "JUST STARTED" : (option.FeedbackCount == 6 || option.FeedbackClosed == true) ? 'SESSION OVER' : 'PORTFOLIO'}}</h5>
-                                            <h5 ng-show="$index==6" class="fontClass" style="color:#A9A9A9;margin: auto auto;float: left;margin-left: 0;">{{option.FeedbackCount == 1 ? "JUST STARTED" : (option.FeedbackCount == 6 || option.FeedbackClosed == true) ? 'SESSION OVER' : 'DESIGN NOTES'}}</h5>
-                                            <h5 ng-show="$index==7" class="fontClass" style="color:#A9A9A9;margin: auto auto;float: left;margin-left: 0;">{{option.FeedbackCount == 1 ? "JUST STARTED" : (option.FeedbackCount == 6 || option.FeedbackClosed == true) ? 'SESSION OVER' : 'DESIGN NOTES'}}</h5>
-
-
-                                        </div>
-                                        <div class="communicationsCoachingStatus" style="width: 41%;margin-top: 3%;">
-
-                                            <img src="" class="iconOnStatusArray" style="visibility:hidden;">
-                                            17/5
-                                            @*<img src="~/Images/icons/call.png" class="iconOnStatusArray iconOnStatusArrayss">*@
-                                            <img src="" class="iconOnStatusArray" style="visibility:hidden;">
-                                        </div>
-                                        <div class="checkbox">
-                                            <input type="checkbox" />
-                                        </div>
-                                        <div class="profileImageCoachingStatus">
-                                            <img ng-src="{{option.PhotoURL ? option.PhotoURL : '/Images/icons/61391.png' }}" style="float: left;height: 13px; width: 14px; margin-top: 47%;" />
-                                        </div>
-                                    </div>
-                                </div>
-                                <div style="height:5%;width: 53%;margin-left: 28%;float:left;display: flex;">
-                                    <input class="signupButton fontClass btn btn-default" type="button" value="Share" style="margin: auto;width: 31%;" />
-                                    <input class="signupButton fontClass btn btn-default" type="button" value="Upload" style="margin: auto;width: 33%;" />
-                                    <input class="signupButton fontClass btn btn-default" type="button" value="Delete" style="margin: auto;width: 28%;" />
-                                </div>
-                            </div>
-
-                        </div>
-                        <div class="podcastsContainer col-md-5 mosuehover ">
-                            <div class="podcastHeader">
-                                <h5 class="fontClass" style="margin-left: 2%;font-size:14px;padding-left: 0;">BOOKMARKS</h5>
-                            </div>
-                            <div class="ImpactZoneChildDiv" style="height: 100%;">
-                                <div style="height:90%;width:100%;float:left">
-                                    <div style="height: 93%;width: 100%;float:left;">
-                                        <div class="ImpactZoneChildDiv" ng-repeat="option in leftSideMenus" style="height:10%;display: flex;">
-                                            <div class="profileImageCoachingStatus">
-                                                <img ng-show="$index==0" ng-src="{{option.PhotoURL ? option.PhotoURL : '/Images/icons/Microsoft_Word_2013_icon.png' }}" style="margin: auto auto;float: left;height: 35px;width: 35px;" />
-                                                <img ng-show="$index==1" ng-src="{{option.PhotoURL ? option.PhotoURL : '/Images/icons/microsoft-excel-icon.png' }}" style="margin: auto auto;float: left;height: 35px;width: 35px;" />
-                                                <img ng-show="$index==2" ng-src="{{option.PhotoURL ? option.PhotoURL : '/Images/icons/Microsoft_Word_2013_icon.png' }}" style="margin: auto auto;float: left;height: 35px;width: 35px;" />
-                                                <img ng-show="$index==3" ng-src="{{option.PhotoURL ? option.PhotoURL : '/Images/icons/Microsoft_Word_2013_icon.png' }}" style="margin: auto auto;float: left;height: 35px;width: 35px;" />
-                                                <img ng-show="$index==4" ng-src="{{option.PhotoURL ? option.PhotoURL : '/Images/icons/microsoft-excel-icon.png' }}" style="margin: auto auto;float: left;height: 35px;width: 35px;" />
-                                                <img ng-show="$index==5" ng-src="{{option.PhotoURL ? option.PhotoURL : '/Images/icons/Microsoft_Word_2013_icon.png' }}" style="margin: auto auto;float: left;height: 35px;width: 35px;" />
-                                                <img ng-show="$index==6" ng-src="{{option.PhotoURL ? option.PhotoURL : '/Images/icons/microsoft-excel-icon.png' }}" style="margin: auto auto;float: left;height: 35px;width: 35px;" />
-                                                <img ng-show="$index==7" ng-src="{{option.PhotoURL ? option.PhotoURL : '/Images/icons/Microsoft_Word_2013_icon.png' }}" style="margin: auto auto;float: left;height: 35px;width: 35px;" />
-
-
-                                            </div>
-                                            <div class="profileNameCoachingStatus">
-                                                <h5 class="textAlignCoachingStatus fontClass">{{option.FirstName+" "+option.LastName}}</h5>
-                                            </div>
-                                            <div class="statusCoachingStatus" style="width: 25%;">
-                                                <h5 ng-show="$index==0" class="fontClass" style="color:#A9A9A9;margin: auto auto;float: left;margin-left: 0;">{{option.FeedbackCount == 1 ? "JUST STARTED" : (option.FeedbackCount == 6 || option.FeedbackClosed == true) ? 'SESSION OVER' : 'DESIGN NOTES'}}</h5>
-                                                <h5 ng-show="$index==1" class="fontClass" style="color:#A9A9A9;margin: auto auto;float: left;margin-left: 0;">{{option.FeedbackCount == 1 ? "JUST STARTED" : (option.FeedbackCount == 6 || option.FeedbackClosed == true) ? 'SESSION OVER' : 'PORTFOLIO'}}</h5>
-                                                <h5 ng-show="$index==2" class="fontClass" style="color:#A9A9A9;margin: auto auto;float: left;margin-left: 0;">{{option.FeedbackCount == 1 ? "JUST STARTED" : (option.FeedbackCount == 6 || option.FeedbackClosed == true) ? 'SESSION OVER' : 'DESIGN NOTES'}}</h5>
-                                                <h5 ng-show="$index==3" class="fontClass" style="color:#A9A9A9;margin: auto auto;float: left;margin-left: 0;">{{option.FeedbackCount == 1 ? "JUST STARTED" : (option.FeedbackCount == 6 || option.FeedbackClosed == true) ? 'SESSION OVER' : 'PORTFOLIO'}}</h5>
-                                                <h5 ng-show="$index==4" class="fontClass" style="color:#A9A9A9;margin: auto auto;float: left;margin-left: 0;">{{option.FeedbackCount == 1 ? "JUST STARTED" : (option.FeedbackCount == 6 || option.FeedbackClosed == true) ? 'SESSION OVER' : 'DESIGN NOTES'}}</h5>
-                                                <h5 ng-show="$index==5" class="fontClass" style="color:#A9A9A9;margin: auto auto;float: left;margin-left: 0;">{{option.FeedbackCount == 1 ? "JUST STARTED" : (option.FeedbackCount == 6 || option.FeedbackClosed == true) ? 'SESSION OVER' : 'PORTFOLIO'}}</h5>
-                                                <h5 ng-show="$index==6" class="fontClass" style="color:#A9A9A9;margin: auto auto;float: left;margin-left: 0;">{{option.FeedbackCount == 1 ? "JUST STARTED" : (option.FeedbackCount == 6 || option.FeedbackClosed == true) ? 'SESSION OVER' : 'DESIGN NOTES'}}</h5>
-                                                <h5 ng-show="$index==7" class="fontClass" style="color:#A9A9A9;margin: auto auto;float: left;margin-left: 0;">{{option.FeedbackCount == 1 ? "JUST STARTED" : (option.FeedbackCount == 6 || option.FeedbackClosed == true) ? 'SESSION OVER' : 'DESIGN NOTES'}}</h5>
-                                            </div>
-                                            <div class="communicationsCoachingStatus" style="width: 41%;margin-top: 3%;">
-
-                                                <img src="" class="iconOnStatusArray" style="visibility:hidden;">
-                                                <img src="~/Images/icons/1351182578_angelina-jolie-290.jpg" class="iconOnStatusArray iconOnStatusArrayss" style="height: 34px; width: 33px;">
-                                                17/5
-
-                                                <img src="" class="iconOnStatusArray" style="visibility:hidden;">
-                                            </div>
-                                            <div class="profileImageCoachingStatus">
-                                                <img ng-src="{{option.PhotoURL ? option.PhotoURL : '/Images/icons/61391.png' }}" style="float: left;height: 13px; width: 14px; margin-top: 47%;" />
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div style="height:5%;width: 53%;margin-left: 28%;float:left;display: flex;">
-                                        <input class="signupButton fontClass btn btn-default" type="button" value="Share" style="margin: auto;width: 31%;" />
-                                        <input class="signupButton fontClass btn btn-default" type="button" value="Upload" style="margin: auto;width: 33%;" />
-                                        <input class="signupButton fontClass btn btn-default" type="button" value="Delete" style="margin: auto;width: 28%;" />
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                <div class="applicationBottomStrip">
+                    <bottom-main-strip></bottom-main-strip>
                 </div>
             </div>
             @*Rss feed - 4*@
