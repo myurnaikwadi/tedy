@@ -25,6 +25,8 @@ namespace KindleSpur.Models.Interfaces
 
         int TotalRewardPoints { get; set; }
         string Country { get; set; }
+        string State { get; set; }
+        string City { get; set; }
 
         string Region { get; set; }
 

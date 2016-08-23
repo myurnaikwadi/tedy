@@ -21,6 +21,8 @@ namespace KindleSpur.Models
         public string LastName { get; set; }
         public int Mobile { get; set; }
         public string Country { get; set; }
+        public string State { get; set; }
+        public string City { get; set; }
         public string Region { get; set; }
         public Boolean IsExternalAuthentication { get; set; }
         public int BalanceRewardPoints { get; set; }
@@ -36,7 +38,7 @@ namespace KindleSpur.Models
         public List<Game> Games { get; set; }
         public List<ValueFeedStory> ValueFeedStories { get; set; }
         public List<VSCS> ValueCreationActivity { get; set; }
-        [BsonId]
+        [BsonRepresentation(BsonType.ObjectId)]
         public ObjectId Id
         {
             get; set;

@@ -204,6 +204,9 @@ namespace KindleSpur.Data
                 userDetail.FirstName = userData.FirstName;
                 userDetail.LastName = userData.LastName;
                 userDetail.Mobile = userData.Mobile;
+                userDetail.Country = userData.Country;
+                userDetail.City = userData.City;
+                userDetail.State = userData.State;
                 userDetail.LinkdinURL = userData.LinkdinURL;
                 _userCollection.Save(userDetail);
                 _transactionStatus = true;

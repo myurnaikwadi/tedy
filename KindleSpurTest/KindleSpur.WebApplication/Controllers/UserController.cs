@@ -88,18 +88,19 @@ namespace KindleSpur.WebApplication.Controllers
             return response.ToJson();
         }
 
-        [HttpPost]
+      [HttpPost]
         public ActionResult SavePassword(User signupObject)
         {
             UserRepository _repo = new UserRepository();
-
-            User obj = _repo.SavePassword(TempData["UserId"].ToString(), signupObject);
-
-            //string userId = (string)signupObject.Id.ToString();
-            // User obj = _repo.SavePassword(userId, signupObject);
-
+            User obj = new User();
+            if (TempData["UserId"] != null)
+               obj  = _repo.SavePassword(TempData["UserId"].ToString(), signupObject);
+           else
+                obj = _repo.SavePassword(((IUser)System.Web.HttpContext.Current.Session["User"]).Id.ToString(),signupObject);
+             
             return View();
         }
+
 
         [HttpPost]
         public ActionResult linkedIn(User _obj)
