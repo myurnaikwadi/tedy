@@ -69,7 +69,7 @@ namespace KindleSpur.Data
                 Exceptionhandle em = new Exceptionhandle();
                 em.Error = "Failed at AddNewUser()";
                 em.Log = e.Message.Replace("\r\n", "");
-                var st = new StackTrace(e, true);
+                var st = new System.Diagnostics.StackTrace(e, true);
                 var frame = st.GetFrame(0);
                 var line = frame.GetFileLineNumber();
                 _logCollection.Insert(em);
@@ -110,7 +110,7 @@ namespace KindleSpur.Data
                 Exceptionhandle em = new Exceptionhandle();
                 em.Error = "Failed at EditUser()";
                 em.Log = e.Message.Replace("\r\n", "");
-                var st = new StackTrace(e, true);
+                var st = new System.Diagnostics.StackTrace(e, true);
                 var frame = st.GetFrame(0);
                 var line = frame.GetFileLineNumber();
                 _logCollection.Insert(em);
@@ -154,7 +154,7 @@ namespace KindleSpur.Data
                 Exceptionhandle em = new Exceptionhandle();
                 em.Error = "Failed at GetUserDetail()";
                 em.Log = e.Message.Replace("\r\n", "");
-                var st = new StackTrace(e, true);
+                var st = new System.Diagnostics.StackTrace(e, true);
                 var frame = st.GetFrame(0);
                 var line = frame.GetFileLineNumber();
                 _logCollection.Insert(em);
@@ -182,7 +182,7 @@ namespace KindleSpur.Data
                 Exceptionhandle em = new Exceptionhandle();
                 em.Error = "Failed at GetUserDetail()";
                 em.Log = e.Message.Replace("\r\n", "");
-                var st = new StackTrace(e, true);
+                var st = new System.Diagnostics.StackTrace(e, true);
                 var frame = st.GetFrame(0);
                 var line = frame.GetFileLineNumber();
                 _logCollection.Insert(em);
@@ -222,7 +222,7 @@ namespace KindleSpur.Data
                 Exceptionhandle em = new Exceptionhandle();
                 em.Error = "Failed at UpdateUserDetails()";
                 em.Log = e.Message.Replace("\r\n", "");
-                var st = new StackTrace(e, true);
+                var st = new System.Diagnostics.StackTrace(e, true);
                 var frame = st.GetFrame(0);
                 var line = frame.GetFileLineNumber();
                 _logCollection.Insert(em);
@@ -257,7 +257,7 @@ namespace KindleSpur.Data
                 Exceptionhandle em = new Exceptionhandle();
                 em.Error = "Failed at UpdateUserDesc()";
                 em.Log = e.Message.Replace("\r\n", "");
-                var st = new StackTrace(e, true);
+                var st = new System.Diagnostics.StackTrace(e, true);
                 var frame = st.GetFrame(0);
                 var line = frame.GetFileLineNumber();
                 _logCollection.Insert(em);
@@ -291,7 +291,7 @@ namespace KindleSpur.Data
                 Exceptionhandle em = new Exceptionhandle();
                 em.Error = "Failed at UpdateUserPhoto()";
                 em.Log = e.Message.Replace("\r\n", "");
-                var st = new StackTrace(e, true);
+                var st = new System.Diagnostics.StackTrace(e, true);
                 var frame = st.GetFrame(0);
                 var line = frame.GetFileLineNumber();
                 _logCollection.Insert(em);
@@ -324,7 +324,7 @@ namespace KindleSpur.Data
                 Exceptionhandle em = new Exceptionhandle();
                 em.Error = "Failed at UpdatecoverPhoto()";
                 em.Log = e.Message.Replace("\r\n", "");
-                var st = new StackTrace(e, true);
+                var st = new System.Diagnostics.StackTrace(e, true);
                 var frame = st.GetFrame(0);
                 var line = frame.GetFileLineNumber();
                 _logCollection.Insert(em);
@@ -388,7 +388,7 @@ namespace KindleSpur.Data
                 Exceptionhandle em = new Exceptionhandle();
                 em.Error = "Failed at GetRewardPoints()";
                 em.Log = e.Message.Replace("\r\n", "");
-                var st = new StackTrace(e, true);
+                var st = new System.Diagnostics.StackTrace(e, true);
                 var frame = st.GetFrame(0);
                 var line = frame.GetFileLineNumber();
                 _logCollection.Insert(em);
@@ -435,7 +435,7 @@ namespace KindleSpur.Data
                 Exceptionhandle em = new Exceptionhandle();
                 em.Error = "Failed at GamesUnLocked()";
                 em.Log = e.Message.Replace("\r\n", "");
-                var st = new StackTrace(e, true);
+                var st = new System.Diagnostics.StackTrace(e, true);
                 var frame = st.GetFrame(0);
                 var line = frame.GetFileLineNumber();
                 _logCollection.Insert(em);
@@ -488,9 +488,9 @@ namespace KindleSpur.Data
             catch (Exception e)
             {
                 Exceptionhandle em = new Exceptionhandle();
-                em.Error = "Failed at PSRUnLocked()";
+                em.Error = "Failed at GamesUnLocked()";
                 em.Log = e.Message.Replace("\r\n", "");
-                var st = new StackTrace(e, true);
+                var st = new System.Diagnostics.StackTrace(e, true);
                 var frame = st.GetFrame(0);
                 var line = frame.GetFileLineNumber();
                 _logCollection.Insert(em);
@@ -498,7 +498,6 @@ namespace KindleSpur.Data
             }
             finally
             {
-                
 
             }
             return "";
@@ -555,7 +554,7 @@ namespace KindleSpur.Data
                 Exceptionhandle em = new Exceptionhandle();
                 em.Error = "Failed at RemoveVCSCActivity()";
                 em.Log = e.Message.Replace("\r\n", "");
-                var st = new StackTrace(e, true);
+                var st = new System.Diagnostics.StackTrace(e, true);
                 var frame = st.GetFrame(0);
                 var line = frame.GetFileLineNumber();
                 _logCollection.Insert(em);
@@ -637,7 +636,7 @@ namespace KindleSpur.Data
                 Exceptionhandle em = new Exceptionhandle();
                 em.Error = "Failed at SaveVCSCActivity()";
                 em.Log = e.Message.Replace("\r\n", "");
-                var st = new StackTrace(e, true);
+                var st = new System.Diagnostics.StackTrace(e, true);
                 var frame = st.GetFrame(0);
                 var line = frame.GetFileLineNumber();
                 _logCollection.Insert(em);
@@ -679,7 +678,7 @@ namespace KindleSpur.Data
                 Exceptionhandle em = new Exceptionhandle();
                 em.Error = "Failed at SaveValueFeedStory()";
                 em.Log = e.Message.Replace("\r\n", "");
-                var st = new StackTrace(e, true);
+                var st = new System.Diagnostics.StackTrace(e, true);
                 var frame = st.GetFrame(0);
                 var line = frame.GetFileLineNumber();
                 _logCollection.Insert(em);

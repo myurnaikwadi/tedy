@@ -56,7 +56,7 @@ namespace KindleSpur.Data
                 Exceptionhandle em = new Exceptionhandle();
                 em.Error = "Failed at GetCTS()";
                 em.Log = e.Message.Replace("\r\n", "");
-                var st = new StackTrace(e, true);
+                var st = new System.Diagnostics.StackTrace(e, true);
                 var frame = st.GetFrame(0);
                 var line = frame.GetFileLineNumber();
                 _logCollection.Insert(em);
@@ -91,7 +91,7 @@ namespace KindleSpur.Data
                 Exceptionhandle em = new Exceptionhandle();
                 em.Error = "Failed at GetTopics()";
                 em.Log = e.Message.Replace("\r\n", "");
-                var st = new StackTrace(e, true);
+                var st = new System.Diagnostics.StackTrace(e, true);
                 var frame = st.GetFrame(0);
                 var line = frame.GetFileLineNumber();
                 _logCollection.Insert(em);
@@ -127,7 +127,7 @@ namespace KindleSpur.Data
                 Exceptionhandle em = new Exceptionhandle();
                 em.Error = "Failed at GetCTSCategoryAndTopic()";
                 em.Log = e.Message.Replace("\r\n", "");
-                var st = new StackTrace(e, true);
+                var st = new System.Diagnostics.StackTrace(e, true);
                 var frame = st.GetFrame(0);
                 var line = frame.GetFileLineNumber();
                 _logCollection.Insert(em);
@@ -162,7 +162,7 @@ namespace KindleSpur.Data
                 Exceptionhandle em = new Exceptionhandle();
                 em.Error = "Failed at GetCategories()";
                 em.Log = e.Message.Replace("\r\n", "");
-                var st = new StackTrace(e, true);
+                var st = new System.Diagnostics.StackTrace(e, true);
                 var frame = st.GetFrame(0);
                 var line = frame.GetFileLineNumber();
                 _logCollection.Insert(em);
@@ -196,7 +196,7 @@ namespace KindleSpur.Data
                 Exceptionhandle em = new Exceptionhandle();
                 em.Error = "Failed at GetTopics()";
                 em.Log = e.Message.Replace("\r\n", "");
-                var st = new StackTrace(e, true);
+                var st = new System.Diagnostics.StackTrace(e, true);
                 var frame = st.GetFrame(0);
                 var line = frame.GetFileLineNumber();
                 _logCollection.Insert(em);
@@ -229,7 +229,7 @@ namespace KindleSpur.Data
                 Exceptionhandle em = new Exceptionhandle();
                 em.Error = "Failed at GetSkills()";
                 em.Log = e.Message.Replace("\r\n", "");
-                var st = new StackTrace(e, true);
+                var st = new System.Diagnostics.StackTrace(e, true);
                 var frame = st.GetFrame(0);
                 var line = frame.GetFileLineNumber();
                 _logCollection.Insert(em);
@@ -262,7 +262,7 @@ namespace KindleSpur.Data
                 Exceptionhandle em = new Exceptionhandle();
                 em.Error = "Failed at GetSkills()";
                 em.Log = e.Message.Replace("\r\n", "");
-                var st = new StackTrace(e, true);
+                var st = new System.Diagnostics.StackTrace(e, true);
                 var frame = st.GetFrame(0);
                 var line = frame.GetFileLineNumber();
                 _logCollection.Insert(em);
@@ -305,7 +305,7 @@ namespace KindleSpur.Data
                 Exceptionhandle em = new Exceptionhandle();
                 em.Error = "Failed at GetMentorCategory()";
                 em.Log = e.Message.Replace("\r\n", "");
-                var st = new StackTrace(e, true);
+                var st = new System.Diagnostics.StackTrace(e, true);
                 var frame = st.GetFrame(0);
                 var line = frame.GetFileLineNumber();
                 _logCollection.Insert(em);
@@ -353,7 +353,7 @@ namespace KindleSpur.Data
                 Exceptionhandle em = new Exceptionhandle();
                 em.Error = "Failed at GetCoachTopicAndCategory()";
                 em.Log = e.Message.Replace("\r\n", "");
-                var st = new StackTrace(e, true);
+                var st = new System.Diagnostics.StackTrace(e, true);
                 var frame = st.GetFrame(0);
                 var line = frame.GetFileLineNumber();
                 _logCollection.Insert(em);
@@ -428,7 +428,7 @@ namespace KindleSpur.Data
                 Exceptionhandle em = new Exceptionhandle();
                 em.Error = "Failed at GetCoachTopicAndCategory()";
                 em.Log = e.Message.Replace("\r\n", "");
-                var st = new StackTrace(e, true);
+                var st = new System.Diagnostics.StackTrace(e, true);
                 var frame = st.GetFrame(0);
                 var line = frame.GetFileLineNumber();
                 _logCollection.Insert(em);
@@ -472,7 +472,7 @@ namespace KindleSpur.Data
                 Exceptionhandle em = new Exceptionhandle();
                 em.Error = "Failed at GetCoacheeTopicAndCategory()";
                 em.Log = e.Message.Replace("\r\n", "");
-                var st = new StackTrace(e, true);
+                var st = new System.Diagnostics.StackTrace(e, true);
                 var frame = st.GetFrame(0);
                 var line = frame.GetFileLineNumber();
                 _logCollection.Insert(em);
@@ -515,7 +515,7 @@ namespace KindleSpur.Data
                 Exceptionhandle em = new Exceptionhandle();
                 em.Error = "Failed at GetSkillsForTopic()";
                 em.Log = e.Message.Replace("\r\n", "");
-                var st = new StackTrace(e, true);
+                var st = new System.Diagnostics.StackTrace(e, true);
                 var frame = st.GetFrame(0);
                 var line = frame.GetFileLineNumber();
                 _logCollection.Insert(em);
@@ -567,7 +567,7 @@ namespace KindleSpur.Data
                 Exceptionhandle em = new Exceptionhandle();
                 em.Error = "Failed at GetAllSkillAndTopics()";
                 em.Log = e.Message.Replace("\r\n", "");
-                var st = new StackTrace(e, true);
+                var st = new System.Diagnostics.StackTrace(e, true);
                 var frame = st.GetFrame(0);
                 var line = frame.GetFileLineNumber();
                 _logCollection.Insert(em);

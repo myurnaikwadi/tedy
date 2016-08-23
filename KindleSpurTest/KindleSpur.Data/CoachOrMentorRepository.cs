@@ -37,7 +37,7 @@ namespace KindleSpur.Data
                 Exceptionhandle em = new Exceptionhandle();
                 em.Error = "Failed at CoachOrMentorRepository()";
                 em.Log = e.Message.Replace("\r\n", "");
-                var st = new StackTrace(e, true);
+                var st = new System.Diagnostics.StackTrace(e, true);
                 var frame = st.GetFrame(0);
                 var line = frame.GetFileLineNumber();
                 _logCollection.Insert(em);
@@ -75,7 +75,7 @@ namespace KindleSpur.Data
                 Exceptionhandle em = new Exceptionhandle();
                 em.Error = "Failed at AddNewCoachOrMentor()";
                 em.Log = e.Message.Replace("\r\n", "");
-                var st = new StackTrace(e, true);
+                var st = new System.Diagnostics.StackTrace(e, true);
                 var frame = st.GetFrame(0);
                 var line = frame.GetFileLineNumber();
                 _logCollection.Insert(em);
@@ -138,7 +138,7 @@ namespace KindleSpur.Data
                 Exceptionhandle em = new Exceptionhandle();
                 em.Error = "Failed at addFeedback()";
                 em.Log = e.Message.Replace("\r\n", "");
-                var st = new StackTrace(e, true);
+                var st = new System.Diagnostics.StackTrace(e, true);
                 var frame = st.GetFrame(0);
                 var line = frame.GetFileLineNumber();
                 _logCollection.Insert(em);
@@ -195,7 +195,7 @@ namespace KindleSpur.Data
             {
                 Exceptionhandle em = new Exceptionhandle();
                 em.Error = "Failed at GetTopicsForMentor()";
-                var st = new StackTrace(e, true);
+                var st = new System.Diagnostics.StackTrace(e, true);
                 var frame = st.GetFrame(0);
                 var line = frame.GetFileLineNumber();
                 em.Log = e.Message.Replace("\r\n", "");
@@ -311,7 +311,7 @@ namespace KindleSpur.Data
                 Exceptionhandle em = new Exceptionhandle();
                 em.Error = "Failed at EditCoachOrMentor()";
                 em.Log = e.Message.Replace("\r\n", "");
-                var st = new StackTrace(e, true);
+                var st = new System.Diagnostics.StackTrace(e, true);
                 var frame = st.GetFrame(0);
                 var line = frame.GetFileLineNumber();
                 _logCollection.Insert(em);
@@ -354,7 +354,7 @@ namespace KindleSpur.Data
                 Exceptionhandle em = new Exceptionhandle();
                 em.Error = "Failed at GetRewardPoints()";
                 em.Log = e.Message.Replace("\r\n", "");
-                var st = new StackTrace(e, true);
+                var st = new System.Diagnostics.StackTrace(e, true);
                 var frame = st.GetFrame(0);
                 var line = frame.GetFileLineNumber();
                 _logCollection.Insert(em);
@@ -386,7 +386,7 @@ namespace KindleSpur.Data
                 Exceptionhandle em = new Exceptionhandle();
                 em.Error = "Failed at GetAllCoachOrMentorDetails()";
                 em.Log = e.Message.Replace("\r\n", "");
-                var st = new StackTrace(e, true);
+                var st = new System.Diagnostics.StackTrace(e, true);
                 var frame = st.GetFrame(0);
                 var line = frame.GetFileLineNumber();
                 _logCollection.Insert(em);
@@ -420,7 +420,7 @@ namespace KindleSpur.Data
                 Exceptionhandle em = new Exceptionhandle();
                 em.Error = "Failed at GetRecommended()";
                 em.Log = e.Message.Replace("\r\n", "");
-                var st = new StackTrace(e, true);
+                var st = new System.Diagnostics.StackTrace(e, true);
                 var frame = st.GetFrame(0);
                 var line = frame.GetFileLineNumber();
                 _logCollection.Insert(em);
@@ -453,7 +453,7 @@ namespace KindleSpur.Data
                 Exceptionhandle em = new Exceptionhandle();
                 em.Error = "Failed at GetCoachOrMentorDetail()";
                 em.Log = e.Message.Replace("\r\n", "");
-                var st = new StackTrace(e, true);
+                var st = new System.Diagnostics.StackTrace(e, true);
                 var frame = st.GetFrame(0);
                 var line = frame.GetFileLineNumber();
                 _logCollection.Insert(em);
@@ -510,7 +510,7 @@ namespace KindleSpur.Data
                 Exceptionhandle em = new Exceptionhandle();
                 em.Error = "Failed at GetAllCoachOrMentors()";
                 em.Log = e.Message.Replace("\r\n", "");
-                var st = new StackTrace(e, true);
+                var st = new System.Diagnostics.StackTrace(e, true);
                 var frame = st.GetFrame(0);
                 var line = frame.GetFileLineNumber();
                 _logCollection.Insert(em);
@@ -577,7 +577,7 @@ namespace KindleSpur.Data
                 Exceptionhandle em = new Exceptionhandle();
                 em.Error = "Failed at GetCoachingStatus()";
                 em.Log = e.Message.Replace("\r\n", "");
-                var st = new StackTrace(e, true);
+                var st = new System.Diagnostics.StackTrace(e, true);
                 var frame = st.GetFrame(0);
                 var line = frame.GetFileLineNumber();
                 _logCollection.Insert(em);
@@ -675,7 +675,7 @@ namespace KindleSpur.Data
                 Exceptionhandle em = new Exceptionhandle();
                 em.Error = "Failed at GetRecommendedCoachList()";
                 em.Log = e.Message.Replace("\r\n", "");
-                var st = new StackTrace(e, true);
+                var st = new System.Diagnostics.StackTrace(e, true);
                 var frame = st.GetFrame(0);
                 var line = frame.GetFileLineNumber();
                 _logCollection.Insert(em);
@@ -720,7 +720,7 @@ namespace KindleSpur.Data
                 Exceptionhandle em = new Exceptionhandle();
                 em.Error = "Failed at GetRecommendedMentorList()";
                 em.Log = e.Message.Replace("\r\n", "");
-                var st = new StackTrace(e, true);
+                var st = new System.Diagnostics.StackTrace(e, true);
                 var frame = st.GetFrame(0);
                 var line = frame.GetFileLineNumber();
                 _logCollection.Insert(em);
@@ -764,7 +764,7 @@ namespace KindleSpur.Data
                 Exceptionhandle em = new Exceptionhandle();
                 em.Error = "Failed at FillSerachData()";
                 em.Log = e.Message.Replace("\r\n", "");
-                var st = new StackTrace(e, true);
+                var st = new System.Diagnostics.StackTrace(e, true);
                 var frame = st.GetFrame(0);
                 var line = frame.GetFileLineNumber();
                 _logCollection.Insert(em);
@@ -810,7 +810,7 @@ namespace KindleSpur.Data
                 Exceptionhandle em = new Exceptionhandle();
                 em.Error = "Failed at GetCoachOrMentorSearchDetails()";
                 em.Log = e.Message.Replace("\r\n", "");
-                var st = new StackTrace(e, true);
+                var st = new System.Diagnostics.StackTrace(e, true);
                 var frame = st.GetFrame(0);
                 var line = frame.GetFileLineNumber();
                 _logCollection.Insert(em);
@@ -851,7 +851,7 @@ namespace KindleSpur.Data
                 Exceptionhandle em = new Exceptionhandle();
                 em.Error = "Failed at RecommendedFillSerachData()";
                 em.Log = e.Message.Replace("\r\n", "");
-                var st = new StackTrace(e, true);
+                var st = new System.Diagnostics.StackTrace(e, true);
                 var frame = st.GetFrame(0);
                 var line = frame.GetFileLineNumber();
                 _logCollection.Insert(em);
@@ -900,7 +900,7 @@ namespace KindleSpur.Data
                 Exceptionhandle em = new Exceptionhandle();
                 em.Error = "Failed at GetRecommendedCoachOrMentorSearchDetails()";
                 em.Log = e.Message.Replace("\r\n", "");
-                var st = new StackTrace(e, true);
+                var st = new System.Diagnostics.StackTrace(e, true);
                 var frame = st.GetFrame(0);
                 var line = frame.GetFileLineNumber();
                 _logCollection.Insert(em);

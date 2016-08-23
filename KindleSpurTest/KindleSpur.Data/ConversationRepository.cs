@@ -10,7 +10,7 @@ using MongoDB.Driver.Builders;
 using MongoDB.Bson;
 using MongoDB.Driver.Linq;
 using MongoDB.Bson.Serialization.Attributes;
-using System.Diagnostics;
+
 
 namespace KindleSpur.Data
 {
@@ -66,7 +66,7 @@ namespace KindleSpur.Data
                 Exceptionhandle em = new Exceptionhandle();
                 em.Error = "Failed at GetCoachingStatus()";
                 em.Log = e.Message.Replace("\r\n", "");
-                var st = new StackTrace(e, true);
+                var st = new System.Diagnostics.StackTrace(e, true);
                 var frame = st.GetFrame(0);
                 var line = frame.GetFileLineNumber();
                 _logCollection.Insert(em);
@@ -106,7 +106,7 @@ namespace KindleSpur.Data
                 Exceptionhandle em = new Exceptionhandle();
                 em.Error = "Failed at EditConversation()";
                 em.Log = e.Message.Replace("\r\n", "");
-                var st = new StackTrace(e, true);
+                var st = new System.Diagnostics.StackTrace(e, true);
                 var frame = st.GetFrame(0);
                 var line = frame.GetFileLineNumber();
                 _logCollection.Insert(em);
@@ -145,7 +145,7 @@ namespace KindleSpur.Data
                 Exceptionhandle em = new Exceptionhandle();
                 em.Error = "Failed at UpdateConversationStatus()";
                 em.Log = e.Message.Replace("\r\n", "");
-                var st = new StackTrace(e, true);
+                var st = new System.Diagnostics.StackTrace(e, true);
                 var frame = st.GetFrame(0);
                 var line = frame.GetFileLineNumber();
                 _logCollection.Insert(em);
@@ -202,7 +202,7 @@ namespace KindleSpur.Data
                 Exceptionhandle em = new Exceptionhandle();
                 em.Error = "Failed at ListConversationForReceiver()";
                 em.Log = e.Message.Replace("\r\n", "");
-                var st = new StackTrace(e, true);
+                var st = new System.Diagnostics.StackTrace(e, true);
                 var frame = st.GetFrame(0);
                 var line = frame.GetFileLineNumber();
                 _logCollection.Insert(em);
@@ -238,7 +238,7 @@ namespace KindleSpur.Data
                 Exceptionhandle em = new Exceptionhandle();
                 em.Error = "Failed at ListConversationForSender()";
                 em.Log = e.Message.Replace("\r\n", "");
-                var st = new StackTrace(e, true);
+                var st = new System.Diagnostics.StackTrace(e, true);
                 var frame = st.GetFrame(0);
                 var line = frame.GetFileLineNumber();
                 _logCollection.Insert(em);
@@ -391,7 +391,7 @@ namespace KindleSpur.Data
                 Exceptionhandle em = new Exceptionhandle();
                 em.Error = "Failed at GetConversationRequest()";
                 em.Log = e.Message.Replace("\r\n", "");
-                var st = new StackTrace(e, true);
+                var st = new System.Diagnostics.StackTrace(e, true);
                 var frame = st.GetFrame(0);
                 var line = frame.GetFileLineNumber();
                 _logCollection.Insert(em);
@@ -489,7 +489,7 @@ namespace KindleSpur.Data
                 Exceptionhandle em = new Exceptionhandle();
                 em.Error = "Failed at GetConversationRequest()";
                 em.Log = e.Message.Replace("\r\n", "");
-                var st = new StackTrace(e, true);
+                var st = new System.Diagnostics.StackTrace(e, true);
                 var frame = st.GetFrame(0);
                 var line = frame.GetFileLineNumber();
                 _logCollection.Insert(em);

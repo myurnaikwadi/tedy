@@ -4,6 +4,7 @@ using MongoDB.Driver.Builders;
 using MongoDB.Bson;
 using MongoDB.Driver.Linq;
 using KindleSpur.Models.Interfaces;
+using KindleSpur.Models;
 
 namespace KindleSpur.Data
 {
@@ -34,11 +35,24 @@ namespace KindleSpur.Data
             }
             catch (MongoException ex)
             {
-                 throw new MongoException("New communication failure!!!");
+                string message = "{ Error : 'Failed at AddCommunication().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ";
+                _logCollection.Insert(message);
+                throw new MongoException("New Conversation failure!!!");
             }
-            catch(Exception ex)
+            catch (Exception e)
             {
-                throw new Exception("New communication failure!!!");
+                Exceptionhandle em = new Exceptionhandle();
+                em.Error = "Failed at AddCommunication()";
+                em.Log = e.Message.Replace("\r\n", "");
+                var st = new System.Diagnostics.StackTrace(e, true);
+                var frame = st.GetFrame(0);
+                var line = frame.GetFileLineNumber();
+                _logCollection.Insert(em);
+                throw new MongoException("Signup failure!!!");
+            }
+            finally
+            {
+
             }
             return _transactionStatus;
         }
@@ -55,11 +69,24 @@ namespace KindleSpur.Data
             }
             catch (MongoException ex)
             {
-                throw new MongoException("New communication failure!!!");
+                string message = "{ Error : 'Failed at UpsertRequest().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ";
+                _logCollection.Insert(message);
+                throw new MongoException("New Conversation failure!!!");
             }
-            catch (Exception ex)
+            catch (Exception e)
             {
-                throw new Exception("New communication failure!!!");
+                Exceptionhandle em = new Exceptionhandle();
+                em.Error = "Failed at UpsertRequest()";
+                em.Log = e.Message.Replace("\r\n", "");
+                var st = new System.Diagnostics.StackTrace(e, true);
+                var frame = st.GetFrame(0);
+                var line = frame.GetFileLineNumber();
+                _logCollection.Insert(em);
+                throw new MongoException("Signup failure!!!");
+            }
+            finally
+            {
+
             }
             return _transactionStatus;
         }

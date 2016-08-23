@@ -63,6 +63,7 @@
     <Compile Include="CTSRepository.cs" />
     <Compile Include="MeetingSchedularRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="StackTrace.cs" />
     <Compile Include="UserRepository.cs" />
   </ItemGroup>
   <ItemGroup>
