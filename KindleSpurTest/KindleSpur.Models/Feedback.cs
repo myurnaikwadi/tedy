@@ -17,5 +17,19 @@ namespace KindleSpur.Models
         public string FeedBackId { get; set; }
         public string Skill { get; set; }
         public int customerSatisfactionRating { get; set; }
+        public string mentorcoachInteractions { get; set; }
+        public string mentorcoachIdeasDiscussed { get; set; }
+        public string mentorcoachQualities { get; set; }
+        public string mentorcoachImprove { get; set; }
+        public string mentorcoachCriticalAreas { get; set; }
+        public string mentorcoachTargettedAreas { get; set; }
+        public string mentorcoachWorthTimeEnergy { get; set; }
+        public string menteecoacheeObjectiveAchieved { get; set; }
+        public string menteecoacheeSessionFeedback { get; set; }
+        public string menteecoacheeAvoidDescribe { get; set; }
+        public string menteecoacheeBestSession { get; set; }
+        public string menteecoacheeReviewImprovment { get; set; }
+        public string menteecoacheeGainConfidence { get; set; }
+        public string menteecoacheeEnergyAndInterest { get; set; }
     }
 }

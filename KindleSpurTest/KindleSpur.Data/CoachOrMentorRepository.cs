@@ -106,6 +106,13 @@ namespace KindleSpur.Data
                 if (entity.Feedbacks == null)
                     entity.Feedbacks = new List<Feedback>();
                 feedback.Sender = UserId;
+                feedback.mentorcoachCriticalAreas = feedback.mentorcoachCriticalAreas;
+                feedback.mentorcoachIdeasDiscussed = feedback.mentorcoachIdeasDiscussed;
+                feedback.mentorcoachImprove = feedback.mentorcoachImprove;
+                feedback.mentorcoachInteractions = feedback.mentorcoachInteractions;
+                feedback.mentorcoachQualities = feedback.mentorcoachQualities;
+                feedback.mentorcoachTargettedAreas = feedback.mentorcoachTargettedAreas;
+                feedback.mentorcoachWorthTimeEnergy = feedback.mentorcoachWorthTimeEnergy;
                 feedback.CreateDate = DateTime.Now;
                 feedback.Skill = feedback.Skill;
                 entity.Feedbacks.Add(feedback);

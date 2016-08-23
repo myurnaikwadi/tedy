@@ -423,8 +423,16 @@ namespace KindleSpur.Data
                 else if (Role == "Mentee")
                     entity = _coacheeOrMenteeCollection.FindOneAs<CoacheeOrMentee>(Query.And(Query.EQ("UserId", feedback.Sender), Query.EQ("Role", Role)));
                 entity.FeedbackPoints += feedback.customerSatisfactionRating;
-
+                
                 if (entity.Feedbacks == null) entity.Feedbacks = new List<IFeedback>();
+                feedback.menteecoacheeAvoidDescribe = feedback.menteecoacheeAvoidDescribe;
+                feedback.menteecoacheeBestSession = feedback.menteecoacheeBestSession;
+                feedback.menteecoacheeEnergyAndInterest = feedback.menteecoacheeEnergyAndInterest;
+                feedback.menteecoacheeGainConfidence = feedback.menteecoacheeGainConfidence;
+                feedback.menteecoacheeObjectiveAchieved = feedback.menteecoacheeObjectiveAchieved;
+                feedback.menteecoacheeReviewImprovment = feedback.menteecoacheeReviewImprovment;
+                feedback.menteecoacheeSessionFeedback = feedback.menteecoacheeSessionFeedback;
+                
                 feedback.Sender = UserId;
                 feedback.CreateDate = DateTime.Now;
                 entity.Feedbacks.Add(feedback);
