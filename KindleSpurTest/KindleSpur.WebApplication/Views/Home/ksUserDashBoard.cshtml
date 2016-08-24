@@ -1,5 +1,27 @@
 ﻿<div class="parentBody" ng-controller="ksMainDashBoardController">
-    <div class="applicationTopStrip">
+    <div class="newApplicationStripInvitation" ng-init="load=false" ng-class="{ AminationStrip : load == true }">
+        <div class="roundedCornerShape" ng-click="load=!load;invitation={}">
+            <img ng-hide="load" src="~/Images/Mail_Send_Email_Envelope.png" />
+            <img ng-show="load" src="~/Images/cancelWhiteIcon.png" />
+        </div>
+        <div class="stripInvitationBody">
+            <div class="headingInvitation">                
+                <h5 style="float: left;margin: auto;color: #333333;">SEND INVITATION TO FRIEND</h5>
+            </div>
+            <div class="middleMainBody">
+                <div style="float: left;width: 100%;display: flex;height: 30%;">                   
+                    <input ng-model="invitation.email" class="inputTagStyle fontClass" style="font-size: 13px;margin: auto;padding:5px;width: 80%;" type="email" placeholder="Enter email address hrere" />
+                </div>
+                <div style="float: left;width: 100%;display: flex;height: 70%;">                    
+                    <textArea class="fontClass" style="padding: 5px;margin: auto;resize: none; font-size: 13px;height: 87%;width: 80%;" placeholder="Message" ng-model="invitation.description"></textArea>
+                </div>
+            </div>
+            <div class="buttonSubmit">
+                <button type="button" ng-click="sendInvitation()" style="margin: auto;width: 20%;padding: 0%;height: 22px;font-size: 9px;" class="signupButton fontClass btn btn-default">SEND</button>                  
+            </div>
+        </div>
+    </div>
+     <div class="applicationTopStrip">
         <top-Main-Strip notification="false"></top-Main-Strip>
     </div>
     <div class="applicationMiddleStripMain">

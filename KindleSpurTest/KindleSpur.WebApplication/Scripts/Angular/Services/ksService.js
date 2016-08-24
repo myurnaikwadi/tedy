@@ -544,18 +544,38 @@ app.factory('serverCommunication', function ($http) {
             //data: message // your original form data,
             //transformRequest: formDataObject  // this sends your data to the formDataObject provider that we are defining below.
             //headers: {'Content-Type': 'multipart/form-data'}
-            var _action = '';            
-            iObj.successCallBack = function (idata) {
-                console.error(idata)
-                iCallBack(idata);
-            }
-            $http.post(_action, iObj, {
-                withCredentials: true,
-                headers: { 'Content-Type': undefined },
-                transformRequest: angular.identity
-            }).then(iObj.successCallBack, iObj.failureCallBack);
-        },
+            var request = {
+                method: 'POST',
+                url: '/Home/UpdateUserPhoto',
+                data: iObj,
+                headers: {
+                    'Content-Type': undefined
+                }
+            };
 
+            // SEND THE FILES.
+            $http(request)
+                .success(function (d) {
+                    iCallBack && iCallBack();
+                })
+                .error(function () {
+                    console.error('uploading error');
+                });
+        },
+        sendInvitationToFriend  : function (iObj) {
+            console.error('sendInvitationTOFriend --------------- ', iObj);
+            var _checkObj = angular.copy(iObj);
+            var req = {
+                method: 'POST',
+                url: '',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                data: { invitation: iObj.invitation }
+            }
+            $http(req).then(iObj.successCallBack, iObj.failureCallBack);
+            // $http.post('/Conversation/Create', _sdss.loggedUserDetails, _sdss.ReceiverName, _sdssRole).then(iObj.successCallBack, iObj.failureCallBack)
+        },
 
     }
 });

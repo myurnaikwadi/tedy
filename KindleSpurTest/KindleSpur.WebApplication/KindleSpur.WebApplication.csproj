@@ -286,6 +286,7 @@
     <Content Include="Images\calendar.png" />
     <Content Include="Images\camera.png" />
     <Content Include="Images\cancel.png" />
+    <Content Include="Images\cancelWhiteIcon.png" />
     <Content Include="Images\Coaching1.png" />
     <Content Include="Images\communication\betterCompetitors.png" />
     <Content Include="Images\communication\bigSelectedStar.png" />
@@ -351,6 +352,7 @@
     <Content Include="Images\linkedIn.jpg" />
     <Content Include="Images\linkedin_square_gray.png" />
     <Content Include="Images\loginLanding.jpg" />
+    <Content Include="Images\Mail_Send_Email_Envelope.png" />
     <Content Include="Images\MedalImage\bronzeMedal.png" />
     <Content Include="Images\MedalImage\goldMedal.png" />
     <Content Include="Images\MedalImage\silverMedal.png" />
@@ -362,6 +364,7 @@
     <Content Include="Images\psrPlant.png" />
     <Content Include="Images\rightSideIcon.png" />
     <Content Include="Images\save.png" />
+    <Content Include="Images\sendMailFormat.png" />
     <Content Include="Images\tempImage.jpg" />
     <Content Include="Images\Tree\Stage 1.png" />
     <Content Include="Images\Tree\Stage 2 with water.png" />

@@ -2,6 +2,7 @@
 	position : absolute;
 	width  	 : 100%;
 	height 	 : 100%;
+    overflow: hidden;
 }
 .fullWidthHeightClass {
 	position : relative;
@@ -1026,5 +1027,69 @@ width: 20%;
     height:100%;
     display:flex;
 }
+
+.newApplicationStripInvitation {
+       position: absolute;
+    top: 13%;
+    right: -19%;
+    width: 22%;
+    height: 30%;
+    z-index: 1;
+    background: transparent;
+    transition: all 0.7s ease;
+}
+.roundedCornerShape {
+    position: relative;
+    width: 16%;
+    height: 22%;
+    float:left;
+    z-index: 2;
+    display: flex;
+    box-shadow: 0px 0px 10px 2px;
+    background: #2d353c;
+    transition: all 0.7s ease;
+    border-top-left-radius: 40%;
+    border-bottom-left-radius: 40%;
+}
+.roundedCornerShape img{
+    margin:auto;
+    width:20px;
+    width:20px;
+}
+.AminationStrip {
+    right: 0%;
+    transition : all 0.7s ease;
+}
+.stripInvitationBody {
+      position: relative;
+    width: 84%;
+    float:left;
+    height: 100%;
+    z-index: 2;
+    background: white;
+        box-shadow: 0px 0px 10px 2px;
+    border-bottom-left-radius: 16px;
+}
+.headingInvitation {
+    float: left;
+    width: 100%;
+    height: 20%;
+    display: flex;
+    position: relative
+}
+.middleMainBody {
+    float: left;
+    width: 100%;
+    height: 60%;
+    position: relative
+}
+.buttonSubmit {
+    float: left;
+        display: flex;
+    width: 100%;
+    height: 20%;
+    position: relative
+}
+
 
     
