@@ -43,5 +43,6 @@ namespace KindleSpur.Models
         {
             get; set;
         }
+        public Invitation invitation { get; set; }
     }
 }

@@ -80,25 +80,26 @@ namespace KindleSpur.WebApplication.MessageHelper
         }
        
 
-        public static void SendEmailOnInvitation(Invitation invitation, string uri)
+        public static void SendEmailOnInvitation(User userDetails, Invitation invitation, string uri)
         {
             // MailMessage message = new MailMessage(aliasemailsendername.ToString(), invitation.EmailAddress);
-            foreach (var emailAddress in invitation.Email)
-            {
-                MailMessage message = new MailMessage(aliasemailsendername.ToString(), emailAddress);
+            //foreach (var emailAddress in invitation.Email)
+            //{
+                MailMessage message = new MailMessage(aliasemailsendername.ToString(), "shilpamulay@gmail.com");
                 message.Subject = "Your friend has invited You";
                 string firstName = "Friend";
                 string body = "Dear " + firstName + ",";
                 body += "<br/>";
-                body += "<br/><br/><a style='background:#808080; color:#fafafa; padding:10px 100px 10px 100px; width:350px; text-decoration:none; text-transform: capitalize; font-weight:bold; font-size:13px;' href = '" + uri + "'>Check This Link, I have Registered for it!!!.</a>";
-                body += "<br /><br /><br/>Thanks, <br/> KindleSpur Team, On Behalf of " + invitation.UserDetails.FirstName + " " + invitation.UserDetails.LastName;
+                body += "<br/><br/><a style='background:#808080; color:#fafafa; padding:10px 100px 10px 100px; width:350px; text-decoration:none; text-transform: capitalize; font-weight:bold; font-size:13px;' href = '" + uri + "'" + invitation.Description + "</a>";
+                body += "<br /><br /><br/>Thanks, <br/> KindleSpur Team, On Behalf of " + userDetails.FirstName + " " + userDetails.LastName;
                 message.Body = body;
                 message.IsBodyHtml = true;
                 SmtpClient smtp = new SmtpClient(smtpServer.ToString(), portNumber);
                 smtp.Credentials = new System.Net.NetworkCredential(emailAddress.ToString(), password.ToString());
                 smtp.EnableSsl = true;
                 smtp.Send(message);
-            }
+
+            //}
         }
     }
 }

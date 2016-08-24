@@ -274,23 +274,25 @@ namespace KindleSpur.WebApplication.Controllers
         public string SendEmailOnInvitation(Invitation signupObject)
         {
             response = new ResponseMessage();
-            
+            UserRepository _repo = new UserRepository();
+            bool status = false;
             try
             {
-                UserRepository _repo = new UserRepository();
-                User u = (User)_repo.GetUserDetail(signupObject.UserDetails.EmailAddress);
+                string EmailAddress = ((IUser)System.Web.HttpContext.Current.Session["User"]).EmailAddress;
+                User userDetails = (User)_repo.GetUserDetail(EmailAddress);
                 Invitation invitation = new Invitation();
-                invitation.Description = "This is description for testing, needs to be deleted";
-                invitation.Email[0] = "shilpamulay@gmail.com";
-                invitation.UserDetails = u;
+                invitation.Description = "This is description for testing, needs to be deleted"; //This needs to be deleted, only for testing purpose.
+                invitation.inviteEmailAddress = "shilpamulay@gmail.com";//This needs to be deleted, only for testing purpose.
                
 
-                if (u != null)
+                if (userDetails != null)
                 {
-                    u.FirstName = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(u.FirstName.ToLower());
-                    u.LastName = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(u.LastName.ToLower());
+                    userDetails.FirstName = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(userDetails.FirstName.ToLower());
+                    userDetails.LastName = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(userDetails.LastName.ToLower());
                     string uri = "www.google.com";
-                    EmailNotification.SendEmailOnInvitation(invitation, uri);
+                    EmailNotification.SendEmailOnInvitation(userDetails, invitation, uri);
+                    status = _repo.SaveInviteEmailAddresses(userDetails, invitation);
+
                 }
                 else
                 {

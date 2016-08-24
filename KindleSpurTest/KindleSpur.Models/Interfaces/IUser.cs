@@ -9,6 +9,8 @@ namespace KindleSpur.Models.Interfaces
 {
     public interface IUser
     {
+        Invitation invitation { get; set; }
+
 
         string EmailAddress { get; set; }
 
@@ -45,5 +47,6 @@ namespace KindleSpur.Models.Interfaces
         Boolean IsVerified { get; set; }
         [BsonId]
         ObjectId Id { get; set; }
+
     }
 }

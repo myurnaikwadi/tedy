@@ -303,6 +303,44 @@ namespace KindleSpur.Data
             }
             return _transactionStatus;
         }
+
+        public bool SaveInviteEmailAddresses(User userData, Invitation invitation)
+        {
+            bool _transactionStatus = false;
+
+            try
+            {
+                var userDetail = _userCollection.FindOneAs<User>(Query.EQ("EmailAddress", userData.EmailAddress));
+                userDetail.invitation = invitation;
+                _userCollection.Save(userDetail);
+                _transactionStatus = true;
+            }
+            catch (MongoException ex)
+            {
+                string message = "{ Error : 'Failed while Inviting Others().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ";
+                _logCollection.Insert(message);
+                throw new MongoException("Unfortunaltely you couldnt Invite others to KindleSpur!!!");
+            }
+            catch (Exception e)
+            {
+                Exceptionhandle em = new Exceptionhandle();
+                em.Error = "Failed while Inviting Others()";
+                em.Log = e.Message.Replace("\r\n", "");
+                var st = new System.Diagnostics.StackTrace(e, true);
+                var frame = st.GetFrame(0);
+                var line = frame.GetFileLineNumber();
+                _logCollection.Insert(em);
+                throw new MongoException("Unfortunaltely you couldnt Invite others to KindleSpur!!!");
+            }
+            finally
+            {
+
+            }
+
+            return _transactionStatus;
+
+        }
+
         public bool UpdatecoverPhoto(string EmailAddress, string coverPhotoPath)
         {
             bool _transactionStatus = false;
