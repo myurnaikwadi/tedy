@@ -76,6 +76,7 @@
     <Compile Include="Interfaces\IConversation.cs" />
     <Compile Include="Interfaces\IFeedback.cs" />
     <Compile Include="Interfaces\IGame.cs" />
+    <Compile Include="Interfaces\IInvitation.cs" />
     <Compile Include="Interfaces\IMeetingSchedular.cs" />
     <Compile Include="Interfaces\ISkill.cs" />
     <Compile Include="Interfaces\ITopic.cs" />
@@ -86,6 +87,7 @@
     <Compile Include="Interfaces\Repository\ICTSRepository.cs" />
     <Compile Include="Interfaces\Repository\IMeetingSchedularRepository.cs" />
     <Compile Include="Interfaces\Repository\IUserRepository.cs" />
+    <Compile Include="Invitation.cs" />
     <Compile Include="MeetingSchedular.cs" />
     <Compile Include="ProgramConducted.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

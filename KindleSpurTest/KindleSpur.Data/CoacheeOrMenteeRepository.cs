@@ -424,13 +424,7 @@ namespace KindleSpur.Data
                 entity.FeedbackPoints += feedback.customerSatisfactionRating;
                 
                 if (entity.Feedbacks == null) entity.Feedbacks = new List<IFeedback>();
-                feedback.menteecoacheeAvoidDescribe = feedback.menteecoacheeAvoidDescribe;
-                feedback.menteecoacheeBestSession = feedback.menteecoacheeBestSession;
-                feedback.menteecoacheeEnergyAndInterest = feedback.menteecoacheeEnergyAndInterest;
-                feedback.menteecoacheeGainConfidence = feedback.menteecoacheeGainConfidence;
-                feedback.menteecoacheeObjectiveAchieved = feedback.menteecoacheeObjectiveAchieved;
-                feedback.menteecoacheeReviewImprovment = feedback.menteecoacheeReviewImprovment;
-                feedback.menteecoacheeSessionFeedback = feedback.menteecoacheeSessionFeedback;
+               
                 
                 feedback.Sender = UserId;
                 feedback.CreateDate = DateTime.Now;

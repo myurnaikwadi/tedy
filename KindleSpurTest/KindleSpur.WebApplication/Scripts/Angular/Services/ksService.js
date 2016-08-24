@@ -366,20 +366,32 @@ app.factory('serverCommunication', function ($http) {
         * @Purpose :
         */
         sendFeedback: function (iObj) {
-            console.error(iObj)            
-            var _action = '';
-            switch (iObj.role) {
-                case 'Mentor': _action = 'Mentee';  break;
-                case 'Mentee': _action = 'Mentor'; break;
-                case 'Coach': _action = 'Coachee';  break;
-                case 'Coachee': _action = 'Coach'; break;
-            }
-            console.error(_action)
-            var _str = '/' + _action + "/SaveFeedBack";
-            console.error(_str)
-            iObj.loggedUserDetails.Role = _action;
-            $http.post(_str, iObj.loggedUserDetails).then(iObj.successCallBack, iObj.failureCallBack)
-        },
+             console.error(iObj)
+             var _action = '';
+             switch (iObj.role) {
+                 case 'Mentor': _action = 'Mentee'; break;
+                 case 'Mentee': _action = 'Mentor'; break;
+                 case 'Coach': _action = 'Coachee'; break;
+                 case 'Coachee': _action = 'Coach'; break;
+                 }
+
+            var _str = '/' +_action + "/SaveFeedBack";
+
+             iObj.loggedUserDetails.Role = _action;
+            console.error(iObj)
+            // $http.post(_str, iObj.loggedUserDetails).then(iObj.successCallBack, iObj.failureCallBack)
+             var req = {
+        method: 'POST',
+        url: _str,
+        headers: {
+                    'Content-Type': 'application/json'
+                },
+                        data: iObj.loggedUserDetails
+                        }
+
+            $http(req).then(iObj.successCallBack, iObj.failureCallBack);
+
+            },
         /**
         * @auther : MKN
          * @date : 15/06/2016
@@ -567,12 +579,15 @@ app.factory('serverCommunication', function ($http) {
             var _checkObj = angular.copy(iObj);
             var req = {
                 method: 'POST',
-                url: '',
+                url: '/User/SendEmailOnInvitation',
                 headers: {
                     'Content-Type': 'application/json'
                 },
+               
                 data: { invitation: iObj.invitation }
+               
             }
+            alert(invitation);
             $http(req).then(iObj.successCallBack, iObj.failureCallBack);
             // $http.post('/Conversation/Create', _sdss.loggedUserDetails, _sdss.ReceiverName, _sdssRole).then(iObj.successCallBack, iObj.failureCallBack)
         },

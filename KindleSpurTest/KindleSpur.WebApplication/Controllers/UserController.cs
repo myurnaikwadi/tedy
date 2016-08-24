@@ -270,5 +270,39 @@ namespace KindleSpur.WebApplication.Controllers
             return this.Json(repo.GetSkillsForConversation());
         }
 
+        [HttpPost]
+        public string SendEmailOnInvitation(Invitation signupObject)
+        {
+            response = new ResponseMessage();
+            
+            try
+            {
+                UserRepository _repo = new UserRepository();
+                User u = (User)_repo.GetUserDetail(signupObject.UserDetails.EmailAddress);
+                Invitation invitation = new Invitation();
+                invitation.Description = "This is description for testing, needs to be deleted";
+                invitation.Email[0] = "shilpamulay@gmail.com";
+                invitation.UserDetails = u;
+               
+
+                if (u != null)
+                {
+                    u.FirstName = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(u.FirstName.ToLower());
+                    u.LastName = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(u.LastName.ToLower());
+                    string uri = "www.google.com";
+                    EmailNotification.SendEmailOnInvitation(invitation, uri);
+                }
+                else
+                {
+                    response.FailureCallBack("UserId does not exists!!!");
+                }
+            }
+            catch (Exception ex)
+            {
+                response.FailureCallBack(ex.Message);
+            }
+            return response.ToJson();
+        }
+
     }
 }

@@ -317,11 +317,11 @@ namespace KindleSpur.Data
                     for (int i = 0; i < _categories.Count; i++)
                     {
                         string sender = _categories[i].GetElement("SenderEmail").Value.ToString();
-                        BsonDocument result = _userDetailsCollection.FindAs<BsonDocument>(Query.EQ("EmailAddress", sender.ToString())).ToBsonDocument();
-                        _categories[i].Add(new BsonElement("Sender", result.GetElement("FirstName").Value + " " + result.GetElement("LastName").Value));
+                       // BsonDocument result = _userDetailsCollection.FindAs<BsonDocument>(Query.EQ("EmailAddress", sender.ToString())).ToBsonDocument();
+                       // _categories[i].Add(new BsonElement("Sender", result.GetElement("FirstName").Value + " " + result.GetElement("LastName").Value));
                         string receiver = _categories[i].GetElement("ReceiverEmail").Value.ToString();
-                        BsonDocument result1 = _userDetailsCollection.FindAs<BsonDocument>(Query.EQ("EmailAddress", receiver)).ToBsonDocument();
-                        _categories[i].Add(new BsonElement("Receiver", result.GetElement("FirstName").Value + " " + result.GetElement("LastName").Value));
+                       // BsonDocument result1 = _userDetailsCollection.FindAs<BsonDocument>(Query.EQ("EmailAddress", receiver)).ToBsonDocument();
+                       // _categories[i].Add(new BsonElement("Receiver", result.GetElement("FirstName").Value + " " + result.GetElement("LastName").Value));
                     }
                 }
 

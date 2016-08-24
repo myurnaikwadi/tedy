@@ -1614,23 +1614,30 @@ app.directive('feedbackPage', function ($state, serverCommunication, $timeout, $
                 $scope.feedBack.feedBackDetails.sender = $scope.sender;
                 console.error($scope.feedBack.feedBackDetails)
 
-                for (var k = 0 ; k < $scope.displayArray.length ; k++) {
-                    $scope.feedBack.feedBackDetails[$scope.displayArray[k].name] = $scope.displayArray[k];
-};
+                for (var k = 0; k < $scope.displayArray.length; k++) {
+                    $scope.feedBack.feedBackDetails[$scope.displayArray[k].name] = '';
+                    console.error($scope.displayArray[k].actionValue) ;
+                    $scope.feedBack.feedBackDetails[$scope.displayArray[k].name]= $scope.displayArray[k].actionValue;
+                };
                 console.error($scope.feedBack.feedBackDetails, $scope.displayArray);
-    // return
-                var _counter = Math.floor((Math.random() * 10) + 1);
-                var _id = $rootScope.loggedDetail.EmailAddress + (Date.now()) + _counter;
+                // return
+                var _counter = Math.floor((Math.random() * 10) +1);
+                var _id = $rootScope.loggedDetail.EmailAddress +(Date.now()) +_counter;
                 var _rating = 5;
-    //for (var _key in $scope.feedBack.feedBackDetails) {
-    //    if ($scope.feedBack.feedBackDetails[_key].sessionRating) {
-    //        _rating = $scope.feedBack.feedBackDetails[_key].actionValue;
-    //    }
-    //}
-                console.error(_rating)
+                    //for (var _key in $scope.feedBack.feedBackDetails) {
+                    //    if ($scope.feedBack.feedBackDetails[_key].sessionRating) {
+                    //        _rating = $scope.feedBack.feedBackDetails[_key].actionValue;
+                    //    }
+                    //}
+                console.error(_rating);
+                var _objectPassed = {
+                    FeedBacks: $scope.feedBack.feedBackDetails, FeedBackId: _id, FeedbackClosed: $scope.feedbackClosed, sender: $scope.sender, Skill: $scope.convObject.skill, customerSatisfactionRating: _rating
+                };
+                    // $scope.feedBack.feedBackDetails = angular.extend($scope.feedBack.feedBackDetails,_objectPassed);
                 serverCommunication.sendFeedback({
-    role: $scope.role,
-    loggedUserDetails: { FeedBackId: _id, FeedbackClosed: $scope.feedbackClosed, sender: $scope.sender, Skill: $scope.convObject.skill, customerSatisfactionRating: _rating },
+                    role: $scope.role,
+        loggedUserDetails: _objectPassed,
+
     successCallBack: function (iObj) {
                         console.error('In successCallBack', iObj);
     // if ($scope.feedbackClosed) {
