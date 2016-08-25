@@ -149,12 +149,27 @@
               $scope.feedBack.feedBackType = 'preSession';
               $scope.array = [].concat(angular.copy(_presessionQuestion));
           } else {
-              $scope.feedBack.feedBackType = icloseFeedBack ? 'closeSession' : 'feedBack';
-              $scope.array = [].concat(angular.copy(_array));
+              if (icloseFeedBack) {
+                  $scope.feedBack.feedBackType = 'closeSession';
+                  $scope.array = [].concat(angular.copy(_arrayCloseSession));
+              } else {
+                  $scope.feedBack.feedBackType = 'feedBack';
+                  $scope.array = [].concat(angular.copy(_array));
+              }
           }
       }
 
       var _array = [
+          { name: 'What do you appreciate the most in your interactions with the mentee ? ', actionValue: '', type: 'textArea', showLoad: false },
+          { name: 'Is the coachee/mentee able to grasp the ideas discussed?', actionValue: '1', type: 'rating', showLoad: false },
+          { name: 'What are the Strong Qualities of the Mentee/ Coachee ?', actionValue: '', type: 'textArea', showLoad: false },
+          { name: 'What are the areas where the Mentee needs to Improve ? ', actionValue: '', type: 'textArea', showLoad: false },
+          { name: 'Are there any critical areas where Mentee/ Coachee needs serious and urgent help/ support ?', actionValue: '', type: 'textArea', showLoad: false },
+          { name: 'Do you believe that the Mentee will be Successful in the targeted areas after the Mentoring is complete ?', actionValue: '', type: 'radio', showLoad: false },
+          { name: 'Was it worth your time, energy and interest ?', type: 'radio', showLoad: false, actionValue: '', },
+          { name: 'Rate the session', sessionRating: true, type: 'rating', showLoad: false, actionValue: '', },
+      ];
+      var _arrayCloseSession = [
           { name: 'What do you appreciate the most in your interactions with the mentee ? ', actionValue: '', type: 'textArea', showLoad: false },
           { name: 'Is the coachee/mentee able to grasp the ideas discussed?', actionValue: '1', type: 'rating', showLoad: false },
           { name: 'What are the Strong Qualities of the Mentee/ Coachee ?', actionValue: '', type: 'textArea', showLoad: false },
