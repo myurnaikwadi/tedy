@@ -10,8 +10,7 @@ namespace KindleSpur.Models.Interfaces
     {
        
         string Description { get; set; }
-       // List<string> Email { get; set; }
-       string inviteEmailAddress { get; set; }
-
+       List<string> Invites { get; set; }
+     
     }
 }
