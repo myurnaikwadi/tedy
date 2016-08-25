@@ -61,13 +61,13 @@ app.directive('topMainStrip', function ($state, $rootScope, authentification) {
             scope.selectedRole = 0;
             if (scope.notification == 'false') {
                 scope.notification = false;
-} else {
-                scope.notification = true;
-}
+            } else {
+                            scope.notification = true;
+            }
 
             scope.loadCalendarView = function () {
               $state.go('calendar');
-};
+            };
 
             scope.navigateToProfile = function () {
                 $state.go('profile');
