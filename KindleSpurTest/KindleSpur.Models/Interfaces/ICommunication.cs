@@ -45,12 +45,16 @@ namespace KindleSpur.Models.Interfaces
     public interface IMeeting
     {
         string MeetingId { get; set; }
+        string From { get; set; }
+        string To { get; set; }
+        string SkillName { get; set; }
+        string TopicName { get; set; }
         string Subject { get; set; }
+        String Status { get; set; }
         DateTime StartDate { get; set; }
         String TimeSlot { get; set; }
         DateTime EndDate { get; set; }
-        String Status { get; set; }
-        IFeedback Feedbacks { get; set; }
+        Boolean IsVerified { get; set; }
     }
 
     public interface IDocument

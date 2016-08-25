@@ -254,14 +254,14 @@
         { name: 'Rate the session', sessionRating :true, type: 'rating', showLoad: false,actionValue : '',  },
     ];
     var _arrayCloseSession = [
-         { name: 'What do you appreciate the most in your interactions with the mentee ? ', actionValue: '', type: 'textArea', showLoad: false },
-         { name: 'Is the coachee/mentee able to grasp the ideas discussed?', actionValue: '1', type: 'rating', showLoad: false },
-         { name: 'What are the Strong Qualities of the Mentee/ Coachee ?', actionValue: '', type: 'textArea', showLoad: false },
-         { name: 'What are the areas where the Mentee needs to Improve ? ', actionValue: '', type: 'textArea', showLoad: false },
-         { name: 'Are there any critical areas where Mentee/ Coachee needs serious and urgent help/ support ?', actionValue: '', type: 'textArea', showLoad: false },
-         { name: 'Do you believe that the Mentee will be Successful in the targeted areas after the Mentoring is complete ?', actionValue: '', type: 'radio', showLoad: false },
-         { name: 'Was it worth your time, energy and interest ?', type: 'radio', showLoad: false, actionValue: '', },
-         { name: 'Rate the session', sessionRating: true, type: 'rating', showLoad: false, actionValue: '', },
+         { name: 'Was the mentee/coachee receptive and well prepared for the sessions.', actionValue: '', type: 'radio', showLoad: false },
+         { name: 'Do you believe the mentee/coachee has accomplished the objectives.', actionValue: '1', type: 'radio', showLoad: false },
+         { name: 'Did this program enrich you as an individual?', actionValue: '', type: 'radio', showLoad: false },
+         { name: 'How did you know about KindleSpur ? ', actionValue: '', type: 'radio', showLoad: false },
+         { name: 'Would you like to refer anyone to try KindleSpur ?', actionValue: '', type: 'radio', showLoad: false },
+         { name: 'Would you take Mentoring/ Coaching again at KindleSpur (for another Objective/ Goal) ?', actionValue: '', type: 'radio', showLoad: false },
+         { name: 'Overall rating for Mentee/ coachee.', type: 'rating', showLoad: false, actionValue: '', },
+         { name: 'Overall rating for KindleSpur.', sessionRating: true, type: 'rating', showLoad: false, actionValue: '', },
     ];
     var _presessionQuestion = [
        { name: 'The broad level areas that will get covered under these sessions', actionValue: '', type: 'textArea', showLoad: false },

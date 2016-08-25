@@ -9,12 +9,16 @@ namespace KindleSpur.Models.Communication
 {
     public class Meeting : IMeeting
     {
-        public DateTime EndDate { get; set; }
-        public IFeedback Feedbacks { get; set; }
-        public string MeetingId { get; set; }
-        public DateTime StartDate { get; set; }
-        public string Status { get; set; }
+        public  string MeetingId { get; set; }
+        public string From { get; set; }
+        public string To { get; set; }
+        public string SkillName { get; set; }
+        public string TopicName { get; set; }
         public string Subject { get; set; }
-        public string TimeSlot { get; set; }
+        public String Status { get; set; }
+        public DateTime StartDate { get; set; }
+        public String TimeSlot { get; set; }
+        public DateTime EndDate { get; set; }
+        public Boolean IsVerified { get; set; }
     }
 }
