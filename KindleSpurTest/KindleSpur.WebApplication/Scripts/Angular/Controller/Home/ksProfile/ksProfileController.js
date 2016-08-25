@@ -13,9 +13,9 @@
         linkedInLink: $scope.userInfo.LinkdinURL ? $scope.userInfo.LinkdinURL : null,
         firstName: $scope.userInfo.FirstName.toUpperCase(),
         lastName: $scope.userInfo.LastName.toUpperCase(),
-        State: $scope.userInfo.State,// ? $scope.userInfo.State : 'No Description Available',
-        City: $scope.userInfo.City,// ? $scope.userInfo.City : 'No Description Available',
-        Country: $scope.userInfo.Country, //? $scope.userInfo.Country : 'No Description Available',
+        State: $scope.userInfo.State ? $scope.userInfo.State : '',// ? $scope.userInfo.State : 'No Description Available',
+        City: $scope.userInfo.City ? $scope.userInfo.City : '',// ? $scope.userInfo.City : 'No Description Available',
+        Country: $scope.userInfo.Country ? $scope.userInfo.Country : '', //? $scope.userInfo.Country : 'No Description Available',
         profileImage: $scope.userInfo.Photo ? $scope.userInfo.Photo : 'Images/icons/If no Profile photo.png',
         profileBackgroundImage: $scope.userInfo.coverphoto ? $scope.userInfo.coverphoto : 'Images/profile.png',
         descriptiontoDisplay: '',
@@ -26,6 +26,19 @@
         message: '',
         formatType: '1'
     };
+
+    $scope.displayAddress = function () {
+        var _str = 'Location not available';
+        if ($scope.myInfo.City)
+            _str = $scope.myInfo.City + " ";
+        if ($scope.myInfo.State)
+            _str += $scope.myInfo.State + " ";
+        if($scope.myInfo.Country)
+            _str += $scope.myInfo.Country + " ";
+        console.error(_str);
+        $scope.myInfo.displayAddress = _str;
+    };
+
     $scope.selectedMenuIndex = -1;
     $scope.switchRoleDropDown = 'All';
     $scope.switchRoleDropDowns = { role: 'All' };
@@ -67,7 +80,8 @@
         $timeout(function () { $scope.loadingObject = { showLoading: false, loadingMessage: 'Loading Feed' }; }, 1000);
         $timeout(function () { $scope.animationActicvate = true; console.error($scope.animationActicvate) }, 1500);
         $scope.mySkill = [].concat(angular.copy($scope.topicArray));
-        $timeout(function () {           
+        $timeout(function () {
+            $scope.displayAddress();
             for (var k = 0; k < $scope.mySkill.length ; k++) {
                 $scope.mySkill[k].showSkill = true;
             }
@@ -292,6 +306,9 @@
         $scope.userInfo.LastName = $scope.myInfo.lastName;
         $scope.userInfo.Mobile = $scope.myInfo.mobileNumber;
         $scope.userInfo.LinkdinURL = $scope.myInfo.linkedInLink;
+        $scope.userInfo.City = $scope.myInfo.City;
+        $scope.userInfo.State = $scope.myInfo.State;
+        $scope.userInfo.Country = $scope.myInfo.Country;
         //return
         var _object = {
             changeDetails: {
