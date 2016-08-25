@@ -1,0 +1,86 @@
+  public string GetProfileSkillsOrTopics()
+        {
+            CTSRepository repo = new CTSRepository();
+            repo.GetCoahingOrMentoringSkilsOrTopic(UserId);
+            return repo.ToJson();
+            //  return this.Json(repo.GetCoahingOrMentoringSkilsOrTopic(UserId));
+        }
+
+
+
+
+
+
+
+
+  public string GetCoahingOrMentoringSkilsOrTopic(string UserId)
+        {
+            CoachOrMentorRepository _coachingRepo = new CoachOrMentorRepository();
+            CoacheeOrMenteeRepository _mentoringRepo = new CoacheeOrMenteeRepository();
+            //  List<SkillOrTopic> skills = _coachingRepo.GetSkillsForCoach(UserId);
+            List<SkillOrTopic> Result = new List<SkillOrTopic>();
+            List<SkillOrTopic>[] skilllist = new List<SkillOrTopic>[2];
+            skilllist[0] = new List<SkillOrTopic>(_coachingRepo.GetSkillsForCoach(UserId));
+            skilllist[1] = new List<SkillOrTopic>(_coachingRepo.GetTopicsForMentor(UserId));
+
+            List<SkillOrTopic>[] topiclist = new List<SkillOrTopic>[2];
+            topiclist[0] = new List<SkillOrTopic>(_mentoringRepo.GetSkillsForCoachee(UserId));
+            topiclist[1] = new List<SkillOrTopic>(_mentoringRepo.GetTopicsForMentee(UserId));
+            CTSRepository _ctsRepo = new CTSRepository();
+            BsonDocument doc = new BsonDocument();
+
+            if (skilllist != null)
+            {
+
+                BsonArray arr = new BsonArray();
+                foreach (List<SkillOrTopic> skill in skilllist)
+                {
+                    foreach (SkillOrTopic skills in skill)
+                    {
+                        if (skills != null)
+                        {
+                            BsonDocument resultCoachOrCoachee = _ctsRepo.GetCoachTopicAndCategory(skills);
+                            arr.Add(resultCoachOrCoachee);
+                        }
+                    }
+
+
+                }
+                doc.Add("Categories", arr);
+            }
+            if (topiclist != null)
+            {
+
+                BsonArray arr = new BsonArray();
+                foreach (List<SkillOrTopic> topics in topiclist)
+                {
+                    foreach (SkillOrTopic topic in topics)
+                    {
+                        if (topic != null)
+                        {
+                            BsonDocument resultMentorOrMentee = _ctsRepo.GetMentorCategory(topic);
+                            arr.Add(resultMentorOrMentee);
+                        }
+                    }
+
+
+                }
+                doc.Add("Categories", arr);
+            }
+            //List<SkillOrTopic> Coachskills = _coachingRepo.GetSkillsForCoach(UserId);
+            //List<SkillOrTopic> mentortopic = _coachingRepo.GetTopicsForMentor(UserId);
+            //List<SkillOrTopic> coacheeskill = _mentoringRepo.GetSkillsForCoachee(UserId);
+            //List<SkillOrTopic> menteetopic = _mentoringRepo.GetTopicsForMentee(UserId);
+            //if (UserId != null)
+            //{
+            //    Result.AddRange(skillortopiclist[0]);
+            //    Result.AddRange(skillortopiclist[1]);
+            //    Result.AddRange(skillortopiclist[2]);
+            //    Result.AddRange(skillortopiclist[3]);
+            //    //Result.AddRange(mentortopic);
+            //    //Result.AddRange(coacheeskill);
+            //    //Result.AddRange(menteetopic);
+            //}
+
+            return doc.ToJson();
+        }

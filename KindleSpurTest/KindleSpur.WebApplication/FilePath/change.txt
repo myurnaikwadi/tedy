@@ -1,0 +1,1193 @@
+ 
+Golbal.ascx
+protected void Application_Error(Object sender, EventArgs e)
+        {
+            Exception ex = Server.GetLastError();
+            HttpException httpException = ex as HttpException;
+
+            if (ex != null)
+            {
+                int errorCode = httpException.GetHttpCode();
+
+                if (errorCode == 404)
+                {
+
+                    Response.Redirect("~/home");
+                }
+            }
+        }
+
+
+
+kscts.html
+
+
+<div class="ctsParent">
+    <div class="ctsParentMain">
+        <div class="ctsParentMainPanel">
+            <div class="ctsCategoryHeading">
+                <h5 ng-show="mySelection" style="font-size: 16px;padding: 6px;padding-left: 0;" class="fontClass" margin-top:15px;>MY SELECTION</h5>
+                <h5 ng-hide="mySelection" style="font-size: 16px;padding: 6px;padding-left: 0;" class="fontClass">{{ categoryDisplay ? 'CATEGORIES' : selectedCategoryValue.Category | uppercase }}</h5>
+                
+                <img ng-show="mySelection" ng-class="{ coachGenericBackgroundBorder : role == 'coach' , coacheeGenericBackgroundBorder : role == 'coachee' , mentorGenericBackgroundBorder : role == 'mentor' , menteeGenericBackgroundBorder : role == 'mentee' }" style="border : 2px solid; width:35px;height : 35px;float:right;margin: auto auto;margin-right: 0;border-radius: 30px;padding: 5px;cursor:pointer;" ng-click="addSkill()" src="~/Images/addBold.png" />
+                <img ng-show="categoryDisplay && mySelection == false" style="border : 2px solid; width:35px;height : 35px;float:right;margin: auto auto;margin-right: 0;border-radius: 30px;padding: 5px;cursor:pointer;" ng-click="backButtonClick()" src="~/Images/cancel.png" />
+            </div>
+            <div class="ctsCategoryPanelMainPanel" ng-show="mySelection">
+                <molecule-Map ng-if="ctsDataForMolecule" cts-Data="ctsDataForMolecule"></molecule-Map>
+            </div>
+            <div class="ctsCategoryPanelMainPanel" ng-hide="mySelection">
+                <div class="ctsCategoryPanel">
+                    <div class="parentCatgoryPanel">
+                        <div class="cateGoryRepeatPanel" ng-if="categoryDisplay == true">
+                            <div style="float: left;width: 50%;height:50%" class="genericPointerClass" ng-click="categoryClick($event,$index,option)" ng-repeat="option in catogoryArray">
+                                <div ng-class="{ coachThemeColor : option.selectedCategory == true && role == 'coach' , mentorThemeColor : option.selectedCategory == true && role == 'mentor' , menteeThemeColor : option.selectedCategory == true && role == 'mentee',coacheeThemeColor : option.selectedCategory == true && role == 'coachee' , }" class="categoryCircle">
+                                    <div class="categoryRightlabelPart">
+                                        <div class="categoryRightlabel">
+                                            <h5 style="color:#B5AFAF;margin: auto;width:80%;font-size: 15px;" class="leftSideMenuLable fontClass" ng-class="{ whiteBackground : option.selectedCategory == true }">
+                                                {{option.Category | uppercase}}
+                                            </h5>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="topicSkillPanel" ng-if="categoryDisplay == false">
+                            <div class="topicClassParent" ng-class="{ heightTopicClass : skillRequired == false}">
+                                <div class="topicHeadingSection">
+                                    <h5 class="topicHeadingBar">TOPIC</h5>
+                                </div>
+                                <div class="topicListingSection">
+                                    <div class="topicListingPanel">
+                                        <div ng-show="topicArray.length == 0" class="topicHeadingPlaceholdr">
+                                            <h5 style="color:gray;margin: auto;font-size: 14px;" class="leftSideMenuLable fontClass">
+                                                NO TOPIC SELECTED
+                                            </h5>
+                                        </div>
+
+                                        <div class="topicsList"  title="{{topic.Tooltip}}" ng-repeat="topic in topicArray" ng-click="topicSelection($event,$index,topic)">
+                                            <div class="topicsListParent fontClass" ng-class="{ coachThemeColor : topic.selected == true && role == 'coach' ,mentorThemeColor : topic.selected == true && role == 'mentor' ,menteeThemeColor : topic.selected == true && role == 'mentee',coacheeThemeColor : topic.selected == true && role == 'coachee'}">
+                                                <div ng-show="skillRequired == false || (skillRequired == false && topic.selected == true)" style="float:left;display: flex;height: 100%;" title="{{(topic.profiLevel == 0 ? 'Basic' : (topic.profiLevel == 1 ? 'Intermediate' : 'Expert') )}}" ng-class="{zeroBackground : topic.profiLevel == 0 && role == 'coach' ,fiftyBackground : topic.profiLevel == 1 && role == 'coach',hundredBackground  : topic.profiLevel == 2 && role == 'coach', zeroBackgroundCoachee : topic.profiLevel == 0 && role == 'coachee' ,fiftyBackgroundCoachee : topic.profiLevel == 1 && role == 'coachee',hundredBackgroundCoachee  : topic.profiLevel == 2 && role == 'coachee', zeroBackgroundMentee  : topic.profiLevel == 0 && role == 'mentee' ,fiftyBackgroundMentee : topic.profiLevel == 1 && role == 'mentee',hundredBackgroundMentee  : topic.profiLevel == 2 && role == 'mentee',zeroBackgroundMentor : topic.profiLevel == 0 && role == 'mentor' , fiftyBackgroundMentor : topic.profiLevel == 1 && role == 'mentor', hundredBackgroundMentor  : topic.profiLevel == 2 && role == 'mentor' }">
+                                                    
+                                                </div>
+                                                <h5 class="eliipsisClass" ng-class="{ whiteBackground : skillRequired == false && topic.selected == true }" style="float:left;margin: auto 5px;font-size: 11px;"> {{topic.Name | uppercase}}</h5>
+                                                @*<h5 ng-show="skillRequired == true || (skillRequired == true && topic.selected == true)" style="float:left;margin: auto 5px;font-size: 11px;"> {{topic.Name | uppercase}}</h5>*@
+                                            </div>
+
+                                            <input ng-show="skillRequired == false && topic.selected == true" ng-click="$event.stopPropagation()" ng-model="topic.profiLevel" name="Proficiency Level" title="{{'Proficiency Level - '+ (topic.profiLevel == 0 ? 'Basic' : (topic.profiLevel == 1 ? 'Intermediate' : 'Expert') )}}" min="0" step="1" max="2" style="float: left;margin: 2%; padding: 0; margin-right: 0;    width: 89%;" type="range" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="skillsClassParent" ng-if="skillRequired">
+                                <div class="topicHeadingSection">
+                                    <h5 class="topicHeadingBar">SKILLS</h5>
+                                </div>
+                                <div class="topicListingSection">
+                                    <div ng-show="skillsArray.length == 0" class="topicHeadingPlaceholdr">
+                                        <h5 style="color:gray;margin: auto;font-size: 14px;" class="leftSideMenuLable fontClass">
+                                            NO TOPIC SELECTED
+                                        </h5>
+                                    </div>
+
+                                    <div class="topicsList" title="{{skill.Tooltip}}" ng-repeat="skill in skillsArray" ng-click="skillSelection($event,$index,skill)">
+                                        <div ng-show="skill.selected == true" class="topicsListParent fontClass" ng-class="{ coachThemeColor : skill.selected == true && role == 'coach',menteeThemeColor : skill.selected == true && role == 'mentee',mentorThemeColor : skill.selected == true && role == 'mentor',coacheeThemeColor : skill.selected == true && role == 'coachee' }">
+                                            <div style="float:left;display: flex;height: 100%;" title="{{(skill.profiLevel == 0 ? 'Basic' : (skill.profiLevel == 1 ? 'Intermediate' : 'Expert') )}}" ng-class="{ zeroBackground : skill.profiLevel == 0 , fiftyBackground : skill.profiLevel == 1, hundredBackground  : skill.profiLevel == 2  ,zeroBackgroundMentor : topic.profiLevel == 0 && role == 'mentor' , fiftyBackgroundMentor : topic.profiLevel == 1 && role == 'mentor', hundredBackgroundMentor  : topic.profiLevel == 2 && role == 'mentor'}">
+                                                
+                                            </div>
+                                            <h5 class="eliipsisClass" ng-class="{ whiteBackground : skill.selected == true }" style="float:left;margin: auto 5px;font-size: 11px;"> {{skill.Name | uppercase}}</h5>
+                                        </div>
+                                    
+                                        <h5 ng-hide="skill.selected == true" class="tagTasks fontClass" style="float: left;margin: 2%; width: 89%;height: 28px;">{{skill.Name | uppercase}}</h5>
+                                        <input ng-show="skill.selected == true" ng-click="$event.stopPropagation()" ng-model="skill.profiLevel" name="Proficiency Level" title="{{ 'Proficiency Level - '+ (skill.profiLevel == 0 ? 'Basic' : (skill.profiLevel == 1 ? 'Intermediate' : 'Expert') )}}" min="0" step="1" max="2" style="float: left;margin: 2%; padding: 0; margin-right: 0;    width: 89%;" type="range" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="ctsCategoryActionPanel" ng-hide="categoryDisplay">
+                    <div class="cateGoryFormDetails">
+                        <button class="signupButton fontClass" ng-click="savepublishClick()" style="width: 90px;height: 30px;padding: 0;">{{categoryDisplay ? 'Publish' : 'SAVE' }}</button>
+                        <h5 class="resetClass cancelLink fontClass" ng-click="backButtonClick()">CANCEL</h5>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="applicationBottomStrip">
+        <bottom-Main-Strip></bottom-Main-Strip>
+    </div>
+</div>
+
+
+ksdashbooardcoach.css
+
+        .fullWidthHeightClass {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+
+        .applicationBottomStrip {
+            position: relative;
+            width: 100%;
+            height: 7%;
+            float: left;
+        }
+
+      
+
+        .parentRoleMenu {
+            position: relative;
+            width: 18%;
+            padding: 1%;
+            height: 100%;
+            float: left;
+        }
+
+        .parentRoleDetailRight {
+            position: relative;
+            width: 82%;
+            height: 100%;
+            float: left;
+        }
+
+        .profileViewMode {
+            position: relative;
+            width: 100%;
+            height: 11%;
+            float: left;
+            display: flex;
+            font-size: 106%;
+           
+        }
+
+        .profileImagePart {
+            position: relative;
+            float: left;
+           width: 50px;
+            margin: 3%;
+            /*border: 1px solid gray;*/
+            background: url("/Images/icons/If no Profile photo.png")no-repeat  center;
+            background-size: contain;
+
+        }
+
+        .profileNamePart {
+            position: relative;
+            float: left;
+            color: white;
+            margin: 10%;
+            margin-right: 0;
+            margin-left: 0;
+            width:100%;
+            font-size: 112%;
+            margin: auto;
+            padding: 0px 7px 1px 0px;
+        }
+
+        .leftSideMenuMainDashBoard {
+            position: relative;
+            float: left;
+            height: 85%;
+            width: 100%;
+            margin-top: 4%;
+        }
+
+        .leftSideMenuParent {
+            position: relative;
+            float: left;
+            height: 100%;
+            width: 100%;
+        }
+
+        .leftSideMenu{
+            position: relative;
+            float: left;
+            width: 100%;
+            height: 6%;
+            
+                text-shadow: 0px 0 25px #fff;
+                /*-webkit-transition: all 0.7s ease;*/
+                 transition: all 0.7s ease;
+           transition: all 0.7s ease;
+        }
+        .leftSideMenu :hover , ngRepeatDivForStatus:hover {
+            -webkit-transform:scale(1.1);
+            transform:scale(1.1);
+            transition: all 0.7s ease;
+        }
+
+        .leftSideMenuLable {
+            position: relative;
+            float: left;
+            color: white;
+            margin: 3%;
+        }
+
+        .requestRoleParent {
+            position: relative;
+            float: left;
+            height: 10%;
+            width: 100%;
+        }
+
+        .dashBoardWizard {
+            position: relative;
+            float: left;
+            height: 77%;
+            width: 100%;
+        }
+
+        .mainDashBoardWizardParent {
+            position: relative;
+            float: left;
+            height: 84%;
+            width: 100%;
+        }
+        .roleRepeatWizard {
+            position: relative;
+            float: left;
+            width: 47%;
+            height: 35%;
+            margin: 2%;
+            margin-right: 0;
+            margin-bottom: 0;
+            //border: 1px solid;
+        }
+
+        .homeLabelInMainDB {
+            position: relative;
+            float: left;
+            width: 100%;
+            height: 9%;
+        }
+
+        .homeLabelInMainDB h5 {
+            float: left;
+            position: relative;
+            margin-left: 2%;
+            margin-top: 2%;
+            font-size: 16px;
+        }
+
+        
+        .userRoleWizardParent {
+            display: inline-flex;
+            overflow: auto;
+            float: left;
+            overflow-x: scroll;
+            overflow-y: hidden;
+            width: 96%;
+            
+            height: 100%;
+        }
+
+        .roleRepeatWizard {
+            position: relative;
+            float: left;
+            width: 45%;
+            height: 42%;
+            margin: 2%;
+            border: 1px solid lightgray;
+        }
+
+        
+
+         
+
+        .notificationWizard {
+            margin: 0% auto;
+            display: table;
+        }
+     
+
+        .roleWiseClass {
+            float: left;
+            width: 70%;
+            padding: 7%;
+        }
+
+        .homeIcon {
+            float: left;
+            width: 20%;
+            border: 1px solid red;
+        }
+
+        .notificationIcon {
+            float: left;
+            width: 20%;
+            border: 1px solid red;
+        }
+
+        .roleRequestIcon {
+            float: left;
+            width: 20%;
+            border: 1px solid red;
+        }
+
+        .addRoleIcon {
+            float: left;
+            width: 20%;
+            border: 1px solid red;
+        }
+
+        .whiteBackground {
+            color: white;
+        }
+
+        .dashBoardMenuCoach {
+            float: left;
+            width: 92%;
+            height: 95%;
+            margin-left: 8%;
+            margin-top: 3%;
+        }
+
+        .dashBoardMenuCoachRight {
+            float: left;
+            width: 32%;
+            height: 59%;
+            margin: -25px 7px 7px 2px;
+        }
+
+        .dashBoardMenuCoachRightCircle {
+            float: left;
+            width: 100%;
+            height: 80%;
+            display: flex;
+        }
+
+        .dashBoardMenuCoachRightCirclePart {
+            float: left;
+            width: 55%;
+            height: 85%;
+            margin: auto auto;
+            border: 7px solid lightgray;
+            border-radius: 100%;
+                display: flex;
+                cursor:pointer;
+        }
+.dashBoardMenuCoachRightCirclePart:hover {
+    box-shadow: 0px 0px 10px 2px;
+}
+        .dashBoardMenuCoachRightlabel {
+            float: left;
+            width: 100%;
+            display: flex;
+            height: 20%;
+        }
+
+        .applicationLogo {
+            float: left;
+            width: 15%;
+            height: 100%;
+              display: flex;
+        }
+
+        .applicationSearch {
+            float: left;
+            width: 20%;
+            display: flex;
+            height: 100%;
+        }
+
+        .applicationRightCornerStrip {
+            float: right;
+            width: 70%;
+            height: 100%;
+        }
+
+        .applicationSearchTag {
+            border: 1px solid lightgray;
+            border-radius: 10px;
+            float: left;
+            margin: auto;
+            width: 84%;
+            padding: 5px;
+        }
+
+        .roleIcons {
+            float: right;
+            width: auto ;
+            display: flex;
+            height: 100%;
+        }
+
+        .notificationDiv {
+            float: right;
+            width: 45%;
+            display: flex;
+            height: 100%;
+        }
+
+        .notificationDivParent {
+            float: left;
+            width: 100%;
+            display: flex;
+            margin: auto;
+        }
+
+        .applicationNotiCount {
+            height: 19px;
+            width: 19px;
+            border: 1px solid red;
+            border-radius: 50%;
+            -moz-border-radius: 50%;
+            background-repeat: no-repeat;
+            background-size: 100%;
+            background-position: 50%50%;
+            background-color: red;
+        }
+
+        .applicationNotiCount h4 {
+                color: white;
+                display: inline-block;
+                font-size: 11px;
+                font-weight: 500;
+                font-family: Varela Round;
+                line-height: 14px;
+                text-align: center;
+                text-overflow: clip;
+        }
+
+        .logoutOption {
+            float: right;
+            width: 9%;
+            display: flex;
+            color:darkgray;
+            height: 100%;
+        }
+
+        .logoutOptionParent {
+            float: left;
+            margin: auto;
+            width: 100%;
+                display: flex;
+        }
+
+        .roleIconCircle {
+            float: left;
+            margin: auto 4%;
+                width: 20px;
+            border-radius: 100%;
+        }
+
+.ctsParent{
+	float: left;
+	width: 100%;
+	height : 100%;
+	
+}
+.ctsCategoryPanelMainPanel {
+    float: left;
+	width: 100%;
+	height : 81%;
+}
+.ctsParentMain{
+	float: left;
+	width: 96%;
+	    margin: 0%;
+	
+	height : 93%;
+    display: flex;
+    margin-bottom: 0;
+}
+.ctsParentMainPanel{
+	float: left;
+	width: 95%;
+	margin: auto;
+	height : 94%;
+}
+.ctsCategoryHeading{
+	float: left;
+	width: 100%;
+	border-bottom:2px solid lightgray;
+	height : 9%;
+	display:flex;
+}
+.ctsCategoryPanel{
+	float: left;
+	width: 100%;
+	height : 100%;
+	display:flex;
+}
+.ctsCategoryActionPanel{
+	float: left;
+	width: 100%;
+	height : 10%;
+	display:flex;
+}
+.parentCatgoryPanel{
+    position: relative;
+    float: left;
+    height: 100%;
+    width: 100%;
+}
+.cateGoryRepeatPanel{
+    float: left;
+    width: 100%;
+    height: 97%;
+    margin-top: 3%;
+    overflow: auto;
+}
+.categoryCircle{
+    float: left;
+    width: 96%;
+    height: 91%;
+    /* margin: 2%; */
+    /* margin-left: 0; */
+    /* margin-right: 0; */
+    /* margin-bottom: 4%; */
+    display: flex;
+    background: rgba(206, 206, 206, 0.44);
+}
+.categoryRightlabelPart{
+    float: left;
+    width: 30%;
+    display: flex;
+    height: 70%;
+    margin: auto auto;
+    border: 7px solid lightgray;
+    border-radius: 100%;
+}
+
+.categoryRightlabel {
+    float: left;
+    width: 100%;
+    display: flex;
+    height: 20%;
+    margin: auto auto;
+}
+.cateGoryFormDetails{
+    position: relative;
+    width: 100%;
+    float: left;
+    height: 100%;
+    margin: 2%;
+    margin-left: 0;
+    margin-right: 0;
+}
+.cancelLink{
+    float: left;
+    opacity: 0.6;
+    margin-right: 0;
+    text-align: center;
+    margin-left: 10%;
+    margin-top: 1%;
+    text-decoration: underline;
+    cursor:pointer;
+}
+.topicSkillPanel {
+     float: left;
+    width: 100%;
+    height: 100%;
+}
+
+.topicClassParent {
+      float: left;
+    width: 100%;
+    height: 50%;
+    border-bottom: 1px solid;
+}
+.skillsClassParent {
+      float: left;
+    width: 100%;
+    height: 50%;
+    border-bottom: 1px solid;
+}
+.topicHeadingSection {
+       float: left;
+    width: 23%;
+    height: 100%;
+    display: flex;
+}
+.topicHeadingPlaceholdr {
+    float: left;
+    width: 100%;
+    height: 100%;
+    display: flex;
+}
+
+.topicListingSection {
+    float: left;
+    width: 77%;
+    height: 100%;
+    /*display: flex;*/
+    overflow :auto;
+    cursor:pointer;
+}
+.topicHeadingBar {
+    float: left;
+    margin: auto auto;
+    font-size: 11px;
+    font-weight: 600;
+}
+.topicListingPanel{
+    float: left;
+    width: 100%;
+    height: 100%;
+    position: relative;
+    display: flex;
+}
+.topicsList {
+       position: relative;
+    float: left;
+    width: 120px;
+    margin: 2%;
+    margin-right: 0;
+    height: 45px;
+}
+.topicsListParent {
+    color: black;
+    /* font-size: 10px; */
+    border: 1px solid lightgray;
+    background: white;
+    margin: 2%;
+    width: 89%;
+    /* padding: 3px; */
+    display: flex;
+    height: 60%;
+}
+.heightTopicClass {
+     height: 100% !important;
+}
+.zeroBackground {
+    background : rgb(239,154,72);
+    width:0;
+}
+.fiftyBackground {
+    background : rgb(231, 120, 23);
+    width:50%;
+}
+.hundredBackground {
+    background : rgb(220, 53, 27);
+    width:100%;
+}
+.zeroBackgroundCoachee {
+    background : rgb(255,249,116);
+    width:0;
+}
+.fiftyBackgroundCoachee {
+    background : rgb(248, 195, 0);
+    width:50%;
+}
+.hundredBackgroundCoachee {
+    background : rgb(241, 164, 0);
+    width:100%;
+}
+
+.zeroBackgroundMentor {
+    background : rgb(67,129,61);
+    width:0;
+}
+.fiftyBackgroundMentor {
+    background : rgb(0, 73, 45);
+    width:50%;
+}
+.hundredBackgroundMentor {
+    background : rgb(5, 33, 29);
+    width:100%;
+}
+  .zeroBackgroundMentee {
+    background : rgb(187,217,0);
+    width:0;
+}
+.fiftyBackgroundMentee {
+    background : rgb(132, 194, 37);
+    width:50%;
+}
+.hundredBackgroundMentee {
+    background : rgb(75, 159, 49);
+    width:100%;
+}
+
+.statusParentDiv{
+    float: left;
+    width: 100%;
+    height: 100%;
+overflow:auto;
+}
+
+
+.ngRepeatDivForStatus{
+    float: left;
+    width: 96%;
+    height: 13%;
+    /*background: #f3f3f3;*/
+border-bottom: 1px solid white;
+   display: flex;
+    margin-left: 2%;
+}
+.ngRepeatDivForStatus:hover{
+    box-shadow:0px 0px 10px 2px;
+}
+.profileImageCoachingStatus{
+    float: left;
+    width: 7%;
+    height: 100%;
+margin: auto auto;
+   display: flex;
+    margin-right: 0;
+  
+}
+.profileNameCoachingStatus{
+float: left;
+   display: flex;
+    width: 13%;
+    height: 100%;
+margin: auto auto;
+    margin-right: 0;
+}
+.progressBarCoachingStatus{
+float: left;
+   display: flex;
+    width: 15%;
+    height: 100%;
+margin: auto auto;
+    margin-right: 0;
+}
+.skillsCoachingStatus{
+float: left;
+    width: 13%;
+    height: 100%;
+   display: flex;
+margin: auto auto;
+    margin-right: 0;
+	}
+.statusCoachingStatus{
+float: left;
+    width: 15%;
+    height: 100%;
+   display: flex;
+margin: auto auto;
+    margin-right: 0;
+}
+.treeCoachingStatus{
+float: left;
+    width: 7%;
+    height: 100%;
+   display: flex;
+margin: auto auto;
+    margin-right: 0;
+}
+.communicationsCoachingStatus{
+float: left;
+    width: 13%;
+   display: flex;
+    height: 100%;
+margin: auto auto;
+
+}
+
+.iconOnStatusArray{
+	margin: auto auto;float: left;height: 15px;width: 15px;
+}
+.textAlignCoachingStatus{
+    font-size: 14px;
+    margin: auto auto;margin-left: 0;float: left;
+    font-weight: bold;
+    font-family: monospace;
+}
+
+/* entire container, keeps perspective */
+.flipContainer {
+	perspective: 1000px;
+}
+
+.flipContainer, .front, .back {
+	    float: left;
+    width: 100%;
+    height: 100%;
+}
+
+/* flip speed goes here */
+.flipper {
+	transition: 2s;
+	transform-style: preserve-3d;
+        transform: rotateY(-180deg);
+	position: relative;
+   text-align:
+}
+.flipperBack {
+	transition:2s;
+	transform-style: preserve-3d;
+        transform: rotateY(180deg);
+	position: relative;
+}
+
+/* hide back of pane during swap */
+.front, .back {
+	backface-visibility: hidden;
+	position: absolute;
+	top: 0;
+	left: 0;
+}
+
+/* front pane, placed above back */
+.front {
+	z-index: 2;
+	/* for firefox 31 */
+	transform: rotateY(0deg);
+	//border: 1px solid #BBB8B8;
+}
+
+/* back, initially hidden pane */
+.back {
+	transform: rotateY(180deg);
+
+}
+.disableClass{
+	background: rgba(0,0,0,0.55);
+}
+.flipDivOnClass {
+float: left;
+    width: 100%;
+    height: 100%;
+	display:flex;
+}
+.promoCodeClass{
+	margin:auto auto;
+}
+
+.shadow4:before, .shadow4:after{
+  content:"";
+  box-shadow:0 0 25px 3px #928d8d;
+  border-radius:100px/10px;
+  z-index:-1;
+}
+.fivePopupContainerOne{
+    width: 100%;
+   height: 30%;
+	float:left;
+	
+}
+.fivePopupContainerTwo{
+    width: 100%;
+   height: 40%;
+    float:left;
+	
+}
+.fivePopupContainerThree{
+    width: 100%;
+   height: 30%;
+    float:left;
+    
+}
+
+.hideCoacheeProfile {
+     width:0%;
+	height:0%;
+	background:white;
+	overflow:hidden;
+    position: absolute;
+    z-index: 1;
+    left: 42%;
+    top: 50%;
+    transition: 1s all ease;
+}
+
+.showCoacheeProfileClass {
+    width: 88%;
+    height: 81%;
+    background: white;
+    position: absolute;
+    z-index: 1;
+    left: 6%;
+    top: 10%;
+    border: 1px solid #bfbfbf;
+}
+
+
+/*Rss Feed Css*/
+
+
+.feedPanel {
+        float: left;
+	position: relative;
+	width: 100%;
+	height : 100%;
+   
+}
+
+.feedParentArray{
+        float: left;
+	width: 100%;
+	height : 77%;
+}
+.skillTaggingArray{
+	float: left;
+	width: 100%;
+	height : 10%;
+	border-top: 1px solid black;
+    padding: 7px;
+    overflow: auto;
+}
+.homeLabelfeed{
+        float: left;
+	width: 100%;
+	height : 6%;
+    display:flex;
+    border-bottom: 1px solid lightgray;
+}
+.feedParentMainArray{
+        float: left;
+	width: 100%;
+	height : 100%;
+	overflow:auto;
+}
+.feedContainRepeatDiv{
+ 	float: left;
+	width: 267px;
+    height: 213px;
+	border : 1px solid lightgray;
+    padding : 10px;
+    margin:2px;
+}
+
+.dashBoardMenuCoachBottom {
+    margin-left:17%;
+}
+
+.col-md-3{
+   
+}
+.dashBoardMenuCoachImage{
+  height: 65%;
+    width: 71%;
+    margin:auto;
+}
+.backgroundIamgeFeed {
+    background : url('../../../Images/communication/feedLogo.png') no-repeat;
+    background-size: 100%;
+}
+
+
+/*--------------------*/
+
+/*-----------New FeedBAck---------*/
+.feedBackParent{
+  width: 100%;
+  height: 100%;  
+  float:left;
+}
+.feedBackLabel{
+  float:left;
+  width:100%;
+  height:5%;
+  display:flex;
+}
+
+.feedBackLabel h5 {
+  margin:auto;
+margin-bottom: 0;
+}
+.feedbackPanelCom{
+  float:left;
+  width:100%;
+  height:85%;
+}
+
+.pageNavigateView{
+ float:left;
+  width:100%;
+  height:5%;
+
+}
+.questionBox{
+  float: left;
+  width: 45%;
+  height: 42%;
+  
+  margin: 3%;
+  margin-right: 0;
+  margin-bottom: 0;
+	display:flex;
+
+}
+.questionLabel{
+  float: left;
+  width: 100%;
+  height: 50%;
+  display: flex;
+}
+.questionLabel h5 {
+  margin:auto;
+  font-size: 16px;
+  width: 90%;
+}
+.questionAnswer{
+  float: left;
+  width: 100%;
+  height: 50%;
+  display: flex;
+}
+
+.questionAnswer textArea{
+  resize: none;
+  margin: auto;
+  width: 84%;
+  height: 60%;
+
+}
+.questionBoxparentHide{
+	transition:all 1s ease;
+	margin:auto;	
+	width: 0%;
+	height: 0%;
+	overflow:hidden;
+}
+.questionBoxparentShow{
+	transition:all 1s ease;
+	margin:auto;
+  background:#F8C301;
+border: 1px solid #999;
+  box-shadow:0px 0px 10px 2px;
+	width: 100% !important;
+	height: 100% !important;
+}
+.ratingFeedBack {
+        width: 85%;
+    height: 80%;
+    margin: auto;
+    display: flex;
+    
+}
+.ratingFeedBack img{
+    margin:auto;
+    width : 50px;
+    transition:all 1s ease;
+    cursor:pointer;
+}
+.ratingStarOne {
+}
+.ratingStarTwo {
+}
+.ratingStarThree {
+
+}
+.ratingStarFour {
+}
+.ratingStarFive {
+}
+/*------------------*/
+
+
+.radioFeedBack {
+    background-image: -webkit-linear-gradient(hsla(0,0%,0%,.1), hsla(0,0%,100%,.1)),
+        -webkit-linear-gradient(right, #b0c43c 50%, #999 50%);
+    background-size: 100% 100%, 200% 100%;
+    background-position: 0 0, 5px 0;
+    border-radius: 25px;
+    box-shadow: inset 0 1px 4px hsla(0,0%,0%,.5),
+                inset 0 0 10px hsla(0,0%,0%,.5),
+                0 0 0 1px hsla(0,0%,0%,.1),
+                0 -1px 2px 1px hsla(0,0%,0%,.25),
+                0 2px 2px 1px hsla(0,0%,100%,.5),
+                0 -2px 10px 2px hsla(0,0%,100%,.75),
+                0 2px 10px 2px hsla(0,0%,0%,.25);
+    cursor: pointer;
+    height: 30px;
+    padding-right: 10px;
+    position: relative;
+    width: 63px;
+    -webkit-appearance: none;
+    -webkit-transition: .15s;
+}
+
+.radioFeedBack:after {
+    background-color: #eee;
+    background-image: -webkit-linear-gradient(hsla(0,0%,100%,.1), hsla(0,0%,0%,.1));
+    box-shadow: inset 0 1px 1px 1px hsla(0,0%,100%,1),
+                inset 0 -1px 1px 1px hsla(0,0%,0%,.25),
+                0 1px 3px 1px hsla(0,0%,0%,.5),
+                0 0 2px hsla(0,0%,0%,.25);
+    content: '';
+    display: block;
+    height: 30px;
+    left: 0;
+    position: relative;
+    top: 0;
+    width: 30px;
+    border-radius: 100%;
+}
+.radioFeedBack:checked {
+    background-position: 0 0, 45px 0;
+    padding-left: 33px;
+    padding-right: 0;
+}
+.radioFeedBack:before {
+    color: #eee;
+    content: 'Yes';
+    font: 12.5px/20px sans-serif;
+    height: 20px;
+    left: 33px;
+    letter-spacing: 1px;
+    position: absolute;
+    text-align: center;
+    top: 6px;
+    width: 20px;
+    text-shadow: 0 -1px 1px rgba(0,0,0,0.5);
+}
+.radioFeedBack:checked:before {
+    content: 'Yes';
+    left: 9px;
+}
+.radioFeedBackNo:before {
+    color: #eee;
+    content: 'No';
+}|
+.radioFeedBackNo:checked:before {
+    content: 'No';
+    left: 9px;
+}
+.radioFeedBackNotApplicable:before {
+    color: #eee;
+    content: 'NA';
+}
+.radioFeedBackNotApplicable:checked:before {
+    content: 'NA';
+    left: 9px;
+}
+ctscontroller.cs
+
+    public JsonResult GetProfileSkillsOrTopics()
+        {
+            CTSRepository repo = new CTSRepository();
+            return this.Json(repo.GetCoahingOrMentoringSkilsOrTopic(UserId));
+        }
+
+
+ctsRepositorty.cs
+
+    public List<SkillOrTopic> GetCoahingOrMentoringSkilsOrTopic(string UserId)
+        {
+            CoachOrMentorRepository _coachingRepo = new CoachOrMentorRepository();
+            CoacheeOrMenteeRepository _mentoringRepo = new CoacheeOrMenteeRepository();
+            List<SkillOrTopic> Result = new List<SkillOrTopic>();
+            List<SkillOrTopic>[] skillortopiclist = new List<SkillOrTopic>[4];
+            skillortopiclist[0] = new List<SkillOrTopic>(_coachingRepo.GetSkillsForCoach(UserId));
+            skillortopiclist[1] = new List<SkillOrTopic>(_coachingRepo.GetTopicsForMentor(UserId));
+            skillortopiclist[2] = new List<SkillOrTopic>(_mentoringRepo.GetSkillsForCoachee(UserId));
+            skillortopiclist[3] = new List<SkillOrTopic>(_mentoringRepo.GetTopicsForMentee(UserId));
+
+            //List<SkillOrTopic> Coachskills = _coachingRepo.GetSkillsForCoach(UserId);
+            //List<SkillOrTopic> mentortopic = _coachingRepo.GetTopicsForMentor(UserId);
+            //List<SkillOrTopic> coacheeskill = _mentoringRepo.GetSkillsForCoachee(UserId);
+            //List<SkillOrTopic> menteetopic = _mentoringRepo.GetTopicsForMentee(UserId);
+            if (UserId != null)
+            {
+                Result.AddRange(skillortopiclist[0]);
+                Result.AddRange(skillortopiclist[1]);
+                Result.AddRange(skillortopiclist[2]);
+                Result.AddRange(skillortopiclist[3]);
+                //Result.AddRange(mentortopic);
+                //Result.AddRange(coacheeskill);
+                //Result.AddRange(menteetopic);
+            }
+
+            return Result;
+        }
+
+
