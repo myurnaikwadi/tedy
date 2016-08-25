@@ -281,17 +281,19 @@ namespace KindleSpur.WebApplication.Controllers
                 string EmailAddress = ((IUser)System.Web.HttpContext.Current.Session["User"]).EmailAddress;
                 User userDetails = (User)_repo.GetUserDetail(EmailAddress);
                 Invitation invitation = new Invitation();
-                invitation.Description = "This is description for testing, needs to be deleted"; //This needs to be deleted, only for testing purpose.
-                invitation.inviteEmailAddress = "shilpamulay@gmail.com";//This needs to be deleted, only for testing purpose.
-               
+                invitation.Description = signupObject.Description;
+                invitation.Invites = signupObject.Invites;
 
                 if (userDetails != null)
                 {
                     userDetails.FirstName = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(userDetails.FirstName.ToLower());
                     userDetails.LastName = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(userDetails.LastName.ToLower());
-                    string uri = "www.google.com";
-                    EmailNotification.SendEmailOnInvitation(userDetails, invitation, uri);
+                    string uri = "www.kindlespur.com";
                     status = _repo.SaveInviteEmailAddresses(userDetails, invitation);
+                    if (status == true)
+                        EmailNotification.SendEmailOnInvitation(userDetails, invitation, uri);
+                    else
+                        response.FailureCallBack("Unfortunately unable to send email, try again ");
 
                 }
                 else
@@ -305,6 +307,7 @@ namespace KindleSpur.WebApplication.Controllers
             }
             return response.ToJson();
         }
+
 
     }
 }

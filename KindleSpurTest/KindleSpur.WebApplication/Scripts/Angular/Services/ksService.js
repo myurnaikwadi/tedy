@@ -597,20 +597,25 @@ app.factory('serverCommunication', function ($http) {
         sendInvitationToFriend: function (iObj) {
             console.error('sendInvitationTOFriend --------------- ', iObj);
             var _checkObj = angular.copy(iObj);
+            var postData = { values: iObj.invitation.Email };
+            var Data = {
+                Description: iObj.invitation.Description,
+                Invites: iObj.invitation.Email
+            };
+            console.error(Data);
             var req = {
                 method: 'POST',
                 url: '/User/SendEmailOnInvitation',
                 headers: {
                     'Content-Type': 'application/json'
                 },
-
-                data: { invitation: iObj.invitation }
-
+                data: Data,
+                traditional: true
             }
-            alert(invitation);
             $http(req).then(iObj.successCallBack, iObj.failureCallBack);
-            // $http.post('/Conversation/Create', _sdss.loggedUserDetails, _sdss.ReceiverName, _sdssRole).then(iObj.successCallBack, iObj.failureCallBack)
         },
+
+
 
     }
 });

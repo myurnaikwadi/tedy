@@ -8,10 +8,9 @@ using System.Threading.Tasks;
 namespace KindleSpur.Models
 {
     public class Invitation : IInvitation
-    {     
+    {
         public string Description { get; set; }
-        // public List<string> Email { get; set; }
-        public string inviteEmailAddress { get; set; }
+        public List<string> Invites { get; set; }
 
     }
 }
