@@ -1,0 +1,131 @@
+       public List<SkillOrTopic> GetSkillsForConversation()
+        {
+            // List<string> result = new List<string>();
+            List<SkillOrTopic> result = new List<SkillOrTopic>();
+            var _CoachOrMentorCollection = _kindleDatabase.GetCollection("CoachOrMentor");
+            var _CoacheeOrMenteeCollection = _kindleDatabase.GetCollection("CoacheeOrMentee");
+            //var results = _conversationCollection.FindOneAs<CoachOrMentor>(Query.And(
+            //                                                     Query.EQ("UserId", UserId),
+            //                                                     Query.EQ("Role", "Coach")
+            //                                                ));
+            var Coach = (from c in _CoachOrMentorCollection.AsQueryable<CoachOrMentor>()
+                         where c.Role == "Coach"
+                         orderby c.Skills
+                         select c.Skills).Take(5).ToList();
+            var Mentor = (from c in _CoachOrMentorCollection.AsQueryable<CoachOrMentor>()
+                          where c.Role == "Mentor"
+                          orderby c.Topics
+                          select c.Topics).Take(5).ToList();
+            var Coachee = (from c in _CoacheeOrMenteeCollection.AsQueryable<CoacheeOrMentee>()
+                           where c.Role == "Coachee"
+                           orderby c.Skills
+                           select c.Skills).Take(5).ToList();
+            var Mentee = (from c in _CoacheeOrMenteeCollection.AsQueryable<CoacheeOrMentee>()
+                          where c.Role == "Mentee"
+                          orderby c.Topics
+                          select c.Topics).Take(5).ToList();
+            var listoflis = Coach.Union(Coachee).ToList();
+            Dictionary<List<SkillOrTopic>, int> Coaching = new Dictionary<List<SkillOrTopic>, int>();
+             
+         
+
+            List<List<SkillOrTopic>> Skillss = new List<List<SkillOrTopic>>();
+            Skillss.AddRange(Coach);
+            Skillss.AddRange(Coachee);
+
+            var disntict = Skillss.Distinct().Take(5);
+            //foreach (var c in disntict)
+            //{
+            //    if (Coaching.ContainsKey(c) == false)
+            //    {
+            //        Coaching.Add(c, 1);
+            //    }
+            //    else
+            //    {
+            //        Coaching[c]++;
+            //    }
+            //}
+            List<SkillOrTopic> skilladd = new List<SkillOrTopic>();
+            // var count = Skillss[0].Count();
+            var skill = (from c in disntict
+                         select c
+                        ).Take(5).ToList();
+          
+                foreach (var v in skill)
+                {
+
+                    foreach (var s in v)
+                    {
+
+                        skilladd.Add(s);
+
+                    }
+
+
+
+                }
+            
+            Dictionary<List<SkillOrTopic>, int> Mentoring = new Dictionary<List<SkillOrTopic>, int>();
+
+            List<List<SkillOrTopic>> Topicss = new List<List<SkillOrTopic>>();
+            Topicss.AddRange(Mentor);
+            Topicss.AddRange(Mentee);
+
+            foreach (var c in Topicss)
+            {
+                if (Mentoring.ContainsKey(c) == false)
+                {
+                    Mentoring.Add(c, 1);
+                }
+                else
+                {
+                    Mentoring[c]++;
+                }
+            }
+            //List<SkillOrTopic> topicsadd = new List<SkillOrTopic>();
+            //var topic = (from c in Topicss
+            //             select c
+            //           ).Take(5).ToList();
+
+            //foreach (var v in topic)
+            //{
+            //    foreach (var c in v)
+            //    {
+            //        topicsadd.Add(c);
+            //    }
+
+            //}
+
+            //List<CoachOrMentor> typeCoach = _CoachOrMentorCollection.AsQueryable<CoachOrMentor>().Where<CoachOrMentor>(sb => sb.Role == "Coach" && sb.Role.StartsWith("Coach")).Take(5).ToList();
+            //List<CoachOrMentor> typeMentor = _CoachOrMentorCollection.AsQueryable<CoachOrMentor>().Where<CoachOrMentor>(sb => sb.Role == "Mentor" && sb.Role.StartsWith("Mentor")).Take(5).ToList();
+
+            //List<CoacheeOrMentee> typeCoachee = _CoacheeOrMenteeCollection.AsQueryable<CoacheeOrMentee>().Where<CoacheeOrMentee>(sb => sb.Role == "Coachee" && sb.Role.StartsWith("Coachee")).Take(5).ToList();
+            //List<CoacheeOrMentee> typeMentee = _CoacheeOrMenteeCollection.AsQueryable<CoacheeOrMentee>().Where<CoacheeOrMentee>(sb => sb.Role == "Mentee" && sb.Role.StartsWith("Mentee")).Take(5).ToList();
+
+            //List<CoachOrMentor> Results = new List<CoachOrMentor>();
+            //Results.AddRange(typeCoach);
+            //Results.AddRange(typeMentor);
+            //List<CoacheeOrMentee> Results2 = new List<CoacheeOrMentee>();
+            //Results2.AddRange(typeCoachee);
+            //Results2.AddRange(typeMentee);
+
+
+            //List<Conversation> typeCoaching = _conveorrsationCollection.AsQueryable<Conversation>().Where<Conversation>(sb => sb.ConversationType == "Coaching" && sb.Content.StartsWith("COACHING REQUEST BY")).Take(5).ToList();
+            //List<Conversation> typeMentoring = _conversationCollection.AsQueryable<Conversation>().Where<Conversation>(sb => sb.ConversationType == "Mentoring" && sb.Content.StartsWith("MENTORING REQUEST BY")).Take(5).ToList();
+
+            //result.AddRange(typeCoaching);
+            //result.AddRange(typeMentoring);
+
+            //result.Add(Results.Select(x => x.Skills).ToString());
+
+
+            //result.Add(Results2.Select(x => x.Topics).ToString());
+
+            //result.AddRange(skilladd);
+
+            //result.AddRange(topicsadd);
+
+
+            return result;
+
+        }

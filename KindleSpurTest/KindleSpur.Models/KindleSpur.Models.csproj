@@ -68,6 +68,7 @@
     <Compile Include="Enums.cs" />
     <Compile Include="Exceptionhandle.cs" />
     <Compile Include="Feedback.cs" />
+    <Compile Include="FileUpload.cs" />
     <Compile Include="Game.cs" />
     <Compile Include="Interfaces\ICategory.cs" />
     <Compile Include="Interfaces\ICoacheeOrMentee.cs" />
@@ -75,6 +76,7 @@
     <Compile Include="Interfaces\ICommunication.cs" />
     <Compile Include="Interfaces\IConversation.cs" />
     <Compile Include="Interfaces\IFeedback.cs" />
+    <Compile Include="Interfaces\IFileUpload.cs" />
     <Compile Include="Interfaces\IGame.cs" />
     <Compile Include="Interfaces\IInvitation.cs" />
     <Compile Include="Interfaces\IMeetingSchedular.cs" />

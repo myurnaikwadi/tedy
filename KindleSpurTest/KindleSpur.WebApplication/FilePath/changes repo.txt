@@ -1,0 +1,911 @@
+  CoacheeOrMenteeRepository.cs  
+ public CoacheeOrMenteeRepository()
+        {
+
+            try
+            {
+               
+               // _kindleDatabase = _mongoServer.GetDatabase("KindleSpur");
+                _logCollection = con.GetCollection("ErrorLogs");
+                _coacheeOrMenteeCollection = con.GetCollection("CoacheeOrMentee");
+            }
+            catch (MongoException ex)
+            {
+                _logCollection.Insert("{ Error : 'Database connection failed.', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ");
+            }
+        }
+
+
+
+
+
+
+ConversationRepository .cs
+
+using KindleSpur.Models.Interfaces;
+using KindleSpur.Models;
+using KindleSpur.Models.Interfaces.Repository;
+using System;
+using System.Collections.Generic;
+using System.Configuration;
+using System.Linq;
+using MongoDB.Driver;
+using MongoDB.Driver.Builders;
+using MongoDB.Bson;
+using MongoDB.Driver.Linq;
+
+namespace KindleSpur.Data
+{
+    public class ConversationRepository : IConversationRepository
+    {
+        Connection con =new Connection();
+        MongoClient _mongoClient;
+        MongoServer _mongoServer;
+        MongoDatabase _kindleDatabase;
+        MongoCollection _logCollection;
+        MongoCollection _conversationCollection;
+        public ConversationRepository()
+        {
+
+            try
+            {
+
+                _conversationCollection = con.GetCollection("Conversations");
+                _logCollection = con.GetCollection("ErrorLogs");
+            }
+            catch (MongoException ex)
+            {
+                _logCollection.Insert("{ Error : 'Database connection failed.', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ");
+            }
+        }
+
+        public bool AddNewConversation(IConversation conversationData)
+        {
+            bool _transactionStatus = false;
+
+            try
+            {
+           //    var _conversationCollection = _kindleDatabase.GetCollection("Conversations");
+                var result = _conversationCollection.FindAs<BsonDocument>(Query.And(Query.EQ("SenderEmail", conversationData.SenderEmail), Query.EQ("ReceiverEmail", conversationData.ReceiverEmail), Query.EQ("skill", conversationData.skill))).ToList();
+
+                if (result.Count() > 0 && conversationData.Content == null)
+                {
+                    _transactionStatus = false;
+                    return false;
+                }
+                _conversationCollection.Insert(conversationData);
+
+                _transactionStatus = true;
+            }
+            catch (MongoException ex)
+            {
+                _logCollection.Insert("{ Error : 'Failed at AddNewConversation().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ");
+                throw new MongoException("New Conversation failure!!!");
+            }
+
+            return _transactionStatus;
+        }
+
+        public bool EditConversation(string conversationId, IConversation conversationData)
+        {
+            bool _transactionStatus = false;
+            try
+            {
+              //  var _conversationCollection = _kindleDatabase.GetCollection("Conversations");
+                var conversationDetail = _conversationCollection.FindOneAs<IConversation>(Query.EQ("_id", ObjectId.Parse(conversationId)));
+                conversationDetail.SenderEmail = conversationData.SenderEmail;
+                conversationDetail.ReceiverEmail = conversationData.ReceiverEmail;
+                //conversationDetail.Content = conversationData.Content;
+                conversationDetail.UpdateDate = DateTime.Now;
+                //conversationDetail.IsVerified = true;
+
+                _conversationCollection.Save(conversationDetail);
+                _transactionStatus = true;
+            }
+            catch (MongoException ex)
+            {
+                _logCollection.Insert("{ Error : 'Failed at EditConversation().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ");
+            }
+            return _transactionStatus;
+        }
+
+        public bool UpdateConversationStatus(string senderEmail, string receiverEmail, string content, bool isVerified, string ConversationType, string ParentId, string skill)
+        {
+            bool _transactionStatus = false;
+            try
+            {
+               // var _conversationCollection = _kindleDatabase.GetCollection("Conversations");
+
+                var conversationDetail = _conversationCollection.FindOneAs<Conversation>(Query.And(Query.EQ("SenderEmail", receiverEmail), Query.EQ("ReceiverEmail", senderEmail), Query.EQ("ConversationType", ConversationType), Query.EQ("skill", skill)));
+
+                conversationDetail.IsVerified = isVerified;
+                conversationDetail.Content = content;
+                conversationDetail.UpdateDate = DateTime.Now;
+                conversationDetail.ConversationParentId = ParentId;
+                _conversationCollection.Save(conversationDetail);
+                _transactionStatus = true;
+            }
+            catch (MongoException ex)
+            {
+                _logCollection.Insert("{ Error : 'Failed at UpdateConversationStatus().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ");
+            }
+            return _transactionStatus;
+        }
+
+        public List<BsonDocument> ListConversationForReceiver(string loggedEmail, string ConversationType)
+        {
+            List<BsonDocument> _categories = new List<BsonDocument>();
+            List<BsonDocument> _checkUser = new List<BsonDocument>();
+
+            try
+            {
+                //var _query = Query.And(Query.Or(Query<Conversation>.EQ(p => p.SenderEmail, loggedEmail), Query<Conversation>.EQ(p => p.ReceiverEmail, loggedEmail)), Query<Conversation>.EQ(p => p.IsVerified, true), Query<Conversation>.EQ(p1 => p1.ConversationType, ConversationType));
+
+                //var _conversationCollection = _kindleDatabase.GetCollection("Conversations");
+
+                //_checkUser = _conversationCollection.Find(_query).ToList();
+                //if (_checkUser.Count() > 0)
+                //{
+                var _query1 = Query.And(Query<Conversation>.EQ(p => p.ReceiverEmail, loggedEmail), Query<Conversation>.EQ(p => p.IsVerified, true), Query<Conversation>.EQ(p1 => p1.ConversationType, ConversationType));
+                _categories = _conversationCollection.FindAs<BsonDocument>(_query1).SetFields(Fields.Exclude("_id").Include("ReceiverEmail", "SenderEmail", "skill", "ConversationType", "ConversationId", "ConversationParentId")).Distinct().ToList();
+
+                //}
+                //else
+                //{
+                //    var _query1 = //Query.Or(
+                //                  // Query.And(
+                //                  //             Query<Conversation>.EQ(p => p.SenderEmail, loggedEmail), Query<Conversation>.EQ(p => p.IsVerified, true)),
+                //    Query.And(
+                //                Query<Conversation>.EQ(p => p.ReceiverEmail, loggedEmail), Query<Conversation>.EQ(p => p.IsVerified, true), Query<Conversation>.EQ(p1 => p1.ConversationType, ConversationType))
+                //        ;
+                //    _categories = _conversationCollection.Find(
+                //    _query1
+                //    ).SetFields(Fields.Exclude("_id").Include("SenderEmail", "skill", "ConversationType", "ConversationId", "ConversationParentId")).Distinct().ToList();
+                //}
+
+
+                //_categories = _conversationCollection.Find().SetFields(Fields.Exclude("_id")).ToList();
+            }
+            catch (MongoException ex)
+            {
+                _logCollection.Insert("{ Error : 'Failed at ListConversation().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ");
+            }
+
+            return _categories;
+        }
+        public List<BsonDocument> ListConversationForSender(string loggedEmail, string ConversationType)
+        {
+            List<BsonDocument> _categories = new List<BsonDocument>();
+            List<BsonDocument> _checkUser = new List<BsonDocument>();
+
+            try
+            {
+              //  var _conversationCollection = _kindleDatabase.GetCollection("Conversations");
+
+                _categories = _conversationCollection.FindAs<BsonDocument>(Query.And(Query<Conversation>.EQ(p => p.SenderEmail, loggedEmail), Query<Conversation>.EQ(p => p.IsVerified, true), Query<Conversation>.EQ(p1 => p1.ConversationType, ConversationType))).SetFields(Fields.Exclude("_id").Include("SenderEmail", "ReceiverEmail", "skill", "ConversationType", "ConversationId", "ConversationParentId")).Distinct().ToList();
+
+                //_categories = _conversationCollection.Find().SetFields(Fields.Exclude("_id")).ToList();
+            }
+            catch (MongoException ex)
+            {
+                _logCollection.Insert("{ Error : 'Failed at ListConversation().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ");
+            }
+
+            return _categories;
+
+            //var _conversationCollection = _kindleDatabase.GetCollection("Conversations");
+            //IQueryable<BsonDocument> convEntities = default(IQueryable<BsonDocument>);
+
+            //try
+            //{
+            //    var res1 = new List<BsonDocument>();
+
+            //    convEntities = _conversationCollection.FindAll().ToList().AsQueryable();
+
+            //}
+            //catch (MongoException ex)
+            //{
+            //    _logCollection.Insert("{ Error : 'Failed at ListConversation().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ");
+            //}
+
+            //return convEntities.ToList();
+        }
+
+        //public List<BsonDocument> ListConversation()
+        //{
+        //    List<BsonDocument> result = null;
+
+        //    try
+        //    {
+        //        var _conversationCollection = _kindleDatabase.GetCollection("Conversations");
+        //        result = _conversationCollection.FindAll().ToList();
+
+        //    }
+        //    catch (MongoException ex)
+        //    {
+        //        _logCollection.Insert("{ Error : 'Failed at ListConversation().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ");
+        //    }
+
+        //    return result;
+        //}
+
+        public List<BsonDocument> GetConversation(string ParentId, string ConversationType)
+        {
+            List<BsonDocument> _categories = new List<BsonDocument>();
+
+            try
+            {
+                //var _convCollection = _kindleDatabase.GetCollection<Conversation>("Conversations");
+                //var _query = Query.And(
+                //            Query.Or(
+                //                        Query<Conversation>.EQ(p => p.SenderEmail, senderEmail), Query<Conversation>.EQ(p => p.ReceiverEmail, receiverEmail)),
+                //            Query.Or(
+                //                        Query<Conversation>.EQ(p => p.ReceiverEmail, senderEmail), Query<Conversation>.EQ(p => p.SenderEmail, receiverEmail))
+                //                );
+
+                //var _query = Query.Or(
+                //    Query.And(
+                //                Query<Conversation>.EQ(p => p.SenderEmail, senderEmail), Query<Conversation>.EQ(p => p.ReceiverEmail, receiverEmail), Query<Conversation>.EQ(p => p.IsVerified, true), Query<Conversation>.EQ(p1 => p1.ConversationType, ConversationType)),
+                //    Query.And(
+                //                Query<Conversation>.EQ(p => p.SenderEmail, receiverEmail), Query<Conversation>.EQ(p => p.ReceiverEmail, senderEmail), Query<Conversation>.EQ(p => p.IsVerified, true), Query<Conversation>.EQ(p1 => p1.ConversationType, ConversationType))
+                //        );
+
+                //MongoCursor<Conversation> cursor = _convCollection.Find(_query);
+
+               // var _conversationCollection = _kindleDatabase.GetCollection("Conversations");
+                //_categories = _conversationCollection.FindAll().SetFields(Fields.Exclude("_id")).ToList();
+
+                _categories = _conversationCollection.FindAs<BsonDocument>(Query.And(Query.EQ("ConversationParentId", ParentId), Query.EQ("ConversationType", ConversationType))).ToList();
+                //_query
+                //Query.And(
+                //    Query.Or(
+                //                Query<Conversation>.EQ(p => p.SenderEmail, senderEmail), Query<Conversation>.EQ(p => p.SenderEmail, receiverEmail)),
+                //    Query.Or(
+                //                Query<Conversation>.EQ(p => p.ReceiverEmail, senderEmail), Query<Conversation>.EQ(p => p.ReceiverEmail, receiverEmail))
+                //        )
+
+
+                //_categories = _conversationCollection.Find(Query.Or(Query.EQ("SenderEmail", senderEmail), Query.EQ("ReceiverEmail", receiverEmail))).ToList();
+
+                //            var query =
+                //from e in _conversationCollection.AsQueryable<Conversation>().ToList()
+                //where (e.ReceiverEmail == receiverEmail || e.ReceiverEmail == senderEmail) && (e.SenderEmail == receiverEmail || e.SenderEmail == senderEmail)
+                //select e;
+
+
+                //_categories = _conversationCollection.Find(Query.And(Query.EQ("SenderEmail", senderEmail), Query.EQ("ReceiverEmail", receiverEmail), Query.EQ("SenderEmail", receiverEmail), Query.EQ("ReceiverEmail", senderEmail))).ToList();
+
+                //_categories = _conversationCollection.Find(Query.And(Query.EQ("SenderEmail", senderEmail), Query.EQ("ReceiverEmail", receiverEmail))).ToList();
+                //_categories = _categories.Find(Query.And((Query.EQ("SenderEmail", senderEmail), Query.EQ("ReceiverEmail", receiverEmail))).Query.And(Query.EQ("SenderEmail", receiverEmail), Query.EQ("ReceiverEmail", senderEmail)).ToList();
+
+                //var _ctsCollection = _kindleDatabase.GetCollection("Conversations");
+                //_categories = _ctsCollection.FindAll().SetFields(Fields.Exclude("_id")).ToList();
+            }
+            catch (MongoException ex)
+            {
+                _logCollection.Insert("{ Error : 'Failed at ListConversation().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ");
+            }
+
+            return _categories;
+
+
+        }
+
+
+        public List<BsonDocument> GetConversationRequest(string senderEmail, string ConversationType)
+        {
+            List<BsonDocument> _categories = new List<BsonDocument>();
+
+            try
+            {
+
+                var _query = Query.And(Query<Conversation>.EQ(p => p.Content, null), Query<Conversation>.EQ(p1 => p1.ReceiverEmail, senderEmail), Query<Conversation>.EQ(p1 => p1.ConversationType, ConversationType));
+               // var _conversationCollection = _kindleDatabase.GetCollection("Conversations");
+
+                _categories = _conversationCollection.FindAs<BsonDocument>(_query).ToList();
+
+
+            }
+            catch (MongoException ex)
+            {
+                _logCollection.Insert("{ Error : 'Failed at GetConversationRequest().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ");
+            }
+
+            return _categories;
+
+
+        }
+
+        public IConversation GetConversationDetail(int conversationId)
+        {
+            //var _conversationCollection = _kindleDatabase.GetCollection("Conversations");
+            return _conversationCollection.FindOneByIdAs<IConversation>(conversationId);
+        }
+
+        public IConversation GetConversationDetail(string message)
+        {
+            //var _conversationCollection = _kindleDatabase.GetCollection("Conversations");
+            return _conversationCollection.FindOneAs<Conversation>(Query.EQ("message", message));
+        }
+        public List<object> GetSkillsForConversation()
+        {
+            object result = new object();
+            var _CoachOrMentorCollection = con.GetCollection("CoachOrMentor");
+            var _CoacheeOrMenteeCollection = con.GetCollection("CoacheeOrMentee");
+            //Coaching Skills
+            var Coach = (from c in _CoachOrMentorCollection.AsQueryable<CoachOrMentor>()
+                         where c.Role == "Coach"
+                         select (c.Skills.Select(r => r.Name).ToList())).ToList();
+
+            var Coachee = (from c in _CoacheeOrMenteeCollection.AsQueryable<CoacheeOrMentee>()
+                           where c.Role == "Coachee"
+                           select (c.Skills.Select(r => r.Name).ToList())).ToList();
+
+
+
+            var resultsCoaching = Coach.Concat(Coachee);
+            List<string> skillListCoaching = new List<string>();
+            foreach (var skills in resultsCoaching)
+            {
+                foreach (var skill in skills)
+                {
+                    skillListCoaching.Add(skill);
+                }
+            }
+            List<string> SkillFilterListCoaching = skillListCoaching.Distinct().Take(5).ToList();
+
+
+            //Mentor SKill
+
+            var Mentor = (from c in _CoachOrMentorCollection.AsQueryable<CoachOrMentor>()
+                          where c.Role == "Mentor"
+                          select (c.Topics.Select(r => r.Name).ToList())).ToList();
+
+            var Mentee = (from c in _CoacheeOrMenteeCollection.AsQueryable<CoacheeOrMentee>()
+                          where c.Role == "Mentee"
+                          select (c.Topics.Select(r => r.Name).ToList())).ToList();
+
+            var resultsMentoring = Mentor.Concat(Mentee);
+            List<string> skillListMentoring = new List<string>();
+            foreach (var topics in resultsMentoring)
+            {
+                foreach (var topic in topics)
+                {
+                    skillListMentoring.Add(topic);
+                }
+            }
+            List<string> TopicFilterListMentoring = skillListMentoring.Distinct().Take(5).ToList();
+
+
+            var list = new List<object>();
+            list.Add(SkillFilterListCoaching);
+            list.Add(TopicFilterListMentoring);
+
+
+
+
+
+            return list;
+
+
+        }
+
+
+    }
+}
+
+
+
+CTSRepository .cs
+
+using KindleSpur.Models;
+using KindleSpur.Models.Interfaces.Repository;
+using MongoDB.Bson;
+using MongoDB.Driver;
+using MongoDB.Driver.Builders;
+using System.Collections.Generic;
+using System.Linq;
+
+namespace KindleSpur.Data
+{
+   public class CTSRepository : ICTSRepository
+    {
+        MongoClient _mongoClient;
+        MongoServer _mongoServer;
+        MongoDatabase _kindleDatabase;
+        MongoCollection _logCollection;
+        MongoCollection __ctsCollectionCoaching;
+        MongoCollection _ctsCollectionMentoring;
+        Connection con = new Connection();
+        public CTSRepository()
+        {
+         
+
+            try
+            {
+              
+                __ctsCollectionCoaching = con.GetCollection("CTSDataCoaching");
+                _ctsCollectionMentoring = con.GetCollection("CTSDataMentoring");
+                _logCollection = con.GetCollection("ErrorLogs");
+            }
+            catch (MongoException ex)
+            {
+                _logCollection.Insert("{ Error : 'Database connection failed.', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ");
+            }
+        }
+
+        public List<BsonDocument> GetCTS()
+        {
+
+            List<BsonDocument> _categories = new List<BsonDocument>();
+
+            try
+            {
+              //  var _ctsCollection = _kindleDatabase.GetCollection("CTSDataCoaching");
+                _categories = __ctsCollectionCoaching.FindAllAs<BsonDocument>().SetFields(Fields.Exclude("_id")).ToList();
+            }
+            catch (MongoException ex)
+            {
+                _logCollection.Insert("{ Error : 'Failed at GetCategories().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ");
+                throw new MongoException("Signup failure!!!");
+            }
+
+            return _categories;
+
+        }
+
+        public List<BsonDocument> GetTopics()
+        {
+
+            List<BsonDocument> _categories = new List<BsonDocument>();
+
+            try
+            {
+                //var _ctsCollection = _kindleDatabase.GetCollection("CTSDataMentoring");
+                _categories = _ctsCollectionMentoring.FindAllAs<BsonDocument>().SetFields(Fields.Exclude("_id")).ToList();
+            }
+            catch (MongoException ex)
+            {
+                _logCollection.Insert("{ Error : 'Failed at GetCategories().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ");
+                throw new MongoException("Signup failure!!!");
+            }
+
+            return _categories;
+
+        }
+
+        public List<BsonDocument> GetCTSCategoryAndTopic(List<string> skills)
+        {
+
+            List<BsonDocument> _categories = new List<BsonDocument>();
+
+            try
+            {
+           //     var _ctsCollection = _kindleDatabase.GetCollection("CTSDataCoaching");
+               
+                _categories = __ctsCollectionCoaching.FindAs<BsonDocument>(Query.EQ("Name", skills[0])).SetFields(Fields.Exclude("_id")).ToList();
+            }
+            catch (MongoException ex)
+            {
+                _logCollection.Insert("{ Error : 'Failed at GetCategories().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ");
+                throw new MongoException("Signup failure!!!");
+            }
+
+            return _categories;
+
+        }
+
+        public List<BsonDocument> GetCategories()
+        {
+           
+            List<BsonDocument> _categories = new List<BsonDocument>();
+
+            try
+            {
+             //   var _ctsCollection = _kindleDatabase.GetCollection("CTSDataCoaching");
+                _categories = __ctsCollectionCoaching.FindAllAs<BsonDocument>().SetFields("Category").ToList();              
+            }
+            catch (MongoException ex)
+            {
+                _logCollection.Insert("{ Error : 'Failed at GetCategories().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ");
+                throw new MongoException("Signup failure!!!");
+            }
+
+            return _categories;
+
+        }
+
+        public List<BsonDocument> GetTopics(string category)
+        {
+            List<BsonDocument> _topics = new List<BsonDocument>();
+
+            try
+            {
+             //   var _ctsCollection = _kindleDatabase.GetCollection("CTSDataMentoring");
+                _topics = _ctsCollectionMentoring.FindAs<BsonDocument>(Query.EQ("Category", category)).SetFields("Topic").ToList();
+            }
+            catch (MongoException ex)
+            {
+                _logCollection.Insert("{ Error : 'Failed at GetTopics().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ");
+                throw new MongoException("Signup failure!!!");
+            }
+
+            return _topics;
+        }
+
+        public List<BsonDocument> GetSkills(string category)
+        {
+            List<BsonDocument> _skills = new List<BsonDocument>();
+
+            try
+            {
+             //   var _ctsCollection = _kindleDatabase.GetCollection("CTSDataCoaching");
+                _skills = __ctsCollectionCoaching.FindAs<BsonDocument>(Query.EQ("Category", category)).SetFields("Skill").ToList();
+            }
+            catch (MongoException ex)
+            {
+                _logCollection.Insert("{ Error : 'Failed at GetSkills().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ");
+                throw new MongoException("Signup failure!!!");
+            }
+
+            return _skills;
+        }
+
+        public List<BsonDocument> GetSkills(string category, string topic)
+        {
+            List<BsonDocument> _skills = new List<BsonDocument>();
+
+            try
+            {
+             //   var _ctsCollection = _kindleDatabase.GetCollection("CTSDataCoaching");
+                _skills = __ctsCollectionCoaching.FindAs<BsonDocument>(Query.And(Query.EQ("Category",category),Query.EQ("Topic",topic))).SetFields("Skill").ToList();
+            }
+            catch (MongoException ex)
+            {
+                _logCollection.Insert("{ Error : 'Failed at GetSkills().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ");
+                throw new MongoException("Signup failure!!!");
+            }
+
+            return _skills;
+        }
+
+        public BsonDocument GetMentorCategory(SkillOrTopic topic)
+        {
+            BsonDocument _Category = new BsonDocument();
+
+            try
+            {
+               // var _ctsCollection = _kindleDatabase.GetCollection("CTSDataMentoring");
+                if (topic != null)
+                {
+                    var query = Query.EQ("Name", topic.Name);
+                    BsonDocument result = _ctsCollectionMentoring.FindAs<BsonDocument>(Query.ElemMatch("Topics", Query.EQ("Name", topic.Name))).SetFields(Fields.Include("Category", "Topics.$")).ToList()[0];
+                    if (result != null)
+                    {
+                        _Category = _Category.Add(new BsonElement("Category", result["Category"].AsString));
+                        _Category = _Category.Add(new BsonElement("Topic", topic.Name));
+                        _Category = _Category.Add(new BsonElement("profiLevel", topic.profiLevel));
+                    }
+                }
+            }
+            catch (MongoException ex)
+            {
+                _logCollection.Insert("{ Error : 'Failed at GetCoachTopicAndCategory().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ");
+                throw new MongoException("Signup failure!!!");
+            }
+
+            return _Category;
+        }
+
+        public BsonDocument GetCoachTopicAndCategory(SkillOrTopic skill)
+        {
+            BsonDocument _Category = new BsonDocument();
+
+            try
+            {
+               // var _ctsCollection = _kindleDatabase.GetCollection("CTSDataCoaching");
+                if (skill != null)
+                {
+                    var query = Query.EQ("Name", skill.Name);
+                    if (__ctsCollectionCoaching.FindAs<BsonDocument>(Query.ElemMatch("Topics.Skills", Query.EQ("Name", skill.Name))).SetFields(Fields.Include("Category", "Topics.Skills.$")).ToList().Count >0)
+                    { 
+                        BsonDocument result = __ctsCollectionCoaching.FindAs<BsonDocument>(Query.ElemMatch("Topics.Skills", Query.EQ("Name", skill.Name))).SetFields(Fields.Include("Category", "Topics.Skills.$")).ToList()[0];
+                    if (result != null)
+                    {
+                        _Category = _Category.Add(new BsonElement("Category", result["Category"].AsString));
+                        _Category = _Category.Add(new BsonElement("Topic", result["Topics"][0]["Name"].AsString));
+                        _Category = _Category.Add(new BsonElement("Skill", skill.Name));
+                        if (skill.profiLevel == null) skill.profiLevel = "0";
+                        _Category = _Category.Add(new BsonElement("profiLevel", skill.profiLevel));
+                    }
+                }
+              }
+            }
+            catch (MongoException ex)
+            {
+                _logCollection.Insert("{ Error : 'Failed at GetCoachTopicAndCategory().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ");
+                throw new MongoException("Signup failure!!!");
+            }
+
+            return _Category;
+        }
+
+        public List<CTSFilter> GetCTSFilters(string Role)
+        {
+            List<BsonDocument> _categories = new List<BsonDocument>();
+            var filters = new List<CTSFilter>();
+
+            try
+            {
+                if(Role=="Coach")
+                { 
+                 //   var _ctsCollection = _kindleDatabase.GetCollection("CTSDataCoaching");
+                    _categories = __ctsCollectionCoaching.FindAllAs<BsonDocument>().SetFields(Fields.Exclude("_id")).ToList();
+
+                    foreach (BsonDocument category in _categories)
+                    {
+                       // filters.Add(new CTSFilter() { Id = category["Id"].ToString(), Name = category["Category"].ToString(), Type = FilterType.Category });
+                        if (category.Contains("Topics"))
+                        {
+                            BsonArray topics = (BsonArray)category["Topics"];
+                            foreach (BsonDocument topic in topics)
+                            {
+                               // filters.Add(new CTSFilter() { Id = topic["Id"].ToString(), Name = topic["Name"].ToString(), Type = FilterType.Topic, ParentId = category["Id"].ToString() });
+                                if (topic.Contains("Skills"))
+                                {
+                                    BsonArray skills = (BsonArray)topic["Skills"];
+                                    foreach (BsonDocument skill in skills)
+                                    {
+                                        filters.Add(new CTSFilter() { Id = skill["Id"].ToString(), Name = skill["Name"].ToString(), Type = FilterType.Skill, ParentId = topic["Id"].ToString() });
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                else if (Role == "Mentor")
+                {
+                   // var _ctsCollection = _kindleDatabase.GetCollection("CTSDataMentoring");
+                    _categories = _ctsCollectionMentoring.FindAllAs<BsonDocument>().SetFields(Fields.Exclude("_id")).ToList();
+
+                    foreach (BsonDocument category in _categories)
+                    {
+                        // filters.Add(new CTSFilter() { Id = category["Id"].ToString(), Name = category["Category"].ToString(), Type = FilterType.Category });
+                        if (category.Contains("Topics"))
+                        {
+                            BsonArray topics = (BsonArray)category["Topics"];
+                            foreach (BsonDocument topic in topics)
+                            {
+                               filters.Add(new CTSFilter() { Id = topic["Id"].ToString(), Name = topic["Name"].ToString(), Type = FilterType.Topic, ParentId = category["Id"].ToString() });
+                            }
+                        }
+                    }
+                }
+            }
+            catch (MongoException ex)
+            {
+                _logCollection.Insert("{ Error : 'Failed at GetCategories().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ");
+                throw new MongoException("Signup failure!!!");
+            }
+
+            return filters;
+        }
+
+        public BsonDocument GetCoacheeTopicAndCategory(SkillOrTopic skill)
+        {
+            BsonDocument _Category = new BsonDocument();
+
+            try
+            {
+            //    var _ctsCollection = _kindleDatabase.GetCollection("CTSDataCoaching");
+                if (skill != null)
+                {
+                    var query = Query.EQ("Name", skill.Name);
+                    BsonDocument result = __ctsCollectionCoaching.FindAs<BsonDocument>(Query.ElemMatch("Topics.Skills", Query.EQ("Name", skill.Name))).SetFields(Fields.Include("Category", "Topics.Skills.$")).ToList()[0];
+                    if (result != null)
+                    {
+                        _Category = _Category.Add(new BsonElement("Category", result["Category"].AsString));
+                        _Category = _Category.Add(new BsonElement("Topic", result["Topics"][0]["Name"].AsString));
+                        _Category = _Category.Add(new BsonElement("Skill", skill.Name));
+                        _Category = _Category.Add(new BsonElement("profiLevel", skill.profiLevel));
+                    }
+                }
+            }
+            catch (MongoException ex)
+            {
+                _logCollection.Insert("{ Error : 'Failed at GetCoacheeTopicAndCategory().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ");
+                throw new MongoException("Signup failure!!!");
+            }
+
+            return _Category;
+        }
+
+        public BsonDocument GetTrendingTopics()
+        {
+            BsonDocument _Category = new BsonDocument();
+
+            var _collection = con.GetCollection("CoachOrMentor");
+            //var result = _collection.Find(Query.And(Query.EQ("UserId", Data.UserId), Query.EQ("Role", Data.Role))).ToList();
+
+            return _Category;
+        }
+
+
+        public List<BsonDocument> GetSkillsForTopic(string topic)
+        {
+            List<BsonDocument> _skills = new List<BsonDocument>();
+            try
+            {
+              //  var _ctsCollection = _kindleDatabase.GetCollection("CTSDataCoaching");
+                _skills = __ctsCollectionCoaching.FindAs<BsonDocument>( Query.EQ("Name", topic)).SetFields("Skills").ToList();
+            }
+            catch (MongoException ex)
+            {
+                _logCollection.Insert("{ Error : 'Failed at GetSkills().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ");
+                throw new MongoException("Signup failure!!!");
+            }
+
+            return _skills;
+        }
+    }
+}
+
+MeetingSchedularRepository.cs
+
+using KindleSpur.Models.Interfaces;
+using KindleSpur.Models;
+using KindleSpur.Models.Interfaces.Repository;
+using System;
+using System.Collections.Generic;
+using System.Configuration;
+using System.Linq;
+using MongoDB.Driver;
+using MongoDB.Driver.Builders;
+using MongoDB.Bson;
+using MongoDB.Driver.Linq;
+
+namespace KindleSpur.Data
+{
+    public class MeetingSchedularRepository : IMeetingSchedularRepository
+    {
+        Connection con = new Connection();
+
+        MongoClient _mongoClient;
+        MongoServer _mongoServer;
+        MongoDatabase _kindleDatabase;
+        MongoCollection _logCollection;
+        MongoCollection _meetingCollection;
+        public MeetingSchedularRepository()
+        {
+
+            try
+            {
+
+                _meetingCollection = con.GetCollection("MeetingSchedulars");
+                _logCollection = con.GetCollection("ErrorLogs");
+            }
+            catch (MongoException ex)
+            {
+                _logCollection.Insert("{ Error : 'Database connection failed.', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ");
+            }
+        }
+
+        public bool AddNewMeeting(IMeetingSchedular meetingSchedularData)
+        {
+            bool _transactionStatus = false;
+
+            try
+            {
+                var result = _meetingCollection.FindAs<MeetingSchedular>(Query.And(Query.EQ("SenderEmail", meetingSchedularData.SenderEmail), Query.EQ("ReceiverEmail", meetingSchedularData.ReceiverEmail))).ToList();
+
+                //if (result.Count() > 0)
+                //    return false;
+
+                _meetingCollection.Insert(meetingSchedularData);
+
+                _transactionStatus = true;
+            }
+            catch (MongoException ex)
+            {
+                _logCollection.Insert("{ Error : 'Failed at AddNewMeeting().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ");
+                throw new MongoException("New Conversation failure!!!");
+            }
+
+            return _transactionStatus;
+        }
+
+        public List<BsonDocument> GetAllMeetingRequest(string userId)
+        {
+            List<BsonDocument> _categories = new List<BsonDocument>();
+
+            try
+            {
+                var _query = Query.And(Query<MeetingSchedular>.EQ(p => p.IsVerified, false), Query<MeetingSchedular>.NE(p => p.SenderEmail, userId), Query<MeetingSchedular>.EQ(p => p.ReceiverEmail, userId));
+
+                _categories = _meetingCollection.FindAs<BsonDocument>(
+                    _query
+                    ).ToList();
+
+            }
+            catch (MongoException ex)
+            {
+                _logCollection.Insert("{ Error : 'Failed at GetConversationRequest().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ");
+            }
+
+            return _categories;
+
+
+        }
+
+        public bool UpdateMeetingStatus(string senderEmail, string receiverEmail, bool isVerified, string Role)
+        {
+            bool _transactionStatus = false;
+            try
+            {
+
+                var meetingDetail = _meetingCollection.FindOneAs<IMeetingSchedular>(Query.And(Query.EQ("SenderEmail", senderEmail), Query.EQ("ReceiverEmail", receiverEmail)));
+
+                meetingDetail.Role = Role;
+                meetingDetail.IsVerified = isVerified;
+                meetingDetail.UpdateDate = DateTime.Now;
+
+                _meetingCollection.Save(meetingDetail);
+                _transactionStatus = true;
+            }
+            catch (MongoException ex)
+            {
+                _logCollection.Insert("{ Error : 'Failed at UpdateMeetingStatus().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ");
+            }
+            return _transactionStatus;
+        }
+
+        public List<BsonDocument> ListMeetingSchedular()
+        {
+            List<BsonDocument> _meeting = new List<BsonDocument>();
+
+            try
+            {
+                _meeting = _meetingCollection.FindAllAs<BsonDocument>().SetFields(Fields.Exclude("_id")).ToList();
+            }
+            catch (MongoException ex)
+            {
+                _logCollection.Insert("{ Error : 'Failed at ListMeetingSchedular().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ");
+            }
+
+            return _meeting;
+            
+        }
+
+        public List<BsonDocument> GetMeetingSchedular(string senderEmail, string receiverEmail)
+        {
+            List<BsonDocument> _meeting = new List<BsonDocument>();
+
+            try
+            {
+                var _query = Query.And(
+                    Query.Or(
+                                Query<Conversation>.EQ(p => p.SenderEmail, senderEmail), Query<Conversation>.EQ(p => p.SenderEmail, receiverEmail)),
+                    Query.Or(
+                                Query<Conversation>.EQ(p => p.ReceiverEmail, senderEmail), Query<Conversation>.EQ(p => p.ReceiverEmail, receiverEmail))
+                        );
+                
+
+                var _conversationCollection = con.GetCollection("Conversations");
+
+                _meeting = _conversationCollection.FindAs<BsonDocument>(
+                    _query
+                    ).ToList();
+
+               
+            }
+            catch (MongoException ex)
+            {
+                _logCollection.Insert("{ Error : 'Failed at GetMeetingSchedular().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ");
+            }
+
+            return _meeting;
+
+
+        }
+    }
+}

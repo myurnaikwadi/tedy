@@ -24,11 +24,11 @@ namespace KindleSpur.Data
 
 
         public UserRepository()
-        {              
+        {
             try
             {
                 _logCollection = con.GetCollection("ErrorLogs");
-                 _userCollection= con.GetCollection("UserDetails");
+                _userCollection = con.GetCollection("UserDetails");
             }
             catch (MongoException ex)
             {
@@ -51,11 +51,11 @@ namespace KindleSpur.Data
 
                 if (result.Count() > 0)
                     return false;
-                
+
                 userData.UpdateDate = DateTime.Now;
                 userData.IsVerified = true;
                 _userCollection.Insert(userData);
-                
+
                 _transactionStatus = true;
             }
             catch (MongoException ex)
@@ -124,7 +124,7 @@ namespace KindleSpur.Data
         }
 
         public User SavePassword(string userId, IUser userData)
-        { 
+        {
             User userDetail = _userCollection.FindOneAs<User>(Query.EQ("_id", ObjectId.Parse(userId)));
             userDetail.Password = userData.Password;
             userDetail.IsExternalAuthentication = userData.IsExternalAuthentication;
@@ -141,7 +141,7 @@ namespace KindleSpur.Data
         {
             try
             {
-                 return _userCollection.FindOneByIdAs<IUser>(userId);
+                return _userCollection.FindOneByIdAs<IUser>(userId);
             }
             catch (MongoException ex)
             {
@@ -382,10 +382,10 @@ namespace KindleSpur.Data
             try
             {
                 var userDetail = _userCollection.FindOneAs<User>(Query.EQ("EmailAddress", EmailAddress));
-                 reward.TotalRewardPoints = (userDetail.TotalRewardPoints.ToString() != null ? userDetail.TotalRewardPoints : 0);
-                 reward.BalanceRewardPoints = (userDetail.BalanceRewardPoints.ToString() != null ? userDetail.BalanceRewardPoints : 0);
-                 reward.RedeemedPoints = (userDetail.RedeemedPoints.ToString() != null ? userDetail.RedeemedPoints : 0);
-               
+                reward.TotalRewardPoints = (userDetail.TotalRewardPoints.ToString() != null ? userDetail.TotalRewardPoints : 0);
+                reward.BalanceRewardPoints = (userDetail.BalanceRewardPoints.ToString() != null ? userDetail.BalanceRewardPoints : 0);
+                reward.RedeemedPoints = (userDetail.RedeemedPoints.ToString() != null ? userDetail.RedeemedPoints : 0);
+
                 if (reward.PSRAndGames == null) reward.PSRAndGames = new List<ActiveGamesAndPSR>();
 
                 if (userDetail.Games != null)
@@ -397,17 +397,17 @@ namespace KindleSpur.Data
                         {
                             objGamesAndPSR.Name = "Game " + (index + 1);
                             objGamesAndPSR.PSR = false;
-                        } 
+                        }
                         else
                         {
                             objGamesAndPSR.Name = userDetail.Games[index].Name;
                             objGamesAndPSR.PSR = true;
                         }
 
-                        
+
                         objGamesAndPSR.Key = userDetail.Games[index].Key;
                         objGamesAndPSR.date = userDetail.Games[index].UnlockedDate.ToShortDateString();
-                        
+
 
                         reward.PSRAndGames.Add(objGamesAndPSR);
                     }
@@ -444,7 +444,7 @@ namespace KindleSpur.Data
             try
             {
                 var userDetail = _userCollection.FindOneByIdAs<User>(userId);
-                
+
                 Game _game = UnlockGames(userDetail.TotalRewardPoints, userDetail.BalanceRewardPoints);
                 if (_game != null)
                 {
@@ -456,7 +456,7 @@ namespace KindleSpur.Data
                         userDetail.Games.Add(_game);
                         userDetail.BalanceRewardPoints -= (int.Parse(_game.GameId) * 10);
                         userDetail.RedeemedPoints += (int.Parse(_game.GameId) * 10);
-                        _userCollection.Save(userDetail);                       
+                        _userCollection.Save(userDetail);
                     }
                     _transactionStatus = true;
                     return _game.Key;
@@ -501,18 +501,18 @@ namespace KindleSpur.Data
 
                     int count = userDetail.Games.Select(x => x.Name.Contains("PSR")).Count() + 1;
 
-                       Game _game = new Game();
-                        _game.Id = new ObjectId();
-                        _game.Name = "PSR" + count;
-                        _game.Key = "";
-                    
-                        _game.UnlockedDate = DateTime.Now;
+                    Game _game = new Game();
+                    _game.Id = new ObjectId();
+                    _game.Name = "PSR" + count;
+                    _game.Key = "";
 
-                        userDetail.Games.Add(_game);
-                        userDetail.BalanceRewardPoints -= 10;
-                        userDetail.RedeemedPoints += 10;
-                        _userCollection.Save(userDetail);
-                   
+                    _game.UnlockedDate = DateTime.Now;
+
+                    userDetail.Games.Add(_game);
+                    userDetail.BalanceRewardPoints -= 10;
+                    userDetail.RedeemedPoints += 10;
+                    _userCollection.Save(userDetail);
+
                     _transactionStatus = true;
                     return _game.Key;
                 }
@@ -544,8 +544,8 @@ namespace KindleSpur.Data
         private Game UnlockGames(int RewardPointsGained, int BalancePoints)
         {
             var _gamesCollection = con.GetCollection("BrainGames");
-     
-            if(RewardPointsGained < 10 || BalancePoints < 10)
+
+            if (RewardPointsGained < 10 || BalancePoints < 10)
             {
                 return null;
             }
@@ -557,7 +557,7 @@ namespace KindleSpur.Data
 
         private Boolean UnlockPSR(int RewardPointsGained, int BalancePoints)
         {
-         
+
             if (RewardPointsGained < 10 || BalancePoints < 10)
             {
                 // throw new Exception("You do not have sufficient points to unlock games!!!");
@@ -600,7 +600,7 @@ namespace KindleSpur.Data
             }
             finally
             {
-               
+
 
             }
             return _transactionStatus;
@@ -612,7 +612,7 @@ namespace KindleSpur.Data
             try
             {
                 var userDetail = _userCollection.FindOneAs<User>(Query.EQ("EmailAddress", EmailAddress));
-                
+
                 if (userDetail.ValueCreationActivity == null)
                 {
                     userDetail.ValueCreationActivity = new List<VSCS>();
@@ -634,7 +634,7 @@ namespace KindleSpur.Data
                             {
                                 if (item.eventTitle == _entity.Tasks[i].eventTitle)
                                 {
-                                   
+
                                     blnDelete = false;
                                     break;
                                 }
@@ -702,7 +702,7 @@ namespace KindleSpur.Data
                 if (userDetail.ValueFeedStories == null) userDetail.ValueFeedStories = new List<ValueFeedStory>();
                 userDetail.ValueFeedStories.Add(story);
                 _userCollection.Save(userDetail);
-                
+
                 return true;
             }
             catch (MongoException ex)
@@ -724,7 +724,7 @@ namespace KindleSpur.Data
             }
             finally
             {
-               
+
 
             }
         }
@@ -755,10 +755,68 @@ namespace KindleSpur.Data
         }
 
         public string GetVCSCActivity(string EmailAddress)
-        {           
-                var userDetail = _userCollection.FindOneAs<User>(Query.EQ("EmailAddress", EmailAddress));
+        {
+            var userDetail = _userCollection.FindOneAs<User>(Query.EQ("EmailAddress", EmailAddress));
 
             return userDetail.ValueCreationActivity.ToJson();
+        }
+        public bool uploadResourceFile(string EmailAddress, object[] fileName)
+        {
+
+            bool _transactionStatus = false;
+            try
+            {
+                var userDetail = _userCollection.FindOneAs<User>(Query.EQ("EmailAddress", EmailAddress));
+
+
+                List<FileUpload> path = new List<FileUpload>();
+
+
+                foreach (var r in fileName)
+                {
+                    FileUpload obj = new FileUpload();
+                    obj.Id = ObjectId.GenerateNewId();
+                    obj.FileName = string.Format("ArtiFacts/{0}", r);
+                    path.Add(obj);
+                }
+                //Dictionary<User, string> list = new Dictionary<User, string>();
+                //if (list.ContainsKey(userDetail))
+                //{
+                if (userDetail.Files == null)
+                    userDetail.Files = new List<FileUpload>();
+
+                    userDetail.Files.AddRange(path.ToList());
+
+                    _userCollection.Save(userDetail);
+               // }
+
+                _transactionStatus = true;
+            }
+            catch (MongoException ex)
+            {
+                string message = "{ Error : 'Failed at UpdateUserPhoto().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ";
+                _logCollection.Insert(message);
+                throw new Exception("User does not Exist!!!");
+            }
+            catch (Exception e)
+            {
+                Exceptionhandle em = new Exceptionhandle();
+                em.Error = "Failed at uploadResourceFile()";
+                em.Log = e.Message.Replace("\r\n", "");
+                var st = new System.Diagnostics.StackTrace(e, true);
+                var frame = st.GetFrame(0);
+                var line = frame.GetFileLineNumber();
+                _logCollection.Insert(em);
+                throw new MongoException("Signup failure!!!");
+            }
+            finally
+            {
+
+            }
+            return _transactionStatus;
+            //_conversationsCollections = con.GetCollection("Conversations");
+            //List<Conversation> typeCoaching = _conversationsCollections.AsQueryable<Conversation>().Where<Conversation>(sb => sb.ConversationType == "Coaching" && sb.Content.StartsWith("COACHING REQUEST BY")).ToList();
+
         }
     }
 }

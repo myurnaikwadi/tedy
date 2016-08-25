@@ -1,0 +1,114 @@
+ksservice
+
+
+   getRecordsOfSkillAndTopics: function (iObj) {
+            $http.post('/CTS/GetRecordsOfSkillAndTopics', iObj.userId).then(iObj.successCallBack, iObj.failureCallBack)
+        }
+ksProfileCOntroller.js
+
+serverCommunication.getRecordsOfSkillAndTopics({
+                userId: $scope.userInfo.EmailAddress,
+                successCallBack: function (iObj) {
+                    console.error('In GetRecordsOfSkillAndTopics ----------- ', iObj);
+
+                    return;
+resourceController
+
+  readonly string UserId;
+        public ResourcesController()
+        {
+            UserId = ((IUser)System.Web.HttpContext.Current.Session["User"]).EmailAddress;
+            UploadFiles();
+        } 
+        public ActionResult Index()
+        {
+            return View();
+        }
+        public JsonResult UploadFiles()
+        {
+
+
+            UserRepository _repo = new UserRepository();
+            var allowedExtensions = new[] {
+                    ".Jpg", ".png", ".jpg", "jpeg",".doc",".pdf",".txt"
+                };
+            string paths = @"D:\tushar\trendig.txt";
+        //    var file = Request.Files[paths];
+            var fileName = Path.GetFileName(paths); //getting only file name(ex-ganesh.jpg)  
+            var ext = Path.GetExtension(paths); //getting the extension(ex-.jpg)  
+          //  var path = "";
+            if (allowedExtensions.Contains(ext)) //check what type of extension  
+            {
+                string name = Path.GetFileNameWithoutExtension(fileName); //getting file name without extension  
+                string myfile = name + ext; //appending the name with id  
+                                            // store the file inside ~/project folder(Img)  
+                //path = Path.Combine(Server.MapPath("~/Img"), myfile);
+                //file.SaveAs(path);
+                if (_repo.uploadResourceFile(UserId, string.Format("ArtiFacts/{0}", myfile)))
+                {
+                }
+            }
+            else
+            {
+                ViewBag.message = "Please choose only Image file";
+            }
+
+            IUser user = _repo.GetUserDetail(((IUser)System.Web.HttpContext.Current.Session["User"]).EmailAddress);
+            return Json(user);
+        }
+
+
+
+
+
+
+
+UserRepository.cs
+
+
+
+
+
+  public bool uploadResourceFile(string EmailAddress, string fileName)
+        {
+
+            bool _transactionStatus = false;
+            try
+            {
+                var userDetail = _userCollection.FindOneAs<User>(Query.EQ("EmailAddress", EmailAddress));
+                userDetail.FileName = fileName;
+                _userCollection.Save(userDetail);
+                _transactionStatus = true;
+            }
+            catch (MongoException ex)
+            {
+                string message = "{ Error : 'Failed at UpdateUserPhoto().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ";
+                _logCollection.Insert(message);
+                throw new Exception("User does not Exist!!!");
+            }
+            catch (Exception e)
+            {
+                Exceptionhandle em = new Exceptionhandle();
+                em.Error = "Failed at UpdateUserPhoto()";
+                em.Log = e.Message.Replace("\r\n", "");
+                var st = new StackTrace(e, true);
+                var frame = st.GetFrame(0);
+                var line = frame.GetFileLineNumber();
+                _logCollection.Insert(em);
+                throw new MongoException("Signup failure!!!");
+            }
+            finally
+            {
+
+            }
+            return _transactionStatus;
+            //_conversationsCollections = con.GetCollection("Conversations");
+            //List<Conversation> typeCoaching = _conversationsCollections.AsQueryable<Conversation>().Where<Conversation>(sb => sb.ConversationType == "Coaching" && sb.Content.StartsWith("COACHING REQUEST BY")).ToList();
+           
+        }
+
+
+
+ks service
+
+  var _action = '/Resources/UploadFilesForArtiFacts';

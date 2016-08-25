@@ -63,7 +63,7 @@
             $http.post('/User/logout', iObj.loginObject).then(iObj.successCallBack, iObj.failureCallBack);
         },
 
-         successLinkedCallBack: function(iObj){
+        successLinkedCallBack: function (iObj) {
             if (!iObj.data.Result) {
                 alert(iObj.data.Message);
             }
@@ -270,7 +270,7 @@ app.factory('serverCommunication', function ($http) {
       * @date : 15/06/2016
       * @Purpose :
       */
-        changeProfileImageDetails: function (iObj,iAction,iCallBack) {
+        changeProfileImageDetails: function (iObj, iAction, iCallBack) {
             console.error(iObj)
             //method: 'POST',
             //url: '/resources/messages',
@@ -325,10 +325,10 @@ app.factory('serverCommunication', function ($http) {
          */
         getRecommendedCoach: function (iObj) {
             console.error(iObj)
-             var UserRole = {};
+            var UserRole = {};
             UserRole.Role = iObj.Role;
             console.error(UserRole)
-            console.error(JSON.stringify(UserRole))           
+            console.error(JSON.stringify(UserRole))
             $http.post('/Coachee/GetRecommendedCoach', iObj).then(iObj.successCallBack, iObj.failureCallBack)
         },
 
@@ -366,32 +366,32 @@ app.factory('serverCommunication', function ($http) {
         * @Purpose :
         */
         sendFeedback: function (iObj) {
-             console.error(iObj)
-             var _action = '';
-             switch (iObj.role) {
-                 case 'Mentor': _action = 'Mentee'; break;
-                 case 'Mentee': _action = 'Mentor'; break;
-                 case 'Coach': _action = 'Coachee'; break;
-                 case 'Coachee': _action = 'Coach'; break;
-                 }
+            console.error(iObj)
+            var _action = '';
+            switch (iObj.role) {
+                case 'Mentor': _action = 'Mentee'; break;
+                case 'Mentee': _action = 'Mentor'; break;
+                case 'Coach': _action = 'Coachee'; break;
+                case 'Coachee': _action = 'Coach'; break;
+            }
 
-            var _str = '/' +_action + "/SaveFeedBack";
+            var _str = '/' + _action + "/SaveFeedBack";
 
-             iObj.loggedUserDetails.Role = _action;
+            iObj.loggedUserDetails.Role = _action;
             console.error(iObj)
             // $http.post(_str, iObj.loggedUserDetails).then(iObj.successCallBack, iObj.failureCallBack)
-             var req = {
-        method: 'POST',
-        url: _str,
-        headers: {
+            var req = {
+                method: 'POST',
+                url: _str,
+                headers: {
                     'Content-Type': 'application/json'
                 },
-                        data: iObj.loggedUserDetails
-                        }
+                data: iObj.loggedUserDetails
+            }
 
             $http(req).then(iObj.successCallBack, iObj.failureCallBack);
 
-            },
+        },
         /**
         * @auther : MKN
          * @date : 15/06/2016
@@ -399,7 +399,7 @@ app.factory('serverCommunication', function ($http) {
      */
         unlockGameCode: function (iObj) {
             console.error(iObj)
-            if (iObj.redeemAction.actionName== 'GAME') {
+            if (iObj.redeemAction.actionName == 'GAME') {
                 $http.get('/User/UnlockGame').then(iObj.successCallBack, iObj.failureCallBack)
             } else {
                 $http.get('/User/UnlockPSR').then(iObj.successCallBack, iObj.failureCallBack)
@@ -499,7 +499,7 @@ app.factory('serverCommunication', function ($http) {
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                data: { ConversationType: iObj.ConversationType   }
+                data: { ConversationType: iObj.ConversationType }
             }
             $http(req).then(iObj.successCallBack, iObj.failureCallBack);
             // $http.get('/Conversation/getConversationRequest').then(iObj.successCallBack, iObj.failureCallBack);
@@ -526,7 +526,7 @@ app.factory('serverCommunication', function ($http) {
                 data: { _obj: _checkObj.loggedUserDetails, ReceiverName: _checkObj.ReceiverName, Role: _checkObj.Role }
             }
             $http(req).then(iObj.successCallBack, iObj.failureCallBack);
-           // $http.post('/Conversation/Create', _sdss.loggedUserDetails, _sdss.ReceiverName, _sdssRole).then(iObj.successCallBack, iObj.failureCallBack)
+            // $http.post('/Conversation/Create', _sdss.loggedUserDetails, _sdss.ReceiverName, _sdssRole).then(iObj.successCallBack, iObj.failureCallBack)
         },
         updateConversation: function (iObj) {
             console.error(iObj)
@@ -543,38 +543,58 @@ app.factory('serverCommunication', function ($http) {
         updateMeeting: function (iObj) {
             $http.post('/MeetingSchedular/UpdateMeetingStatus', iObj.loggedUserDetails, iObj.ReceiverName, iObj.Reason).then(iObj.successCallBack, iObj.failureCallBack)
         },
-        
-            /**
-          * @auther : MKN
-          * @date : 15/06/2016
-          * @Purpose :
-          */
-        sendUploadedFileToServer : function (iObj,iCallBack) {
+
+        /**
+      * @auther : MKN
+      * @date : 15/06/2016
+      * @Purpose :
+      */
+        //sendUploadedFileToServer : function (iObj,iCallBack) {
+        //    console.error(iObj)
+        //    //method: 'POST',
+        //    //url: '/resources/messages',
+        //    //data: message // your original form data,
+        //    //transformRequest: formDataObject  // this sends your data to the formDataObject provider that we are defining below.
+        //    //headers: {'Content-Type': 'multipart/form-data'}
+        //    var request = {
+        //        method: 'POST',
+        //        url: '/Home/UpdateUserPhoto',
+        //        data: iObj,
+        //        headers: {
+        //            'Content-Type': undefined
+        //        }
+        //    };
+
+        //    // SEND THE FILES.
+        //    $http(request)
+        //        .success(function (d) {
+        //            iCallBack && iCallBack();
+        //        })
+        //        .error(function () {
+        //            console.error('uploading error');
+        //        });
+        //},
+        sendUploadedFileToServer: function (iObj, iCallBack) {
             console.error(iObj)
             //method: 'POST',
             //url: '/resources/messages',
             //data: message // your original form data,
             //transformRequest: formDataObject  // this sends your data to the formDataObject provider that we are defining below.
             //headers: {'Content-Type': 'multipart/form-data'}
-            var request = {
-                method: 'POST',
-                url: '/Home/UpdateUserPhoto',
-                data: iObj,
+            var _action = '/Resources/UploadFilesForArtiFacts';
+            iObj.successCallBack = function (idata) {
+                console.error(idata)
+                iCallBack(idata);
+            }
+            $http.post(_action, iObj, {
+                withCredentials: true,
                 headers: {
                     'Content-Type': undefined
-                }
-            };
-
-            // SEND THE FILES.
-            $http(request)
-                .success(function (d) {
-                    iCallBack && iCallBack();
-                })
-                .error(function () {
-                    console.error('uploading error');
-                });
+                },
+                transformRequest: angular.identity
+            }).then(iObj.successCallBack, iObj.failureCallBack);
         },
-        sendInvitationToFriend  : function (iObj) {
+        sendInvitationToFriend: function (iObj) {
             console.error('sendInvitationTOFriend --------------- ', iObj);
             var _checkObj = angular.copy(iObj);
             var req = {
@@ -583,9 +603,9 @@ app.factory('serverCommunication', function ($http) {
                 headers: {
                     'Content-Type': 'application/json'
                 },
-               
+
                 data: { invitation: iObj.invitation }
-               
+
             }
             alert(invitation);
             $http(req).then(iObj.successCallBack, iObj.failureCallBack);
@@ -647,7 +667,7 @@ function seperateDataAsPerCTS(iObj) {
                     } else {
                         _category[iObj.data.Categories[k].Category] = { Name: iObj.data.Categories[k].Category, topic: {} };
                         _topics[iObj.data.Categories[k].Topic] = { Name: iObj.data.Categories[k].Topic, skill: null, profiLevel: iObj.data.Categories[k].profiLevel };
-                        _category[iObj.data.Categories[k].Category].topic[iObj.data.Categories[k].Topic] = { Name: iObj.data.Categories[k].Topic, skill: {}, profiLevel: iObj.data.Categories[k].profiLevel};
+                        _category[iObj.data.Categories[k].Category].topic[iObj.data.Categories[k].Topic] = { Name: iObj.data.Categories[k].Topic, skill: {}, profiLevel: iObj.data.Categories[k].profiLevel };
                         if (iObj.data.Categories[k].Skill) {
                             _skills[iObj.data.Categories[k].Skill] = { Name: iObj.data.Categories[k].Skill, profiLevel: iObj.data.Categories[k].profiLevel };
                             _category[iObj.data.Categories[k].Category].topic[iObj.data.Categories[k].Topic].skill = {}

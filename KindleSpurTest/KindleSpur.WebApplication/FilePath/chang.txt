@@ -1,0 +1,76 @@
+ks login controller-151-          $scope.displayAlert.message = 'Please Enter Email Address Or Password ';
+239-                $scope.displayAlert.message = 'Please Enter First,Last Name and Email Address';
+244-                $scope.displayAlert.message = 'Please Enter First Name and Last Name. ';
+249-                $scope.displayAlert.message = 'Please Enter First Name and EmailAddress. ';
+ksLogin.css
+.close {
+  float: right;
+  color:whitesmoke ;
+  font-size: 20px;
+  font-weight: bold;
+  line-height: 13.5px;
+  text-shadow: 0 1px 0 #ffffff;
+  filter: alpha(opacity=25);
+  -khtml-opacity: 0.25;
+  -moz-opacity: 0.25;
+  opacity: 0.25;
+}
+.alert-message.error {
+    background-color: #c43c35;
+    background-repeat: repeat-x;
+    color:white;
+    height: 42px;
+  
+    margin-left: auto;
+    margin-right: auto;
+    width: auto;
+    display: inline-flex;
+    float: left;
+}
+ksvcs.css
+parentRoleDashboard -remove
+ksdashboardcoach.cshtml
+-  52-NO CONVERSATIONS
+-181-                        <h5 style="color:gray;margin: auto;font-size: 30px;" class="leftSideMenuLable fontClass">
+ksdashboardcoachee.cshtml
+-91-   <div class="homeLabelInChat" style="height:7%;">
+mettee.csthmtl
+-60- <div class="homeLabelInChat" style="height:7%;">
+178-   <h5 style="color:gray;margin: auto;font-size: 14px;" class="leftSideMenuLable fontClass">
+                    NO CONVERSATIONS
+                </h5>
+mentor.cshtml
+-95-   <h5 style="color:gray;margin: auto;font-size: 14px;" class="leftSideMenuLable fontClass">
+-156- <h5 style="color:gray;margin: auto;font-size: 14px;" class="leftSideMenuLable fontClass">
+                        NO CONVERSATIONS
+                    </h5>
+ksrssfeed.cshtml
+6-    <h5 style="color:gray;margin: auto;font-size: 14PX;" class="leftSideMenuLable fontClass">
+            SKILLS IS NOT AVAILABLE.YOU NEED TO ADD SKILL TO SEE FEED.
+        </h5>
+gameview.cshtml
+32-<div class="parentRoleDashboard fontClass" style="height: 93%;">
+
+fogotpass.cshtml
+13-  @*red*@
+            <div class="alert-message error" ng-show="displayAlert.formatType == '2'">
+             
+                <p style="margin-top:4%">{{displayAlert.message}}</p>
+                <a class="close" href="#">×</a>
+            </div> 
+
+login.cshtml
+8-@*Green*@
+                            <p>{{displayAlert.message}}</p>
+                            <a class="close" href="#" ng-click="displayAlert.showAlert = false">×</a>
+                        </div>
+                      
+                      @*red*@
+                        <div class="alert-message error" ng-show="displayAlert.formatType == '2'">
+                           
+                            <h5 style="margin:0;padding:0; margin-top:4%">{{displayAlert.message}}</h5>
+                            <h5 style="margin:0;padding:0;" class="close" ng-click="displayAlert.showAlert = false">×</h5>
+                        </div>
+                       
+
+
