@@ -130,11 +130,18 @@ namespace KindleSpur.Data
             userDetail.IsExternalAuthentication = userData.IsExternalAuthentication;
             userDetail.UpdateDate = DateTime.Now;
             userDetail.IsVerified = true;
-
             _userCollection.Save(userDetail);
-
+            MongoCursor<User> result = _userCollection.FindAs<User>(Query.EQ("invitation.Invites", userDetail.EmailAddress));
+            List<User> list = result.ToList();
+            for (int userListCount = 0; userListCount < list.Count; userListCount++)
+            {
+                string emailAddress = list[userListCount].EmailAddress;
+                User user = (User)GetUserDetail(emailAddress);
+                user.InviteRewardPoints += 2;
+                user.TotalRewardPoints += 2;
+                _userCollection.Save(user);
+            }
             return (User)userDetail;
-
         }
 
         public IUser GetUserDetail(int userId)
@@ -310,8 +317,34 @@ namespace KindleSpur.Data
 
             try
             {
-                var userDetail = _userCollection.FindOneAs<User>(Query.EQ("EmailAddress", userData.EmailAddress));
-                userDetail.invitation = invitation;
+                User userDetail = _userCollection.FindOneAs<User>(Query.EQ("EmailAddress", userData.EmailAddress));
+                List<Invitation> listOfInvitation = new List<Invitation>();
+                Invitation invite = new Invitation();
+                List<string> inviteEmailAddress = new List<string>();
+
+                string oneInviteEmailAddress;
+                for (int countOfInvites = 0; countOfInvites < invitation.Invites.Count; countOfInvites++)
+                {
+                    oneInviteEmailAddress = invitation.Invites[countOfInvites];
+                    inviteEmailAddress.Add(oneInviteEmailAddress);
+                    //invite.Invites.Add(oneInviteEmailAddress);
+                }
+                invite.Invites = inviteEmailAddress;
+                invite.Description = invitation.Description;
+                listOfInvitation.Add(invite);
+                if (userData.invitation != null)
+                {
+                    for (int i=0;i<userData.invitation.Count;i++)
+                    {
+                        invite = userData.invitation[i];
+                        listOfInvitation.Add(invite);
+                    }
+                    
+                }
+               
+                   
+          
+                userDetail.invitation = listOfInvitation;
                 _userCollection.Save(userDetail);
                 _transactionStatus = true;
             }
@@ -385,6 +418,7 @@ namespace KindleSpur.Data
                 reward.TotalRewardPoints = (userDetail.TotalRewardPoints.ToString() != null ? userDetail.TotalRewardPoints : 0);
                 reward.BalanceRewardPoints = (userDetail.BalanceRewardPoints.ToString() != null ? userDetail.BalanceRewardPoints : 0);
                 reward.RedeemedPoints = (userDetail.RedeemedPoints.ToString() != null ? userDetail.RedeemedPoints : 0);
+                reward.InviteRewardPoints = (userDetail.InviteRewardPoints.ToString() != null ? userDetail.InviteRewardPoints : 0);
 
                 if (reward.PSRAndGames == null) reward.PSRAndGames = new List<ActiveGamesAndPSR>();
 
@@ -785,10 +819,10 @@ namespace KindleSpur.Data
                 if (userDetail.Files == null)
                     userDetail.Files = new List<FileUpload>();
 
-                    userDetail.Files.AddRange(path.ToList());
+                userDetail.Files.AddRange(path.ToList());
 
-                    _userCollection.Save(userDetail);
-               // }
+                _userCollection.Save(userDetail);
+                // }
 
                 _transactionStatus = true;
             }

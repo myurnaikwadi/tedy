@@ -27,6 +27,7 @@ namespace KindleSpur.Models
         public Boolean IsExternalAuthentication { get; set; }
         public int BalanceRewardPoints { get; set; }
         public int RedeemedPoints { get; set; }
+        public int InviteRewardPoints { get; set; }
         public int TotalRewardPoints { get; set; }
         public Boolean IsVerified { get; set; }
         public DateTime CreateDate { get; set; }
@@ -44,6 +45,6 @@ namespace KindleSpur.Models
         {
             get; set;
         }
-        public Invitation invitation { get; set; }
+        public List<Invitation> invitation { get; set; }
     }
 }

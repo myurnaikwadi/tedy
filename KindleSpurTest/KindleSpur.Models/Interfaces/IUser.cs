@@ -9,7 +9,7 @@ namespace KindleSpur.Models.Interfaces
 {
     public interface IUser
     {
-        Invitation invitation { get; set; }
+        List<Invitation> invitation { get; set; }
 
 
         string EmailAddress { get; set; }
@@ -23,6 +23,7 @@ namespace KindleSpur.Models.Interfaces
         int Mobile { get; set; }
         int BalanceRewardPoints { get; set; }
 
+        int InviteRewardPoints { get; set; }
         int RedeemedPoints { get; set; }
 
         int TotalRewardPoints { get; set; }

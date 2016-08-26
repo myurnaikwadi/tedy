@@ -11,6 +11,7 @@ namespace KindleSpur.Models
         public int TotalRewardPoints { get; set; }
         public int RedeemedPoints { get; set; }
         public int BalanceRewardPoints { get; set; }
+        public int InviteRewardPoints { get; set; }
         public int CoachRewardPoints { get; set; }
         public int CoacheeRewardPoints { get; set; }
         public int MentorRewardPoints { get; set; }

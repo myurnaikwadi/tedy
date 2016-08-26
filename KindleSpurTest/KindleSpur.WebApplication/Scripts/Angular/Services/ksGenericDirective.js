@@ -1585,6 +1585,7 @@ app.directive('feedbackPage', function ($state, serverCommunication, $timeout, $
                 menteePoints: 0,
                 coachPoints: 0,
                 coacheePoints: 0,
+                invitePoints: 0,
                 balancePoints: 0,
                 redeemedPoints: 0,
                 totalPoints: 0
@@ -1598,6 +1599,7 @@ app.directive('feedbackPage', function ($state, serverCommunication, $timeout, $
                         $scope.rewardsPoints.menteePoints = iObj.data.MenteeRewardPoints ? iObj.data.MenteeRewardPoints : 0;
                         $scope.rewardsPoints.coachPoints = iObj.data.CoachRewardPoints ? iObj.data.CoachRewardPoints : 0;
                         $scope.rewardsPoints.coacheePoints = iObj.data.CoacheeRewardPoints ? iObj.data.CoacheeRewardPoints : 0;
+                        $scope.rewardsPoints.invitePoints = iObj.data.InviteRewardPoints ? iObj.data.InviteRewardPoints : 0;
                         $scope.rewardsPoints.totalPoints = iObj.data.TotalRewardPoints ? iObj.data.TotalRewardPoints : 0;
                         $scope.rewardsPoints.balancePoints = iObj.data.BalanceRewardPoints ? iObj.data.BalanceRewardPoints : 0;
                         $scope.rewardsPoints.redeemedPoints = iObj.data.RedeemedPoints ? iObj.data.RedeemedPoints : 0;

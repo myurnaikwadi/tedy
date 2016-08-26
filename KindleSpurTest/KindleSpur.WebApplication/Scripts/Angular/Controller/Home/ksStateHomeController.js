@@ -8,8 +8,11 @@
         if ($scope.invitation.email == '') {
             return;
         }
+        var _str = $scope.invitation.email.split(';');
+       //// console.error(_str)
+        //return
         serverCommunication.sendInvitationToFriend({
-            invitation: { Email: [$scope.invitation.email], UserDetails: { FirstName: $rootScope.loggedDetail.FirstName, LastName: $rootScope.loggedDetail.LastName, EmailAddress: $rootScope.loggedDetail.EmailAddress }, Description: $scope.invitation.description },
+            invitation: { Email: _str, UserDetails: { FirstName: $rootScope.loggedDetail.FirstName, LastName: $rootScope.loggedDetail.LastName, EmailAddress: $rootScope.loggedDetail.EmailAddress }, Description: $scope.invitation.description },
             successCallBack: function (iObj) {
                 console.error('In successCallBack', iObj);
                 $scope.invitation = {};
