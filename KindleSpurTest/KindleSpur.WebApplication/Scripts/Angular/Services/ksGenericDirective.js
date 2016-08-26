@@ -627,17 +627,17 @@ app.directive('ctcRole', function ($state, serverCommunication) {
                                             _skills[iObj.data.Categories[k].Skill] = { Name: iObj.data.Categories[k].Skill, profiLevel: iObj.data.Categories[k].profiLevel };
                                             if (!_category[iObj.data.Categories[k].Category].topic[iObj.data.Categories[k].Topic].skill) _category[iObj.data.Categories[k].Category].topic[iObj.data.Categories[k].Topic].skill = {}
                                             _category[iObj.data.Categories[k].Category].topic[iObj.data.Categories[k].Topic].skill[iObj.data.Categories[k].Skill] = { Name: iObj.data.Categories[k].Skill, profiLevel: iObj.data.Categories[k].profiLevel }
-}
-} else {
+                                        }
+                                    } else {
                                         _topics[iObj.data.Categories[k].Topic] = { Name: iObj.data.Categories[k].Topic, skill: {}, profiLevel: iObj.data.Categories[k].profiLevel };
                                         _category[iObj.data.Categories[k].Category].topic[iObj.data.Categories[k].Topic] = { Name: iObj.data.Categories[k].Topic, skill: null, profiLevel: iObj.data.Categories[k].profiLevel };
                                         if (iObj.data.Categories[k].Skill) {
                                             _skills[iObj.data.Categories[k].Skill] = { Name: iObj.data.Categories[k].Skill, profiLevel: iObj.data.Categories[k].profiLevel };
                                             if (!_category[iObj.data.Categories[k].Category].topic[iObj.data.Categories[k].Topic].skill) _category[iObj.data.Categories[k].Category].topic[iObj.data.Categories[k].Topic].skill = {}
                                             _category[iObj.data.Categories[k].Category].topic[iObj.data.Categories[k].Topic].skill[iObj.data.Categories[k].Skill] = { Name: iObj.data.Categories[k].Skill, profiLevel: iObj.data.Categories[k].profiLevel }
-}
-}
-} else {
+                                        }
+                                    }
+                               } else {
                                     _category[iObj.data.Categories[k].Category] = { Name: iObj.data.Categories[k].Category, topic: {} };
                                     _topics[iObj.data.Categories[k].Topic] = { Name: iObj.data.Categories[k].Topic, skill: null, profiLevel: iObj.data.Categories[k].profiLevel };
                                     _category[iObj.data.Categories[k].Category].topic[iObj.data.Categories[k].Topic] = { Name: iObj.data.Categories[k].Topic, skill: null, profiLevel: iObj.data.Categories[k].profiLevel };
@@ -645,13 +645,13 @@ app.directive('ctcRole', function ($state, serverCommunication) {
                                         _skills[iObj.data.Categories[k].Skill] = { Name: iObj.data.Categories[k].Skill, profiLevel: iObj.data.Categories[k].profiLevel };
                                         _category[iObj.data.Categories[k].Category].topic[iObj.data.Categories[k].Topic].skill = {}
                                         _category[iObj.data.Categories[k].Category].topic[iObj.data.Categories[k].Topic].skill[iObj.data.Categories[k].Skill] = { Name: iObj.data.Categories[k].Skill, profiLevel: iObj.data.Categories[k].profiLevel }
-}
-}
-}
+                                    }
+                               }
+                            }
 
-}
-}
-}
+                        }
+                    }
+                }
                 console.error('In getMySelection', _category, _topics, _skills);
                 var _array = [];
                 var _node = [];
@@ -664,12 +664,12 @@ app.directive('ctcRole', function ($state, serverCommunication) {
                     case 'mentor': _color = 'rgb(0,73,45)'; _textColor = 'white'; break;
                     case 'mentee': _color = 'rgb(132,194,37)'; _textColor = 'black'; break;
                     case 'coachee': _color = 'rgb(248,195,0)'; _textColor = 'black'; break;
-}
+                }
                 var _textColor = 'black';//temp purpose
-    // var _idArray = [];
+                // var _idArray = [];
                 if (Object.keys(_category).length == 0) {
-
-} else {
+                    scope.loadingObject = { showLoading: false, loadingMessage: 'Loading' };
+                } else {
                     _array.push({
                         "symbol": 'My Selection',
                         "size": 40,
@@ -678,26 +678,26 @@ app.directive('ctcRole', function ($state, serverCommunication) {
                         "className": 'circleProfileImageClass',
                         "id": 0,
                         "bonds": 1
-});
+                    });
                     for (var _key in _category) {
                         _array.push({
                             "symbol": _key,
                             "size": 35,
                             "id": _count,
                             "type": 'C',
-    //  "image": 'Images/Tree/Stage 1.png',
+                        //  "image": 'Images/Tree/Stage 1.png',
                             'color': 'white',
                             'textColor': _textColor,
                             'border': _color,
                             "bonds": 1
-});
+                        });
                         _node.push({
                             "source": 0,
                             "target": _count,
                             "id": 'link_' + _count,
                             "bondType": 1
 
-});
+                        });
                         if (_category[_key].topic) {
                             var _level = 1;
                             var _dd = 0;
@@ -708,13 +708,13 @@ app.directive('ctcRole', function ($state, serverCommunication) {
                                     "symbol": _topic,
                                     "size": 25,
                                     "id": _topicId,
-    //  "image": 'Images/Tree/Stage 1.png',
+                                    //  "image": 'Images/Tree/Stage 1.png',
                                     "type": 'T',
                                     'textColor': scope.skillRequired ? 'black' : _textColor,
                                     'color': scope.skillRequired ? 'white' : _colorArray[scope.role][_category[_key].topic[_topic].profiLevel],
                                     'border': _color,
                                     "bonds": 1
-});
+                                });
 
                                 _node.push({
                                     "source": _count,
@@ -722,13 +722,13 @@ app.directive('ctcRole', function ($state, serverCommunication) {
                                     "id": 'link_' + _topicId,
                                     "bondType": 1
 
-});
+                                });
 
                                 var _levelSkill = 1;
                                 var _skillId = 0;
                                 if (!_category[_key].topic[_topic].skill) {
                                     _skillId = _topicId;
-} else {
+                                } else {
                                     var _finalLevelVaue = 0;
                                     for (var _skill in _category[_key].topic[_topic].skill) {
                                         var _skillId = _topicId + _levelSkill;
@@ -739,11 +739,11 @@ app.directive('ctcRole', function ($state, serverCommunication) {
                                             "id": _skillId,
                                             "type": 'S',
                                             'color': _colorArray[scope.role][_category[_key].topic[_topic].skill[_skill].profiLevel],
-    //  "image": 'Images/Tree/Stage 1.png',
+                                            //  "image": 'Images/Tree/Stage 1.png',
                                             'textColor': _textColor,
                                             'border': _color,
                                             "bonds": 1
-});
+                                        });
 
                                         _node.push({
                                             "source": _topicId,
@@ -751,43 +751,43 @@ app.directive('ctcRole', function ($state, serverCommunication) {
                                             "id": 'link_' + _skillId,
                                             "bondType": 1
 
-});
-    // console.error(_levelSkill, Object.keys(_category[_key].topic[_topic].skill).length)
+                                        });
+                                        // console.error(_levelSkill, Object.keys(_category[_key].topic[_topic].skill).length)
                                         if (_levelSkill == (Object.keys(_category[_key].topic[_topic].skill).length)) {
-    // console.error(_skillId)
+                                                 // console.error(_skillId)
                                             _topicId = _skillId;
-}
+                                        }
                                         _levelSkill++;
-}
-}
-    //console.error(Object.keys(_category[_key].topic).length)
+                                    }
+                                }
+                                 //console.error(Object.keys(_category[_key].topic).length)
                                 if (_dd == (Object.keys(_category[_key].topic).length - 1)) {
-    //console.error(_skillId)
+                                    //console.error(_skillId)
                                     _count = _skillId;
-}
-    // _level = _finalLevelVaue;
-    //  _level++;
+                                }
+                                // _level = _finalLevelVaue;
+                                //  _level++;
                                 _dd++;
-    // console.error(_level)
-}
-}
+                                  // console.error(_level)
+                            }
+                        }
                         _count++;
-}
+                    }
                     console.error(_node, _array)
                     var _retu = {
                         "3-iodo-3-methylhexan-1,4-diamine": {
                             "nodes": _array,
                             "links": _node
-}
-}
+                        }
+                    }
                     console.error(_retu)
                     scope.ctsDataForMolecule = _retu;
                     scope.loadingObject = { showLoading: false, loadingMessage: 'Loading' };
-}
+                }
 };
 
             var _category = {};
-    //var _categoryArray = {};
+             //var _categoryArray = {};
             var _topics = {};
             var _skills = {};
 
