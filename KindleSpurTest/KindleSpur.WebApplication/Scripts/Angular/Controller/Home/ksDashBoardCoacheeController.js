@@ -385,7 +385,9 @@
                 }
                 if (result.data) {
                     _createCoachArray(result);
+                  //  $scope.loadingMiddleObject = { showLoading: false, loadingMessage: 'Loading' };
                 }
+                $scope.loadingMiddleObject = { showLoading: false, loadingMessage: 'Loading' };
                 serverCommunication.getCTSFilters({
                     Role: 'Coach',
                     successCallBack: function (iResult) {

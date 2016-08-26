@@ -218,6 +218,7 @@
                 if (result.data) {
                     _createCoachArray(result);
                 }
+                $scope.loadingMiddleObject = { showLoading: false, loadingMessage: 'Loading' };
                 serverCommunication.getCTSFilters({
                         Role: 'Mentor',
                         successCallBack: function (iResult) {
