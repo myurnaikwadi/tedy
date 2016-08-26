@@ -3,11 +3,11 @@
             <div class="parentRoleMenu coacheeThemeColor">
                 <div class="profileViewMode genericPointerClass" ng-click="navigateToProfile()">
                     <div class="imageConversation">
-                        <img style="border: 2px solid white;margin:auto auto;margin-top: 0;width: 40px;height: 40px;border-radius: 50%;" ng-src="{{loggedDetail.Photo ?  loggedDetail.Photo  : '../../../Images/icons/If no Profile photo.png'}}" />
+                        <img class="profileImgLeftPanel" ng-src="{{loggedDetail.Photo ?  loggedDetail.Photo  : '../../../Images/icons/If no Profile photo.png'}}" />
                     </div>
                     <div class="profileNamePart fontClass genericPointerClass">
-                        <h5 style="font-size: 15px;" class="leftSideMenuLable fontClass genericPointerClass eliipsisClass">WELCOME {{(loggedDetail.FirstName) | uppercase }}</h5>
-                        <h5 style="font-size: 12px;float: right;" class="leftSideMenuLable fontClass genericPointerClass eliipsisClass">- Coachee</h5>
+                        <h5 class="leftSideMenuLable fontClass genericPointerClass eliipsisClass fontWelcome">WELCOME {{(loggedDetail.FirstName) | uppercase }}</h5>
+                        <h5 class="leftSideMenuLable fontClass genericPointerClass eliipsisClass roleLeftPanel">- Coachee</h5>
                     </div>
                 </div>
                 <div class="leftSideMenuMainDashBoard">
@@ -19,7 +19,7 @@
                 </div>
             </div>
          
-            <div class="parentRoleDetailRight" style="padding:1%;padding-bottom: 0;" ng-if="loadingMiddleObject.showLoading">
+            <div class="parentRoleDetailRight cubeDiv"ng-if="loadingMiddleObject.showLoading">
                 <cube-Strct class="cubeParentClass" loading-Object="loadingMiddleObject"></cube-Strct>
             </div>
             <div class="parentRoleDetailRight" style="padding:1%;padding-bottom: 0;" ng-if="loadingMiddleObject.showLoading == false" ng-switch="selectedMenu">
