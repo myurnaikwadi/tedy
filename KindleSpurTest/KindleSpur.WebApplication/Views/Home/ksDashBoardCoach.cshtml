@@ -4,7 +4,7 @@
             <div class="parentRoleMenu coachThemeColor">
                 <div class="profileViewMode genericPointerClass" ng-click="navigateToProfile()">
                     <div class="imageConversation">
-                        <img style="border: 2px solid white;margin:auto auto;margin-top: 0;width: 40px;height: 40px;border-radius: 50%;" ng-src="{{loggedDetail.Photo ?  loggedDetail.Photo  : '../../../Images/icons/If no Profile photo.png'}}" />
+                        <img style="border: 2px solid white;margin:auto auto;margin-top: 0;width: 40px;height: 40px;border-radius: 50%;cursor:pointer;" ng-src="{{loggedDetail.Photo ?  loggedDetail.Photo  : '../../../Images/icons/If no Profile photo.png'}}" />
                     </div>
                     <div class="profileNamePart fontClass genericPointerClass">
                         <h5 style="font-size: 15px;" class="leftSideMenuLable fontClass genericPointerClass eliipsisClass">WELCOME {{(loggedDetail.FirstName) | uppercase }}</h5>
@@ -58,7 +58,7 @@
                                 <div class="conversationList" ng-class="{ highlightedSelctedConversationParent  : conversation.selectedConversation == true}" ng-click="conversationLoad($index,conversation)" ng-repeat="conversation in conversationListNew">
                                     <div class="conversationParentDiv">
                                         <div class="imageConversation">
-                                            <img ng-class="{ activeSessionCLass :  conversation.sessionClosed == false, closeSessionClass :  conversation.sessionClosed == true }" style="margin:auto auto;width: 40px;height: 40px;border-radius: 50%;" src="~/Images/icons/If no Profile photo.png" />
+                                            <img ng-class="{ activeSessionCLass :  conversation.sessionClosed == false, closeSessionClass :  conversation.sessionClosed == true }" style="margin:auto auto;width: 40px;height: 40px;border-radius: 50%;cursor:pointer;" src="~/Images/icons/If no Profile photo.png" />
                                         </div>
                                         <div class="nameMessageConversation">
                                             <div style="margin:auto auto;float:left; width: 100%;height: 55%;">
@@ -81,7 +81,7 @@
                                                 <h5 class="fontClass">{{ReceiverName}}</h5>
                                             </span>
                                             <div style="margin: auto;margin-right: 0;width: 29px;">
-                                                <img ng-click="askFeedBackFunc(3)" class="mod model-1" style="width: 35px;height: 35px;" title="Pre Session Feedback" src="~/Images/communication/preSessionIcon.png" />
+                                                <img ng-click="askFeedBackFunc(3)" class="mod model-1" style="width: 35px;height: 35px;cursor:pointer;" title="Pre Session Feedback" src="~/Images/communication/preSessionIcon.png" />
                                                 <section style="position: absolute;top: 4px;width: 44px;z-index: 1;background: transparent;" class="mod model-1">
                                                     <div class="spinner"></div>
                                                 </section>

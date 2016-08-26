@@ -1160,6 +1160,11 @@ border: 1px solid #999;
     margin-left: 0;
     margin-right: 0;
 }
+.preSessionIcon{
+    width: 35px;
+    height: 35px;
+    cursor:pointer;
+}
 
 
 

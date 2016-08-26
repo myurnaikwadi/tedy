@@ -179,6 +179,7 @@
 	padding: 3%;
 	font-weight: 100;
 	float : left;
+    cursor:pointer;
 }
 
 .notificationTiming{
@@ -1050,6 +1051,7 @@ width: 20%;
     transition: all 0.7s ease;
     border-top-left-radius: 40%;
     border-bottom-left-radius: 40%;
+    cursor: pointer;
 }
 .roundedCornerShape img{
     margin:auto;
@@ -1132,4 +1134,12 @@ width: 20%;
     animation-name: exampleBottomContain;
     animation-duration: 0.5s;
     animation-timing-function: linear;
+}
+.calendarImage{
+    width: 30px;
+    height: 30px;
+    margin: auto;
+    float: left;
+    cursor:pointer;
+
 }
