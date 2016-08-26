@@ -52,45 +52,74 @@ app.directive('placeHolder', function ($timeout) {
 app.directive('topMainStrip', function ($state, $rootScope, authentification) {
     return {
     scope: {
-    notification: '@'
-},
+        notification: '@'
+    },
     templateUrl: '/Home/ksTopMainStrip',
     //scope: true,   // optionally create a child scope
     link: function (scope, element, attrs) {
             scope.loggedDetail  = $rootScope.loggedDetail;
             scope.selectedRole = 0;
-            if (scope.notification == 'false') {
-                scope.notification = false;
-            } else {
-                            scope.notification = true;
-            }
-
+            scope.uiFlag = {
+                notification : false,
+                calendar : true,
+                profileLogo: false,
+                roleIcon : true
+            }           
+            $rootScope.$on("refreshView", function () {
+                scope.init();
+            });
+           
+            console.error($rootScope.currentModule)
             scope.loadCalendarView = function () {
-              $state.go('calendar');
+                $state.go('home.dashBoard.calendar');
             };
 
             scope.navigateToProfile = function () {
-                $state.go('profile');
-};
+                $state.go('home.dashBoard.profile');
+            };
             scope.logout = function () {
-                console.error(IN.User)
+                //  console.error(IN.User)
                 if (IN.User) IN.User.logout();
-                authentification.logout({ loginObject: {} });
-                $state.go('login');             
-};
+                    authentification.logout({ loginObject: { } });
+                  $state.go('login', { }, { reload: true });
+            };
             scope.navigateAsPerRole = function (iRole) {
-                console.error(iRole);
+                // console.error(iRole);
                 scope.selectedRole = iRole;
                 switch (iRole) {
-                    case 0: $state.go('dashBoardCoachee'); break;
-                    case 1: $state.go('dashBoardCoach'); break;
-                    case 2: $state.go('dashBoardMentee'); break;
-                    case 3: $state.go('dashBoardMentor'); break;
-                    case 4: $state.go('ksUserDashBoard'); break;//navigate to home page
-}
-};
-}
-};
+                    case 0: $state.go('home.dashBoard.coachee'); break;
+                    case 1: $state.go('home.dashBoard.coach'); break;
+                    case 2: $state.go('home.dashBoard.mentee'); break;
+                    case 3: $state.go('home.dashBoard.mentor'); break;
+                    case 4: $state.go('home.dashBoard'); break;//navigate to home page
+                }
+            };
+            scope.init = function () {
+                switch ($rootScope.currentModule) {
+                    case 'Profile':
+                        scope.uiFlag.profileLogo = false;
+                        scope.uiFlag.calendar = true;
+                        scope.uiFlag.roleIcon = true;
+                        scope.uiFlag.notification = true;
+                        break;
+                    case 'Calendar':
+                        scope.uiFlag.calendar = false;
+                        scope.uiFlag.roleIcon = true;
+                        scope.uiFlag.profileLogo = true;
+                        scope.uiFlag.notification = true;
+                        break;
+                    case 'DashBoard':
+                        scope.uiFlag.calendar = true;
+                        scope.uiFlag.roleIcon = false;
+                        scope.uiFlag.profileLogo = true;
+                        scope.uiFlag.notification = true;
+                        break;
+                        //   default :  break;
+                }
+            };
+            scope.init();
+        }
+    };
 });
 
 app.directive('cubeStrct', function ($timeout) {
@@ -107,23 +136,43 @@ app.directive('cubeStrct', function ($timeout) {
 }
 };
 });
-app.directive('bottomMainStrip', function ($timeout) {
+app.directive('bottomMainStrip', function ($timeout, $rootScope) {
     return {
-    scope: {
+        scope: {
 
-},
-    template: '<div style="float: left;width: 100%;height: 100%;display: flex;"><ul class="bottomStripOption"><li class="fontClass" ng-repeat = "option in bottomOptionArray">{{ option.name}}</li></ul></div>',
-    //scope: true,   // optionally create a child scope
-    link: function (scope, element, attrs) {
-            console.error(scope);
-            scope.bottomOptionArray = [
-{ name: 'ABOUT' },
-{ name: 'FEEDBACK' },
-{ name: 'PRIVACY POLICY' },
-{ name: 'TERMS AND CONDITIONS' },
-];
-}
-};
+        },
+        template: '<div style="float: left;width: 100%;height: 100%;display: flex;"><div ng-style="styleToLeftStrip" style="float:left;position:relative;heigth:100%;"></div><ul class="bottomStripOption"><li class="fontClass" ng-repeat = "option in bottomOptionArray" ng-click="loadAttachment()">{{ option.name}}</li></ul></div>',
+        //scope: true,   // optionally create a child scope
+        controller: function ($scope) {
+            console.error($scope);
+            console.error($rootScope.currentModule)
+            $scope.styleToLeftStrip = { 'width': '0%' };
+            var _color = 'white';
+            var _width = 0;
+
+            switch ($rootScope.currentModule) {
+                case 'Coach': _color = 'rgb(231,120,23)'; _width = 18; break;
+                case 'Mentor': _color = 'rgb(0,73,45)'; _width = 18; break;
+                case 'Mentee': _color = 'rgb(132,194,37)'; _width = 18; break;
+                case 'Coachee': _color = 'rgb(231,180,0)'; _width = 18; break;
+            }
+            $scope.styleToLeftStrip = {
+                'width': _width+'%',
+                'background' : _color
+            };
+            // window.bottom = $scope;
+            //console.error(scope.bottomStrip)
+            $scope.bottomOptionArray = [
+                        { name: 'ABOUT' },
+                        { name: 'FEEDBACK' },
+                        { name: 'PRIVACY POLICY' },
+                        { name: 'TERMS AND CONDITIONS' },
+            ];
+            $scope.loadAttachment = function () {
+                $rootScope.$broadcast("refreshStateHomeView", { type: 'loadBottomContain' });
+            };
+        }
+   }
 });
 
 app.directive('ctcRole', function ($state, serverCommunication) {
@@ -138,13 +187,14 @@ app.directive('ctcRole', function ($state, serverCommunication) {
             window.cts = scope;
             scope.catogoryArray = [];
             scope.topicArray = [
-{ name: 'Advertising' },
-{ name: 'Education' },
-{ name: 'Engineering' },
-{ name: 'Marketing' },
-{ name: 'BRAIN GAMES' },
-{ name: 'RESOURCES' }
-];
+                { name: 'Advertising' },
+                { name: 'Education' },
+                { name: 'Engineering' },
+                { name: 'Marketing' },
+                { name: 'BRAIN GAMES' },
+                { name: 'RESOURCES' }
+            ];
+            scope.loadingObject = { showLoading: true, loadingMessage: 'Loading' };
             scope.skillsArray = [];
             scope.mySelection = true;
     // scope.selectedCategory = -1;
@@ -157,18 +207,18 @@ app.directive('ctcRole', function ($state, serverCommunication) {
             scope.styleToCTS = {};
             scope.styleToCTSText = {};
             scope.changeslider = function (iSkill) {
-    // console.error(iSkill)
+                  // console.error(iSkill)
                 scope.createStyleArrayAsPerSelected(iSkill,true);
-};
+            };
             var _colorArray = {
                 'coach': { '0' : 'rgb(239,154,72)', '1' : 'rgb(231,120,23)','2': 'rgb(220,53,27)'},
                 'coachee': { '0' : 'rgb(255,249,116)', '1' :'rgb(248,195,0)' ,'2': 'rgb(241,164,0)'},
                 'mentor': { '0' : 'rgb(67,129,61)', '1' : 'rgb(0,73,45)','2': 'rgb(5,33,29)'},
                 'mentee': { '0' : 'rgb(187,217,0)' , '1' : 'rgb(132,194,37)','2': 'rgb(75,159,49)'},
-};
+            };
             scope.createStyleArrayAsPerSelected = function (iSkill,iSelect) {
                 if (iSelect) {
-    //console.error(iSkill)
+                    //console.error(iSkill)
                     var _width = 100;                   
                     var _color = 'transparent';
                     var _textColor = 'black';
@@ -177,7 +227,7 @@ app.directive('ctcRole', function ($state, serverCommunication) {
                         case 'mentor': _color = 'rgb(0,73,45)'; _textColor = 'white'; break;
                         case 'mentee': _color = 'rgb(132,194,37)'; _textColor = 'black'; break;
                         case 'coachee': _color = 'rgb(248,195,0)'; _textColor = 'black'; break;
-}
+                    }
                     switch (iSkill.profiLevel) {
                         case '0': _width = 5; scope.styleToCTSText[iSkill.Name] = { 'color': 'black', 'transition': 'all 0.7s ease' }; break;
                         case '1': _width = 50; scope.styleToCTSText[iSkill.Name] = { 'color': 'black', 'transition': 'all 0.7s ease' }; break;
@@ -187,46 +237,46 @@ app.directive('ctcRole', function ($state, serverCommunication) {
                         if (iSkill.type == 'T') {
                             _width = 100;
                             scope.styleToCTSText[iSkill.Name] = { 'color': _textColor, 'transition': 'all 0.7s ease' };
-} else {
+                        } else {
                             _color = _colorArray[scope.role][iSkill.profiLevel];
-}
-} else {
+                        }
+                    } else {
                         _color = _colorArray[scope.role][iSkill.profiLevel];
-}
+                    }
 
                     scope.styleToCTS[iSkill.Name] = { 'position': 'absolute', 'height': '28px', 'width': (_width + "%"), 'background': _color, 'transition': 'all 0.7s ease' };
-}else{
-    // De select
-}
-};
+                }else{
+                    // De select
+                }
+    };
 
 
             scope.categoryClick = function (iEvent, iIndex, iCategory) {
-    // scope.selectedCategory = iIndex;
+                // scope.selectedCategory = iIndex;
                 iCategory.type = 'C';
-    //if(iCategory.selectedCategory == true){//already select
-    //    if (iCategory.alreadySelected == true) {//make delete array
-    //        _deleteArray[iCategory.Name] = iCategory;
-    //    }
-    //}
+                //if(iCategory.selectedCategory == true){//already select
+                //    if (iCategory.alreadySelected == true) {//make delete array
+                //        _deleteArray[iCategory.Name] = iCategory;
+                //    }
+                //}
 
                 iCategory.selectedCategory = true;
                 scope.categoryDisplay = false;
                 scope.selectedCategoryValue = iCategory;
-    //if (iCategory.alreadySelected == true) {
-    //    if (_deleteArray[iCategory.Name]) delete _deleteArray[iCategory.Name];
-    //} else {
-    //    if (_updateArray[iCategory.Name]) {
-    //        _updateArray[iCategory.Name] = iCategory;
-    //    }
-    //}
+                //if (iCategory.alreadySelected == true) {
+                //    if (_deleteArray[iCategory.Name]) delete _deleteArray[iCategory.Name];
+                //} else {
+                //    if (_updateArray[iCategory.Name]) {
+                //        _updateArray[iCategory.Name] = iCategory;
+                //    }
+                //}
                 scope.topicArray = [].concat(iCategory.Topics)
                 for (var k = 0; k < scope.topicArray.length ; k++) {
                     scope.topicArray[k].selected = false;
-    // console.error('1')
+                    // console.error('1')
                     if (!scope.topicArray[k].profiLevel) scope.topicArray[k].profiLevel = '0';
                     if (_topics[scope.topicArray[k].Name]) {
-    //console.error('12')
+                        //console.error('12')
                         scope.topicArray[k].alreadySelected = true;
                         if (_topics[scope.topicArray[k].Name].profiLevel)
                             scope.topicArray[k].profiLevel = _topics[scope.topicArray[k].Name].profiLevel;
@@ -246,49 +296,47 @@ app.directive('ctcRole', function ($state, serverCommunication) {
             scope.topicSelection = function (iEvent, iIndex, iTopic) {
                 iEvent.stopPropagation();
                 iTopic.type = 'T';
-
-
                 if (iTopic.selected) {
                     iTopic.selected = false;
                     scope.styleToCTSText[iTopic.Name] = { 'color': 'black', 'transition': 'all 0.7s ease' };
                     if (iTopic.alreadySelected == true && !scope.skillRequired) {//make delete array
                         _deleteArray[iTopic.Name] = iTopic;
-}
-    //if (_updateArray[iTopic.Name]) {
-    //    delete _updateArray[iTopic.Name];
-    //}
+                    }
+                    //if (_updateArray[iTopic.Name]) {
+                    //    delete _updateArray[iTopic.Name];
+                    //}
                     if (scope.skillRequired) {
                         if (iTopic.Skills.length > 0) {
                             var _deleteArr = [];
                             for (var l = 0 ; l < scope.skillsArray.length; l++) {
                                 for (var k = 0; k < iTopic.Skills.length ; k++) {
-    //if (_updateArray[iTopic.Skills[k].Name]) 
-    //    delete _updateArray[iTopic.Skills[k].Name];                                   
+                                    //if (_updateArray[iTopic.Skills[k].Name]) 
+                                    //    delete _updateArray[iTopic.Skills[k].Name];                                   
                                     if (iTopic.Skills[k].alreadySelected == true) {
                                         _deleteArray[iTopic.Skills[k].Name] = iTopic.Skills[k];
-}
+                                    }
                                     if (scope.skillsArray[l] && scope.skillsArray[l].Name == iTopic.Skills[k].Name) {
                                         _deleteArr.push(l);
-}
-}
-}
+                                    }
+                                }
+                            }
                             console.error(_deleteArray);
                             _deleteArr.sort(function (a, b) { return b - a })
                             for (var z = 0 ; z < _deleteArr.length ; z++) {
                                 scope.skillsArray.splice(_deleteArr[z], 1);
-}
-}
-}
-}
-else {
+                            }
+                        }
+                    }
+                }
+                else {
                     iTopic.selected = true;
-    // scope.createStyleArrayAsPerSelected(iTopic, true);
+                        // scope.createStyleArrayAsPerSelected(iTopic, true);
                     if (iTopic.alreadySelected == true && !scope.skillRequired) {
                         if (_deleteArray[iTopic.Name]) delete _deleteArray[iTopic.Name];
-    //    if (_updateArray[iTopic.Name]) delete _updateArray[iTopic.Name];
-} //else {                    
-    //        _updateArray[iTopic.Name] = iTopic;                     
-    //}
+                        //    if (_updateArray[iTopic.Name]) delete _updateArray[iTopic.Name];
+                    } //else {                    
+                        //        _updateArray[iTopic.Name] = iTopic;                     
+                        //}
                     if (scope.skillRequired) {
                         scope.createStyleArrayAsPerSelected(iTopic, true);
                         for (var k = 0; k < iTopic.Skills.length ; k++) {
@@ -301,22 +349,22 @@ else {
                                 scope.createStyleArrayAsPerSelected(iTopic.Skills[k], true);
                                 if (_deleteArray[iTopic.Skills[k].Name]) {
                                     delete _deleteArray[iTopic.Skills[k].Name];
-} else {
+                                } else {
                                     iTopic.Skills[k].selected = true;
-}
-}// else {
-    //    //if (_updateArray[iTopic.Skills[k].Name]) {
-    //    //    _updateArray[iTopic.Skills[k].Name] = iTopic.Skills[k];
-    //    //}
-    //}                           
-}
-                        scope.skillsArray = scope.skillsArray.concat(iTopic.Skills);
-} else {
-                        if (!iTopic.profiLevel) iTopic.profiLevel = '0';
-                        scope.createStyleArrayAsPerSelected(iTopic, true);
-}
-}
-};
+                                }
+                            }// else {
+                                //    //if (_updateArray[iTopic.Skills[k].Name]) {
+                                //    //    _updateArray[iTopic.Skills[k].Name] = iTopic.Skills[k];
+                                //    //}
+                                //}                           
+                            }
+                            scope.skillsArray = scope.skillsArray.concat(iTopic.Skills);
+                        } else {
+                                                if (!iTopic.profiLevel) iTopic.profiLevel = '0';
+                                                scope.createStyleArrayAsPerSelected(iTopic, true);
+                        }
+                    }
+            };
             scope.skillSelection = function (iEvent, iIndex, iSkills) {
                 iEvent.stopPropagation();
                 iSkills.type = 'S';
@@ -326,25 +374,25 @@ else {
                     iSkills.profiLevel = '0';
                     if (_updateArray[iSkills.Name]) {
                         delete _updateArray[iSkills.Name];
-}
+                    }
                     if (iSkills.alreadySelected == true) {//make delete array
                         _deleteArray[iSkills.Name] = iSkills;
-}
-} else {
+                    }
+                } else {
                     iSkills.selected = true;
                     iSkills.profiLevel = '0';
                     scope.createStyleArrayAsPerSelected(iSkills, true);
-    //  _updateArray[iSkills.Name] = iSkills;
+                        //  _updateArray[iSkills.Name] = iSkills;
                     if (iSkills.alreadySelected == true) {
                         if (_deleteArray[iSkills.Name]) delete _deleteArray[iSkills.Name];
                         if (_updateArray[iSkills.Name]) delete _updateArray[iSkills.Name];
-} else {
+                    } else {
                         if (_updateArray[iSkills.Name]) {
                             _updateArray[iSkills.Name] = iSkills;
-}
-}
-}
-};
+                    }
+                 }
+                }
+            };
 
             scope.backButtonClick = function () {
                 console.error(scope.categoryDisplay)
@@ -354,44 +402,44 @@ else {
                     scope.selectedTopic = -1;
                     scope.selectedSkills = -1;
                     scope.selectedCategoryValue = null;
-}
-else {
+                }
+                else {
                     scope.categoryDisplay = true;
                     for (var k = 0; k < scope.catogoryArray.length ; k++) {
                         scope.catogoryArray[k].selectedCategory = false;
                         if (_category[scope.catogoryArray[k].Category]) {
                             scope.catogoryArray[k].selectedCategory = true;
                             scope.catogoryArray[k].alreadySelected = true;
-}
-}
-}
+                        }
+                    }
+                }
 
                 scope.skillsArray = [];
                 scope.topicArray = [];
                 _updateArray = {};
                 _deleteArray = {}
-};
+            };
 
             scope.savepublishClick = function () {
                 console.error(_updateArray, _deleteArray);
-    //  debugger 
+                //  debugger 
                 if (scope.categoryDisplay) {
-    //publish check
-} else {
-    // console.error(_updateArray);
-    //if (Object.keys(_updateArray).length > 0 || Object.keys(_deleteArray).length > 0 ){
+                    //publish check
+                } else {
+                    // console.error(_updateArray);
+                    //if (Object.keys(_updateArray).length > 0 || Object.keys(_deleteArray).length > 0 ){
                     var _dataArray = [];
                     var _dd = [];
                     for (var l = 0 ; l < scope.skillsArray.length; l++) {
-    //console.error(scope.skillsArray[l].Name)
+                        //console.error(scope.skillsArray[l].Name)
                         if (scope.skillsArray[l].selected) {
                             _dataArray.push(scope.skillsArray[l]);
-} else {
+                        } else {
                             if (_skills[scope.skillsArray[l].Name]) {
                                 delete _skills[scope.skillsArray[l].Name];
-}
-}
-}
+                            }
+                        }
+                    }
                     for (var _key in _skills) {
                         for (var j = 0 ; j < scope.catogoryArray.length ; j++) {
                             for (var y = 0 ; y < scope.catogoryArray[j].Topics.length ; y++) {
@@ -399,48 +447,46 @@ else {
                                     if (_key == scope.catogoryArray[j].Topics[y].Skills[w].Name) {
                                         _skills[_key].Id = scope.catogoryArray[j].Topics[y].Skills[w].Id;
                                         _dd.push(_skills[_key]);
-}
-}
-}
-}
-
-}
+                                    }
+                                }
+                            }
+                        }
+                    }
                     var _deleteArr = [];
                     for (var j = 0 ; j < _dd.length ; j++) {
                         if (_deleteArray[_dd[j].Name]) {
                             _deleteArr.push(j);
-}
-}
+                        }
+                    }
                     _deleteArr.sort(function (a, b) { return b - a })
                     for (var z = 0 ; z < _deleteArr.length ; z++) {
                         _dd.splice(_deleteArr[z], 1);
-}
-    //console.error(_dd)
-    //console.error(_category);
-    //console.error(_topics);
-    //console.error(_skills);
-
+                    }
+                    //console.error(_dd)
+                    //console.error(_category);
+                    //console.error(_topics);
+                    //console.error(_skills);
                     _dataArray = _dataArray.concat(_dd);
-    //return
+                    //return
                     if (scope.skillRequired) {
                         serverCommunication.sendSelectedCTSDataToServer({
-    selectedArray: _dataArray,
-    role: scope.role,
-    successCallBack: function (iObj) {
+                            selectedArray: _dataArray,
+                            role: scope.role,
+                            successCallBack: function (iObj) {
                                 scope.mySelection = true;
                                 scope.categoryDisplay = true;
-    // scope.selectedCategory = -1;
+                                 // scope.selectedCategory = -1;
                                 scope.selectedTopic = -1;
                                 scope.selectedSkills = -1;
                                 scope.selectedCategoryValue = null;
                                 scope.init();
                                 console.error('In successCallBack', iObj);
-},
-    failureCallBack: function (iObj) {
+                            },
+                            failureCallBack: function (iObj) {
                                 console.error('In failureCallBack', iObj);
-}
-});
-} else {
+                            }
+                        });
+                     } else {
 
                         var _dataArray = [];
                         var _dd = [];
@@ -448,70 +494,68 @@ else {
                             console.error(scope.topicArray[l].Name)
                             if (scope.topicArray[l].selected) {
                                 _dataArray.push(scope.topicArray[l]);
-} else {
+                             } else {
                                 if (_topics[scope.topicArray[l].Name]) {
                                     delete _topics[scope.topicArray[l].Name];
-}
-}
-}
+                                }
+                            }
+                        }
                         for (var _key in _topics) {
                             for (var j = 0 ; j < scope.catogoryArray.length ; j++) {
                                 for (var y = 0; y < scope.catogoryArray[j].Topics.length; y++) {
                                     if (_key == scope.catogoryArray[j].Topics[y].Name) {
                                         _topics[_key].Id = scope.catogoryArray[j].Topics[y].Id;
                                         _dd.push(_topics[_key]);
-}
-
-}
-}
-
-}
+                                    }
+    
+                                }
+                            }
+                        }
                         _dataArray = _dataArray.concat(_dd);
                         console.error(_dd)
                         console.error(_dataArray)
                         console.error(_category);
                         console.error(_topics);
                         console.error(_skills);
-    // return
+                         // return
                         serverCommunication.sendSelectedCTSDataToServerMentor({
-    selectedArray: _dataArray,
-    role: scope.role,
-    successCallBack: function (iObj) {
+                            selectedArray: _dataArray,
+                            role: scope.role,
+                            successCallBack: function (iObj) {
                                 console.error('In successCallBack', iObj);
                                 scope.mySelection = true;
                                 scope.categoryDisplay = true;
-    // scope.selectedCategory = -1;
+                                 // scope.selectedCategory = -1;
                                 scope.selectedTopic = -1;
                                 scope.selectedSkills = -1;
                                 scope.selectedCategoryValue = null;
                                 scope.init();
-},
-    failureCallBack: function (iObj) {
+                            },
+                            failureCallBack: function (iObj) {
                                 console.error('In failureCallBack', iObj);
-}
-});
-}
+                            }
+                       });
+                    }
                     _updateArray = {};
                     _deleteArray = {}
-    //}
-}
-};
+                //}
+                }
+            };
 
             scope.getTopicSkill = function (iCategory) {
-    //serverCommunication.getTopicSkill({
-    //    cateGoryObject: iCategory,
-    //    successCallBack: function (iObj) {
-    //        console.error('In successCallBack', iObj);
+                //serverCommunication.getTopicSkill({
+                //    cateGoryObject: iCategory,
+                //    successCallBack: function (iObj) {
+                //        console.error('In successCallBack', iObj);
 
 
-    //    },
-    //    failureCallBack: function () {
-    //        console.error('In failureCallBack', iObj);
+                //    },
+                //    failureCallBack: function () {
+                //        console.error('In failureCallBack', iObj);
 
-    //    }
-    //});
-};
-
+                //    }
+                //});
+            };
 
             scope.addSkill = function () {
                 scope.mySelection = false;
@@ -523,7 +567,7 @@ else {
                 if (scope.role == "mentor" || scope.role == "mentee") {
                     console.error('get data for mentor')
                     serverCommunication.getCategorysTopics({
-    successCallBack: function (iObj) {
+                        successCallBack: function (iObj) {
                             console.error('In successCallBack', iObj);
                             var _data = iObj.data;
                             console.error(_data)
@@ -532,18 +576,18 @@ else {
                                 if (_category[scope.catogoryArray[k].Category]) {
                                     scope.catogoryArray[k].selectedCategory = true;
                                     scope.catogoryArray[k].alreadySelected = true;
-}
-}
+                                }
+                            }
 
-},
-    failureCallBack: function (iObj) {
+                        },
+                        failureCallBack: function (iObj) {
                             console.error('In failureCallBack', iObj);
 
-}
-});
-} else {
+                        }
+                    });
+                } else {
                     serverCommunication.getCategorys({
-    successCallBack: function (iObj) {
+                        successCallBack: function (iObj) {
                             console.error('In successCallBack', iObj);
                             var _data = iObj.data;
                             console.error(_data)
@@ -552,18 +596,17 @@ else {
                                 if (_category[scope.catogoryArray[k].Category]) {
                                     scope.catogoryArray[k].selectedCategory = true;
                                     scope.catogoryArray[k].alreadySelected = true;
-}
-}
+                                }
+                            }
 
-},
-    failureCallBack: function (iObj) {
+                        },
+                        failureCallBack: function (iObj) {
                             console.error('In failureCallBack', iObj);
 
-}
-});
-}
-
-};
+                        }
+                    });
+                }
+            };
 
             var _createMoleculeStructure = function (iObj) {
                 _category = {};
@@ -739,6 +782,7 @@ else {
 }
                     console.error(_retu)
                     scope.ctsDataForMolecule = _retu;
+                    scope.loadingObject = { showLoading: false, loadingMessage: 'Loading' };
 }
 };
 
@@ -852,7 +896,7 @@ app.directive('moleculeMap', function ($rootScope) {
     link: function ($scope, element, attrs) {
 
 
-            var width = 994, height = 454
+            var width = 1100, height = 500
             var color = d3.scale.category20();
             var moleculeExamples = {};
             var radius = d3.scale.sqrt().range([0, 6]);
@@ -1524,27 +1568,27 @@ app.directive('feedbackPage', function ($state, serverCommunication, $timeout, $
     //scope: true,   // optionally create a child scope
     link: function ($scope, element, attrs) {
             console.error($scope)
-
+           // $scope.loadingObject = { showLoading: true, loadingMessage: 'Loading Feed' };
             $scope.sender = ($scope.convObject.SenderEmail == $rootScope.loggedDetail.EmailAddress) ? $scope.convObject.ReceiverEmail : $scope.convObject.SenderEmail;
             window.feedbackPage = $scope;
 
             if (typeof $scope.feedbackClosed === 'undefined') {
                 $scope.feedbackClosed = false;
-}
+            }
 
             $scope.feedBack = {              
-    feedBackDetails: {}
-};
+                feedBackDetails: {}
+            };
 
             $scope.rewardsPoints = {
-    mentorPoints: 0,
-    menteePoints: 0,
-    coachPoints: 0,
-    coacheePoints: 0,
-    balancePoints: 0,
-    redeemedPoints: 0,
-    totalPoints: 0
-};
+                mentorPoints: 0,
+                menteePoints: 0,
+                coachPoints: 0,
+                coacheePoints: 0,
+                balancePoints: 0,
+                redeemedPoints: 0,
+                totalPoints: 0
+            };
             $scope.myRewardsArray = [];
             $scope.getPointsRecord = function () {
                 serverCommunication.getPointsRecord({

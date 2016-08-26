@@ -43,6 +43,10 @@ namespace KindleSpur.WebApplication.Controllers
             //ViewBag.Name = ((User)Session["User"]).FirstName;
             return View();
         }
+        public ActionResult ksParentState()
+        {
+           return View();
+        }
         public ActionResult ksTopMainStrip()
         {
             return View();

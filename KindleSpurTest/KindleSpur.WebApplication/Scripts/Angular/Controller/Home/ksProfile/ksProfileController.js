@@ -1,6 +1,9 @@
 ﻿app.controller('ksProfileController', function ($scope, commonFunction, serverCommunication, $rootScope, $state, $timeout, $filter,authentification) {
     $scope.editModeProfile = false;
-    console.error($scope.userInfo)
+   // $rootScope.currentModule = 'Profile';
+    //console.error($scope.userInfo);
+    if ($scope.moduleName)
+        $rootScope.currentModule = $scope.moduleName;
     window.profile = $scope;
     $scope.topicArray = $scope.mySkill = [];
     $scope.profileMenuArr = [{ name: 'OVERVIEW' }, { name: 'FEEDBACKS' }, { name: 'SETTINGS' }];
@@ -384,6 +387,7 @@
     var _topicArray = [];
     var _skillsArray = [];
     $scope.init = function () {
+        $rootScope.$broadcast("refreshView", { type: 'refreshUI' });
         $scope.ctsDataForMolecule = null;
         $scope.loadAnimation = false;
         $timeout(function () {
@@ -465,7 +469,8 @@ app.directive('profilePage', function ($state, serverCommunication) {
         scope: {
             editRequired: "@",
             userInfo: "=",
-            closePopup: "&"
+            closePopup: "&",
+            moduleName : "@?"
         },
         templateUrl: '/Home/ksProfileTemplate',
         controller: "ksProfileController",

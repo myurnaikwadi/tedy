@@ -352,6 +352,7 @@
     <Content Include="Images\linkedIn.jpg" />
     <Content Include="Images\linkedin_square_gray.png" />
     <Content Include="Images\loginLanding.jpg" />
+    <Content Include="Images\logout1.png" />
     <Content Include="Images\Mail_Send_Email_Envelope.png" />
     <Content Include="Images\MedalImage\bronzeMedal.png" />
     <Content Include="Images\MedalImage\goldMedal.png" />
@@ -389,9 +390,11 @@
     <Content Include="Scripts\Angular\Controller\Home\ksDashBoardMentorController.js" />
     <Content Include="Scripts\Angular\Controller\Home\ksHomePageController.js" />
     <Content Include="Scripts\Angular\Controller\Home\ksProfile\ksProfileController.js" />
+    <Content Include="Scripts\Angular\Controller\Home\ksStateHomeController.js" />
     <Content Include="Scripts\Angular\Controller\Home\ksVCGController.js" />
     <Content Include="Scripts\Angular\Controller\Home\ksVcsController.js" />
     <Content Include="Scripts\Angular\Controller\value\ksValueFeedsController.js" />
+    <Content Include="Scripts\Angular\Services\autoScroll.js" />
     <Content Include="Scripts\Angular\Services\ksCommonRepo.js" />
     <Content Include="Scripts\Angular\Services\ksGenericDirective.js" />
     <Content Include="Scripts\Angular\Services\ksIsotope.js" />
@@ -435,8 +438,6 @@
     <Content Include="fonts\fontawesome-webfont.ttf" />
     <Content Include="fonts\fontawesome-webfont.svg" />
     <Content Include="fonts\fontawesome-webfont.eot" />
-    <Content Include="Scripts\css\ksDashBoard\ksResources.css" />
-    <Content Include="Scripts\css\ksValue\ksValueFeeds.css" />
     <Content Include="Scripts\d3.v3.js" />
     <Content Include="Scripts\d3.v3.min.js" />
     <Content Include="fonts\Roboto-Regular.ttf" />
@@ -500,10 +501,10 @@
     <Content Include="Views\Home\ksVCGameView.cshtml" />
     <Content Include="Views\Home\ksFeedBackPanel.cshtml" />
     <Content Include="Views\Home\ksMyReward.cshtml" />
-    <Content Include="Views\Home\ksResources.cshtml" />
     <Content Include="Views\Home\ksMonthlyView.cshtml" />
     <Content Include="Views\Home\ksMonthlyTemplate.cshtml" />
     <Content Include="Views\Home\ksCommonRepository.cshtml" />
+    <Content Include="Views\Home\ksParentState.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

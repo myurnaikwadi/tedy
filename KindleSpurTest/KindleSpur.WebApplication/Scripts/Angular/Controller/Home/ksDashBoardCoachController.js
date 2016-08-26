@@ -1,10 +1,12 @@
 ﻿app.controller('ksDashBoardCoachController', function ($rootScope, $scope, serverCommunication, $stateParams, $interval, $state) {
     console.error($stateParams)
     $scope.passedData = $stateParams;
+    $rootScope.currentModule = 'Coach';
    // $scope.redeemAction = { actionName: "GAME" };
     $scope.navigateToProfile = function () {
-        $state.go('profile');
+        $state.go('home.dashBoard.profile');
     };
+    $scope.loadingObject = { showLoading: true, loadingMessage: 'Loading' };
     $scope.loggedEmail = $rootScope.loggedDetail.EmailAddress;
     $scope.ApprovalName = $rootScope.loggedDetail.FirstName + " " +$rootScope.loggedDetail.LastName;
     $scope.conversation = {    Message: '' };
@@ -69,13 +71,16 @@
         $scope.feedBack.closeFeedBackPopup();
         $scope.feedContainArray = [];
         $scope.stopFight();
+        $scope.loadingMiddleObject = { showLoading: true, loadingMessage: 'Loading' };
         switch (iIndex) {
-            case 0: $scope.autoSyncRoutine(_conversationTime); $scope.conversationRequest(); break;
+            case 0: $scope.conversationRequest();  $scope.autoSyncRoutine(_conversationTime); break;
             case 1: $scope.getCoachRecord(); break;
             case 3: $scope.generateGarden(); break;
-            case 4: $scope.getRssFeedData(); break;
-                //case 6: $scope.getPointsRecord(); break;
-            case 5: $scope.autoSyncRoutine(_chatMessageTime); $scope.conversationLoading(); break;
+            case 4: $scope.getRssFeedData(); break;            
+            case 5: $scope.conversationLoading(); $scope.autoSyncRoutine(_chatMessageTime); break;
+            case 2:
+            case 7:
+            case 6: $scope.loadingMiddleObject = { showLoading: false, loadingMessage: 'Loading' }; break;
         }
     };
 
@@ -156,6 +161,7 @@
                 for (var _skill in _skills) {
                     $scope.feedCategoryArray.push({ selected: false, name: _skill });
                 }
+                $scope.loadingMiddleObject = { showLoading: false, loadingMessage: 'Loading' };
                 if (!$scope.$$phase) $scope.$digest();
             },
             failureCallBack: function (iObj) {
@@ -193,7 +199,7 @@
                 }
                 console.error(_retu)
                 $scope.ctsDataForMolecule = _retu;
-
+                $scope.loadingMiddleObject = { showLoading: false, loadingMessage: 'Loading' };
             },
             failureCallBack: function (iObj) {
                 console.error('In failureCallBack', iObj);
@@ -208,6 +214,7 @@
             successCallBack: function (iObj) {
                 console.error('In successCallBack', iObj);
                 $scope.coachingStatusArray = iObj.data.Filters;
+                $scope.loadingMiddleObject = { showLoading: false, loadingMessage: 'Loading' };
             },
             failureCallBack: function (iObj) {
                 console.error('In failureCallBack', iObj);
@@ -369,6 +376,7 @@
                     // $scope.conversationListNew.push(_con);
                 }
                 //  $scope.conversationListNew = iObj.data.Result;
+                $scope.loadingMiddleObject = { showLoading: false, loadingMessage: 'Loading' };
                 if ($scope.conversationListNew && $scope.conversationListNew.length > 0) {
                     if ($scope.openConversation) {
                         for (var i = 0 ; i < $scope.conversationListNew.length ; i++) {
@@ -393,6 +401,7 @@
 
     $scope.openConversation = null;
     $scope.conversationLoad = function (iIndex, iCategory) {
+        $scope.loadingMessageObject = { showLoading: true, loadingMessage: 'Loading' };
         for (var i = 0 ; i < $scope.conversationListNew.length ; i++) {
             $scope.conversationListNew[i].selectedConversation = false;
         }
@@ -519,6 +528,7 @@
                     b = new Date(b.UpdateDate);
                     return a - b;
                 });
+                $scope.loadingMessageObject = { showLoading: false, loadingMessage: 'Loading' };
                 //  console.error('ssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss')
                 _setScrollPosition();
                 
@@ -541,8 +551,9 @@
                 function ISODate(d) {
                     return d;
                 }
-
+                
                 $scope.notificationData = iObj.data.Result;
+                $scope.loadingMiddleObject = { showLoading: false, loadingMessage: 'Loading' };
             },
             failureCallBack: function (iObj) {
                 console.debug('In failureCallBack', iObj);
@@ -553,13 +564,14 @@
             ConversationType: "Coaching",
             successCallBack: function (iObj) {
                 console.debug('In getAllMeetingRequest', iObj);
-
+               
                 function ObjectId(id) { return id; }
                 function ISODate(d) {
                     return d;
                 }
 
                 $scope.notificationRequestData = iObj.data.Result;
+                $scope.loadingMiddleObject = { showLoading: false, loadingMessage: 'Loading' };
             },
             failureCallBack: function (iObj) {
                 console.debug('In failureCallBack', iObj);
@@ -784,6 +796,7 @@
         if ($scope.passedData && $scope.passedData.param) {
             $scope.selectedMenu = '2';
         } else {
+            $scope.loadingObject = { showLoading: false, loadingMessage: 'Loading' };
             $scope.selectedMenu = '0';
             // $scope.conversationStartData($scope.loggedEmail);
             $scope.conversationRequest();

@@ -1,27 +1,13 @@
-﻿<div style="position:absolute;z-index:2;" class="hiddenErrorNotificationClass" ng-class="{ 'showErrorNotificationClass' : displayAlert.showAlert  == true}">
-    <div class="alert-message success" ng-show="displayAlert.formatType == '1'">
-        <p class="alert-message1">{{displayAlert.message}}</p>
-        <a class="closealert-padding close" href="#" ng-click="displayAlert.showAlert = false">×</a>
-
-    </div>
-    @*Green*@
-
-    <div class="alert-message error" ng-show="displayAlert.formatType == '2'">
-        <p class="alert-message1">{{displayAlert.message}}</p>
-        <a class="closealert-padding close" href="#" ng-click="displayAlert.showAlert = false">×</a>
-
-    </div>
-    @*red*@
-</div>
-<img ng-show="editRequired == 'false'" ng-click="closeProfilePopup()" style="width: 15px;height: 15px;top:5px;right: 5px;bottom: 0;position: absolute;z-index:1;cursor:pointer;" title="Cancel" src="~/Images/cancel.png" />
-<div class="parentBody" style="display:flex;">
-
+﻿<div class="parentBody" style="display:flex;">
+    <img ng-show="editRequired == 'false'" ng-click="closeProfilePopup()" style="width: 15px;height: 15px;top:5px;right: 5px;bottom: 0;position: absolute;z-index:1;cursor:pointer;" title="Cancel" src="~/Images/cancel.png" />
     <div class="applicationProfilePanel" style="position : relative;width : 70%;height: 100%;float : left;margin:auto;">
         <div class="" style="position : relative;width : 100%;height: 40%;float : left;z-index: 1;">
             <img style="width: 100%; height: 100%;float: left;padding: 5px;border: 1px solid #ddd;" ng-src="{{ myInfo.profileBackgroundImage ? myInfo.profileBackgroundImage : '../../../Images/userprofile.png'}}" />
 
-            <div class="widthClassss">
-                <img style="width: 130px; height: 130px;float: left;border-radius:100%;border: 5px solid white; position: absolute;bottom: 30px;padding: 2px;left: 51px;" ng-src="{{ myInfo.profileImage ? myInfo.profileImage : '../../../Images/icons/If no Profile photo.png'}}" />
+            <div class="widthClassss" ng-init="profileHoverFlag = false">
+                <img id="profileNew" ng-click="triggerUpload(true)" ng-class="{ profileHoverClass : profileHoverFlag == true && selectedMenuIndex == 2 }" style="width: 130px; height: 130px;float: left;border-radius:100%;border: 5px solid white; position: absolute;bottom: 30px;padding: 2px;left: 51px;" src="~/Images/add.png" />
+                <input type="file" onchange="angular.element(this).scope().uploadFileFunction()" ng-model="acceptedFile" style="display: none" id="fileInputIdRv" name="filedata" />
+                <img ng-mouseleave="proileHoverFlag = false;" ng-mouseover="profileHoverFlag = true;" style="width: 130px; height: 130px;float: left;border-radius:100%;border: 5px solid white; position: absolute;bottom: 30px;padding: 2px;left: 51px;" ng-src="{{ myInfo.profileImage ? myInfo.profileImage : '../../../Images/icons/If no Profile photo.png'}}" />                              
                 <h5 class="fontClass" style="position: absolute;bottom: 11px;padding: 2px;left: 192px;color: white;font-size: 27px;color:#4f4f4f;">{{ (myInfo.firstName+" "+myInfo.lastName) | uppercase }}</h5>
             </div>
 

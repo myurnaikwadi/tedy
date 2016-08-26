@@ -114,14 +114,14 @@
         .dashBoardWizard {
             position: relative;
             float: left;
-            height: 77%;
+            height: 85%;
             width: 100%;
         }
 
         .mainDashBoardWizardParent {
             position: relative;
             float: left;
-            height: 84%;
+            height: 93%;
             width: 100%;
         }
         .roleRepeatWizard {
@@ -365,24 +365,24 @@
 }
 .ctsParentMain{
 	float: left;
-	width: 96%;
+	width: 100%;
 	    margin: 0%;
 	
-	height : 93%;
+	height : 100%;
     display: flex;
     margin-bottom: 0;
 }
 .ctsParentMainPanel{
 	float: left;
-	width: 95%;
+	width: 100%;
 	margin: auto;
-	height : 94%;
+	height : 100%;
 }
 .ctsCategoryHeading{
 	float: left;
 	width: 100%;
-	border-bottom:2px solid lightgray;
-	height : 9%;
+	border-bottom:1px solid lightgray;
+	height : 7%;
 	display:flex;
 }
 .ctsCategoryPanel{
@@ -760,7 +760,7 @@ float: left;
 
 
 .feedPanel {
-        float: left;
+    float: left;
 	position: relative;
 	width: 100%;
 	height : 100%;
@@ -768,23 +768,23 @@ float: left;
 }
 
 .feedParentArray{
-        float: left;
+    float: left;
 	width: 100%;
-	height : 67%;
+	height : 73%;
     padding:10px;
 }
 .skillTaggingArray{
 	float: left;
 	width: 100%;
     height: 20%;
-	border-top: 1px solid black;
+	border-bottom: 1px solid lightgray;
     padding: 9px;
     overflow: auto;
 }
 .homeLabelfeed{
-        float: left;
+    float: left;
 	width: 100%;
-	height : 6%;
+	height : 7%;
     display:flex;
     border-bottom: 1px solid lightgray;
 }

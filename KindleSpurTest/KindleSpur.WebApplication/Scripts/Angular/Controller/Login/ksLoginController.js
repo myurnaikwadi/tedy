@@ -76,7 +76,7 @@ app.controller('ksLoginController', ['$scope', 'authentification', '$location', 
                 $scope.displayAlert.formatType = '2';
                 $state.go('login');
             } else {
-                $state.go('ksUserDashBoard');
+                $state.go('home.dashBoard');
                 //$state.go('landingPage');
             }
         }

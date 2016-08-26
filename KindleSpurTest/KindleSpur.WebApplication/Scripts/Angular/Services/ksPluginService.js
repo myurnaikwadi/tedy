@@ -1,11 +1,22 @@
-﻿app.directive('monthly', function (dateServiceForMonthlyCalendar) {
+﻿/**
+     * @auther : MKN
+     * @date : 07/05/2016
+     * @Purpose : login and Signup controller - Manage all data related to  login and signup page
+     */
+app.controller('monthlyParent', ['$scope', 'authentification', '$location', '$rootScope', '$state', '$stateParams', function ($scope, authentification, $location, $rootScope, $state, $stateParams) {
+    $rootScope.currentModule = 'Calendar';
+    console.error('monthlyParent');
+}]);
+app.directive('monthly', function (dateServiceForMonthlyCalendar, $rootScope) {
     return {
         scope: {
-
+            moduleName : '@?'
         },
-        templateUrl: 'Home/ksMonthlyView',
+        templateUrl: 'Home/ksMonthlyView',        
         link: function ($scope) {
             console.error('monthlyController');
+            if ($scope.moduleName)
+                $rootScope.currentModule = $scope.moduleName;
             $scope.monthDate = new Date();
             $scope.dateNavigation = function (iValue) {
                 if (iValue == '1') {
@@ -15,10 +26,11 @@
                 }
                 $scope.init();
             };
-
-            $scope.init = function () {
-                $scope.monthlyArray = [].concat(dateServiceForMonthlyCalendar.initializeMonthlyCell($scope.monthDate));
-                $scope.dayName = [{ name: "Sun" }, { name: "Mon" }, { name: "Tue" }, { name: "Wed" }, { name: "Thu" }, { name: "Fri" }, { name: "Sat" }];//day name array reqiured for weekly view
+            $scope.closeExpandDateView = function (iEvent) {
+                if(iEvent) iEvent.stopPropagation();
+                console.error('closeExpandDateView()')
+                $scope.expandIndex = -1;
+                $scope.expandDay = null;
                 var _tempHeight = document.getElementById('monthlycontroller').getBoundingClientRect().height;
                 var _obj = {
                     iHeight: _tempHeight / 6,
@@ -26,6 +38,35 @@
                     iArray: $scope.monthlyArray
                 };
                 msIsotopeFunc.prototype.genericHeightChange(_obj);
+            };
+
+            $scope.expandIndex = -1;
+            $scope.expandDay = null;
+            $scope.cellClickFunc = function (iCell, iIndex, iEvent) {
+                if (iEvent) iEvent.stopPropagation();
+                $scope.expandIndex = iIndex;
+                var _tempHeight = document.getElementById('monthlycontroller').getBoundingClientRect().height;
+                $scope.expandDay = iCell;
+                //_dayWeekMonthView.expandIndex = iIndex;
+                var _object = {
+                    iHeight: _tempHeight / 6,
+                    index: iIndex,
+                    iWidth: 100 / 7,
+                    TotalColumns: 7,
+                    column: 7,
+                    row: 6,
+                    array: $scope.monthlyArray
+                };
+                msIsotopeFunc.prototype.expandForFloat(_object);
+                console.error($scope.monthlyArray[iIndex].styleObj)
+                $scope.monthlyArray[iIndex].styleObj['margin-top'] = '0';
+            };
+
+            $scope.init = function () {
+                $rootScope.$broadcast("refreshView", { type : 'refreshUI' });
+                $scope.monthlyArray = [].concat(dateServiceForMonthlyCalendar.initializeMonthlyCell($scope.monthDate));
+                $scope.dayName = [{ name: "Sun" }, { name: "Mon" }, { name: "Tue" }, { name: "Wed" }, { name: "Thu" }, { name: "Fri" }, { name: "Sat" }];//day name array reqiured for weekly view
+                $scope.closeExpandDateView();
                var _indexArr = [1,21,13,35,38,28,40]
                 for (var k = 0 ; k < $scope.monthlyArray.length ; k++) {
                     if (k % 2 == 0) {

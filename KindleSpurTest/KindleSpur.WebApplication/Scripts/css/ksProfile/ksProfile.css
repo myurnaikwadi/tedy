@@ -244,3 +244,6 @@ display: flex;
     transform: scale(1) !important;
     transition: 1s all ease;
 }
+.profileHoverClass {
+    z-index:1 !important;
+}

@@ -9,12 +9,13 @@
             <h6 class="profileName">WELCOME</h6>
             <h6 class="profileName">&nbsp{{loggedDetail.FirstName}}</h6>
         </div>*@
-    <div class="logoutOption">
+    <div class="logoutOption" style="width: 6%;">
         <div class="logoutOptionParent">
-            <h5 style="margin: auto;"class="fontClass genericPointerClass" ng-click="logout()">LOGOUT</h5>
+            @*<h5 style="margin: auto;"class="fontClass genericPointerClass" ng-click="logout()">LOGOUT</h5>*@
+            <img style="margin: auto;width:20px;" class="genericPointerClass" ng-click="logout()" src="~/Images/logout1.png" />
         </div>
     </div>
-    <div class="notificationDiv" ng-show="notification == false">
+    <div class="notificationDiv" ng-show="false">
         <div class="notificationDivParent">
             <h5 style="color: red;float:left;margin: auto 0;" class="fontClass genericPointerClass">NOTIFICATIONS</h5>
             <div class="applicationNotiCount" title="5" style="float:left;text-align: center;margin: auto 5%;display: flex;">
@@ -22,14 +23,14 @@
             </div>
         </div>
     </div>
-    <div class="roleIcons" ng-show="notification == true">
+    <div class="roleIcons" ng-show="uiFlag.roleIcon">
         <div class="roleIconCircle coacheeBorderColor genericPointerClass" ng-click="navigateAsPerRole(0)"></div>
         <div class="roleIconCircle coachBorderColor genericPointerClass" ng-click="navigateAsPerRole(1)"></div>
         <div class="roleIconCircle menteeBorderColor genericPointerClass" ng-click="navigateAsPerRole(2)"></div>
         <div class="roleIconCircle mentorBorderColor genericPointerClass" ng-click="navigateAsPerRole(3)"></div>
         @*<div class="triangleArrowUp"></div>*@
     </div>
-    <div class="profileViewModeMain" style="margin-left: 0;" ng-click="navigateToProfile()" ng-hide="notification == true" >
+    <div class="profileViewModeMain" style="margin-left: 0;" ng-click="navigateToProfile()" ng-show="uiFlag.profileLogo" >
         <div class="profileImagePartMain">
             <div class="profileImage"></div>
         </div>
@@ -38,7 +39,7 @@
             <h2 class="profileName">&nbsp {{(loggedDetail.FirstName) | uppercase }}</h2>
         </div>
     </div>
-    <div class="profileViewModeMain">
+    <div class="profileViewModeMain" ng-show="uiFlag.calendar">
         <div class="profileImagePartMain" style="width: 35px;"><img style="width: 30px; height: 30px; margin: auto; float: left;" ng-click="loadCalendarView()" src="~/Images/calendar.png" /></div>
     </div>
 </div>

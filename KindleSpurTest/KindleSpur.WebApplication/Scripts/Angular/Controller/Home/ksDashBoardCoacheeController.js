@@ -1,11 +1,13 @@
 ﻿app.controller('ksDashBoardCoacheeController', function ($rootScope, $scope, serverCommunication, $interval, $state) {
     window.cocc = $scope;
+    $rootScope.currentModule = 'Coachee';
     $scope.loggedEmail = $rootScope.loggedDetail.EmailAddress;
     $scope.ApprovalName = $rootScope.loggedDetail.FirstName + " " + $rootScope.loggedDetail.LastName;
-    $scope.conversation = { Message : '' };
+    $scope.conversation = { Message: '' };
+    $scope.loadingObject = { showLoading: true, loadingMessage: 'Loading' };
     $scope.ReceiverName = "";
     $scope.navigateToProfile = function () {
-        $state.go('profile');
+        $state.go('home.dashBoard.profile');
     };
     $scope.notifications = [
 
@@ -70,13 +72,16 @@
     $scope.menuClick = function (iIndex, iOption) {
         $scope.selectedMenu = iIndex;
         $scope.stopFight();
+        $scope.feedBack.closeFeedBackPopup();
+        $scope.feedContainArray =[];
+        $scope.loadingMiddleObject = { showLoading: true, loadingMessage: 'Loading' };
         switch (iIndex) {
-            case 0: $scope.autoSyncRoutine(_conversationTime); $scope.conversationRequest(); break;
+            case 0: $scope.conversationRequest();  $scope.autoSyncRoutine(_conversationTime); break;
             case 4: $scope.getRssFeedData(); break;
             case 3: $scope.getCoachRecord(); break;
             case 1: $scope.generateGarden(); break;
                 //case 6: $scope.getPointsRecord(); break;
-            case 5: $scope.autoSyncRoutine(_chatMessageTime); $scope.conversationLoading(); break;
+            case 5: $scope.conversationLoading(); $scope.autoSyncRoutine(_chatMessageTime); break;
                 //case 5:
                 //    if ($scope.conversationListNew.length > 0) {
                 //        $scope.ReceiverName = $scope.conversationListNew[0].FirstName + " " + $scope.conversationListNew[0].LastName;
@@ -85,6 +90,9 @@
                 //        $scope.showSelectedConversation($scope.loggedEmail, $scope.ReceiverEmail);
                 //    }
                 //    break;
+            case 2:
+            case 7:
+            case 6 : $scope.loadingMiddleObject = { showLoading: false, loadingMessage: 'Loading' }; break;
         }
     };
     $scope.selectedOption = function (iIndex, iCate) {
@@ -239,6 +247,7 @@
                 for (var _skill in _skills) {
                     $scope.feedCategoryArray.push({ selected: false, name: _skill });
                 }
+                 $scope.loadingMiddleObject = { showLoading: false, loadingMessage: 'Loading' };
                 if (!$scope.$$phase) $scope.$digest();
             },
             failureCallBack: function (iObj) {
@@ -314,7 +323,7 @@
                 }
                 console.error(_retu)
                 $scope.ctsDataForMolecule = _retu;
-
+                $scope.loadingMiddleObject = { showLoading: false, loadingMessage: 'Loading' };
             },
             failureCallBack: function (iObj) {
                 console.error('In failureCallBack', iObj);
@@ -352,10 +361,12 @@
             }
             console.error(_coachFinalArr, $scope.timeSlots)
             $scope.Coaches = [].concat(_coachFinalArr);
+            $scope.loadingMiddleObject = { showLoading: false, loadingMessage: 'Loading' };
             setTimeout(function () {
                 for (var k = 0; k < $scope.Coaches.length; k++) {
                        $scope.Coaches[k].showLoad = true;
                 }
+
                 $scope.$apply();
             }, 500);
     };
@@ -384,6 +395,7 @@
                                 $scope.availableSkills.push(iCts);
                             }
                         });
+
                         // $scope.availableSkills.splice(0, $scope.availableSkills.length);
                         //$scope.availableSkills.push.apply($scope.availableSkills, result.data.Filters);
                     },
@@ -457,6 +469,7 @@
                     //var _con = angular.copy(_coach[_key])
                     // $scope.conversationListNew.push(_con);
                 }
+                $scope.loadingMiddleObject = { showLoading: false, loadingMessage: 'Loading' };
                 if ($scope.conversationListNew && $scope.conversationListNew.length > 0) {
                     if ($scope.openConversation) {
                         for (var i = 0 ; i < $scope.conversationListNew.length ; i++) {                           
@@ -480,6 +493,7 @@
     };
     $scope.openConversation = null;
     $scope.conversationLoad = function (iIndex, iCategory) {
+        $scope.loadingMessageObject = { showLoading: true, loadingMessage: 'Loading' };
         for (var i = 0 ; i < $scope.conversationListNew.length ; i++) {
             $scope.conversationListNew[i].selectedConversation = false;
         }
@@ -608,6 +622,7 @@
                     b = new Date(b.UpdateDate);
                     return a - b;
                 });
+                $scope.loadingMessageObject = { showLoading: false, loadingMessage: 'Loading' };
                 //  console.error('ssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss')
                 _setScrollPosition();
                
@@ -632,6 +647,7 @@
                 }
 
                 $scope.notificationData = iObj.data.Result;
+                $scope.loadingMessageObject = { showLoading: false, loadingMessage: 'Loading' };
             },
             failureCallBack: function (iObj) {
                 console.debug('In failureCallBack', iObj);
@@ -648,6 +664,7 @@
                 }
 
                 $scope.notificationRequestData = iObj.data.Result;
+                $scope.loadingMiddleObject = { showLoading: false, loadingMessage: 'Loading' };
             },
             failureCallBack: function (iObj) {
                 console.debug('In failureCallBack', iObj);
@@ -938,7 +955,7 @@
 
     $scope.init = function () {
         $scope.conversationRequest();
-
+        $scope.loadingObject = { showLoading: false, loadingMessage: 'Loading' };
         $scope.autoSyncRoutine(_conversationTime);
         serverCommunication.getMyCoacheeSelection({
             Role: 'Coach',

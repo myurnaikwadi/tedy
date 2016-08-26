@@ -19,10 +19,10 @@
     $('#popoverOption1').popover({ trigger: "hover" });
     
     $scope.loadMentoringView = function () {
-        $state.go('ksUserDashBoard');
+        $state.go('home.dashBoard');
     };
     $scope.loadVcsView = function () {
-        $state.go('VCGameView');
+        $state.go('home.vCGameView');
     };
 
 });
