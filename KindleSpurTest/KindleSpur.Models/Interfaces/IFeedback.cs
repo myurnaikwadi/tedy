@@ -11,13 +11,6 @@ namespace KindleSpur.Models.Interfaces
         DateTime CreateDate { get; set; }
         string Skill { get; set; }
         int customerSatisfactionRating { get; set; }
-        List<FeedBacks> FeedBacks { get; set; }
-    }
-
-    public interface FeedBacks
-    {
-        string Question { get; set; }
-        string Answer { get; set; }
-    }
-    
+        List<QueAndAns> QueAndAns { get; set; }
+    }    
 }

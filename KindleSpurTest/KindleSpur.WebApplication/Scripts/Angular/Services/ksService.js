@@ -379,6 +379,17 @@ app.factory('serverCommunication', function ($http) {
 
             iObj.loggedUserDetails.Role = _action;
             console.error(iObj)
+
+            var Data = {
+                Sender: iObj.loggedUserDetails.sender,
+                FeedBackId: iObj.loggedUserDetails.FeedBackId,
+                QueAndAns: iObj.loggedUserDetails.FeedBacks,
+                FeedbackClosed: iObj.loggedUserDetails.FeedbackClosed,
+                customerSatisfactionRating: iObj.loggedUserDetails.customerSatisfactionRating,
+                Skill: iObj.loggedUserDetails.Skill
+            };
+
+
             // $http.post(_str, iObj.loggedUserDetails).then(iObj.successCallBack, iObj.failureCallBack)
             var req = {
                 method: 'POST',
@@ -386,7 +397,7 @@ app.factory('serverCommunication', function ($http) {
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                data: { feedback: iObj.loggedUserDetails },
+                data: Data,
                 traditional: true
             }
             console.error(req)

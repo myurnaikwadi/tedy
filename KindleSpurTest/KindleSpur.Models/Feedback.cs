@@ -17,6 +17,6 @@ namespace KindleSpur.Models
         public string FeedBackId { get; set; }
         public string Skill { get; set; }
         public int customerSatisfactionRating { get; set; }
-        public List<FeedBacks> FeedBacks { get; set; }
+        public List<QueAndAns> QueAndAns { get; set; }
     }
 }
