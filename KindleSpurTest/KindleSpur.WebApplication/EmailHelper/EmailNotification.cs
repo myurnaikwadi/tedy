@@ -1,4 +1,5 @@
 ﻿using KindleSpur.Models;
+using KindleSpur.Models.Communication;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -70,6 +71,18 @@ namespace KindleSpur.WebApplication.MessageHelper
         public static void SendMeetingEmail(MeetingSchedular _obj, string uri, string subject, string content)
         {
             MailMessage message = new MailMessage(aliasemailsendername.ToString(), _obj.ReceiverEmail);
+            message.Subject = subject;
+            message.Body = content;
+            message.IsBodyHtml = true;
+            SmtpClient smtp = new SmtpClient(smtpServer.ToString(), portNumber);
+            smtp.Credentials = new System.Net.NetworkCredential(emailAddress.ToString(), password.ToString());
+            smtp.EnableSsl = true;
+            smtp.Send(message);
+        }
+
+        public static void SendMeetingEmail(Meeting _obj, string uri, string subject, string content)
+        {
+            MailMessage message = new MailMessage(aliasemailsendername.ToString(), _obj.To);
             message.Subject = subject;
             message.Body = content;
             message.IsBodyHtml = true;

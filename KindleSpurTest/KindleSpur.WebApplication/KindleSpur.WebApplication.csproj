@@ -255,6 +255,7 @@
     <Compile Include="Controllers\MenteeController.cs" />
     <Compile Include="Controllers\MentorController.cs" />
     <Compile Include="Controllers\ResourcesController.cs" />
+    <Compile Include="Controllers\SchedularController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Controllers\ValueController.cs" />
     <Compile Include="EmailHelper\EmailNotification.cs" />
@@ -512,6 +513,7 @@
     <Folder Include="Views\Coach\" />
     <Folder Include="Views\Mentor\" />
     <Folder Include="Views\Resources\" />
+    <Folder Include="Views\Schedular\" />
     <Folder Include="Views\Shared\" />
   </ItemGroup>
   <ItemGroup>
