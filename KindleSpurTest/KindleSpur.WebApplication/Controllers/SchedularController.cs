@@ -93,7 +93,23 @@ namespace KindleSpur.WebApplication.Controllers
             return _repo.MeetingSchedularUpdate(MeetingId, flag);            
         }
 
-        
+        public ActionResult GetAllMeetingPerMonth(DateTime FromDate, DateTime ToDate)
+        {
 
+            //MeetingSchedularRepository _repo = new MeetingSchedularRepository();
+            //var result = _repo.GetAllMeetingRequest().ToJson();
+            //return Json(new { Result = result }, JsonRequestBehavior.AllowGet);
+            //return Content(result);
+
+            MeetingRepository _repo = new MeetingRepository();
+            //List<IUser> result = new List<IUser>();
+
+            UserRepository ur = new UserRepository();
+           var result = _repo.GetAllMeetingPerMonth(( ((IUser)Session["User"]).EmailAddress),FromDate,ToDate);           
+            return Json(new { Result = result }, JsonRequestBehavior.AllowGet);
         }
+
+
+
+    }
 }
