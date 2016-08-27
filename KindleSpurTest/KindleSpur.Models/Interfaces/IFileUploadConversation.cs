@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace KindleSpur.Models.Interfaces
 {
-    public interface IFileUpload
+    public interface IFileUploadConversation
     {
         ObjectId Id { get; set; }
-        string FileName { get; set; }
-        string FilePath { get; set; }
-        string TagName { get; set; }
+        string FileNameConversation { get; set; }
+        string FilePathConversation { get; set; }
+        string TagNameConversation { get; set; }
     }
 }

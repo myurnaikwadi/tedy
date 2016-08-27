@@ -37,6 +37,7 @@ namespace KindleSpur.Models
         public string Photo { get; set; }
         public string coverphoto { get; set; }
         public List<FileUpload> Files { get; set; }
+        public List<BookMark> BookMarks { get; set; }
         public List<Game> Games { get; set; }
         public List<ValueFeedStory> ValueFeedStories { get; set; }
         public List<VSCS> ValueCreationActivity { get; set; }

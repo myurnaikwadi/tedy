@@ -41,7 +41,7 @@ namespace KindleSpur.Models.Interfaces
         string coverphoto { get; set; }
         List<FileUpload> Files { get; set; }
         List<Game> Games { get; set; }
-
+         List<BookMark> BookMarks { get; set; }
         Boolean IsExternalAuthentication { get; set; }
         DateTime CreateDate { get; set; }
         DateTime UpdateDate { get; set; }

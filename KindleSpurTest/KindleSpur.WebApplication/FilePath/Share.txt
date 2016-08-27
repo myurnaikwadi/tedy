@@ -1,0 +1,119 @@
+ ConversationsRepository.cs
+public List<FileUpload> getFiles(string UserId)
+        {
+            var _UserrCollection = con.GetCollection("UserDetails");
+
+            var userDetail = _UserrCollection.FindOneAs<User>(Query.EQ("EmailAddress", UserId));
+            if (userDetail != null)
+                return userDetail.Files;
+            else
+                return new List<FileUpload>();
+
+        }
+        public bool AddResourceFileLink(IConversation conversationData)
+        {
+            bool _transactionStatus = false;
+
+            try
+            {
+                var result = _conversationCollection.FindAs<BsonDocument>(Query.And(Query.EQ("SenderEmail", conversationData.SenderEmail), Query.EQ("ReceiverEmail", conversationData.ReceiverEmail), Query.EQ("skill", conversationData.skill))).ToList();
+
+                if (result.Count() > 0 && conversationData.Content == null)
+                {
+                    _transactionStatus = false;
+                    return false;
+                }
+                _conversationCollection.Insert(conversationData);
+
+                _transactionStatus = true;
+            }
+            catch (MongoException ex)
+            {
+                string message = "{ Error : 'Failed at GetCoachingStatus().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ";
+                _logCollection.Insert(message);
+                throw new MongoException("New Conversation failure!!!");
+            }
+            catch (Exception e)
+            {
+                Exceptionhandle em = new Exceptionhandle();
+                em.Error = "Failed at GetCoachingStatus()";
+                em.Log = e.Message.Replace("\r\n", "");
+                var st = new System.Diagnostics.StackTrace(e, true);
+                var frame = st.GetFrame(0);
+                var line = frame.GetFileLineNumber();
+                _logCollection.Insert(em);
+                throw new MongoException("Signup failure!!!");
+            }
+            finally
+            {
+
+            }
+
+            return _transactionStatus;
+        }
+
+
+ConversationCOntroller
+
+
+
+    public JsonResult ResourseFileUrl(Conversation _obj, string ReceiverName, string Role)
+        {
+            ResponseMessage response = new ResponseMessage();
+            try
+            {
+                //ConversationRepository _repo = new ConversationRepository();
+                //_obj.CreateDate = _obj.UpdateDate = DateTime.Now;
+                //_repo.AddNewConversation(_obj);
+
+                //return RedirectToAction("Index");
+
+                ConversationRepository _repo = new ConversationRepository();
+                _obj.CreateDate = DateTime.Now.ToShortDateString();
+                _obj.UpdateDate = DateTime.Now;
+                if (_repo.AddResourceFileLink(_obj))
+                {
+                    if (_obj.Content == null)
+                    {
+
+                        string uri = Request.Url.AbsoluteUri.ToString();
+                        string senderName = ((IUser)System.Web.HttpContext.Current.Session["User"]).FirstName + " " + ((IUser)System.Web.HttpContext.Current.Session["User"]).LastName;
+                        string subject = "Communication Request from " + senderName;
+
+                        string content = "Hello " + ReceiverName + ",";
+                        if (Role == "Coachee")
+                            content += "<br/><br/>You have a coaching invite from " + senderName + " for Skill '" + _obj.skill + "'.<br/>";
+                        else if (Role == "Mentee")
+                            content += "<br/><br/>You have a mentoring invite from " + senderName + " for Topic '" + _obj.skill + "'.<br/>";
+                        else
+                            content += "<br/><br/>You have a mentoring invite from " + senderName + " for Topic '" + _obj.skill + "'.<br/>";
+
+                        content += "<br/><br/>To accept or decline please click on the following link - <a href = '" + uri + "'>" + uri + "</a>";
+                        content += "<br /><br />Regards, <br/> KindleSpur Team.";
+                        EmailNotification.SendConversationEmail(_obj, uri, subject, content);
+                        TempData["StatusMessage"] = "Please check your mail to start conversation!!!";
+                    }
+                    else
+                    {
+                        if (Role == "Coachee")
+                            response.FailureCallBack("Request pending with Coach!!!");
+                        else if (Role == "Mentee")
+                            response.FailureCallBack("Request pending with Mentor!!!");
+                    }
+                }
+                else
+                {
+                    if (Role == "Coachee")
+                        response.FailureCallBack("Request already sent to Coach!!!");
+                    else if (Role == "Mentee")
+                        response.FailureCallBack("Request already sent to Mentor!!!");
+                }
+            }
+            catch (Exception Ex)
+            {
+
+                //return View();
+            }
+            return this.Json(response);
+        }
+

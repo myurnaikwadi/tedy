@@ -1,4 +1,4 @@
-﻿app.directive('commonRepository', function ($state, serverCommunication) {
+﻿app.directive('commonRepository', function ($state, serverCommunication, $rootScope) {
     return {
         scope: {
             role: "@"
@@ -31,7 +31,7 @@
             };           
             scope.uploadDataOnServer = function () {
                 console.error(data)
-                serverCommunication.sendUploadedFileToServer(data, null, function (iPath) {
+                serverCommunication.sendUploadedFileToServer(data,function (iPath) {
                     data = new FormData();
                     scope.uploadAttachmentArray = [];
                     scope.loadUploadPopupFlag = false;
@@ -49,6 +49,7 @@
                     //  debugger;
                     console.error(valueFile);                    
                     angular.forEach(valueFile, function (value, key) {
+                        value.TagName = "sssss"
                         data.append(key, value);
                         console.error(key, value)
                     });
@@ -74,6 +75,23 @@
                 });
             };
 
+            scope.init = function () {
+                var _object = {                   
+                    EmailAddress: $rootScope.loggedDetail.EmailAddress,
+                }
+                serverCommunication.getArtifactBookMarks({
+
+                    loggedDetail: _object,
+                    successCallBack: function (iObj) {
+                        console.error('serverrrrr', iObj)
+                        scope.artifactsArray = iObj.data[0];
+                        scope.bookMarkArray = iObj.data[1];
+                    }, failureCallBack: function (iObj) {
+                        console.error('serverrrrr', iObj)
+                    }
+                });
+            };
+            scope.init();
         }
     }
 });

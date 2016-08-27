@@ -24,5 +24,7 @@ namespace KindleSpur.Models.Interfaces
         string CreateDate { get; set; }
         DateTime UpdateDate { get; set; }
         string skill { get; set; }
+        List<FileUploadConversation> FilesConversations { get; set; }
+        List<ResourceFileLink> FilesURLlink { get; set; }
     }
 }

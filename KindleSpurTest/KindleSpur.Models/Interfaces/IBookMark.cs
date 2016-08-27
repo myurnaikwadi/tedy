@@ -7,11 +7,12 @@ using System.Threading.Tasks;
 
 namespace KindleSpur.Models.Interfaces
 {
-    public interface IFileUpload
+    public interface IBookMark
     {
         ObjectId Id { get; set; }
-        string FileName { get; set; }
-        string FilePath { get; set; }
+        string DocumentName { get; set; }
         string TagName { get; set; }
+        string LinkUrl { get; set; }
+
     }
 }

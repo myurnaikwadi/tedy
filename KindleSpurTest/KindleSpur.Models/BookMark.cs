@@ -8,11 +8,11 @@ using System.Threading.Tasks;
 
 namespace KindleSpur.Models
 {
-    public class FileUpload : IFileUpload
+    public class BookMark :IBookMark
     {
         public ObjectId Id { get; set; }
-        public string FileName { get; set; }
-        public string FilePath { get; set; }
+        public string DocumentName { get; set; }
         public string TagName { get; set; }
+        public string LinkUrl { get; set; }
     }
 }
