@@ -386,9 +386,10 @@ app.factory('serverCommunication', function ($http) {
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                data: iObj.loggedUserDetails
+                data: { feedback: iObj.loggedUserDetails },
+                traditional: true
             }
-
+            console.error(req)
             $http(req).then(iObj.successCallBack, iObj.failureCallBack);
 
         },
@@ -519,7 +520,7 @@ app.factory('serverCommunication', function ($http) {
             var _checkObj = angular.copy(iObj);
             var req = {
                 method: 'POST',
-                url: '/Conversation/Create',
+                url: '/Conversation/SaveAndSendConversationNotification',
                 headers: {
                     'Content-Type': 'application/json'
                 },

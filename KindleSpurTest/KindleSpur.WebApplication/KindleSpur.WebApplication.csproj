@@ -255,6 +255,7 @@
     <Compile Include="Controllers\MenteeController.cs" />
     <Compile Include="Controllers\MentorController.cs" />
     <Compile Include="Controllers\ResourcesController.cs" />
+    <Compile Include="Controllers\SchedularController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Controllers\ValueController.cs" />
     <Compile Include="EmailHelper\EmailNotification.cs" />
@@ -481,7 +482,6 @@
     <Content Include="Views\User\PasswordPromp.cshtml" />
     <Content Include="Views\Home\ksUserDashBoard.cshtml" />
     <Content Include="Views\User\linkedIn.cshtml" />
-    <Content Include="Views\User\Error.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Home\ksDashBoardCoach.cshtml" />
     <Content Include="Views\Home\ksDashBoardCoachee.cshtml" />
@@ -504,7 +504,6 @@
     <Content Include="Views\Home\ksMonthlyTemplate.cshtml" />
     <Content Include="Views\Home\ksCommonRepository.cshtml" />
     <Content Include="Views\Home\ksParentState.cshtml" />
-    <Content Include="Views\Shared\Error.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -513,6 +512,8 @@
     <Folder Include="Views\Coach\" />
     <Folder Include="Views\Mentor\" />
     <Folder Include="Views\Resources\" />
+    <Folder Include="Views\Schedular\" />
+    <Folder Include="Views\Shared\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

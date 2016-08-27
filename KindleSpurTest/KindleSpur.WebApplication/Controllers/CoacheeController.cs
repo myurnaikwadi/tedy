@@ -115,7 +115,7 @@ namespace KindleSpur.WebApplication.Controllers
            
         }
         [HttpPost]
-        public int SaveFeedBack(Feedback feedback,string Role)
+        public int SaveFeedBack(Feedback feedback)
         {
             try
             {
