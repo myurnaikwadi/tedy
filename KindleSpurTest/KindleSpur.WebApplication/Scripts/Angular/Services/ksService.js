@@ -531,7 +531,7 @@ app.factory('serverCommunication', function ($http) {
             var _checkObj = angular.copy(iObj);
             var req = {
                 method: 'POST',
-                url: '/Conversation/SaveAndSendConversationNotification',
+                url: '/Conversation/MentoringCoachingInvite',
                 headers: {
                     'Content-Type': 'application/json'
                 },
@@ -542,7 +542,7 @@ app.factory('serverCommunication', function ($http) {
         },
         updateConversation: function (iObj) {
             console.error(iObj)
-            $http.post('/Conversation/UpdateConversationStatus', iObj.loggedUserDetails, iObj.ReceiverName, iObj.Role).then(iObj.successCallBack, iObj.failureCallBack)
+            $http.post('/Conversation/CoachingMentoringInvite', iObj.loggedUserDetails, iObj.ReceiverName, iObj.Role).then(iObj.successCallBack, iObj.failureCallBack)
         },
 
         getAllMeetingRequest: function (iObj) {
