@@ -1,93 +1,92 @@
 ﻿<div class="parentBody" ng-controller="ksDashBoardMenteeController">
-        <div class="parentRoleDashboard">
-            <div class="parentRoleMenu menteeThemeColor" >
-                <div class="profileViewMode genericPointerClass" ng-click="navigateToProfile()">
-                    <div class="imageConversation">
-                        <img style="border: 2px solid white;margin:auto auto;margin-top: 0;width: 40px;height: 40px;border-radius: 50%;" ng-src="{{loggedDetail.Photo ?  loggedDetail.Photo  : '../../../Images/icons/If no Profile photo.png'}}" />
-                    </div>                    
-                    <div class="profileNamePart fontClass genericPointerClass">
-                        <h5 style="font-size: 15px;" class="leftSideMenuLable fontClass genericPointerClass eliipsisClass">WELCOME {{(loggedDetail.FirstName) | uppercase }}</h5>
-                        <h5 style="font-size: 12px;float: right;" class="leftSideMenuLable fontClass genericPointerClass eliipsisClass">- Mentee</h5>
-                    </div>
+    <div class="parentRoleDashboard">
+        <div class="parentRoleMenu menteeThemeColor" >
+            <div class="profileViewMode genericPointerClass" ng-click="navigateToProfile()">
+                <div class="imageConversation">
+                    <img style="border: 2px solid white;margin:auto auto;margin-top: 0;width: 40px;height: 40px;border-radius: 50%;" ng-src="{{loggedDetail.Photo ?  loggedDetail.Photo  : '../../../Images/icons/If no Profile photo.png'}}" />
                 </div>
-                <div class="leftSideMenuMainDashBoard">
-                    <div class="leftSideMenuParent">
-                        <div class="leftSideMenu" ng-class="{ selectedLeftSideMenu : selectedMenu == $index }" ng-repeat="option in leftSideMenus" ng-click="menuClick($index,option)">
-                            <h5 class="leftSideMenuLable fontClass genericPointerClass">{{option.name}}</h5>
-                            <h5 ng-if="option.name == 'Add Topics'" style="float: right;font-size: 25px;margin: 1%;" class="leftSideMenuLable fontClass genericPointerClass">@*+*@</h5>
-                        </div>
+                <div class="profileNamePart fontClass genericPointerClass">
+                    <h5 style="font-size: 15px;" class="leftSideMenuLable fontClass genericPointerClass eliipsisClass">WELCOME {{(loggedDetail.FirstName) | uppercase }}</h5>
+                    <h5 style="font-size: 12px;float: right;" class="leftSideMenuLable fontClass genericPointerClass eliipsisClass">- Mentee</h5>
+                </div>
+            </div>
+            <div class="leftSideMenuMainDashBoard">
+                <div class="leftSideMenuParent">
+                    <div class="leftSideMenu" ng-class="{ selectedLeftSideMenu : selectedMenu == $index }" ng-repeat="option in leftSideMenus" ng-click="menuClick($index,option)">
+                        <h5 class="leftSideMenuLable fontClass genericPointerClass">{{option.name}}</h5>
+                        <h5 ng-if="option.name == 'Add Topics'" style="float: right;font-size: 25px;margin: 1%;" class="leftSideMenuLable fontClass genericPointerClass">@*+*@</h5>
                     </div>
                 </div>
             </div>
+        </div>
 
-            <div class="parentRoleDetailRight" style="padding:1%;padding-bottom: 0;" ng-if="loadingMiddleObject.showLoading">
-                <cube-Strct class="cubeParentClass" loading-Object="loadingMiddleObject"></cube-Strct>
-            </div>
-            <div class="parentRoleDetailRight" style="padding:1%;padding-bottom: 0;" ng-if="loadingMiddleObject.showLoading == false" ng-switch="selectedMenu">
-                @*search mentor -3 *@
-                <div class="fullWidthHeightClass" ng-switch-when="3">
-                    <div class="hideCoacheeProfile" ng-class="{ showCoacheeProfileClass : showMenteeProfile == true }">
-                        <profile-Page ng-if="showMenteeProfile && userInfo" user-Info="userInfo" close-Popup="closeProfilePic()" edit-Required="false"></profile-Page>
-                    </div>
-                    <ddiv class="ctsParent">
-                        <div class="ctsParentMain">
-                            <div class="ctsParentMainPanel">
-                                <div class="ctsCategoryHeading">
-                                    <div class="homeLabelInChat" style="height:100%;display: flex;">
-                                        <h5 class="fontClass" style="font-size: 16px;margin: auto;margin-left: 1%;">SEARCH MENTOR</h5>
+        <div class="parentRoleDetailRight" style="padding:1%;padding-bottom: 0;" ng-if="loadingMiddleObject.showLoading">
+            <cube-Strct class="cubeParentClass" loading-Object="loadingMiddleObject"></cube-Strct>
+        </div>
+        <div class="parentRoleDetailRight" style="padding:1%;padding-bottom: 0;" ng-if="loadingMiddleObject.showLoading == false" ng-switch="selectedMenu">
+            @*search mentor -3 *@
+            <div class="fullWidthHeightClass" ng-switch-when="3">
+                <div class="hideCoacheeProfile" ng-class="{ showCoacheeProfileClass : showMenteeProfile == true }">
+                    <profile-Page ng-if="showMenteeProfile && userInfo" user-Info="userInfo" close-Popup="closeProfilePic()" edit-Required="false"></profile-Page>
+                </div>
+                <ddiv class="ctsParent">
+                    <div class="ctsParentMain">
+                        <div class="ctsParentMainPanel">
+                            <div class="ctsCategoryHeading">
+                                <div class="homeLabelInChat" style="height:100%;display: flex;">
+                                    <h5 class="fontClass" style="font-size: 16px;margin: auto;margin-left: 1%;">SEARCH MENTOR</h5>
+                                </div>
+                                <div class="search-mentor">
+                                    <div class="inner-addon left-addon">
+                                        <span ng-show="searchKey.length > 0" class="filter-icon" ng-click="clearSearch()"><i class="fa fa-times-circle"></i></span>
+                                        <span ng-show="searchKey.length == 0" class="filter-icon"><i class="fa fa-search"></i></span>
+                                        <input type="text" class="auto-complete" cts-dropdown ng-model="searchKey" key="searchKey" searching="searching" skill="selectedSkill" placeholder="Type to search" />
                                     </div>
-                                    <div class="search-mentor">
-                                        <div class="inner-addon left-addon">
-                                            <span ng-show="searchKey.length > 0" class="filter-icon" ng-click="clearSearch()"><i class="fa fa-times-circle"></i></span>
-                                            <span ng-show="searchKey.length == 0" class="filter-icon"><i class="fa fa-search"></i></span>
-                                            <input type="text" class="auto-complete" cts-dropdown ng-model="searchKey" key="searchKey" searching="searching" skill="selectedSkill" placeholder="Type to search" />
+                                    <div class="auto-complete-container" ng-show="searching" ng-class="{hide:!searching}">
+                                        <div class="item" ng-click="selectSkill(skill)" ng-repeat="skill in skills = (availableSkills | filter: skillFilter)">
+                                            <div>{{skill.Name}}</div>
                                         </div>
-                                        <div class="auto-complete-container" ng-show="searching" ng-class="{hide:!searching}">
-                                            <div class="item" ng-click="selectSkill(skill)" ng-repeat="skill in skills = (availableSkills | filter: skillFilter)">
-                                                <div>{{skill.Name}}</div>
-                                            </div>
-                                            <div ng-show="!skills.length && searching" class="no-result">
-                                                No result found.
-                                            </div>
+                                        <div ng-show="!skills.length && searching" class="no-result">
+                                            No result found.
                                         </div>
                                     </div>
                                 </div>
-                                <div class="ctsCategoryPanelMainPanel" style="overflow-y:scroll;">
-                                    <h5 class="margin-small" style="margin-bottom: 0;">RECOMMENDED MENTORS</h5>
-                                    <div class="filterListContainer">
-                                        <div class="mentor-list">
-                                            <div class="row" style="margin:0px;">
-                                                <div style="display: flex;width: 100%;height: 35px;" ng-repeat-start="timeSlot in timeSlots">
-                                                    <div style="margin:auto;width: 100%;display: flex;">
-                                                        <div style="width:33.33%;height:100%;float:left;margin: auto;">
-                                                            <div style="height:1px;width:100%;border-bottom:1px solid rgba(214,214,214,.61);"></div>
-                                                        </div>
-                                                        <div style="width:33.33%;height:100%;float:left;margin: auto;display:flex;">
-                                                            <h5 class="genericEventHeadings genericMarginZero genericEllipsis" style="margin: auto;color: #a9a9a9;font-size:13px;" title="{{timeSlot}}">{{timeSlot}}</h5>
-                                                        </div>
-                                                        <div style="width:33.33%;height:100%;float:left;margin: auto;">
-                                                            <div style="height:1px;width:100%;border-bottom:1px solid rgba(214,214,214,.61);"></div>
-                                                        </div>
+                            </div>
+                            <div class="ctsCategoryPanelMainPanel" style="overflow-y:scroll;">
+                                <h5 class="margin-small" style="margin-bottom: 0;">RECOMMENDED MENTORS</h5>
+                                <div class="filterListContainer">
+                                    <div class="mentor-list">
+                                        <div class="row" style="margin:0px;">
+                                            <div style="display: flex;width: 100%;height: 35px;" ng-repeat-start="timeSlot in timeSlots">
+                                                <div style="margin:auto;width: 100%;display: flex;">
+                                                    <div style="width:33.33%;height:100%;float:left;margin: auto;">
+                                                        <div style="height:1px;width:100%;border-bottom:1px solid rgba(214,214,214,.61);"></div>
+                                                    </div>
+                                                    <div style="width:33.33%;height:100%;float:left;margin: auto;display:flex;">
+                                                        <h5 class="genericEventHeadings genericMarginZero genericEllipsis" style="margin: auto;color: #a9a9a9;font-size:13px;" title="{{timeSlot}}">{{timeSlot}}</h5>
+                                                    </div>
+                                                    <div style="width:33.33%;height:100%;float:left;margin: auto;">
+                                                        <div style="height:1px;width:100%;border-bottom:1px solid rgba(214,214,214,.61);"></div>
+                                                    </div>
 
-                                                    </div>
                                                 </div>
-                                                <div class="mentor-card mentorBorderColor" style="border-top-width:4px !important; border-right: 1px solid #ddd !important;border-left: 1px solid #ddd !important;border-bottom: 1px solid #ddd !important;" ng-init="coach.showOption = false" ng-mouseleave="coach.showOption = false" ng-mouseover="coach.showOption = true" ng-class="{ mentorCardAnimation : coach.showLoad == true }" ng-repeat-end="" ng-repeat="coach in Coaches" ng-if="coach.Skill.Name == timeSlot">
-                                                    <div class="mentor-actions" ng-class="{ mentorActionsActivate : coach.showOption == true}">
-                                                        <h5 class="genericEventHeadings" style="margin: auto;color: white;font-size:13px;" title="View Profile" ng-click="openmentorprofile(coach)">View Profile</h5>
-                                                        <h5 class="genericEventHeadings" style="margin: auto;color: white;font-size:13px;" title="Send Mentoring Request" ng-click="sendCoachingRequest(false, coach)">Request</h5>
+                                            </div>
+                                            <div class="mentor-card mentorBorderColor" style="border-top-width:4px !important; border-right: 1px solid #ddd !important;border-left: 1px solid #ddd !important;border-bottom: 1px solid #ddd !important;" ng-init="coach.showOption = false" ng-mouseleave="coach.showOption = false" ng-mouseover="coach.showOption = true" ng-class="{ mentorCardAnimation : coach.showLoad == true }" ng-repeat-end="" ng-repeat="coach in Coaches" ng-if="coach.Skill.Name == timeSlot">
+                                                <div class="mentor-actions" ng-class="{ mentorActionsActivate : coach.showOption == true}">
+                                                    <h5 class="genericEventHeadings" style="margin: auto;color: white;font-size:13px;" title="View Profile" ng-click="openmentorprofile(coach)">View Profile</h5>
+                                                    <h5 class="genericEventHeadings" style="margin: auto;color: white;font-size:13px;" title="Send Mentoring Request" ng-click="sendCoachingRequest(false, coach)">Request</h5>
+                                                </div>
+                                                <div class="mentor-info">
+                                                    <span class="profile-close" ng-click="Coaches.splice($index,1);" style="float:right;top:10px;right:10px;"><i class="fa fa-times"></i></span>
+                                                    <div class="profile-image" style="display:flex;">
+                                                        <img ng-src="{{coach.PhotoURL ? coach.PhotoURL : 'Images/icons/If no Profile photo.png'}}" class="img-circle" />
+                                                        <h5 class="fontClass eliipsisClass" style="background: rgb(5, 33, 29);color: white; border: 1px solid #CCCCCC;font-size: 11px;padding: 5px;text-align: center;float: left;margin: auto;margin-right: 0;width: 97px;height: 25px;">{{coach.Skill.profiLevel == '0' ? 'Basic' : (coach.Skill.profiLevel == '1' ?'Intermediate' : 'Expert')}}</h5>
                                                     </div>
-                                                    <div class="mentor-info">
-                                                        <span class="profile-close" ng-click="Coaches.splice($index,1);" style="float:right;top:10px;right:10px;"><i class="fa fa-times"></i></span>
-                                                        <div class="profile-image" style="display:flex;">
-                                                            <img ng-src="{{coach.PhotoURL ? coach.PhotoURL : 'Images/icons/If no Profile photo.png'}}" class="img-circle" />
-                                                            <h5 class="fontClass eliipsisClass" style="background: rgb(5, 33, 29);color: white; border: 1px solid #CCCCCC;font-size: 11px;padding: 5px;text-align: center;float: left;margin: auto;margin-right: 0;width: 97px;height: 25px;">{{coach.Skill.profiLevel == '0' ? 'Basic' : (coach.Skill.profiLevel == '1' ?'Intermediate' : 'Expert')}}</h5>
-                                                        </div>
-                                                        <div class="profile-info">
-                                                            <h5 class="mentor-name fontClass eliipsisClass">{{ (coach.FirstName +" "+coach.LastName) | uppercase }}</h5>
-                                                            <h5 class="mentor-skils fontClass eliipsisClass" style="font-size: 12px;margin-top: 17px;">{{ coach.EmailAddress }}</h5>
-                                                            <h5 class="mentor-skils fontClass eliipsisClass" style="font-size: 10px;">Topic - {{coach.Skill.Name | uppercase}}</h5>
-                                                            <h5 class="mentor-location fontClass eliipsisClass" style="font-size: 10px;">{{coach.Country ? coach.Country : 'India'}}</h5>
-                                                        </div>
+                                                    <div class="profile-info">
+                                                        <h5 class="mentor-name fontClass eliipsisClass">{{ (coach.FirstName +" "+coach.LastName) | uppercase }}</h5>
+                                                        <h5 class="mentor-skils fontClass eliipsisClass" style="font-size: 12px;margin-top: 17px;">{{ coach.EmailAddress }}</h5>
+                                                        <h5 class="mentor-skils fontClass eliipsisClass" style="font-size: 10px;">Topic - {{coach.Skill.Name | uppercase}}</h5>
+                                                        <h5 class="mentor-location fontClass eliipsisClass" style="font-size: 10px;">{{coach.Country ? coach.Country : 'India'}}</h5>
                                                     </div>
                                                 </div>
                                             </div>
@@ -96,236 +95,252 @@
                                 </div>
                             </div>
                         </div>
+                    </div>
+            </div>
+            @*RESOURCES - 7*@
+            <div class="fullWidthHeightClass" ng-switch-when="7">
+                <div class="applicationMiddleStripMain" style="display:flex;height:100%;">
+                    <common-Repository extra-Param="objectForResourceTab" role="mentee"></common-Repository>
                 </div>
-                @*RESOURCES - 7*@
-                <div class="fullWidthHeightClass" ng-switch-when="7">
-                    <div class="applicationMiddleStripMain" style="display:flex;height:100%;">
-                        <common-Repository role="mentee"></common-Repository>
+            </div>
+            @*dashboard -0 *@
+            <div class="fullWidthHeightClass" ng-switch-when="0">
+                <div class="userNotificationParent">
+                    <div class="userRoleWizardParent">
+                        <div class="notificationWiz" ng-repeat="notification in notificationData">
+                            <div ng-if="true" style=" height 100%; width 100%;">
+                                <h6 class="notificationWizReason" style="margin: 8px;margin-bottom: 6px;">{{ notification.ConversationType | uppercase }} INVITE {{notification.skill | uppercase }} FROM </h6>
+                                <h5 class="notificationWizName" style="margin: 0 10px;width : 42%;">{{notification.FirstName+" "+notification.LastName}}</h5>
+                                @*<h6 class="notificationWizReason">FOR SKILL {{notification.skill}}</h6>*@
+                                <div class="notificationWizButton">
+                                    <button style="font-size: 10px;padding: 5px;    margin: auto;font-weight: bolder;" class="signupButton fontClass" ng-click="notificationData.splice($index,1);updateConversation(true, loggedEmail, notification.EmailAddress,notification)">ACCEPT</button>
+                                    <button style="font-size: 10px;padding: 5px;    margin: auto;font-weight: bolder;" class="signupButton fontClass" ng-click="notificationData.splice($index,1);updateConversation(false, loggedEmail, notification.EmailAddress,notification)">DECLINE</button>
+                                </div>
+                            </div>
+                            <div ng-class="{ mentorThemeColor : notification.role =='mentor',coacheeThemeColor : notification.role =='coachee'}" style="float: left;width: 100%;height: 100%;" ng-if="notification.notificationType == '2'">
+                                <div class="notificationWizReason" style="margin :4%;border:0px;color: white; padding : 0;">{{notification.name}}</div>
+                                <div class="notificationTimingPanel">
+                                    <h6 class="notificationTiming notificationDate">{{notification.meetingDate}}</h6>
+                                    <h6 class="notificationTiming notificationTime">{{notification.meetingTime}}</h6>
+                                    <h6 style="float:right;    margin-right: 8%;" class="notificationTiming notificationDiff">{{notification.meetingTimeDiff}}</h6>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="notificationWiz" ng-repeat="notificationRequest in notificationRequestData | orderBy: '-CreateDate'">
+                            <div>
+                                <h6 class="notificationWizReason">YOU HAVE SESSION INVITE FROM</h6>
+                                <h4 class="notificationWizName" style="text-transform: uppercase;">{{notificationRequest.FirstName}} {{notificationRequest.LastName}}</h4>
+                                <div class="notificationWizButton">
+                                    <button class="btnAcceptReject" ng-click="notificationData.splice($index,1);updateMeeting(false, notificationRequest.EmailAddress, loggedEmail, 'Coachee')">R</button>
+                                    <button class="btnAcceptReject" ng-click="notificationData.splice($index,1);updateMeeting(true, notificationRequest.EmailAddress, loggedEmail, 'Coachee')">A</button>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                @*dashboard -0 *@
-                <div class="fullWidthHeightClass" ng-switch-when="0">
-                    <div class="userNotificationParent">
-                        <div class="userRoleWizardParent">
-                            <div class="notificationWiz" ng-repeat="notification in notificationData">
-                                <div ng-if="true" style=" height 100%; width 100%;">
-                                    <h6 class="notificationWizReason" style="margin: 8px;margin-bottom: 6px;">{{ notification.ConversationType | uppercase }} INVITE {{notification.skill | uppercase }} FROM </h6>
-                                    <h5 class="notificationWizName" style="margin: 0 10px;width : 42%;">{{notification.FirstName+" "+notification.LastName}}</h5>
-                                    @*<h6 class="notificationWizReason">FOR SKILL {{notification.skill}}</h6>*@
-                                    <div class="notificationWizButton">
-                                        <button style="font-size: 10px;padding: 5px;    margin: auto;font-weight: bolder;" class="signupButton fontClass" ng-click="notificationData.splice($index,1);updateConversation(true, loggedEmail, notification.EmailAddress,notification)">ACCEPT</button>
-                                        <button style="font-size: 10px;padding: 5px;    margin: auto;font-weight: bolder;" class="signupButton fontClass" ng-click="notificationData.splice($index,1);updateConversation(false, loggedEmail, notification.EmailAddress,notification)">DECLINE</button>
+                <div class="dashBoardWizard">
+                    <div class="homeLabelInMainDB">
+                        @*<h5 class="fontClass">DASHBOARD >></h5>*@
+                    </div>
+                    <div class="mainDashBoardWizardParent">
+                        <div class="dashBoardMenuCoach">
+                            <div class="dashBoardMenuCoachRight genericPointerClass  col-md-3" ng-click="selectedOption($index,option)" ng-repeat="option in rightSideDashBoardArray" ng-class="{'dashBoardMenuCoachBottom': $index == 3}">
+                                <div class="dashBoardMenuCoachRightCircle">
+                                    <div class="dashBoardMenuCoachRightCirclePart">
+                                        <img src={{option.url}} class="dashBoardMenuCoachImage">
                                     </div>
                                 </div>
-                                <div ng-class="{ mentorThemeColor : notification.role =='mentor',coacheeThemeColor : notification.role =='coachee'}" style="float: left;width: 100%;height: 100%;" ng-if="notification.notificationType == '2'">
-                                    <div class="notificationWizReason" style="margin :4%;border:0px;color: white; padding : 0;">{{notification.name}}</div>
-                                    <div class="notificationTimingPanel">
-                                        <h6 class="notificationTiming notificationDate">{{notification.meetingDate}}</h6>
-                                        <h6 class="notificationTiming notificationTime">{{notification.meetingTime}}</h6>
-                                        <h6 style="float:right;    margin-right: 8%;" class="notificationTiming notificationDiff">{{notification.meetingTimeDiff}}</h6>
+                                <div class="dashBoardMenuCoachRightlabel">
+                                    <h5 style="color:black;margin: auto;" class="leftSideMenuLable fontClass">{{option.name}}</h5>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            @*rss feed -4 *@
+            <div class="fullWidthHeightClass" ng-switch-when="4">
+                <rss-Feed role="mentee" skill="feedCategoryArray"></rss-Feed>
+            </div>
+            @*MY Rewards - 6 *@
+            <div class="fullWidthHeightClass" ng-switch-when="6">
+                <my-Reward></my-Reward>
+            </div>
+            @* Knowledge garden - 1 *@
+            <div class="fullWidthHeightClass" ng-switch-when="1">
+                <div class="homeLabelInChat" style="height:7%;border-bottom:1px solid lightgray;">
+                    <h5 class="fontClass" style="font-size: 16px;margin-left: 1%;">KNOWLEDGE GARDEN</h5>
+                </div>
+                <div class="" style="float:left;width:100%;height:93%;">
+                    <molecule-Map ng-if="ctsDataForMolecule" cts-Data="ctsDataForMolecule"></molecule-Map>
+                </div>
+            </div>
+            @*Add Topics -2 *@
+            <div class="fullWidthHeightClass" ng-switch-when="2">
+                <ctc-Role role="mentee" skill-Required="false"></ctc-Role>
+            </div>
+            @*Communication - 5*@
+            <div class="fullWidthHeightClass" ng-switch-when="5">
+                <div class="homeLabelInChat" style="height:7%;border-bottom:1px solid lightgray;">
+                    <h5 class="fontClass" style="font-size: 16px;margin-left:1%;">COMMUNICATION</h5>
+                </div>
+                <place-Holder message="No Conversations" ng-show="conversationListNew.length == 0"></place-Holder><place-Holder message="No Conversations" ng-show="conversationListNew.length == 0"></place-Holder>
+                <div class="communicationMainPanel" ng-hide="conversationListNew.length == 0">
+                    <div ng-if='feedBack.askFeedback' class="feedbackPanel" style="height: 75%;">
+                        <feedback-Page role="Mentee" feedback-Type="feedBack.feedBackType" question="array" feedback-Closed="feedBack.icloseFeedBack" conv-Object="openConversation" submit-Feedback="feedBackSave()" close-Callback="closeCallBack()"></feedback-Page>
+                    </div>
+                    <div class="conversationPanel">
+                        <div class="conversationPanelDiv">
+                            <div class="conversationList" ng-class="{ highlightedSelctedConversationParent  : conversation.selectedConversation == true}" ng-click="conversationLoad($index,conversation)" ng-repeat="conversation in conversationListNew">
+                                <div class="conversationParentDiv">
+                                    <div class="imageConversation">
+                                        <img ng-class="{ activeSessionCLass :  conversation.sessionClosed == false, closeSessionClass :  conversation.sessionClosed == true }" style="margin:auto auto;width: 40px;height: 40px;border-radius: 50%;" src="~/Images/icons/If no Profile photo.png" />
+                                    </div>
+                                    <div class="nameMessageConversation">
+                                        <div style="margin:auto auto;float:left; width: 100%;height: 55%;">
+                                            <h5 class="textFormatConversation fontClass" style="color:#797979;">{{(conversation.FirstName +" "+conversation.LastName) | uppercase }}</h5>
+                                            <h5 class="textFormatConversation eliipsisClass fontClass" style="color:#aaa; font-size: 12px;font-weight: 100;">{{conversation.skill  | uppercase }}</h5>
+                                        </div>
+                                    </div>
+                                    <div ng-show="conversation.selectedConversation == true" class="highlightedSelctedConversation"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="communicationPanel">
+                        <div class="chatParent">
+                            <div class="chatHeader">
+                                <div class="chatStrongHeader">
+                                    <div class="chatHalfContainer">
+                                        <span style="color:#797979;" class="chatHalfContainerSpan">
+                                            <h5 class="fontClass">{{ReceiverName}}</h5>
+                                        </span>
+                                        <div style="margin: auto;margin-right: 0;width: 29px;">
+                                            <img ng-click="askFeedBackFunc(3)" class="mod model-1" style="width: 35px;height: 35px;" title="Pre Session Feedback" src="~/Images/communication/preSessionIcon.png" />
+                                            <section style="position: absolute;top: 4px;width: 44px;z-index: 1;background: transparent;" class="mod model-1">
+                                                <div class="spinner"></div>
+                                            </section>
+                                        </div>
+                                        <span style="margin: auto;height: 35px;margin-left: 0;margin-right: 0;" ng-hide="openConversation.sessionClosed" class="chatHalfContainerSpanNxt">
+                                            <h6 class="fontClass genericPointerClass" style="margin: auto;" ng-click="askFeedBackFunc(true)">Close Session</h6>
+                                            <h6 class="fontClass genericPointerClass" style="margin: auto;" ng-click="askFeedBackFunc(false)">Give Feedback</h6>
+                                        </span>
+                                    </div>
+                                    <div class="chatHalfContainer">
+                                        <span class="chatHalfContainerSpanNxt" style="align-items: center;">
+                                            <h6 class="fontClass" style="padding: 0px;">{{openConversation.skill}}</h6>
+                                        </span>
                                     </div>
                                 </div>
                             </div>
-                            <div class="notificationWiz" ng-repeat="notificationRequest in notificationRequestData | orderBy: '-CreateDate'">
+                            <div class="chatMiddle" id="messagebox">
+                                <div style="display: flex;width: 100%;height: 35px;" ng-repeat-start="timeSlot in timeSlots">
+                                    <div style="margin:auto;width: 100%;display: flex;">
+                                        <div style="width:33.33%;height:100%;float:left;margin: auto;">
+                                            <div style="height:1px;width:100%;border-bottom:1px solid rgba(214,214,214,.61);"></div>
+                                        </div>
+                                        <div style="width:33.33%;height:100%;float:left;margin: auto;display:flex;">
+                                            <h5 class="genericEventHeadings genericMarginZero genericEllipsis" style="margin: auto;color: #a9a9a9;font-size:13px;" title="{{timeSlot.displayDate}}">{{timeSlot.displayDate}}</h5>
+                                        </div>
+                                        <div style="width:33.33%;height:100%;float:left;margin: auto;">
+                                            <div style="height:1px;width:100%;border-bottom:1px solid rgba(214,214,214,.61);"></div>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                                <div class="chatOuterContainer" ng-repeat-end="" ng-repeat="MailRecord in MailRecords" ng-if="MailRecord.displayDate == timeSlot.displayDate">
+                                    <div class="" ng-class="{ chatReceiverImage : MailRecord.SenderEmail === loggedEmail, chatSenderImage : MailRecord.ReceiverEmail === loggedEmail }">
+                                        <div class="imageConversation" style="width: 100%;display: block;">
+                                            <img style="box-shadow: 0 0 19px 0px #969595;width: 40px;height: 40px;border-radius: 50%;" src="~/Images/tempImage.jpg" />
+                                            <h5 class="fontClass" style="margin: 0;width: 50px;color: #aaa;font-size: 10px;height: auto;margin-top:3px;">{{MailRecord.UpdateDate | date:'hh:mm a' }}</h5>
+                                        </div>
+                                    </div>
+                                    <div style="border-radius: 7px;display:flex;" ng-class="{chatReceiver : MailRecord.SenderEmail === loggedEmail, chatSender : MailRecord.ReceiverEmail === loggedEmail}">
+                                        <div style="margin:auto;float:left;">
+                                            <h5 class="fontClass" style="margin: 0;margin-bottom: 5px;color: #1d89cf;height: auto;font-size:11px;font-size: 10px;width: 100%;" ng-class="{chatTimeReceiver : MailRecord.SenderEmail === loggedEmail, chatTime : MailRecord.ReceiverEmail === loggedEmail}">{{('ALex Ward') | uppercase }} says</h5>
+                                            <h5 class="fontClass" style="margin: 0;margin-bottom: 5px;color: #555;">{{MailRecord.Content}}</h5>
+
+                                            <div ng-show="MailRecord.messageType =='media'" class="imageConversation" style="width: 100%;display: block;height:auto;">
+
+                                                <div class="ImpactZoneChildDiv mouseOverEffectDiv" style="border-top: 1px solid #ddd;" ng-repeat="option in MailRecord.messages">
+                                                    <div class="profileImageCoachingStatus">
+                                                        <img ng-src="{{option.PhotoURL ? option.PhotoURL : '/Images/icons/Microsoft_Word_2013_icon.png' }}" style="margin: auto auto;float: left;height: 35px;width: 35px;" />
+                                                    </div>
+                                                    <div class="statusCoachingStatus" style="width: 50%;">
+                                                        <h5 class="fontClass" style="color:#A9A9A9;margin: auto auto;float: left;margin-left: 0;">{{option.Name}}</h5>
+                                                    </div>
+                                                    <div class="communicationsCoachingStatus" style="width: 14%;    margin-right: 0;">
+                                                        <h5 class="fontClass" style="color:#A9A9A9;margin: auto auto;float: left;margin-left: 0;">{{option.size}}</h5>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                </div>
+                            </div>
+                            <div class="chatBottom">
+                                <div class="chatBottomOne">
+                                    <textarea ng-keypress="conversationClick($event)" ng-disabled="openConversation.sessionClosed" placeholder="{{ openConversation.sessionClosed ? 'SESSION CLOSED' : 'CLICK HERE TO TYPE MESSAGE'}}" required ng-model="conversation.Message"></textarea>
+                                </div>
+                                <div class="chatBottomTwo">
+                                    <div class="iconContainer">
+                                        <div class="fa fa-paperclip" style="padding: 0px 8px;" ng-click="loadAttachment()"></div>
+                                        <div class="fa fa-phone" style="padding: 0px 8px;" ng-click="scheduleMeeting()"></div>
+                                    </div>
+                                    <div class="iconContainer">
+                                        <button type="submit" class="btn btn-default" ng-disabled="conversation.Message==''" ng-click="conversationClick($event, true)">Send</button>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal fade" id="myMeetingSchedular" tabindex="-1" role="dialog" aria-labelledby="myMeetingSchedularLabel">
+                    <div class="modal-dialog">
+                        <div class="modal-content SchedularContent">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            </div>
+                            <div class="modal-body SchedularBody">
                                 <div>
-                                    <h6 class="notificationWizReason">YOU HAVE SESSION INVITE FROM</h6>
-                                    <h4 class="notificationWizName" style="text-transform: uppercase;">{{notificationRequest.FirstName}} {{notificationRequest.LastName}}</h4>
-                                    <div class="notificationWizButton">
-                                        <button class="btnAcceptReject" ng-click="notificationData.splice($index,1);updateMeeting(false, notificationRequest.EmailAddress, loggedEmail, 'Coachee')">R</button>
-                                        <button class="btnAcceptReject" ng-click="notificationData.splice($index,1);updateMeeting(true, notificationRequest.EmailAddress, loggedEmail, 'Coachee')">A</button>
+                                    <textarea style="width: 100%;" placeholder="Subject Name" ng-model="MeetingSchedular.Subject" required></textarea>
+                                </div>
+                                <div>
+                                    <h4 style="width: 100%;" class="notificationWizName">Meeting schedule with <span class="SchedularProfile"></span>  <span style="text-transform: uppercase;">{{ReceiverName}}</span></h4>
+                                </div>
+                                <div>
+                                    <div style="float: left; width: 40%; ">Date <input type="date" ng-model="MeetingSchedular.MeetingDate" required /></div>
+                                    <div style="float: left; width: 25%; ">From <input type="time" ng-model="MeetingSchedular.TimeFrom" required /></div>
+                                    <div style="float: left; width: 25%; ">To <input type="time" ng-model="MeetingSchedular.TimeTo" required /></div>
+                                </div>
+                                <div>
+                                    <div style="float: left; width: 50%; ">
+                                        <fieldset data-role="controlgroup" data-type="horizontal">
+                                            <input type="radio" name="platformType" id="Skype" value="Skype" ng-model="MeetingSchedular.PlatformType" required>
+                                            <label for="Skype">Skype</label>
+                                            <input type="radio" name="platformType" id="Hangout" value="Hangout" ng-model="MeetingSchedular.PlatformType" required>
+                                            <label for="Hangout">Hangout</label>
+                                            <input type="radio" name="platformType" id="Other" value="Other" ng-model="MeetingSchedular.PlatformType" required>
+                                            <label for="Other">Other</label>
+                                        </fieldset>
                                     </div>
+                                    <div style="float: left; width: 50%; "><input type="text" placeholder="Mention Platform" ng-model="MeetingSchedular.UserId" required /></div>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                    <div class="dashBoardWizard">
-                        <div class="homeLabelInMainDB">
-                            @*<h5 class="fontClass">DASHBOARD >></h5>*@
-                        </div>
-                        <div class="mainDashBoardWizardParent">
-                            <div class="dashBoardMenuCoach">
-                                <div class="dashBoardMenuCoachRight genericPointerClass  col-md-3" ng-click="selectedOption($index,option)" ng-repeat="option in rightSideDashBoardArray" ng-class="{'dashBoardMenuCoachBottom': $index == 3}">
-                                    <div class="dashBoardMenuCoachRightCircle">
-                                        <div class="dashBoardMenuCoachRightCirclePart">
-                                            <img src={{option.url}} class="dashBoardMenuCoachImage">
-                                        </div>
-                                    </div>
-                                    <div class="dashBoardMenuCoachRightlabel">
-                                        <h5 style="color:black;margin: auto;" class="leftSideMenuLable fontClass">{{option.name}}</h5>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                @*rss feed -4 *@
-                <div class="fullWidthHeightClass" ng-switch-when="4">
-                    <rss-Feed role="mentee" skill="feedCategoryArray"></rss-Feed>
-                </div>
-                @*MY Rewards - 6 *@
-                <div class="fullWidthHeightClass" ng-switch-when="6">
-                    <my-Reward></my-Reward>
-                </div>
-                @* Knowledge garden - 1 *@
-                <div class="fullWidthHeightClass" ng-switch-when="1">
-                    <div class="homeLabelInChat" style="height:7%;border-bottom:1px solid lightgray;">
-                        <h5 class="fontClass" style="font-size: 16px;margin-left: 1%;">KNOWLEDGE GARDEN</h5>
-                    </div>
-                    <div class="" style="float:left;width:100%;height:93%;">
-                        <molecule-Map ng-if="ctsDataForMolecule" cts-Data="ctsDataForMolecule"></molecule-Map>
-                    </div>
-                </div>
-                @*Add Topics -2 *@
-                <div class="fullWidthHeightClass" ng-switch-when="2">
-                    <ctc-Role role="mentee" skill-Required="false"></ctc-Role>
-                </div>
-                @*Communication - 5*@
-                <div class="fullWidthHeightClass" ng-switch-when="5">
-                    <div class="homeLabelInChat" style="height:7%;border-bottom:1px solid lightgray;">
-                        <h5 class="fontClass" style="font-size: 16px;margin-left:1%;">COMMUNICATION</h5>
-                    </div>
-                    <place-Holder message="No Conversations" ng-show="conversationListNew.length == 0"></place-Holder><place-Holder message="No Conversations" ng-show="conversationListNew.length == 0"></place-Holder>
-                    <div class="communicationMainPanel" ng-hide="conversationListNew.length == 0">
-                        <div ng-if='feedBack.askFeedback' class="feedbackPanel" style="height: 75%;">
-                            <feedback-Page role="Mentee" feedback-Type="feedBack.feedBackType" question="array" feedback-Closed="feedBack.icloseFeedBack" conv-Object="openConversation" submit-Feedback="feedBackSave()" close-Callback="closeCallBack()"></feedback-Page>
-                        </div>
-                        <div class="conversationPanel">
-                            <div class="conversationPanelDiv">
-                                <div class="conversationList" ng-class="{ highlightedSelctedConversationParent  : conversation.selectedConversation == true}" ng-click="conversationLoad($index,conversation)" ng-repeat="conversation in conversationListNew">
-                                    <div class="conversationParentDiv">
-                                        <div class="imageConversation">
-                                            <img ng-class="{ activeSessionCLass :  conversation.sessionClosed == false, closeSessionClass :  conversation.sessionClosed == true }" style="margin:auto auto;width: 40px;height: 40px;border-radius: 50%;" src="~/Images/icons/If no Profile photo.png" />
-                                        </div>
-                                        <div class="nameMessageConversation">
-                                            <div style="margin:auto auto;float:left; width: 100%;height: 55%;">
-                                                <h5 class="textFormatConversation fontClass" style="color:#797979;">{{(conversation.FirstName +" "+conversation.LastName) | uppercase }}</h5>
-                                                <h5 class="textFormatConversation eliipsisClass fontClass" style="color:#aaa; font-size: 12px;font-weight: 100;">{{conversation.skill  | uppercase }}</h5>
-                                            </div>
-                                        </div>
-                                        <div ng-show="conversation.selectedConversation == true" class="highlightedSelctedConversation"></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="communicationPanel">
-                            <div class="chatParent">
-                                <div class="chatHeader">
-                                    <div class="chatStrongHeader">
-                                        <div class="chatHalfContainer">
-                                            <span style="color:#797979;" class="chatHalfContainerSpan">
-                                                <h5 class="fontClass">{{ReceiverName}}</h5>
-                                            </span>
-                                            <div style="margin: auto;margin-right: 0;width: 29px;">
-                                                <img ng-click="askFeedBackFunc(3)" class="mod model-1" style="width: 35px;height: 35px;" title="Pre Session Feedback" src="~/Images/communication/preSessionIcon.png" />
-                                                <section style="position: absolute;top: 4px;width: 44px;z-index: 1;background: transparent;" class="mod model-1">
-                                                    <div class="spinner"></div>
-                                                </section>
-                                            </div>
-                                            <span style="margin: auto;height: 35px;margin-left: 0;margin-right: 0;" ng-hide="openConversation.sessionClosed" class="chatHalfContainerSpanNxt">
-                                                <h6 class="fontClass genericPointerClass" style="margin: auto;" ng-click="askFeedBackFunc(true)">Close Session</h6>
-                                                <h6 class="fontClass genericPointerClass" style="margin: auto;" ng-click="askFeedBackFunc(false)">Give Feedback</h6>
-                                            </span>
-                                        </div>
-                                        <div class="chatHalfContainer">
-                                            <span class="chatHalfContainerSpanNxt" style="align-items: center;">
-                                                <h6 style="padding: 0px;">{{openConversation.skill}} </h6>
-                                            </span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="chatMiddle" id="messagebox">
-                                    <div style="display: flex;width: 100%;height: 35px;" ng-repeat-start="timeSlot in timeSlots">
-                                        <div style="margin:auto;width: 100%;display: flex;">
-                                            <div style="width:33.33%;height:100%;float:left;margin: auto;">
-                                                <div style="height:1px;width:100%;border-bottom:1px solid rgba(214,214,214,.61);"></div>
-                                            </div>
-                                            <div style="width:33.33%;height:100%;float:left;margin: auto;display:flex;">
-                                                <h5 class="genericEventHeadings genericMarginZero genericEllipsis" style="margin: auto;color: #a9a9a9;font-size:13px;" title="{{timeSlot.displayDate}}">{{timeSlot.displayDate}}</h5>
-                                            </div>
-                                            <div style="width:33.33%;height:100%;float:left;margin: auto;">
-                                                <div style="height:1px;width:100%;border-bottom:1px solid rgba(214,214,214,.61);"></div>
-                                            </div>
-
-                                        </div>
-
-                                    </div>
-                                    <div class="chatOuterContainer" ng-repeat-end="" ng-repeat="MailRecord in MailRecords" ng-if="MailRecord.displayDate == timeSlot.displayDate">
-                                        <div class="" ng-class="{ chatReceiverImage : MailRecord.SenderEmail === loggedEmail, chatSenderImage : MailRecord.ReceiverEmail === loggedEmail }">
-                                            <div class="imageConversation" style="width: 100%;display: block;">
-                                                <img style="box-shadow: 0 0 19px 0px #969595;width: 40px;height: 40px;border-radius: 50%;" src="~/Images/tempImage.jpg" />
-                                                <h5 class="fontClass" style="margin: 0;width: 50px;color: #aaa;font-size: 10px;height: auto;margin-top:3px;">{{MailRecord.UpdateDate | date:'hh:mm a' }}</h5>
-                                            </div>
-                                        </div>
-                                        <div style="border-radius: 7px;display:flex;" ng-class="{chatReceiver : MailRecord.SenderEmail === loggedEmail, chatSender : MailRecord.ReceiverEmail === loggedEmail}">
-                                            <div style="margin:auto;float:left;">
-                                                <h5 class="fontClass" style="margin: 0;margin-bottom: 5px;color: #1d89cf;height: auto;font-size:11px;font-size: 10px;width: 100%;" ng-class="{chatTimeReceiver : MailRecord.SenderEmail === loggedEmail, chatTime : MailRecord.ReceiverEmail === loggedEmail}">{{('ALex Ward') | uppercase }} says</h5>
-                                                <h5 class="fontClass" style="margin: 0;margin-bottom: 5px;color: #555;">{{MailRecord.Content}}</h5>
-
-                                            </div>
-                                        </div>
-
-
-                                    </div>
-                                </div>
-                                <div class="chatBottom">
-                                    <div class="chatBottomOne">
-                                        <textarea ng-keypress="conversationClick($event)" ng-disabled="openConversation.sessionClosed" placeholder="{{ openConversation.sessionClosed ? 'SESSION CLOSED' : 'CLICK HERE TO TYPE MESSAGE'}}" required ng-model="conversation.Message"></textarea>
-                                    </div>
-                                    <div class="chatBottomTwo">
-                                        <div class="iconContainer">
-                                            <div class="fa fa-paperclip" style="padding: 0px 8px;"></div>
-                                            <div class="fa fa-phone" style="padding: 0px 8px;" data-toggle="modal" data-target="#myMeetingSchedular"></div>
-                                        </div>
-                                        <div class="iconContainer">
-                                            <button type="submit" class="btn btn-default" ng-disabled="conversation.Message==''" ng-click="conversationClick($event, true)">Send</button>
-                                        </div>
-
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal fade" id="myMeetingSchedular" tabindex="-1" role="dialog" aria-labelledby="myMeetingSchedularLabel">
-                        <div class="modal-dialog">
-                            <div class="modal-content SchedularContent">
-                                <div class="modal-header">
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                </div>
-                                <div class="modal-body SchedularBody">
-                                    <div>
-                                        <textarea style="width: 100%;" placeholder="Subject Name" ng-model="MeetingSchedular.Subject" required></textarea>
-                                    </div>
-                                    <div>
-                                        <h4 style="width: 100%;" class="notificationWizName">Meeting schedule with <span class="SchedularProfile"></span>  <span style="text-transform: uppercase;">{{ReceiverName}}</span></h4>
-                                    </div>
-                                    <div>
-                                        <div style="float: left; width: 40%; ">Date <input type="date" ng-model="MeetingSchedular.MeetingDate" required /></div>
-                                        <div style="float: left; width: 25%; ">From <input type="time" ng-model="MeetingSchedular.TimeFrom" required /></div>
-                                        <div style="float: left; width: 25%; ">To <input type="time" ng-model="MeetingSchedular.TimeTo" required /></div>
-                                    </div>
-                                    <div>
-                                        <div style="float: left; width: 50%; ">
-                                            <fieldset data-role="controlgroup" data-type="horizontal">
-                                                <input type="radio" name="platformType" id="Skype" value="Skype" ng-model="MeetingSchedular.PlatformType" required>
-                                                <label for="Skype">Skype</label>
-                                                <input type="radio" name="platformType" id="Hangout" value="Hangout" ng-model="MeetingSchedular.PlatformType" required>
-                                                <label for="Hangout">Hangout</label>
-                                                <input type="radio" name="platformType" id="Other" value="Other" ng-model="MeetingSchedular.PlatformType" required>
-                                                <label for="Other">Other</label>
-                                            </fieldset>
-                                        </div>
-                                        <div style="float: left; width: 50%; "><input type="text" placeholder="Mention Platform" ng-model="MeetingSchedular.UserId" required /></div>
-                                    </div>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="submit" class="Schedular" ng-click="saveSchedular(false);">Send</button>
-                                    @*<button type="button" class="btn btn-primary">Cancel</button>*@
-                                </div>
+                            <div class="modal-footer">
+                                <button type="submit" class="Schedular" ng-click="saveSchedular(false);">Send</button>
+                                @*<button type="button" class="btn btn-primary">Cancel</button>*@
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>               
-       </div>
+            </div>
+        </div>
+    </div>
 </div>
 

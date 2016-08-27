@@ -438,6 +438,7 @@
     <Content Include="fonts\fontawesome-webfont.ttf" />
     <Content Include="fonts\fontawesome-webfont.svg" />
     <Content Include="fonts\fontawesome-webfont.eot" />
+    <Content Include="Scripts\css\ksDashBoard\ksStateHome.css" />
     <Content Include="Scripts\d3.v3.js" />
     <Content Include="Scripts\d3.v3.min.js" />
     <Content Include="fonts\Roboto-Regular.ttf" />

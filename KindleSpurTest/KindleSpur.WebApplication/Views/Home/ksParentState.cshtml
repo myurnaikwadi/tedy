@@ -1,4 +1,4 @@
-﻿<div  class="parentBody" ng-controller="ksStateHomeController">
+﻿<div class="parentBody" ng-controller="ksStateHomeController">
     <div style="position:absolute;" class="hiddenErrorNotificationClass" ng-class="{ 'showErrorNotificationClass' : displayAlert.showAlert  == true}">
         <div class="alert-message success" ng-show="displayAlert.formatType == '1'">
             <p class="alert-message1">{{displayAlert.message}}</p>
@@ -21,11 +21,11 @@
         </div>
         <div class="stripInvitationBody">
             <div class="headingInvitation">
-                <h5 style="float: left;margin: auto;color: #333333;">SEND INVITATION TO FRIENDS</h5>
+                <h5 style="float: left;margin: auto;color: #333333;">SEND INVITATION TO FRIEND</h5>
             </div>
             <div class="middleMainBody">
                 <div style="float: left;width: 100%;display: flex;height: 30%;">
-                    <input ng-model="invitation.email" class="inputTagStyle fontClass" style="font-size: 13px;margin: auto;padding:5px;width: 80%;" type="text" placeholder="Enter email addresses" />
+                    <input ng-model="invitation.email" class="inputTagStyle fontClass" style="font-size: 13px;margin: auto;padding:5px;width: 80%;" type="email" placeholder="Enter email addresses" />
                 </div>
                 <div style="float: left;width: 100%;display: flex;height: 70%;">
                     <textArea class="fontClass" style="padding: 5px;margin: auto;resize: none; font-size: 13px;height: 87%;width: 80%;" placeholder="Invite your friends to Grow Knowledge and Get Rewarded!" ng-model="invitation.description"></textArea>
@@ -37,16 +37,80 @@
         </div>
     </div>
     <div ng-click="uiFlag.loadBottomContain=false;" ng-class="{ loadBottomContain : uiFlag.loadBottomContain == true}" style="overflow: hidden;display:none; position:absolute;width:100%;height:100%;">
-        <div class="aboutUsParent"> 
-           
+        <div class="aboutUsParent">
+
         </div>
     </div>
-        <div ng-click="uiFlag.loadRepository=false;" ng-class="{ loadRepository : uiFlag.loadRepository == true}" style="overflow: hidden;display:none; position:absolute;width:100%;height:100%;">
-            <div class="fullWidthHeightClass" style="display: flex;">
-                <common-Repository extra-Param="" style="width:65%;height:65%;margin:auto;" role="coachee"></common-Repository>
+    <div ng-click="uiFlag.loadRepository=false;uiFlag.loadModule = null" ng-class="{ loadRepository : uiFlag.loadRepository == true}" style="overflow: hidden;display:none; position:absolute;width:100%;height:100%;">
+        <div class="fullWidthHeightClass" style="display: flex;" ng-click="$event.stopPropagation()">
+            <common-Repository ng-if="uiFlag.loadModule == 'Attachment'" extra-Param="extraParam" style="width:75%;height:85%;margin:auto;"></common-Repository>
+
+            <div ng-if="uiFlag.loadModule == 'Meeting'" class="scheduleMeetingParentDiv">
+                <div class="schedularContent fullWidthHeightClass">
+                    <div class="schedularHeader">
+                        <h5 class="meetingPersonName fontClass eliipsisClass">SCHEDULE MEETING</h5>
+                        @*<img ng-show="extraParam.closeRequired" ng-click="closePopup()" style="width: 15px;height: 15px;top:5px;right: 5px;bottom: 0;position: absolute;z-index:1;cursor:pointer;" title="Cancel" src="~/Images/cancel.png" />*@
+                    </div>
+                    <div class="schedularBody">
+                        <div class="meetingSubject">
+                            <textarea placeholder="Subject Name" ng-model="MeetingSchedular.Subject" required></textarea>
+                        </div>
+                        <div class="meetingSubjectTwo">
+                            <div class="meetingPersonNameParent">
+                                <h4 class="meetingWizName fontClass">Meeting schedule with</h4>
+                            </div>
+                            <div class="meetingInvitee">
+                                <div class="imageConversation">
+                                    <img style="border: 2px solid white;margin:auto;width: 60px;height: 60px;border-radius: 50%;" ng-src="{{loggedDetail.Photo ?  loggedDetail.Photo  : '../../../Images/icons/If no Profile photo.png'}}" />
+                                </div>
+                                <div class="meetingPersonNameStrc" style="margin-left: 0;">
+                                    <h5 style="font-size: 15px;color:black;" class="leftSideMenuLable fontClass eliipsisClass">ALEX WARD</h5>
+                                </div>
+                            </div>                                
+                        </div>
+                        <div class="meetingTimePanel">
+                            <div style="display: flex;float: left; width: 33.33%;margin:auto;margin-right: 0">
+                                <h5 style="margin : auto" class="meetingPersonName fontClass genericPointerClass eliipsisClass">DATE</h5>
+                                <input style="margin : auto" type="date" ng-model="MeetingSchedular.MeetingDate" required />
+                            </div>
+                            <div style="display: flex;float: left; width: 26%;margin:auto;margin-right: 0">
+                                <h5 class="meetingPersonName fontClass genericPointerClass eliipsisClass">FROM</h5>
+                                <input style="margin : auto" type="time" ng-model="MeetingSchedular.TimeFrom" required />
+                            </div>
+                            <div style="display: flex;float: left; width: 26%;margin:auto;">
+                                <h5 class="meetingPersonName fontClass genericPointerClass eliipsisClass">TO</h5>
+                                 <input style="margin : auto" type="time" ng-model="MeetingSchedular.TimeTo" required />
+                            </div>
+                        </div>                           
+                        <div class="meetingCommunicationPanel">
+                            <div style="float: left; width: 60%;display: flex;margin:auto;margin-right: 0;">
+                                <div style="display: flex;float: left; width: 33%;margin:auto;">
+                                    <label for="Skype" style="margin : auto;margin-right: 10%;" class="meetingPersonName fontClass genericPointerClass eliipsisClass">Skype</label>
+                                    <input style="margin: auto;"type="radio" name="platformType" id="Skype" value="Skype" ng-model="MeetingSchedular.PlatformType" required />
+                                </div>
+                                <div style="display: flex;float: left; width: 33%;margin:auto;">
+                                    <label for="Hangout"  style="margin : auto;margin-right: 10%;" class="meetingPersonName fontClass genericPointerClass eliipsisClass">Hangout</label>
+                                    <input style="margin: auto;" type="radio" name="platformType" id="Hangout" value="Hangout" ng-model="MeetingSchedular.PlatformType" required />
+                                </div>
+                                <div style="display: flex;float: left; width: 20%;margin:auto;">
+                                    <label for="Other"  style="margin : auto;margin-right: 10%;" class="meetingPersonName fontClass genericPointerClass eliipsisClass">Other</label>
+                                    <input style="margin: auto;" type="radio" name="platformType" id="Other" value="Other" ng-model="MeetingSchedular.PlatformType" required />
+                                </div>                                
+                            </div>
+                            <div style="float: left; display: flex;margin:auto;">
+                                <input style="margin: auto;padding: 5px;" type="text" placeholder="Mention Platform" ng-model="MeetingSchedular.UserId" required />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="schedularBottom">
+                        <button type="button" style="margin: auto;width: 15%;padding: 0%;margin-right: 7%;height: 22px;font-size: 9px;" ng-click="saveSchedular()" class="signupButton fontClass btn btn-default">SEND</button>
+                        <button type="button" style="margin: auto;width: 15%;padding: 0%;margin-left: 0;height: 22px;font-size: 9px;" ng-click="saveSchedular()" class="signupButton fontClass btn btn-default">CANCEL</button>
+                    </div>
+                </div>
             </div>
         </div>
-        <div class="applicationTopStrip" ui-view="topMainPanel"></div>
-        <div class="applicationMiddleStrip" ui-view="mainBody"></div>
-        <div class="applicationBottomStrip" ui-view="bottomPanel"></div>
     </div>
+    <div class="applicationTopStrip" ui-view="topMainPanel"></div>
+    <div class="applicationMiddleStrip" ui-view="mainBody"></div>
+    <div class="applicationBottomStrip" ui-view="bottomPanel"></div>
+</div>

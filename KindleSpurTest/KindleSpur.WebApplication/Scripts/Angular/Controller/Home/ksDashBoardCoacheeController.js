@@ -417,6 +417,85 @@
 
     /*START: Conversation Module Code*/
 
+
+    $scope.objectForResourceTab = { deleteIcon: true, AttachMode: false, headingRequired: true, closeRequired: false, styleUI: { top: { 'height': '7%' }, middle: { 'height': '93%' }, bottom: {} } };
+    var _afterAddCallBack = function (iObj) {
+        //console.error('_afterAddCallBack --- ', iObj);
+        $scope.conversation.SenderEmail = $scope.loggedEmail;
+        $scope.conversation.Content = null;
+        $scope.conversation.SendOrReceive = "Send";
+        $scope.conversation.IsVerified = true;
+        $scope.conversation.isRead = false;
+        var _parentId = $scope.openConversation.ConversationParentId ? $scope.openConversation.ConversationParentId : $scope.openConversation.ConversationId;
+        if ($scope.conversation.SenderEmail === "" || $scope.conversation.ReceiverEmail === "")
+            return false;
+        var _id = _parentId + ":CHT#" + (Date.now()) + (Math.floor((Math.random() * 10) + 1));
+        var _array = [];
+
+        if (iObj.selectedData['Artifact']) {
+            for (var _key in iObj.selectedData['Artifact']) {
+                _array.push(iObj.selectedData['Artifact'][_key]);
+            }
+        }
+        if (iObj.selectedData['bookMark']) {
+            for (var _key in iObj.selectedData['bookMark']) {
+                _array.push(iObj.selectedData['bookMark'][_key]);
+            }
+        }
+
+        console.error(_array)
+        var _object = {
+            Content: iObj.message,
+            SenderEmail: $scope.conversation.SenderEmail,
+            ReceiverEmail: $scope.openConversation.ReceiverEmail,
+            SendOrReceive: $scope.conversation.SendOrReceive,
+            IsVerified: $scope.conversation.IsVerified,
+            ConversationClosed: false,
+            messageType: 'media',
+            messages: _array,
+            ConversationType: "Coaching",
+            Skill: $scope.conversation.skill,
+            //"8/7/2016"
+            // CreateDate: (new Date().getMonth()+1)+"/"+new Date().getDate()+
+            //UpdateDate: "2016-08-07T11:58:13.867Z"
+            ConversationId: _id,
+            ConversationParentId: _parentId,
+        }
+
+        //   console.debug(_object);
+        var _replica = angular.copy(_object);
+        _replica.UpdateDate = new Date();
+        //  _replica.UpdateDate.setDate(6);
+        _replica.UpdateDate = _replica.UpdateDate.toJSON();
+        _replica.displayDate = _displayDate(_replica.UpdateDate);
+        _resizeDateFilter(_replica);
+        $scope.MailRecords.push(_replica);
+    };
+
+
+    $scope.loadAttachment = function () {
+        $rootScope.$broadcast("refreshStateHomeView", {
+            type: 'loadUpperSlider',
+            subType: 'Attachment',
+            data: {
+                headingRequired: true, closeRequired: true, headingTitle: ('Send to ' + ($scope.openConversation.FirstName + " " + $scope.openConversation.LastName)),
+                AttachMode: true, role: 'Mentee', afterAddCallBack: _afterAddCallBack, deleteIcon: false,
+                styleUI: { chat: { 'height': '15%', 'background-color': 'white' }, top: { 'height': '12%', 'background-color': 'white' }, middle: { 'height': '59%', 'background-color': 'white' }, bottom: { 'height': '12%', 'background-color': 'white' } }
+            }
+        });
+    };
+    $scope.scheduleMeeting = function () {
+        $rootScope.$broadcast("refreshStateHomeView", {
+            type: 'loadUpperSlider',
+            subType: 'Meeting',
+            data: {
+                headingRequired: true, closeRequired: true, headingTitle: ('Send to ' + ($scope.openConversation.FirstName + " " + $scope.openConversation.LastName)),
+                AttachMode: true, role: 'Mentee', afterAddCallBack: _afterAddCallBack, deleteIcon: false,
+                styleUI: { chat: { 'height': '15%', 'background-color': 'white' }, top: { 'height': '12%', 'background-color': 'white' }, middle: { 'height': '59%', 'background-color': 'white' }, bottom: { 'height': '12%', 'background-color': 'white' } }
+            }
+        });
+    };
+
     $scope.autoSyncCounter = null;
     $scope.stopFight = function () {
         if (angular.isDefined($scope.autoSyncCounter)) {
