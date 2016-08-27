@@ -51,6 +51,7 @@ namespace KindleSpur.Data
                     _transactionStatus = false;
                     return false;
                 }
+                conversationData.IsRejected = false;
                 _conversationCollection.Insert(conversationData);
 
                 _transactionStatus = true;
@@ -127,10 +128,13 @@ namespace KindleSpur.Data
 
                 var conversationDetail = _conversationCollection.FindOneAs<Conversation>(Query.And(Query.EQ("SenderEmail", receiverEmail), Query.EQ("ReceiverEmail", senderEmail), Query.EQ("ConversationType", ConversationType), Query.EQ("skill", skill)));
 
-                conversationDetail.IsVerified = isVerified;
                 conversationDetail.Content = content;
                 conversationDetail.UpdateDate = DateTime.Now;
                 conversationDetail.ConversationParentId = ParentId;
+                if (isVerified)
+                    conversationDetail.IsVerified = isVerified;
+                else
+                    conversationDetail.IsRejected = isVerified;
                 _conversationCollection.Save(conversationDetail);
                 _transactionStatus = true;
             }
@@ -171,7 +175,7 @@ namespace KindleSpur.Data
                 //_checkUser = _conversationCollection.Find(_query).ToList();
                 //if (_checkUser.Count() > 0)
                 //{
-                var _query1 = Query.And(Query<Conversation>.EQ(p => p.ReceiverEmail, loggedEmail), Query<Conversation>.EQ(p => p.IsVerified, true), Query<Conversation>.EQ(p1 => p1.ConversationType, ConversationType));
+                var _query1 = Query.And(Query<Conversation>.EQ(p => p.ReceiverEmail, loggedEmail), Query<Conversation>.EQ(p => p.IsVerified, true), Query<Conversation>.EQ(p => p.IsRejected, false), Query<Conversation>.EQ(p1 => p1.ConversationType, ConversationType));
                 _categories = _conversationCollection.FindAs<BsonDocument>(_query1).SetFields(Fields.Exclude("_id").Include("ReceiverEmail", "SenderEmail", "skill", "ConversationType", "ConversationId", "ConversationParentId")).Distinct().ToList();
 
                 //}
@@ -513,6 +517,7 @@ namespace KindleSpur.Data
             return list;
 
         }
+
         public bool Bookmarks(string UserId, string documnetname, string Url, string tagname)
         {
             bool _transactionStatus = false;

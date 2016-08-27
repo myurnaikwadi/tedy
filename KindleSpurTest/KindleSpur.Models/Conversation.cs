@@ -20,6 +20,7 @@ namespace KindleSpur.Models
         //public int group_id { get; set; }
         public Boolean isRead { get; set; }
         public Boolean IsVerified { get; set; }
+        public Boolean IsRejected { get; set; }
         public string CreateDate { get; set; }
         public DateTime UpdateDate { get; set; }
         public string skill { get; set; }
