@@ -317,6 +317,84 @@ namespace KindleSpur.WebApplication.Controllers
             return View();
         }
 
+
+        //public JsonResult ShareResourseFileUrl(Conversation _obj, string ReceiverName, string Role)
+        //{
+        //    ResponseMessage response = new ResponseMessage();
+        //    try
+        //    {
+        //        //ConversationRepository _repo = new ConversationRepository();
+        //        //_obj.CreateDate = _obj.UpdateDate = DateTime.Now;
+        //        //_repo.AddNewConversation(_obj);
+
+        //        //return RedirectToAction("Index");
+
+        //        ConversationRepository _repo = new ConversationRepository();
+        //        List<ResourceFileLink> resourcelist = new List<ResourceFileLink>();
+        //        List<FileUpload> list = _repo.getFiles(UserId);
+        //        if (list != null)
+        //        {
+        //            foreach (var r in list)
+        //            {
+        //                ResourceFileLink links = new ResourceFileLink();
+        //                links.Id = ObjectId.GenerateNewId();
+        //                links.filenameconversations = r.FileName;
+        //                links.filepathconversations = r.FilePath;
+        //                resourcelist.Add(links);
+        //            }
+        //            if (_obj.FilesURLlink == null)
+        //                _obj.FilesURLlink = new List<ResourceFileLink>();
+        //            _obj.FilesURLlink.AddRange(resourcelist.ToList());
+
+        //        }
+
+        //        _obj.CreateDate = DateTime.Now.ToShortDateString();
+        //        _obj.UpdateDate = DateTime.Now;
+        //        if (_repo.AddResourceFileLink(_obj))
+        //        {
+        //            if (_obj.Content == null)
+        //            {
+
+        //                string uri = Request.Url.AbsoluteUri.ToString();
+        //                string senderName = ((IUser)System.Web.HttpContext.Current.Session["User"]).FirstName + " " + ((IUser)System.Web.HttpContext.Current.Session["User"]).LastName;
+        //                string subject = "Communication Request from " + senderName;
+
+        //                string content = "Hello " + ReceiverName + ",";
+        //                if (Role == "Coachee")
+        //                    content += "<br/><br/>You have a coaching invite from " + senderName + " for Skill '" + _obj.skill + "'.<br/>";
+        //                else if (Role == "Mentee")
+        //                    content += "<br/><br/>You have a mentoring invite from " + senderName + " for Topic '" + _obj.skill + "'.<br/>";
+        //                else
+        //                    content += "<br/><br/>You have a mentoring invite from " + senderName + " for Topic '" + _obj.skill + "'.<br/>";
+
+        //                content += "<br/><br/>To accept or decline please click on the following link - <a href = '" + uri + "'>" + uri + "</a>";
+        //                content += "<br /><br />Regards, <br/> KindleSpur Team.";
+        //                EmailNotification.SendConversationEmail(_obj, uri, subject, content);
+        //                TempData["StatusMessage"] = "Please check your mail to start conversation!!!";
+        //            }
+        //            else
+        //            {
+        //                if (Role == "Coachee")
+        //                    response.FailureCallBack("Request pending with Coach!!!");
+        //                else if (Role == "Mentee")
+        //                    response.FailureCallBack("Request pending with Mentor!!!");
+        //            }
+        //        }
+        //        else
+        //        {
+        //            if (Role == "Coachee")
+        //                response.FailureCallBack("Request already sent to Coach!!!");
+        //            else if (Role == "Mentee")
+        //                response.FailureCallBack("Request already sent to Mentor!!!");
+        //        }
+        //    }
+        //    catch (Exception Ex)
+        //    {
+
+        //        //return View();
+        //    }
+        //    return this.Json(response);
+        //}
         //
         // POST: /Coversation/Delete/5
         [HttpPost]

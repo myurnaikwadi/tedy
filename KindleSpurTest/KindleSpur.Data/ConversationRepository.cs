@@ -513,6 +513,195 @@ namespace KindleSpur.Data
             return list;
 
         }
+        public bool Bookmarks(string UserId, string documnetname, string Url, string tagname)
+        {
+            bool _transactionStatus = false;
+            try
+            {
+                var _userCollection = con.GetCollection("UserDetails");
+                var userDetail = _userCollection.FindOneAs<User>(Query.EQ("EmailAddress", UserId));
+                List<BookMark> path = new List<BookMark>();
+
+                BookMark Link = new BookMark();
+                Link.Id = ObjectId.GenerateNewId();
+                Link.LinkUrl = Url;
+                Link.DocumentName = documnetname;
+                Link.TagName = tagname;
+
+                path.Add(Link);
+                if (userDetail.Files == null)
+                    userDetail.BookMarks = new List<BookMark>();
+                userDetail.BookMarks.AddRange(path.ToList());
+
+                //if (userDetail.Files == null)
+                //    userDetail.BookMarks = new List<BookMark>();
+
+
+
+                _userCollection.Save(userDetail);
+                _transactionStatus = true;
+            }
+            catch (MongoException ex)
+            {
+                string message = "{ Error : 'Failed at UpdateUserPhoto().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ";
+                _logCollection.Insert(message);
+                throw new Exception("User does not Exist!!!");
+            }
+            catch (Exception e)
+            {
+                Exceptionhandle em = new Exceptionhandle();
+                em.Error = "Failed at uploadResourceFile()";
+                em.Log = e.Message.Replace("\r\n", "");
+                var st = new System.Diagnostics.StackTrace(e, true);
+                var frame = st.GetFrame(0);
+                var line = frame.GetFileLineNumber();
+                _logCollection.Insert(em);
+                throw new MongoException("Signup failure!!!");
+            }
+            finally
+            {
+
+            }
+            return _transactionStatus;
+
+
+        }
+
+        public bool uploadConversationsResourceFile(string senderEmailAddress, object[] filepath, string tagName, Dictionary<int, string> listname)
+        {
+
+            bool _transactionStatus = false;
+            try
+            {
+                //  var _userCollection = con.GetCollection("Conversations");
+                var userDetail = _conversationCollection.FindOneAs<Conversation>(Query.EQ("SenderEmail", senderEmailAddress));
+
+
+                List<FileUploadConversation> path = new List<FileUploadConversation>();
+
+
+                foreach (var r in listname)
+                {
+                    if (listname.ContainsKey(r.Key))
+                    {
+                        FileUploadConversation obj = new FileUploadConversation();
+                        obj.Id = ObjectId.GenerateNewId();
+                        obj.FileNameConversation = string.Format("FilePath/{0}", r);
+                        obj.TagNameConversation = tagName;
+                        path.Add(obj);
+                    }
+                }
+                //Dictionary<User, string> list = new Dictionary<User, string>();
+                //if (list.ContainsKey(userDetail))
+                //{
+                if (userDetail.FilesConversations == null)
+                    userDetail.FilesConversations = new List<FileUploadConversation>();
+
+                userDetail.FilesConversations.AddRange(path.ToList());
+
+                _conversationCollection.Save(userDetail);
+                // }
+
+                _transactionStatus = true;
+            }
+            catch (MongoException ex)
+            {
+                string message = "{ Error : 'Failed at UpdateUserPhoto().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ";
+                _logCollection.Insert(message);
+                throw new Exception("User does not Exist!!!");
+            }
+            catch (Exception e)
+            {
+                Exceptionhandle em = new Exceptionhandle();
+                em.Error = "Failed at uploadResourceFile()";
+                em.Log = e.Message.Replace("\r\n", "");
+                var st = new System.Diagnostics.StackTrace(e, true);
+                var frame = st.GetFrame(0);
+                var line = frame.GetFileLineNumber();
+                _logCollection.Insert(em);
+                throw new MongoException("Signup failure!!!");
+            }
+            finally
+            {
+
+            }
+            return _transactionStatus;
+            //_conversationsCollections = con.GetCollection("Conversations");
+            //List<Conversation> typeCoaching = _conversationsCollections.AsQueryable<Conversation>().Where<Conversation>(sb => sb.ConversationType == "Coaching" && sb.Content.StartsWith("COACHING REQUEST BY")).ToList();
+
+        }
+        public List<FileUpload> getFiles(string UserId)
+        {
+            var _UserrCollection = con.GetCollection("UserDetails");
+
+            var userDetail = _UserrCollection.FindOneAs<User>(Query.EQ("EmailAddress", UserId));
+
+
+
+
+            if (userDetail != null)
+                return userDetail.Files;
+            else
+                return new List<FileUpload>();
+
+        }
+        public List<BookMark> getFilesBookmarks(string UserId)
+        {
+            var _UserrCollection = con.GetCollection("UserDetails");
+
+            var userDetail = _UserrCollection.FindOneAs<User>(Query.EQ("EmailAddress", UserId));
+
+
+
+            if (userDetail != null)
+                return userDetail.BookMarks;
+            else
+                return new List<BookMark>();
+
+        }
+        public bool AddResourceFileLink(IConversation conversationData)
+        {
+            bool _transactionStatus = false;
+
+            try
+            {
+                var result = _conversationCollection.FindAs<BsonDocument>(Query.And(Query.EQ("SenderEmail", conversationData.SenderEmail), Query.EQ("ReceiverEmail", conversationData.ReceiverEmail), Query.EQ("skill", conversationData.skill))).ToList();
+
+                if (result.Count() > 0 && conversationData.Content == null)
+                {
+                    _transactionStatus = false;
+                    return false;
+                }
+                _conversationCollection.Insert(conversationData);
+
+                _transactionStatus = true;
+            }
+            catch (MongoException ex)
+            {
+                string message = "{ Error : 'Failed at GetCoachingStatus().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ";
+                _logCollection.Insert(message);
+                throw new MongoException("New Conversation failure!!!");
+            }
+            catch (Exception e)
+            {
+                Exceptionhandle em = new Exceptionhandle();
+                em.Error = "Failed at GetCoachingStatus()";
+                em.Log = e.Message.Replace("\r\n", "");
+                var st = new System.Diagnostics.StackTrace(e, true);
+                var frame = st.GetFrame(0);
+                var line = frame.GetFileLineNumber();
+                _logCollection.Insert(em);
+                throw new MongoException("Signup failure!!!");
+            }
+            finally
+            {
+
+            }
+
+            return _transactionStatus;
+        }
+
+
 
 
     }

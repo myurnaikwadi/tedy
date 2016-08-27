@@ -56,6 +56,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ActiveGamesAndPSR.cs" />
+    <Compile Include="BookMark.cs" />
     <Compile Include="CoacheeOrMentee.cs" />
     <Compile Include="CoachOrMentor.cs" />
     <Compile Include="CoachStatus.cs" />
@@ -69,6 +70,7 @@
     <Compile Include="Exceptionhandle.cs" />
     <Compile Include="Feedback.cs" />
     <Compile Include="FileUpload.cs" />
+    <Compile Include="FileUploadConversation.cs" />
     <Compile Include="Game.cs" />
     <Compile Include="HandleErrorInfo.cs" />
     <Compile Include="Interfaces\ICategory.cs" />
@@ -97,6 +99,7 @@
     <Compile Include="PSRAndGamesVM.cs" />
     <Compile Include="QueAndAns.cs" />
     <Compile Include="Request.cs" />
+    <Compile Include="ResourceFileLink.cs" />
     <Compile Include="ResponseMessage.cs" />
     <Compile Include="Reward.cs" />
     <Compile Include="SearchCoachOrMentor.cs" />

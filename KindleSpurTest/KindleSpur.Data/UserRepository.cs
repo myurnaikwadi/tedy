@@ -852,5 +852,120 @@ namespace KindleSpur.Data
             //List<Conversation> typeCoaching = _conversationsCollections.AsQueryable<Conversation>().Where<Conversation>(sb => sb.ConversationType == "Coaching" && sb.Content.StartsWith("COACHING REQUEST BY")).ToList();
 
         }
+
+        public bool uploadResourceFile(string EmailAddress, object[] filePath, string tagName, Dictionary<int, string> filename)
+        {
+
+            bool _transactionStatus = false;
+            try
+            {
+                var userDetail = _userCollection.FindOneAs<User>(Query.EQ("EmailAddress", EmailAddress));
+
+
+                List<FileUpload> path = new List<FileUpload>();
+
+
+
+                foreach (var f in filename)
+                {
+                    if (filename.ContainsKey(f.Key))
+                    {
+
+                        FileUpload obj = new FileUpload();
+                        obj.Id = ObjectId.GenerateNewId();
+                        obj.FilePath = string.Format("FilePath/{0}", f.Value);
+
+                        obj.FileName = f.Value;
+                        obj.TagName = tagName;
+                        path.Add(obj);
+
+                    }
+
+                }
+
+                if (userDetail.Files == null)
+                    userDetail.Files = new List<FileUpload>();
+
+                userDetail.Files.AddRange(path.ToList());
+
+                _userCollection.Save(userDetail);
+
+
+                _transactionStatus = true;
+            }
+            catch (MongoException ex)
+            {
+                string message = "{ Error : 'Failed at UpdateUserPhoto().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ";
+                _logCollection.Insert(message);
+                throw new Exception("User does not Exist!!!");
+            }
+            catch (Exception e)
+            {
+                Exceptionhandle em = new Exceptionhandle();
+                em.Error = "Failed at uploadResourceFile()";
+                em.Log = e.Message.Replace("\r\n", "");
+                var st = new System.Diagnostics.StackTrace(e, true);
+                var frame = st.GetFrame(0);
+                var line = frame.GetFileLineNumber();
+                _logCollection.Insert(em);
+                throw new MongoException("Signup failure!!!");
+            }
+            finally
+            {
+
+            }
+            return _transactionStatus;
+            //_conversationsCollections = con.GetCollection("Conversations");
+            //List<Conversation> typeCoaching = _conversationsCollections.AsQueryable<Conversation>().Where<Conversation>(sb => sb.ConversationType == "Coaching" && sb.Content.StartsWith("COACHING REQUEST BY")).ToList();
+
+        }
+        public bool DeleteResourceFiles(List<FileUpload> list, List<User> list2)
+        {
+            bool _transactionStatus = false;
+            try
+            {
+                //var query = _userCollection.AsQueryable<User>().Where(e => e.Files.Select(r => r.Id) == Id).Select(e => e);
+
+                //_userCollection.Remove(query);
+                //var delete = (from c in _userCollection.AsQueryable<User>()
+                //              where c.Id == obId.Id && c.Files.Select(r => r.Id) == Id
+                //              select new object[] { c.Files.Select(r =>new { r.FileName,r.TagName }).ToList() }).ToList();
+                foreach (var e in list2)
+                {
+                    foreach (var r in list)
+                    {
+
+                        var query = Query.And(Query.EQ("_id", e.Id), Query.EQ("_id", r.Id));
+                        _userCollection.Remove(query);
+
+                    }
+                }
+
+                _transactionStatus = true;
+            }
+            catch (MongoException ex)
+            {
+                string message = "{ Error : 'Failed at DeleteCoacheeOrMentee().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ";
+                _logCollection.Insert(message);
+                throw new MongoException("Signup failure!!!");
+                //_logCollection.Insert("{ Error : 'Failed at AddNewCoacheeOrMentee().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ");
+                //throw new MongoException("Signup failure!!!");
+            }
+            catch (Exception e)
+            {
+                Exceptionhandle em = new Exceptionhandle();
+                em.Error = "Failed at DeleteCoacheeOrMentee()";
+                em.Log = e.Message.Replace("\r\n", "");
+                var st = new System.Diagnostics.StackTrace(e, true); var frame = st.GetFrame(0);
+                var line = frame.GetFileLineNumber();
+                _logCollection.Insert(em);
+                throw new MongoException("Signup failure!!!");
+            }
+            finally
+            {
+
+            }
+            return _transactionStatus;
+        }
     }
 }

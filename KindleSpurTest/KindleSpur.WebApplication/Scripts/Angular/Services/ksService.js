@@ -606,6 +606,20 @@ app.factory('serverCommunication', function ($http) {
                 transformRequest: angular.identity
             }).then(iObj.successCallBack, iObj.failureCallBack);
         },
+            getArtifactBookMarks: function (iObj) {
+            console.error('getArtifactBookMarks --------------- ', iObj);
+
+            var req = {
+                method: 'POST',
+                    url : '/Resources/getAlllFilesAndBookmarks',
+                    headers: {
+                    'Content-Type': 'application/json'
+                },
+                    data: iObj.loggedDetail,
+                traditional: true
+            }
+            $http(req).then(iObj.successCallBack, iObj.failureCallBack);
+            },  
         sendInvitationToFriend: function (iObj) {
             console.error('sendInvitationTOFriend --------------- ', iObj);
             var _checkObj = angular.copy(iObj);
