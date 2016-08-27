@@ -455,7 +455,7 @@ namespace KindleSpur.Data
                 var frame = st.GetFrame(0);
                 var line = frame.GetFileLineNumber();
                 _logCollection.Insert(em);
-                throw new MongoException("Signup failure!!!");
+              //  throw new MongoException("Signup failure!!!");
             }
             finally
             {

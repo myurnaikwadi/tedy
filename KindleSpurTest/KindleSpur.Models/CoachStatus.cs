@@ -15,6 +15,7 @@ namespace KindleSpur.Models
         public string LastName { get; set; }
         public string PhotoURL { get; set; }
         public int Mobile { get; set; }
+        public string Region { get; set; }
         public string LinkdinURL { get; set; }
         public string description { get; set; }
         public string Skill { get; set; }

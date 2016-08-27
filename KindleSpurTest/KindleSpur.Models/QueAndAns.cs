@@ -8,7 +8,7 @@ namespace KindleSpur.Models
 {
    public class QueAndAns
     {
-        public string question { get; set; }
-        public int answer { get; set; }
+        public string Question { get; set; }
+        public string Answer { get; set; }
     }
 }

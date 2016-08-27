@@ -1,9 +1,10 @@
-﻿<div class="fullWidthHeightClass">
-    <div class="labelInRightPanelVCG" style="height:7%;border-bottom:1px solid lightgray;display:flex;">
-        <h5 class="fontClass" style="font-size: 16px;margin: auto;margin-left: 1%;">RESOURCES</h5>
+﻿<div class="fullWidthHeightClass" ng-click="$event.stopPropagation()">
+    <div ng-style="styleUI.top" class="labelInRightPanelVCG" style="height:7%;border-bottom:1px solid lightgray;display:flex;background-color: white;" ng-show="extraParam.headingRequired">
+        <h5 class="fontClass" style="font-size: 16px;margin: auto;margin-left: 1%;">{{extraParam.headingTitle ? extraParam.headingTitle : 'RESOURCES'}}</h5>
+        <img ng-show="extraParam.closeRequired" ng-click="closePopup()" style="width: 15px;height: 15px;top:5px;right: 5px;bottom: 0;position: absolute;z-index:1;cursor:pointer;" title="Cancel" src="~/Images/cancel.png" />
     </div>
-
-    <div style="float: left;width: 100%;height: 93%;background-color: #f3f3f3;">
+    
+    <div ng-style="styleUI.middle" style="float: left;width: 100%;height: 93%;background-color: #f3f3f3;">
         <div style="float: left;width: 100%;height: 100%;position: relative;display:flex;" class="col-md-12">
             <div class="uploadPopup" ng-class="{ loadUploadPopup : loadUploadPopupFlag == true}">
                 <div class="topStripPopup">
@@ -41,7 +42,6 @@
                 <div class="bottomStripPopup" ng-hide="uploadAttachmentArray.length == 0">                    
                     <button type="button" style="margin: auto;width: 15%;padding: 0%;margin-right: 7%;height: 22px;font-size: 9px;" ng-click="uploadDataOnServer()" class="signupButton fontClass btn btn-default">UPLOAD</button>                  
                 </div>
-
             </div>
             <div class="podcastsContainer col-md-5 col-sm-12 mosuehover"  style="background-color: #f3f3f3;width: 50%;padding-right: 0;">
                 <div class="podcastHeader">
@@ -60,7 +60,7 @@
                                 <h5 class="fontClass" style="color:#A9A9A9;margin: auto auto;float: left;margin-left: 0;">{{option.size}}</h5>   
                             </div>
                             <div style="float: left;display: flex;width: 5%;height: 100%; position: relative;">
-                                <input style="float: left;margin: auto;" type="checkbox" />
+                                <input style="float: left;margin: auto;" value="true" ng-model="option.selected" type="checkbox" />
                             </div>
                             <div class="profileImageCoachingStatus">                                
                                 <img src="/Images/icons/61391.png"style="margin: auto; float: left;height: 18px;width: 20px;opacity: 0.4;" />
@@ -68,11 +68,11 @@
                         </div>
                         <place-Holder message="No Attachment Uploaded" ng-show="artifactsArray.length == 0" ></place-Holder>
                     </div>
-                    <div style="height:9%;width: 53%;margin-left: 28%;float:left;display: flex;">
-                        <input class="signupButton fontClass btn btn-default" type="button" value="Share" style="margin: auto;width: 31%;" />
-                        <input class="signupButton fontClass btn btn-default" type="button" value="Upload" ng-click="loadUploadPopup()" style="margin: auto;width: 33%;" />
-                        <input class="signupButton fontClass btn btn-default" type="button" value="Delete" style="margin: auto;width: 28%;" />
-                    </div>
+                    <div style="height:9%;width: 100%;float:left;display: flex;" ng-show="extraParam.AttachMode == false">
+                        @*<input class="signupButton fontClass btn btn-default" type="button" value="Share" style="margin: auto;margin-right: 0;padding: 0;width: 115px;" />*@
+                        <input class="signupButton fontClass btn btn-default" type="button" value="Upload" ng-click="loadUploadPopup()" style="margin: auto;margin-right: 0;padding: 0;width: 115px;" />
+                        <input class="signupButton fontClass btn btn-default" type="button" value="Delete" style="margin: auto;padding: 0;width: 115px;" />
+                    </div>                   
                 </div>
 
             </div>
@@ -82,7 +82,7 @@
                 </div>
                 <div class="ImpactZoneChildDiv" style="height: 90%;">
                     <div style="height:100%;width:100%;float:left">
-                        <div style="height: 100%;width: 100%;float:left;">
+                        <div style="height: 91%;width: 100%;float:left;overflow:auto">
                             <div class="ImpactZoneChildDiv mouseOverEffectDiv" ng-repeat="option in bookMarkArray">
                                 <div class="profileImageCoachingStatus">
                                     <img ng-src="{{option.PhotoURL ? option.PhotoURL : '/Images/icons/Microsoft_Word_2013_icon.png' }}" style="margin: auto auto;float: left;height: 35px;width: 35px;" />
@@ -99,19 +99,25 @@
                                 <div style="float: left;display: flex;width: 5%;height: 100%; position: relative;">
                                     <input style="float: left;margin: auto;" type="checkbox" />
                                 </div>
-                                <div class="profileImageCoachingStatus">
+                                <div ng-show="extraParam.deleteIcon == true" class="profileImageCoachingStatus">
                                     <img src="/Images/icons/61391.png" style="margin: auto; float: left;height: 18px;width: 20px;opacity: 0.4;" />
                                 </div>
                             </div>                            
                         </div>
-                        @*<div style="height:9%;width: 53%;float:left;display: flex;">
-                            <input class="signupButton fontClass btn btn-default" type="button" value="Share" style="margin: auto;width: 31%;" />
-                            <input class="signupButton fontClass btn btn-default" type="button" value="Upload" style="margin: auto;width: 33%;" />
-                            <input class="signupButton fontClass btn btn-default" type="button" value="Delete" style="margin: auto;width: 28%;" />
-                        </div>*@
+                        <div style="height:9%;width: 100%;float:left;display: flex;" ng-show="extraParam.AttachMode == false">
+                            @*<input class="signupButton fontClass btn btn-default" type="button" value="Share" style="margin: auto;width: 115px;padding: 0;margin-right: 0;" />*@
+                            <input class="signupButton fontClass btn btn-default" type="button" value="Delete" style="margin: auto;width: 115px;padding: 0;margin-left: 4%;" />
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
+    <div ng-style="styleUI.top" class="labelInRightPanelVCG" ng-style="styleUI.chat" style="border-bottom:1px solid lightgray;display:flex;background-color: white;" ng-show="extraParam.headingRequired">
+        <textarea ng-keypress="conversationClick($event)" style="resize : none; margin: auto;width: 70%; height: 70%;" ng-disabled="openConversation.sessionClosed" placeholder="{{ openConversation.sessionClosed ? 'SESSION CLOSED' : 'CLICK HERE TO TYPE MESSAGE'}}" required ng-model="uiFlag.Message"></textarea>
+
+    </div>
+    <div class="labelInRightPanelVCG" ng-style="styleUI.bottom" style="background-color: rgb(243, 243, 243);display:flex;" ng-show="extraParam.AttachMode">
+        <input class="signupButton fontClass btn btn-default" type="button" value="Attach Files" style="margin: auto;width: 15%;padding:0;" ng-click="attachFiles()" />
     </div>
 </div>

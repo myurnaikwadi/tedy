@@ -379,6 +379,17 @@ app.factory('serverCommunication', function ($http) {
 
             iObj.loggedUserDetails.Role = _action;
             console.error(iObj)
+
+            var Data = {
+                Sender: iObj.loggedUserDetails.sender,
+                FeedBackId: iObj.loggedUserDetails.FeedBackId,
+                QueAndAns: iObj.loggedUserDetails.FeedBacks,
+                FeedbackClosed: iObj.loggedUserDetails.FeedbackClosed,
+                customerSatisfactionRating: iObj.loggedUserDetails.customerSatisfactionRating,
+                Skill: iObj.loggedUserDetails.Skill
+            };
+
+
             // $http.post(_str, iObj.loggedUserDetails).then(iObj.successCallBack, iObj.failureCallBack)
             var req = {
                 method: 'POST',
@@ -386,9 +397,10 @@ app.factory('serverCommunication', function ($http) {
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                data: iObj.loggedUserDetails
+                data: Data,
+                traditional: true
             }
-
+            console.error(req)
             $http(req).then(iObj.successCallBack, iObj.failureCallBack);
 
         },
@@ -519,7 +531,7 @@ app.factory('serverCommunication', function ($http) {
             var _checkObj = angular.copy(iObj);
             var req = {
                 method: 'POST',
-                url: '/Conversation/Create',
+                url: '/Conversation/MentoringCoachingInvite',
                 headers: {
                     'Content-Type': 'application/json'
                 },
@@ -530,7 +542,7 @@ app.factory('serverCommunication', function ($http) {
         },
         updateConversation: function (iObj) {
             console.error(iObj)
-            $http.post('/Conversation/UpdateConversationStatus', iObj.loggedUserDetails, iObj.ReceiverName, iObj.Role).then(iObj.successCallBack, iObj.failureCallBack)
+            $http.post('/Conversation/CoachingMentoringInvite', iObj.loggedUserDetails, iObj.ReceiverName, iObj.Role).then(iObj.successCallBack, iObj.failureCallBack)
         },
 
         getAllMeetingRequest: function (iObj) {
@@ -615,23 +627,10 @@ app.factory('serverCommunication', function ($http) {
             $http(req).then(iObj.successCallBack, iObj.failureCallBack);
         },
 
-        getArtifactBookMarks: function (iObj) {
-            console.error('getArtifactBookMarks --------------- ', iObj);
-
-            var req = {
-                method: 'POST',
-                url: '/Resources/getAlllFilesAndBookmarks',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                data: iObj.loggedDetail,
-                traditional: true
-            }
-            $http(req).then(iObj.successCallBack, iObj.failureCallBack);
-        },
-
-
-
+        GetRecordsOfSkillAndTopics: function (iObj) { //userID
+            console.error('GetRecordsOfSkillAndTopics --------------- ', iObj);
+            $http.post('/CTS/GetRecordsOfSkillAndTopics', iObj.userID).then(iObj.successCallBack, iObj.failureCallBack);
+        }
     }
 });
 

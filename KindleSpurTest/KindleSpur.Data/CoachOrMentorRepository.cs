@@ -41,7 +41,7 @@ namespace KindleSpur.Data
                 var frame = st.GetFrame(0);
                 var line = frame.GetFileLineNumber();
                 _logCollection.Insert(em);
-                throw new MongoException("Signup failure!!!");
+                throw new MongoException("Error");
             }
         }
 
@@ -119,8 +119,11 @@ namespace KindleSpur.Data
                 _users.Save(user);
                 _transactionStatus = true;
                 return user.TotalRewardPoints;
+
+
             }
-            catch(MongoException ex)
+
+            catch (MongoException ex)
             {
                 string message = "{ Error : 'Failed at addFeedback().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ";
                 _logCollection.Insert(message);
@@ -142,7 +145,6 @@ namespace KindleSpur.Data
             {
 
             }
-            return 0;
 
         }
 
@@ -785,6 +787,9 @@ namespace KindleSpur.Data
                 obj.FirstName = userDetail.FirstName;
                 obj.LastName = userDetail.LastName;
                 obj.PhotoURL = userDetail.Photo;
+                obj.City = userDetail.City;
+                obj.Country = userDetail.Country;
+                obj.State = userDetail.State;
                 obj.Mobile = userDetail.Mobile;
                 obj.LinkdinURL = userDetail.LinkdinURL;
                 obj.description = userDetail.description;

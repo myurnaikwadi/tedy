@@ -40,7 +40,7 @@
                 @*RESOURCES - 7*@
                 <div class="fullWidthHeightClass" ng-switch-when ='7'>
                     <div class="applicationMiddleStripMain" style="display:flex;height:100%;">
-                        <common-Repository role="coach"></common-Repository>
+                        <common-Repository extra-Param="objectForResourceTab"></common-Repository>
                     </div>
                 </div>
                 @*Communication - 5*@
@@ -128,6 +128,19 @@
                                                 <h5 class="fontClass" style="margin: 0;margin-bottom: 5px;color: #1d89cf;height: auto;font-size:11px;font-size: 10px;width: 100%;" ng-class="{chatTimeReceiver : MailRecord.SenderEmail === loggedEmail, chatTime : MailRecord.ReceiverEmail === loggedEmail}">{{('ALex Ward') | uppercase }} says</h5>
                                                 <h5 class="fontClass" style="margin: 0;margin-bottom: 5px;color: #555;">{{MailRecord.Content}}</h5>
 
+                                                <div ng-show="MailRecord.messageType =='media'" class="imageConversation" style="width: 100%;display: block;height:auto;">
+                                                    <div class="ImpactZoneChildDiv mouseOverEffectDiv" style="border-top: 1px solid #ddd;" ng-repeat="option in MailRecord.messages">
+                                                        <div class="profileImageCoachingStatus">
+                                                            <img ng-src="{{option.PhotoURL ? option.PhotoURL : '/Images/icons/Microsoft_Word_2013_icon.png' }}" style="margin: auto auto;float: left;height: 35px;width: 35px;" />
+                                                        </div>
+                                                        <div class="statusCoachingStatus" style="width: 50%;">
+                                                            <h5 class="fontClass" style="color:#A9A9A9;margin: auto auto;float: left;margin-left: 0;">{{option.Name}}</h5>
+                                                        </div>
+                                                        <div class="communicationsCoachingStatus" style="width: 14%;    margin-right: 0;">
+                                                            <h5 class="fontClass" style="color:#A9A9A9;margin: auto auto;float: left;margin-left: 0;">{{option.size}}</h5>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -138,8 +151,8 @@
                                     </div>
                                     <div class="chatBottomTwo">
                                         <div class="iconContainer">
-                                            <div class="fa fa-paperclip" style="padding: 0px 8px;"></div>
-                                            <div class="fa fa-phone" style="padding: 0px 8px;" data-toggle="modal" data-target="#myMeetingSchedular"></div>
+                                            <div class="fa fa-paperclip" style="padding: 0px 8px;" ng-click="loadAttachment()"></div>
+                                            <div class="fa fa-phone" style="padding: 0px 8px;" ng-click="scheduleMeeting()"></div>
                                         </div>
                                         <div class="iconContainer">
                                             <button type="submit" class="btn btn-default" ng-disabled="conversation.Message==''" ng-click="conversationClick($event, true)">Send</button>
