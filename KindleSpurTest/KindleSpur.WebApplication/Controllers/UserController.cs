@@ -303,7 +303,9 @@ namespace KindleSpur.WebApplication.Controllers
             }
             catch (Exception ex)
             {
-                response.FailureCallBack(ex.Message);
+                return "Opss contact to Administrator";
+
+
             }
             return response.ToJson();
         }

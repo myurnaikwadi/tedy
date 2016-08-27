@@ -61,7 +61,7 @@ namespace KindleSpur.Data
             {
                 string message = "{ Error : 'Failed at AddNewCoacheeOrMentee().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ";
                 _logCollection.Insert(message);
-                throw new MongoException("Signup failure!!!");
+              //  throw new MongoException("Signup failure!!!");
                 // _logCollection.Insert("{ Error : 'Failed at AddNewCoacheeOrMentee().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ");
                 //throw new MongoException("Signup failure!!!");
             }
@@ -74,7 +74,7 @@ namespace KindleSpur.Data
                 var frame = st.GetFrame(0);
                 var line = frame.GetFileLineNumber();
                 _logCollection.Insert(em);
-                throw new MongoException("Signup failure!!!");
+                //throw new MongoException("Signup failure!!!");
             }
             finally
             {
@@ -179,7 +179,7 @@ namespace KindleSpur.Data
             {
                 string message = "{ Error : 'Failed at EditCoacheeOrMentee().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ";
                 _logCollection.Insert(message);
-                throw new MongoException("Signup failure!!!");
+               // throw new MongoException("Signup failure!!!");
                 //_logCollection.Insert("{ Error : 'Failed at EditUser().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ");
             }
             catch (Exception e)
@@ -191,7 +191,7 @@ namespace KindleSpur.Data
                 var frame = st.GetFrame(0);
                 var line = frame.GetFileLineNumber();
                 _logCollection.Insert(em);
-                throw new MongoException("Signup failure!!!");
+               // throw new MongoException("Signup failure!!!");
             }
             finally
             {
@@ -238,7 +238,7 @@ namespace KindleSpur.Data
                 var st = new System.Diagnostics.StackTrace(e, true); var frame = st.GetFrame(0);
                 var line = frame.GetFileLineNumber();
                 _logCollection.Insert(em);
-                throw new MongoException("Signup failure!!!");
+               // throw new MongoException("Signup failure!!!");
             }
             finally
             {
@@ -269,7 +269,7 @@ namespace KindleSpur.Data
                 var frame = st.GetFrame(0);
                 var line = frame.GetFileLineNumber();
                 _logCollection.Insert(em);
-                throw new MongoException("Signup failure!!!");
+                //throw new MongoException("Signup failure!!!");
             }
             finally
             {
@@ -299,7 +299,7 @@ namespace KindleSpur.Data
             {
                 string message = "{ Error : 'Failed at GetRewardPoints().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ";
                 _logCollection.Insert(message);
-                throw new MongoException("Signup failure!!!");
+                //throw new MongoException("Signup failure!!!");
             }
             catch (Exception e)
             {
@@ -310,7 +310,7 @@ namespace KindleSpur.Data
                 var frame = st.GetFrame(0);
                 var line = frame.GetFileLineNumber();
                 _logCollection.Insert(em);
-                throw new MongoException("Signup failure!!!");
+                //throw new MongoException("Signup failure!!!");
             }
             finally
             {
@@ -328,7 +328,24 @@ namespace KindleSpur.Data
             }
             catch (MongoException ex)
             {
-                _logCollection.Insert("{ Error : 'Failed at EditUser().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ");
+                string message = "{ Error : 'Failed at GetCoacheeOrMenteeDetail().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ";
+                _logCollection.Insert(message);
+                // throw new MongoException("Signup failure!!!");
+            }
+            catch (Exception e)
+            {
+                Exceptionhandle em = new Exceptionhandle();
+                em.Error = "Failed at GetCoacheeOrMenteeDetail()";
+                em.Log = e.Message.Replace("\r\n", "");
+                var st = new System.Diagnostics.StackTrace(e, true);
+                var frame = st.GetFrame(0);
+                var line = frame.GetFileLineNumber();
+                _logCollection.Insert(em);
+                // throw new MongoException("Signup failure!!!");
+            }
+            finally
+            {
+
             }
 
             return result;
@@ -345,7 +362,7 @@ namespace KindleSpur.Data
             {
                 string message = "{ Error : 'Failed at GetCoacheeOrMenteeDetail().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ";
                 _logCollection.Insert(message);
-                throw new MongoException("Signup failure!!!");
+               // throw new MongoException("Signup failure!!!");
             }
             catch (Exception e)
             {
@@ -356,7 +373,7 @@ namespace KindleSpur.Data
                 var frame = st.GetFrame(0);
                 var line = frame.GetFileLineNumber();
                 _logCollection.Insert(em);
-                throw new MongoException("Signup failure!!!");
+               // throw new MongoException("Signup failure!!!");
             }
             finally
             {
@@ -391,7 +408,7 @@ namespace KindleSpur.Data
 
                 string message = "{ Error : 'Failed at GetAllCoacheeOrMentee().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ";
                 _logCollection.Insert(message);
-                throw new MongoException("Signup failure!!!");
+              //  throw new MongoException("Signup failure!!!");
             }
             catch (Exception e)
             {
@@ -402,7 +419,7 @@ namespace KindleSpur.Data
                 var frame = st.GetFrame(0);
                 var line = frame.GetFileLineNumber();
                 _logCollection.Insert(em);
-                throw new MongoException("Signup failure!!!");
+               // throw new MongoException("Signup failure!!!");
             }
             finally
             {
@@ -443,7 +460,7 @@ namespace KindleSpur.Data
             {
                 string message = "{ Error : 'Failed at addFeedback().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ";
                 _logCollection.Insert(message);
-                throw new MongoException("Signup failure!!!");
+              //  throw new MongoException("Signup failure!!!");
                 //_transactionStatus = false;
             }
             catch (Exception e)
@@ -455,7 +472,7 @@ namespace KindleSpur.Data
                 var frame = st.GetFrame(0);
                 var line = frame.GetFileLineNumber();
                 _logCollection.Insert(em);
-                throw new MongoException("Signup failure!!!");
+               // throw new MongoException("Signup failure!!!");
             }
             finally
             {
@@ -525,7 +542,7 @@ namespace KindleSpur.Data
             {
                 string message = "{ Error : 'Failed at GetAllCoacheeOrMentees().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ";
                 _logCollection.Insert(message);
-                throw new MongoException("Signup failure!!!");
+               // throw new MongoException("Signup failure!!!");
             }
             catch (Exception e)
             {
@@ -536,7 +553,7 @@ namespace KindleSpur.Data
                 var frame = st.GetFrame(0);
                 var line = frame.GetFileLineNumber();
                 _logCollection.Insert(em);
-                throw new MongoException("Signup failure!!!");
+                //throw new MongoException("Signup failure!!!");
             }
             finally
             {
@@ -587,7 +604,7 @@ namespace KindleSpur.Data
             {
                 string message = "{ Error : 'Failed at GetCoachingStatus().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ";
                 _logCollection.Insert(message);
-                throw new MongoException("Signup failure!!!");
+              //  throw new MongoException("Signup failure!!!");
             }
             catch (Exception e)
             {
@@ -597,8 +614,9 @@ namespace KindleSpur.Data
                 var st = new System.Diagnostics.StackTrace(e, true);
                 var frame = st.GetFrame(0);
                 var line = frame.GetFileLineNumber();
+                em.Trace = st.ToString();
                 _logCollection.Insert(em);
-                throw new MongoException("Signup failure!!!");
+               // throw new MongoException("Signup failure!!!");
             }
             finally
             {

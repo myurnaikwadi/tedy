@@ -2,6 +2,7 @@
 using KindleSpur.Models;
 using KindleSpur.Models.Interfaces;
 using MongoDB.Bson;
+using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,76 +13,149 @@ namespace KindleSpur.WebApplication.Controllers
 {
     public class CoachController : Controller
     {
+        Connection con = new Connection();
+        MongoCollection _logCollection;
         private readonly CTSRepository _ctsRepo = new CTSRepository();
         private readonly CoachOrMentorRepository _coachRepo = new CoachOrMentorRepository();
-        private readonly string UserId;
+        private readonly string UserId ;
         public CoachController()
         {
             UserId = ((IUser)System.Web.HttpContext.Current.Session["User"]).EmailAddress;
            // getfeedback();
         }
-
+        [HandleError]
         [HttpPost]
         public Boolean SaveSkills(List<Models.SkillOrTopic> selectedArray)
         {
-            KindleSpur.Models.CoachOrMentor _obj = new Models.CoachOrMentor();
-            _obj.UserId = UserId;
-            _obj.Role = "Coach";
-            _obj.CreateDate = _obj.UpdateDate= DateTime.Now;
-            if (_obj.Skills == null) _obj.Skills = new List<SkillOrTopic>();
-            if(selectedArray!=null)
-            _obj.Skills.AddRange(selectedArray);
-           // if (selectedArray != null)
+            try
+            {
+                KindleSpur.Models.CoachOrMentor _obj = new Models.CoachOrMentor();
+                _obj.UserId = UserId;
+                _obj.Role = "Coach";
+                _obj.CreateDate = _obj.UpdateDate = DateTime.Now;
+                if (_obj.Skills == null) _obj.Skills = new List<SkillOrTopic>();
+                if (selectedArray != null)
+                    _obj.Skills.AddRange(selectedArray);
+                // if (selectedArray != null)
                 _coachRepo.AddNewCoachOrMentor(_obj);
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+           
+            finally
+            {
 
+            }
             return true;
         }
-
+        [HandleError]
         public BsonDocument  GetRecommendedCoach()
         {
             return _coachRepo.GetRecommended("Coach");
             
         }
-
+        [HandleError]
         public string GetCTS()
         {
-
-            List<SkillOrTopic> skills = _coachRepo.GetSkillsForCoach(UserId);
-            CTSRepository _ctsRepo = new CTSRepository();
-            BsonDocument doc = new BsonDocument();
-            if (skills != null)
+            try
             {
-                BsonArray arr = new BsonArray();
-                foreach (SkillOrTopic skill in skills)
+                List<SkillOrTopic> skills = _coachRepo.GetSkillsForCoach(UserId);
+                CTSRepository _ctsRepo = new CTSRepository();
+                BsonDocument doc = new BsonDocument();
+                if (skills != null)
                 {
+                    BsonArray arr = new BsonArray();
+                    foreach (SkillOrTopic skill in skills)
+                    {
 
-                    BsonDocument result = _ctsRepo.GetCoachTopicAndCategory(skill);
-                    arr.Add(result);
+                        BsonDocument result = _ctsRepo.GetCoachTopicAndCategory(skill);
+                        arr.Add(result);
 
+                    }
+                    doc.Add("Categories", arr);
                 }
-                doc.Add("Categories", arr);
-            }
-            return doc.ToJson();
-        }
+                return doc.ToJson();
 
+            }
+            catch (Exception ex)
+            {
+                return "Opss contact to Administrator";
+            }
+
+            finally
+            {
+
+            }
+
+
+
+        }
+        [HandleError]
         public string GetCoachs(CTSFilter ctsFilter)
         {
-            var result = _coachRepo.GetAllCoachOrMentors(ctsFilter, "Role");
-            return result.ToJson();
-        }
+            try
+            {
+                var result = _coachRepo.GetAllCoachOrMentors(ctsFilter, "Role");
+                return result.ToJson();
 
+            }
+           
+            catch (Exception ex)
+            {
+                return "Opss contact to Administrator";
+            }
+            finally
+            {
+
+            }
+
+
+        }
+        
         [HttpPost]
         public int SaveFeedBack(Feedback feedback)
         {
-            CoachOrMentorRepository _coachRepo = new CoachOrMentorRepository();
-            return _coachRepo.addFeedback(UserId, feedback, "Coach");
 
+            try
+            {
+                CoachOrMentorRepository _coachRepo = new CoachOrMentorRepository();
+               
+
+            }
+            
+            catch (Exception ex)
+            {
+                //return partialView("Error");
+                throw new Exception("system error");
+            }
+
+            finally
+            {
+
+            }
+            return _coachRepo.addFeedback(UserId, feedback, "Coach");
         }
+        [HandleError]
         public ActionResult GetCoachingStatus()
         {
-            CoachOrMentorRepository _coachRepo = new CoachOrMentorRepository();
-            var filters = _coachRepo.GetCoachingStatus(UserId,"Coach");
-            return Json(new { Filters = filters, Success = true }, JsonRequestBehavior.AllowGet);
+            try
+            {
+                CoachOrMentorRepository _coachRepo = new CoachOrMentorRepository();
+                var filters = _coachRepo.GetCoachingStatus(UserId, "Coach");
+                return Json(new { Filters = filters, Success = true }, JsonRequestBehavior.AllowGet);
+            }
+           
+            catch (Exception ex)
+            {
+                return View("Error");
+            }
+            finally
+            {
+
+            }
+
         }
         //public  JsonResult getfeedback()
         //{

@@ -1,6 +1,8 @@
 ﻿using KindleSpur.Data;
+using KindleSpur.Models;
 using KindleSpur.Models.Interfaces;
 using MongoDB.Bson;
+using System;
 using System.Web.Mvc;
 
 namespace KindleSpur.WebApplication.Controllers
@@ -9,12 +11,13 @@ namespace KindleSpur.WebApplication.Controllers
     {
         private readonly CTSRepository _ctsRepo = new CTSRepository();
         string uid;
-        public CTSController()
-        {
-            GetRecordsOfSkillAndTopics(uid);
-        }
+        //public CTSController()
+        //{
+        //    GetRecordsOfSkillAndTopics(uid);
+        //}
         public string GetCTS()
         {
+
             return _ctsRepo.GetCTS().ToJson();
 
         }
@@ -28,23 +31,49 @@ namespace KindleSpur.WebApplication.Controllers
         [HttpPost]
         public ActionResult GetCTSFilters(string Role)
         {
-            var filters = _ctsRepo.GetCTSFilters(Role);
-            return Json(new { Filters = filters, Success = true }, JsonRequestBehavior.AllowGet);
+            try
+            {
+                var filters = _ctsRepo.GetCTSFilters(Role);
+                return Json(new { Filters = filters, Success = true }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+
+                return View("Error");
+            }
+           
         }
 
         public ActionResult GetTrendingTopics()
         {
-            var filters = _ctsRepo.GetTrendingTopics();
-            return Json(new { Filters = filters, Success = true }, JsonRequestBehavior.AllowGet);
+            try
+            {
+                var filters = _ctsRepo.GetTrendingTopics();
+                return Json(new { Filters = filters, Success = true }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+
+                return View("Error");
+            }
+
         }
-        public JsonResult GetRecordsOfSkillAndTopics(string userID)
+        public JsonResult GetRecordsOfSkillAndTopics(User user)
         {
-        
-            uid=((IUser)System.Web.HttpContext.Current.Session["User"]).EmailAddress;
+            try
+            {
+             
 
-            CTSRepository repo = new CTSRepository();
+                CTSRepository repo = new CTSRepository();
 
-            return this.Json(repo.GetAllSkillAndTopics(uid));
+                return this.Json(repo.GetAllSkillAndTopics(user.EmailAddress));
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+          
         }
     }
 }

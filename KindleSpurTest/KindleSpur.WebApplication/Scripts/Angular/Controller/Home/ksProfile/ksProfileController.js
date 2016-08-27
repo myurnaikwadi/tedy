@@ -398,7 +398,9 @@
         } else if ($scope.userInfo.Topics) {
             $scope.topicArray = [].concat($scope.userInfo.Topics);
         } else {
-            serverCommunication.getMySelection({
+
+            serverCommunication.GetRecordsOfSkillAndTopics({
+                userID : $scope.userInfo    ,
                 successCallBack: function (iObj) {
                     console.error('In getMySelection', iObj);
                     _category = {};
