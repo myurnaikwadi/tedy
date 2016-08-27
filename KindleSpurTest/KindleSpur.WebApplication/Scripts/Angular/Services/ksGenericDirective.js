@@ -1663,41 +1663,45 @@ app.directive('feedbackPage', function ($state, serverCommunication, $timeout, $
                 for (var k = 0; k < $scope.displayArray.length; k++) {
                     $scope.feedBack.feedBackDetails[$scope.displayArray[k].name] = '';
                     console.error($scope.displayArray[k].actionValue) ;
-                    $scope.feedBack.feedBackDetails[$scope.displayArray[k].name]= $scope.displayArray[k].actionValue;
+                    $scope.feedBack.feedBackDetails[$scope.displayArray[k].name]= $scope.displayArray[k];
                 };
                 console.error($scope.feedBack.feedBackDetails, $scope.displayArray);
                 // return
                 var _counter = Math.floor((Math.random() * 10) +1);
                 var _id = $rootScope.loggedDetail.EmailAddress +(Date.now()) +_counter;
                 var _rating = 5;
-                    //for (var _key in $scope.feedBack.feedBackDetails) {
+                var _feedBacks = []
+                for (var _key in $scope.feedBack.feedBackDetails) {
+                    if ($scope.feedBack.feedBackDetails[_key]) {
+                        _feedBacks.push({ Question: _key, Answer: $scope.feedBack.feedBackDetails[_key].actionValue });
+                    }
                     //    if ($scope.feedBack.feedBackDetails[_key].sessionRating) {
                     //        _rating = $scope.feedBack.feedBackDetails[_key].actionValue;
                     //    }
-                    //}
-                console.error(_rating);
+                }
+                console.error(_feedBacks);
                 var _objectPassed = {
-                    FeedBacks: $scope.feedBack.feedBackDetails, FeedBackId: _id, FeedbackClosed: $scope.feedbackClosed, sender: $scope.sender, Skill: $scope.convObject.skill, customerSatisfactionRating: _rating
+                    FeedBacks: _feedBacks, FeedBackId: _id, FeedbackClosed: $scope.feedbackClosed, Sender: $scope.sender, Skill: $scope.convObject.skill, customerSatisfactionRating: _rating
                 };
                     // $scope.feedBack.feedBackDetails = angular.extend($scope.feedBack.feedBackDetails,_objectPassed);
                 serverCommunication.sendFeedback({
-                    role: $scope.role,
-        loggedUserDetails: _objectPassed,
+                        role: $scope.role,
+                        loggedUserDetails: _objectPassed,
 
-    successCallBack: function (iObj) {
+                        successCallBack: function (iObj) {
                         console.error('In successCallBack', iObj);
-    // if ($scope.feedbackClosed) {
+                         // if ($scope.feedbackClosed) {
                             $scope.generateSesstionClosedEntry();
-    // }
+                         // }
                         $scope.getPointsRecord();
 
-},
-    failureCallBack: function (iObj) {
+                    },
+                    failureCallBack: function (iObj) {
                         console.error('In failureCallBack', iObj);
 
-}
-});
-};
+                    }
+                });
+        };
 
             $scope.feedBack.sendPreSessionDetail = function () {
                 $scope.feedBack.feedBackDetails.sender = $scope.sender;

@@ -16,7 +16,8 @@ namespace KindleSpur.Models.Interfaces
 
     public interface FeedBacks
     {
-        KeyValuePair<string, string> FeedBacks { get; set; }
+        string Question { get; set; }
+        string Answer { get; set; }
     }
     
 }
