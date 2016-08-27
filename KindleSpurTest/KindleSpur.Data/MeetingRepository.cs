@@ -43,8 +43,8 @@ namespace KindleSpur.Data
             {
                 var result = _meetingCollection.FindAs<Meeting>(Query.And(Query.EQ("From", meetingSchedularData.From), Query.EQ("To", meetingSchedularData.To))).ToList();
 
-                //if (result.Count() > 0)
-                //    return false;
+                if (result.Count() > 0)
+                    return false;
 
                 _meetingCollection.Insert(meetingSchedularData);
 
@@ -75,13 +75,21 @@ namespace KindleSpur.Data
             return _transactionStatus;
         }
 
+        public bool MeetingSchedularUpdate(string MeetingId,bool flag)
+        {
+            var result = _meetingCollection.FindOneAs<Meeting>(Query.EQ("MeetingId", MeetingId));
+            result.IsVerified = flag;
+            _meetingCollection.Save(result);
+            return true;
+        }
+
         public List<BsonDocument> GetAllMeetingRequest(string userId)
         {
             List<BsonDocument> _categories = new List<BsonDocument>();
 
             try
             {
-                var _query = Query.And(Query<Meeting>.EQ(p => p.IsVerified, false), Query<Meeting>.NE(p => p.From, userId), Query<Meeting>.EQ(p => p.To, userId));
+                var _query = Query.And(Query<Meeting>.EQ(p => p.IsVerified, true), Query<Meeting>.EQ(p => p.From, userId), Query<Meeting>.EQ(p => p.To, userId));
 
                 _categories = _meetingCollection.FindAs<BsonDocument>(
                     _query
