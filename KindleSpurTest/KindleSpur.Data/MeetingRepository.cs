@@ -142,5 +142,45 @@ namespace KindleSpur.Data
             }
             return _transactionStatus;
         }
+
+        public List<BsonDocument> GetAllMeetingPerMonth(string userId,DateTime FromDate,DateTime ToDate )
+        {
+            List<BsonDocument> _categories = new List<BsonDocument>();
+
+            try
+            {
+                var _query = Query.And(Query<Meeting>.GTE(p => p.StartDate, FromDate), Query<Meeting>.LTE(p => p.EndDate, ToDate), Query<Meeting>.EQ(p => p.From, userId), Query<Meeting>.EQ(p => p.To, userId));
+
+                _categories = _meetingCollection.FindAs<BsonDocument>(
+                    _query
+                    ).ToList();
+
+            }
+            catch (MongoException ex)
+            {
+                string message = "{ Error : 'Failed at GetAllMeetingRequest().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ";
+                _logCollection.Insert(message);
+                throw new MongoException("Signup failure!!!");
+            }
+            catch (Exception e)
+            {
+                Exceptionhandle em = new Exceptionhandle();
+                em.Error = "Failed at GetAllMeetingRequest()";
+                em.Log = e.Message.Replace("\r\n", "");
+                var st = new System.Diagnostics.StackTrace(e, true);
+                var frame = st.GetFrame(0);
+                var line = frame.GetFileLineNumber();
+                _logCollection.Insert(em);
+                throw new MongoException("Signup failure!!!");
+            }
+            finally
+            {
+
+            }
+
+            return _categories;
+        }
+
+
     }
 }

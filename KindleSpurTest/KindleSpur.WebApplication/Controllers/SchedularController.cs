@@ -65,7 +65,7 @@ namespace KindleSpur.WebApplication.Controllers
                 return View();
             }
         }
-
+        [HttpPost]
         public ActionResult GetAllMeetingRequest()
         {
 
@@ -86,13 +86,14 @@ namespace KindleSpur.WebApplication.Controllers
 
             return Json(new { Result = result }, JsonRequestBehavior.AllowGet);
         }
-
+        [HttpPost]
         public bool MeetingSchedularUpdate(string MeetingId, bool flag)
         {
             MeetingRepository _repo = new MeetingRepository();
             return _repo.MeetingSchedularUpdate(MeetingId, flag);            
         }
 
+        
 
         }
 }
