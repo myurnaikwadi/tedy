@@ -1,4 +1,11 @@
 ﻿var app = angular.module('app', ['ui.router']);
+app.run(function ($rootScope) {
+    $rootScope.$on('$locationChangeSuccess', function () {
+        var _userDetails = _getMyDetailsFromCookies();
+        if (_userDetails)
+            $rootScope.loggedDetail = _userDetails;
+    });
+});
 var rootScope = null;
 function onLinkedInLoad() {
 

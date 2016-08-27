@@ -37,7 +37,10 @@ namespace KindleSpur.WebApplication.Controllers
         {
             return View();
         }
-
+        public ActionResult ksMeetingSchdule()
+        {
+            return View();
+        }
         //public ActionResult GetConversation(string loggedEmail)
         //{
         //    ConversationRepository _repo = new ConversationRepository();

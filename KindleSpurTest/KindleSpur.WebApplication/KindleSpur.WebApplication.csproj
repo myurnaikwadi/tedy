@@ -398,6 +398,7 @@
     <Content Include="Scripts\Angular\Services\ksCommonRepo.js" />
     <Content Include="Scripts\Angular\Services\ksGenericDirective.js" />
     <Content Include="Scripts\Angular\Services\ksIsotope.js" />
+    <Content Include="Scripts\Angular\Services\ksMeetingScheduler.js" />
     <Content Include="Scripts\Angular\Services\ksPluginService.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -505,6 +506,7 @@
     <Content Include="Views\Home\ksMonthlyTemplate.cshtml" />
     <Content Include="Views\Home\ksCommonRepository.cshtml" />
     <Content Include="Views\Home\ksParentState.cshtml" />
+    <Content Include="Views\Conversation\ksMeetingSchdule.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

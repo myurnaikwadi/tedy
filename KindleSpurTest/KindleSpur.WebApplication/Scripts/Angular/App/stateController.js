@@ -14,7 +14,7 @@ app.config(['$stateProvider', '$urlRouterProvider','$locationProvider',function(
          $urlRouterProvider.otherwise('login');
     }
 
-    $locationProvider.html5Mode(true);
+    //$locationProvider.html5Mode(true);
     $stateProvider
     .state('/', {
         url: '/login',
