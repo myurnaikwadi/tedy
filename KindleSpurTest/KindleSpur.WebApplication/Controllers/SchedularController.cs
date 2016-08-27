@@ -92,7 +92,7 @@ namespace KindleSpur.WebApplication.Controllers
             MeetingRepository _repo = new MeetingRepository();
             return _repo.MeetingSchedularUpdate(MeetingId, flag);            
         }
-
+        [HttpPost]
         public ActionResult GetAllMeetingPerMonth(DateTime FromDate, DateTime ToDate)
         {
 
