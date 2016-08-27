@@ -627,8 +627,10 @@ app.factory('serverCommunication', function ($http) {
             $http(req).then(iObj.successCallBack, iObj.failureCallBack);
         },
 
-
-
+        GetRecordsOfSkillAndTopics: function (iObj) { //userID
+            console.error('GetRecordsOfSkillAndTopics --------------- ', iObj);
+            $http.post('/CTS/GetRecordsOfSkillAndTopics', iObj.userID).then(iObj.successCallBack, iObj.failureCallBack);
+        }
     }
 });
 

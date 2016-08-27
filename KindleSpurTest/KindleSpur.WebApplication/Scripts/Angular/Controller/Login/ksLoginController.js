@@ -52,7 +52,7 @@ app.controller('ksLoginController', ['$scope', 'authentification', '$location', 
     * @Purpose : success callback after successful login
     */
     var _successLoginCallBack = function (iObject) {
-        console.error('In _successCallBack', iObject);
+        console.error('In _successLoginCallBack', iObject);
         //  window.$cookieStore = $cookieStore 	    
         if (!iObject.data.Result) {
             //alert();
@@ -74,7 +74,7 @@ app.controller('ksLoginController', ['$scope', 'authentification', '$location', 
                 $scope.displayAlert.showAlert = true;
                 $scope.displayAlert.message = 'Wrong id password';
                 $scope.displayAlert.formatType = '2';
-                $state.go('login');
+                $state.go('login', {}, { reload: true });
             } else {
                 $state.go('home.dashBoard');
                 //$state.go('landingPage');
@@ -82,13 +82,13 @@ app.controller('ksLoginController', ['$scope', 'authentification', '$location', 
         }
     };
     var _successPasswordCallBack = function (iObj) {
-        console.error('In _successCallBack');
+        console.error('In _successPasswordCallBack');
         //alert('Your password has been save successfully.Please login')
         $scope.displayAlert.showAlert = true;
         $scope.displayAlert.message = 'Your password has been saved successfully. Please login';
         $scope.displayAlert.formatType = '1';
 
-        $state.go('login');
+        $state.go('login', {}, { reload: true });
     };
 
     var _successCallBack = function (iObj) {
@@ -103,6 +103,7 @@ app.controller('ksLoginController', ['$scope', 'authentification', '$location', 
             $scope.displayAlert.formatType = '1';
             //  alert(iObj.data.Message);
         }
+        $state.go('login', {}, { reload: true });
         //$rootscope.$broadcast('alertBox', {
         //        showAlertBox: true,
         //        formatType: 'success',
@@ -133,7 +134,7 @@ app.controller('ksLoginController', ['$scope', 'authentification', '$location', 
         $scope.displayAlert.message = 'Your password has been saved successfully. Please login';
         $scope.displayAlert.formatType = '1';
         //$state.go('login');
-        $state.go('login');
+        $state.go('login', {}, { reload: true });
         //  window.location = '/User/Login';
     };
 
@@ -197,7 +198,7 @@ app.controller('ksLoginController', ['$scope', 'authentification', '$location', 
 
     $scope.cancelClick = function () {
 
-        $state.go('login');
+        $state.go('login',{}, { reload: true });
     };
 
     $scope.savePassword = function () {

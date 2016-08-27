@@ -26,45 +26,54 @@ namespace KindleSpur.WebApplication.Controllers
         public JsonResult UploadFilesForArtiFacts(HttpPostedFileBase model)
         {
             UserRepository _repo = new UserRepository();
-            var allowedExtensions = new[] {
+            try
+            {
+                var allowedExtensions = new[] {
                     ".Jpg", ".png", ".jpg", "jpeg",".doc",".pdf",".txt"
                 };
-            var filess = Request.Files;
-            if (filess.Count > 0)
-            {
-                object[] myfiles = new object[filess.Count];
-
-                List<FileUpload> list = new List<FileUpload>();
-                for (int i = 0; i < filess.Count; i++)
+                var filess = Request.Files;
+                if (filess.Count > 0)
                 {
-                    var postfile = filess[i];
-                    var fileName = Path.GetFileName(postfile.FileName);
+                    object[] myfiles = new object[filess.Count];
 
-                    var ext = Path.GetExtension(postfile.FileName);
+                    List<FileUpload> list = new List<FileUpload>();
+                    for (int i = 0; i < filess.Count; i++)
+                    {
+                        var postfile = filess[i];
+                        var fileName = Path.GetFileName(postfile.FileName);
 
-                    string name = Path.GetFileNameWithoutExtension(fileName);
-                    myfiles[i] = name + ext;
+                        var ext = Path.GetExtension(postfile.FileName);
 
-                    postfile.SaveAs(Path.Combine(Server.MapPath("~/FilePath"), myfiles[i].ToString()));
-                }
-                if (myfiles != null)
-                {
-                    _repo.uploadResourceFile(UserId, myfiles);
+                        string name = Path.GetFileNameWithoutExtension(fileName);
+                        myfiles[i] = name + ext;
+
+                        postfile.SaveAs(Path.Combine(Server.MapPath("~/FilePath"), myfiles[i].ToString()));
+                    }
+                    if (myfiles != null)
+                    {
+                        _repo.uploadResourceFile(UserId, myfiles);
+                    }
+                    else
+                    {
+                        ViewBag.message = "Please choose only Image file";
+                    }
                 }
                 else
                 {
-                    ViewBag.message = "Please choose only Image file";
+                    ViewBag.message = "Please choose  file";
                 }
+
+
+
+                IUser user = _repo.GetUserDetail(((IUser)System.Web.HttpContext.Current.Session["User"]).EmailAddress);
+                return Json(user);
             }
-            else
+            catch (Exception)
             {
-                ViewBag.message = "Please choose  file";
+
+                throw;
             }
-
-
-
-            IUser user = _repo.GetUserDetail(((IUser)System.Web.HttpContext.Current.Session["User"]).EmailAddress);
-            return Json(user);
+            
         }
 
 

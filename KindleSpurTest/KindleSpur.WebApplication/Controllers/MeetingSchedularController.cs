@@ -95,16 +95,26 @@ namespace KindleSpur.WebApplication.Controllers
             //return Content(result);
 
             MeetingSchedularRepository _repo = new MeetingSchedularRepository();
-            List<IUser> result = new List<IUser>();
-
-            UserRepository ur = new UserRepository();
-            foreach (var value in _repo.GetAllMeetingRequest(((IUser)Session["User"]).EmailAddress))
+            try
             {
-                var recevicedetails = ur.GetUserDetail(value["SenderEmail"].ToString());
-                result.Add((IUser)recevicedetails);
-            }
+                List<IUser> result = new List<IUser>();
 
-            return Json(new { Result = result }, JsonRequestBehavior.AllowGet);
+                UserRepository ur = new UserRepository();
+                foreach (var value in _repo.GetAllMeetingRequest(((IUser)Session["User"]).EmailAddress))
+                {
+                    var recevicedetails = ur.GetUserDetail(value["SenderEmail"].ToString());
+                    result.Add((IUser)recevicedetails);
+                }
+                return Json(new { Result = result }, JsonRequestBehavior.AllowGet);
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+           
+
         }
 
         //Update Meeting Schedular Status MeetingSchedular/UpdateConversationStatus
@@ -112,54 +122,64 @@ namespace KindleSpur.WebApplication.Controllers
         public void UpdateMeetingStatus(MeetingSchedular _obj, string ReceiverName, string Reason)
         {
             MeetingSchedularRepository _repo = new MeetingSchedularRepository();
-            if (_repo.UpdateMeetingStatus(_obj.SenderEmail, _obj.ReceiverEmail, _obj.IsVerified, _obj.Role))
+            try
             {
-                string uri = Request.Url.AbsoluteUri.ToString();
-                string senderName = ((IUser)System.Web.HttpContext.Current.Session["User"]).FirstName + " " + ((IUser)System.Web.HttpContext.Current.Session["User"]).LastName;
-                string subject = "";
-
-                string content = "Hello " + ReceiverName + ",";
-
-                if (_obj.IsVerified == true && (_obj.Role == "Coach" || _obj.Role == "Coachee")) 
+                if (_repo.UpdateMeetingStatus(_obj.SenderEmail, _obj.ReceiverEmail, _obj.IsVerified, _obj.Role))
                 {
-                    subject = "Meeting invite is accepted";
-                    content += senderName + " has accepted your meeting invite on " + _obj.MeetingDate + ", " + _obj.FromTime + "," + _obj.ToTime + " hours (IST) on Topic " + Reason + ". You can start communicating with your Coach via KindleSpur platform.";
-                    content += "<br/><br/>Have a successful discussion!";
-                }
-                else if (_obj.IsVerified == false && (_obj.Role == "Coach" || _obj.Role == "Coachee"))
-                { 
-                    subject = "Meeting invite is declined";
-                    content += senderName + " has declined  your meeting invite on " + _obj.MeetingDate + ", " + _obj.FromTime + "," + _obj.ToTime + " hours (IST) on Topic " + Reason + ". You can start communicating with your Coach via KindleSpur platform.";
+                    string uri = Request.Url.AbsoluteUri.ToString();
+                    string senderName = ((IUser)System.Web.HttpContext.Current.Session["User"]).FirstName + " " + ((IUser)System.Web.HttpContext.Current.Session["User"]).LastName;
+                    string subject = "";
 
-                    content += "<br/></br>Discuss with " + senderName + " via KindleSpur platform and schedule a new meeting.";
-                    content+= "<br/><br/>Please click on the following link - <a href = '" + uri + "'>" + uri + "</a>";
-                }
-                else if (_obj.IsVerified == true && (_obj.Role == "Mentor" || _obj.Role == "Mentee"))
-                {
-                    subject = "Meeting invite is accepted";
-                    content += senderName + " has accepted your meeting invite on " + _obj.MeetingDate + ", " + _obj.FromTime + "," + _obj.ToTime + " hours (IST) on Skill " + Reason + ". You can start communicating with your Coach via KindleSpur platform.";
-                    content += "<br/><br/>Have a successful discussion!";
-                }
-                else if (_obj.IsVerified == false && (_obj.Role == "Mentor" || _obj.Role == "Mentee"))
-                {
-                    subject = "Meeting invite is declined";
-                    content += senderName + " has declined  your meeting invite on " + _obj.MeetingDate + ", " + _obj.FromTime + "," + _obj.ToTime + " hours (IST) on Skill " + Reason + ". You can start communicating with your Coach via KindleSpur platform.";
+                    string content = "Hello " + ReceiverName + ",";
 
-                    content += "<br/></br>Discuss with " + senderName + " via KindleSpur platform and schedule a new meeting.";
-                    content += "<br/><br/>Please click on the following link - <a href = '" + uri + "'>" + uri + "</a>";
-                }
-                else
-                {
-                    subject = "Meeting Status";
-                    content += senderName + "has taken action on your request. Search via KindleSpur.";
-                }
+                    if (_obj.IsVerified == true && (_obj.Role == "Coach" || _obj.Role == "Coachee"))
+                    {
+                        subject = "Meeting invite is accepted";
+                        content += senderName + " has accepted your meeting invite on " + _obj.MeetingDate + ", " + _obj.FromTime + "," + _obj.ToTime + " hours (IST) on Topic " + Reason + ". You can start communicating with your Coach via KindleSpur platform.";
+                        content += "<br/><br/>Have a successful discussion!";
+                    }
+                    else if (_obj.IsVerified == false && (_obj.Role == "Coach" || _obj.Role == "Coachee"))
+                    {
+                        subject = "Meeting invite is declined";
+                        content += senderName + " has declined  your meeting invite on " + _obj.MeetingDate + ", " + _obj.FromTime + "," + _obj.ToTime + " hours (IST) on Topic " + Reason + ". You can start communicating with your Coach via KindleSpur platform.";
 
-                //
-                content += "<br /><br />Regards, <br/> KindleSpur Team.";
-                EmailNotification.SendMeetingEmail(_obj, uri, subject, content);
-                TempData["StatusMessage"] = "Please check your mail for status of conversation!!!";
+                        content += "<br/></br>Discuss with " + senderName + " via KindleSpur platform and schedule a new meeting.";
+                        content += "<br/><br/>Please click on the following link - <a href = '" + uri + "'>" + uri + "</a>";
+                    }
+                    else if (_obj.IsVerified == true && (_obj.Role == "Mentor" || _obj.Role == "Mentee"))
+                    {
+                        subject = "Meeting invite is accepted";
+                        content += senderName + " has accepted your meeting invite on " + _obj.MeetingDate + ", " + _obj.FromTime + "," + _obj.ToTime + " hours (IST) on Skill " + Reason + ". You can start communicating with your Coach via KindleSpur platform.";
+                        content += "<br/><br/>Have a successful discussion!";
+                    }
+                    else if (_obj.IsVerified == false && (_obj.Role == "Mentor" || _obj.Role == "Mentee"))
+                    {
+                        subject = "Meeting invite is declined";
+                        content += senderName + " has declined  your meeting invite on " + _obj.MeetingDate + ", " + _obj.FromTime + "," + _obj.ToTime + " hours (IST) on Skill " + Reason + ". You can start communicating with your Coach via KindleSpur platform.";
+
+                        content += "<br/></br>Discuss with " + senderName + " via KindleSpur platform and schedule a new meeting.";
+                        content += "<br/><br/>Please click on the following link - <a href = '" + uri + "'>" + uri + "</a>";
+                    }
+                    else
+                    {
+                        subject = "Meeting Status";
+                        content += senderName + "has taken action on your request. Search via KindleSpur.";
+                    }
+
+                    //
+                    content += "<br /><br />Regards, <br/> KindleSpur Team.";
+                    EmailNotification.SendMeetingEmail(_obj, uri, subject, content);
+                    TempData["StatusMessage"] = "Please check your mail for status of conversation!!!";
+                }
             }
-        }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            
+            }
+        
 
         // GET: MeetingSchedular/Edit/5
         public ActionResult Edit(int id)

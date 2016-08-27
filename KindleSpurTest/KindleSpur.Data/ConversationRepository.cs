@@ -291,89 +291,89 @@ namespace KindleSpur.Data
         {
             List<BsonDocument> _categories = new List<BsonDocument>();
 
-                //var _convCollection = _kindleDatabase.GetCollection<Conversation>("Conversations");
-                //var _query = Query.And(
-                //            Query.Or(
-                //                        Query<Conversation>.EQ(p => p.SenderEmail, senderEmail), Query<Conversation>.EQ(p => p.ReceiverEmail, receiverEmail)),
-                //            Query.Or(
-                //                        Query<Conversation>.EQ(p => p.ReceiverEmail, senderEmail), Query<Conversation>.EQ(p => p.SenderEmail, receiverEmail))
-                //                );
+            //var _convCollection = _kindleDatabase.GetCollection<Conversation>("Conversations");
+            //var _query = Query.And(
+            //            Query.Or(
+            //                        Query<Conversation>.EQ(p => p.SenderEmail, senderEmail), Query<Conversation>.EQ(p => p.ReceiverEmail, receiverEmail)),
+            //            Query.Or(
+            //                        Query<Conversation>.EQ(p => p.ReceiverEmail, senderEmail), Query<Conversation>.EQ(p => p.SenderEmail, receiverEmail))
+            //                );
 
-                //var _query = Query.Or(
-                //    Query.And(
-                //                Query<Conversation>.EQ(p => p.SenderEmail, senderEmail), Query<Conversation>.EQ(p => p.ReceiverEmail, receiverEmail), Query<Conversation>.EQ(p => p.IsVerified, true), Query<Conversation>.EQ(p1 => p1.ConversationType, ConversationType)),
-                //    Query.And(
-                //                Query<Conversation>.EQ(p => p.SenderEmail, receiverEmail), Query<Conversation>.EQ(p => p.ReceiverEmail, senderEmail), Query<Conversation>.EQ(p => p.IsVerified, true), Query<Conversation>.EQ(p1 => p1.ConversationType, ConversationType))
-                //        );
+            //var _query = Query.Or(
+            //    Query.And(
+            //                Query<Conversation>.EQ(p => p.SenderEmail, senderEmail), Query<Conversation>.EQ(p => p.ReceiverEmail, receiverEmail), Query<Conversation>.EQ(p => p.IsVerified, true), Query<Conversation>.EQ(p1 => p1.ConversationType, ConversationType)),
+            //    Query.And(
+            //                Query<Conversation>.EQ(p => p.SenderEmail, receiverEmail), Query<Conversation>.EQ(p => p.ReceiverEmail, senderEmail), Query<Conversation>.EQ(p => p.IsVerified, true), Query<Conversation>.EQ(p1 => p1.ConversationType, ConversationType))
+            //        );
 
-                //MongoCursor<Conversation> cursor = _convCollection.Find(_query);
+            //MongoCursor<Conversation> cursor = _convCollection.Find(_query);
 
-                //_categories = _conversationCollection.FindAll().SetFields(Fields.Exclude("_id")).ToList();
+            //_categories = _conversationCollection.FindAll().SetFields(Fields.Exclude("_id")).ToList();
 
-                _categories = _conversationCollection.FindAs<BsonDocument>(Query.And(Query.EQ("ConversationParentId", ParentId), Query.EQ("ConversationType", ConversationType))).ToList();
-                var _userDetailsCollection = con.GetCollection("UserDetails");
-                try
+            _categories = _conversationCollection.FindAs<BsonDocument>(Query.And(Query.EQ("ConversationParentId", ParentId), Query.EQ("ConversationType", ConversationType))).ToList();
+            var _userDetailsCollection = con.GetCollection("UserDetails");
+            try
+            {
+                for (int i = 0; i < _categories.Count; i++)
                 {
-                    for (int i = 0; i < _categories.Count; i++)
-                    {
-                        string sender = _categories[i].GetElement("SenderEmail").Value.ToString();
-                       // BsonDocument result = _userDetailsCollection.FindAs<BsonDocument>(Query.EQ("EmailAddress", sender.ToString())).ToBsonDocument();
-                       // _categories[i].Add(new BsonElement("Sender", result.GetElement("FirstName").Value + " " + result.GetElement("LastName").Value));
-                        string receiver = _categories[i].GetElement("ReceiverEmail").Value.ToString();
-                       // BsonDocument result1 = _userDetailsCollection.FindAs<BsonDocument>(Query.EQ("EmailAddress", receiver)).ToBsonDocument();
-                       // _categories[i].Add(new BsonElement("Receiver", result.GetElement("FirstName").Value + " " + result.GetElement("LastName").Value));
-                    }
+                    string sender = _categories[i].GetElement("SenderEmail").Value.ToString();
+                    // BsonDocument result = _userDetailsCollection.FindAs<BsonDocument>(Query.EQ("EmailAddress", sender.ToString())).ToBsonDocument();
+                    // _categories[i].Add(new BsonElement("Sender", result.GetElement("FirstName").Value + " " + result.GetElement("LastName").Value));
+                    string receiver = _categories[i].GetElement("ReceiverEmail").Value.ToString();
+                    // BsonDocument result1 = _userDetailsCollection.FindAs<BsonDocument>(Query.EQ("EmailAddress", receiver)).ToBsonDocument();
+                    // _categories[i].Add(new BsonElement("Receiver", result.GetElement("FirstName").Value + " " + result.GetElement("LastName").Value));
                 }
+            }
 
-                catch (MongoException ex)
-                {
+            catch (MongoException ex)
+            {
 
-                    string message = "{ Error : 'Failed at GetConversation().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ";
-                    _logCollection.Insert(message);
-                    throw new MongoException("New Conversation failure!!!");
-                }
-                catch (Exception e)
-                {
-                    Exceptionhandle em = new Exceptionhandle();
-                    em.Error = "Failed at GetConversation()";
-                    em.Log = e.Message.Replace("\r\n", "");
-                    var st = new System.Diagnostics.StackTrace(e, true);
-                    var frame = st.GetFrame(0);
-                    var line = frame.GetFileLineNumber();
-                    _logCollection.Insert(em);
-                    throw new MongoException("Signup failure!!!");
-                }
-                finally
-                {
+                string message = "{ Error : 'Failed at GetConversation().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ";
+                _logCollection.Insert(message);
+                throw new MongoException("New Conversation failure!!!");
+            }
+            catch (Exception e)
+            {
+                Exceptionhandle em = new Exceptionhandle();
+                em.Error = "Failed at GetConversation()";
+                em.Log = e.Message.Replace("\r\n", "");
+                var st = new System.Diagnostics.StackTrace(e, true);
+                var frame = st.GetFrame(0);
+                var line = frame.GetFileLineNumber();
+                _logCollection.Insert(em);
+                throw new MongoException("Signup failure!!!");
+            }
+            finally
+            {
 
-                }
-                //_query
-                //Query.And(
-                //    Query.Or(
-                //                Query<Conversation>.EQ(p => p.SenderEmail, senderEmail), Query<Conversation>.EQ(p => p.SenderEmail, receiverEmail)),
-                //    Query.Or(
-                //                Query<Conversation>.EQ(p => p.ReceiverEmail, senderEmail), Query<Conversation>.EQ(p => p.ReceiverEmail, receiverEmail))
-                //        )
-
-
-                //_categories = _conversationCollection.Find(Query.Or(Query.EQ("SenderEmail", senderEmail), Query.EQ("ReceiverEmail", receiverEmail))).ToList();
-
-                //            var query =
-                //from e in _conversationCollection.AsQueryable<Conversation>().ToList()
-                //where (e.ReceiverEmail == receiverEmail || e.ReceiverEmail == senderEmail) && (e.SenderEmail == receiverEmail || e.SenderEmail == senderEmail)
-                //select e;
+            }
+            //_query
+            //Query.And(
+            //    Query.Or(
+            //                Query<Conversation>.EQ(p => p.SenderEmail, senderEmail), Query<Conversation>.EQ(p => p.SenderEmail, receiverEmail)),
+            //    Query.Or(
+            //                Query<Conversation>.EQ(p => p.ReceiverEmail, senderEmail), Query<Conversation>.EQ(p => p.ReceiverEmail, receiverEmail))
+            //        )
 
 
-                //_categories = _conversationCollection.Find(Query.And(Query.EQ("SenderEmail", senderEmail), Query.EQ("ReceiverEmail", receiverEmail), Query.EQ("SenderEmail", receiverEmail), Query.EQ("ReceiverEmail", senderEmail))).ToList();
+            //_categories = _conversationCollection.Find(Query.Or(Query.EQ("SenderEmail", senderEmail), Query.EQ("ReceiverEmail", receiverEmail))).ToList();
 
-                //_categories = _conversationCollection.Find(Query.And(Query.EQ("SenderEmail", senderEmail), Query.EQ("ReceiverEmail", receiverEmail))).ToList();
-                //_categories = _categories.Find(Query.And((Query.EQ("SenderEmail", senderEmail), Query.EQ("ReceiverEmail", receiverEmail))).Query.And(Query.EQ("SenderEmail", receiverEmail), Query.EQ("ReceiverEmail", senderEmail)).ToList();
+            //            var query =
+            //from e in _conversationCollection.AsQueryable<Conversation>().ToList()
+            //where (e.ReceiverEmail == receiverEmail || e.ReceiverEmail == senderEmail) && (e.SenderEmail == receiverEmail || e.SenderEmail == senderEmail)
+            //select e;
 
-                //var _ctsCollection = _kindleDatabase.GetCollection("Conversations");
-                //_categories = _ctsCollection.FindAll().SetFields(Fields.Exclude("_id")).ToList();
-            
-            
-           
+
+            //_categories = _conversationCollection.Find(Query.And(Query.EQ("SenderEmail", senderEmail), Query.EQ("ReceiverEmail", receiverEmail), Query.EQ("SenderEmail", receiverEmail), Query.EQ("ReceiverEmail", senderEmail))).ToList();
+
+            //_categories = _conversationCollection.Find(Query.And(Query.EQ("SenderEmail", senderEmail), Query.EQ("ReceiverEmail", receiverEmail))).ToList();
+            //_categories = _categories.Find(Query.And((Query.EQ("SenderEmail", senderEmail), Query.EQ("ReceiverEmail", receiverEmail))).Query.And(Query.EQ("SenderEmail", receiverEmail), Query.EQ("ReceiverEmail", senderEmail)).ToList();
+
+            //var _ctsCollection = _kindleDatabase.GetCollection("Conversations");
+            //_categories = _ctsCollection.FindAll().SetFields(Fields.Exclude("_id")).ToList();
+
+
+
 
             return _categories;
 
@@ -436,8 +436,6 @@ namespace KindleSpur.Data
             var list = new List<object>();
             try
             {
-
-
                 var _CoachOrMentorCollection = con.GetCollection("CoachOrMentor");
                 var _CoacheeOrMenteeCollection = con.GetCollection("CoacheeOrMentee");
                 //Coaching Skills
@@ -448,9 +446,6 @@ namespace KindleSpur.Data
                 var Coachee = (from c in _CoacheeOrMenteeCollection.AsQueryable<CoacheeOrMentee>()
                                where c.Role == "Coachee"
                                select (c.Skills.Select(r => r.Name).ToList())).ToList();
-
-
-
                 var resultsCoaching = Coach.Concat(Coachee);
                 List<string> skillListCoaching = new List<string>();
                 foreach (var skills in resultsCoaching)
@@ -485,7 +480,7 @@ namespace KindleSpur.Data
                 List<string> TopicFilterListMentoring = skillListMentoring.Distinct().Take(5).ToList();
 
 
-              //  var list = new List<object>();
+                //  var list = new List<object>();
                 list.Add(SkillFilterListCoaching);
                 list.Add(TopicFilterListMentoring);
 
@@ -497,7 +492,7 @@ namespace KindleSpur.Data
 
                 string message = "{ Error : 'Failed at GetSkillsForConversation().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ";
                 _logCollection.Insert(message);
-                throw new MongoException("New Conversation failure!!!");
+                //throw new MongoException("New Conversation failure!!!");
             }
             catch (Exception e)
             {
