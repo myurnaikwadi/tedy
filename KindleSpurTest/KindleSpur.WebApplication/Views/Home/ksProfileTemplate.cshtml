@@ -5,9 +5,9 @@
             <img style="width: 100%; height: 100%;float: left;padding: 5px;border: 1px solid #ddd;" ng-src="{{ myInfo.profileBackgroundImage ? myInfo.profileBackgroundImage : '../../../Images/userprofile.png'}}" />
 
             <div class="widthClassss" ng-init="profileHoverFlag = false">
-                <img id="profileNew" ng-click="triggerUpload(true)" ng-class="{ profileHoverClass : profileHoverFlag == true && selectedMenuIndex == 2 }" style="width: 130px; height: 130px;float: left;border-radius:100%;border: 5px solid white; position: absolute;bottom: 30px;padding: 2px;left: 51px;cursor:pointer;" src="~/Images/add.png" />
+                <img id="profileNew" ng-click="triggerUpload(true)" ng-class="{ profileHoverClass : profileHoverFlag == true && selectedMenuIndex == 2 }" style="width: 117px; height: 117px;float: left;border-radius:100%;background : rgba(0,0,0,.48); z-index: -1;position: absolute;bottom: 37px;padding: 2px;left: 17%;  transition: 0.4s all ease;cursor:pointer;" src="~/Images/add.png" />
                 <input type="file" onchange="angular.element(this).scope().uploadFileFunction()" ng-model="acceptedFile" style="display: none" id="fileInputIdRv" name="filedata" />
-                <img ng-mouseleave="proileHoverFlag = false;" ng-mouseover="profileHoverFlag = true;" style="width: 130px; height: 130px;float: left;border-radius:100%;border: 5px solid white; position: absolute;bottom: 30px;padding: 2px;left: 51px;cursor:pointer;" ng-src="{{ myInfo.profileImage ? myInfo.profileImage : '../../../Images/icons/If no Profile photo.png'}}" />                              
+                <img style="width: 130px; height: 130px;float: left;border-radius:100%;border: 5px solid white; position: absolute;bottom: 30px;padding: 2px;left: 51px;cursor:pointer;" ng-src="{{ myInfo.profileImage ? myInfo.profileImage : '../../../Images/icons/If no Profile photo.png'}}" />                              
                 <h5 class="fontClass" style="position: absolute;bottom: 11px;padding: 2px;left: 192px;color: white;font-size: 27px;font-weight: 700;cursor:pointer">{{ (myInfo.firstName+" "+myInfo.lastName) | uppercase }}</h5>
             </div>
 
@@ -76,7 +76,7 @@
                                     <div class="podcastsContainer" style="padding-left: 0;">
                                         <div class="podcastHeader" style="border: 1px solid #ddd;border-bottom: 0;height: 15%;margin: 7px;margin-bottom: 0;margin-left: 0;">
                                             <h5 class="fontClass" style="margin: auto;margin-left: 2%;font-size: 14px;padding-left: 0;">Skills</h5>
-                                            <select style="border:0;margin: auto;margin-right: 4%;" ng-change="roleDropdownChange()" ng-model="switchRoleDropDown">
+                                            <select ng-hide="loadOutside" style="border:0;margin: auto;margin-right: 4%;" ng-change="roleDropdownChange()" ng-model="switchRoleDropDown">
                                                 <option value="All">All</option>
                                                 <option value="Coach">By Coach</option>
                                                 <option value="Coachee">By Coachee</option>
@@ -90,7 +90,7 @@
                                                                                                  
                                                 </div>
                                                 <div ng-class="{ animationToSkillLoading : skill.showSkill == true ,coachThemeColor : skill.role == 'Coach' , coacheeThemeColor : skill.role == 'Coachee' , mentorThemeColor : skill.role == 'Mentor' , menteeThemeColor : skill.role == 'Mentee' }" class="skillDisplayProfile">
-                                                    <h5 class="fontClass" style="margin: auto;color: white;font-size:13px;" title="{{skill.Name}}">{{skill.Name}}</h5>      
+                                                    <h5 class="fontClass" style="margin: auto;color: white;width: 80%;font-size: 11px;" title="{{skill.Name}}">{{skill.Name}}</h5>      
                                                 </div>
 
                                             </div>

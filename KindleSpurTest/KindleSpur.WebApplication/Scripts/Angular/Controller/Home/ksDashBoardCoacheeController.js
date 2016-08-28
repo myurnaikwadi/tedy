@@ -39,7 +39,18 @@
                { name: 'RESOURCES', url: '../../Images/icons/resources1.png ' }
 
 
-    ]
+    ];
+    $scope.displayAddress = function (iObj) {
+        var _str = 'Location not available';
+        if (iObj.City)
+            _str = iObj.City + " ";
+        if (iObj.State)
+            _str += iObj.State + " ";
+        if (iObj.Country)
+            _str += iObj.Country + " ";
+        console.error(_str);
+      return _str;
+    };
     //$scope.leftSideMenus = [{ name: 'DASHBOARD' },
     //                        { name: 'COACHING STATUS' },
     //                        { name: 'KNOWLEDGE GARDEN' },

@@ -7,7 +7,7 @@
                 </div>
                 <div style="width: 75%;height: 50%;" class="profileNamePart fontClass genericPointerClass">
                     <h5 style="width: 100%;margin: 0;" class="leftSideMenuLable fontClass genericPointerClass eliipsisClass">{{(loggedDetail.FirstName+" "+loggedDetail.LastName) | uppercase }}</h5>
-                    <h5 style="font-size: 12px;float: left;margin-left:0;" class="leftSideMenuLable fontClass genericPointerClass eliipsisClass">Mentee</h5>
+                    <h5 style="font-size: 12px;float: left;margin-left:0;" class="leftSideMenuLable fontClass genericPointerClass eliipsisClass">- Mentee</h5>
                 </div>
             </div>
             <div class="leftSideMenuMainDashBoard">
@@ -27,7 +27,7 @@
             @*search mentor -3 *@
             <div class="fullWidthHeightClass" ng-switch-when="3">
                 <div class="hideCoacheeProfile" ng-class="{ showCoacheeProfileClass : showMenteeProfile == true }">
-                    <profile-Page ng-if="showMenteeProfile && userInfo" user-Info="userInfo" close-Popup="closeProfilePic()" edit-Required="false"></profile-Page>
+                    <profile-Page ng-if="showMenteeProfile && userInfo" load-Outside ="true" user-Info="userInfo" close-Popup="closeProfilePic()" edit-Required="false"></profile-Page>
                 </div>
                 <ddiv class="ctsParent">
                     <div class="ctsParentMain">
@@ -86,7 +86,7 @@
                                                         <h5 class="mentor-name fontClass eliipsisClass">{{ (coach.FirstName +" "+coach.LastName) | uppercase }}</h5>
                                                         <h5 class="mentor-skils fontClass eliipsisClass" style="font-size: 12px;margin-top: 17px;">{{ coach.EmailAddress }}</h5>
                                                         <h5 class="mentor-skils fontClass eliipsisClass" style="font-size: 10px;">Topic - {{coach.Skill.Name | uppercase}}</h5>
-                                                        <h5 class="mentor-location fontClass eliipsisClass" style="font-size: 10px;">{{coach.Country ? coach.Country : 'India'}}</h5>
+                                                        <h5 class="mentor-location fontClass eliipsisClass" style="font-size: 10px;">{{displayAddress(coach)}}</h5>
                                                     </div>
                                                 </div>
                                             </div>
@@ -100,7 +100,7 @@
             @*RESOURCES - 7*@
             <div class="fullWidthHeightClass" ng-switch-when="7">
                 <div class="applicationMiddleStripMain" style="display:flex;height:100%;">
-                    <common-Repository extra-Param="objectForResourceTab" role="mentee"></common-Repository>
+                    <common-Repository class="fullWidthHeightClass" extra-Param="objectForResourceTab" role="mentee"></common-Repository>
                 </div>
             </div>
             @*dashboard -0 *@
@@ -172,6 +172,7 @@
                     <h5 class="fontClass" style="font-size: 16px;margin-left: 1%;">KNOWLEDGE GARDEN</h5>
                 </div>
                 <div class="" style="float:left;width:100%;height:93%;">
+                    <place-Holder message="No Conversations" ng-if="!ctsDataForMolecule"></place-Holder>
                     <molecule-Map ng-if="ctsDataForMolecule" cts-Data="ctsDataForMolecule"></molecule-Map>
                 </div>
             </div>
@@ -184,7 +185,7 @@
                 <div class="homeLabelInChat" style="height:7%;border-bottom:1px solid lightgray;">
                     <h5 class="fontClass" style="font-size: 16px;margin-left:1%;">COMMUNICATION</h5>
                 </div>
-                <place-Holder message="No Conversations" ng-show="conversationListNew.length == 0"></place-Holder><place-Holder message="No Conversations" ng-show="conversationListNew.length == 0"></place-Holder>
+                <place-Holder message="No Conversations" ng-show="conversationListNew.length == 0"></place-Holder>
                 <div class="communicationMainPanel" ng-hide="conversationListNew.length == 0">
                     <div ng-if='feedBack.askFeedback' class="feedbackPanel" style="height: 75%;">
                         <feedback-Page role="Mentee" feedback-Type="feedBack.feedBackType" question="array" feedback-Closed="feedBack.icloseFeedBack" conv-Object="openConversation" submit-Feedback="feedBackSave()" close-Callback="closeCallBack()"></feedback-Page>

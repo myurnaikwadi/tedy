@@ -7,7 +7,7 @@
                     </div>
                     <div style="width: 75%;height: 50%;" class="profileNamePart fontClass genericPointerClass">
                         <h5 style="width: 100%;margin: 0;" class="leftSideMenuLable fontClass genericPointerClass eliipsisClass">{{(loggedDetail.FirstName+" "+loggedDetail.LastName) | uppercase }}</h5>
-                        <h5 style="font-size: 12px;float: left;margin-left:0;" class="leftSideMenuLable fontClass genericPointerClass eliipsisClass">Mentor</h5>
+                        <h5 style="font-size: 12px;float: left;margin-left:0;" class="leftSideMenuLable fontClass genericPointerClass eliipsisClass">- Mentor</h5>
                     </div>
                 </div>
                 <div class="leftSideMenuMainDashBoard">
@@ -30,7 +30,7 @@
                 @*RESOURCES - 7*@
                 <div class="fullWidthHeightClass" ng-switch-when='7'>
                     <div class="applicationMiddleStripMain" style="display:flex;height:100%;">
-                        <common-Repository extra-Param="objectForResourceTab"></common-Repository>
+                        <common-Repository class="fullWidthHeightClass" extra-Param="objectForResourceTab"></common-Repository>
                     </div>
                 </div>
                 @*Add topics -2 *@

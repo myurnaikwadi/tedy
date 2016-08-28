@@ -246,4 +246,6 @@ display: flex;
 }
 .profileHoverClass {
     z-index:1 !important;
+    left: 6%  !important;
+    transition: 0.4s all ease;
 }

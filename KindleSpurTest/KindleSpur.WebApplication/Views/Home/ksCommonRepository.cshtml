@@ -34,9 +34,8 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="" ng-show="uploadAttachmentArray.length == 0">
-                            
-                        </div>
+                        <place-Holder message="Please Upload Some Files" ng-show="uploadAttachmentArray.length == 0"></place-Holder>
+                       
                     </div>
                 </div>
                 <div class="bottomStripPopup" ng-hide="uploadAttachmentArray.length == 0">                    
@@ -48,7 +47,7 @@
                     <h5 style="margin: auto;margin-left: 2%;" class="fontClass ValueFeedsHeade">ARTIFACTS</h5>
                 </div>
                 <div style="height:90%;width:100%;float:left">
-                    <div style="height: 91%;width: 100%;float:left;">
+                    <div style="height: 88%;width: 100%;float:left;overflow:auto;">
                         <div ng-hide="artifactsArray.length == 0" class="ImpactZoneChildDiv mouseOverEffectDiv" ng-repeat="option in artifactsArray">
                             <div class="profileImageCoachingStatus">
                                 <img ng-src="{{option.PhotoURL ? option.PhotoURL : '/Images/icons/Microsoft_Word_2013_icon.png' }}" style="margin: auto auto;float: left;height: 35px;width: 35px;" />                               
@@ -68,7 +67,7 @@
                         </div>
                         <place-Holder message="No Attachment Uploaded" ng-show="artifactsArray.length == 0" ></place-Holder>
                     </div>
-                    <div style="height:9%;width: 100%;float:left;display: flex;" ng-show="extraParam.AttachMode == false">
+                    <div style="height:11%;width: 100%;float:left;display: flex;" ng-show="extraParam.AttachMode == false">
                         @*<input class="signupButton fontClass btn btn-default" type="button" value="Share" style="margin: auto;margin-right: 0;padding: 0;width: 115px;" />*@
                         <input class="signupButton fontClass btn btn-default" type="button" value="Upload" ng-click="loadUploadPopup()" style="margin: auto;margin-right: 0;padding: 0;width: 115px;" />
                         <input class="signupButton fontClass btn btn-default" type="button" value="Delete" style="margin: auto;padding: 0;width: 115px;" />
@@ -82,7 +81,7 @@
                 </div>
                 <div class="ImpactZoneChildDiv" style="height: 90%;">
                     <div style="height:100%;width:100%;float:left">
-                        <div style="height: 91%;width: 100%;float:left;overflow:auto">
+                        <div style="height: 88%;width: 100%;float:left;overflow:auto">
                             <div class="ImpactZoneChildDiv mouseOverEffectDiv" ng-repeat="option in bookMarkArray">
                                 <div class="profileImageCoachingStatus">
                                     <img ng-src="{{option.PhotoURL ? option.PhotoURL : '/Images/icons/Microsoft_Word_2013_icon.png' }}" style="margin: auto auto;float: left;height: 35px;width: 35px;" />
@@ -104,9 +103,9 @@
                                 </div>
                             </div>                            
                         </div>
-                        <div style="height:9%;width: 100%;float:left;display: flex;" ng-show="extraParam.AttachMode == false">
+                        <div style="height:11%;width: 100%;float:left;display: flex;" ng-show="extraParam.AttachMode == false">
                             @*<input class="signupButton fontClass btn btn-default" type="button" value="Share" style="margin: auto;width: 115px;padding: 0;margin-right: 0;" />*@
-                            <input class="signupButton fontClass btn btn-default" type="button" value="Delete" style="margin: auto;width: 115px;padding: 0;margin-left: 4%;" />
+                            <input class="signupButton fontClass btn btn-default" type="button" value="Delete" style="margin: auto;width: 115px;padding: 0;" />
                         </div>
                     </div>
                 </div>

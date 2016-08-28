@@ -4,6 +4,9 @@
     //console.error($scope.userInfo);
     if ($scope.moduleName)
         $rootScope.currentModule = $scope.moduleName;
+    
+    if ($scope.loadOutside == 'true')
+        $scope.loadOutside = true;
     window.profile = $scope;
     $scope.topicArray = $scope.mySkill = [];
     $scope.profileMenuArr = [{ name: 'OVERVIEW' }, { name: 'FEEDBACKS' }, { name: 'SETTINGS' }];
@@ -73,6 +76,7 @@
         $scope.animationActicvate = false;
         $scope.loadingObject = { showLoading: true, loadingMessage: 'Loading Feed' };
         $scope.localModel = {};
+        $scope.profileHoverFlag =false;
         for (var k = 0; k < $scope.topicArray.length ; k++) {
             $scope.topicArray[k].showSkill = false;
         }
@@ -88,6 +92,7 @@
         $timeout(function () { $scope.loadingObject = { showLoading: false, loadingMessage: 'Loading Feed' }; }, 1000);
         $timeout(function () { $scope.animationActicvate = true; console.error($scope.animationActicvate) }, 1500);
         $scope.mySkill = [].concat(angular.copy($scope.topicArray));
+      //  console.error($scope.mySkill);
         $timeout(function () {
             $scope.displayAddress();
             for (var k = 0; k < $scope.mySkill.length ; k++) {
@@ -131,6 +136,7 @@
             $scope.animationActicvate = true;
           //  console.error($scope.animationActicvate);
             $scope.localModel = {};
+            $scope.profileHoverFlag = true;
             $scope.localModel = angular.copy($scope.myInfo);
             setTimeout(function () {
                 _setElementFocus('userId');
@@ -398,63 +404,63 @@
         $timeout(function () {
             $scope.loadAnimation = true;
         }, 500);
+
+    //    console.error($scope);
+        
         if ($scope.userInfo.Skills) {
-            $scope.topicArray = [].concat($scope.userInfo.Skills);
+            $scope.topicArray = [];
+            for (var i = 0; i < $scope.userInfo.Skills.length; i++) {
+                var _obj = {
+                    Name: $scope.userInfo.Skills[i].Name,
+                    role: $scope.userInfo.Role
+                }
+                $scope.topicArray.push(_obj);
+            }
+            $scope.selectedMenuProfile(0);
         } else if ($scope.userInfo.Topics) {
-            $scope.topicArray = [].concat($scope.userInfo.Topics);
+           // $scope.topicArray = [].concat($scope.userInfo.Topics);
+            $scope.topicArray = [];
+            for (var i = 0; i < $scope.userInfo.Topics.length; i++) {
+                var _obj = {
+                    Name: $scope.userInfo.Topics[i].Name,
+                    role: $scope.userInfo.Role
+                }
+                $scope.topicArray.push(_obj);
+            }
+            $scope.selectedMenuProfile(0);
         } else {
 
             serverCommunication.GetRecordsOfSkillAndTopics({
                 userID : $scope.userInfo    ,
                 successCallBack: function (iObj) {
                     console.error('In getMySelection', iObj);
-                    _category = {};
-                    _categoryArray = [];
-                    _topicArray = [];
-                    _skillsArray = [];
-                    if (iObj.data && iObj.data.Categories && iObj.data.Categories.length > 0) {
-                        for (var k = 0; k < iObj.data.Categories.length ; k++) {
-                            if (Object.keys(iObj.data.Categories[k]).length > 0) {
-                                if (iObj.data.Categories[k].Category) {
-                                    if (_category[iObj.data.Categories[k].Category]) {
-
-                                    } else {
-                                        _category[iObj.data.Categories[k].Category] = { Name: iObj.data.Categories[k].Category };
-                                        _categoryArray.push(_category[iObj.data.Categories[k].Category]);
+                    if (iObj.data) {
+                        for (var role in iObj.data) {
+                            if (iObj.data[role]) {
+                                for (var i = 0; i < iObj.data[role].length; i++) {
+                                    var _obj = {
+                                        Name: iObj.data[role][i],
+                                        role : role
                                     }
+                                    $scope.topicArray.push(_obj);
                                 }
-
-                                if (iObj.data.Categories[k].Topic) {
-                                    if (_category[iObj.data.Categories[k].Topic]) {
-
-                                    } else {
-                                        _category[iObj.data.Categories[k].Topic] = { Name: iObj.data.Categories[k].Topic };
-                                        _topicArray.push(_category[iObj.data.Categories[k].Topic]);
-                                    }
-                                }
-
-                                if (iObj.data.Categories[k].Skill) {
-                                    if (_category[iObj.data.Categories[k].Skill]) {
-
-                                    } else {
-                                        _category[iObj.data.Categories[k].Skill] = { Name: iObj.data.Categories[k].Skill };
-                                        _skillsArray.push(_category[iObj.data.Categories[k].Skill]);
-                                    }
-                                }
-
+                              
                             }
                         }
                     }
-                   // console.error('In getMySelection', _category, _categoryArray, _topicArray, _skillsArray);
-                    $scope.topicArray = [];
-                    //  $scope.topicArray =  $scope.topicArray.concat(_categoryArray);
-                    //  $scope.topicArray =  $scope.topicArray.concat(_topicArray);
-                    $scope.topicArray = $scope.topicArray.concat(_skillsArray);
-                    $scope.topicArray = [{ Name: 'OVERVIEW', role: 'Coach' }, { Name: 'OVERVIEW', role: 'Coachee' }, { Name: 'OVERVIEW', role: 'Mentor' }, { Name: 'OVERVIEW', role: 'Coach' },
-                                         { Name: 'OVERVIEW', role: 'Mentee' }, { Name: 'OVERVIEW', role: 'Coach' }, { Name: 'OVERVIEW', role: 'Coachee' },
-                                         { Name: 'FEEDBACKS', role: 'Coach' }, { Name: 'SETTINGS', role: 'Coachee' }];
-
+                    console.error($scope.topicArray)
                     $scope.selectedMenuProfile(0);
+                    //return
+                   // console.error('In getMySelection', _category, _categoryArray, _topicArray, _skillsArray);
+                    //$scope.topicArray = [];
+                    ////  $scope.topicArray =  $scope.topicArray.concat(_categoryArray);
+                    ////  $scope.topicArray =  $scope.topicArray.concat(_topicArray);
+                    //$scope.topicArray = $scope.topicArray.concat(_skillsArray);
+                    //$scope.topicArray = [{ Name: 'OVERVIEW', role: 'Coach' }, { Name: 'OVERVIEW', role: 'Coachee' }, { Name: 'OVERVIEW', role: 'Mentor' }, { Name: 'OVERVIEW', role: 'Coach' },
+                    //                     { Name: 'OVERVIEW', role: 'Mentee' }, { Name: 'OVERVIEW', role: 'Coach' }, { Name: 'OVERVIEW', role: 'Coachee' },
+                    //                     { Name: 'FEEDBACKS', role: 'Coach' }, { Name: 'SETTINGS', role: 'Coachee' }];
+
+                   
                     
                 },
                 failureCallBack: function (iObj) {
@@ -464,7 +470,7 @@
             });
         }
 
-
+        
 
 
     };
@@ -477,7 +483,8 @@ app.directive('profilePage', function ($state, serverCommunication) {
             editRequired: "@",
             userInfo: "=",
             closePopup: "&",
-            moduleName : "@?"
+            moduleName: "@?",
+            loadOutside: "@?",
         },
         templateUrl: '/Home/ksProfileTemplate',
         controller: "ksProfileController",

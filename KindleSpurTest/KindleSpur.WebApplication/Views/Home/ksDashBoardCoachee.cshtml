@@ -7,7 +7,7 @@
                     </div>
                     <div style="width: 75%;height: 50%;" class="profileNamePart fontClass genericPointerClass">
                         <h5 style="width: 100%;margin: 0;" class="leftSideMenuLable fontClass genericPointerClass eliipsisClass">{{(loggedDetail.FirstName+" "+loggedDetail.LastName) | uppercase }}</h5>
-                        <h5 style="font-size: 12px;float: left;margin-left:0;" class="leftSideMenuLable fontClass genericPointerClass eliipsisClass">Coachee</h5>
+                        <h5 style="font-size: 12px;float: left;margin-left:0;" class="leftSideMenuLable fontClass genericPointerClass eliipsisClass">- Coachee</h5>
                     </div>
                 </div>
                 <div class="leftSideMenuMainDashBoard">
@@ -83,7 +83,7 @@
                 @*Search Coach - 3 *@
                 <div class="fullWidthHeightClass" ng-switch-when="3">
                     <div class="hideCoacheeProfile" ng-class="{ showCoacheeProfileClass : showCoacheeProfile == true }">
-                        <profile-Page ng-if="showCoacheeProfile && userInfo" user-Info="userInfo" close-Popup="closeProfilePic()" edit-Required="false"></profile-Page>
+                        <profile-Page ng-if="showCoacheeProfile && userInfo" load-Outside ="true" user-Info="userInfo" close-Popup="closeProfilePic()" edit-Required="false"></profile-Page>
                     </div>
                     <div class="ctsParent">
                         <div class="ctsParentMain">
@@ -143,7 +143,7 @@
                                                             <h5 class="mentor-name fontClass eliipsisClass">{{ (coach.FirstName +" "+coach.LastName) | uppercase }}</h5>
                                                             <h5 class="mentor-skils fontClass eliipsisClass" style="font-size: 12px;margin-top: 17px;">{{ coach.EmailAddress }}</h5>
                                                             <h5 class="mentor-skils fontClass eliipsisClass" style="font-size: 10px;">Skill - {{coach.Skill.Name | uppercase}}</h5>
-                                                            <h5 class="mentor-location fontClass eliipsisClass" style="font-size: 10px;">{{coach.Country ? coach.Country : 'India'}}</h5>
+                                                            <h5 class="mentor-location fontClass eliipsisClass" style="font-size: 10px;">{{displayAddress(coach)}}</h5>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -317,8 +317,8 @@
                 </div>
                 @*RESOURCES - 7*@
                 <div class="fullWidthHeightClass" ng-switch-when="7">
-                    <div class="applicationMiddleStripMain" style="display:flex;height:100%;">
-                        <common-Repository extra-Param="objectForResourceTab"></common-Repository>
+                    <div class="applicationMiddleStripMain " style="display:flex;height:100%;">
+                        <common-Repository class="fullWidthHeightClass" extra-Param="objectForResourceTab"></common-Repository>
                     </div>
                 </div>
                 @*Rss feed - 4*@

@@ -17,11 +17,13 @@
             scope.bookMarkArray = [];
             scope.uploadAttachmentArray = [];
             var data = new FormData();
+            var tempArray = [];
             scope.loadUploadPopupFlag = false;
             scope.loadUploadPopup = function () {
                 scope.loadUploadPopupFlag = true;
                 // data = [];
                 data = new FormData();
+                tempArray = [];
             };
             
             scope.closePopup = function () {
@@ -58,10 +60,12 @@
             };
             scope.uploadDataOnServer = function () {
                 console.error(data)
+                scope.artifactsArray = scope.artifactsArray.concat(tempArray);
                 serverCommunication.sendUploadedFileToServer(data,function (iPath) {
                     data = new FormData();
                     scope.uploadAttachmentArray = [];
                     scope.loadUploadPopupFlag = false;
+                    console.error(iPath)
                 });
                
             };
@@ -92,11 +96,18 @@
                             valueFile[k].fileType = 'sheet';
                         else
                             valueFile[k].fileType = 'default';
-                        
+                      
                         scope.uploadAttachmentArray.push(valueFile[k]);
+                        var _obj = {                            
+                            FileName :  valueFile[k].name,
+                            fileType : valueFile[k].fileType,
+                            FilePath:  valueFile[k].name,
+                        }                 
+                        //});                 
+                        tempArray.push(_obj);
                     }
-                    console.error(scope.uploadAttachmentArray);
-                    //});                 
+                    //console.error(scope.uploadAttachmentArray, tempArray);
+                  
                     document.getElementById(iId).value = "";
                     scope.$apply();
                 });
