@@ -10,6 +10,11 @@
     if ($scope.editRequired == 'false') {
         $scope.profileMenuArr = [{ name: 'OVERVIEW' }, { name: 'FEEDBACKS' }];
     }
+
+    $scope.slideCar = function (iIndex) {
+        //console.error($scope.userInfo);
+        $("#carousel").carousel(iIndex);
+    };
    // $scope.topicArray = [{ Name: 'OVERVIEW' }, { Name: 'OVERVIEW' }, { Name: 'OVERVIEW' }, { Name: 'OVERVIEW' }, { Name: 'OVERVIEW' }, { Name: 'OVERVIEW' },{ Name: 'OVERVIEW' }, { Name: 'FEEDBACKS' }, { Name: 'SETTINGS' }];
     $scope.myInfo = {
         mobileNumber: $scope.userInfo.Mobile ? $scope.userInfo.Mobile : null,

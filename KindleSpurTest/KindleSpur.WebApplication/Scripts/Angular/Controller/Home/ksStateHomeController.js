@@ -19,7 +19,7 @@
             }
         });
     };
-    $scope.uiFlag = { loadRepository: false, loadBottomContain: false };
+    $scope.uiFlag = { loadRepository: false, loadBottomContain: false ,loadProfileView : false};
     $rootScope.$on("refreshStateHomeView", function (event, iObj) {
         console.error('refreshStateHomeView ---- ', iObj);
         switch (iObj.type) {
@@ -33,6 +33,7 @@
                 }
                 break;
             case "loadBottomContain": $scope.uiFlag.loadBottomContain = true; break;
+            case "loadProfileContain": $scope.extraParam = iObj.data; $scope.uiFlag.loadProfileView = iObj.data.toggleFlag; break;
         }
 
     });

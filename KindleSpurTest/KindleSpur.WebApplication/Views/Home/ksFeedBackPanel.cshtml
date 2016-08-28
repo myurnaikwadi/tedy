@@ -1,5 +1,5 @@
 ﻿<div class="popupContainer" ng-class="{ coachThemeColor : role == 'Coach' , coacheeThemeColor : role == 'Coachee' , mentorThemeColor : role == 'Mentor' , menteeThemeColor : role == 'Mentee' }" ng-show="feedBack.formValue == '1'" >
-    <div id="carousel-example-generic" class="carousel slide fullWidthHeightClass" data-slide-to="carousel" data-interval="false">
+    <div id="carousel-example" class="carousel slide fullWidthHeightClass" data-slide-to="carousel" data-interval="false">
         <!-- Wrapper for slides -->
         <div class="carousel-inner fullWidthHeightClass" role="listbox">
             <div class="item active fullWidthHeightClass">
@@ -42,8 +42,8 @@
                     </div>
                     <div class="pageNavigateView">
                         <ul class="pager" style="margin: 0;">
-                            <li ng-show="question.length > 4"><a href="#carousel-example-generic" ng-click="loadSlideData(1)" data-slide="next">Next</a></li>
-                            <li ng-hide="question.length > 4"><a style="background:#D60500;color: white;" href="" ng-click="feedBack.sendPreSessionDetail();">Submit</a></li>
+                            <li ng-show="question.length > 4"><h5 ng-click="loadSlideData(1)">Next</h5></li>
+                            <li ng-hide="question.length > 4"><h5 style="background:#D60500;color: white;" ng-click="feedBack.sendPreSessionDetail();">Submit</h5></li>
                         </ul>
                     </div>
                 </div>
@@ -81,8 +81,8 @@
                     </div>
                     <div class="pageNavigateView">
                         <ul class="pager" style="margin: 0;">
-                            <li><a href="#carousel-example-generic" ng-click="loadSlideData(0)" data-slide="prev">Previous</a></li>
-                            <li><a style="background:#D60500;color: white;" href="" ng-click="feedBack.sendFeedBackDetail();feedBack.formValue = '5'">Submit</a></li>
+                            <li><h5 ng-click="loadSlideData(0,true)">Previous</h5></li>
+                            <li><h5 style="background:#D60500;color: white;" ng-click="feedBack.sendFeedBackDetail();feedBack.formValue = '5'">Submit</a></li>
                             @*<li><a href="#carousel-example-generic" data-slide="next">Next</a></li>*@
                         </ul>
                     </div>

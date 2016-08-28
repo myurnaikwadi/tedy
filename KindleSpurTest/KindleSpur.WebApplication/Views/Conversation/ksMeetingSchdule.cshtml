@@ -1,7 +1,7 @@
 ﻿<div class="scheduleMeetingParentDiv">
     <div class="schedularContent fullWidthHeightClass">
         <div class="schedularHeader">
-            <h5 class="meetingPersonName fontClass eliipsisClass">SCHEDULE MEETING</h5>
+            <h5 class="meetingPersonName fontClass eliipsisClass">SCHEDULE MEETING FOR <b>{{extraParam.openConversation.skill | uppercase}}</b></h5>
             @*<img ng-show="extraParam.closeRequired" ng-click="closePopup()" style="width: 15px;height: 15px;top:5px;right: 5px;bottom: 0;position: absolute;z-index:1;cursor:pointer;" title="Cancel" src="~/Images/cancel.png" />*@
         </div>
         <div class="schedularBody">
@@ -17,7 +17,7 @@
                         <img style="border: 2px solid white;margin:auto;width: 60px;height: 60px;border-radius: 50%;" ng-src="{{loggedDetail.Photo ?  loggedDetail.Photo  : '../../../Images/icons/If no Profile photo.png'}}" />
                     </div>
                     <div class="meetingPersonNameStrc" style="margin-left: 0;">
-                        <h5 style="font-size: 15px;color:black;" class="leftSideMenuLable fontClass eliipsisClass">ALEX WARD</h5>
+                        <h5 style="font-size: 15px;color:black;" class="leftSideMenuLable fontClass eliipsisClass">{{(extraParam.openConversation.FirstName+" "+extraParam.openConversation.LastName) | uppercase}}</h5>
                     </div>
                 </div>
             </div>

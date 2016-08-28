@@ -209,25 +209,28 @@
                     </div>
                     <div class="communicationPanel">
                         <div class="chatParent">
+                            <div class="myFeedBackClass" ng-class="{ loadMyFeedBackClass : loadMyFeedback == true }"></div>
                             <div class="chatHeader">
                                 <div class="chatStrongHeader">
                                     <div class="chatHalfContainer">
-                                        <span style="color:#797979;" class="chatHalfContainerSpan">
+                                        <span style="color:#797979;z-index: 1;" class="chatHalfContainerSpan">
                                             <h5 class="fontClass">{{ReceiverName}}</h5>
                                         </span>
-                                        <div style="margin: auto;margin-right: 0;width: 29px;">
+                                        <img ng-click="loadMyFeedback =! loadMyFeedback;" class="mod model-1" style="width: 35px;height: 35px;" title="Feedback" src="~/Images/communication/preSessionIcon.png" />
+                                        <div style="margin: auto;margin-right: 0;width: 29px;z-index: 1;">
+                                           
                                             <img ng-click="askFeedBackFunc(3)" class="mod model-1" style="width: 35px;height: 35px;" title="Pre Session Feedback" src="~/Images/communication/preSessionIcon.png" />
                                             <section style="position: absolute;top: 4px;width: 44px;z-index: 1;background: transparent;" class="mod model-1">
                                                 <div class="spinner"></div>
                                             </section>
                                         </div>
-                                        <span style="margin: auto;height: 35px;margin-left: 0;margin-right: 0;" ng-hide="openConversation.sessionClosed" class="chatHalfContainerSpanNxt">
+                                        <span style="z-index: 1;margin: auto;height: 35px;margin-left: 0;margin-right: 0;" ng-hide="openConversation.sessionClosed" class="chatHalfContainerSpanNxt">
                                             <h6 class="fontClass genericPointerClass" style="margin: auto;" ng-click="askFeedBackFunc(true)">Close Session</h6>
                                             <h6 class="fontClass genericPointerClass" style="margin: auto;" ng-click="askFeedBackFunc(false)">Give Feedback</h6>
                                         </span>
                                     </div>
                                     <div class="chatHalfContainer">
-                                        <span class="chatHalfContainerSpanNxt" style="align-items: center;">
+                                        <span class="chatHalfContainerSpanNxt" style="z-index: 1;align-items: center;">
                                             <h6 class="fontClass" style="padding: 0px;">{{openConversation.skill}}</h6>
                                         </span>
                                     </div>
@@ -298,6 +301,7 @@
                                 </div>
                             </div>
                         </div>
+                       
                     </div>
                 </div>
                 <div class="modal fade" id="myMeetingSchedular" tabindex="-1" role="dialog" aria-labelledby="myMeetingSchedularLabel">

@@ -12,7 +12,10 @@
     <div class="logoutOption" style="width: 6%;">
         <div class="logoutOptionParent">
             @*<h5 style="margin: auto;"class="fontClass genericPointerClass" ng-click="logout()">LOGOUT</h5>*@
-            <img style="margin: auto;width:20px;" class="genericPointerClass" ng-click="logout()" src="~/Images/logout1.png" />
+            <div class="imageConversation" style="width: 100%;">
+                <img ng-click="loadProfleView()" style="border: 2px solid white;margin:auto auto;margin-top: 0;width: 40px;height: 40px;border-radius: 50%;cursor:pointer;" ng-src="{{loggedDetail.Photo ?  loggedDetail.Photo  : '../../../Images/icons/If no Profile photo.png'}}" />
+            </div>
+            @*<img style="margin: auto;width:20px;" class="genericPointerClass" ng-click="loadProfleView()" src="~/Images/logout1.png" />*@
         </div>
     </div>
     <div class="notificationDiv" ng-show="false">
@@ -30,7 +33,7 @@
         <div class="roleIconCircle mentorBorderColor genericPointerClass" ng-click="navigateAsPerRole(3)"></div>
         @*<div class="triangleArrowUp"></div>*@
     </div>
-    <div class="profileViewModeMain" style="margin-left: 0;" ng-click="navigateToProfile()" ng-show="uiFlag.profileLogo" >
+    @*<div class="profileViewModeMain" style="margin-left: 0;" ng-click="navigateToProfile()" ng-show="uiFlag.profileLogo" >
         <div class="profileImagePartMain">
             <div class="profileImage"></div>
         </div>
@@ -38,7 +41,7 @@
             <h2 class="profileName" >WELCOME</h2>
             <h2 class="profileName">&nbsp {{(loggedDetail.FirstName) | uppercase }}</h2>
         </div>
-    </div>
+    </div>*@
     <div class="profileViewModeMain" ng-show="uiFlag.calendar">
         <div class="profileImagePartMain" style="width: 35px;"><img class="calendarImage" ng-click="loadCalendarView()" src="~/Images/calendar.png" /></div>
     </div>

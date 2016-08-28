@@ -70,18 +70,40 @@ app.directive('topMainStrip', function ($state, $rootScope, authentification) {
             });
            
             console.error($rootScope.currentModule)
-            scope.loadCalendarView = function () {
+            scope.loadCalendarView = function (iEvent) {
+
+                if (iEvent) iEvent.stopPropagation();
                 $state.go('home.dashBoard.calendar');
             };
 
-            scope.navigateToProfile = function () {
+            scope.navigateToProfile = function (iEvent) {
+                console.error('navigateToProfile')
+                if (iEvent) iEvent.stopPropagation();
                 $state.go('home.dashBoard.profile');
             };
-            scope.logout = function () {
+            scope.logout = function (iEvent) {
+                console.error('logout')
+                if (iEvent) iEvent.stopPropagation();
                 //  console.error(IN.User)
                 if (IN.User) IN.User.logout();
                     authentification.logout({ loginObject: { } });
                   $state.go('login', { }, { reload: true });
+            };
+            scope.toggleFlag = false;
+            scope.loadProfleView = function () {
+                console.error(scope.toggleFlag)
+                if (scope.toggleFlag) scope.toggleFlag = false
+                else scope.toggleFlag = true;
+                console.error(scope.toggleFlag)
+                $rootScope.$broadcast("refreshStateHomeView", {
+                    type: 'loadProfileContain',
+                    //subType: 'Attachment',
+                    data: {
+                        toggleFlag: scope.toggleFlag,
+                        logout: scope.logout,
+                        profile: scope.navigateToProfile
+                    }
+                });
             };
             scope.navigateAsPerRole = function (iRole) {
                 // console.error(iRole);
@@ -1643,7 +1665,7 @@ app.directive('feedbackPage', function ($state, serverCommunication, $timeout, $
     // $scope.MailRecords.push(_object);
                 serverCommunication.sendConversation({
     loggedUserDetails: _object,
-    ReceiverName: $scope.ReceiverName,
+    ReceiverName: $scope.sender,
     Role: $scope.role,
     successCallBack: function () {
     // $scope.conversation.Message = "";
@@ -1744,30 +1766,34 @@ app.directive('feedbackPage', function ($state, serverCommunication, $timeout, $
             $scope.displayArray = [];
             $scope.counter = 4;
 
-            $scope.loadSlideData = function (iMode) {
+            $scope.loadSlideData = function (iMode,IcallfromHtml) {
                 console.error('111')
+              
                 var _loadArray = [];
                 $scope.indexArray = []
                 for (var k = 0 ; k < $scope.displayArray.length ; k++) {
                     $scope.feedBack.feedBackDetails[$scope.displayArray[k].name] = angular.copy($scope.displayArray[k]);
-};
+                };
                 $scope.displayArray = [];
                 if (iMode == 0) {
+                    if (IcallfromHtml)
+                        $("#carousel-example").carousel('prev');
                     for (var k = 0 ; k < $scope.counter ; k++) {
                         _loadArray.push(angular.copy($scope.question[k]));
                         if (_loadArray.length == $scope.counter) {
                             break;
-}
-}
-} else {
+                        }
+                     }
+                } else {
+                    $("#carousel-example").carousel('next');
                     for (var k = 4 ; k < $scope.question.length ; k++) {
                         _loadArray.push(angular.copy($scope.question[k]));
                         if (_loadArray.length == $scope.counter) {
                             break;
-}
-}
+                        }
+                }
 
-}
+            }
                 console.error($scope.question, _loadArray);
                 $scope.displayArray = [].concat(_loadArray);
                 setTimeout(function () {

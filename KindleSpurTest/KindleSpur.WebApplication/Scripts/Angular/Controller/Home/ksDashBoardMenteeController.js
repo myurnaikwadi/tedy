@@ -32,134 +32,7 @@
         $scope.userInfo = iOption;
         console.log(iOption)
     };
-
-    var _afterAddCallBack = function(iObj){
-        //console.error('_afterAddCallBack --- ', iObj);
-        $scope.conversation.SenderEmail = $scope.loggedEmail;
-        $scope.conversation.Content = null;
-        $scope.conversation.SendOrReceive = "Send";
-        $scope.conversation.IsVerified = true;
-        $scope.conversation.isRead = false;
-        var _parentId = $scope.openConversation.ConversationParentId ? $scope.openConversation.ConversationParentId : $scope.openConversation.ConversationId;
-        if ($scope.conversation.SenderEmail === "" || $scope.conversation.ReceiverEmail === "")
-            return false;
-        var _id = _parentId + ":CHT#" + (Date.now()) + (Math.floor((Math.random() * 10) + 1));
-        var _array = [];
-        
-        if(iObj.selectedData['Artifact']){
-            for(var _key in iObj.selectedData['Artifact']){
-                _array.push(iObj.selectedData['Artifact'][_key]);
-            }
-        }
-        if (iObj.selectedData['bookMark']) {
-            for (var _key in iObj.selectedData['bookMark']) {
-                _array.push(iObj.selectedData['bookMark'][_key]);
-            }
-        }
-
-       console.error(_array)
-        var _object = {
-            Content: iObj.message,
-            SenderEmail: $scope.conversation.SenderEmail,
-            ReceiverEmail: $scope.openConversation.ReceiverEmail,
-            SendOrReceive: $scope.conversation.SendOrReceive,
-            IsVerified: $scope.conversation.IsVerified,
-            ConversationClosed: false,
-            messageType: 'media',
-            messages : _array,
-            ConversationType: "Mentoring",
-            Skill: $scope.conversation.skill,
-            //"8/7/2016"
-            // CreateDate: (new Date().getMonth()+1)+"/"+new Date().getDate()+
-            //UpdateDate: "2016-08-07T11:58:13.867Z"
-            ConversationId: _id,
-            ConversationParentId: _parentId,
-        }
-
-        //   console.debug(_object);
-        var _replica = angular.copy(_object);
-        _replica.UpdateDate = new Date();
-        //  _replica.UpdateDate.setDate(6);
-        _replica.UpdateDate = _replica.UpdateDate.toJSON();
-        _replica.displayDate = _displayDate(_replica.UpdateDate);
-        _resizeDateFilter(_replica);
-        $scope.MailRecords.push(_replica);
-    };
-
-
-    $scope.loadAttachment = function () {
-          $rootScope.$broadcast("refreshStateHomeView", { 
-                        type: 'loadUpperSlider',
-                        subType : 'Attachment',
-                        data: {
-                            headingRequired: true, closeRequired: true, headingTitle: ('Send to ' + ($scope.openConversation.FirstName + " " + $scope.openConversation.LastName)),
-                            AttachMode: true, role: 'Mentee', afterAddCallBack: _afterAddCallBack,deleteIcon : false,
-                            styleUI: { chat: { 'height': '15%', 'background-color': 'white' }, top: { 'height': '12%', 'background-color': 'white' }, middle: { 'height': '59%', 'background-color': 'white' }, bottom: { 'height': '12%', 'background-color': 'white' } }
-                        }
-         });
-    };
-    
-     $scope.scheduleMeeting = function () {
-        $rootScope.$broadcast("refreshStateHomeView", {
-            type: 'loadUpperSlider',
-            subType: 'Meeting',
-            data: {
-                openConversation: $scope.openConversation, headingRequired: true, closeRequired : true, headingTitle: ('Send to ' +($scope.openConversation.FirstName + " " +$scope.openConversation.LastName)),
-                AttachMode: true, role: 'Mentee', afterAddCallBack: _saveSchedule, deleteIcon: false,
-                styleUI: { chat: { 'height': '15%', 'background-color': 'white' }, top: { 'height': '12%', 'background-color': 'white' }, middle: { 'height': '59%', 'background-color': 'white' }, bottom: { 'height': '12%', 'background-color': 'white' } }
-            }
-        });
-    };
-
-    var _saveSchedule = function (iMeetingData) {
-        console.log("Test",iMeetingData);
-        
-        return
-        $scope.MeetingSchedular.SenderEmail = $scope.loggedEmail;
-        if (emailId != "")
-            $scope.MeetingSchedular.ReceiverEmail = $scope.ReceiverEmail;
-        else
-            $scope.MeetingSchedular.ReceiverEmail = emailId;
-
-        $scope.MeetingSchedular.Subject = $scope.MeetingSchedular.Subject;
-        $scope.MeetingSchedular.MeetingDate = $scope.MeetingSchedular.MeetingDate;
-        $scope.MeetingSchedular.TimeFrom = $scope.MeetingSchedular.TimeFrom;
-        $scope.MeetingSchedular.TimeTo = $scope.MeetingSchedular.TimeTo;
-        $scope.MeetingSchedular.PlatformType = $scope.MeetingSchedular.PlatformType;
-        $scope.MeetingSchedular.UserId = $scope.MeetingSchedular.UserId;
-        $scope.MeetingSchedular.Role = "Coach";
-
-        $scope.MeetingSchedular.IsVerified = isVerified;
-
-        if ($scope.conversation.SenderEmail === "" || $scope.conversation.ReceiverEmail === "")
-            return false;
-
-        var _object = {
-            SenderEmail: $scope.MeetingSchedular.SenderEmail,
-            ReceiverEmail: $scope.MeetingSchedular.ReceiverEmail,
-            Subject: $scope.MeetingSchedular.Subject,
-            MeetingDate: $scope.MeetingSchedular.MeetingDate,
-            TimeFrom: $scope.MeetingSchedular.TimeFrom,
-            TimeTo: $scope.MeetingSchedular.TimeTo,
-            PlatformType: $scope.MeetingSchedular.PlatformType,
-            UserId: $scope.MeetingSchedular.UserId,
-            Role: $scope.MeetingSchedular.Role,
-            IsVerified: $scope.MeetingSchedular.IsVerified
-        }
-        console.log(_object);
-
-        serverCommunication.saveMeeting({
-            loggedUserDetails: _object,
-            successCallBack: function () {
-                console.log('In successCallBack');
-                $scope.myMeetingSchedular.close();
-            },
-            failureCallBack: function () {
-                console.log('In failureCallBack');
-
-            }
-        });
-    };
+  
     $scope.closeProfilePic = function () {
         console.error('closeProfilePopup')
         $scope.showMenteeProfile = false;
@@ -626,7 +499,158 @@
 
         //};
         /*START: Conversation Module Code*/
+      var _afterAddCallBack = function(iObj){
+        //console.error('_afterAddCallBack --- ', iObj);
+        $scope.conversation.SenderEmail = $scope.loggedEmail;
+        $scope.conversation.Content = null;
+        $scope.conversation.SendOrReceive = "Send";
+        $scope.conversation.IsVerified = true;
+        $scope.conversation.isRead = false;
+        var _parentId = $scope.openConversation.ConversationParentId ? $scope.openConversation.ConversationParentId : $scope.openConversation.ConversationId;
+        if ($scope.conversation.SenderEmail === "" || $scope.conversation.ReceiverEmail === "")
+            return false;
+        var _id = _parentId + ":CHT#" + (Date.now()) + (Math.floor((Math.random() * 10) + 1));
+        var _array = [];
+        
+        if(iObj.selectedData['Artifact']){
+            for(var _key in iObj.selectedData['Artifact']){
+                _array.push(iObj.selectedData['Artifact'][_key]);
+            }
+        }
+        if (iObj.selectedData['bookMark']) {
+            for (var _key in iObj.selectedData['bookMark']) {
+                _array.push(iObj.selectedData['bookMark'][_key]);
+            }
+        }
 
+       console.error(_array)
+        var _object = {
+            Content: iObj.message,
+            SenderEmail: $scope.conversation.SenderEmail,
+            ReceiverEmail: $scope.openConversation.ReceiverEmail,
+            SendOrReceive: $scope.conversation.SendOrReceive,
+            IsVerified: $scope.conversation.IsVerified,
+            ConversationClosed: false,
+            messageType: 'media',
+            messages : _array,
+            ConversationType: "Mentoring",
+            Skill: $scope.conversation.skill,
+            //"8/7/2016"
+            // CreateDate: (new Date().getMonth()+1)+"/"+new Date().getDate()+
+            //UpdateDate: "2016-08-07T11:58:13.867Z"
+            ConversationId: _id,
+            ConversationParentId: _parentId,
+        }
+
+        //   console.debug(_object);
+        var _replica = angular.copy(_object);
+        _replica.UpdateDate = new Date();
+        //  _replica.UpdateDate.setDate(6);
+        _replica.UpdateDate = _replica.UpdateDate.toJSON();
+        _replica.displayDate = _displayDate(_replica.UpdateDate);
+        _resizeDateFilter(_replica);
+        $scope.MailRecords.push(_replica);
+    };
+
+
+    $scope.loadAttachment = function () {
+          $rootScope.$broadcast("refreshStateHomeView", { 
+                        type: 'loadUpperSlider',
+                        subType : 'Attachment',
+                        data: {
+                            headingRequired: true, closeRequired: true, headingTitle: ('Send to ' + ($scope.openConversation.FirstName + " " + $scope.openConversation.LastName)),
+                            AttachMode: true, role: 'Mentee', afterAddCallBack: _afterAddCallBack,deleteIcon : false,
+                            styleUI: { chat: { 'height': '15%', 'background-color': 'white' }, top: { 'height': '12%', 'background-color': 'white' }, middle: { 'height': '59%', 'background-color': 'white' }, bottom: { 'height': '12%', 'background-color': 'white' } }
+                        }
+         });
+    };
+    
+     $scope.scheduleMeeting = function () {
+        $rootScope.$broadcast("refreshStateHomeView", {
+            type: 'loadUpperSlider',
+            subType: 'Meeting',
+            data: {
+                openConversation: $scope.openConversation, headingRequired: true, closeRequired : true, headingTitle: ('Send to ' +($scope.openConversation.FirstName + " " +$scope.openConversation.LastName)),
+                AttachMode: true, role: 'Mentee', afterAddCallBack: _saveSchedule, deleteIcon: false,
+                styleUI: { chat: { 'height': '15%', 'background-color': 'white' }, top: { 'height': '12%', 'background-color': 'white' }, middle: { 'height': '59%', 'background-color': 'white' }, bottom: { 'height': '12%', 'background-color': 'white' } }
+            }
+        });
+    };
+
+    var _saveSchedule = function (iMeetingData) {
+        console.log("Test", iMeetingData, $scope.openConversation);
+        var _parentId = $scope.openConversation.ConversationParentId ? $scope.openConversation.ConversationParentId : $scope.openConversation.ConversationId;
+        var _id = _parentId + ":CHT#" +(Date.now()) +(Math.floor((Math.random() * 10) +1));
+        var _object = {
+                Subject: $scope.conversation.Content,
+                From: $scope.conversation.SenderEmail,
+                To: $scope.conversation.ReceiverEmail,
+                Status : 'Mentoring',
+                IsVerified: false,
+                ConversationClosed: false,
+                StartDate: '',
+                EndDate : '',
+                //TimeSlot
+                MeetingId: _id,
+                SkillName: $scope.openConversation.skill
+        }
+        return
+        serverCommunication.saveMeeting({
+            loggedUserDetails : _object,
+            successCallBack : function () {
+                console.log('In successCallBack');
+                $scope.myMeetingSchedular.close();
+            },
+            failureCallBack : function () {
+                console.log('In failureCallBack');
+            }
+        }); 
+        return
+        $scope.MeetingSchedular.SenderEmail = $scope.loggedEmail;
+        if (emailId != "")
+            $scope.MeetingSchedular.ReceiverEmail = $scope.ReceiverEmail;
+        else
+            $scope.MeetingSchedular.ReceiverEmail = emailId;
+
+        $scope.MeetingSchedular.Subject = $scope.MeetingSchedular.Subject;
+        $scope.MeetingSchedular.MeetingDate = $scope.MeetingSchedular.MeetingDate;
+        $scope.MeetingSchedular.TimeFrom = $scope.MeetingSchedular.TimeFrom;
+        $scope.MeetingSchedular.TimeTo = $scope.MeetingSchedular.TimeTo;
+        $scope.MeetingSchedular.PlatformType = $scope.MeetingSchedular.PlatformType;
+        $scope.MeetingSchedular.UserId = $scope.MeetingSchedular.UserId;
+        $scope.MeetingSchedular.Role = "Coach";
+
+        $scope.MeetingSchedular.IsVerified = isVerified;
+
+        if ($scope.conversation.SenderEmail === "" || $scope.conversation.ReceiverEmail === "")
+            return false;
+
+        var _object = {
+            SenderEmail: $scope.MeetingSchedular.SenderEmail,
+            ReceiverEmail: $scope.MeetingSchedular.ReceiverEmail,
+            Subject: $scope.MeetingSchedular.Subject,
+            MeetingDate: $scope.MeetingSchedular.MeetingDate,
+            TimeFrom: $scope.MeetingSchedular.TimeFrom,
+            TimeTo: $scope.MeetingSchedular.TimeTo,
+            PlatformType: $scope.MeetingSchedular.PlatformType,
+            UserId: $scope.MeetingSchedular.UserId,
+            Role: $scope.MeetingSchedular.Role,
+            IsVerified: $scope.MeetingSchedular.IsVerified
+        }
+        console.log(_object);
+
+        serverCommunication.saveMeeting({
+            loggedUserDetails: _object,
+            successCallBack: function () {
+                console.log('In successCallBack');
+                $scope.myMeetingSchedular.close();
+            },
+            failureCallBack: function () {
+                console.log('In failureCallBack');
+
+            }
+        });
+    };
     $scope.autoSyncCounter = null;
     $scope.stopFight = function () {
         if (angular.isDefined($scope.autoSyncCounter)) {
@@ -638,16 +662,16 @@
 
     $scope.autoSyncRoutine = function (iTime) {
         console.error('autoSyncRoutine')
-        $scope.autoSyncCounter = $interval(function () {
-            console.error('autoSyncRoutine - CallBack -- ')
-            if (iTime == _chatMessageTime) {
-                console.error('auto sync call for chat Message');
-                $scope.conversationLoading();
-            } else {
-                console.error('auto sync call for conversation');
-                $scope.conversationRequest();
-        }
-        }, iTime);
+        //$scope.autoSyncCounter = $interval(function () {
+        //    console.error('autoSyncRoutine - CallBack -- ')
+        //    if (iTime == _chatMessageTime) {
+        //        console.error('auto sync call for chat Message');
+        //        $scope.conversationLoading();
+        //    } else {
+        //        console.error('auto sync call for conversation');
+        //        $scope.conversationRequest();
+        //}
+        //}, iTime);
     };
     $scope.conversationLoading = function () {
         $scope.conversationListNew =[];
@@ -857,22 +881,14 @@
 
         serverCommunication.getConversationRequest({
                 successCallBack: function (iObj) {
-                console.debug('In successCallBack getConversationRequest', iObj);
-
-                    function ObjectId(id) { return id;
-                }
-                    function ISODate(d) {
-                    return d;
-                }
-
-                $scope.notificationData = iObj.data.Result;
-                 $scope.loadingMiddleObject = { showLoading: false, loadingMessage: 'Loading'
-                };
-        },
+                     console.debug('In successCallBack getConversationRequest', iObj);
+                     $scope.notificationData = iObj.data.Result;
+                     $scope.loadingMiddleObject = { showLoading: false, loadingMessage: 'Loading' };
+                },
                 failureCallBack: function (iObj) {
-                console.debug('In failureCallBack', iObj);
-        }
-    });
+                    console.debug('In failureCallBack', iObj);
+                }
+        });
 
         serverCommunication.getAllMeetingRequest({
                 successCallBack: function (iObj) {
@@ -926,7 +942,7 @@
                 ConversationId: _id,
                 ConversationType: "Mentoring",
                 skill: iCoach.Skill.Name
-    }
+        }
         console.debug(_object);
         serverCommunication.sendConversation({
                 loggedUserDetails: _object,
