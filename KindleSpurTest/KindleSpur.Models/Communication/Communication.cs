@@ -17,7 +17,11 @@ namespace KindleSpur.Models.Communication
         public List<IRequest> Requests { get; set; }
         public string SkillName { get; set; }
         public string Status { get; set; }
+        public string SenderName { get; set; }
+        public string SenderProfilePhoto { get; set; }
         public string To { get; set; }
+        public string ReceiverName { get; set; }
+        public string ReceiverProfilePhoto { get; set; }
         public string TopicName { get; set; }
         public string Type { get; set; }
     }
