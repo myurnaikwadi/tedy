@@ -295,25 +295,6 @@ namespace KindleSpur.Data
         {
             List<BsonDocument> _categories = new List<BsonDocument>();
 
-            //var _convCollection = _kindleDatabase.GetCollection<Conversation>("Conversations");
-            //var _query = Query.And(
-            //            Query.Or(
-            //                        Query<Conversation>.EQ(p => p.SenderEmail, senderEmail), Query<Conversation>.EQ(p => p.ReceiverEmail, receiverEmail)),
-            //            Query.Or(
-            //                        Query<Conversation>.EQ(p => p.ReceiverEmail, senderEmail), Query<Conversation>.EQ(p => p.SenderEmail, receiverEmail))
-            //                );
-
-            //var _query = Query.Or(
-            //    Query.And(
-            //                Query<Conversation>.EQ(p => p.SenderEmail, senderEmail), Query<Conversation>.EQ(p => p.ReceiverEmail, receiverEmail), Query<Conversation>.EQ(p => p.IsVerified, true), Query<Conversation>.EQ(p1 => p1.ConversationType, ConversationType)),
-            //    Query.And(
-            //                Query<Conversation>.EQ(p => p.SenderEmail, receiverEmail), Query<Conversation>.EQ(p => p.ReceiverEmail, senderEmail), Query<Conversation>.EQ(p => p.IsVerified, true), Query<Conversation>.EQ(p1 => p1.ConversationType, ConversationType))
-            //        );
-
-            //MongoCursor<Conversation> cursor = _convCollection.Find(_query);
-
-            //_categories = _conversationCollection.FindAll().SetFields(Fields.Exclude("_id")).ToList();
-
             _categories = _conversationCollection.FindAs<BsonDocument>(Query.And(Query.EQ("ConversationParentId", ParentId), Query.EQ("ConversationType", ConversationType))).ToList();
             var _userDetailsCollection = con.GetCollection("UserDetails");
             try
@@ -321,11 +302,9 @@ namespace KindleSpur.Data
                 for (int i = 0; i < _categories.Count; i++)
                 {
                     string sender = _categories[i].GetElement("SenderEmail").Value.ToString();
-                    // BsonDocument result = _userDetailsCollection.FindAs<BsonDocument>(Query.EQ("EmailAddress", sender.ToString())).ToBsonDocument();
-                    // _categories[i].Add(new BsonElement("Sender", result.GetElement("FirstName").Value + " " + result.GetElement("LastName").Value));
+                   
                     string receiver = _categories[i].GetElement("ReceiverEmail").Value.ToString();
-                    // BsonDocument result1 = _userDetailsCollection.FindAs<BsonDocument>(Query.EQ("EmailAddress", receiver)).ToBsonDocument();
-                    // _categories[i].Add(new BsonElement("Receiver", result.GetElement("FirstName").Value + " " + result.GetElement("LastName").Value));
+                    
                 }
             }
 

@@ -12,13 +12,12 @@ namespace KindleSpur.WebApplication.Controllers
 {
     public class MentorController : Controller
     {
-        private readonly string UserId;
+        private readonly string UserId = null;
         public MentorController()
         {
-              if(UserId!=null)
             UserId = ((IUser)System.Web.HttpContext.Current.Session["User"]).EmailAddress;
-            
         }
+
         [HttpPost]
         public Boolean SaveTopics(List<SkillOrTopic> selectedArray)
         {

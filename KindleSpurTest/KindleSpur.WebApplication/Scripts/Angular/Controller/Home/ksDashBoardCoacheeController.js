@@ -651,6 +651,7 @@
             //senderEmail: SenderEmail,
             //receiverEmail: ReceiverEmail,
             ConversationType: "Coaching",
+           
             ParentId: $scope.openConversation.ConversationParentId,
             successCallBack: function (iObj) {
                 console.debug('In successCallBack', iObj);
@@ -659,6 +660,7 @@
                 function ISODate(d) {
                     return d;
                 }
+                console.debug(ParentId)
                 $scope.MailRecords = []
                 var MailRecords = eval('(' + iObj.data.Result + ')');
                 console.error(MailRecords);

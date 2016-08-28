@@ -17,5 +17,7 @@ namespace KindleSpur.Models
         public string ReceiverEmail { get; set; }
         public string SenderEmail { get; set; }
         public string ConversationParentId { get; set; }
+        public string Photo { get; set; }
+
     }
 }

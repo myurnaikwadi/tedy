@@ -63,6 +63,14 @@ namespace KindleSpur.WebApplication.Controllers
                     req.FirstName = recevicedetails.FirstName;
                     req.LastName = recevicedetails.LastName;
                     req.EmailAddress = recevicedetails.EmailAddress;
+                    req.Photo = recevicedetails.Photo;
+                    if (req.EmailAddress == loggedEmail)
+                    {
+                        User swapUserDetails = (User)ur.GetUserDetail(value["ReceiverEmail"].ToString());
+                        req.Photo = swapUserDetails.Photo;
+                        req.FirstName = swapUserDetails.FirstName;
+                        req.LastName = swapUserDetails.LastName;
+                    }
                     req.SenderEmail = value["SenderEmail"].ToString();
                     req.ReceiverEmail = value["ReceiverEmail"].ToString();
                     req.skill = value["skill"].ToString();
@@ -99,6 +107,7 @@ namespace KindleSpur.WebApplication.Controllers
                     req.FirstName = recevicedetails.FirstName;
                     req.LastName = recevicedetails.LastName;
                     req.EmailAddress = recevicedetails.EmailAddress;
+                    req.Photo = recevicedetails.Photo;
                     req.SenderEmail = value["SenderEmail"].ToString();
                     req.ReceiverEmail = value["ReceiverEmail"].ToString();
                     req.skill = value["skill"].ToString();
