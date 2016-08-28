@@ -146,17 +146,17 @@ app.directive('topMainStrip', function ($state, $rootScope, authentification) {
 
 app.directive('cubeStrct', function ($timeout) {
     return {
-    scope: {
-    loadingObject : '='
-},
-    //template: '<div class="cubeContainer"><div id="cube" class="animate"><div></div><div></div><div></div><div></div><div></div><div></div></div><div style="margin-left: -25px;margin-top: 20px;"><h5 style="font-size: 11px;width: 100px;text-align: center;margin-top:5px;">{{loadingObject.loadingMessage}}</h5></div></div>',
-    template: '<div class="cubeContainer"><div id="cube" class="animate"><div></div><div></div><div></div><div></div><div></div><div></div></div><div style="margin-left: -15px;margin-top: 20px;width: 100px;"><div class="inner"><span>I</span><span>g</span><span>n</span><span>i</span><span>t</span><span>e</span> <span>u</span><span>r</span><span>g</span><span>e</span></div></div></div>',
-    //scope: true,   // optionally create a child scope
-    link: function (scope, element, attrs) {
-            console.error(scope);
-    //  scope.messageArray = loadingObject
-}
-};
+        scope: {
+             loadingObject : '='
+        },
+        //template: '<div class="cubeContainer"><div id="cube" class="animate"><div></div><div></div><div></div><div></div><div></div><div></div></div><div style="margin-left: -25px;margin-top: 20px;"><h5 style="font-size: 11px;width: 100px;text-align: center;margin-top:5px;">{{loadingObject.loadingMessage}}</h5></div></div>',
+        template: '<div class="cubeContainer"><div id="cube" class="animate"><div></div><div></div><div></div><div></div><div></div><div></div></div><div style="margin-left: -15px;margin-top: 20px;width: 100px;"><div class="inner" ng-hide="loadingObject.showSlogan == false"><span>I</span><span>g</span><span>n</span><span>i</span><span>t</span><span>e</span> <span>u</span><span>r</span><span>g</span><span>e</span></div></div></div>',
+        //scope: true,   // optionally create a child scope
+        link: function (scope, element, attrs) {
+                console.error(scope);
+            //  scope.messageArray = loadingObject
+        }
+    };
 });
 app.directive('bottomMainStrip', function ($timeout, $rootScope) {
     return {
@@ -1614,6 +1614,8 @@ app.directive('feedbackPage', function ($state, serverCommunication, $timeout, $
             };
             $scope.myRewardsArray = [];
             $scope.getPointsRecord = function () {
+             
+                $scope.loadingRewardObject = { showLoading: true, loadingMessage: 'Loading', showSlogan: false };
                 serverCommunication.getPointsRecord({
     successCallBack: function (iObj) {
                         console.error('In successCallBack', iObj);
@@ -1626,6 +1628,7 @@ app.directive('feedbackPage', function ($state, serverCommunication, $timeout, $
                         $scope.rewardsPoints.balancePoints = iObj.data.BalanceRewardPoints ? iObj.data.BalanceRewardPoints : 0;
                         $scope.rewardsPoints.redeemedPoints = iObj.data.RedeemedPoints ? iObj.data.RedeemedPoints : 0;
                         $scope.myRewardsArray = iObj.data.PSRAndGames ? iObj.data.PSRAndGames : [];
+                        $scope.loadingRewardObject = { showLoading: false, loadingMessage: 'Loading' ,showSlogan : false };
 
 },
     failureCallBack: function (iObj) {

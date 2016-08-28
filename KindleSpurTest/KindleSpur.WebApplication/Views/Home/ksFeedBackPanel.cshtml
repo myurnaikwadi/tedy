@@ -102,7 +102,8 @@
         <img style="position:absolute;left: 46%;width: 60px;" src="~/Images/communication/moneyBag.png">
         <div class="" style="float: left;display:flex; width: 100%;height: 100%;">
             <div class="" style="border: 3px solid black;margin: auto auto;float: left;display:flex; width: 35%;height: 60%;margin-bottom: 6%;">
-                <div class="" style="float: left; width: 100%;margin: auto auto;">
+                <cube-Strct class="cubeParentClass" ng-if="loadingRewardObject.showLoading" loading-Object="loadingRewardObject"></cube-Strct>
+                <div ng-show="loadingRewardObject.showLoading == false" class="" style="float: left; width: 100%;margin: auto auto;">
                     <h5 class="fontClass" style="font-size: 19px;text-align: center;font-weight: 500;">YOU HAVE EARNED</h5>
                     <h5 class="fontClass" style="font-size: 19px;text-align: center;font-weight: 700;font-weight: 700;margin: 2px;">{{rewardsPoints.balancePoints}} POINTS</h5>
                 </div>
