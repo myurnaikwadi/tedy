@@ -40,11 +40,8 @@
                             </div>
                         </div>
                     </div>
-                    <div class="pageNavigateView">
-                        <ul class="pager" style="margin: 0;">
-                            <li ng-show="question.length > 4"><h5 ng-click="loadSlideData(1)">Next</h5></li>
-                            <li ng-hide="question.length > 4"><h5 style="background:#D60500;color: white;" ng-click="feedBack.sendPreSessionDetail();">Submit</h5></li>
-                        </ul>
+                    <div class="pageNavigateView"style="display:flex;">
+                        <button type="button" style="margin: auto auto; margin-right: 45%; padding: 6px;background-color: white;color:#333;" class="signupButton fontClass btn btn-default" ng-click="loadSlideData(1)">Next</button>
                     </div>
                 </div>
             </div>
@@ -79,12 +76,9 @@
                         </div>
 
                     </div>
-                    <div class="pageNavigateView">
-                        <ul class="pager" style="margin: 0;">
-                            <li><h5 ng-click="loadSlideData(0,true)">Previous</h5></li>
-                            <li><h5 style="background:#D60500;color: white;" ng-click="feedBack.sendFeedBackDetail();feedBack.formValue = '5'">Submit</a></li>
-                            @*<li><a href="#carousel-example-generic" data-slide="next">Next</a></li>*@
-                        </ul>
+                    <div class="pageNavigateView" style="display:flex;">
+                        <button type="button" style="margin: auto auto; margin-right: 5%; padding: 6px;background-color: white;color:#333;" class="signupButton fontClass btn btn-default" ng-click="loadSlideData(0,true)">Previous</button>
+                        <button type="button" style="margin: auto auto; margin-left: 0%; padding: 6px;" class="signupButton fontClass btn btn-default" ng-click="feedBack.sendFeedBackDetail();feedBack.formValue = '5'">Submit</button>
                     </div>
                 </div>
             </div>
