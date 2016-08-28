@@ -3,7 +3,7 @@
      * @date : 07/05/2016
      * @Purpose : login and Signup controller - Manage all data related to  login and signup page
      */
-app.controller('ksLoginController', ['$scope', 'authentification', '$location', '$rootScope', '$state', '$stateParams', function ($scope, authentification, $location, $rootScope, $state, $stateParams) {
+app.controller('ksLoginController', ['$scope', 'authentification', '$location', '$rootScope', '$state', '$stateParams', '$timeout', function ($scope, authentification, $location, $rootScope, $state, $stateParams, $timeout) {
     console.error('login Page loaded Successfully');
     rootScope = $rootScope;
     //   window.login = $scope
@@ -88,7 +88,9 @@ app.controller('ksLoginController', ['$scope', 'authentification', '$location', 
         $scope.displayAlert.message = 'Your password has been saved successfully. Please login';
         $scope.displayAlert.formatType = '1';
 
-        $state.go('login', {}, { reload: true });
+        $timeout(function () {
+            $state.go('login', {}, { reload: true });
+        }, 1000);
     };
 
     var _successCallBack = function (iObj) {
@@ -103,7 +105,11 @@ app.controller('ksLoginController', ['$scope', 'authentification', '$location', 
             $scope.displayAlert.formatType = '1';
             //  alert(iObj.data.Message);
         }
-        $state.go('login', {}, { reload: true });
+        
+        $timeout(function () {
+            $state.go('login', {}, { reload: true });
+        }, 1000);
+        
         //$rootscope.$broadcast('alertBox', {
         //        showAlertBox: true,
         //        formatType: 'success',
@@ -134,7 +140,9 @@ app.controller('ksLoginController', ['$scope', 'authentification', '$location', 
         $scope.displayAlert.message = 'Your password has been saved successfully. Please login';
         $scope.displayAlert.formatType = '1';
         //$state.go('login');
-        $state.go('login', {}, { reload: true });
+        $timeout(function () {
+            $state.go('login', {}, { reload: true });
+        }, 1000);
         //  window.location = '/User/Login';
     };
 
@@ -224,11 +232,11 @@ app.controller('ksLoginController', ['$scope', 'authentification', '$location', 
             Password: $scope.signupDetails.password
         }
         var _string = window.location.href;
-        _object.userId = _string.split("passwordPrompt/")[1];
-
+        _object.userId = _string.split('PasswordPromp?UserId=')[1];
+        _object.userId = _object.userId.split('#/login')[0];
         console.error(_object)
         authentification.savePassword({ signupObject: _object, successCallBack: _successPasswordCallBack, failureCallBack: _failurePasswordCallBack });
-        $state.go('login');
+       // $state.go('login', {}, { reload: true });
     };
 
     /**
