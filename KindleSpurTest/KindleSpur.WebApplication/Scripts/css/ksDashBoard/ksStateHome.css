@@ -1,0 +1,147 @@
+﻿.loadProfileContain {
+    top: 8% !important;
+    background:white;
+     z-index:2 !important;
+     opacity:1 !important;
+      
+   box-shadow: 0px 0px 10px 2px;
+      transition : all 1s ease;
+}
+.profileImageNameTagClass{
+    float: left;
+    width: 100%;
+    height: 100%;
+     background:linear-gradient(to bottom,rgba(0,0,0,0) 0,#2dc3e8 100%);
+}
+.profileViewParentTop {
+    float: left;
+    width: 100%;
+    height: 60%;
+}
+.profileViewImageTagTop {
+    float: left;
+    width: 100%;
+    height: 60%;
+}
+.defaultProfileContainClass {
+    overflow: hidden;
+        top: -32%;
+    position:absolute;
+       width: 25%;
+    height: 40%;
+    right:0;
+
+    opacity:0;
+    z-index:0;    
+     transition : all 1s ease;
+}
+
+.scheduleMeetingParentDiv {
+    margin: auto;
+    width: 100%;
+    background: white;
+    height: 100%;
+}
+.schedularContent {
+    padding: 11px;
+}
+.schedularHeader {
+    width: 100%;
+    float: left;
+    height: 14%;
+    display: flex;
+    border: 1px solid lightgray;
+    border-bottom: 0;
+}
+
+.schedularBody {
+    width: 100%;
+    float: left;
+    height: 72%;
+    border: 1px solid lightgray;
+}
+.schedularBottom {
+    width: 100%;
+    float: left;
+    display: flex;
+    height: 14%;
+    border: 1px solid lightgray;
+    border-top: 0;
+}
+.meetingSubject {
+    float: left;
+    width: 100%;
+    display: flex;
+    height: 22%;
+}
+.meetingSubject textarea{
+    margin: auto;
+        margin-bottom: 0;
+    width: 80%;
+     float: left;
+    height: 74%;
+    resize: none;
+   
+    font-size: 22px;
+    border: 0px solid;
+    border-bottom: 1px solid;
+}
+.meetingSubjectTwo{
+    float: left;
+    display: flex;
+    width: 100%;
+    height: 35%;
+}
+.meetingTimePanel {
+     float: left;
+        display: flex;
+    width: 100%;
+    height: 22%;
+}
+.meetingCommunicationPanel {
+     float: left;
+        display: flex;
+    width: 100%;
+    height: 21%;
+}
+.meetingWizName {
+
+    margin: auto;
+    text-align: center;
+}
+.meetingInvitee {
+     margin: auto;
+     width: 50%;
+     margin-left: 0;
+    display: flex;
+    margin-right: 0;
+}
+.meetingPersonName{
+    float: left;
+    font-size: 15px;
+    margin: auto;
+    margin-left: 3%;
+}
+.meetingPersonNameParent{
+    margin: auto;
+      float: left;
+    margin-right: 0;
+    width: auto;
+}
+.meetingPersonNameStrc {
+    width: 75%;
+    display: flex;
+    height: 100%;
+    margin: auto;
+    margin-left: 0;
+    position: relative;
+    float: left;
+    transition: all 0.7s ease;
+}
+.meetingPersonNameStrc h5{
+        font-size: 15px;
+    color: black;
+    margin: auto;
+    text-align: left;
+    width: 100%;
+}
