@@ -20,6 +20,8 @@ namespace KindleSpur.Data
         MongoCollection __ctsCollectionCoaching;
         MongoCollection _ctsCollectionMentoring;
         Connection con = new Connection();
+        Dictionary<string, List<string>> list = new Dictionary<string, List<string>>();
+        List<string> l = new List<string>();
 
         public CTSRepository()
         {
@@ -489,10 +491,8 @@ namespace KindleSpur.Data
         public BsonDocument GetTrendingTopics()
         {
             BsonDocument _Category = new BsonDocument();
-
             var _collection = con.GetCollection("CoachOrMentor");
             //var result = _collection.Find(Query.And(Query.EQ("UserId", Data.UserId), Query.EQ("Role", Data.Role))).ToList();
-
             return _Category;
         }
 
@@ -528,38 +528,37 @@ namespace KindleSpur.Data
 
             return _skills;
         }
-        public List<object> GetAllSkillAndTopics(string userID)
-        {
-            var list = new List<object>();
+        public Dictionary<string, List<string>> GetAllSkillAndTopics(string userID)
+        {            
+            string[] str = { "Coach" , "Coachee", "Mentor" , "Mentee" };
+            var CoachOrMentorCollections = con.GetCollection("CoachOrMentor");
+            var CoacheeOrMenteeCollections = con.GetCollection("CoacheeOrMentee");
+            foreach (string items in str)
+            {
+                list.Add(items, l);
+            }
             try
             {
-                var CoachOrMentorCollections = con.GetCollection("CoachOrMentor");
-                var CoacheeOrMenteeCollections = con.GetCollection("CoacheeOrMentee");
-
-                //var options = new MapReduceOptionsBuilder();
-                //options.SetOutput(MapReduceOutput.Inline);
-
                 var Coach = (from c in CoachOrMentorCollections.AsQueryable<CoachOrMentor>()
                              where c.Role == "Coach" && c.UserId == userID
-                             select new object[] { c.Skills.Select(r => r.Name).ToList(), c.Role }).ToList();
-
+                             select c.Skills.Select(r => r.Name).ToList());
                 var Coachee = (from c in CoacheeOrMenteeCollections.AsQueryable<CoacheeOrMentee>()
                                where c.Role == "Coachee" && c.UserId == userID
-                               select new object[] { c.Skills.Select(r => r.Name).ToList(), c.Role }).ToList();
-
+                               select c.Skills.Select(r => r.Name).ToList());
                 var Mentor = (from c in CoachOrMentorCollections.AsQueryable<CoachOrMentor>()
                               where c.Role == "Mentor" && c.UserId == userID
-                              select new object[] { c.Topics.Select(r => r.Name).ToList(), c.Role }).ToList();
-
+                              select c.Topics.Select(r => r.Name).ToList());
                 var Mentee = (from c in CoacheeOrMenteeCollections.AsQueryable<CoacheeOrMentee>()
                               where c.Role == "Mentee" && c.UserId == userID
-                              select new object[] { c.Topics.Select(r => r.Name).ToList(), c.Role }).ToList();
+                              select c.Topics.Select(r => r.Name).ToList());
 
+                addSkillORTopicsToDictionary(Coach, "Coach");
+                addSkillORTopicsToDictionary(Coachee, "Coachee");
+                addSkillORTopicsToDictionary(Mentor, "Mentor");
+                addSkillORTopicsToDictionary(Mentee, "Mentee");
 
-                list.Add(Coach);
-                list.Add(Coachee);
-                list.Add(Mentor);
-                list.Add(Mentee);
+            
+
             }
             catch (Exception e)
             {
@@ -574,10 +573,34 @@ namespace KindleSpur.Data
                 throw new MongoException("Signup failure!!!");
             }
 
-
-
             return list;
         }
+
+        private void addSkillORTopicsToDictionary(IQueryable<List<string>> obj, string strRole)
+        {
+            l = new List<string>();
+            try
+            {
+                foreach (var skill in obj)
+                {
+                    foreach (var s in skill)
+                    {
+                        l.Add(s.ToString());
+                    }
+
+                }
+                if (list.ContainsKey(strRole))
+                {
+                    list[strRole] = l;
+                }
+            }
+            catch (Exception exp) { }
+            finally
+            {
+                l = null;
+            }
+            
+          }
 
     }
 }
