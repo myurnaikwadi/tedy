@@ -80,7 +80,7 @@ namespace KindleSpur.WebApplication.Controllers
             UserRepository ur = new UserRepository();
             foreach (var value in _repo.GetAllMeetingRequest(((IUser)Session["User"]).EmailAddress))
             {
-                var recevicedetails = ur.GetUserDetail(value["SenderEmail"].ToString());
+                var recevicedetails = ur.GetUserDetail(value["From"].ToString());
                 result.Add((IUser)recevicedetails);
             }
 

@@ -547,10 +547,31 @@ app.factory('serverCommunication', function ($http) {
 
         getAllMeetingRequest: function (iObj) {
             console.error(iObj)
-            $http.get('/MeetingSchedular/GetAllMeetingRequest').then(iObj.successCallBack, iObj.failureCallBack)
+            //$http.get('/Schedular/GetAllMeetingRequest').then(iObj.successCallBack, iObj.failureCallBack)
+            var req = {
+                method: 'POST',
+                url: '/Schedular/GetAllMeetingRequest',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                data: {}
+            }
+            console.error(req)
+            $http(req).then(iObj.successCallBack, iObj.failureCallBack);
         },
         saveMeeting: function (iObj) {
-            $http.post('/MeetingSchedular/Create', iObj.loggedUserDetails).then(iObj.successCallBack, iObj.failureCallBack)
+            console.error(iObj)
+            var req = {
+                method: 'POST',
+                url: '/Schedular/Create',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                data: iObj.loggedUserDetails
+            }
+            console.error(req)
+            $http(req).then(iObj.successCallBack, iObj.failureCallBack);
+           // $http.post('/Schedular/Create', iObj.loggedUserDetails).then(iObj.successCallBack, iObj.failureCallBack)
         },
         updateMeeting: function (iObj) {
             $http.post('/MeetingSchedular/UpdateMeetingStatus', iObj.loggedUserDetails, iObj.ReceiverName, iObj.Reason).then(iObj.successCallBack, iObj.failureCallBack)

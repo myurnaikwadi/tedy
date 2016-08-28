@@ -518,13 +518,53 @@
             type: 'loadUpperSlider',
             subType: 'Meeting',
             data: {
-                headingRequired: true, closeRequired: true, headingTitle: ('Send to ' + ($scope.openConversation.FirstName + " " + $scope.openConversation.LastName)),
-                AttachMode: true, role: 'Mentee', afterAddCallBack: _afterAddCallBack, deleteIcon: false,
+                openConversation: $scope.openConversation, headingRequired: true, closeRequired: true, headingTitle: ('Send to ' + ($scope.openConversation.FirstName + " " + $scope.openConversation.LastName)),
+                AttachMode: true, role: 'Mentee', afterAddCallBack: _saveSchedule, deleteIcon: false,
                 styleUI: { chat: { 'height': '15%', 'background-color': 'white' }, top: { 'height': '12%', 'background-color': 'white' }, middle: { 'height': '59%', 'background-color': 'white' }, bottom: { 'height': '12%', 'background-color': 'white' } }
             }
         });
     };
 
+    var _saveSchedule = function (iMeetingData) {
+        console.log("Test", iMeetingData);
+        var _startDate = new Date(iMeetingData.selectedData.MeetingDate);
+        _startDate.setHours(new Date(iMeetingData.selectedData.TimeFrom).getHours());
+        _startDate.setMinutes(new Date(iMeetingData.selectedData.TimeFrom).getMinutes());
+        _startDate.setSeconds(0);
+        var _endDate = new Date(iMeetingData.selectedData.MeetingDate);
+        _endDate.setHours(new Date(iMeetingData.selectedData.TimeTo).getHours());
+        _endDate.setMinutes(new Date(iMeetingData.selectedData.TimeTo).getMinutes());
+        _endDate.setSeconds(0);
+
+        var _parentId = $scope.openConversation.ConversationParentId ? $scope.openConversation.ConversationParentId : $scope.openConversation.ConversationId;
+        var _id = _parentId + ":MTG#" +(Date.now()) +(Math.floor((Math.random() * 10) +1));        
+
+        var _Obj = {
+            MeetingId : _id,
+            From  : $scope.loggedEmail ,
+            To: $scope.openConversation.ReceiverEmail,
+            Subject : iMeetingData.selectedData.Subject,
+            SkillName :  $scope.openConversation.skill,
+            //TopicName
+            Status    :iMeetingData.selectedData.UserId,
+            StartDate : _startDate,
+            EndDate   : _endDate,
+            TimeSlot  : "Coaching",
+            IsVerified : false
+        }
+        console.error(_Obj);
+        serverCommunication.saveMeeting({
+            loggedUserDetails: { _obj: _Obj, ReceiverName: $scope.openConversation.ReceiverEmail, Role: 'Coachee', ContentText: $scope.openConversation.skill },
+            successCallBack: function () {
+                console.log('In successCallBack');
+                $scope.myMeetingSchedular.close();
+            },
+            failureCallBack: function () {
+                console.log('In failureCallBack');
+
+            }
+        });      
+    };
     $scope.autoSyncCounter = null;
     $scope.stopFight = function () {
         if (angular.isDefined($scope.autoSyncCounter)) {

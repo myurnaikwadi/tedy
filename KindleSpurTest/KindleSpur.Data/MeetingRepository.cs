@@ -89,8 +89,8 @@ namespace KindleSpur.Data
 
             try
             {
-                var _query = Query.And(Query<Meeting>.EQ(p => p.IsVerified, false), Query<Meeting>.EQ(p => p.From, userId), Query<Meeting>.EQ(p => p.To, userId));
-
+                var _query = Query.And(Query<Meeting>.EQ(p => p.IsVerified, false),  Query<Meeting>.EQ(p => p.To, userId));
+                //var _query = Query.And(Query<Meeting>.EQ(p => p.IsVerified, false), Query<Meeting>.EQ(p => p.From, userId), Query<Meeting>.EQ(p => p.To, userId));
                 _categories = _meetingCollection.FindAs<BsonDocument>(
                     _query
                     ).ToList();

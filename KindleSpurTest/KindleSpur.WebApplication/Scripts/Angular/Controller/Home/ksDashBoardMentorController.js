@@ -390,52 +390,44 @@
             type: 'loadUpperSlider',
             subType: 'Meeting',
             data: {
-                headingRequired: true, closeRequired: true, headingTitle: ('Send to ' + ($scope.openConversation.FirstName + " " + $scope.openConversation.LastName)),
-                AttachMode: true, role: 'Mentor', afterAddCallBack: _saveMeeting, deleteIcon: false,
+                openConversation: $scope.openConversation, headingRequired: true, closeRequired: true, headingTitle: ('Send to ' + ($scope.openConversation.FirstName + " " + $scope.openConversation.LastName)),
+                AttachMode: true, role: 'Mentor', afterAddCallBack: _saveSchedule, deleteIcon: false,
                 styleUI: { chat: { 'height': '15%', 'background-color': 'white' }, top: { 'height': '12%', 'background-color': 'white' }, middle: { 'height': '59%', 'background-color': 'white' }, bottom: { 'height': '12%', 'background-color': 'white' } }
             }
         });
     };
 
-    var _saveMeeting = function (iMeeting) {
-        console.log("Test");
-        console.error(iMeeting);
-        return;
-        $scope.MeetingSchedular.SenderEmail = $scope.loggedEmail;
-        if (emailId != "")
-            $scope.MeetingSchedular.ReceiverEmail = $scope.ReceiverEmail;
-        else
-            $scope.MeetingSchedular.ReceiverEmail = emailId;
 
-        $scope.MeetingSchedular.Subject = $scope.MeetingSchedular.Subject;
-        $scope.MeetingSchedular.MeetingDate = $scope.MeetingSchedular.MeetingDate;
-        $scope.MeetingSchedular.TimeFrom = $scope.MeetingSchedular.TimeFrom;
-        $scope.MeetingSchedular.TimeTo = $scope.MeetingSchedular.TimeTo;
-        $scope.MeetingSchedular.PlatformType = $scope.MeetingSchedular.PlatformType;
-        $scope.MeetingSchedular.UserId = $scope.MeetingSchedular.UserId;
-        $scope.MeetingSchedular.Role = "Coach";
+    var _saveSchedule = function (iMeetingData) {
+        console.log("Test", iMeetingData);
+        var _startDate = new Date(iMeetingData.selectedData.MeetingDate);
+        _startDate.setHours(new Date(iMeetingData.selectedData.TimeFrom).getHours());
+        _startDate.setMinutes(new Date(iMeetingData.selectedData.TimeFrom).getMinutes());
+        _startDate.setSeconds(0);
+        var _endDate = new Date(iMeetingData.selectedData.MeetingDate);
+        _endDate.setHours(new Date(iMeetingData.selectedData.TimeTo).getHours());
+        _endDate.setMinutes(new Date(iMeetingData.selectedData.TimeTo).getMinutes());
+        _endDate.setSeconds(0);
 
-        $scope.MeetingSchedular.IsVerified = isVerified;
+        var _parentId = $scope.openConversation.ConversationParentId ? $scope.openConversation.ConversationParentId : $scope.openConversation.ConversationId;
+        var _id = _parentId + ":MTG#" + (Date.now()) + (Math.floor((Math.random() * 10) + 1));
 
-        if ($scope.conversation.SenderEmail === "" || $scope.conversation.ReceiverEmail === "")
-            return false;
-
-        var _object = {
-            SenderEmail: $scope.MeetingSchedular.SenderEmail,
-            ReceiverEmail: $scope.MeetingSchedular.ReceiverEmail,
-            Subject: $scope.MeetingSchedular.Subject,
-            MeetingDate: $scope.MeetingSchedular.MeetingDate,
-            TimeFrom: $scope.MeetingSchedular.TimeFrom,
-            TimeTo: $scope.MeetingSchedular.TimeTo,
-            PlatformType: $scope.MeetingSchedular.PlatformType,
-            UserId: $scope.MeetingSchedular.UserId,
-            Role: $scope.MeetingSchedular.Role,
-            IsVerified: $scope.MeetingSchedular.IsVerified
+        var _Obj = {
+            MeetingId: _id,
+            From: $scope.loggedEmail,
+            To: $scope.openConversation.SenderEmail,
+            Subject: iMeetingData.selectedData.Subject,
+            SkillName: $scope.openConversation.skill,
+            //TopicName
+            Status: iMeetingData.selectedData.UserId,
+            StartDate: _startDate,
+            EndDate: _endDate,
+            TimeSlot: "Mentoring",
+            IsVerified: false
         }
-        console.log(_object);
-
+        console.error(_Obj);
         serverCommunication.saveMeeting({
-            loggedUserDetails: _object,
+            loggedUserDetails: { _obj: _Obj, ReceiverName: $scope.openConversation.ReceiverEmail, Role: 'Coachee', ContentText: $scope.openConversation.skill },
             successCallBack: function () {
                 console.log('In successCallBack');
                 $scope.myMeetingSchedular.close();
