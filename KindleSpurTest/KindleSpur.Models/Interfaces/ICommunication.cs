@@ -9,7 +9,11 @@ namespace KindleSpur.Models.Interfaces
     {
         string CommunicationId { get; set; }
         string From { get; set; }
+        string SenderName { get; set; }
+        string SenderProfilePhoto { get; set; }
         string To { get; set; }
+        string ReceiverName { get; set; }
+        string ReceiverProfilePhoto { get; set; }
         string Status { get; set; }
         string SkillName { get; set; }
         string TopicName { get; set; }
