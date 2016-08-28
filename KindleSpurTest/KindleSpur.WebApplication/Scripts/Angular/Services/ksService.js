@@ -381,7 +381,7 @@ app.factory('serverCommunication', function ($http) {
             console.error(iObj)
 
             var Data = {
-                Sender: iObj.loggedUserDetails.sender,
+                Sender: iObj.loggedUserDetails.Sender,
                 FeedBackId: iObj.loggedUserDetails.FeedBackId,
                 QueAndAns: iObj.loggedUserDetails.FeedBacks,
                 FeedbackClosed: iObj.loggedUserDetails.FeedbackClosed,

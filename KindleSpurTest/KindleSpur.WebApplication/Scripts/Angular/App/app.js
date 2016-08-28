@@ -2,8 +2,11 @@
 app.run(function ($rootScope) {
     $rootScope.$on('$locationChangeSuccess', function () {
         var _userDetails = _getMyDetailsFromCookies();
-        if (_userDetails)
+        if (_userDetails) {
             $rootScope.loggedDetail = _userDetails;
+            window.rootScope = $rootScope;
+        }
+           
     });
 });
 var rootScope = null;

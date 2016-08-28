@@ -1096,7 +1096,7 @@ app.directive('moleculeMap', function ($rootScope) {
                                          .attr("height", 100)
                                          .attr("width", 100)
                                          .attr("xlink:href", function (d) { return d.image; })
-                                         .attr("clip-path", "url(#clip-circle)")
+                                         //.attr("clip-path", "url(#clip-circle)")
 } else {
                                     d3.select(this)
                                             .append("image")

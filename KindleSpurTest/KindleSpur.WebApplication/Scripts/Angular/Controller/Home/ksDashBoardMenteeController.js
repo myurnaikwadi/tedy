@@ -834,7 +834,14 @@
                         console.error(dd.ConversationClosed)
                         $scope.openConversation.sessionClosed = true;
 
-                }
+                    }
+                    if (dd.SenderEmail == $scope.loggedEmail) {
+                        dd.Name = $rootScope.loggedDetail.FirstName + " " +$rootScope.loggedDetail.LastName;
+                        dd.Photo = $rootScope.loggedDetail.Photo;
+                    } else {
+                        dd.Name = $scope.openConversation.FirstName + " " +$scope.openConversation.LastName;
+                        dd.Photo = $scope.openConversation.Photo;
+                    }
                     dd.displayDate = _displayDate(dd.UpdateDate);
                     if ($scope.timeSlots.length > 0) {
                         _flag = true;
