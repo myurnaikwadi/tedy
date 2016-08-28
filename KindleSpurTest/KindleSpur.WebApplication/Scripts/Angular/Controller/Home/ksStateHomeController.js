@@ -23,6 +23,7 @@
     $rootScope.$on("refreshStateHomeView", function (event, iObj) {
         console.error('refreshStateHomeView ---- ', iObj);
         switch (iObj.type) {
+            case 'displayAlert': $scope.displayAlert = iObj.data; break;
             case "loadUpperSlider":
                 $scope.uiFlag.loadRepository = true;
                 $scope.uiFlag.loadModule = iObj.subType;

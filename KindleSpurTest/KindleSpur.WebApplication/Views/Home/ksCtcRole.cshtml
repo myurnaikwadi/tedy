@@ -40,7 +40,7 @@
                                                 NO TOPIC SELECTED
                                             </h5>
                                         </div>
-                                        <div class="topicsList" title="{{skill.Tooltip}}" ng-repeat="skill in topicArray">
+                                        <div class="topicsList"  title="{{skill.Name+''+(skill.Tooltip ? (' :- '+skill.Tooltip) : '')}}" ng-repeat="skill in topicArray">
 
                                             <h5 ng-click="topicSelection($event,$index,skill)" class="tagTasks fontClass eliipsisClass" ng-style="styleToCTSText[skill.Name]" style="float: left;width: 100%;height: 28px;z-index: 2;position: relative;">{{skill.Name | uppercase}}</h5>
                                             <div ng-show="skill.selected == true" ng-style="styleToCTS[skill.Name]"></div>
@@ -60,7 +60,7 @@
                                         </h5>
                                     </div>
 
-                                    <div class="topicsList" title="{{skill.Name+' :- '+skill.Tooltip}}" ng-repeat="skill in skillsArray" >
+                                    <div class="topicsList" title="{{skill.Name+''+(skill.Tooltip ? (' :- '+skill.Tooltip) : '')}}" ng-repeat="skill in skillsArray" >
                                                                   
                                         <h5 ng-click="skillSelection($event,$index,skill)" class="tagTasks fontClass eliipsisClass" ng-style="styleToCTSText[skill.Name]" style="float: left;width: 100%;height: 28px;z-index: 2;position: relative;">{{skill.Name | uppercase}}</h5>
                                         <div ng-show="skill.selected == true" ng-style="styleToCTS[skill.Name]"></div>  

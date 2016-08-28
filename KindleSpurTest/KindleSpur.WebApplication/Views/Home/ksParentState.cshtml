@@ -1,15 +1,14 @@
 ﻿<div class="parentBody" ng-controller="ksStateHomeController">
-    <div style="position:absolute;" class="hiddenErrorNotificationClass" ng-class="{ 'showErrorNotificationClass' : displayAlert.showAlert  == true}">
+    <div style="position:absolute;z-index:1;" class="hiddenErrorNotificationClass" ng-class="{ 'showErrorNotificationClass' : displayAlert.showAlert  == true}">
         <div class="alert-message success" ng-show="displayAlert.formatType == '1'">
             <p class="alert-message1">{{displayAlert.message}}</p>
-            <a class="close" href="#" ng-click="displayAlert.showAlert = false">×</a>
-
+            <h5 class="close" ng-click="displayAlert.showAlert = false">×</h5>
         </div>
         @*Green*@
 
         <div class="alert-message error" ng-show="displayAlert.formatType == '2'">
             <p class="alert-message1">{{displayAlert.message}}</p>
-            <a class="close" href="#" ng-click="displayAlert.showAlert = false">×</a>
+            <h5 class="close" ng-click="displayAlert.showAlert = false">×</h5>
 
         </div>
         @*red*@
@@ -38,12 +37,21 @@
     </div>
     <div ng-click="$event.stopPropagation();" class="defaultProfileContainClass" ng-class="{ loadProfileContain : uiFlag.loadProfileView == true}">
         <div class="profileImageNameTagClass" >
-            <div class="imageConversation" style="width:100%;height: 60%;">
-                <img style="border: 5px solid white;margin:auto auto;margin-bottom: 0;width: 100px;height: 100px;border-radius: 50%;" ng-src="{{loggedDetail.Photo ?  loggedDetail.Photo  : '../../../Images/icons/If no Profile photo.png'}}" />
+            <div style="float:left;width:100%;height:20%;display: flex;text-align: center;">
+                <h5 style="font-size: 19px;margin: auto;margin-bottom: 0%;width: 85%;font-weight: 700;color: rebeccapurple;" class="leftSideMenuLable fontClass eliipsisClass">WELCOME</h5>
             </div>
-            <div class="profileNamePart fontClass" style="cursor: default;height: 25%;width:100%;display: flex;padding: 0;border-bottom: 2px solid;">
-                <h5 style="font-size: 19px;margin: auto;margin-bottom: 5%;" class="leftSideMenuLable fontClass eliipsisClass">WELCOME {{(loggedDetail.FirstName) | uppercase }}</h5>
-               
+            <div class="imageConversation" style="width:100%;height: 45%;">
+                <img style="border: 5px solid white;margin:auto auto;margin-bottom: 0;width: 80px;height: 80px;border-radius: 50%;" ng-src="{{loggedDetail.Photo ?  loggedDetail.Photo  : '../../../Images/icons/If no Profile photo.png'}}" />
+            </div>
+            <div class="profileNamePart fontClass" style="cursor: default;height: 20%;width:100%;display: flex;padding: 0;border-bottom: 2px solid;">              
+                <div style="margin:auto auto;width:100%;height:80%;">
+                    <div style="float:left;width:100%;height:60%;display: flex;text-align: center;">
+                        <h5 style="font-size: 19px;margin: auto;margin-bottom: 0%;width: 85%;" class="leftSideMenuLable fontClass eliipsisClass">{{(loggedDetail.FirstName) | uppercase }}</h5>
+                    </div>
+                    <div style="float:left;width:100%;height:40%;display: flex;text-align: center;">
+                        <h5 style="font-size: 11px;margin: auto;width: 93%;" class="leftSideMenuLable fontClass eliipsisClass">{{(loggedDetail.EmailAddress)}}</h5>
+                    </div>                      
+                 </div>
             </div>
             <div class="profileNamePart fontClass" style="height: 15%;width:100%;display: flex;padding: 0;">
                 <h5 style="font-size: 13px;margin: auto;" ng-click="$event.stopPropagation();uiFlag.loadProfileView = false;extraParam.profile($event)" class="leftSideMenuLable fontClass eliipsisClass genericPointerClass">PROFILE</h5>
@@ -52,7 +60,7 @@
         </div>
     </div>
     <div ng-click="uiFlag.loadBottomContain=false;" ng-class="{ loadBottomContain : uiFlag.loadBottomContain == true}" style="overflow: hidden;display:none; position:absolute;width:100%;height:100%;">
-        <div class="aboutUsParent">
+        <div class="aboutUsParent"> 
 
         </div>
     </div>

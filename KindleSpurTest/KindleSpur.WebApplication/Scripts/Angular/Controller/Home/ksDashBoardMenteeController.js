@@ -917,10 +917,17 @@
     });
 
     };
-    $scope.displayAlert = {
-            showAlert: false,
-            message: '',
-            formatType: '1'
+      var _displayAlertMeesage = function (iObj) {
+        var _displayAlert = {
+            showAlert: true,
+            message: iObj.message,
+            formatType:  iObj.formatType,
+        };
+        $rootScope.$broadcast("refreshStateHomeView", {
+            type: 'displayAlert',
+           // subType: 'Meeting',
+            data: _displayAlert
+        });
     };
     $scope.sendCoachingRequest = function (isVerified, iCoach) {
 
@@ -935,7 +942,7 @@
         $scope.conversation.SendOrReceive = "Send";
         $scope.conversation.IsVerified = isVerified;
         $scope.conversation.isRead = false;
-
+       
         if ($scope.conversation.SenderEmail === "" || $scope.conversation.ReceiverEmail === "")
             return false;
         var _id = $rootScope.loggedDetail.EmailAddress + ":CON#" +(Date.now()) +(Math.floor((Math.random() * 10) +1));
@@ -959,9 +966,9 @@
                 $scope.conversation.Message = "";
                 console.error(iObj)
                 if (iObj.data && iObj.data && iObj.data.Message && iObj.data.Message != '') {
-                    $scope.displayAlert.showAlert = true;
-                    $scope.displayAlert.message = iObj.data.Message;
-                    $scope.displayAlert.formatType = '1';
+                    _displayAlertMeesage({ message: iObj.data.Message, formatType: '1' });
+                } else {
+                     _displayAlertMeesage({ message: "Your request has been sent", formatType: '1' });
                 }
         },
                 failureCallBack: function () {
