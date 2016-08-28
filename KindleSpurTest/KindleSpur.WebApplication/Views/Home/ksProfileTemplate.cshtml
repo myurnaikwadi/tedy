@@ -15,7 +15,7 @@
         <div class="" style="position : relative;width : 100%;height: 60%;float : left;">
             <div class="stripForMenuProfile" style="position : relative;width : 75%;margin-left:25%;height: 13%;float : left;display:flex;">
                 <div style="display:flex;margin:auto;margin-left: 0;margin-right: 0%;width:20%;height:100%;border-right: 1px solid #ddd;border-bottom: 1px solid #ddd;border-bottom-right-radius: 15px;border-bottom-left-radius: 15px;" ng-click="selectedMenuProfile($index)" ng-class="{ selectedMenu : selectedMenuIndex == $index }" ng-repeat="menu in profileMenuArr">
-                    <h5 class="fontClass" style="float:left;margin:auto;color: black;" ng-click="slideCar($index)">{{menu.name}}</h5>
+                    <h5 class="fontClass genericPointerClass" style="float:left;margin:auto;color: black;" ng-click="slideCar($index)">{{menu.name}}</h5>
                 </div>
             </div>
             <div class="optionLeftPanelProfile" ng-class="{ loadProfileAnimation  : loadAnimation == true}" style="margin-left: 6%;opacity:0;position : relative;width : 25%;height: 88%;float : left;">
