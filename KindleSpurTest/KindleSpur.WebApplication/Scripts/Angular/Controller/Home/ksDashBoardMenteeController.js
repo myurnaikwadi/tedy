@@ -550,6 +550,24 @@
         _replica.displayDate = _displayDate(_replica.UpdateDate);
         _resizeDateFilter(_replica);
         $scope.MailRecords.push(_replica);
+        _object.FilesURLlink = [].concat(_array);
+        serverCommunication.sendConversation({
+            loggedUserDetails: _object,
+            ReceiverName: $scope.ReceiverName,
+            Role: 'Coachee',
+            successCallBack: function () {
+                $scope.conversation.Message = "";
+
+                console.debug('In successCallBack');
+
+            },
+            failureCallBack: function () {
+
+                $scope.conversation.Message = "";
+
+                console.debug('In failureCallBack');
+            }
+        });
     };
 
 

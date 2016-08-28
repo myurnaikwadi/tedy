@@ -7,26 +7,14 @@
         //scope: true,   // optionally create a child scope
         link: function (scope, element, attrs) {
             window.re = scope;
-            scope.uiFlag = { uploadNotRequired: false };
+            scope.uiFlag = { uploadNotRequired: false, Message : '' };
             console.error(scope.extraParam)
             scope.styleUI = {};
             if (scope.extraParam && scope.extraParam.styleUI)
                 scope.styleUI = scope.extraParam.styleUI;
 
-            scope.artifactsArray = [
-                 { Name: ' Design Notes', size: '120KB', PhotoURL: '/Images/icons/Microsoft_Word_2013_icon.png' },
-                 { Name: ' Angulat Js Documentation', size: '12KB', PhotoURL: '/Images/icons/Microsoft_Word_2013_icon.png' },
-                 { Name: ' Design Flow', size: '10KB', PhotoURL: '/Images/icons/Microsoft_Word_2013_icon.png' },
-                 { Name: ' MVC Architecture', size: '190KB', PhotoURL: '/Images/icons/Microsoft_Word_2013_icon.png' },
-                 { Name: ' Design Notes', size: '1220KB', PhotoURL: '/Images/icons/Microsoft_Word_2013_icon.png' }
-            ];
-            scope.bookMarkArray = [
-                { Name: ' Design Notes', bookmarkedIamge: '/Images/icons/Microsoft_Word_2013_icon.png', size: '120KB', PhotoURL: '/Images/icons/Microsoft_Word_2013_icon.png' },
-                { Name: ' Angulat Js Documentation', bookmarkedIamge: '/Images/icons/Microsoft_Word_2013_icon.png', size: '120KB', PhotoURL: '/Images/icons/Microsoft_Word_2013_icon.png' },
-                { Name: ' Design Flow', bookmarkedIamge: '/Images/icons/Microsoft_Word_2013_icon.png', size: '10KB', PhotoURL: '/Images/icons/Microsoft_Word_2013_icon.png' },
-                { Name: ' MVC Architecture', bookmarkedIamge: '/Images/icons/Microsoft_Word_2013_icon.png', size: '190KB', PhotoURL: '/Images/icons/Microsoft_Word_2013_icon.png' },
-                { Name: ' Design Notes', bookmarkedIamge: '/Images/icons/Microsoft_Word_2013_icon.png', size: '1220KB', PhotoURL: '/Images/icons/Microsoft_Word_2013_icon.png' }
-            ];
+            scope.artifactsArray = [];
+            scope.bookMarkArray = [];
             scope.uploadAttachmentArray = [];
             var data = new FormData();
             scope.loadUploadPopupFlag = false;
@@ -45,7 +33,7 @@
                 scope.artifactsArray.some(function (iContain) {
                     if (iContain.selected) {
                         if (_selectedData['Artifact'])
-                            _selectedData['Artifact'][iContain.Name] = iContain;
+                            _selectedData['Artifact'][iContain.FileName] = iContain;
                         else
                             _selectedData['Artifact'] = {}
                     }
@@ -54,7 +42,7 @@
                 scope.bookMarkArray.some(function (iContain) {
                     if (iContain.selected) {
                         if (_selectedData['bookMark'])
-                            _selectedData['bookMark'][iContain.Name] = iContain;
+                            _selectedData['bookMark'][iContain.FileName] = iContain;
                         else
                             _selectedData['bookMark'] = {}
                     }

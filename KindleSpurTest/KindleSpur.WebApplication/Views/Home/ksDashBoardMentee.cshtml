@@ -3,11 +3,11 @@
         <div class="parentRoleMenu menteeThemeColor" >
             <div class="profileViewMode genericPointerClass" ng-click="navigateToProfile()">
                 <div class="imageConversation">
-                    <img style="border: 2px solid white;margin:auto auto;margin-top: 0;width: 40px;height: 40px;border-radius: 50%;" ng-src="{{loggedDetail.Photo ?  loggedDetail.Photo  : '../../../Images/icons/If no Profile photo.png'}}" />
+                    <img class="profileImgLeftPanel"  ng-src="{{loggedDetail.Photo ?  loggedDetail.Photo  : '../../../Images/icons/If no Profile photo.png'}}" />
                 </div>
-                <div style="width: 75%;" class="profileNamePart fontClass genericPointerClass">
+                <div style="width: 75%;height: 50%;" class="profileNamePart fontClass genericPointerClass">
                     <h5 style="width: 100%;margin: 0;" class="leftSideMenuLable fontClass genericPointerClass eliipsisClass">{{(loggedDetail.FirstName+" "+loggedDetail.LastName) | uppercase }}</h5>
-                    <h5 style="font-size: 12px;float: right;" class="leftSideMenuLable fontClass genericPointerClass eliipsisClass">- Coach</h5>
+                    <h5 style="font-size: 12px;float: left;margin-left:0;" class="leftSideMenuLable fontClass genericPointerClass eliipsisClass">Mentee</h5>
                 </div>
             </div>
             <div class="leftSideMenuMainDashBoard">
@@ -216,7 +216,7 @@
                                         <span style="color:#797979;z-index: 1;" class="chatHalfContainerSpan">
                                             <h5 class="fontClass">{{ReceiverName}}</h5>
                                         </span>
-                                        <img ng-click="loadMyFeedback =! loadMyFeedback;" class="mod model-1" style="width: 35px;height: 35px;" title="Feedback" src="~/Images/communication/preSessionIcon.png" />
+                                        @*<img ng-click="loadMyFeedback =! loadMyFeedback;" class="mod model-1" style="width: 35px;height: 35px;" title="Feedback" src="~/Images/communication/preSessionIcon.png" />*@
                                         <div style="margin: auto;margin-right: 0;width: 29px;z-index: 1;">
                                            
                                             <img ng-click="askFeedBackFunc(3)" class="mod model-1" style="width: 35px;height: 35px;" title="Pre Session Feedback" src="~/Images/communication/preSessionIcon.png" />
@@ -271,7 +271,7 @@
                                                         <img ng-src="{{option.PhotoURL ? option.PhotoURL : '/Images/icons/Microsoft_Word_2013_icon.png' }}" style="margin: auto auto;float: left;height: 35px;width: 35px;" />
                                                     </div>
                                                     <div class="statusCoachingStatus" style="width: 50%;">
-                                                        <h5 class="fontClass" style="color:#A9A9A9;margin: auto auto;float: left;margin-left: 0;">{{option.Name}}</h5>
+                                                        <h5 class="fontClass" style="color:#A9A9A9;margin: auto auto;float: left;margin-left: 0;">{{option.FileName}}</h5>
                                                     </div>
                                                     <div class="communicationsCoachingStatus" style="width: 14%;    margin-right: 0;">
                                                         <h5 class="fontClass" style="color:#A9A9A9;margin: auto auto;float: left;margin-left: 0;">{{option.size}}</h5>

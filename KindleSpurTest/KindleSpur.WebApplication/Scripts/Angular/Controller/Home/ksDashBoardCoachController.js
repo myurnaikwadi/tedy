@@ -319,7 +319,7 @@
 
     $scope.objectForResourceTab = { deleteIcon: true, AttachMode: false, headingRequired: true, closeRequired: false, styleUI: { top: { 'height': '7%' }, middle: { 'height': '93%' }, bottom: {} } };
     var _afterAddCallBack = function (iObj) {
-        //console.error('_afterAddCallBack --- ', iObj);
+        console.error('_afterAddCallBack --- ', iObj);
         $scope.conversation.SenderEmail = $scope.loggedEmail;
         $scope.conversation.Content = null;
         $scope.conversation.SendOrReceive = "Send";
@@ -330,10 +330,10 @@
             return false;
         var _id = _parentId + ":CHT#" + (Date.now()) + (Math.floor((Math.random() * 10) + 1));
         var _array = [];
-
+      //  var _passedArray = [];
         if (iObj.selectedData['Artifact']) {
             for (var _key in iObj.selectedData['Artifact']) {
-                _array.push(iObj.selectedData['Artifact'][_key]);
+                _array.push(iObj.selectedData['Artifact'][_key]);                
             }
         }
         if (iObj.selectedData['bookMark']) {
@@ -361,7 +361,7 @@
             ConversationParentId: _parentId,
         }
 
-        //   console.debug(_object);
+           console.debug(_object);
         var _replica = angular.copy(_object);
         _replica.UpdateDate = new Date();
         //  _replica.UpdateDate.setDate(6);
@@ -369,6 +369,25 @@
         _replica.displayDate = _displayDate(_replica.UpdateDate);
         _resizeDateFilter(_replica);
         $scope.MailRecords.push(_replica);
+        _object.FilesURLlink = [].concat(_array);
+        serverCommunication.sendConversation({
+            loggedUserDetails: _object,
+            ReceiverName: $scope.ReceiverName,
+            Role: 'Coachee',
+            successCallBack: function () {
+                $scope.conversation.Message = "";
+
+                console.debug('In successCallBack');
+
+            },
+            failureCallBack: function () {
+
+                $scope.conversation.Message = "";
+
+                console.debug('In failureCallBack');
+            }
+        });
+        
     };
 
 

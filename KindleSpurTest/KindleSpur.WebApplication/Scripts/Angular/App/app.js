@@ -1,12 +1,15 @@
 ﻿var app = angular.module('app', ['ui.router']);
-app.run(function ($rootScope) {
+app.run(function ($rootScope, $timeout, $state) {
     $rootScope.$on('$locationChangeSuccess', function () {
         var _userDetails = _getMyDetailsFromCookies();
         if (_userDetails) {
             $rootScope.loggedDetail = _userDetails;
             window.rootScope = $rootScope;
-        }
-           
+        } else {
+            $timeout(function () {
+                $state.go('login');
+            });
+        }           
     });
 });
 var rootScope = null;

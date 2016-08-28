@@ -18,7 +18,7 @@ namespace KindleSpur.WebApplication.Controllers
         public ResourcesController()
         {
             UserId = ((IUser)System.Web.HttpContext.Current.Session["User"]).EmailAddress;
-            //AddBookMakrs();
+           // AddBookMakrs();
             //UploadFilesForArtiFacts();
         }
         public ActionResult Index()
@@ -31,7 +31,7 @@ namespace KindleSpur.WebApplication.Controllers
             List<object> obj = new List<object>();
             var files = cs.getFiles(user.EmailAddress);
             var bookmark = cs.getFilesBookmarks(user.EmailAddress);
-            if (files != null && bookmark != null)
+            if (files != null || bookmark != null)
             {
                 List<FileUpload> listfile = new List<FileUpload>();
                 foreach (var i in files)

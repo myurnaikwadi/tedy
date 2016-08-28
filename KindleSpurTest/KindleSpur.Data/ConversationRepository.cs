@@ -513,7 +513,7 @@ namespace KindleSpur.Data
                 Link.TagName = tagname;
 
                 path.Add(Link);
-                if (userDetail.Files == null)
+               if (userDetail.Files == null)
                     userDetail.BookMarks = new List<BookMark>();
                 userDetail.BookMarks.AddRange(path.ToList());
 
