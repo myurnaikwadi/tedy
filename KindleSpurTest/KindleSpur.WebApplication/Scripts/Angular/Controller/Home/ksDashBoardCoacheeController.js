@@ -660,7 +660,7 @@
                 function ISODate(d) {
                     return d;
                 }
-                console.debug(ParentId)
+            //    console.debug(ParentId)
                 $scope.MailRecords = []
                 var MailRecords = eval('(' + iObj.data.Result + ')');
                 console.error(MailRecords);

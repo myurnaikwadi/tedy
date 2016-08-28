@@ -39,15 +39,15 @@
     <div ng-click="$event.stopPropagation();" class="defaultProfileContainClass" ng-class="{ loadProfileContain : uiFlag.loadProfileView == true}">
         <div class="profileImageNameTagClass" >
             <div class="imageConversation" style="width:100%;height: 60%;">
-                <img style="border: 5px solid white;margin:auto auto;width: 120px;height: 120px;border-radius: 50%;" ng-src="{{loggedDetail.Photo ?  loggedDetail.Photo  : '../../../Images/icons/If no Profile photo.png'}}" />
+                <img style="border: 5px solid white;margin:auto auto;margin-bottom: 0;width: 100px;height: 100px;border-radius: 50%;" ng-src="{{loggedDetail.Photo ?  loggedDetail.Photo  : '../../../Images/icons/If no Profile photo.png'}}" />
             </div>
-            <div class="profileNamePart fontClass" style="cursor: default;height: 15%;width:100%;display: flex;padding: 0;">
-                <h5 style="font-size: 28px;font-weight:700;margin: auto;" class="leftSideMenuLable fontClass eliipsisClass">WELCOME {{(loggedDetail.FirstName) | uppercase }}</h5>
+            <div class="profileNamePart fontClass" style="cursor: default;height: 25%;width:100%;display: flex;padding: 0;border-bottom: 2px solid;">
+                <h5 style="font-size: 19px;margin: auto;margin-bottom: 5%;" class="leftSideMenuLable fontClass eliipsisClass">WELCOME {{(loggedDetail.FirstName) | uppercase }}</h5>
                
             </div>
-            <div class="profileNamePart fontClass" style="height: 25%;width:100%;display: flex;padding: 0;">
-                <h5 style="font-size: 15px;margin: auto;margin-bottom: 5%;" ng-click="$event.stopPropagation();uiFlag.loadProfileView = false;extraParam.profile($event)" class="leftSideMenuLable fontClass eliipsisClass genericPointerClass">PROFILE</h5>
-                <h5 style="font-size: 15px;margin: auto;margin-bottom: 5%;" ng-click="$event.stopPropagation();uiFlag.loadProfileView = false;extraParam.logout($event)" class="leftSideMenuLable fontClass eliipsisClass genericPointerClass">LOGOUT</h5>
+            <div class="profileNamePart fontClass" style="height: 15%;width:100%;display: flex;padding: 0;">
+                <h5 style="font-size: 13px;margin: auto;" ng-click="$event.stopPropagation();uiFlag.loadProfileView = false;extraParam.profile($event)" class="leftSideMenuLable fontClass eliipsisClass genericPointerClass">PROFILE</h5>
+                <h5 style="font-size: 13px;margin: auto;" ng-click="$event.stopPropagation();uiFlag.loadProfileView = false;extraParam.logout($event)" class="leftSideMenuLable fontClass eliipsisClass genericPointerClass">LOGOUT</h5>
             </div>
         </div>
     </div>
