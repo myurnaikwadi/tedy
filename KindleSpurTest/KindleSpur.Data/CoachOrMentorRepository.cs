@@ -16,7 +16,8 @@ namespace KindleSpur.Data
         Connection con = new Connection();
         MongoCollection _logCollection;
         MongoCollection _coachOrMentorCollection;
-   
+        MongoCollection _coacheeOrMenteeCollection;
+
 
         public CoachOrMentorRepository()
         {
@@ -24,6 +25,7 @@ namespace KindleSpur.Data
             {         
                 _logCollection = con.GetCollection("ErrorLogs");
                 _coachOrMentorCollection = con.GetCollection("CoachOrMentor");
+                _coacheeOrMenteeCollection = con.GetCollection("CoacheeOrMentee");
             }
             catch (MongoException ex)
             {
@@ -94,29 +96,34 @@ namespace KindleSpur.Data
         {
             bool _transactionStatus = false;
             CoachOrMentor entity = new CoachOrMentor();
+            CoacheeOrMentee coacheeOrMenteeEntity = new CoacheeOrMentee();
             try {
                // CoachOrMentor entity = _coachOrMentorCollection.FindOneAs<CoachOrMentor>(Query.And(Query.EQ("UserId", feedback.Sender), Query.EQ("Role", "Coach")));
                 if (Role == "Coach")
+                   
                     entity = _coachOrMentorCollection.FindOneAs<CoachOrMentor>(Query.And(Query.EQ("UserId", feedback.Sender), Query.EQ("Role", Role)));
+
                 else if (Role == "Mentor")
                     entity = _coachOrMentorCollection.FindOneAs<CoachOrMentor>(Query.And(Query.EQ("UserId", feedback.Sender), Query.EQ("Role", Role)));
 
                 entity.FeedbackPoints += feedback.customerSatisfactionRating;
 
-                if (entity.Feedbacks == null)
-                    entity.Feedbacks = new List<Feedback>();
+                if (entity.Feedbacks == null) entity.Feedbacks = new List<Feedback>();
+
                 feedback.Sender = UserId;
-               
                 feedback.CreateDate = DateTime.Now;
-                feedback.Skill = feedback.Skill;
                 entity.Feedbacks.Add(feedback);
-                entity.RewardPointsGained += 5;           
                 _coachOrMentorCollection.Save(entity);
+
                 var _users = con.GetCollection("UserDetails");
                 User user = _users.FindOneAs<User>(Query.EQ("EmailAddress", UserId));
                 user.BalanceRewardPoints += 5;
-                user.TotalRewardPoints +=5;
+                user.TotalRewardPoints += 5;
                 _users.Save(user);
+
+                coacheeOrMenteeEntity = _coacheeOrMenteeCollection.FindOneAs<CoacheeOrMentee>(Query.EQ("UserId", UserId));
+                coacheeOrMenteeEntity.RewardPointsGained += 5;
+                _coacheeOrMenteeCollection.Save(coacheeOrMenteeEntity);
                 _transactionStatus = true;
                 return user.TotalRewardPoints;
 

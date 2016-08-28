@@ -88,7 +88,7 @@ namespace KindleSpur.WebApplication.Controllers
             try
             {
                 CoacheeOrMenteeRepository _coachRepo = new CoacheeOrMenteeRepository();
-                return _coachRepo.addFeedback(UserId, feedback, Role);
+                return _coachRepo.addFeedback(UserId, feedback, "Mentee");
             }
             catch (Exception)
             {

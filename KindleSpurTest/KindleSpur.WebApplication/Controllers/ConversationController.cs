@@ -286,7 +286,7 @@ namespace KindleSpur.WebApplication.Controllers
                             new KeyValuePair<string, string>("Uri", uri),
                             new KeyValuePair<string, string>("Role",_obj.ConversationType),
                         };
-                    EmailNotification.CoachingMentoringInviteEmail(_obj, list);
+                    EmailNotification.MentoringCoachingAcceptDeclineEmail(_obj, list);
                     TempData["StatusMessage"] = "Please check your mail for status of conversation!!!";
                 }
             }

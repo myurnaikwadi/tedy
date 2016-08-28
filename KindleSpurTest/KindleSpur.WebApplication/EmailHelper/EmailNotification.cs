@@ -115,7 +115,7 @@ namespace KindleSpur.WebApplication.MessageHelper
 
         }
 
-        public static void CoachingMentoringInviteEmail(Conversation _obj, List<KeyValuePair<string, string>> listofSenderAndReceiverDetails)
+        public static void MentoringCoachingAcceptDeclineEmail(Conversation _obj, List<KeyValuePair<string, string>> listofSenderAndReceiverDetails)
         {
             MailMessage message = new MailMessage(aliasemailsendername.ToString(), _obj.ReceiverEmail);
             string receiverName = string.Empty;
