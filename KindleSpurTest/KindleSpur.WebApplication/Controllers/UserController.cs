@@ -176,8 +176,43 @@ namespace KindleSpur.WebApplication.Controllers
         public void UpdateUserDetails(User _obj)
         {
             UserRepository _repo = new UserRepository();
-            if (_repo.UpdateUserDetails(((IUser)System.Web.HttpContext.Current.Session["User"]).EmailAddress, _obj))
+            string emailAddress = ((IUser)System.Web.HttpContext.Current.Session["User"]).EmailAddress;
+            if (_repo.UpdateUserDetails(emailAddress, _obj))
             {
+                response = new ResponseMessage();
+                HttpCookie cookie = new HttpCookie("ksUser");
+                try
+                {
+                    IUser u = _repo.GetUserDetail(emailAddress);
+
+                    if (u != null)
+                    {
+
+                        cookie[u.EmailAddress] = new JavaScriptSerializer().Serialize(u);
+                        Response.SetCookie(cookie);
+
+                        Session["User"] = u;
+                       
+                        if (u.IsExternalAuthentication)
+                        {
+                            cookie[u.EmailAddress] = new JavaScriptSerializer().Serialize(u);
+                            Response.SetCookie(cookie);
+
+                            Session["User"] = u;
+                        }
+
+                    }
+                    else
+                    {
+                        response.FailureCallBack("User does not exists, Please Sign up!!!");
+
+                    }
+                }
+                catch (Exception ex)
+                {
+                    response.FailureCallBack(ex.Message);
+                }
+               // return response.ToJson();
             }
         }
         [HttpPost]
