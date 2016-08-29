@@ -302,9 +302,9 @@ namespace KindleSpur.Data
                 for (int i = 0; i < _categories.Count; i++)
                 {
                     string sender = _categories[i].GetElement("SenderEmail").Value.ToString();
-                   
+
                     string receiver = _categories[i].GetElement("ReceiverEmail").Value.ToString();
-                    
+
                 }
             }
 
@@ -513,12 +513,10 @@ namespace KindleSpur.Data
                 Link.TagName = tagname;
 
                 path.Add(Link);
-               if (userDetail.Files == null)
+                if (userDetail.Files == null)
                     userDetail.BookMarks = new List<BookMark>();
                 userDetail.BookMarks.AddRange(path.ToList());
 
-                //if (userDetail.Files == null)
-                //    userDetail.BookMarks = new List<BookMark>();
 
 
 
@@ -551,69 +549,7 @@ namespace KindleSpur.Data
 
         }
 
-        public bool uploadConversationsResourceFile(string senderEmailAddress, object[] filepath, string tagName, Dictionary<int, string> listname)
-        {
 
-            bool _transactionStatus = false;
-            try
-            {
-                //  var _userCollection = con.GetCollection("Conversations");
-                var userDetail = _conversationCollection.FindOneAs<Conversation>(Query.EQ("SenderEmail", senderEmailAddress));
-
-
-                List<FileUploadConversation> path = new List<FileUploadConversation>();
-
-
-                foreach (var r in listname)
-                {
-                    if (listname.ContainsKey(r.Key))
-                    {
-                        FileUploadConversation obj = new FileUploadConversation();
-                        obj.Id = ObjectId.GenerateNewId();
-                        obj.FileNameConversation = string.Format("FilePath/{0}", r);
-                        obj.TagNameConversation = tagName;
-                        path.Add(obj);
-                    }
-                }
-                //Dictionary<User, string> list = new Dictionary<User, string>();
-                //if (list.ContainsKey(userDetail))
-                //{
-                if (userDetail.FilesConversations == null)
-                    userDetail.FilesConversations = new List<FileUploadConversation>();
-
-                userDetail.FilesConversations.AddRange(path.ToList());
-
-                _conversationCollection.Save(userDetail);
-                // }
-
-                _transactionStatus = true;
-            }
-            catch (MongoException ex)
-            {
-                string message = "{ Error : 'Failed at UpdateUserPhoto().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ";
-                _logCollection.Insert(message);
-                throw new Exception("User does not Exist!!!");
-            }
-            catch (Exception e)
-            {
-                Exceptionhandle em = new Exceptionhandle();
-                em.Error = "Failed at uploadResourceFile()";
-                em.Log = e.Message.Replace("\r\n", "");
-                var st = new System.Diagnostics.StackTrace(e, true);
-                var frame = st.GetFrame(0);
-                var line = frame.GetFileLineNumber();
-                _logCollection.Insert(em);
-                throw new MongoException("Signup failure!!!");
-            }
-            finally
-            {
-
-            }
-            return _transactionStatus;
-            //_conversationsCollections = con.GetCollection("Conversations");
-            //List<Conversation> typeCoaching = _conversationsCollections.AsQueryable<Conversation>().Where<Conversation>(sb => sb.ConversationType == "Coaching" && sb.Content.StartsWith("COACHING REQUEST BY")).ToList();
-
-        }
         public List<FileUpload> getFiles(string UserId)
         {
             var _UserrCollection = con.GetCollection("UserDetails");

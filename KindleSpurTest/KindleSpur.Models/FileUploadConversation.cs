@@ -10,8 +10,8 @@ namespace KindleSpur.Models
     public class FileUploadConversation
     {
         public ObjectId Id { get; set; }
-        public string FileNameConversation { get; set; }
-        public string TagNameConversation { get; set; }
+        public string FileName { get; set; }
+        public string FilePath { get; set; }
 
 
     }
