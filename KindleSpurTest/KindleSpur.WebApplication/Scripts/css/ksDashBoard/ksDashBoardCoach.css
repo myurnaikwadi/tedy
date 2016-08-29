@@ -23,8 +23,8 @@
 
         .parentRoleDetailRight {
             position: relative;
-            width: 78%;
-            height: 90%;
+            width: 75%;
+            height: 85%;
             float: left;
         }
 
@@ -227,7 +227,7 @@
             float: left;
             width: 32%;
             height: 59%;
-            margin: -25px 7px 7px 2px;
+            margin: -20px -6px 34px -8px;
         }
 
         .dashBoardMenuCoachRightCircle {
