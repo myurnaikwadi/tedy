@@ -222,6 +222,7 @@
                 }
                     // _mySkill = [].concat(angular.copy($rootScope.loggedDetail.coachee.skills));
                 }
+                $scope.timeSlots = [];
                 if (result.data) {
                     _createCoachArray(result);
                 }

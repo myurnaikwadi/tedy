@@ -1812,7 +1812,7 @@ app.directive('feedbackPage', function ($state, serverCommunication, $timeout, $
                 $scope.feedBack.formValue = '1';
                 $scope.closeCallback();
 };
-
+            $scope.redeemAction = { actionName: 'PSR' };
 
             $scope.redeemPointsClick = function () {
                 $scope.feedBack.closeFeedBackPopup();

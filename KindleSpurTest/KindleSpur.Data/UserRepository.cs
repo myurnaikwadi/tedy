@@ -209,6 +209,7 @@ namespace KindleSpur.Data
                 //var userDetail = _userCollection.FindOneByIdAs<User>(userId);
                 var userDetail = _userCollection.FindOneAs<User>(Query.EQ("EmailAddress", EmailAddress));
                 userDetail.FirstName = userData.FirstName;
+                userDetail.EmailAddress = EmailAddress;
                 userDetail.LastName = userData.LastName;
                 userDetail.Mobile = userData.Mobile;
                 userDetail.Country = userData.Country;
