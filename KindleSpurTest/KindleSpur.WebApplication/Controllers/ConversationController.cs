@@ -11,12 +11,14 @@ using KindleSpur.WebApplication.MessageHelper;
 using MongoDB.Bson;
 using MongoDB.Driver;
 using MongoDB.Bson.Serialization;
+using MongoDB.Driver.Builders;
 
 namespace KindleSpur.WebApplication.Controllers
 {
     public class ConversationController : Controller
     {
         private readonly string UserId;
+        Connection con = new Connection();
         public ConversationController()
         {
             //UserId = ((IUser)Session["User"]).EmailAddress;
@@ -26,7 +28,7 @@ namespace KindleSpur.WebApplication.Controllers
         public ActionResult Index()
         {
             ConversationRepository _repo = new ConversationRepository();
-            _repo.ListConversationForSender(((IUser)Session["User"]).EmailAddress,"Coaching");
+            _repo.ListConversationForSender(((IUser)Session["User"]).EmailAddress, "Coaching");
             _repo.ListConversationForReceiver(((IUser)Session["User"]).EmailAddress, "Coaching");
             return View();
         }
@@ -48,7 +50,7 @@ namespace KindleSpur.WebApplication.Controllers
         //    return Json(new { Result = result }, JsonRequestBehavior.AllowGet);
         //}
 
-        public ActionResult GetConversationForSender(string loggedEmail,string ConversationType)
+        public ActionResult GetConversationForSender(string loggedEmail, string ConversationType)
         {
             try
             {
@@ -71,6 +73,7 @@ namespace KindleSpur.WebApplication.Controllers
                         req.FirstName = swapUserDetails.FirstName;
                         req.LastName = swapUserDetails.LastName;
                     }
+                   
                     req.SenderEmail = value["SenderEmail"].ToString();
                     req.ReceiverEmail = value["ReceiverEmail"].ToString();
                     req.skill = value["skill"].ToString();
@@ -87,9 +90,9 @@ namespace KindleSpur.WebApplication.Controllers
 
                 return View("Error");
             }
-            
-            
-            
+
+
+
         }
 
         public ActionResult ListConversationForReceiver(string loggedEmail, string ConversationType)
@@ -126,10 +129,10 @@ namespace KindleSpur.WebApplication.Controllers
                 return View("Error");
             }
 
-            
+
         }
 
-        public ActionResult GetConversationDetails(string ParentId,string ConversationType)
+        public ActionResult GetConversationDetails(string ParentId, string ConversationType)
         {
             try
             {
@@ -184,7 +187,7 @@ namespace KindleSpur.WebApplication.Controllers
 
                 return View("Error");
             }
-            
+
         }
 
         public ActionResult ksConversationDashBoard()
@@ -215,10 +218,36 @@ namespace KindleSpur.WebApplication.Controllers
         {
             ResponseMessage response = new ResponseMessage();
             UserRepository userRepo = new UserRepository();
+            //var _conversationCollection = con.GetCollection("Conversations");
+            //  var userDetail = _conversationCollection.FindOneAs<Conversation>(Query.EQ("_id", _obj.Id));
             try
             {
-                User receiverUserDetails = (User)userRepo.GetUserDetail(receiverName);
+                User receiverUserDetails = (User)userRepo.GetUserDetail(_obj.ReceiverEmail);
                 ConversationRepository _repo = new ConversationRepository();
+
+                List<ResourceFileLink> resourcelist = new List<ResourceFileLink>();
+                if (_obj.FilesURLlink != null)
+                {
+
+                    foreach (var file in _obj.FilesURLlink)
+                    {
+                        ResourceFileLink link = new ResourceFileLink();
+                        link.Id = ObjectId.GenerateNewId();
+                        link.FileName = file.FileName;
+                        link.FilePath = file.FilePath;
+                        resourcelist.Add(link);
+                    }
+
+
+                    if (_obj.FilesURLlink == null)
+                        _obj.FilesURLlink = new List<ResourceFileLink>();
+
+                    _obj.FilesURLlink.Clear();
+                    _obj.FilesURLlink.AddRange(resourcelist.ToList());
+                    // _conversationCollection.Save(userDetail);
+                }
+
+
                 _obj.CreateDate = DateTime.Now.ToShortDateString();
                 _obj.UpdateDate = DateTime.Now;
                 if (_repo.AddNewConversation(_obj))
@@ -293,9 +322,9 @@ namespace KindleSpur.WebApplication.Controllers
             catch (Exception ex)
             {
                 throw;
-               // return View("Error");
+                // return View("Error");
             }
-          
+
         }
 
         //
@@ -330,85 +359,7 @@ namespace KindleSpur.WebApplication.Controllers
         }
 
 
-        //public JsonResult ShareResourseFileUrl(Conversation _obj, string ReceiverName, string Role)
-        //{
-        //    ResponseMessage response = new ResponseMessage();
-        //    try
-        //    {
-        //        //ConversationRepository _repo = new ConversationRepository();
-        //        //_obj.CreateDate = _obj.UpdateDate = DateTime.Now;
-        //        //_repo.AddNewConversation(_obj);
-
-        //        //return RedirectToAction("Index");
-
-        //        ConversationRepository _repo = new ConversationRepository();
-        //        List<ResourceFileLink> resourcelist = new List<ResourceFileLink>();
-        //        List<FileUpload> list = _repo.getFiles(UserId);
-        //        if (list != null)
-        //        {
-        //            foreach (var r in list)
-        //            {
-        //                ResourceFileLink links = new ResourceFileLink();
-        //                links.Id = ObjectId.GenerateNewId();
-        //                links.filenameconversations = r.FileName;
-        //                links.filepathconversations = r.FilePath;
-        //                resourcelist.Add(links);
-        //            }
-        //            if (_obj.FilesURLlink == null)
-        //                _obj.FilesURLlink = new List<ResourceFileLink>();
-        //            _obj.FilesURLlink.AddRange(resourcelist.ToList());
-
-        //        }
-
-        //        _obj.CreateDate = DateTime.Now.ToShortDateString();
-        //        _obj.UpdateDate = DateTime.Now;
-        //        if (_repo.AddResourceFileLink(_obj))
-        //        {
-        //            if (_obj.Content == null)
-        //            {
-
-        //                string uri = Request.Url.AbsoluteUri.ToString();
-        //                string senderName = ((IUser)System.Web.HttpContext.Current.Session["User"]).FirstName + " " + ((IUser)System.Web.HttpContext.Current.Session["User"]).LastName;
-        //                string subject = "Communication Request from " + senderName;
-
-        //                string content = "Hello " + ReceiverName + ",";
-        //                if (Role == "Coachee")
-        //                    content += "<br/><br/>You have a coaching invite from " + senderName + " for Skill '" + _obj.skill + "'.<br/>";
-        //                else if (Role == "Mentee")
-        //                    content += "<br/><br/>You have a mentoring invite from " + senderName + " for Topic '" + _obj.skill + "'.<br/>";
-        //                else
-        //                    content += "<br/><br/>You have a mentoring invite from " + senderName + " for Topic '" + _obj.skill + "'.<br/>";
-
-        //                content += "<br/><br/>To accept or decline please click on the following link - <a href = '" + uri + "'>" + uri + "</a>";
-        //                content += "<br /><br />Regards, <br/> KindleSpur Team.";
-        //                EmailNotification.SendConversationEmail(_obj, uri, subject, content);
-        //                TempData["StatusMessage"] = "Please check your mail to start conversation!!!";
-        //            }
-        //            else
-        //            {
-        //                if (Role == "Coachee")
-        //                    response.FailureCallBack("Request pending with Coach!!!");
-        //                else if (Role == "Mentee")
-        //                    response.FailureCallBack("Request pending with Mentor!!!");
-        //            }
-        //        }
-        //        else
-        //        {
-        //            if (Role == "Coachee")
-        //                response.FailureCallBack("Request already sent to Coach!!!");
-        //            else if (Role == "Mentee")
-        //                response.FailureCallBack("Request already sent to Mentor!!!");
-        //        }
-        //    }
-        //    catch (Exception Ex)
-        //    {
-
-        //        //return View();
-        //    }
-        //    return this.Json(response);
-        //}
-        //
-        // POST: /Coversation/Delete/5
+     
         [HttpPost]
         public ActionResult Delete(int id, FormCollection collection)
         {
@@ -418,7 +369,7 @@ namespace KindleSpur.WebApplication.Controllers
 
                 return RedirectToAction("Index");
             }
-               
+
             catch (Exception ex)
             {
                 return View("Error");
@@ -428,5 +379,5 @@ namespace KindleSpur.WebApplication.Controllers
 
             }
         }
-        }
     }
+}

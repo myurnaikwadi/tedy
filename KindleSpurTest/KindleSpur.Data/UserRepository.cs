@@ -334,16 +334,16 @@ namespace KindleSpur.Data
                 listOfInvitation.Add(invite);
                 if (userData.invitation != null)
                 {
-                    for (int i=0;i<userData.invitation.Count;i++)
+                    for (int i = 0; i < userData.invitation.Count; i++)
                     {
                         invite = userData.invitation[i];
                         listOfInvitation.Add(invite);
                     }
-                    
+
                 }
-               
-                   
-          
+
+
+
                 userDetail.invitation = listOfInvitation;
                 _userCollection.Save(userDetail);
                 _transactionStatus = true;

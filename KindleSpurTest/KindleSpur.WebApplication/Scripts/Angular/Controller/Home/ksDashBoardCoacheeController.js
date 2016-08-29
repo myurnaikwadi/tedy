@@ -465,7 +465,7 @@
             messageType: 'media',
             messages: _array,
             ConversationType: "Coaching",
-            Skill: $scope.conversation.skill,
+            Skill: $scope.openConversation.skill,
             //"8/7/2016"
             // CreateDate: (new Date().getMonth()+1)+"/"+new Date().getDate()+
             //UpdateDate: "2016-08-07T11:58:13.867Z"
@@ -948,6 +948,7 @@
                 $scope.conversation.SendOrReceive = "Send";
                 $scope.conversation.IsVerified = true;
                 $scope.conversation.isRead = false;
+
                 var _parentId = $scope.openConversation.ConversationParentId ? $scope.openConversation.ConversationParentId : $scope.openConversation.ConversationId;
                 if ($scope.conversation.SenderEmail === "" || $scope.conversation.ReceiverEmail === "")
                     return false;
