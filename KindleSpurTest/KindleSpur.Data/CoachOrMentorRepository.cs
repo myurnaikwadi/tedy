@@ -108,7 +108,7 @@ namespace KindleSpur.Data
 
                 entity.FeedbackPoints += feedback.customerSatisfactionRating;
 
-                if (entity.Feedbacks == null) entity.Feedbacks = new List<Feedback>();
+                if (entity.Feedbacks == null) entity.Feedbacks = new List<IFeedback>();
 
                 feedback.Sender = UserId;
                 feedback.CreateDate = DateTime.Now;
@@ -539,7 +539,7 @@ namespace KindleSpur.Data
                 CoachOrMentor coach = _coachOrMentorCollection.FindOneAs<CoachOrMentor>(Query.And(Query.EQ("UserId", UserId), Query.EQ("Role", Role)));
                 if (coach != null)
                 {
-                    LstCochees = coach.Feedbacks;
+                    //LstCochees = coach.Feedbacks;
 
                     if (LstCochees != null)
                     {
