@@ -374,6 +374,7 @@
     <Content Include="Images\save.png" />
     <Content Include="Images\sendMailFormat.png" />
     <Content Include="Images\tempImage.jpg" />
+    <Content Include="Images\Tree\plant.png" />
     <Content Include="Images\Tree\Stage 1.png" />
     <Content Include="Images\Tree\Stage 2 with water.png" />
     <Content Include="Images\Tree\Stage 2.png" />
