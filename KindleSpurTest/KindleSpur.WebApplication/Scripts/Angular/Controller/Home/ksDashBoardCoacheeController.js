@@ -876,6 +876,7 @@
             skill: iCoach.Skill.Name
         }
         console.debug(_object);
+        iCoach.loadingSearchCoach = { loadingEffectCss: { position: 'absolute', background: 'rgba(0,0,0,.48)' }, showLoading: true, loadingMessage: 'Loading' };
         serverCommunication.sendConversation({
             loggedUserDetails: _object,
             ReceiverName: $scope.conversation.ReceiverEmail,
@@ -890,6 +891,7 @@
                     
                     _displayAlertMeesage({ message: "Your request has been sent", formatType: '1' });
                 }
+                 iCoach.loadingSearchCoach = { showLoading: false, loadingMessage: 'Loading' };
 
             },
             failureCallBack: function () {

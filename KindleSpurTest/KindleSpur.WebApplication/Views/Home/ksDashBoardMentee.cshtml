@@ -29,7 +29,7 @@
                 <div class="hideCoacheeProfile" ng-class="{ showCoacheeProfileClass : showMenteeProfile == true }">
                     <profile-Page ng-if="showMenteeProfile && userInfo" load-Outside ="true" user-Info="userInfo" close-Popup="closeProfilePic()" edit-Required="false"></profile-Page>
                 </div>
-                <ddiv class="ctsParent">
+                <ddiv class="ctsParent">                    
                     <div class="ctsParentMain">
                         <div class="ctsParentMainPanel">
                             <div class="ctsCategoryHeading">
@@ -72,6 +72,7 @@
                                                 </div>
                                             </div>
                                             <div class="mentor-card mentorBorderColor" style="border-top-width:4px !important; border-right: 1px solid #ddd !important;border-left: 1px solid #ddd !important;border-bottom: 1px solid #ddd !important;" ng-init="coach.showOption = false" ng-mouseleave="coach.showOption = false" ng-mouseover="coach.showOption = true" ng-class="{ mentorCardAnimation : coach.showLoad == true }" ng-repeat-end="" ng-repeat="coach in Coaches" ng-if="coach.Skill.Name == timeSlot">
+                                                <cube-Strct ng-style="coach.loadingSearchCoach.loadingEffectCss" ng-show="coach.loadingSearchCoach.showLoading == true" class="cubeParentClass" loading-Object="coach.loadingSearchCoach"></cube-Strct>
                                                 <div class="mentor-actions" ng-class="{ mentorActionsActivate : coach.showOption == true}">
                                                     <h5 class="genericEventHeadings" style="margin: auto;color: white;font-size:13px;" title="View Profile" ng-click="openmentorprofile(coach)">View Profile</h5>
                                                     <h5 class="genericEventHeadings" style="margin: auto;color: white;font-size:13px;" title="Send Mentoring Request" ng-click="sendCoachingRequest(false, coach)">Request</h5>

@@ -112,8 +112,7 @@
         $scope.feedBack.closeFeedBackPopup();
         $scope.feedContainArray =[];
         $scope.stopFight();
-         $scope.loadingMiddleObject = { showLoading: true, loadingMessage: 'Loading'
-    };
+        $scope.loadingMiddleObject = { showLoading: true, loadingMessage: 'Loading' };
         switch (iIndex) {
             case 0: $scope.autoSyncRoutine(_conversationTime); $scope.conversationRequest(); break;
             case 1: $scope.generateGarden(); break;
@@ -123,7 +122,7 @@
             case 2:
             case 7:
             case 6: $scope.loadingMiddleObject = { showLoading: false, loadingMessage: 'Loading' }; break;
-    }
+        }
     };
     $scope.selectedOption = function (iIndex, iCate) {
         for (var k = 0; k < $scope.leftSideMenus.length; k++) {
@@ -160,8 +159,7 @@
                 }
                 console.error(_retu)
                 $scope.ctsDataForMolecule = _retu;
-                $scope.loadingMiddleObject = { showLoading: false, loadingMessage: 'Loading'
-                };
+                $scope.loadingMiddleObject = { showLoading: false, loadingMessage: 'Loading' };
         },
                 failureCallBack: function (iObj) {
                 console.error('In failureCallBack', iObj);
@@ -200,8 +198,7 @@
     }
         console.error(_coachFinalArr, $scope.timeSlots)
         $scope.Coaches =[].concat(_coachFinalArr);
-        $scope.loadingMiddleObject = { showLoading: false, loadingMessage: 'Loading'
-    };
+        $scope.loadingMiddleObject = { showLoading: false, loadingMessage: 'Loading' };
         setTimeout(function () {
             for (var k = 0; k < $scope.Coaches.length; k++) {
                 $scope.Coaches[k].showLoad = true;
@@ -278,8 +275,7 @@
                 }
                 console.error(_retu)
                 $scope.ctsDataForMolecule = _retu;
-                $scope.loadingMiddleObject = { showLoading: false, loadingMessage: 'Loading'
-                };
+                $scope.loadingMiddleObject = { showLoading: false, loadingMessage: 'Loading' };
         },
                 failureCallBack: function (iObj) {
                 console.error('In failureCallBack', iObj);
@@ -473,8 +469,7 @@
                     $scope.feedCategoryArray.push({ selected: false, name: _skill
                 });
                 }
-                $scope.loadingMiddleObject = { showLoading: false, loadingMessage: 'Loading'
-                };
+                $scope.loadingMiddleObject = { showLoading: false, loadingMessage: 'Loading' };
                 if (!$scope.$$phase) $scope.$digest();
         },
                 failureCallBack: function (iObj) {
@@ -705,8 +700,7 @@
                     //var _con = angular.copy(_coach[_key])
                     // $scope.conversationListNew.push(_con);
                 }
-                $scope.loadingMiddleObject = { showLoading: false, loadingMessage: 'Loading'
-                };
+                $scope.loadingMiddleObject = { showLoading: false, loadingMessage: 'Loading' };
                 if ($scope.conversationListNew && $scope.conversationListNew.length > 0) {
                     if ($scope.openConversation) {
                         for (var i = 0 ; i < $scope.conversationListNew.length ; i++) {
@@ -903,8 +897,7 @@
                 }
 
                 $scope.notificationRequestData = iObj.data.Result;
-                $scope.loadingMiddleObject = { showLoading: false, loadingMessage: 'Loading'
-                };
+                $scope.loadingMiddleObject = { showLoading: false, loadingMessage: 'Loading' };
         },
                 failureCallBack: function (iObj) {
                 console.debug('In failureCallBack', iObj);
@@ -953,24 +946,26 @@
                 skill: iCoach.Skill.Name
         }
         console.debug(_object);
+        iCoach.loadingSearchCoach = { loadingEffectCss: { position: 'absolute', background: 'rgba(0,0,0,.48)' }, showLoading: true, loadingMessage: 'Loading' };
         serverCommunication.sendConversation({
                 loggedUserDetails: _object,
                 ReceiverName: $scope.conversation.ReceiverEmail,
                 Role: 'Mentee',
                 successCallBack: function (iObj) {
-                $scope.conversation.Message = "";
-                console.error(iObj)
-                if (iObj.data && iObj.data && iObj.data.Message && iObj.data.Message != '') {
-                    _displayAlertMeesage({ message: iObj.data.Message, formatType: '1' });
-                } else {
-                     _displayAlertMeesage({ message: "Your request has been sent", formatType: '1' });
-                }
-        },
+                    $scope.conversation.Message = "";
+                    console.error(iObj)
+                    if (iObj.data && iObj.data && iObj.data.Message && iObj.data.Message != '') {
+                        _displayAlertMeesage({ message: iObj.data.Message, formatType: '1' });
+                    } else {
+                         _displayAlertMeesage({ message: "Your request has been sent", formatType: '1' });
+                    }
+                    iCoach.loadingSearchCoach = { showLoading: false, loadingMessage: 'Loading' };
+                },
                 failureCallBack: function () {
-                $scope.conversation.Message = "";
-                console.debug('In failureCallBack');
-        }
-    });
+                        $scope.conversation.Message = "";
+                        console.debug('In failureCallBack');
+                }
+        });
 
     };
     var _setScrollPosition = function () {
