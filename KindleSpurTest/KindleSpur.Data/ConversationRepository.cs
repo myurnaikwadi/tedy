@@ -120,21 +120,18 @@ namespace KindleSpur.Data
             return _transactionStatus;
         }
 
-        public bool UpdateConversationStatus(string senderEmail, string receiverEmail, string content, bool isVerified, string ConversationType, string ParentId, string skill)
+        public bool UpdateConversationStatus(string senderEmail, string receiverEmail, string content, bool isVerified, bool isRejected, string ConversationType, string ParentId, string skill)
         {
             bool _transactionStatus = false;
             try
             {
 
                 var conversationDetail = _conversationCollection.FindOneAs<Conversation>(Query.And(Query.EQ("SenderEmail", receiverEmail), Query.EQ("ReceiverEmail", senderEmail), Query.EQ("ConversationType", ConversationType), Query.EQ("skill", skill)));
-
                 conversationDetail.Content = content;
                 conversationDetail.UpdateDate = DateTime.Now;
                 conversationDetail.ConversationParentId = ParentId;
-                if (isVerified)
-                    conversationDetail.IsVerified = isVerified;
-                else
-                    conversationDetail.IsRejected = isVerified;
+                conversationDetail.IsVerified = isVerified;
+                conversationDetail.IsRejected = isRejected;
                 _conversationCollection.Save(conversationDetail);
                 _transactionStatus = true;
             }
@@ -371,7 +368,7 @@ namespace KindleSpur.Data
             try
             {
 
-                var _query = Query.And(Query<Conversation>.EQ(p => p.Content, null), Query<Conversation>.EQ(p1 => p1.ReceiverEmail, senderEmail), Query<Conversation>.EQ(p1 => p1.ConversationType, ConversationType));
+                var _query = Query.And(Query<Conversation>.EQ(p => p.IsRejected, false), Query<Conversation>.EQ(p1 => p1.IsVerified, false), Query<Conversation>.EQ(p1 => p1.ReceiverEmail, senderEmail), Query<Conversation>.EQ(p1 => p1.ConversationType, ConversationType));
 
                 _categories = _conversationCollection.FindAs<BsonDocument>(_query).ToList();
 

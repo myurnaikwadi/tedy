@@ -1083,6 +1083,7 @@
             contentText = 'Mentoring Request by ' +$scope.ApprovalName + ' has been accepted';
         else
             contentText = null;
+
         var _id = iNotificationDash.ConversationId + ":CHT#" +(Date.now()) +(Math.floor((Math.random() * 10) +1));
         var _object = {
                 SenderEmail: SenderEmail,
@@ -1091,6 +1092,7 @@
                 IsVerified: $scope.conversation.IsVerified,
                 ConversationClosed: false,
                 ConversationType: "Mentoring",
+                IsRejected: isVerfied == false ? true : false,
                 Skill: iNotificationDash.skill,
             //"8/7/2016"
             // CreateDate: (new Date().getMonth()+1)+"/"+new Date().getDate()+

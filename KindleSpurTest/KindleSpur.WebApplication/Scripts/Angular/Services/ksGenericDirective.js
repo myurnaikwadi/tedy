@@ -1644,47 +1644,48 @@ app.directive('feedbackPage', function ($state, serverCommunication, $timeout, $
                 var _id = _parentId + ":CHT#" + (Date.now()) + (Math.floor((Math.random() * 10) + 1));
                 var _message = '';
                 
-                if ($scope.feedbackType == 'preSession') {
+                if ($scope.feedbackType == 'preSession' || $scope.feedbackType == 'feedBack') {
                     _message = "Feedback Form has been filled by " +$rootScope.loggedDetail.EmailAddress;
-} else if($scope.feedbackType == 'closeSession'){
+                } else if($scope.feedbackType == 'closeSession'){
                     _message = $scope.convObject.ConversationType.toUpperCase()+" " +$scope.convObject.skill+" "+ 'WAS CLOSED';
-}
+                }
                 var _object = {
-    Content: _message,
-    SenderEmail: $rootScope.loggedDetail.EmailAddress,
-    ReceiverEmail: $scope.sender,
-    SendOrReceive: 'Send',
-    IsVerified: true,
-    ConversationClosed: $scope.feedbackType == 'closeSession' ? true : false,
-    ConversationType: $scope.convObject.ConversationType,
-    Skill: $scope.convObject.skill,
-    ConversationId: _id,
-    ConversationParentId: _parentId,
-}
-    // console.debug(_object);
+                        Content: _message,
+                        SenderEmail: $rootScope.loggedDetail.EmailAddress,
+                        ReceiverEmail: $scope.sender,
+                        SendOrReceive: 'Send',
+                        IsVerified: true,
+                        ConversationClosed: $scope.feedbackType == 'closeSession' ? true : false,
+                        ConversationType: $scope.convObject.ConversationType,
+                        Skill: $scope.convObject.skill,
+                        ConversationId: _id,
+                        ConversationParentId: _parentId,
+                }
+                 console.debug(_object);
                 var _replica = angular.copy(_object)
                 _replica.UpdateDate = new Date().toJSON();
-    // $scope.MailRecords.push(_replica);
-    // $scope.MailRecords.push(_object);
+               // return
+                // $scope.MailRecords.push(_replica);
+                // $scope.MailRecords.push(_object);
                 serverCommunication.sendConversation({
-    loggedUserDetails: _object,
-    ReceiverName: $scope.sender,
-    Role: $scope.role,
-    successCallBack: function () {
-    // $scope.conversation.Message = "";
-    // console.debug('In successCallBack');
-},
-    failureCallBack: function () {
-    // $scope.conversation.Message = "";
-                        console.debug('In failureCallBack');
-}
-});
-};
+                    loggedUserDetails: _object,
+                    ReceiverName: $scope.sender,
+                    Role: $scope.role,
+                    successCallBack: function () {
+                    // $scope.conversation.Message = "";
+                    // console.debug('In successCallBack');
+                    },
+                        failureCallBack: function () {
+                        // $scope.conversation.Message = "";
+                                            console.debug('In failureCallBack');
+                    }
+                });
+            };
 
             $scope.feedBack.sendFeedBackDetail = function () {
                 $scope.feedBack.feedBackDetails.sender = $scope.sender;
-                console.error($scope.feedBack.feedBackDetails)
-
+                console.error($scope.feedBack.feedBackDetails);
+                
                 for (var k = 0; k < $scope.displayArray.length; k++) {
                     $scope.feedBack.feedBackDetails[$scope.displayArray[k].name] = '';
                     console.error($scope.displayArray[k].actionValue) ;
@@ -1714,12 +1715,14 @@ app.directive('feedbackPage', function ($state, serverCommunication, $timeout, $
                         loggedUserDetails: _objectPassed,
 
                         successCallBack: function (iObj) {
-                        console.error('In successCallBack', iObj);
-                         // if ($scope.feedbackClosed) {
+                            console.error('In successCallBack', iObj);
                             $scope.generateSesstionClosedEntry();
-                         // }
-                        $scope.getPointsRecord();
-
+                            if ($scope.feedbackType == 'closeSession')
+                                $scope.feedBack.closeFeedBackPopup();
+                            else {
+                                $scope.feedBack.formValue = '5';
+                                $scope.getPointsRecord();
+                            }
                     },
                     failureCallBack: function (iObj) {
                         console.error('In failureCallBack', iObj);

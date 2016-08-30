@@ -14,7 +14,7 @@ namespace KindleSpur.Models.Interfaces.Repository
 
         bool EditConversation(string id, IConversation conversationData);
 
-        bool UpdateConversationStatus(string senderEmail, string receiverEmail, string content, bool isVerified, string ConversationType,string ParentId, string skill);
+        bool UpdateConversationStatus(string senderEmail, string receiverEmail, string content, bool isVerified, bool isRejected, string ConversationType,string ParentId, string skill);
 
         IConversation GetConversationDetail(int conversationId);
 
