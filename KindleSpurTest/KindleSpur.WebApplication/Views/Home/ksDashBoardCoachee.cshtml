@@ -25,6 +25,9 @@
             <div class="parentRoleDetailRight" style="padding:1%;padding-bottom: 0;" ng-if="loadingMiddleObject.showLoading == false" ng-switch="selectedMenu">
                 @*DashBoard - 0*@
                  <div class="fullWidthHeightClass" ng-switch-when="0">
+                     <div class="homeLabelInMainDB">
+                         <h5 class="fontClass" style="font-size: 16px;">INVITES</h5>
+                     </div>
                     <div class="userNotificationParent">
                         <div class="userRoleWizardParent" style="display: inline-flex;overflow: auto;float:left; overflow-x:scroll; overflow-y:hidden;width:96%;margin-left:2%;">
                             <div class="notificationWiz" ng-repeat="notification in notificationData">
@@ -60,8 +63,8 @@
                     </div>
 
                     <div class="dashBoardWizard">
-                        <div class="homeLabelInMainDB">
-                            @*<h5 class="fontClass">DASHBOARD >></h5>*@
+                        <div class="homeLabelInMainDB" style="height: 9%;">
+                            <h5 class="fontClass" style="font-size: 16px;">DASHBOARD</h5>
                         </div>
                         <div class="mainDashBoardWizardParent">
                             <div class="dashBoardMenuCoach">

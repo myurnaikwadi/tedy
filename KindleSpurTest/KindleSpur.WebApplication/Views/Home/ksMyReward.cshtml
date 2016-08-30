@@ -155,7 +155,8 @@
                 <div ng-show="rewardsPoints.myRewardsArray.length >0" class="myRewardsPointRepeatParent" ng-class="{ psrRewardColor : myRewards.PSR == true}" ng-repeat="myRewards in rewardsPoints.myRewardsArray">
                     <div class="medalIconsMyReward">
                         <img ng-show="myRewards.PSR == true" style="float: left;height: 100%;" src="~/Images/psrPlant.png">
-                        <img style="float: right;height: 100%;width:65%" src="~/Images/normalMedal.png">
+                        <img style="float: right;height: 100%;width:50%" src="~/Images/normalMedal.png">
+                        <img ng-show="myRewards.PSR == false" style="float: right;height: 56%;width: 27%;margin-right: 21%; margin-top: 7%;" src="~/Images/icons/Game2.png">
                     </div>
                     <div class="rewardsLabelDivMyReward">
                         <h5 class="fontClass" style="margin: auto auto;margin-left:0;font-size: 16px;font-weight: 600;">{{myRewards.Name}}</h5>
@@ -171,7 +172,7 @@
                         </div>
 
                     </div>
-                    <div  ng-show="myRewards.PSR == false"  class="rewardsDateDivMyReward" style="height: auto;">
+                    <div  ng-show="myRewards.PSR == false"  class="rewardsDateDivMyReward">
                         <h5 class="fontClass genericPointerClass" ng-click="loadFeedOnNextTab('http://www.brainhq.com/')" style="margin: auto auto;margin-left:0;font-size: 9px;">http://www.brainhq.com/</h5>
                     </div>
 

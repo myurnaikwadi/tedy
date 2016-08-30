@@ -366,6 +366,7 @@
     <Content Include="Images\MinusValueScoreCard.png" />
     <Content Include="Images\misty-mountains.jpg" />
     <Content Include="Images\normalMedal.png" />
+    <Content Include="Images\passwordIcon.png" />
     <Content Include="Images\PlusValueScoreCard.png" />
     <Content Include="Images\pointStatusPanel.png" />
     <Content Include="Images\profile.png" />
