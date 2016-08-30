@@ -39,7 +39,10 @@
             console.error(iObj)
             $http.post('/User/SavePassword', iObj.signupObject).then(iObj.successCallBack, iObj.failureCallBack);
         },
-
+        updatePassword: function (iObj) {
+            console.error(iObj)
+            $http.post('/User/UpdatePassword', iObj.signupObject).then(iObj.successCallBack, iObj.failureCallBack);
+        },
         verifyEmailAddress: function (iObj) {
             console.error(iObj)
             $http.post('/User/ForgotPasswordEmail', iObj.signupObject).then(iObj.successCallBack, iObj.failureCallBack);

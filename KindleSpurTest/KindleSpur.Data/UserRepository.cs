@@ -243,6 +243,41 @@ namespace KindleSpur.Data
             return _transactionStatus;
         }
 
+        public bool UpdatePassword(string emailAddress, string password)
+        {
+            bool _transactionStatus = false;
+            try
+            {
+                //var userDetail = _userCollection.FindOneByIdAs<User>(userId);
+                var userDetail = _userCollection.FindOneAs<User>(Query.EQ("EmailAddress", emailAddress));
+                userDetail.Password = password;
+                _userCollection.Save(userDetail);
+                _transactionStatus = true;
+            }
+            catch (MongoException ex)
+            {
+                string message = "{ Error : 'Failed at UpdateUserDetails().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ";
+                _logCollection.Insert(message);
+                throw new Exception("User does not Exist!!!");
+            }
+            catch (Exception e)
+            {
+                Exceptionhandle em = new Exceptionhandle();
+                em.Error = "Failed at UpdateUserDetails()";
+                em.Log = e.Message.Replace("\r\n", "");
+                var st = new System.Diagnostics.StackTrace(e, true);
+                var frame = st.GetFrame(0);
+                var line = frame.GetFileLineNumber();
+                _logCollection.Insert(em);
+                throw new MongoException("Signup failure!!!");
+            }
+            finally
+            {
+
+            }
+            return _transactionStatus;
+        }
+
         public bool UpdateUserDesc(string EmailAddress, string description)
         {
             bool _transactionStatus = false;

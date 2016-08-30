@@ -226,6 +226,50 @@ namespace KindleSpur.WebApplication.Controllers
 
         }
 
+        [HttpPost]
+        public void UpdatePassword(User _obj)
+        {
+            UserRepository _repo = new UserRepository();
+            string emailAddress = ((IUser)System.Web.HttpContext.Current.Session["User"]).EmailAddress;
+            if (_repo.UpdatePassword(emailAddress, _obj.Password))
+            {
+                response = new ResponseMessage();
+                HttpCookie cookie = new HttpCookie("ksUser");
+                try
+                {
+                    IUser u = _repo.GetUserDetail(emailAddress);
+                    if (u != null)
+                    {
+
+                        cookie[u.EmailAddress] = new JavaScriptSerializer().Serialize(u);
+                        Response.SetCookie(cookie);
+
+                        Session["User"] = u;
+
+                        if (u.IsExternalAuthentication)
+                        {
+                            cookie[u.EmailAddress] = new JavaScriptSerializer().Serialize(u);
+                            Response.SetCookie(cookie);
+
+                            Session["User"] = u;
+                        }
+
+                    }
+                    else
+                    {
+                        response.FailureCallBack("User does not exists, Please Sign up!!!");
+
+                    }
+                }
+                catch (Exception ex)
+                {
+                    response.FailureCallBack(ex.Message);
+                }
+                // return response.ToJson();
+            }
+
+        }
+
 
         public string UnlockGame()
         {

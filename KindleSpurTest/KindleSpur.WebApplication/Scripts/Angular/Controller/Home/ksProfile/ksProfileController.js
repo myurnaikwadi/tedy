@@ -370,7 +370,7 @@
 
             }
         }       
-        authentification.savePassword(_object);
+        authentification.updatePassword(_object);
     };
 
     $scope.sendDescDetailsToServer = function () {
