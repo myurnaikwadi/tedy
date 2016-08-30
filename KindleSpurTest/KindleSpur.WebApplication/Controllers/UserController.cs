@@ -105,6 +105,16 @@ namespace KindleSpur.WebApplication.Controllers
         }
 
 
+        //This method to be tested after AngularJS code written
+        [HttpPost]
+        public List<List<IFeedback>> GetFeedback()
+        {
+                UserRepository _userRepo = new UserRepository();
+                string emailAddress = ((IUser)System.Web.HttpContext.Current.Session["User"]).EmailAddress;
+                return(_userRepo.GetFeedback(emailAddress));
+        }
+
+
         [HttpPost]
         public ActionResult linkedIn(User _obj)
         {

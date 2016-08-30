@@ -11,7 +11,7 @@
     };
     $scope.notifications = [
 
-                { notificationType: '1', name: 'YOU HAVE COACHING INVITE  FROM', assignPerson: 'HARSHADA D.' },
+                { notificationType: '1', name: 'You have Coaching invite from', assignPerson: 'HARSHADA D.' },
                 { notificationType: '2', role: 'mentor', name: 'YOUR MEETING HAS BEEN SCHEDULED WITH SAGAR N  ON', meetingDate: '20/05/2016', meetingTime: '11:00PM', meetingTimeDiff: '1 HOUR' },
                 { notificationType: '2', role: 'coachee', name: 'YOUR MEETING HAS BEEN SCHEDULED WITH SAGAR N  ON', meetingDate: '25/05/2016', meetingTime: '08:00AM', meetingTimeDiff: '2 HOUR' },
                 { notificationType: '3', name: 'MOHAN N.', profileImage: '' }
@@ -294,7 +294,9 @@
                 console.log('Result - ', result);
                 if (result.data) {
                     _createCoachArray(result);
-            }
+                }
+                $scope.loadingMiddleObject = { showLoading: false, loadingMessage: 'Loading' };
+                if (!$scope.$$phase) $scope.$digest();
             },
             failureCallBack: function () {
                 console.error('In failureCallBack');
@@ -884,6 +886,8 @@
                 if (iObj.data && iObj.data && iObj.data.Message && iObj.data.Message != '') {
                     _displayAlertMeesage({ message: iObj.data.Message, formatType: '1' });
                 } else {
+                    $scope.loadingMiddleObject = { showLoading: false, loadingMessage: 'Loading' };
+                    
                     _displayAlertMeesage({ message: "Your request has been sent", formatType: '1' });
                 }
 

@@ -833,7 +833,7 @@
         console.error(iNotificationDash);
         var contentText = "";
         if (isVerfied != false)
-            contentText = 'COACHING REQUEST BY ' +$scope.ApprovalName + ' HAS BEEN ACCEPTED';
+            contentText = 'Coaching Request by ' +$scope.ApprovalName + ' has been accepted';
         else
             contentText = null;
         var _id = iNotificationDash.ConversationId + ":CHT#" + (Date.now()) + (Math.floor((Math.random() * 10) + 1));

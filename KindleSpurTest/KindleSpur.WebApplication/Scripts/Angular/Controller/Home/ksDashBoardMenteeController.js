@@ -1085,7 +1085,7 @@
         $scope.conversation.IsVerified = isVerfied;
         var contentText = "";
         if (isVerfied != false)
-            contentText = 'MENTORING REQUEST BY ' +$scope.ApprovalName + ' HAS BEEN ACCEPTED';
+            contentText = 'Mentoring Request by ' +$scope.ApprovalName + ' has been accepted';
         else
             contentText = null;
         var _id = iNotificationDash.ConversationId + ":CHT#" +(Date.now()) +(Math.floor((Math.random() * 10) +1));

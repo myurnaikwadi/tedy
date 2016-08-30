@@ -21,6 +21,8 @@ namespace KindleSpur.Data
         private MongoCollection _logCollection;
         private MongoCollection _userCollection;
         private string emailAddress;
+        MongoCollection _coacheeOrMenteeCollection;
+        MongoCollection _coachOrMentorCollection;
 
 
         public UserRepository()
@@ -199,6 +201,51 @@ namespace KindleSpur.Data
             {
 
             }
+        }
+
+        //This method to be tested after AngularJS code written
+        public List<List<IFeedback>> GetFeedback(string emaiAddress)
+        {          
+            CoacheeOrMentee menteeEntity = new CoacheeOrMentee();
+            CoacheeOrMentee coacheeEntity = new CoacheeOrMentee();
+            CoachOrMentor mentorEntity = new CoachOrMentor();
+            CoachOrMentor coachEntity = new CoachOrMentor();
+            List<List<IFeedback>> entireFeedback = new List<List<IFeedback>>();
+            try
+            {
+                coacheeEntity = _coacheeOrMenteeCollection.FindOneAs<CoacheeOrMentee>(Query.And(Query.EQ("UserId", emailAddress), Query.EQ("Role", "Coachee")));
+                menteeEntity = _coacheeOrMenteeCollection.FindOneAs<CoacheeOrMentee>(Query.And(Query.EQ("UserId", emailAddress), Query.EQ("Role", "Mentee")));
+                coachEntity = _coachOrMentorCollection.FindOneAs<CoachOrMentor>(Query.And(Query.EQ("UserId", emailAddress), Query.EQ("Role", "Coach")));
+                mentorEntity = _coachOrMentorCollection.FindOneAs<CoachOrMentor>(Query.And(Query.EQ("UserId", emailAddress), Query.EQ("Role", "Mentor")));
+
+                entireFeedback.Add(coacheeEntity.Feedbacks);
+                entireFeedback.Add(menteeEntity.Feedbacks);
+                entireFeedback.Add(mentorEntity.Feedbacks);
+                entireFeedback.Add(coachEntity.Feedbacks);
+            }
+            catch (MongoException ex)
+            {
+                string message = "{ Error : 'Failed at addFeedback().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ";
+                _logCollection.Insert(message);
+                throw new MongoException("Signup failure!!!");
+                //_transactionStatus = false;
+            }
+            catch (Exception e)
+            {
+                Exceptionhandle em = new Exceptionhandle();
+                em.Error = "Failed at addFeedback()";
+                em.Log = e.Message.Replace("\r\n", "");
+                var st = new System.Diagnostics.StackTrace(e, true);
+                var frame = st.GetFrame(0);
+                var line = frame.GetFileLineNumber();
+                _logCollection.Insert(em);
+                //  throw new MongoException("Signup failure!!!");
+            }
+            finally
+            {
+
+            }
+            return entireFeedback;
         }
 
         public bool UpdateUserDetails(string EmailAddress, IUser userData)
