@@ -326,8 +326,6 @@
     <Content Include="Images\edit_Icon.png" />
     <Content Include="Images\Game2.png" />
     <Content Include="Images\gameConsole.png" />
-    <Content Include="Images\icons\1351182578_angelina-jolie-290.jpg" />
-    <Content Include="Images\icons\61391.png" />
     <Content Include="Images\icons\books icon 1.png" />
     <Content Include="Images\icons\books icon 2.png" />
     <Content Include="Images\icons\books icon 3.png" />
@@ -340,7 +338,6 @@
     <Content Include="Images\icons\coaching_status.png" />
     <Content Include="Images\icons\coach_logo.png" />
     <Content Include="Images\icons\communication.png" />
-    <Content Include="Images\icons\Dashboard6.png" />
     <Content Include="Images\icons\delete.png" />
     <Content Include="Images\icons\Game2.png" />
     <Content Include="Images\icons\kindlespurlogo.png" />
@@ -370,6 +367,7 @@
     <Content Include="Images\MinusValueScoreCard.png" />
     <Content Include="Images\misty-mountains.jpg" />
     <Content Include="Images\normalMedal.png" />
+    <Content Include="Images\passwordIcon.png" />
     <Content Include="Images\PlusValueScoreCard.png" />
     <Content Include="Images\pointStatusPanel.png" />
     <Content Include="Images\profile.png" />
@@ -378,6 +376,7 @@
     <Content Include="Images\save.png" />
     <Content Include="Images\sendMailFormat.png" />
     <Content Include="Images\tempImage.jpg" />
+    <Content Include="Images\Tree\plant.png" />
     <Content Include="Images\Tree\Stage 1.png" />
     <Content Include="Images\Tree\Stage 2 with water.png" />
     <Content Include="Images\Tree\Stage 2.png" />
@@ -404,7 +403,6 @@
     <Content Include="Scripts\Angular\Controller\Home\ksStateHomeController.js" />
     <Content Include="Scripts\Angular\Controller\Home\ksVCGController.js" />
     <Content Include="Scripts\Angular\Controller\Home\ksVcsController.js" />
-    <Content Include="Scripts\Angular\Controller\value\ksValueFeedsController.js" />
     <Content Include="Scripts\Angular\Services\ksCommonRepo.js" />
     <Content Include="Scripts\Angular\Services\ksGenericDirective.js" />
     <Content Include="Scripts\Angular\Services\ksIsotope.js" />
@@ -475,8 +473,6 @@
     <Content Include="Scripts\jquery-2.2.3.min.js" />
     <Content Include="Scripts\jquery-2.2.3.min.map" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
-    <Content Include="Scripts\jquery.signalR-2.2.1.js" />
-    <Content Include="Scripts\jquery.signalR-2.2.1.min.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
@@ -523,6 +519,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Models\" />
+    <Folder Include="Scripts\Angular\Controller\value\" />
     <Folder Include="Views\Coachee\" />
     <Folder Include="Views\Coach\" />
     <Folder Include="Views\Mentor\" />

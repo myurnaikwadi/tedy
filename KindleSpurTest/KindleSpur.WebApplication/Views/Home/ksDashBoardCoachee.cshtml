@@ -25,6 +25,9 @@
             <div class="parentRoleDetailRight" style="padding:1%;padding-bottom: 0;" ng-if="loadingMiddleObject.showLoading == false" ng-switch="selectedMenu">
                 @*DashBoard - 0*@
                  <div class="fullWidthHeightClass" ng-switch-when="0">
+                     <div class="homeLabelInMainDB">
+                         <h5 class="fontClass" style="font-size: 16px;">INVITES</h5>
+                     </div>
                     <div class="userNotificationParent">
                         <div class="userRoleWizardParent" style="display: inline-flex;overflow: auto;float:left; overflow-x:scroll; overflow-y:hidden;width:96%;margin-left:2%;">
                             <div class="notificationWiz" ng-repeat="notification in notificationData">
@@ -60,8 +63,8 @@
                     </div>
 
                     <div class="dashBoardWizard">
-                        <div class="homeLabelInMainDB">
-                            @*<h5 class="fontClass">DASHBOARD >></h5>*@
+                        <div class="homeLabelInMainDB" style="height: 9%;">
+                            <h5 class="fontClass" style="font-size: 16px;">DASHBOARD</h5>
                         </div>
                         <div class="mainDashBoardWizardParent">
                             <div class="dashBoardMenuCoach">
@@ -129,6 +132,7 @@
 
                                                 </div>
                                                 <div class="mentor-card coachBorderColor" style="border-top-width:4px !important; border-right: 1px solid #ddd !important;border-left: 1px solid #ddd !important;border-bottom: 1px solid #ddd !important;" ng-init="coach.showOption = false" ng-mouseleave="coach.showOption = false" ng-mouseover="coach.showOption = true" ng-class="{ mentorCardAnimation : coach.showLoad == true }" ng-repeat-end="" ng-repeat="coach in Coaches" ng-if="coach.Skill.Name == timeSlot">
+                                                    <cube-Strct ng-style="coach.loadingSearchCoach.loadingEffectCss" ng-show="coach.loadingSearchCoach.showLoading == true" class="cubeParentClass" loading-Object="coach.loadingSearchCoach"></cube-Strct>
                                                     <div class="mentor-actions" ng-class="{ mentorActionsActivate : coach.showOption == true}">
                                                         <h5 class="genericEventHeadings" style="margin: auto;color: white;font-size:13px;" title="View Profile" ng-click="opencoachprofile(coach)">View Profile</h5>
                                                         <h5 class="genericEventHeadings" style="margin: auto;color: white;font-size:13px;" title="Send Mentoring Request" ng-click="sendCoachingRequest(false, coach)">Request</h5>

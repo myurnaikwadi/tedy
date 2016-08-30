@@ -105,6 +105,8 @@
             padding: 3%;
             font-weight: 100;
             float: left;
+            width:70px;
+            height:30px;
         }
 
         .resetClass {

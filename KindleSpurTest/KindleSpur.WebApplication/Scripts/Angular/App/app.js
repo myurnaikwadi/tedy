@@ -6,9 +6,14 @@ app.run(function ($rootScope, $timeout, $state) {
             $rootScope.loggedDetail = _userDetails;
             window.rootScope = $rootScope;
         } else {
-            $timeout(function () {
-                $state.go('login');
-            });
+            //resolve issue page navigation
+            if (window.location.href.indexOf('forgotPassword') > -1) {
+
+            }else{
+  		$timeout(function () {
+               	     state.go('login');
+            	});        		
+            }
         }           
     });
 });

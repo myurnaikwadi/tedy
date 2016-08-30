@@ -38,7 +38,7 @@
            
         }
 
-       profileImagePart {
+       .profileImagePart {
             position: relative;
             float: left;
            width: 84px;
@@ -114,7 +114,7 @@
         .dashBoardWizard {
             position: relative;
             float: left;
-            height: 85%;
+            height: 75%;
             width: 100%;
         }
 
@@ -123,6 +123,7 @@
             float: left;
             height: 93%;
             width: 100%;
+                display: flex;
         }
         .roleRepeatWizard {
             position: relative;
@@ -139,18 +140,19 @@
             position: relative;
             float: left;
             width: 100%;
-            height: 9%;
+            height: 7%;
+            display:flex;
+                border-bottom: 1px solid lightgray;
         }
 
         .homeLabelInMainDB h5 {
             float: left;
             position: relative;
-            margin-left: 2%;
-            margin-top: 2%;
+            margin: auto;
+            margin-left: 1%;
             font-size: 16px;
         }
-
-        
+                
         .userRoleWizardParent {
             display: inline-flex;
             overflow: auto;
@@ -170,10 +172,6 @@
             margin: 2%;
             border: 1px solid lightgray;
         }
-
-        
-
-         
 
         .notificationWizard {
             margin: 0% auto;
@@ -217,23 +215,23 @@
 
         .dashBoardMenuCoach {
             float: left;
-            width: 92%;
-            height: 95%;
-            margin-left: 8%;
-            margin-top: 3%;
+            width: 80%;
+            height: 100%;
+            margin:auto;
+            
         }
 
         .dashBoardMenuCoachRight {
             float: left;
             width: 32%;
-            height: 59%;
-            margin: -25px 7px 7px 2px;
+            height: 48%;
+           
         }
 
         .dashBoardMenuCoachRightCircle {
             float: left;
             width: 100%;
-            height: 80%;
+            height: 85%;
             display: flex;
         }
 
@@ -247,21 +245,23 @@
             display: flex;
             cursor:pointer;
         }
-.dashBoardMenuCoachRightCirclePart:hover {
-    box-shadow: 0px 0px 10px 2px;
-}
+        .dashBoardMenuCoachRightCirclePart:hover {
+            box-shadow: 0px 0px 10px 2px;
+        }
         .dashBoardMenuCoachRightlabel {
             float: left;
             width: 100%;
             display: flex;
-            height: 20%;
+            height: 10%;
         }
-
+        .dashBoardMenuCoachRightlabel h5 {           
+            margin: auto;
+        }
         .applicationLogo {
             float: left;
             width: 15%;
             height: 100%;
-              display: flex;
+            display: flex;
         }
 
         .applicationSearch {
@@ -546,7 +546,7 @@
 }
 
 .zeroBackgroundMentor {
-    background : rgb(0,73,45);
+    background : rgb(67,129,61);
     width:0;
 }
 .fiftyBackgroundMentor {
@@ -812,8 +812,8 @@ float: left;
    
 }
 .dashBoardMenuCoachImage{
-  height: 65%;
-    width: 71%;
+    height:80px;
+    width:80px;
     margin:auto;
 }
 .backgroundIamgeFeed {

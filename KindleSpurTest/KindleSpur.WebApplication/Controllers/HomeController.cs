@@ -8,6 +8,7 @@ using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Script.Serialization;
 
 namespace KindleSpur.WebApplication.Controllers
 {
@@ -131,8 +132,36 @@ namespace KindleSpur.WebApplication.Controllers
                                                 // store the file inside ~/project folder(Img)  
                     path = Path.Combine(Server.MapPath("~/Img"), myfile);
                     file.SaveAs(path);
-                    if (_repo.UpdateUserPhoto(((IUser)System.Web.HttpContext.Current.Session["User"]).EmailAddress, string.Format("Img/{0}", myfile)))
+                    string emailAddress = ((IUser)System.Web.HttpContext.Current.Session["User"]).EmailAddress;
+                    if (_repo.UpdateUserPhoto(emailAddress, string.Format("Img/{0}", myfile)))
                     {
+                        ResponseMessage response = new ResponseMessage();
+                        HttpCookie cookie = new HttpCookie("ksUser");
+                        try
+                        {
+                            IUser u = _repo.GetUserDetail(emailAddress);
+
+                            if (u != null)
+                            {
+
+                                cookie[u.EmailAddress] = new JavaScriptSerializer().Serialize(u);
+                                Response.SetCookie(cookie);
+
+                                Session["User"] = u;
+
+                            }
+                            else
+                            {
+                                response.FailureCallBack("User does not exists, Please Sign up!!!");
+
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            response.FailureCallBack(ex.Message);
+                        }
+                        // return response.ToJson();
+
                     }
                 }
                 else

@@ -28,7 +28,7 @@
                     <h5 class="monthlyClassForTodayHeading fontClass">TODAY</h5>
                 </div>*@
                 <div class="monthDayInnerEventRow" ng-show="dateNumberArr.meetingArray.length>0">
-                    <h5 class="eliipsisClass fontClass" ng-repeat="request in dateNumberArr.meetingArray | limitTo : 3"  ng-class="{ coachThemeColor : request.role == 'Coach' , coacheeThemeColor : request.role == 'Coachee' , mentorThemeColor : request.role == 'Mentor' , menteeThemeColor : request.role == 'Mentee' }">
+                    <h5 class="eliipsisClass fontClass genericPointerClass" ng-repeat="request in dateNumberArr.meetingArray | limitTo : 3"  ng-class="{ coachThemeColor : request.role == 'Coach' , coacheeThemeColor : request.role == 'Coachee' , mentorThemeColor : request.role == 'Mentor' , menteeThemeColor : request.role == 'Mentee' }">
                         {{request.Name}}
                     </h5>                    
                 </div>          
@@ -43,7 +43,7 @@
             <div ng-if="expandIndex == $index" ng-click="$event.stopProgation()" class="monthlyExpandedDiv" style="transition:none;height:100%">
                 <div class="podcastHeader">
                     <h5 style="margin: auto;margin-left: 2%;" class="fontClass ValueFeedsHeade">{{expandDay.cellDate | date : 'dd-MMM-yyyy'}}</h5>
-                    <img style="margin: auto;margin-right: 2%;width: 20px;" src="~/Images/cancel.png" ng-click="closeExpandDateView($event)" />
+                    <img class="genericPointerClass" style="margin: auto;margin-right: 2%;width: 20px;" src="~/Images/cancel.png" ng-click="closeExpandDateView($event)" />
                 </div>
                 <div class="monthlyPopupMainContainer" style="height: 90%;display:inline-block;background-color:#FAFBFB;transition:none;">
                     <div class="podcastsContainer col-md-5 col-sm-12 mosuehover" style="border-right: 1px solid lightgray;background-color: #f3f3f3;width: 33.33%;padding-right: 0;">

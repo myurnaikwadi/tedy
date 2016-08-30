@@ -93,14 +93,14 @@ namespace KindleSpur.WebApplication.MessageHelper
             {
                 body += "<br/>I am looking for Coaching on Skill - '" + _obj.skill + "'.<br/><br/>";
                 body += "Would you like to be my Coach?";
-                message.Subject = "Coaching Invite from " + senderFirstName.ToString();
+                message.Subject = "Coaching Invite from " + senderFirstName.ToString() + " " + senderLastName.ToString();
             }
 
             else if (role == "Mentee")
             {
                 body += "<br/>I am looking for Mentoring on Topic - '" + _obj.skill + "'.<br/><br/>";
                 body += "Would you like to be my Mentor?";
-                message.Subject = "Mentoring invite from " + senderFirstName.ToString();
+                message.Subject = "Mentoring Invite from " + senderFirstName.ToString() + " " + senderLastName.ToString();
             }
 
             body += "<br /><br /><br/>Thanks, <br/>";
@@ -115,7 +115,7 @@ namespace KindleSpur.WebApplication.MessageHelper
 
         }
 
-        public static void CoachingMentoringInviteEmail(Conversation _obj, List<KeyValuePair<string, string>> listofSenderAndReceiverDetails)
+        public static void MentoringCoachingAcceptDeclineEmail(Conversation _obj, List<KeyValuePair<string, string>> listofSenderAndReceiverDetails)
         {
             MailMessage message = new MailMessage(aliasemailsendername.ToString(), _obj.ReceiverEmail);
             string receiverName = string.Empty;

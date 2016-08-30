@@ -112,8 +112,7 @@
         $scope.feedBack.closeFeedBackPopup();
         $scope.feedContainArray =[];
         $scope.stopFight();
-         $scope.loadingMiddleObject = { showLoading: true, loadingMessage: 'Loading'
-    };
+        $scope.loadingMiddleObject = { showLoading: true, loadingMessage: 'Loading' };
         switch (iIndex) {
             case 0: $scope.autoSyncRoutine(_conversationTime); $scope.conversationRequest(); break;
             case 1: $scope.generateGarden(); break;
@@ -123,7 +122,7 @@
             case 2:
             case 7:
             case 6: $scope.loadingMiddleObject = { showLoading: false, loadingMessage: 'Loading' }; break;
-    }
+        }
     };
     $scope.selectedOption = function (iIndex, iCate) {
         for (var k = 0; k < $scope.leftSideMenus.length; k++) {
@@ -160,8 +159,7 @@
                 }
                 console.error(_retu)
                 $scope.ctsDataForMolecule = _retu;
-                $scope.loadingMiddleObject = { showLoading: false, loadingMessage: 'Loading'
-                };
+                $scope.loadingMiddleObject = { showLoading: false, loadingMessage: 'Loading' };
         },
                 failureCallBack: function (iObj) {
                 console.error('In failureCallBack', iObj);
@@ -200,8 +198,7 @@
     }
         console.error(_coachFinalArr, $scope.timeSlots)
         $scope.Coaches =[].concat(_coachFinalArr);
-        $scope.loadingMiddleObject = { showLoading: false, loadingMessage: 'Loading'
-    };
+        $scope.loadingMiddleObject = { showLoading: false, loadingMessage: 'Loading' };
         setTimeout(function () {
             for (var k = 0; k < $scope.Coaches.length; k++) {
                 $scope.Coaches[k].showLoad = true;
@@ -222,6 +219,7 @@
                 }
                     // _mySkill = [].concat(angular.copy($rootScope.loggedDetail.coachee.skills));
                 }
+                $scope.timeSlots = [];
                 if (result.data) {
                     _createCoachArray(result);
                 }
@@ -277,8 +275,7 @@
                 }
                 console.error(_retu)
                 $scope.ctsDataForMolecule = _retu;
-                $scope.loadingMiddleObject = { showLoading: false, loadingMessage: 'Loading'
-                };
+                $scope.loadingMiddleObject = { showLoading: false, loadingMessage: 'Loading' };
         },
                 failureCallBack: function (iObj) {
                 console.error('In failureCallBack', iObj);
@@ -472,8 +469,7 @@
                     $scope.feedCategoryArray.push({ selected: false, name: _skill
                 });
                 }
-                $scope.loadingMiddleObject = { showLoading: false, loadingMessage: 'Loading'
-                };
+                $scope.loadingMiddleObject = { showLoading: false, loadingMessage: 'Loading' };
                 if (!$scope.$$phase) $scope.$digest();
         },
                 failureCallBack: function (iObj) {
@@ -544,7 +540,7 @@
             messageType: 'media',
             messages : _array,
             ConversationType: "Mentoring",
-            Skill: $scope.conversation.skill,
+            Skill: $scope.openConversation.skill,
             //"8/7/2016"
             // CreateDate: (new Date().getMonth()+1)+"/"+new Date().getDate()+
             //UpdateDate: "2016-08-07T11:58:13.867Z"
@@ -603,82 +599,48 @@
                 styleUI: { chat: { 'height': '15%', 'background-color': 'white' }, top: { 'height': '12%', 'background-color': 'white' }, middle: { 'height': '59%', 'background-color': 'white' }, bottom: { 'height': '12%', 'background-color': 'white' } }
             }
         });
-    };
+     };
 
-    var _saveSchedule = function (iMeetingData) {
-        console.log("Test", iMeetingData, $scope.openConversation);
-        var _parentId = $scope.openConversation.ConversationParentId ? $scope.openConversation.ConversationParentId : $scope.openConversation.ConversationId;
-        var _id = _parentId + ":CHT#" +(Date.now()) +(Math.floor((Math.random() * 10) +1));
-        var _object = {
-                Subject: $scope.conversation.Content,
-                From: $scope.conversation.SenderEmail,
-                To: $scope.conversation.ReceiverEmail,
-                Status : 'Mentoring',
-                IsVerified: false,
-                ConversationClosed: false,
-                StartDate: '',
-                EndDate : '',
-                //TimeSlot
-                MeetingId: _id,
-                SkillName: $scope.openConversation.skill
-        }
-        return
-        serverCommunication.saveMeeting({
-            loggedUserDetails : _object,
-            successCallBack : function () {
-                console.log('In successCallBack');
-                $scope.myMeetingSchedular.close();
-            },
-            failureCallBack : function () {
-                console.log('In failureCallBack');
-            }
-        }); 
-        return
-        $scope.MeetingSchedular.SenderEmail = $scope.loggedEmail;
-        if (emailId != "")
-            $scope.MeetingSchedular.ReceiverEmail = $scope.ReceiverEmail;
-        else
-            $scope.MeetingSchedular.ReceiverEmail = emailId;
+     var _saveSchedule = function (iMeetingData) {
+         console.log("Test", iMeetingData);
+         var _startDate = new Date(iMeetingData.selectedData.MeetingDate);
+         _startDate.setHours(new Date(iMeetingData.selectedData.TimeFrom).getHours());
+         _startDate.setMinutes(new Date(iMeetingData.selectedData.TimeFrom).getMinutes());
+         _startDate.setSeconds(0);
+         var _endDate = new Date(iMeetingData.selectedData.MeetingDate);
+         _endDate.setHours(new Date(iMeetingData.selectedData.TimeTo).getHours());
+         _endDate.setMinutes(new Date(iMeetingData.selectedData.TimeTo).getMinutes());
+         _endDate.setSeconds(0);
 
-        $scope.MeetingSchedular.Subject = $scope.MeetingSchedular.Subject;
-        $scope.MeetingSchedular.MeetingDate = $scope.MeetingSchedular.MeetingDate;
-        $scope.MeetingSchedular.TimeFrom = $scope.MeetingSchedular.TimeFrom;
-        $scope.MeetingSchedular.TimeTo = $scope.MeetingSchedular.TimeTo;
-        $scope.MeetingSchedular.PlatformType = $scope.MeetingSchedular.PlatformType;
-        $scope.MeetingSchedular.UserId = $scope.MeetingSchedular.UserId;
-        $scope.MeetingSchedular.Role = "Coach";
+         var _parentId = $scope.openConversation.ConversationParentId ? $scope.openConversation.ConversationParentId : $scope.openConversation.ConversationId;
+         var _id = _parentId + ":MTG#" + (Date.now()) + (Math.floor((Math.random() * 10) + 1));
 
-        $scope.MeetingSchedular.IsVerified = isVerified;
+         var _Obj = {
+             MeetingId: _id,
+             From: $scope.loggedEmail,
+             To: $scope.openConversation.ReceiverEmail,
+             Subject: iMeetingData.selectedData.Subject,
+             SkillName: $scope.openConversation.skill,
+             //TopicName
+             Status: iMeetingData.selectedData.UserId,
+             StartDate: _startDate,
+             EndDate: _endDate,
+             TimeSlot: "Mentoring",
+             IsVerified: false
+         }
+         console.error(_Obj);
+         serverCommunication.saveMeeting({
+             loggedUserDetails: { _obj: _Obj, ReceiverName: $scope.openConversation.ReceiverEmail, Role: 'Coachee', ContentText: $scope.openConversation.skill },
+             successCallBack: function () {
+                 console.log('In successCallBack');
+                 $scope.myMeetingSchedular.close();
+             },
+             failureCallBack: function () {
+                 console.log('In failureCallBack');
 
-        if ($scope.conversation.SenderEmail === "" || $scope.conversation.ReceiverEmail === "")
-            return false;
-
-        var _object = {
-            SenderEmail: $scope.MeetingSchedular.SenderEmail,
-            ReceiverEmail: $scope.MeetingSchedular.ReceiverEmail,
-            Subject: $scope.MeetingSchedular.Subject,
-            MeetingDate: $scope.MeetingSchedular.MeetingDate,
-            TimeFrom: $scope.MeetingSchedular.TimeFrom,
-            TimeTo: $scope.MeetingSchedular.TimeTo,
-            PlatformType: $scope.MeetingSchedular.PlatformType,
-            UserId: $scope.MeetingSchedular.UserId,
-            Role: $scope.MeetingSchedular.Role,
-            IsVerified: $scope.MeetingSchedular.IsVerified
-        }
-        console.log(_object);
-
-        serverCommunication.saveMeeting({
-            loggedUserDetails: _object,
-            successCallBack: function () {
-                console.log('In successCallBack');
-                $scope.myMeetingSchedular.close();
-            },
-            failureCallBack: function () {
-                console.log('In failureCallBack');
-
-            }
-        });
-    };
+             }
+         });
+     };
     $scope.autoSyncCounter = null;
     $scope.stopFight = function () {
         if (angular.isDefined($scope.autoSyncCounter)) {
@@ -738,8 +700,7 @@
                     //var _con = angular.copy(_coach[_key])
                     // $scope.conversationListNew.push(_con);
                 }
-                $scope.loadingMiddleObject = { showLoading: false, loadingMessage: 'Loading'
-                };
+                $scope.loadingMiddleObject = { showLoading: false, loadingMessage: 'Loading' };
                 if ($scope.conversationListNew && $scope.conversationListNew.length > 0) {
                     if ($scope.openConversation) {
                         for (var i = 0 ; i < $scope.conversationListNew.length ; i++) {
@@ -936,8 +897,7 @@
                 }
 
                 $scope.notificationRequestData = iObj.data.Result;
-                $scope.loadingMiddleObject = { showLoading: false, loadingMessage: 'Loading'
-                };
+                $scope.loadingMiddleObject = { showLoading: false, loadingMessage: 'Loading' };
         },
                 failureCallBack: function (iObj) {
                 console.debug('In failureCallBack', iObj);
@@ -986,24 +946,26 @@
                 skill: iCoach.Skill.Name
         }
         console.debug(_object);
+        iCoach.loadingSearchCoach = { loadingEffectCss: { position: 'absolute', background: 'rgba(0,0,0,.48)' }, showLoading: true, loadingMessage: 'Loading' };
         serverCommunication.sendConversation({
                 loggedUserDetails: _object,
                 ReceiverName: $scope.conversation.ReceiverEmail,
                 Role: 'Mentee',
                 successCallBack: function (iObj) {
-                $scope.conversation.Message = "";
-                console.error(iObj)
-                if (iObj.data && iObj.data && iObj.data.Message && iObj.data.Message != '') {
-                    _displayAlertMeesage({ message: iObj.data.Message, formatType: '1' });
-                } else {
-                     _displayAlertMeesage({ message: "Your request has been sent", formatType: '1' });
-                }
-        },
+                    $scope.conversation.Message = "";
+                    console.error(iObj)
+                    if (iObj.data && iObj.data && iObj.data.Message && iObj.data.Message != '') {
+                        _displayAlertMeesage({ message: iObj.data.Message, formatType: '1' });
+                    } else {
+                         _displayAlertMeesage({ message: "Your request has been sent", formatType: '1' });
+                    }
+                    iCoach.loadingSearchCoach = { showLoading: false, loadingMessage: 'Loading' };
+                },
                 failureCallBack: function () {
-                $scope.conversation.Message = "";
-                console.debug('In failureCallBack');
-        }
-    });
+                        $scope.conversation.Message = "";
+                        console.debug('In failureCallBack');
+                }
+        });
 
     };
     var _setScrollPosition = function () {
@@ -1118,7 +1080,7 @@
         $scope.conversation.IsVerified = isVerfied;
         var contentText = "";
         if (isVerfied != false)
-            contentText = 'MENTORING REQUEST BY ' +$scope.ApprovalName + ' HAS BEEN ACCEPTED';
+            contentText = 'Mentoring Request by ' +$scope.ApprovalName + ' has been accepted';
         else
             contentText = null;
         var _id = iNotificationDash.ConversationId + ":CHT#" +(Date.now()) +(Math.floor((Math.random() * 10) +1));

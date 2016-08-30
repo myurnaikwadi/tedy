@@ -41,7 +41,8 @@
                         </div>
                     </div>
                     <div class="pageNavigateView"style="display:flex;">
-                        <button type="button" style="margin: auto auto; margin-right: 45%; padding: 6px;background-color: white;color:#333;" class="signupButton fontClass btn btn-default" ng-click="loadSlideData(1)">Next</button>
+                        <button ng-show="question.length > 4" type="button" style="margin: auto auto; margin-right: 45%; padding: 6px;background-color: white;color:#333;" class="signupButton fontClass btn btn-default" ng-click="loadSlideData(1)">Next</button>
+                        <button ng-hide="question.length > 4" type="button" style="margin: auto auto; padding: 6px;" class="signupButton fontClass btn btn-default" ng-click="feedBack.sendPreSessionDetail();">Submit</button>
                     </div>
                 </div>
             </div>
@@ -99,13 +100,13 @@
 
     </div>
     <div class="fivePopupContainerTwo" style="height: 50%;">
-        <img style="position:absolute;left: 46%;width: 60px;" src="~/Images/communication/moneyBag.png">
+        @*<img style="position:absolute;height:100%;margin-top: -31%;width: 100%" src="~/Images/communication/moneyBag.png">*@
         <div class="" style="float: left;display:flex; width: 100%;height: 100%;">
             <div class="" style="border: 3px solid black;margin: auto auto;float: left;display:flex; width: 35%;height: 60%;margin-bottom: 6%;">
                 <cube-Strct class="cubeParentClass" ng-if="loadingRewardObject.showLoading" loading-Object="loadingRewardObject"></cube-Strct>
                 <div ng-show="loadingRewardObject.showLoading == false" class="" style="float: left; width: 100%;margin: auto auto;">
                     <h5 class="fontClass" style="font-size: 19px;text-align: center;font-weight: 500;">YOU HAVE EARNED</h5>
-                    <h5 class="fontClass" style="font-size: 19px;text-align: center;font-weight: 700;font-weight: 700;margin: 2px;">{{rewardsPoints.balancePoints}} POINTS</h5>
+                    <h5 class="fontClass" style="font-size: 19px;text-align: center;font-weight: 700;font-weight: 700;margin: 2px;">5 POINTS</h5>
                 </div>
             </div>
         </div>
@@ -123,7 +124,7 @@
 </div>
 
 <!-- Screen 6 -->
-<div class="popupContainer" ng-show="feedBack.formValue == '6'">
+<div class="popupContainer coacheeThemeColor" ng-show="feedBack.formValue == '6'">
     <img ng-click="feedBack.closeFeedBackPopup()" style="width: 15px;height: 15px;top:1%;right: 1%;bottom: 0;position: absolute;cursor:pointer;" title="Close" src="~/Images/cancel.png" />
     <div class="fivePopupContainerOne" style="height:21%;">
         <div class="" style="float: left;display:flex; width: 100%;height: 100%;">
@@ -131,7 +132,7 @@
         </div>
     </div>
     <div class="fivePopupContainerTwo" style="height:30%;">
-        <img style="position:absolute;left: 46%;width: 60px;" src="~/Images/communication/moneyBag.png">
+        @*<img style="position:absolute;height:100%;margin-top: -19%;width: 100%;margin-left: 4%;" src="~/Images/communication/moneyBag.png">*@
         <div class="" style="float: left;display:flex; width: 100%;height: 100%;">
 
             <div class="" style="border: 3px solid black;margin: 6% auto;float: left;display:flex; width: 55%;height: 60%;">
@@ -144,24 +145,28 @@
     <div class="fivePopupContainerThree" style="height: 49%;">
         <div class="" style="float: left;width: 100%;height: 100%;">
             <div class="" style="float: left; width: 100%; height: 60%;display: flex;">
-                <div class="partSubOne" style="margin: auto auto;height: 100%;margin-right: 3%;">
+
+                <div class="partSubOne" style="margin: auto auto;height: 100%;margin-right: 16%;">
                     <div class="" style="float: left;display: flex;width: 100%;height: 25%;">
                         <input type="radio" ng-model="redeemAction.actionName" value="GAME" name="rm" style="margin: auto auto;float: left;height: 30px;width: 20px;">
                     </div>
                     <div class="" style="float: left;display: flex;width: 100%;height: 30%;">
-                        <img style="float: left;margin: auto;margin-right: 0;width: 35px;" src="~/Images/communication/moneyBag.png">
+                        <img style="float: left;margin: auto;margin-right: 0;width: 15%;margin-top: 0%;" src="~/Images/Game2.png">
+                        @*<img style="position:absolute;height:100%;margin-top: -31%;width: 100%" src="~/Images/communication/moneyBag.png">*@
                         <h5 class="fontClass" style="font-size: 27px;text-align: center;font-weight: 600;margin: 6px auto;margin: auto;margin-left: 3%;width: 35px;">10</h5>
                     </div>
                     <div class="" style="float: left;display: flex;width: 100%;height: 30%;">
                         <h5 class="fontClass" style="font-size: 14px;text-align: center;font-weight: 600;margin: auto auto;">3 Brain Games</h5>
                     </div>
                 </div>
-                <div class="partSubTwo" style="margin: auto auto;height: 100%;">
+                <div class="partSubTwo" style="margin: auto auto;height: 100%;margin-right:0%;">
                     <div class="" style="float: left;display: flex;width: 100%;height: 25%;">
                         <input type="radio" ng-model="redeemAction.actionName" value="PSR" name="rm" style="margin: auto auto;float: left;height: 30px;width: 20px;">
                     </div>
+
                     <div class="" style="float: left;display: flex;width: 100%;height: 30%;">
-                        <img style="float: left;margin: auto;margin-right: 0;width: 35px;" src="~/Images/communication/moneyBag.png">
+                        <img style="float: left;margin: auto;margin-right: -1%;width: 31%;margin-left:20%;margin-top:-6%" src="~/Images/Tree/plant.png">
+                        @*<img style="position:absolute;height:100%;margin-top: -31%;width: 100%" src="~/Images/communication/moneyBag.png">*@
                         <h5 class="fontClass" style="font-size: 27px;text-align: center;font-weight: 600;margin: 6px auto;margin: auto;margin-left: 3%;width: 35px;">10</h5>
                     </div>
                     <div class="" style="float: left;display: flex;width: 100%;height: 30%;">

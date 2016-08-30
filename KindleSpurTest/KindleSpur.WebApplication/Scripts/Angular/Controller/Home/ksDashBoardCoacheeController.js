@@ -11,7 +11,7 @@
     };
     $scope.notifications = [
 
-                { notificationType: '1', name: 'YOU HAVE COACHING INVITE  FROM', assignPerson: 'HARSHADA D.' },
+                { notificationType: '1', name: 'You have Coaching invite from', assignPerson: 'HARSHADA D.' },
                 { notificationType: '2', role: 'mentor', name: 'YOUR MEETING HAS BEEN SCHEDULED WITH SAGAR N  ON', meetingDate: '20/05/2016', meetingTime: '11:00PM', meetingTimeDiff: '1 HOUR' },
                 { notificationType: '2', role: 'coachee', name: 'YOUR MEETING HAS BEEN SCHEDULED WITH SAGAR N  ON', meetingDate: '25/05/2016', meetingTime: '08:00AM', meetingTimeDiff: '2 HOUR' },
                 { notificationType: '3', name: 'MOHAN N.', profileImage: '' }
@@ -294,7 +294,9 @@
                 console.log('Result - ', result);
                 if (result.data) {
                     _createCoachArray(result);
-            }
+                }
+                $scope.loadingMiddleObject = { showLoading: false, loadingMessage: 'Loading' };
+                if (!$scope.$$phase) $scope.$digest();
             },
             failureCallBack: function () {
                 console.error('In failureCallBack');
@@ -394,6 +396,7 @@
                     }
                     // _mySkill = [].concat(angular.copy($rootScope.loggedDetail.coachee.skills));
                 }
+                $scope.timeSlots = [];
                 if (result.data) {
                     _createCoachArray(result);
                   //  $scope.loadingMiddleObject = { showLoading: false, loadingMessage: 'Loading' };
@@ -465,7 +468,7 @@
             messageType: 'media',
             messages: _array,
             ConversationType: "Coaching",
-            Skill: $scope.conversation.skill,
+            Skill: $scope.openConversation.skill,
             //"8/7/2016"
             // CreateDate: (new Date().getMonth()+1)+"/"+new Date().getDate()+
             //UpdateDate: "2016-08-07T11:58:13.867Z"
@@ -518,13 +521,53 @@
             type: 'loadUpperSlider',
             subType: 'Meeting',
             data: {
-                headingRequired: true, closeRequired: true, headingTitle: ('Send to ' + ($scope.openConversation.FirstName + " " + $scope.openConversation.LastName)),
-                AttachMode: true, role: 'Mentee', afterAddCallBack: _afterAddCallBack, deleteIcon: false,
+                openConversation: $scope.openConversation, headingRequired: true, closeRequired: true, headingTitle: ('Send to ' + ($scope.openConversation.FirstName + " " + $scope.openConversation.LastName)),
+                AttachMode: true, role: 'Mentee', afterAddCallBack: _saveSchedule, deleteIcon: false,
                 styleUI: { chat: { 'height': '15%', 'background-color': 'white' }, top: { 'height': '12%', 'background-color': 'white' }, middle: { 'height': '59%', 'background-color': 'white' }, bottom: { 'height': '12%', 'background-color': 'white' } }
             }
         });
     };
 
+    var _saveSchedule = function (iMeetingData) {
+        console.log("Test", iMeetingData);
+        var _startDate = new Date(iMeetingData.selectedData.MeetingDate);
+        _startDate.setHours(new Date(iMeetingData.selectedData.TimeFrom).getHours());
+        _startDate.setMinutes(new Date(iMeetingData.selectedData.TimeFrom).getMinutes());
+        _startDate.setSeconds(0);
+        var _endDate = new Date(iMeetingData.selectedData.MeetingDate);
+        _endDate.setHours(new Date(iMeetingData.selectedData.TimeTo).getHours());
+        _endDate.setMinutes(new Date(iMeetingData.selectedData.TimeTo).getMinutes());
+        _endDate.setSeconds(0);
+
+        var _parentId = $scope.openConversation.ConversationParentId ? $scope.openConversation.ConversationParentId : $scope.openConversation.ConversationId;
+        var _id = _parentId + ":MTG#" +(Date.now()) +(Math.floor((Math.random() * 10) +1));        
+
+        var _Obj = {
+            MeetingId : _id,
+            From  : $scope.loggedEmail ,
+            To: $scope.openConversation.ReceiverEmail,
+            Subject : iMeetingData.selectedData.Subject,
+            SkillName :  $scope.openConversation.skill,
+            //TopicName
+            Status    :iMeetingData.selectedData.UserId,
+            StartDate : _startDate,
+            EndDate   : _endDate,
+            TimeSlot  : "Coaching",
+            IsVerified : false
+        }
+        console.error(_Obj);
+        serverCommunication.saveMeeting({
+            loggedUserDetails: { _obj: _Obj, ReceiverName: $scope.openConversation.ReceiverEmail, Role: 'Coachee', ContentText: $scope.openConversation.skill },
+            successCallBack: function () {
+                console.log('In successCallBack');
+                $scope.myMeetingSchedular.close();
+            },
+            failureCallBack: function () {
+                console.log('In failureCallBack');
+
+            }
+        });      
+    };
     $scope.autoSyncCounter = null;
     $scope.stopFight = function () {
         if (angular.isDefined($scope.autoSyncCounter)) {
@@ -833,6 +876,7 @@
             skill: iCoach.Skill.Name
         }
         console.debug(_object);
+        iCoach.loadingSearchCoach = { loadingEffectCss: { position: 'absolute', background: 'rgba(0,0,0,.48)' }, showLoading: true, loadingMessage: 'Loading' };
         serverCommunication.sendConversation({
             loggedUserDetails: _object,
             ReceiverName: $scope.conversation.ReceiverEmail,
@@ -843,8 +887,11 @@
                 if (iObj.data && iObj.data && iObj.data.Message && iObj.data.Message != '') {
                     _displayAlertMeesage({ message: iObj.data.Message, formatType: '1' });
                 } else {
+                    $scope.loadingMiddleObject = { showLoading: false, loadingMessage: 'Loading' };
+                    
                     _displayAlertMeesage({ message: "Your request has been sent", formatType: '1' });
                 }
+                 iCoach.loadingSearchCoach = { showLoading: false, loadingMessage: 'Loading' };
 
             },
             failureCallBack: function () {
@@ -908,6 +955,7 @@
                 $scope.conversation.SendOrReceive = "Send";
                 $scope.conversation.IsVerified = true;
                 $scope.conversation.isRead = false;
+
                 var _parentId = $scope.openConversation.ConversationParentId ? $scope.openConversation.ConversationParentId : $scope.openConversation.ConversationId;
                 if ($scope.conversation.SenderEmail === "" || $scope.conversation.ReceiverEmail === "")
                     return false;

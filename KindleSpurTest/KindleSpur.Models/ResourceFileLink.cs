@@ -10,8 +10,8 @@ namespace KindleSpur.Models
     public class ResourceFileLink
     {
         public ObjectId Id { get; set; }
-        public string filenameconversations { get; set; }
+        public string FileName { get; set; }
 
-        public string filepathconversations { get; set; }
+        public string FilePath { get; set; }
     }
 }

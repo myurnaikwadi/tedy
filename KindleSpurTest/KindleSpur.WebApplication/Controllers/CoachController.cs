@@ -21,7 +21,6 @@ namespace KindleSpur.WebApplication.Controllers
         public CoachController()
         {
             UserId = ((IUser)System.Web.HttpContext.Current.Session["User"]).EmailAddress;
-           // getfeedback();
         }
         [HandleError]
         [HttpPost]
@@ -157,10 +156,6 @@ namespace KindleSpur.WebApplication.Controllers
             }
 
         }
-        //public  JsonResult getfeedback()
-        //{
-        //    CoachOrMentorRepository _coachRepo = new CoachOrMentorRepository();
-        //    return this.Json(_coachRepo.GetFeedback(UserId));
-        //}
+        
     }
 }

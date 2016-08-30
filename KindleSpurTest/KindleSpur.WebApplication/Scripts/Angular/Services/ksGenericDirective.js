@@ -174,8 +174,8 @@ app.directive('bottomMainStrip', function ($timeout, $rootScope) {
 
             switch ($rootScope.currentModule) {
                 case 'Coach': _color = 'rgb(231,120,23)'; _width = 18; break;
-                case 'Mentor': _color = 'rgb(0,73,45)'; _width = 18; break;
-                case 'Mentee': _color = 'rgb(132,194,37)'; _width = 18; break;
+                case 'Mentor': _color = 'rgb(67,129,61)'; _width = 18; break;
+                case 'Mentee': _color = 'rgb(187,217,0)'; _width = 18; break;
                 case 'Coachee': _color = 'rgb(231,180,0)'; _width = 18; break;
             }
             $scope.styleToLeftStrip = {
@@ -235,8 +235,8 @@ app.directive('ctcRole', function ($state, serverCommunication) {
             var _colorArray = {
                 'coach': { '0' : 'rgb(239,154,72)', '1' : 'rgb(231,120,23)','2': 'rgb(220,53,27)'},
                 'coachee': { '0' : 'rgb(255,249,116)', '1' :'rgb(248,195,0)' ,'2': 'rgb(241,164,0)'},
-                'mentor': { '0' : 'rgb(67,129,61)', '1' : 'rgb(0,73,45)','2': 'rgb(5,33,29)'},
-                'mentee': { '0' : 'rgb(187,217,0)' , '1' : 'rgb(132,194,37)','2': 'rgb(75,159,49)'},
+                'mentor': { '0' : 'rgb(122,175,87)', '1' : 'rgb(67,129,61)','2': 'rgb(2,105,56)'},
+                'mentee': { '0' : 'rgb(218,232,102)' , '1' : 'rgb(187,217,0)','2': 'rgb(132,194,37)'},
             };
             scope.createStyleArrayAsPerSelected = function (iSkill,iSelect) {
                 if (iSelect) {
@@ -246,8 +246,8 @@ app.directive('ctcRole', function ($state, serverCommunication) {
                     var _textColor = 'black';
                     switch (scope.role) {
                         case 'coach': _color = 'rgb(231,120,23)'; _textColor = 'white'; break;
-                        case 'mentor': _color = 'rgb(0,73,45)'; _textColor = 'white'; break;
-                        case 'mentee': _color = 'rgb(132,194,37)'; _textColor = 'black'; break;
+                        case 'mentor': _color = 'rgb(67,129,61)'; _textColor = 'white'; break;
+                        case 'mentee': _color = 'rgb(187,217,0)'; _textColor = 'black'; break;
                         case 'coachee': _color = 'rgb(248,195,0)'; _textColor = 'black'; break;
                     }
                     switch (iSkill.profiLevel) {
@@ -683,8 +683,8 @@ app.directive('ctcRole', function ($state, serverCommunication) {
 
                 switch (scope.role) {
                     case 'coach': _color = 'rgb(231,120,23)'; _textColor = 'white'; break;
-                    case 'mentor': _color = 'rgb(0,73,45)'; _textColor = 'white'; break;
-                    case 'mentee': _color = 'rgb(132,194,37)'; _textColor = 'black'; break;
+                    case 'mentor': _color = 'rgb(67,129,61)'; _textColor = 'white'; break;
+                    case 'mentee': _color = 'rgb(187,217,0)'; _textColor = 'black'; break;
                     case 'coachee': _color = 'rgb(248,195,0)'; _textColor = 'black'; break;
                 }
                 var _textColor = 'black';//temp purpose
@@ -1812,7 +1812,7 @@ app.directive('feedbackPage', function ($state, serverCommunication, $timeout, $
                 $scope.feedBack.formValue = '1';
                 $scope.closeCallback();
 };
-
+            $scope.redeemAction = { actionName: 'PSR' };
 
             $scope.redeemPointsClick = function () {
                 $scope.feedBack.closeFeedBackPopup();

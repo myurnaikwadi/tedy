@@ -32,21 +32,30 @@
             scope.attachFiles = function () {
                 console.error(scope)
                 var _selectedData = {};
+               // debugger
                 scope.artifactsArray.some(function (iContain) {
+                    //debugger
+                    //console.error(iContain)
                     if (iContain.selected) {
                         if (_selectedData['Artifact'])
                             _selectedData['Artifact'][iContain.FileName] = iContain;
-                        else
-                            _selectedData['Artifact'] = {}
+                        else {
+                            _selectedData['Artifact'] = {};
+                            _selectedData['Artifact'][iContain.FileName] = iContain;
+                            
+                        }
                     }
-                });
 
+                });
+                console.error(_selectedData)
                 scope.bookMarkArray.some(function (iContain) {
                     if (iContain.selected) {
                         if (_selectedData['bookMark'])
                             _selectedData['bookMark'][iContain.FileName] = iContain;
-                        else
-                            _selectedData['bookMark'] = {}
+                        else {
+                            _selectedData['bookMark'] = {};
+                            _selectedData['bookMark'][iContain.FileName] = iContain;
+                        }
                     }
                 });
                 if (scope.extraParam && scope.extraParam.afterAddCallBack)
@@ -59,7 +68,7 @@
                     scope.extraParam.closeCallBack();
             };
             scope.uploadDataOnServer = function () {
-                console.error(data)
+                console.error(scope.artifactsArray)
                 scope.artifactsArray = scope.artifactsArray.concat(tempArray);
                 serverCommunication.sendUploadedFileToServer(data,function (iPath) {
                     data = new FormData();
@@ -122,8 +131,11 @@
                     loggedDetail: _object,
                     successCallBack: function (iObj) {
                         console.error('serverrrrr', iObj)
-                        scope.artifactsArray = iObj.data[0];
-                        scope.bookMarkArray = iObj.data[1];
+                        if (iObj.data.length > 0) {
+                            scope.artifactsArray = iObj.data[0];
+                            scope.bookMarkArray = iObj.data[1];
+                        }
+                       
                     }, failureCallBack: function (iObj) {
                         console.error('serverrrrr', iObj)
                     }
