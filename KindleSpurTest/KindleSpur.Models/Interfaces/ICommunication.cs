@@ -17,7 +17,7 @@ namespace KindleSpur.Models.Interfaces
         string Status { get; set; }
         string SkillName { get; set; }
         string TopicName { get; set; }
-        List<IRequest> Requests { get; set; }
+        IRequest Requests { get; set; }
         List<IChat> Chats { get; set; }
         List<IMeeting> Meetings { get; set; }
         List<IDocument> Documents { get; set; }    
@@ -38,7 +38,8 @@ namespace KindleSpur.Models.Interfaces
         string ChatId { get; set; }
         string Role { get; set; }
         string Message { get; set; }
-        string Sender { get; set; }
+        string SenderName { get; set; }
+        string ReceiverName { get; set; }
         Boolean ReadStatus { get; set; }
         String Progress { get; set; }
         DateTime StartDate { get; set; }

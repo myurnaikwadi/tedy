@@ -17,7 +17,8 @@ namespace KindleSpur.Models.Communication
         public bool ReadStatus { get; set; }
         public string RequestId { get; set; }
         public string Role { get; set; }
-        public string Sender { get; set; }
+        public string SenderName { get; set; }
+        public string ReceiverName { get; set; }
         public DateTime StartDate { get; set; }
     }
 }

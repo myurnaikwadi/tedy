@@ -5,6 +5,9 @@ using MongoDB.Bson;
 using MongoDB.Driver.Linq;
 using KindleSpur.Models.Interfaces;
 using KindleSpur.Models;
+using System.Linq;
+using System.Collections.Generic;
+using KindleSpur.Models.Communication;
 
 namespace KindleSpur.Data
 {
@@ -25,7 +28,7 @@ namespace KindleSpur.Data
             bool _transactionStatus = false;
             try
             {
-                var result = _communicationCollection.FindAs<BsonArray>(Query.And(Query.EQ("From", communication.From), Query.EQ("To", communication.To)));
+                var result = _communicationCollection.FindAs<BsonArray>(Query.EQ("CommunicationId", communication.CommunicationId));
 
                 if (result.Count() > 0) return _transactionStatus;
 
@@ -55,6 +58,16 @@ namespace KindleSpur.Data
 
             }
             return _transactionStatus;
+        }
+
+        public void Save(Communication _obj)
+        {
+            _communicationCollection.Save(_obj);
+        }
+
+        public List<string> GetAllOpenedCommunications()
+        {
+          return  _communicationCollection.FindAllAs<ICommunication>().Select(x=>x.CommunicationId).ToList();                
         }
 
         public Boolean UpsertRequest(IRequest request)

@@ -52,6 +52,7 @@ namespace KindleSpur.WebApplication.Controllers
         public ActionResult PasswordPromp(int? UserId)
         {
             TempData["UserId"] = Request["UserId"].ToString();
+            TempData.Keep("UserId");
             return View();
         }
 
@@ -93,8 +94,10 @@ namespace KindleSpur.WebApplication.Controllers
         {
             UserRepository _repo = new UserRepository();
             User obj = new User();
-            if (TempData["UserId"] != null)
-               obj  = _repo.SavePassword(TempData["UserId"].ToString(), signupObject);
+
+            string Id = Request.UrlReferrer.Query.TrimStart('?').Split('=')[1];
+            if (Id != null)
+               obj  = _repo.SavePassword(Id, signupObject);
            else
                 obj = _repo.SavePassword(((IUser)System.Web.HttpContext.Current.Session["User"]).Id.ToString(),signupObject);
              
