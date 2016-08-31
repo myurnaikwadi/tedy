@@ -1,6 +1,6 @@
 ﻿app.controller('ksProfileController', function ($scope, commonFunction, serverCommunication, $rootScope, $state, $timeout, $filter,authentification) {
     $scope.editModeProfile = false;
-   // $rootScope.currentModule = 'Profile';
+    // $rootScope.currentModule = 'Profile';
     //console.error($scope.userInfo);
     if ($scope.moduleName)
         $rootScope.currentModule = $scope.moduleName;
@@ -18,7 +18,7 @@
         //console.error($scope.userInfo);
         $("#carousel").carousel(iIndex);
     };
-   // $scope.topicArray = [{ Name: 'OVERVIEW' }, { Name: 'OVERVIEW' }, { Name: 'OVERVIEW' }, { Name: 'OVERVIEW' }, { Name: 'OVERVIEW' }, { Name: 'OVERVIEW' },{ Name: 'OVERVIEW' }, { Name: 'FEEDBACKS' }, { Name: 'SETTINGS' }];
+    // $scope.topicArray = [{ Name: 'OVERVIEW' }, { Name: 'OVERVIEW' }, { Name: 'OVERVIEW' }, { Name: 'OVERVIEW' }, { Name: 'OVERVIEW' }, { Name: 'OVERVIEW' },{ Name: 'OVERVIEW' }, { Name: 'FEEDBACKS' }, { Name: 'SETTINGS' }];
     $scope.myInfo = {
         mobileNumber: $scope.userInfo.Mobile ? $scope.userInfo.Mobile : null,
         linkedInLink: $scope.userInfo.LinkdinURL ? $scope.userInfo.LinkdinURL : null,
@@ -87,6 +87,29 @@
             case 2: $scope.loadSettingDetail(); break;
         }
     };
+    $scope.uiFlag = {
+        
+        ConfirmPassword: { flagName : -1, styleToPassword : { 'position': 'absolute', 'height': '100%', 'width': "0%", 'background': 'white', 'transition': 'all 0.7s ease' } }, 
+        Password: { flagName : -1, styleToPassword : { 'position': 'absolute', 'height': '100%', 'width': "0%", 'background': 'white', 'transition': 'all 0.7s ease' } }
+
+    }
+    $scope.fun = function (iObj,iModel) {
+        console.log($scope.localModel.Password)
+        if (iModel.length > 8 && iModel.length < 13) {
+            iObj.flagName = 1;
+            iObj.styleToPassword = { 'position': 'absolute', 'height': '100%', 'width': "5%", 'background': 'red', 'transition': 'all 0.7s ease' };
+            
+        }
+        else if (iModel.length > 12 && iModel.length < 16) {
+            iObj.flagName = 2;
+            iObj.styleToPassword = { 'position': 'absolute', 'height': '100%', 'width': "50%", 'background': 'orange', 'transition': 'all 0.7s ease' };
+        }
+        else if (iModel.length > 15 && iModel.length < 20) {
+            iObj.flagName = 3;
+            iObj.styleToPassword = { 'position': 'absolute', 'height': '100%', 'width': "100%", 'background': 'green', 'transition': 'all 0.7s ease' };
+        }
+    }
+
 
     $scope.loadPersonalInfoAndSkill = function () {
         $timeout(function () { $scope.loadingObject = { showLoading: false, loadingMessage: 'Loading Feed' }; }, 1000);
@@ -129,7 +152,7 @@
             }
         }
     };
-    $scope.localModel = {};
+    $scope.localModel = { Password: '', ConfirmPassword  : '' };
     $scope.loadSettingDetail = function () {
         $timeout(function () { $scope.loadingObject = { showLoading: false, loadingMessage: 'Loading Feed' }; }, 1000);
         $timeout(function () {
@@ -345,14 +368,26 @@
         }
         serverCommunication.changeProgileDetails(_object);
     };
-
+    var _displayAlertMeesage = function (iObj) {
+        var _displayAlert = {
+            showAlert: true,
+            message: iObj.message,
+            formatType: iObj.formatType,
+        };
+        $rootScope.$broadcast("refreshStateHomeView", {
+            type: 'displayAlert',
+            // subType: 'Meeting',
+            data: _displayAlert
+        });
+    };
     $scope.sendPasswordDetailsToServer = function () {
        
-        //console.error($scope.localModel)
-        if (($scope.localModel.Password) != ($scope.localModel.ConfirmPassword)) {
-            $scope.displayAlert.showAlert = true;
-            $scope.displayAlert.message = 'The passwords are not same';
-            $scope.displayAlert.formatType = '2';
+        console.error($scope.localModel)
+        if ($scope.localModel.Password == '') {
+            _displayAlertMeesage({ message: "Please Enter Password", formatType: '2' });
+        }
+       else if (($scope.localModel.Password) != ($scope.localModel.ConfirmPassword)) {
+            _displayAlertMeesage({ message: "The passwords are not same", formatType: '2' });
             return;
         }
         //return;

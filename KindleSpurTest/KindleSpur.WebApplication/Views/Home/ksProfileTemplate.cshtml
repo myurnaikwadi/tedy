@@ -142,13 +142,13 @@
                                         <div class="ImpactZoneChildDiv heightZeroClassProfile" ng-init="changeOccPerInfo = false" ng-class="{ heightAnimationProfile : animationActicvate == true }" style="border: 1px solid #ddd;margin: 7px;margin-top: 0;">
                                             <div class="userNameProfile" style="height: 20%;display:block;width: 100%;">
                                                 <div class="activityNameInputBox" style="width: 49%;margin-right: 2%;">
-                                                    <input class="profileInputTag homeLogininput" style="color: #4f4f4f !important;font-size: 12px !important;letter-spacing: 1px; font-weight: 100 !important;" type="text" required ng-keydown="autoCompleteEmailId($event,'userId');" ng-blur="resetAutoComplete('userId');closeAlertMessage('userId')" ng-change='selectedIndex=-1;changeOccPerInfo = true' name="username" id="userId" ng-model="localModel.firstName" tabindex="0" autocomplete="off">
+                                                    <input class="profileInputTag homeLogininput" allow-pattern="[a-z]" style="color: #4f4f4f !important;font-size: 12px !important;letter-spacing: 1px; font-weight: 100 !important;" type="text" required ng-keydown="autoCompleteEmailId($event,'userId');" ng-blur="resetAutoComplete('userId');closeAlertMessage('userId')" ng-change='selectedIndex=-1;changeOccPerInfo = true' name="username" id="userId" ng-model="localModel.firstName" tabindex="0" autocomplete="off">
                                                     <span class="highlight"></span>
                                                     <span class="bar" style="background:rebeccapurple"></span>
                                                     <label class="homeLoginlabel fontClass" style="">First Name</label>
                                                 </div>
                                                 <div class="activityNameInputBox" style="width: 49%;">
-                                                    <input class="profileInputTag homeLogininput" style="color: #4f4f4f !important;font-size: 12px !important;letter-spacing: 1px; font-weight: 100 !important;" type="text" required ng-keydown="autoCompleteEmailId($event,'lastName');" ng-blur="resetAutoComplete('lastName');closeAlertMessage('lastName')" ng-change='selectedIndexLN=-1;changeOccPerInfo = true' name="username" id="lastName" ng-model="localModel.lastName" tabindex="0" autocomplete="off">
+                                                    <input class="profileInputTag homeLogininput" allow-pattern="[a-z]" style="color: #4f4f4f !important;font-size: 12px !important;letter-spacing: 1px; font-weight: 100 !important;" type="text" required ng-keydown="autoCompleteEmailId($event,'lastName');" ng-blur="resetAutoComplete('lastName');closeAlertMessage('lastName')" ng-change='selectedIndexLN=-1;changeOccPerInfo = true' name="username" id="lastName" ng-model="localModel.lastName" tabindex="0" autocomplete="off">
                                                     <span class="highlight"></span>
                                                     <span class="bar" style="background:rebeccapurple"></span>
                                                     <label class="homeLoginlabel fontClass" style="">Last Name</label>
@@ -156,13 +156,13 @@
                                             </div>
                                             <div class="userNameProfile" style="height: 20%;display:block;width: 100%;">
                                                 <div class="activityNameInputBox" style="width: 49%;margin-right: 2%;">
-                                                    <input class="profileInputTag homeLogininput" style="color: #4f4f4f !important;font-size: 12px !important;letter-spacing: 1px; font-weight: 100 !important;" type="text" required ng-keydown="autoCompleteEmailId($event,'mobile');" ng-blur="resetAutoComplete('mobile');closeAlertMessage('mobile')" ng-change='selectedIndexMobile=-1;changeOccPerInfo = true' name="username" id="mobile" ng-model="localModel.mobileNumber" tabindex="0" autocomplete="off">
+                                                    <input class="profileInputTag homeLogininput"  style="color: #4f4f4f !important;font-size: 12px !important;letter-spacing: 1px; font-weight: 100 !important;" type="text" required ng-keydown="autoCompleteEmailId($event,'mobile');" ng-blur="resetAutoComplete('mobile');closeAlertMessage('mobile')" ng-change='selectedIndexMobile=-1;changeOccPerInfo = true' name="username" id="mobile" ng-model="localModel.mobileNumber" tabindex="0" autocomplete="off">
                                                     <span class="highlight"></span>
                                                     <span class="bar" style="background:rebeccapurple"></span>
                                                     <label class="homeLoginlabel fontClass" style="">Mobile</label>
                                                 </div>
                                                 <div class="activityNameInputBox" style="width: 49%;">
-                                                    <input class="profileInputTag homeLogininput" style="color: #4f4f4f !important;font-size: 12px !important;letter-spacing: 1px; font-weight: 100 !important;" type="text" required ng-keydown="autoCompleteEmailId($event,'City');" ng-blur="resetAutoComplete('City');closeAlertMessage('City')" ng-change='selectedIndexCity=-1;changeOccPerInfo = true' name="City" id="City" ng-model="localModel.City" tabindex="0" autocomplete="off">
+                                                    <input class="profileInputTag homeLogininput" allow-pattern="[a-z]" style="color: #4f4f4f !important;font-size: 12px !important;letter-spacing: 1px; font-weight: 100 !important;" type="text" required ng-keydown="autoCompleteEmailId($event,'City');" ng-blur="resetAutoComplete('City');closeAlertMessage('City')" ng-change='selectedIndexCity=-1;changeOccPerInfo = true' name="City" id="City" ng-model="localModel.City" tabindex="0" autocomplete="off">
                                                     <span class="highlight"></span>
                                                     <span class="bar" style="background:rebeccapurple"></span>
                                                     <label class="homeLoginlabel fontClass" style="">City</label>
@@ -173,13 +173,13 @@
                                                     <input ng-model="myInfo.City" class="inputTagStyle fontClass" style="padding:5px;width: 60% !important; margin: auto 0;border-left: 0;border-right: 0;border-top: 0;border-bottom: 1px solid #ccc;" type="text" placeholder="City Name" />*@
                                                 
                                                 <div class="activityNameInputBox" style="width: 49%;margin-right: 2%;">
-                                                    <input class="profileInputTag homeLogininput" style="color: #4f4f4f !important;font-size: 12px !important;letter-spacing: 1px; font-weight: 100 !important;" type="text" required ng-keydown="autoCompleteEmailId($event,'State');" ng-blur="resetAutoComplete('State');closeAlertMessage('State')" ng-change='selectedIndexState=-1;changeOccPerInfo = true' name="State" id="State" ng-model="localModel.State" tabindex="0" autocomplete="off">
+                                                    <input class="profileInputTag homeLogininput" allow-pattern="[a-z]" style="color: #4f4f4f !important;font-size: 12px !important;letter-spacing: 1px; font-weight: 100 !important;" type="text" required ng-keydown="autoCompleteEmailId($event,'State');" ng-blur="resetAutoComplete('State');closeAlertMessage('State')" ng-change='selectedIndexState=-1;changeOccPerInfo = true' name="State" id="State" ng-model="localModel.State" tabindex="0" autocomplete="off">
                                                     <span class="highlight"></span>
                                                     <span class="bar" style="background:rebeccapurple"></span>
                                                     <label class="homeLoginlabel fontClass" style="">State</label>
                                                 </div>
                                                 <div class="activityNameInputBox" style="width: 49%;">
-                                                    <input class="profileInputTag homeLogininput" style="color: #4f4f4f !important;font-size: 12px !important;letter-spacing: 1px; font-weight: 100 !important;" type="text" required ng-keydown="autoCompleteEmailId($event,'Country');" ng-blur="resetAutoComplete('Country');closeAlertMessage('Country')" ng-change='selectedIndexState=-1;changeOccPerInfo = true' name="Country" id="Country" ng-model="localModel.Country" tabindex="0" autocomplete="off">
+                                                    <input class="profileInputTag homeLogininput" allow-pattern="[a-z]" style="color: #4f4f4f !important;font-size: 12px !important;letter-spacing: 1px; font-weight: 100 !important;" type="text" required ng-keydown="autoCompleteEmailId($event,'Country');" ng-blur="resetAutoComplete('Country');closeAlertMessage('Country')" ng-change='selectedIndexState=-1;changeOccPerInfo = true' name="Country" id="Country" ng-model="localModel.Country" tabindex="0" autocomplete="off">
                                                     <span class="highlight"></span>
                                                     <span class="bar" style="background:rebeccapurple"></span>
                                                     <label class="homeLoginlabel fontClass" style="">Country</label>
@@ -204,31 +204,42 @@
                                             </div>
                                         </div>
                                     </div>
+
+
                                     <div class="podcastsContainer col-md-5">
                                         <div class="podcastHeader" style="border: 1px solid #ddd;border-bottom: 0;height: 15%;margin: 7px;margin-bottom: 0;">
                                             <h5 style="margin: auto; font-weight: bold;color:#696565;" class="fontClass ValueFeedsHeade">Login Information</h5>
                                         </div>
                                         <div class="ImpactZoneChildDiv heightZeroClassProfile" ng-init="changeOccLogInfo = false" ng-class="{ heightAnimationProfile : animationActicvate == true }" style="border: 1px solid #ddd;margin: 7px;margin-top: 0;">
-                                            <div class="userNameProfile" style="height: 30%;width: 100%;display:block;">
+                                          
+                                              <div class="userNameProfile" style="height: 30%;width: 100%;display:block;">
                                                 <h5 class="fontClass" style="float:left;width: 92%;margin: 15px;margin-bottom: 0;color: #777777;">New Password</h5>
-                                                <input ng-model="localModel.Password" ng-change="changeOccLogInfo = true" class="inputTagStyle fontClass" style="height: 28px;padding:5px;width: 60% !important;margin: 15px;margin-bottom: 0;margin-right: 0;" type="password" />
-                                                <span class="passwordIconWithInput"><img src="~/Images/passwordIcon.png" /></span>
+                                                <input ng-model="localModel.Password"  minlength="0" maxlength="20" ng-change="fun(uiFlag.Password,localModel.Password);changeOccLogInfo = true;" class="inputTagStyle fontClass" style="height: 28px;padding:5px;width: 60% !important;margin: 15px;margin-bottom: 0;margin-right: 0;" type="password" />
+                                                <span class="passwordIconWithInput" style="float:left;"><img src="~/Images/passwordIcon.png" /></span>  
+                                                <div ng-show="localModel.Password.length > 8" style="float:left;position: relative;height: 15px;width: 80px;border: 1px solid gray;margin-top: 21px;margin-left: 7px;margin-bottom: 0;margin-right: 0;">
+                                                    <div ng-style="uiFlag.Password.styleToPassword"></div>                                                      
+                                                </div>
+                                                <span  ng-show="localModel.Password.length > 8" style="font-size:11px;margin-left: 5%;">{{uiFlag.Password.flagName == 1 ? 'Weak' : (uiFlag.Password.flagName == 2 ? 'Medium' : 'Strong') }}</span>  
                                             </div>
-                                            
 
                                             <div class="userNameProfile" style="height: 30%;width: 100%;display:block;">
                                                 <h5 class="fontClass" style="float:left;width: 92%;margin: 15px;margin-bottom: 0;color: #777777;">Confirm New Password</h5>
-                                                <input ng-model="localModel.ConfirmPassword" ng-change="changeOccLogInfo = true" class="inputTagStyle fontClass" style="height: 28px;padding:5px;width: 60% !important;margin: 15px;margin-bottom: 0;margin-right: 0;" type="password" />
+                                                <input ng-model="localModel.ConfirmPassword" minlength="0" maxlength="20"  ng-change="fun(uiFlag.ConfirmPassword,localModel.ConfirmPassword);changeOccLogInfo = true" class="inputTagStyle fontClass" style="height: 28px;padding:5px;width: 60% !important;margin: 15px;margin-bottom: 0;margin-right: 0;" type="password" />
                                                 <span class="passwordIconWithInput"><img src="~/Images/passwordIcon.png" /></span>
+                                                <div ng-show="localModel.ConfirmPassword.length > 8" style="float:left;position: relative;height: 15px;width: 80px;border: 1px solid gray;margin-top: 21px;margin-left: 7px;margin-bottom: 0;margin-right: 0;">
+                                                    <div ng-style="uiFlag.ConfirmPassword.styleToPassword"></div>
+                                                </div>
+                                                <span ng-show="localModel.ConfirmPassword.length > 8" style="font-size:11px;margin-left: 5%;">{{uiFlag.ConfirmPassword.flagName == 1 ? 'Weak' : (uiFlag.ConfirmPassword.flagName == 2 ? 'Medium' : 'Strong') }}</span>  
                                             </div>
                                             @*<div class="userNameProfile" style="height: 20%;width: 100%;">
                                                     <input ng-model="myInfo.termCondition" class="inputTagStyle fontClass" style="padding:5px; margin: auto 0;" type="checkbox" />
                                                     <h5 style="float:left;width: 60%;margin: auto 15px;color: #777777;">I accept term and condition</h5>
                                                 </div>*@
                                             <div class="userNameProfile" style="height: 35%;width: 100%;">
-                                                <button ng-disabled="changeOccLogInfo == false" style="background: #D72C28;width: 70px; height: 30px;font-size: 10px;padding: 5px;font-weight: 100;margin: auto;" class="signupButton fontClass genericPointerClass" ng-click="sendPasswordDetailsToServer()">SAVE</button>
+                                                <button ng-disabled="changeOccLogInfo == false && (localModel.Password.length == 0 || localModel.ConfirmPassword.length == 0 )" style="background: #D72C28;width: 70px; height: 30px;font-size: 10px;padding: 5px;font-weight: 100;margin: auto;" class="signupButton fontClass genericPointerClass" ng-click="sendPasswordDetailsToServer()">SAVE</button>
                                             </div>
                                         </div>
+
                                     </div>
                                 </div>
                             </div>

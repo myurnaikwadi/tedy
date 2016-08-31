@@ -249,3 +249,13 @@ display: flex;
     left: 6%  !important;
     transition: 0.4s all ease;
 }
+
+.WeakClass{
+    width:5%;
+}
+.MediumClass{
+    width:50%;
+}
+.StrongClass{
+    width:100%;
+}                            

@@ -176,17 +176,11 @@ namespace KindleSpur.WebApplication.Controllers
             }
             catch (Exception ex)
             {
-                throw;
-            }
-
-
-            finally
-            {
+               
+                return null;
 
             }
-           
         }
-
         public ActionResult GetCoachingStatus()
         {
             try
