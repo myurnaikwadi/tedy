@@ -49,7 +49,7 @@
         if (iObj.Country)
             _str += iObj.Country + " ";
         console.error(_str);
-      return _str;
+        return _str;
     };
     //$scope.leftSideMenus = [{ name: 'DASHBOARD' },
     //                        { name: 'COACHING STATUS' },
@@ -68,7 +68,7 @@
         $scope.userInfo = iOption;
         console.log(iOption)
     };
-    
+
 
     $scope.closeProfilePic = function () {
         console.error('closeProfilePopup')
@@ -103,7 +103,7 @@
                 //    break;
             case 2:
             case 7:
-            case 6 : $scope.loadingMiddleObject = { showLoading: false, loadingMessage: 'Loading' }; break;
+            case 6: $scope.loadingMiddleObject = { showLoading: false, loadingMessage: 'Loading' }; break;
         }
     };
     $scope.selectedOption = function (iIndex, iCate) {
@@ -119,7 +119,7 @@
     $scope.feedBack.icloseFeedBack = false;
     $scope.feedBack.feedBackType = 'feedBack';
     $scope.askFeedBackFunc = function (icloseFeedBack) {
-        
+
         $scope.feedBack.askFeedback = true;
         $scope.feedBack.formValue = '1';
         $scope.feedBack.icloseFeedBack = icloseFeedBack;
@@ -188,7 +188,7 @@
     $scope.feedCategoryArray = [];
     $scope.getRssFeedData = function () {
         //feedback
-       // $scope.feedCategoryArray = [];
+        // $scope.feedCategoryArray = [];
         serverCommunication.getMyCoacheeSelection({
             successCallBack: function (iObj) {
                 console.error('In getMySelection', iObj);
@@ -258,7 +258,7 @@
                 for (var _skill in _skills) {
                     $scope.feedCategoryArray.push({ selected: false, name: _skill });
                 }
-                 $scope.loadingMiddleObject = { showLoading: false, loadingMessage: 'Loading' };
+                $scope.loadingMiddleObject = { showLoading: false, loadingMessage: 'Loading' };
                 if (!$scope.$$phase) $scope.$digest();
             },
             failureCallBack: function (iObj) {
@@ -313,7 +313,7 @@
         $scope.ctsDataForMolecule = null;
         serverCommunication.getCoachingWithStatus({
             loggedUserDetails: $rootScope.loggedDetail,
-            role : 'coachee',
+            role: 'coachee',
             successCallBack: function (iObj) {
                 console.error('In successCallBack', iObj);
                 $scope.coachingStatusArray = iObj.data.Filters;
@@ -346,42 +346,42 @@
     };
 
     var _createCoachArray = function (iResult) {
-            $scope.timeSlots =[];
-            var _coachFinalArr =[];
-            for (var k = 0; k < iResult.data.length; k++) {
-                for (var i = 0; i < iResult.data[k].Skills.length; i++) {
-                    var _coach = angular.copy(iResult.data[k]);
-                    _coach.Skill = { };
-                    _coach.Skill = angular.copy(iResult.data[k].Skills[i]);
-                        //  _coach.Skill = Object.assign(_coach.Skill, result.data[k].Skills[i]);
-                    if ($scope.timeSlots.length > 0) {
-                        $scope.flag = true;
-                        var _index = $scope.timeSlots.indexOf(iResult.data[k].Skills[i].Name);
-                        if (_index > -1) {
-                            $scope.flag = false;
-                        }
-                        if ($scope.flag == true) {
-                            $scope.timeSlots.push(iResult.data[k].Skills[i].Name);
-                            $scope.flag = false;
-                        }
-                    } else {
+        $scope.timeSlots = [];
+        var _coachFinalArr = [];
+        for (var k = 0; k < iResult.data.length; k++) {
+            for (var i = 0; i < iResult.data[k].Skills.length; i++) {
+                var _coach = angular.copy(iResult.data[k]);
+                _coach.Skill = {};
+                _coach.Skill = angular.copy(iResult.data[k].Skills[i]);
+                //  _coach.Skill = Object.assign(_coach.Skill, result.data[k].Skills[i]);
+                if ($scope.timeSlots.length > 0) {
+                    $scope.flag = true;
+                    var _index = $scope.timeSlots.indexOf(iResult.data[k].Skills[i].Name);
+                    if (_index > -1) {
                         $scope.flag = false;
-                        $scope.timeSlots.push(iResult.data[k].Skills[i].Name);
                     }
-                    _coach.showLoad = false;
-                    _coachFinalArr.push(_coach);
+                    if ($scope.flag == true) {
+                        $scope.timeSlots.push(iResult.data[k].Skills[i].Name);
+                        $scope.flag = false;
+                    }
+                } else {
+                    $scope.flag = false;
+                    $scope.timeSlots.push(iResult.data[k].Skills[i].Name);
                 }
+                _coach.showLoad = false;
+                _coachFinalArr.push(_coach);
             }
-            console.error(_coachFinalArr, $scope.timeSlots)
-            $scope.Coaches = [].concat(_coachFinalArr);
-            $scope.loadingMiddleObject = { showLoading: false, loadingMessage: 'Loading' };
-            setTimeout(function () {
-                for (var k = 0; k < $scope.Coaches.length; k++) {
-                       $scope.Coaches[k].showLoad = true;
-                }
+        }
+        console.error(_coachFinalArr, $scope.timeSlots)
+        $scope.Coaches = [].concat(_coachFinalArr);
+        $scope.loadingMiddleObject = { showLoading: false, loadingMessage: 'Loading' };
+        setTimeout(function () {
+            for (var k = 0; k < $scope.Coaches.length; k++) {
+                $scope.Coaches[k].showLoad = true;
+            }
 
-                $scope.$apply();
-            }, 500);
+            $scope.$apply();
+        }, 500);
     };
 
     $scope.getCoachRecord = function () {
@@ -399,7 +399,7 @@
                 $scope.timeSlots = [];
                 if (result.data) {
                     _createCoachArray(result);
-                  //  $scope.loadingMiddleObject = { showLoading: false, loadingMessage: 'Loading' };
+                    //  $scope.loadingMiddleObject = { showLoading: false, loadingMessage: 'Loading' };
                 }
                 $scope.loadingMiddleObject = { showLoading: false, loadingMessage: 'Loading' };
                 serverCommunication.getCTSFilters({
@@ -540,20 +540,20 @@
         _endDate.setSeconds(0);
 
         var _parentId = $scope.openConversation.ConversationParentId ? $scope.openConversation.ConversationParentId : $scope.openConversation.ConversationId;
-        var _id = _parentId + ":MTG#" +(Date.now()) +(Math.floor((Math.random() * 10) +1));        
+        var _id = _parentId + ":MTG#" + (Date.now()) + (Math.floor((Math.random() * 10) + 1));
 
         var _Obj = {
-            MeetingId : _id,
-            From  : $scope.loggedEmail ,
+            MeetingId: _id,
+            From: $scope.loggedEmail,
             To: $scope.openConversation.ReceiverEmail,
-            Subject : iMeetingData.selectedData.Subject,
-            SkillName :  $scope.openConversation.skill,
+            Subject: iMeetingData.selectedData.Subject,
+            SkillName: $scope.openConversation.skill,
             //TopicName
-            Status    :iMeetingData.selectedData.UserId,
-            StartDate : _startDate,
-            EndDate   : _endDate,
-            TimeSlot  : "Coaching",
-            IsVerified : false
+            Status: iMeetingData.selectedData.UserId,
+            StartDate: _startDate,
+            EndDate: _endDate,
+            TimeSlot: "Coaching",
+            IsVerified: false
         }
         console.error(_Obj);
         serverCommunication.saveMeeting({
@@ -566,7 +566,7 @@
                 console.log('In failureCallBack');
 
             }
-        });      
+        });
     };
     $scope.autoSyncCounter = null;
     $scope.stopFight = function () {
@@ -591,7 +591,7 @@
         }, iTime);
     };
     $scope.conversationLoading = function () {
-      //  console.error('ge');
+        //  console.error('ge');
         $scope.conversationListNew = [];
         serverCommunication.getConversation({
             loggedEmail: $scope.loggedEmail,
@@ -625,18 +625,18 @@
                 $scope.loadingMiddleObject = { showLoading: false, loadingMessage: 'Loading' };
                 if ($scope.conversationListNew && $scope.conversationListNew.length > 0) {
                     if ($scope.openConversation) {
-                        for (var i = 0 ; i < $scope.conversationListNew.length ; i++) {                           
+                        for (var i = 0 ; i < $scope.conversationListNew.length ; i++) {
                             if ($scope.conversationListNew[i].ConversationParentId == $scope.openConversation.ConversationParentId) {
                                 $scope.conversationLoad(i, $scope.conversationListNew[i]);
                                 break;
-                            }                           
+                            }
                         }
-                      
+
                     } else {
                         $scope.conversationLoad(0, $scope.conversationListNew[0]);
                     }
 
-                    
+
                 }
             },
             failureCallBack: function (iObj) {
@@ -680,26 +680,26 @@
         else
             return monthArray;
     };
-   var _setPrefixDate = function (iDate) {
+    var _setPrefixDate = function (iDate) {
         var _prefix = 'th';
-        var _fun = function(iVal) {
-            switch(iVal) {
-                  case "1": _prefix = 'st'; break;
-                  case "2": _prefix = 'nd'; break;
-                  case "3": _prefix = 'rd'; break;
-                  }
+        var _fun = function (iVal) {
+            switch (iVal) {
+                case "1": _prefix = 'st'; break;
+                case "2": _prefix = 'nd'; break;
+                case "3": _prefix = 'rd'; break;
+            }
         };
-        if(iDate[1]) {
-                if (Number(iDate) >= 11 && Number(iDate) <= 20) {
+        if (iDate[1]) {
+            if (Number(iDate) >= 11 && Number(iDate) <= 20) {
 
-                } else {
-                                  _fun(iDate[1]);
-                }
-                } else {
-                      _fun(iDate[0]);
-                }
+            } else {
+                _fun(iDate[1]);
+            }
+        } else {
+            _fun(iDate[0]);
+        }
         return _prefix;
-   };
+    };
     var _displayDate = function (iDate) {
         var _getDate = {};
         var _date = new Date(iDate);
@@ -723,7 +723,7 @@
             //senderEmail: SenderEmail,
             //receiverEmail: ReceiverEmail,
             ConversationType: "Coaching",
-           
+
             ParentId: $scope.openConversation.ConversationParentId,
             successCallBack: function (iObj) {
                 console.debug('In successCallBack', iObj);
@@ -732,7 +732,7 @@
                 function ISODate(d) {
                     return d;
                 }
-            //    console.debug(ParentId)
+                //    console.debug(ParentId)
                 $scope.MailRecords = []
                 var MailRecords = eval('(' + iObj.data.Result + ')');
                 console.error(MailRecords);
@@ -759,43 +759,133 @@
                         _flag = true;
                         for (var j = 0; j < $scope.timeSlots.length; j++) {
                             if (dd.displayDate == $scope.timeSlots[j].displayDate) {
-                               _flag = false;
+                                _flag = false;
+                            }
                         }
-                    }
                         if (_flag == true) {
-                            $scope.timeSlots.push({ displayDate: dd.displayDate, compareDate: dd.UpdateDate
-                        });
+                            $scope.timeSlots.push({ displayDate: dd.displayDate, compareDate: dd.UpdateDate});
                             _flag = false;
-                    }
+                        }
                     } else {
                         _flag = false;
-                        $scope.timeSlots.push({ displayDate: dd.displayDate, compareDate: dd.UpdateDate
-                    });
-                }
+                        $scope.timeSlots.push({ displayDate: dd.displayDate, compareDate: dd.UpdateDate});
+                    }
                     $scope.MailRecords.push(angular.copy(dd));
                 });
-                $scope.timeSlots.sort(function(a, b) {
+                $scope.timeSlots.sort(function (a, b) {
                     a = new Date(a.compareDate);
                     b = new Date(b.compareDate);
-                    return a -b;
+                    return a - b;
                 });
                 $scope.MailRecords.sort(function (a, b) {
                     a = new Date(a.UpdateDate);
                     b = new Date(b.UpdateDate);
                     return a - b;
                 });
+                $scope.feedbackDisplayIcon = [
+                     { Name: 'P', replaceNameI: 'Pre Session FeedBack I', replaceNameU: 'Pre Session FeedBack', selected: false, activate: true, style: { 'border': '1px solid', 'overflow': 'hidden', 'color': '#9400D3', 'transition': 'all 1s ease', 'transform': 'scale(1)', 'width': '100%', 'height': '100%' } },
+                     { Name: 'G', replaceNameI: 'Click to Give 1st FeedBack', replaceNameU: 'Click to Give 1st FeedBack', selected: false, activate: true, style: { 'border': '1px solid', 'overflow': 'hidden', 'color': 'red', 'transition': 'all 1s ease', 'transform': 'scale(1)', 'width': '100%', 'height': '100%' } },
+                     { Name: 'C', replaceNameI: 'Close Session Feedback', replaceNameU: 'Close Session Feedback', selected: false, activate: true, style: { 'border': '1px solid', 'overflow': 'hidden', 'color': 'brown', 'transition': 'all 1s ease', 'transform': 'scale(1)', 'width': '100%', 'height': '100%' } },
+                ];
+                $scope.closeEx();
                 $scope.loadingMessageObject = { showLoading: false, loadingMessage: 'Loading' };
                 //  console.error('ssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss')
                 _setScrollPosition();
-               
-                
+
+
             },
             failureCallBack: function (iObj) {
                 console.debug('In failureCallBack', iObj);
             }
         });
     };
+    $scope.closeEx = function (iEvent) {
+        if (iEvent) iEvent.stopPropagation();
+        for (var k = 0 ; k < $scope.feedbackDisplayIcon.length ; k++)
+            $scope.feedbackDisplayIcon[k].style['width'] = '100%';
+        $scope.expandIndex = -1;
+        var _obj = {
+            iHeight: 27,
+            iCol: 8,
+            row: 1,
+            iArray: $scope.feedbackDisplayIcon
+        };
+        $scope.selectedMode = '';
+        msIsotopeFunc.prototype.genericHeightChange(_obj);
+    }
 
+    $scope.selectedMode = '';
+    $scope.openFeedBackFormOnAction = function (iObj) {
+        //  $scope.feedbackDisplayIcon[iIndex].activate = true;
+
+        //$scope.feedbackDisplayIcon[iIndex].style = { 'border': '1px solid ' + _colorArray[iIndex], 'color': _colorArray[iIndex], 'transition': 'all 1s ease', 'transform': 'scale(1)', 'width': '100%', 'height': '100%' };
+        //   $scope.feedbackDisplayIcon[iIndex].style['transform'] = 'scale(1.1)';
+       // console.error(iObj)
+        if (iObj.event) iObj.event.stopPropagation();
+        if ($scope.feedbackDisplayIcon[iObj.index].activate) {
+            $scope.feedbackDisplayIcon[iObj.index].activate = true;
+            $scope.selectedMode = iObj.mode;
+            switch (iObj.icon.Name) {
+                case 'P': $scope.askFeedBackFunc(3); break;
+                case 'C': $scope.askFeedBackFunc(true); break;
+                case 'G':;
+                case '1':;
+                case '2':;
+                case '3':;
+                case '4':;
+                case '5':;
+                case '6': $scope.askFeedBackFunc(false); break;
+            }
+            //$scope.askFeedBackFunc(false);
+            //if (iIcon.Name == 'G') {
+            //    $scope.feedbackDisplayIcon = [
+            //        { Name: 'P', replaceNameI: 'Pre Session FeedBack I', replaceNameU: 'Pre Session FeedBack', selected: false, activate: true, style: { 'border': '1px solid', 'overflow': 'hidden', 'color': '#9400D3', 'transition': 'all 1s ease', 'transform': 'scale(1)', 'width': '100%', 'height': '100%' } },
+            //        { Name: '1', replaceNameI: '1st FeedBack I', replaceNameU: '1st FeedBack', selected: false, activate: false, style: { 'border': '1px solid', 'overflow': 'hidden', 'color': '#4B0082', 'transition': 'all 1s ease', 'transform': 'scale(1)', 'width': '100%', 'height': '100%' } },
+            //        { Name: '2', replaceNameI: '2nd FeedBack I', replaceNameU: '2nd FeedBack', selected: false, activate: false, style: { 'border': '1px solid', 'overflow': 'hidden', 'color': '#0000FF', 'transition': 'all 1s ease', 'transform': 'scale(1)', 'width': '100%', 'height': '100%' } },
+            //        { Name: '3', replaceNameI: '3rd FeedBack I', replaceNameU: '3rd FeedBack', selected: false, activate: false, style: { 'border': '1px solid', 'overflow': 'hidden', 'color': '#00FF00', 'transition': 'all 1s ease', 'transform': 'scale(1)', 'width': '100%', 'height': '100%' } },
+            //        { Name: '4', replaceNameI: '4th FeedBack I', replaceNameU: '4th FeedBack', selected: false, activate: false, style: { 'border': '1px solid', 'overflow': 'hidden', 'color': '#FFFF00', 'transition': 'all 1s ease', 'transform': 'scale(1)', 'width': '100%', 'height': '100%' } },
+            //        { Name: '5', replaceNameI: '5th FeedBack I', replaceNameU: '5th FeedBack', selected: false, activate: false, style: { 'border': '1px solid', 'overflow': 'hidden', 'color': '#FF7F00', 'transition': 'all 1s ease', 'transform': 'scale(1)', 'width': '100%', 'height': '100%' } },
+            //        { Name: '6', replaceNameI: '6th FeedBack I', replaceNameU: '6th FeedBack', selected: false, activate: false, style: { 'border': '1px solid', 'overflow': 'hidden', 'color': '#FF0000', 'transition': 'all 1s ease', 'transform': 'scale(1)', 'width': '100%', 'height': '100%' } },
+            //   //  { Name: 'G', selected: false, activate: true, style: { 'overflow': 'hidden', 'color': '#FF0000', 'transition': 'all 1s ease', 'transform': 'scale(0)', 'width': '100%', 'height': '100%' } },
+            //        { Name: 'C', replaceNameI: 'Close Session Feedback', replaceNameU: 'Close Session Feedback', replaceName: 'Close Session', selected: false, activate: true, style: { 'border': '1px solid', 'overflow': 'hidden', 'color': 'brown', 'transition': 'all 1s ease', 'transform': 'scale(1)', 'width': '100%', 'height': '100%' } },
+            //    ];
+            //    $scope.closeEx();
+            //}
+        }
+
+    };
+    $scope.expandInboxFlag = false;
+    $scope.loadExpandModeInbox = function () {
+        $scope.expandInboxFlag = true;
+    };
+    var _colorArray = ['#9400D3', '#4B0082', '#0000FF', '#00FF00', '#FFFF00', '#FF7F00', '#FF0000', 'brown'];
+    $scope.cliked = -1
+    $scope.expandIndex = -1;
+    $scope.iconCLicked = function (iEvent, iIndex, iIcon) {
+        //console.error(iIcon, iIndex);
+        if (iEvent) iEvent.stopPropagation();
+        $scope.expandIndex = iIndex;
+        var _tempHeight = document.getElementById('monthlycontroller').getBoundingClientRect().height;
+        $scope.expandDay = iIcon;
+        //_dayWeekMonthView.expandIndex = iIndex;
+        var _object = {
+            iHeight: 30,
+            index: iIndex,
+            iWidth: 100 / 8,
+            TotalColumns: 8,
+            column: 8,
+            row: 1,
+            array: $scope.feedbackDisplayIcon
+        };
+        msIsotopeFunc.prototype.expandForFloat(_object);
+        console.error($scope.feedbackDisplayIcon[iIndex].styleObj);
+        $scope.feedbackDisplayIcon[iIndex].styleObj['background'] = 'white';
+        $scope.feedbackDisplayIcon[iIndex].styleObj['z-index'] = '1';
+        $scope.feedbackDisplayIcon[iIndex].style['width'] = '50%';
+        //background: white;
+        for (var k = 0 ; k < $scope.feedbackDisplayIcon.length ; k++)
+            $scope.feedbackDisplayIcon[k].styleObj['margin-top'] = '0';
+    };
 
     $scope.conversationRequest = function () {
 
@@ -843,13 +933,13 @@
         };
         $rootScope.$broadcast("refreshStateHomeView", {
             type: 'displayAlert',
-           // subType: 'Meeting',
+            // subType: 'Meeting',
             data: _displayAlert
         });
     };
 
-        $scope.sendCoachingRequest = function (isVerified, iCoach) {
-       
+    $scope.sendCoachingRequest = function (isVerified, iCoach) {
+
         $scope.conversation.SenderEmail = $scope.loggedEmail;
         var _emailId = iCoach.EmailAddress;
         if (_emailId != "")
@@ -860,7 +950,7 @@
         $scope.conversation.Content = null;
         $scope.conversation.SendOrReceive = "Send";
         $scope.conversation.IsVerified = isVerified;
-        $scope.conversation.isRead = false;       
+        $scope.conversation.isRead = false;
         if ($scope.conversation.SenderEmail === "" || $scope.conversation.ReceiverEmail === "")
             return false;
         var _id = $rootScope.loggedDetail.EmailAddress + ":CON#" + (Date.now()) + (Math.floor((Math.random() * 10) + 1));
@@ -888,10 +978,10 @@
                     _displayAlertMeesage({ message: iObj.data.Message, formatType: '1' });
                 } else {
                     $scope.loadingMiddleObject = { showLoading: false, loadingMessage: 'Loading' };
-                    
+
                     _displayAlertMeesage({ message: "Your request has been sent", formatType: '1' });
                 }
-                 iCoach.loadingSearchCoach = { showLoading: false, loadingMessage: 'Loading' };
+                iCoach.loadingSearchCoach = { showLoading: false, loadingMessage: 'Loading' };
 
             },
             failureCallBack: function () {
@@ -899,54 +989,54 @@
                 console.debug('In failureCallBack');
             }
         });
-       
+
     };
     var _setScrollPosition = function () {
         setTimeout(function () {
             var msgDiv = document.getElementById("messagebox");
             msgDiv.scrollTop = msgDiv.scrollHeight;
         }, 400);
-       
+
     }
 
     var _resizeDateFilter = function(iChatMessage) {
-           if ($scope.timeSlots.length > 0) {
-                    _flag = true;
-                    for (var j = 0; j < $scope.timeSlots.length; j++) {
-                         console.error(iChatMessage.displayDate, $scope.timeSlots[j].displayDate)
-                        if (iChatMessage.displayDate == $scope.timeSlots[j].displayDate) {
-                            _flag = false;
-                        }
-                    }
-                    if (_flag == true) {
-                        $scope.timeSlots.push({ displayDate: iChatMessage.displayDate, compareDate: iChatMessage.UpdateDate });
-                        _flag = false;
-                    }
-            }else {
+        if ($scope.timeSlots.length > 0) {
+            _flag = true;
+            for (var j = 0; j < $scope.timeSlots.length; j++) {
+                console.error(iChatMessage.displayDate, $scope.timeSlots[j].displayDate)
+                if (iChatMessage.displayDate == $scope.timeSlots[j].displayDate) {
                     _flag = false;
-                    $scope.timeSlots.push({ displayDate: iChatMessage.displayDate, compareDate: iChatMessage.UpdateDate });
-            }            
+                }
+            }
+            if (_flag == true) {
+                $scope.timeSlots.push({ displayDate: iChatMessage.displayDate, compareDate: iChatMessage.UpdateDate });
+                _flag = false;
+            }
+        }else {
+            _flag = false;
+            $scope.timeSlots.push({ displayDate: iChatMessage.displayDate, compareDate: iChatMessage.UpdateDate });
+        }
     };
 
     var _sortArray = function() {
-         $scope.timeSlots.sort(function (a, b) {
-                    a = new Date(a.compareDate);
-                    b = new Date(b.compareDate);
-                    return a - b;
-         });
-         $scope.MailRecords.sort(function (a, b) {
-                    a = new Date(a.UpdateDate);
-                    b = new Date(b.UpdateDate);
-                    return a -b;
-         });
+        $scope.timeSlots.sort(function (a, b) {
+            a = new Date(a.compareDate);
+            b = new Date(b.compareDate);
+            return a - b;
+        });
+        $scope.MailRecords.sort(function (a, b) {
+            a = new Date(a.UpdateDate);
+            b = new Date(b.UpdateDate);
+            return a -  b;
+        });
     };
     $scope.conversationClick = function (iEvent, iClickFlag) {
         iEvent && iEvent.stopPropagation();
         console.error(arguments)
         if ($scope.conversation.Message.trim() == '') {
             return;
-    }
-    if ((iEvent && iEvent.keyCode == 13) || iClickFlag) {
+        }
+        if ((iEvent && iEvent.keyCode == 13) || iClickFlag) {
             if ($scope.openConversation) {
 
                 $scope.conversation.ReceiverEmail = $scope.openConversation.ReceiverEmail;
@@ -959,53 +1049,53 @@
                 var _parentId = $scope.openConversation.ConversationParentId ? $scope.openConversation.ConversationParentId : $scope.openConversation.ConversationId;
                 if ($scope.conversation.SenderEmail === "" || $scope.conversation.ReceiverEmail === "")
                     return false;
-                var _id = _parentId + ":CHT#" +(Date.now()) +(Math.floor((Math.random() * 10) +1));
+                var _id = _parentId + ":CHT#" +(Date.now()) +(Math.floor((Math.random() * 10) + 1));
                 var _object = {
-                        Content: $scope.conversation.Content,
-                        SenderEmail: $scope.conversation.SenderEmail,
-                        ReceiverEmail: $scope.conversation.ReceiverEmail,
-                        SendOrReceive: $scope.conversation.SendOrReceive,
-                        IsVerified: $scope.conversation.IsVerified,
+                    Content: $scope.conversation.Content,
+                    SenderEmail: $scope.conversation.SenderEmail,
+                    ReceiverEmail: $scope.conversation.ReceiverEmail,
+                    SendOrReceive: $scope.conversation.SendOrReceive,
+                    IsVerified: $scope.conversation.IsVerified,
                     ConversationClosed: false,
-                        ConversationType: "Coaching",
-                        Skill: $scope.openConversation.skill,
+                    ConversationType: "Coaching",
+                    Skill: $scope.openConversation.skill,
                     //"8/7/2016"
                     // CreateDate: (new Date().getMonth()+1)+"/"+new Date().getDate()+
                     //UpdateDate: "2016-08-07T11:58:13.867Z"
                     ConversationId: _id,
-                        ConversationParentId: _parentId,
-            }
+                    ConversationParentId: _parentId,
+                }
 
                 //   console.debug(_object);
                 var _replica = angular.copy(_object)
                 _replica.UpdateDate = new Date();
-               // _replica.UpdateDate.setDate(6);
+                // _replica.UpdateDate.setDate(6);
                 _replica.UpdateDate = _replica.UpdateDate.toJSON();
                 _replica.displayDate = _displayDate(_replica.UpdateDate);
-                 _resizeDateFilter(_replica);
-                 $scope.MailRecords.push(_replica);
+                _resizeDateFilter(_replica);
+                $scope.MailRecords.push(_replica);
                 _sortArray();
                 //  console.error($scope.MailRecords)
                 //  return;
                 _setScrollPosition();
                 serverCommunication.sendConversation({
                     loggedUserDetails: _object,
-                        ReceiverName: $scope.ReceiverName,
-                        Role: 'Coachee',
-                        successCallBack: function () {
+                    ReceiverName: $scope.ReceiverName,
+                    Role: 'Coachee',
+                    successCallBack: function () {
                         $scope.conversation.Message = "";
 
                         console.debug('In successCallBack');
 
-                },
-                        failureCallBack: function () {
+                    },
+                    failureCallBack: function () {
 
                         $scope.conversation.Message = "";
 
                         console.debug('In failureCallBack');
-                }
-            });
-    }
+                    }
+                });
+            }
         }
     };
 

@@ -50,7 +50,9 @@ msIsotopeFunc.prototype.getModValue = function (iIndex, iChangeIndexTo) {
             marginLeft: _that.floatStyleLeft + '%',
             marginTop: _that.floatStyleTop + 'px',
             height: _height + 'px',
-            width: _weidth + '%'
+            width: _weidth + '%',
+            transition: 'all 0.7s ease'
+
         };
     }
     else {
@@ -59,7 +61,8 @@ msIsotopeFunc.prototype.getModValue = function (iIndex, iChangeIndexTo) {
             marginLeft: _that.floatStyleLeft + '%',
             marginTop: _that.floatStyleTop + 'px',
             height: _variableHeight + 'px',
-            width: _variableWidth + '%'
+            width: _variableWidth + '%',
+            transition :'all 0.7s ease'
         };
 
     }

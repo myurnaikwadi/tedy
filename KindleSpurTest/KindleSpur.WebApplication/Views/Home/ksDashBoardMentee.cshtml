@@ -29,7 +29,7 @@
                 <div class="hideCoacheeProfile" ng-class="{ showCoacheeProfileClass : showMenteeProfile == true }">
                     <profile-Page ng-if="showMenteeProfile && userInfo" load-Outside ="true" user-Info="userInfo" close-Popup="closeProfilePic()" edit-Required="false"></profile-Page>
                 </div>
-                <ddiv class="ctsParent">                    
+                <ddiv class="ctsParent">
                     <div class="ctsParentMain">
                         <div class="ctsParentMainPanel">
                             <div class="ctsCategoryHeading">
@@ -199,7 +199,7 @@
                             <div class="conversationList" ng-class="{ highlightedSelctedConversationParent  : conversation.selectedConversation == true}" ng-click="conversationLoad($index,conversation)" ng-repeat="conversation in conversationListNew">
                                 <div class="conversationParentDiv">
                                     <div class="imageConversation">
-                                        <img ng-class="{ activeSessionCLass :  conversation.sessionClosed == false, closeSessionClass :  conversation.sessionClosed == true }" style="margin:auto auto;width: 40px;height: 40px;border-radius: 50%;"  ng-src="{{ conversation.Photo ? conversation.Photo : '/Images/icons/If no Profile photo.png' }}"  />
+                                        <img ng-class="{ activeSessionCLass :  conversation.sessionClosed == false, closeSessionClass :  conversation.sessionClosed == true }" style="margin:auto auto;width: 40px;height: 40px;border-radius: 50%;"  ng-src="{{ conversation.Photo ? conversation.Photo : '/Images/icons/If no Profile photo.png' }}" />
                                     </div>
                                     <div class="nameMessageConversation">
                                         <div style="margin:auto auto;float:left; width: 100%;height: 55%;">
@@ -221,23 +221,35 @@
                                         <span style="color:#797979;z-index: 1;" class="chatHalfContainerSpan">
                                             <h5 class="fontClass">{{ReceiverName}}</h5>
                                         </span>
-                                        <img ng-click="loadMyFeedback =! loadMyFeedback;" class="mod model-1" style="width: 35px;height: 35px;" title="Feedback" src="~/Images/communication/preSessionIcon.png" />
-                                        <div style="margin: auto;margin-right: 0;width: 29px;z-index: 1;">
-                                           
-                                            <img ng-click="askFeedBackFunc(3)" class="mod model-1" style="width: 35px;height: 35px;" title="Pre Session Feedback" src="~/Images/communication/preSessionIcon.png" />
-                                            <section style="position: absolute;top: 4px;width: 44px;z-index: 1;background: transparent;" class="mod model-1">
-                                                <div class="spinner"></div>
-                                            </section>
-                                        </div>
-                                        <span style="z-index: 1;margin: auto;height: 35px;margin-left: 0;margin-right: 0;" ng-hide="openConversation.sessionClosed" class="chatHalfContainerSpanNxt">
-                                            <h6 class="fontClass genericPointerClass" style="margin: auto;" ng-click="askFeedBackFunc(true)">Close Session</h6>
-                                            <h6 class="fontClass genericPointerClass" style="margin: auto;" ng-click="askFeedBackFunc(false)">Give Feedback</h6>
-                                        </span>
+                                        @*<img ng-click="loadMyFeedback =! loadMyFeedback;" class="mod model-1" style="width: 35px;height: 35px;" title="Feedback" src="~/Images/communication/preSessionIcon.png" />*@
+                                        @*<div style="margin: auto;margin-right: 0;width: 29px;z-index: 1;">
+
+                                                <img ng-click="askFeedBackFunc(3)" class="mod model-1" style="width: 35px;height: 35px;" title="Pre Session Feedback" src="~/Images/communication/preSessionIcon.png" />
+                                                <section style="position: absolute;top: 4px;width: 44px;z-index: 1;background: transparent;" class="mod model-1">
+                                                    <div class="spinner"></div>
+                                                </section>
+                                            </div>
+                                            <span style="z-index: 1;margin: auto;height: 35px;margin-left: 0;margin-right: 0;" ng-hide="openConversation.sessionClosed" class="chatHalfContainerSpanNxt">
+                                                <h6 class="fontClass genericPointerClass" style="margin: auto;" ng-click="askFeedBackFunc(true)">Close Session</h6>
+                                                <h6 class="fontClass genericPointerClass" style="margin: auto;" ng-click="askFeedBackFunc(false)">Give Feedback</h6>
+                                            </span>*@
                                     </div>
                                     <div class="chatHalfContainer">
                                         <span class="chatHalfContainerSpanNxt" style="z-index: 1;align-items: center;">
                                             <h6 class="fontClass" style="padding: 0px;">{{openConversation.skill}}</h6>
                                         </span>
+                                    </div>
+                                    <div class="feedBackCommunicationStrip" ng-class="{ widthClassDIvide : cliked > -1 }" ng-init="clickedElement = 0;">
+                                        <div id="monthlycontroller" ng-style="iconCLickedParent" style="float:left;width:100%;height:100%;position:relative;" ng-init="clickedElement = 0;">
+                                            <div ng-style="icon.styleObj" style="position: absolute;" class="" ng-repeat="icon in feedbackDisplayIcon">
+                                                <h6 title="To see details please click on it" ng-if="expandIndex != $index" ng-style="icon.style" ng-class="{ lowOpacityClass : icon.activate == false , activeOpacityClass : icon.activate == true}" ng-if="icon.replaceName == null" class="fontClass genericPointerClass feedBackPanelButton" ng-click="iconCLicked($event,$index,icon)">{{icon.Name}}</h6>
+                                                <div style="float:left;width:100%;height:100%;">
+                                                    <h6 title="Double click on it to go back to option" ng-if="expandIndex == $index" ng-class="{ highlightedGrayColorClass  : selectedMode == 'self',lowOpacityClass : selectedMode != 'self' , activeOpacityClass : selectedMode == 'self' }" sglclick="openFeedBackFormOnAction({ event : $event, index : $index, icon : icon , mode : 'self' })" ng-style="icon.style" ng-dblclick="closeEx($event)" style="font-size:10px;" class="fontClass genericPointerClass feedBackPanelButton">{{ icon.replaceNameI}}</h6>
+                                                    <h6 title="Double click on it to go back to option" ng-if="expandIndex == $index" ng-class="{ highlightedGrayColorClass  : selectedMode == 'other',lowOpacityClass : selectedMode != 'other' , activeOpacityClass : selectedMode == 'other' }" sglclick="openFeedBackFormOnAction({ event : $event, index : $index, icon : icon , mode : 'other' })" ng-style="icon.style" ng-dblclick="closeEx($event)" style="font-size:10px;" class="fontClass genericPointerClass feedBackPanelButton">{{ icon.replaceNameU}}</h6>
+                                                </div>
+
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -306,7 +318,7 @@
                                 </div>
                             </div>
                         </div>
-                       
+
                     </div>
                 </div>
                 <div class="modal fade" id="myMeetingSchedular" tabindex="-1" role="dialog" aria-labelledby="myMeetingSchedularLabel">

@@ -131,96 +131,96 @@
 
     $scope.getCoachRecord = function () {
         serverCommunication.getCoachingWithStatus({
-              role: 'mentor',
-              loggedUserDetails: $rootScope.loggedDetail,
-              successCallBack: function (iObj) {
-                   console.error('In successCallBack', iObj);
-                   $scope.coachingStatusArray = iObj.data.Filters;
-                   $scope.loadingMiddleObject = { showLoading: false, loadingMessage: 'Loading' };
-             },
-             failureCallBack: function (iObj) {
-                 console.error('In failureCallBack', iObj);
-             }
+            role: 'mentor',
+            loggedUserDetails: $rootScope.loggedDetail,
+            successCallBack: function (iObj) {
+                console.error('In successCallBack', iObj);
+                $scope.coachingStatusArray = iObj.data.Filters;
+                $scope.loadingMiddleObject = { showLoading: false, loadingMessage: 'Loading' };
+            },
+            failureCallBack: function (iObj) {
+                console.error('In failureCallBack', iObj);
+            }
         });
-      };
-      $scope.feedBack = {}
-      $scope.feedBack.askFeedback = false;
-      $scope.feedBack.formValue = '0';
-      $scope.feedBack.icloseFeedBack = false
-      $scope.askFeedBackFunc = function (icloseFeedBack) {
-          $scope.feedBack.askFeedback = true;
-          $scope.feedBack.formValue = '1';
-          $scope.feedBack.icloseFeedBack = icloseFeedBack;         
-          $scope.feedBackloaded = { showLoad: false };
-          if (icloseFeedBack == 3) {
-              $scope.feedBack.feedBackType = 'preSession';
-              $scope.array = [].concat(angular.copy(_presessionQuestion));
-          } else {
-              if (icloseFeedBack) {
-                  $scope.feedBack.feedBackType = 'closeSession';
-                  $scope.array = [].concat(angular.copy(_arrayCloseSession));
-              } else {
-                  $scope.feedBack.feedBackType = 'feedBack';
-                  $scope.array = [].concat(angular.copy(_array));
-              }
-          }
-      }
+    };
+    $scope.feedBack = {}
+    $scope.feedBack.askFeedback = false;
+    $scope.feedBack.formValue = '0';
+    $scope.feedBack.icloseFeedBack = false
+    $scope.askFeedBackFunc = function (icloseFeedBack) {
+        $scope.feedBack.askFeedback = true;
+        $scope.feedBack.formValue = '1';
+        $scope.feedBack.icloseFeedBack = icloseFeedBack;
+        $scope.feedBackloaded = { showLoad: false };
+        if (icloseFeedBack == 3) {
+            $scope.feedBack.feedBackType = 'preSession';
+            $scope.array = [].concat(angular.copy(_presessionQuestion));
+        } else {
+            if (icloseFeedBack) {
+                $scope.feedBack.feedBackType = 'closeSession';
+                $scope.array = [].concat(angular.copy(_arrayCloseSession));
+            } else {
+                $scope.feedBack.feedBackType = 'feedBack';
+                $scope.array = [].concat(angular.copy(_array));
+            }
+        }
+    }
 
-      var _array = [
-          { name: 'What do you appreciate the most in your interactions with the mentee ? ', actionValue: '', type: 'textArea', showLoad: false },
-          { name: 'Is the coachee/mentee able to grasp the ideas discussed?', actionValue: '1', type: 'rating', showLoad: false },
-          { name: 'What are the Strong Qualities of the Mentee/ Coachee ?', actionValue: '', type: 'textArea', showLoad: false },
-          { name: 'What are the areas where the Mentee needs to Improve ? ', actionValue: '', type: 'textArea', showLoad: false },
-          { name: 'Are there any critical areas where Mentee/ Coachee needs serious and urgent help/ support ?', actionValue: '', type: 'textArea', showLoad: false },
-          { name: 'Do you believe that the Mentee will be Successful in the targeted areas after the Mentoring is complete ?', actionValue: '', type: 'radio', showLoad: false },
-          { name: 'Was it worth your time, energy and interest ?', type: 'radio', showLoad: false, actionValue: '', },
-          { name: 'Rate the session', sessionRating: true, type: 'rating', showLoad: false, actionValue: '', },
-      ];
-      var _arrayCloseSession = [
-          { name: 'Was the mentee/coachee receptive and well prepared for the sessions.', actionValue: '', type: 'radio', showLoad: false },
-          { name: 'Do you believe the mentee/coachee has accomplished the objectives.', actionValue: '1', type: 'radio', showLoad: false },
-          { name: 'Did this program enrich you as an individual?', actionValue: '', type: 'radio', showLoad: false },
-          { name: 'How did you know about KindleSpur ?', actionValue: '', type: 'radio', showLoad: false },
-          { name: 'Would you like to refer anyone to try KindleSpur ?', actionValue: '', type: 'radio', showLoad: false },
-          { name: 'Would you take Mentoring/ Coaching again at KindleSpur (for another Objective/ Goal) ?', actionValue: '', type: 'radio', showLoad: false },
-          { name: 'Overall rating for Mentee/ coachee.', type: 'rating', showLoad: false, actionValue: '', },
-          { name: ' Overall rating for KindleSpur.', sessionRating: true, type: 'rating', showLoad: false, actionValue: '', },
-      ];
-      var _presessionQuestion = [
-        { name: 'The broad level areas that will get covered under these sessions', actionValue: '', type: 'textArea', showLoad: false },
-        { name: 'Knowledge areas you would like the recipient to aware of before the session', actionValue: '', type: 'textArea', showLoad: false },
-        { name: 'Your preferred time and mode of communication', actionValue: '', type: 'checkBoxTime', showLoad: false },
-        { name: 'Five attributes that you would like your coachee/ mentee to know about you', actionValue: '', type: 'textArea', showLoad: false },
-      ];
+    var _array = [
+        { name: 'What do you appreciate the most in your interactions with the mentee ? ', actionValue: '', type: 'textArea', showLoad: false },
+        { name: 'Is the coachee/mentee able to grasp the ideas discussed?', actionValue: '1', type: 'rating', showLoad: false },
+        { name: 'What are the Strong Qualities of the Mentee/ Coachee ?', actionValue: '', type: 'textArea', showLoad: false },
+        { name: 'What are the areas where the Mentee needs to Improve ? ', actionValue: '', type: 'textArea', showLoad: false },
+        { name: 'Are there any critical areas where Mentee/ Coachee needs serious and urgent help/ support ?', actionValue: '', type: 'textArea', showLoad: false },
+        { name: 'Do you believe that the Mentee will be Successful in the targeted areas after the Mentoring is complete ?', actionValue: '', type: 'radio', showLoad: false },
+        { name: 'Was it worth your time, energy and interest ?', type: 'radio', showLoad: false, actionValue: '', },
+        { name: 'Rate the session', sessionRating: true, type: 'rating', showLoad: false, actionValue: '', },
+    ];
+    var _arrayCloseSession = [
+        { name: 'Was the mentee/coachee receptive and well prepared for the sessions.', actionValue: '', type: 'radio', showLoad: false },
+        { name: 'Do you believe the mentee/coachee has accomplished the objectives.', actionValue: '1', type: 'radio', showLoad: false },
+        { name: 'Did this program enrich you as an individual?', actionValue: '', type: 'radio', showLoad: false },
+        { name: 'How did you know about KindleSpur ?', actionValue: '', type: 'radio', showLoad: false },
+        { name: 'Would you like to refer anyone to try KindleSpur ?', actionValue: '', type: 'radio', showLoad: false },
+        { name: 'Would you take Mentoring/ Coaching again at KindleSpur (for another Objective/ Goal) ?', actionValue: '', type: 'radio', showLoad: false },
+        { name: 'Overall rating for Mentee/ coachee.', type: 'rating', showLoad: false, actionValue: '', },
+        { name: ' Overall rating for KindleSpur.', sessionRating: true, type: 'rating', showLoad: false, actionValue: '', },
+    ];
+    var _presessionQuestion = [
+      { name: 'The broad level areas that will get covered under these sessions', actionValue: '', type: 'textArea', showLoad: false },
+      { name: 'Knowledge areas you would like the recipient to aware of before the session', actionValue: '', type: 'textArea', showLoad: false },
+      { name: 'Your preferred time and mode of communication', actionValue: '', type: 'checkBoxTime', showLoad: false },
+      { name: 'Five attributes that you would like your coachee/ mentee to know about you', actionValue: '', type: 'textArea', showLoad: false },
+    ];
 
-      $scope.feedBack.closeFeedBackPopup = function () {
-          $scope.feedBack.askFeedback = false;
-          $scope.feedBack.formValue = '1';
-          $scope.feedBack.icloseFeedBack = false;
-      };
+    $scope.feedBack.closeFeedBackPopup = function () {
+        $scope.feedBack.askFeedback = false;
+        $scope.feedBack.formValue = '1';
+        $scope.feedBack.icloseFeedBack = false;
+    };
 
 
-      $scope.redeemPointsClick = function () {
+    $scope.redeemPointsClick = function () {
 
-          $scope.feedBack.closeFeedBackPopup();
-          $scope.menuClick(6);
-      };
+        $scope.feedBack.closeFeedBackPopup();
+        $scope.menuClick(6);
+    };
 
-      $scope.feedBackSave = function () {
-          //alert('')
-          $scope.menuClick(6);
-      };
-      $scope.closeCallBack = function () {
-          //  alert('closeCallBack')
+    $scope.feedBackSave = function () {
+        //alert('')
+        $scope.menuClick(6);
+    };
+    $scope.closeCallBack = function () {
+        //  alert('closeCallBack')
 
-          $scope.feedBack.closeFeedBackPopup()
-      };
+        $scope.feedBack.closeFeedBackPopup()
+    };
 
     $scope.feedCategoryArray = [];
     $scope.getRssFeedData = function () {
         //feedback
-      //  $scope.feedCategoryArray = [];
-        serverCommunication.getMyMentorSelection({  
+        //  $scope.feedCategoryArray = [];
+        serverCommunication.getMyMentorSelection({
             successCallBack: function (iObj) {
                 console.error('In getMySelection', iObj);
                 _category = {
@@ -652,6 +652,12 @@
                     b = new Date(b.UpdateDate);
                     return a - b;
                 });
+                $scope.feedbackDisplayIcon = [
+                    { Name: 'P', replaceNameI: 'Pre Session FeedBack I', replaceNameU: 'Pre Session FeedBack', selected: false, activate: true, style: { 'border': '1px solid', 'overflow': 'hidden', 'color': '#9400D3', 'transition': 'all 1s ease', 'transform': 'scale(1)', 'width': '100%', 'height': '100%' } },
+                    { Name: 'G', replaceNameI: 'Click to Give 1st FeedBack', replaceNameU: 'Click to Give 1st FeedBack', selected: false, activate: true, style: { 'border': '1px solid', 'overflow': 'hidden', 'color': 'red', 'transition': 'all 1s ease', 'transform': 'scale(1)', 'width': '100%', 'height': '100%' } },
+                    { Name: 'C', replaceNameI: 'Close Session Feedback', replaceNameU: 'Close Session Feedback', selected: false, activate: true, style: { 'border': '1px solid', 'overflow': 'hidden', 'color': 'brown', 'transition': 'all 1s ease', 'transform': 'scale(1)', 'width': '100%', 'height': '100%' } },
+                ];
+                $scope.closeEx();
                 $scope.loadingMessageObject = { showLoading: false, loadingMessage: 'Loading' };
                 //  console.error('ssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss')
                 _setScrollPosition();
@@ -662,7 +668,93 @@
             }
         });
     };
+    $scope.closeEx = function (iEvent) {
+        if (iEvent) iEvent.stopPropagation();
+        for (var k = 0 ; k < $scope.feedbackDisplayIcon.length ; k++)
+            $scope.feedbackDisplayIcon[k].style['width'] = '100%';
+        $scope.expandIndex = -1;
+        var _obj = {
+            iHeight: 27,
+            iCol: 8,
+            row: 1,
+            iArray: $scope.feedbackDisplayIcon
+        };
+        $scope.selectedMode = '';
+        msIsotopeFunc.prototype.genericHeightChange(_obj);
+    }
 
+    $scope.selectedMode = '';
+    $scope.openFeedBackFormOnAction = function (iObj) {
+        //  $scope.feedbackDisplayIcon[iIndex].activate = true;
+
+        //$scope.feedbackDisplayIcon[iIndex].style = { 'border': '1px solid ' + _colorArray[iIndex], 'color': _colorArray[iIndex], 'transition': 'all 1s ease', 'transform': 'scale(1)', 'width': '100%', 'height': '100%' };
+        //   $scope.feedbackDisplayIcon[iIndex].style['transform'] = 'scale(1.1)';
+        console.error(iObj)
+        if (iObj.event) iObj.event.stopPropagation();
+        if ($scope.feedbackDisplayIcon[iObj.index].activate) {
+            $scope.feedbackDisplayIcon[iObj.index].activate = true;
+            $scope.selectedMode = iObj.mode;
+            switch (iObj.icon.Name) {
+                case 'P': $scope.askFeedBackFunc(3); break;
+                case 'C': $scope.askFeedBackFunc(true); break;
+                case 'G':;
+                case '1':;
+                case '2':;
+                case '3':;
+                case '4':;
+                case '5':;
+                case '6': $scope.askFeedBackFunc(false); break;
+            }
+            //$scope.askFeedBackFunc(false);
+            //if (iIcon.Name == 'G') {
+            //    $scope.feedbackDisplayIcon = [
+            //        { Name: 'P', replaceNameI: 'Pre Session FeedBack I', replaceNameU: 'Pre Session FeedBack', selected: false, activate: true, style: { 'border': '1px solid', 'overflow': 'hidden', 'color': '#9400D3', 'transition': 'all 1s ease', 'transform': 'scale(1)', 'width': '100%', 'height': '100%' } },
+            //        { Name: '1', replaceNameI: '1st FeedBack I', replaceNameU: '1st FeedBack', selected: false, activate: false, style: { 'border': '1px solid', 'overflow': 'hidden', 'color': '#4B0082', 'transition': 'all 1s ease', 'transform': 'scale(1)', 'width': '100%', 'height': '100%' } },
+            //        { Name: '2', replaceNameI: '2nd FeedBack I', replaceNameU: '2nd FeedBack', selected: false, activate: false, style: { 'border': '1px solid', 'overflow': 'hidden', 'color': '#0000FF', 'transition': 'all 1s ease', 'transform': 'scale(1)', 'width': '100%', 'height': '100%' } },
+            //        { Name: '3', replaceNameI: '3rd FeedBack I', replaceNameU: '3rd FeedBack', selected: false, activate: false, style: { 'border': '1px solid', 'overflow': 'hidden', 'color': '#00FF00', 'transition': 'all 1s ease', 'transform': 'scale(1)', 'width': '100%', 'height': '100%' } },
+            //        { Name: '4', replaceNameI: '4th FeedBack I', replaceNameU: '4th FeedBack', selected: false, activate: false, style: { 'border': '1px solid', 'overflow': 'hidden', 'color': '#FFFF00', 'transition': 'all 1s ease', 'transform': 'scale(1)', 'width': '100%', 'height': '100%' } },
+            //        { Name: '5', replaceNameI: '5th FeedBack I', replaceNameU: '5th FeedBack', selected: false, activate: false, style: { 'border': '1px solid', 'overflow': 'hidden', 'color': '#FF7F00', 'transition': 'all 1s ease', 'transform': 'scale(1)', 'width': '100%', 'height': '100%' } },
+            //        { Name: '6', replaceNameI: '6th FeedBack I', replaceNameU: '6th FeedBack', selected: false, activate: false, style: { 'border': '1px solid', 'overflow': 'hidden', 'color': '#FF0000', 'transition': 'all 1s ease', 'transform': 'scale(1)', 'width': '100%', 'height': '100%' } },
+            //   //  { Name: 'G', selected: false, activate: true, style: { 'overflow': 'hidden', 'color': '#FF0000', 'transition': 'all 1s ease', 'transform': 'scale(0)', 'width': '100%', 'height': '100%' } },
+            //        { Name: 'C', replaceNameI: 'Close Session Feedback', replaceNameU: 'Close Session Feedback', replaceName: 'Close Session', selected: false, activate: true, style: { 'border': '1px solid', 'overflow': 'hidden', 'color': 'brown', 'transition': 'all 1s ease', 'transform': 'scale(1)', 'width': '100%', 'height': '100%' } },
+            //    ];
+            //    $scope.closeEx();
+            //}
+        }
+
+    };
+    $scope.expandInboxFlag = false;
+    $scope.loadExpandModeInbox = function () {
+        $scope.expandInboxFlag = true;
+    };
+    var _colorArray = ['#9400D3', '#4B0082', '#0000FF', '#00FF00', '#FFFF00', '#FF7F00', '#FF0000', 'brown'];
+    $scope.cliked = -1
+    $scope.expandIndex = -1;
+    $scope.iconCLicked = function (iEvent, iIndex, iIcon) {
+        console.error(iIcon, iIndex);
+        if (iEvent) iEvent.stopPropagation();
+        $scope.expandIndex = iIndex;
+        var _tempHeight = document.getElementById('monthlycontroller').getBoundingClientRect().height;
+        $scope.expandDay = iIcon;
+        //_dayWeekMonthView.expandIndex = iIndex;
+        var _object = {
+            iHeight: 30,
+            index: iIndex,
+            iWidth: 100 / 8,
+            TotalColumns: 8,
+            column: 8,
+            row: 1,
+            array: $scope.feedbackDisplayIcon
+        };
+        msIsotopeFunc.prototype.expandForFloat(_object);
+        console.error($scope.feedbackDisplayIcon[iIndex].styleObj);
+        $scope.feedbackDisplayIcon[iIndex].styleObj['background'] = 'white';
+        $scope.feedbackDisplayIcon[iIndex].styleObj['z-index'] = '1';
+        $scope.feedbackDisplayIcon[iIndex].style['width'] = '50%';
+        //background: white;
+        for (var k = 0 ; k < $scope.feedbackDisplayIcon.length ; k++)
+            $scope.feedbackDisplayIcon[k].styleObj['margin-top'] = '0';
+    };
 
     $scope.conversationRequest = function () {
         console.error('Conversation Request Call');
@@ -715,7 +807,7 @@
         if ($scope.timeSlots.length > 0) {
             _flag = true;
             for (var j = 0; j < $scope.timeSlots.length; j++) {
-               
+
                 if (iChatMessage.displayDate == $scope.timeSlots[j].displayDate) {
                     _flag = false;
                 }
@@ -724,7 +816,7 @@
                 $scope.timeSlots.push({ displayDate: iChatMessage.displayDate, compareDate: iChatMessage.UpdateDate });
                 _flag = false;
             }
-        }else{
+        } else {
             _flag = false;
             $scope.timeSlots.push({ displayDate: iChatMessage.displayDate, compareDate: iChatMessage.UpdateDate });
         }
@@ -775,7 +867,7 @@
                 // console.debug(_object);
                 var _replica = angular.copy(_object);
                 _replica.UpdateDate = new Date();
-              //  _replica.UpdateDate.setDate(6);
+                //  _replica.UpdateDate.setDate(6);
                 _replica.UpdateDate = _replica.UpdateDate.toJSON();
                 _replica.displayDate = _displayDate(_replica.UpdateDate);
                 _resizeDateFilter(_replica);

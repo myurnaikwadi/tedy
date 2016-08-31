@@ -674,6 +674,15 @@
                     b = new Date(b.UpdateDate);
                     return a - b;
                 });
+               
+                $scope.feedbackDisplayIcon = [
+                     { Name: 'P', replaceNameI: 'Pre Session FeedBack I', replaceNameU: 'Pre Session FeedBack', selected: false, activate: true, style: { 'border': '1px solid', 'overflow': 'hidden', 'color': '#9400D3', 'transition': 'all 1s ease', 'transform': 'scale(1)', 'width': '100%', 'height': '100%' } },
+                     { Name: 'G', replaceNameI: 'Click to Give 1st FeedBack', replaceNameU: 'Click to Give 1st FeedBack', selected: false, activate: true, style: { 'border': '1px solid', 'overflow': 'hidden', 'color': 'red', 'transition': 'all 1s ease', 'transform': 'scale(1)', 'width': '100%', 'height': '100%' } },
+                     { Name: 'C', replaceNameI: 'Close Session Feedback', replaceNameU: 'Close Session Feedback', selected: false, activate: true, style: { 'border': '1px solid', 'overflow': 'hidden', 'color': 'brown', 'transition': 'all 1s ease', 'transform': 'scale(1)', 'width': '100%', 'height': '100%' } },
+                ];
+                $scope.closeEx();
+                
+                // $scope.feedbackDisplayIcon.push({ Name: 'P', style: {} });
                 $scope.loadingMessageObject = { showLoading: false, loadingMessage: 'Loading' };
                 //  console.error('ssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss')
                 _setScrollPosition();
@@ -685,6 +694,93 @@
         });
     };
 
+    $scope.closeEx = function (iEvent) {
+        if (iEvent) iEvent.stopPropagation();
+        for (var k = 0 ; k < $scope.feedbackDisplayIcon.length ; k++)
+            $scope.feedbackDisplayIcon[k].style['width'] = '100%';
+        $scope.expandIndex = -1;
+        var _obj = {
+            iHeight: 27,
+            iCol: 8,
+            row: 1,
+            iArray: $scope.feedbackDisplayIcon
+        };
+        $scope.selectedMode = '';
+        msIsotopeFunc.prototype.genericHeightChange(_obj);
+    }
+
+    $scope.selectedMode = '';
+    $scope.openFeedBackFormOnAction = function (iObj) {
+      //  $scope.feedbackDisplayIcon[iIndex].activate = true;
+        
+        //$scope.feedbackDisplayIcon[iIndex].style = { 'border': '1px solid ' + _colorArray[iIndex], 'color': _colorArray[iIndex], 'transition': 'all 1s ease', 'transform': 'scale(1)', 'width': '100%', 'height': '100%' };
+        //   $scope.feedbackDisplayIcon[iIndex].style['transform'] = 'scale(1.1)';
+       // console.error(iObj)
+        if (iObj.event) iObj.event.stopPropagation();
+        if ($scope.feedbackDisplayIcon[iObj.index].activate) {
+            $scope.feedbackDisplayIcon[iObj.index].activate = true;
+            $scope.selectedMode = iObj.mode;
+            switch (iObj.icon.Name) {
+                case 'P': $scope.askFeedBackFunc(3); break;
+                case 'C': $scope.askFeedBackFunc(true); break;
+                case 'G': ;
+                case '1': ;
+                case '2': ;
+                case '3': ;
+                case '4': ;
+                case '5': ;
+                case '6': $scope.askFeedBackFunc(false); break;
+            }
+            //$scope.askFeedBackFunc(false);
+            //if (iIcon.Name == 'G') {
+            //    $scope.feedbackDisplayIcon = [
+            //        { Name: 'P', replaceNameI: 'Pre Session FeedBack I', replaceNameU: 'Pre Session FeedBack', selected: false, activate: true, style: { 'border': '1px solid', 'overflow': 'hidden', 'color': '#9400D3', 'transition': 'all 1s ease', 'transform': 'scale(1)', 'width': '100%', 'height': '100%' } },
+            //        { Name: '1', replaceNameI: '1st FeedBack I', replaceNameU: '1st FeedBack', selected: false, activate: false, style: { 'border': '1px solid', 'overflow': 'hidden', 'color': '#4B0082', 'transition': 'all 1s ease', 'transform': 'scale(1)', 'width': '100%', 'height': '100%' } },
+            //        { Name: '2', replaceNameI: '2nd FeedBack I', replaceNameU: '2nd FeedBack', selected: false, activate: false, style: { 'border': '1px solid', 'overflow': 'hidden', 'color': '#0000FF', 'transition': 'all 1s ease', 'transform': 'scale(1)', 'width': '100%', 'height': '100%' } },
+            //        { Name: '3', replaceNameI: '3rd FeedBack I', replaceNameU: '3rd FeedBack', selected: false, activate: false, style: { 'border': '1px solid', 'overflow': 'hidden', 'color': '#00FF00', 'transition': 'all 1s ease', 'transform': 'scale(1)', 'width': '100%', 'height': '100%' } },
+            //        { Name: '4', replaceNameI: '4th FeedBack I', replaceNameU: '4th FeedBack', selected: false, activate: false, style: { 'border': '1px solid', 'overflow': 'hidden', 'color': '#FFFF00', 'transition': 'all 1s ease', 'transform': 'scale(1)', 'width': '100%', 'height': '100%' } },
+            //        { Name: '5', replaceNameI: '5th FeedBack I', replaceNameU: '5th FeedBack', selected: false, activate: false, style: { 'border': '1px solid', 'overflow': 'hidden', 'color': '#FF7F00', 'transition': 'all 1s ease', 'transform': 'scale(1)', 'width': '100%', 'height': '100%' } },
+            //        { Name: '6', replaceNameI: '6th FeedBack I', replaceNameU: '6th FeedBack', selected: false, activate: false, style: { 'border': '1px solid', 'overflow': 'hidden', 'color': '#FF0000', 'transition': 'all 1s ease', 'transform': 'scale(1)', 'width': '100%', 'height': '100%' } },
+            //   //  { Name: 'G', selected: false, activate: true, style: { 'overflow': 'hidden', 'color': '#FF0000', 'transition': 'all 1s ease', 'transform': 'scale(0)', 'width': '100%', 'height': '100%' } },
+            //        { Name: 'C', replaceNameI: 'Close Session Feedback', replaceNameU: 'Close Session Feedback', replaceName: 'Close Session', selected: false, activate: true, style: { 'border': '1px solid', 'overflow': 'hidden', 'color': 'brown', 'transition': 'all 1s ease', 'transform': 'scale(1)', 'width': '100%', 'height': '100%' } },
+            //    ];
+            //    $scope.closeEx();
+            //}
+        }
+      
+    };
+    $scope.expandInboxFlag = false;
+    $scope.loadExpandModeInbox = function () {
+        $scope.expandInboxFlag = true;
+    };
+    var _colorArray = ['#9400D3', '#4B0082', '#0000FF', '#00FF00', '#FFFF00', '#FF7F00', '#FF0000', 'brown'];
+    $scope.cliked = -1
+    $scope.expandIndex = -1;
+    $scope.iconCLicked = function (iEvent,iIndex, iIcon) {
+            //console.error(iIcon, iIndex);    
+            if (iEvent) iEvent.stopPropagation();
+            $scope.expandIndex = iIndex;
+            var _tempHeight = document.getElementById('monthlycontroller').getBoundingClientRect().height;
+            $scope.expandDay = iIcon;
+            //_dayWeekMonthView.expandIndex = iIndex;
+            var _object = {
+                iHeight: 30,
+                index: iIndex,
+                iWidth: 100 / 8,
+                TotalColumns: 8,
+                column: 8,
+                row: 1,
+                array: $scope.feedbackDisplayIcon
+            };
+            msIsotopeFunc.prototype.expandForFloat(_object);
+            //console.error($scope.feedbackDisplayIcon[iIndex].styleObj);
+            $scope.feedbackDisplayIcon[iIndex].styleObj['background'] = 'white';
+            $scope.feedbackDisplayIcon[iIndex].styleObj['z-index'] = '1';
+            $scope.feedbackDisplayIcon[iIndex].style['width'] = '50%';
+        //background: white;
+            for (var k = 0 ; k < $scope.feedbackDisplayIcon.length ; k++) 
+                $scope.feedbackDisplayIcon[k].styleObj['margin-top'] = '0';
+    };
 
     $scope.conversationRequest = function () {
         console.error('Conversation Request Call');
