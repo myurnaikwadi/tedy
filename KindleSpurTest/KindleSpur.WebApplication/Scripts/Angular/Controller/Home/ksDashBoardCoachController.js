@@ -1,7 +1,7 @@
 ﻿app.controller('ksDashBoardCoachController', function ($rootScope, $scope, serverCommunication, $stateParams, $interval, $state) {
     console.error($stateParams)
     $scope.passedData = $stateParams;
-    $rootScope.currentModule = 'Coach';
+    $rootScope.currentModule = 'Coach';   
    // $scope.redeemAction = { actionName: "GAME" };
     $scope.navigateToProfile = function () {
         $state.go('home.dashBoard.profile');
@@ -551,6 +551,7 @@
     $scope.openConversation = null;
     $scope.conversationLoad = function (iIndex, iCategory) {
         $scope.loadingMessageObject = { showLoading: true, loadingMessage: 'Loading' };
+        $scope.loadMyFeedback = false;
         for (var i = 0 ; i < $scope.conversationListNew.length ; i++) {
             $scope.conversationListNew[i].selectedConversation = false;
         }
@@ -770,8 +771,10 @@
     $scope.cliked = -1
     $scope.expandIndex = -1;
     $scope.iconCLicked = function (iEvent,iIndex, iIcon) {
-            //console.error(iIcon, iIndex);    
+        //console.error(iIcon, iIndex);          
             if (iEvent) iEvent.stopPropagation();
+              //$scope.loadMyFeedback = true;
+             // return;
             $scope.expandIndex = iIndex;
             var _tempHeight = document.getElementById('monthlycontroller').getBoundingClientRect().height;
             $scope.expandDay = iIcon;

@@ -10,8 +10,8 @@ app.run(function ($rootScope, $timeout, $state) {
             if (window.location.href.indexOf('forgotPassword') > -1) {
 
             }else{
-  		$timeout(function () {
-               	     state.go('login');
+  		        $timeout(function () {
+  		            $state.go('login');
             	});        		
             }
         }           

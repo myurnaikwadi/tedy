@@ -190,6 +190,7 @@
                     <div class="communicationPanel">
                         <cube-Strct ng-show="loadingMessageObject.showLoading" class="cubeParentClass" loading-Object="loadingMessageObject"></cube-Strct>
                         <div ng-hide="loadingMessageObject.showLoading" class="chatParent">
+                            <div class="myFeedBackClass" ng-class="{ loadMyFeedBackClass : loadMyFeedback == true }"></div>
                             <div class="chatHeader">
                                 <div class="chatStrongHeader">
                                     <div class="chatHalfContainer">
