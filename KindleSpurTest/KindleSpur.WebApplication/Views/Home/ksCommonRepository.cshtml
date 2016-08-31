@@ -62,7 +62,7 @@
                                 <input style="float: left;margin: auto;" value="true" ng-model="option.selected" type="checkbox" />
                             </div>
                             <div class="profileImageCoachingStatus">                                
-                                <img src="/Images/icons/61391.png"style="margin: auto; float: left;height: 18px;width: 20px;opacity: 0.4;" />
+                                <img src="/Images/icons/61391.png" ng-click="deleteAttachment({ deleteMultiple : false , type : 'artifact' , deletedObject : option , index : $index })" style="margin: auto; float: left;height: 18px;width: 20px;opacity: 0.4;" />
                             </div>
                         </div>
                         <place-Holder message="No Attachment Uploaded" ng-show="artifactsArray.length == 0" ></place-Holder>
@@ -70,7 +70,7 @@
                     <div style="height:11%;width: 100%;float:left;display: flex;" ng-show="extraParam.AttachMode == false">
                         @*<input class="signupButton fontClass btn btn-default" type="button" value="Share" style="margin: auto;margin-right: 0;padding: 0;width: 115px;" />*@
                         <input class="signupButton fontClass btn btn-default" type="button" value="Upload" ng-click="loadUploadPopup()" style="margin: auto;margin-right: 0;padding: 0;width: 115px;" />
-                        <input class="signupButton fontClass btn btn-default" type="button" value="Delete" style="margin: auto;padding: 0;width: 115px;" />
+                        <input class="signupButton fontClass btn btn-default" ng-click="deleteAttachment({ deleteMultiple : true , type : 'artifact' , deletedObject : null })" type="button" value="Delete" style="margin: auto;padding: 0;width: 115px;" />
                     </div>                   
                 </div>
 
@@ -99,14 +99,14 @@
                                     <input style="float: left;margin: auto;" type="checkbox" />
                                 </div>
                                 <div ng-show="extraParam.deleteIcon == true" class="profileImageCoachingStatus">
-                                    <img src="/Images/icons/61391.png" style="margin: auto; float: left;height: 18px;width: 20px;opacity: 0.4;" />
+                                    <img src="/Images/icons/61391.png" ng-click="deleteAttachment({ deleteMultiple : false , type : 'bookMark' , deletedObject : option , index : $index })" style="margin: auto; float: left;height: 18px;width: 20px;opacity: 0.4;" />
                                 </div>
                             </div>    
                             <place-Holder message="No Bookmark Present" ng-show="bookMarkArray.length == 0"></place-Holder>                        
                         </div>
                         <div style="height:11%;width: 100%;float:left;display: flex;" ng-show="extraParam.AttachMode == false">
                             @*<input class="signupButton fontClass btn btn-default" type="button" value="Share" style="margin: auto;width: 115px;padding: 0;margin-right: 0;" />*@
-                            <input class="signupButton fontClass btn btn-default" type="button" value="Delete" style="margin: auto;width: 115px;padding: 0;" />
+                            <input class="signupButton fontClass btn btn-default" ng-click="deleteAttachment({ deleteMultiple : true , type : 'bookMark' , deletedObject : null })" type="button" value="Delete" style="margin: auto;width: 115px;padding: 0;" />
                         </div>
                     </div>
                 </div>

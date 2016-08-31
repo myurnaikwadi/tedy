@@ -78,6 +78,79 @@
                 });
                
             };
+            //{ deleteMultiple : false , type : 'artifact' , deletedObject : option , index : $index }
+            scope.deleteAttachment = function (iObj) {
+                var _array = [];
+                console.error(iObj);
+                var _selectedData = {};
+                var _deletedArray = [];
+                if (iObj.type == 'artifact') {
+                    var _indexArray = [];
+                    if (iObj.deleteMultiple) {
+                        scope.artifactsArray.some(function (iContain, iIndex) {
+                            console.error(iIndex)
+                            //debugger
+                            //console.error(iContain)
+                            if (iContain.selected) {
+                                _indexArray.push(iIndex);
+                                if (_selectedData['Artifact'])
+                                    _selectedData['Artifact'][iContain.FileName] = iContain;
+                                else {
+                                    _selectedData['Artifact'] = {};
+                                    _selectedData['Artifact'][iContain.FileName] = iContain;
+
+                                }
+                            }
+                        });                       
+                        if (_indexArray.length == 0) {
+                            alert('please Select ')
+                        } else {
+                            _indexArray.sort(function (a, b) { return b - a });
+                            console.error(_indexArray)
+                            for (var k = 0 ; k < _indexArray.length ; k++) {
+                                scope.artifactsArray.splice(_indexArray[k], 1);
+                            }
+                        }
+                      
+                    } else {
+                        _selectedData['Artifact'] = {};
+                        _selectedData['Artifact'][iObj.deletedObject.FileName] = iObj.deletedObject;
+                        scope.artifactsArray.splice(iObj.index, 1);
+                    }
+                } else {
+                    if (iObj.deleteMultiple) {
+                        scope.bookMarkArray.some(function (iContain, iIndex) {
+                            console.error(iIndex)
+                            if (iContain.selected) {
+                                if (iContain.selected) {
+                                    _indexArray.push(iIndex);
+                                    if (_selectedData['bookMark'])
+                                        _selectedData['bookMark'][iContain.FileName] = iContain;
+                                    else {
+                                        _selectedData['bookMark'] = {};
+                                        _selectedData['bookMark'][iContain.FileName] = iContain;
+                                    }
+                                }
+                            }
+                        });
+                        if (_indexArray.length == 0) {
+                            alert('please Select ')
+                        } else {
+                            _indexArray.sort(function (a, b) { return b - a });
+                            console.error(_indexArray)
+                            for (var k = 0 ; k < _indexArray.length ; k++) {
+                                scope.bookMarkArray.splice(_indexArray[k], 1);
+                            }
+                        }
+                        
+                    } else {
+                        _selectedData['bookMark'] = {};
+                        _selectedData['bookMark'][iObj.deletedObject.FileName] = iObj.deletedObject;
+                        scope.bookMarkArray.splice(iObj.index, 1);
+                    }
+                }
+                console.error(_selectedData)
+            };
             scope.triggerUpload = function (iId) {
                 console.error('iId --- ', iId)
                 var obj = {
@@ -131,10 +204,10 @@
                     loggedDetail: _object,
                     successCallBack: function (iObj) {
                         console.error('serverrrrr', iObj)
-                        if (iObj.data.length > 0) {
-                            scope.artifactsArray = iObj.data[0];
-                            scope.bookMarkArray = iObj.data[1];
-                        }
+                        if (iObj.data['Artifacts'])
+                            scope.artifactsArray = iObj.data['Artifacts'];
+                        if (iObj.data['Bookmarks'])
+                            scope.bookMarkArray = iObj.data['Bookmarks'];
                        
                     }, failureCallBack: function (iObj) {
                         console.error('serverrrrr', iObj)

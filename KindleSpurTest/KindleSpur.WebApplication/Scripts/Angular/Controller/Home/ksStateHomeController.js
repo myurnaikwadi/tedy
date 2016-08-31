@@ -63,12 +63,16 @@
         switch (iObj.type) {
             case 'displayAlert': $scope.displayAlert = iObj.data; break;
             case "loadUpperSlider":
-                $scope.uiFlag.loadRepository = true;
+                $scope.uiFlag.loadRepository = iObj.data.closeFlag ? false : true;
+                if (!iObj.data.closeFlag) {
+
+                }
                 $scope.uiFlag.loadModule = iObj.subType;
                 $scope.extraParam = iObj.data;
                 $scope.extraParam.closeCallBack = function () {
                     console.error('sssss')
                     $scope.uiFlag.loadRepository = false;
+                    $scope.uiFlag.loadModule = '';
                 }
                 break;
             case "loadBottomContain": $scope.uiFlag.loadBottomContain = true; break;

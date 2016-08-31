@@ -18,17 +18,18 @@ namespace KindleSpur.WebApplication.Controllers
         public ResourcesController()
         {
             UserId = ((IUser)System.Web.HttpContext.Current.Session["User"]).EmailAddress;
-         //   AddBookMakrs();
-          
+             // AddBookMakrs();
+
         }
         public ActionResult Index()
         {
             return View();
         }
+        [HttpPost]
         public JsonResult getAlllFilesAndBookmarks(User user)
         {
             ConversationRepository cs = new ConversationRepository();
-            List<object> obj = new List<object>();
+            Dictionary<string,object> obj = new Dictionary<string, object>();
             var files = cs.getFiles(user.EmailAddress);
             var bookmark = cs.getFilesBookmarks(user.EmailAddress);
             if (files != null)
@@ -37,7 +38,7 @@ namespace KindleSpur.WebApplication.Controllers
                 foreach (var i in files)
 
                     listfile.Add(i);
-                obj.Add(listfile);
+                obj.Add("Artifacts",listfile);
 
             }
             if (bookmark != null)
@@ -46,7 +47,7 @@ namespace KindleSpur.WebApplication.Controllers
                 foreach (var e in bookmark)
                     listbookmark.Add(e);
 
-                obj.Add(listbookmark);
+                obj.Add("Bookmarks",listbookmark);
             }
 
 
@@ -57,7 +58,7 @@ namespace KindleSpur.WebApplication.Controllers
         public JsonResult UploadFilesForArtiFacts(FileUpload model)
         {
             UserRepository _repo = new UserRepository();
-          
+
 
 
             var filess = Request.Files;
@@ -65,7 +66,7 @@ namespace KindleSpur.WebApplication.Controllers
             if (filess.Count > 0)
             {
                 object[] myfiles = new object[filess.Count];
-               
+
 
                 for (int i = 0; i < filess.Count; i++)
                 {
@@ -99,7 +100,7 @@ namespace KindleSpur.WebApplication.Controllers
             IUser user = _repo.GetUserDetail(((IUser)System.Web.HttpContext.Current.Session["User"]).EmailAddress);
             return Json(user);
         }
-
+        [HttpPost]
         public JsonResult AddBookMakrs(string LinkUrl, string DocumnetName, string tagname)
         {
             //hardcoded value
@@ -112,9 +113,20 @@ namespace KindleSpur.WebApplication.Controllers
 
             return Json(cs.Bookmarks(UserId, DocumnetName, LinkUrl, tagname));
         }
+        [HttpPost]
+        public JsonResult DeketeFiles(List<FileUpload> Obj)
+        {
+            UserRepository user = new UserRepository();
+            return Json(user.DeleteResourceFiles(Obj));
+        }
+        [HttpPost]
+        public JsonResult DeketeBookmarks(List<BookMark> Obj)
+        {
+            UserRepository user = new UserRepository();
+            return Json(user.DeleteBookMarks(Obj));
+        }
 
 
-    
 
     }
 }

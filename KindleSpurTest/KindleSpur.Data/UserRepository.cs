@@ -1002,28 +1002,18 @@ namespace KindleSpur.Data
             //List<Conversation> typeCoaching = _conversationsCollections.AsQueryable<Conversation>().Where<Conversation>(sb => sb.ConversationType == "Coaching" && sb.Content.StartsWith("COACHING REQUEST BY")).ToList();
 
         }
-        public bool DeleteResourceFiles(List<FileUpload> list, List<User> list2)
+
+        public bool DeleteResourceFiles(List<FileUpload> list)
         {
             bool _transactionStatus = false;
             try
             {
-                //var query = _userCollection.AsQueryable<User>().Where(e => e.Files.Select(r => r.Id) == Id).Select(e => e);
-
-                //_userCollection.Remove(query);
-                //var delete = (from c in _userCollection.AsQueryable<User>()
-                //              where c.Id == obId.Id && c.Files.Select(r => r.Id) == Id
-                //              select new object[] { c.Files.Select(r =>new { r.FileName,r.TagName }).ToList() }).ToList();
-                foreach (var e in list2)
+                foreach (var r in list)
                 {
-                    foreach (var r in list)
-                    {
+                    var query = Query.And(Query.EQ("_id", r.Id));
+                    _userCollection.Remove(query);
 
-                        var query = Query.And(Query.EQ("_id", e.Id), Query.EQ("_id", r.Id));
-                        _userCollection.Remove(query);
-
-                    }
                 }
-
                 _transactionStatus = true;
             }
             catch (MongoException ex)
@@ -1031,8 +1021,41 @@ namespace KindleSpur.Data
                 string message = "{ Error : 'Failed at DeleteCoacheeOrMentee().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ";
                 _logCollection.Insert(message);
                 throw new MongoException("Signup failure!!!");
-                //_logCollection.Insert("{ Error : 'Failed at AddNewCoacheeOrMentee().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ");
-                //throw new MongoException("Signup failure!!!");
+            }
+            catch (Exception e)
+            {
+                Exceptionhandle em = new Exceptionhandle();
+                em.Error = "Failed at DeleteCoacheeOrMentee()";
+                em.Log = e.Message.Replace("\r\n", "");
+                var st = new System.Diagnostics.StackTrace(e, true); var frame = st.GetFrame(0);
+                var line = frame.GetFileLineNumber();
+                _logCollection.Insert(em);
+                throw new MongoException("Signup failure!!!");
+            }
+            finally
+            {
+
+            }
+            return _transactionStatus;
+        }
+        public bool DeleteBookMarks(List<BookMark> list)
+        {
+            bool _transactionStatus = false;
+            try
+            {
+                foreach (var r in list)
+                {
+                    var query = Query.And(Query.EQ("_id", r.Id));
+                    _userCollection.Remove(query);
+
+                }
+                _transactionStatus = true;
+            }
+            catch (MongoException ex)
+            {
+                string message = "{ Error : 'Failed at DeleteCoacheeOrMentee().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ";
+                _logCollection.Insert(message);
+                throw new MongoException("Signup failure!!!");
             }
             catch (Exception e)
             {

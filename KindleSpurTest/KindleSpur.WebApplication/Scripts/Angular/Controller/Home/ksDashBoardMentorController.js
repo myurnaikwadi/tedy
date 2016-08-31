@@ -299,7 +299,9 @@
         });
 
     };
-
+    $scope.loadFeedOnNextTab = function (iFeed) {
+        window.open(iFeed.FilePath);
+    };
 
     $scope.objectForResourceTab = { deleteIcon: true, AttachMode: false, headingRequired: true, closeRequired: false, styleUI: { top: { 'height': '7%' }, middle: { 'height': '93%' }, bottom: {} } };
     var _afterAddCallBack = function (iObj) {
@@ -317,11 +319,15 @@
 
         if (iObj.selectedData['Artifact']) {
             for (var _key in iObj.selectedData['Artifact']) {
+                var _idAth = _parentId + ":ATH#" + (Date.now()) + (Math.floor((Math.random() * 10) + 1));
+                iObj.selectedData['Artifact'][_key].FileId = _idAth;
                 _array.push(iObj.selectedData['Artifact'][_key]);
             }
         }
         if (iObj.selectedData['bookMark']) {
             for (var _key in iObj.selectedData['bookMark']) {
+                var _idAth = _parentId + ":ATH#" + (Date.now()) + (Math.floor((Math.random() * 10) + 1));
+                iObj.selectedData['bookMark'][_key].FileId = _idAth;
                 _array.push(iObj.selectedData['bookMark'][_key]);
             }
         }
@@ -329,15 +335,15 @@
         console.error(_array)
         var _object = {
             Content: iObj.message,
-            SenderEmail: $scope.conversation.SenderEmail,
+            SenderEmail: $scope.openConversation.SenderEmail,
             ReceiverEmail: $scope.openConversation.ReceiverEmail,
-            SendOrReceive: $scope.conversation.SendOrReceive,
-            IsVerified: $scope.conversation.IsVerified,
+            SendOrReceive: 'send',
+            IsVerified: true,
             ConversationClosed: false,
             messageType: 'media',
-            messages: _array,
+            FilesURLlink: _array,
             ConversationType: "Coaching",
-            Skill: $scope.conversation.skill,
+            Skill: $scope.openConversation.skill,
             //"8/7/2016"
             // CreateDate: (new Date().getMonth()+1)+"/"+new Date().getDate()+
             //UpdateDate: "2016-08-07T11:58:13.867Z"
@@ -347,6 +353,13 @@
 
         //   console.debug(_object);
         var _replica = angular.copy(_object);
+        if (_replica.SenderEmail == $scope.loggedEmail) {
+            _replica.Name = $rootScope.loggedDetail.FirstName + " " + $rootScope.loggedDetail.LastName;
+            _replica.Photo = $rootScope.loggedDetail.Photo;
+        } else {
+            _replica.Name = $scope.openConversation.FirstName + " " + $scope.openConversation.LastName;
+            _replica.Photo = $scope.openConversation.Photo;
+        }
         _replica.UpdateDate = new Date();
         //  _replica.UpdateDate.setDate(6);
         _replica.UpdateDate = _replica.UpdateDate.toJSON();
@@ -866,6 +879,13 @@
                 }
                 // console.debug(_object);
                 var _replica = angular.copy(_object);
+                if (_replica.SenderEmail == $scope.loggedEmail) {
+                    _replica.Name = $rootScope.loggedDetail.FirstName + " " + $rootScope.loggedDetail.LastName;
+                    _replica.Photo = $rootScope.loggedDetail.Photo;
+                } else {
+                    _replica.Name = $scope.openConversation.FirstName + " " + $scope.openConversation.LastName;
+                    _replica.Photo = $scope.openConversation.Photo;
+                }
                 _replica.UpdateDate = new Date();
                 //  _replica.UpdateDate.setDate(6);
                 _replica.UpdateDate = _replica.UpdateDate.toJSON();
