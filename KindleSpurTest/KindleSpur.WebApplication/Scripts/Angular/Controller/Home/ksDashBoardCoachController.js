@@ -844,6 +844,7 @@
             IsVerified: $scope.conversation.IsVerified,
             ConversationClosed: false,
             ConversationType:"Coaching",
+            IsRejected: isVerfied == false ? true : false,
             Skill: iNotificationDash.skill,           
             ConversationId: _id,
             ConversationParentId: iNotificationDash.ConversationId,

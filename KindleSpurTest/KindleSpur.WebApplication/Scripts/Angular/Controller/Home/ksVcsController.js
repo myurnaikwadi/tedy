@@ -243,7 +243,7 @@ app.directive('myReward', function ($state, serverCommunication, $rootScope) {
             window.ff = $scope;
             $scope.feedBack = {
                 redeemPoint: false,
-                redeemAction: {}
+                redeemAction: { actionName  : 'PSR' }
             }
             $scope.feedBack.redeemPointsClick = function () {
                 $scope.feedBack.closeFeedBackPopup();

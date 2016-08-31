@@ -1025,6 +1025,7 @@
             ConversationClosed: false,
             ConversationType: "Coaching",
             Skill: iNotificationDash.skill,
+            IsRejected: isVerfied == false ? true : false,
             //"8/7/2016"
             // CreateDate: (new Date().getMonth()+1)+"/"+new Date().getDate()+
             //UpdateDate: "2016-08-07T11:58:13.867Z"

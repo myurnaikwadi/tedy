@@ -822,6 +822,7 @@
             ConversationType: "Mentoring",
             Skill: iNotificationDash.skill,
             ConversationId: _id,
+            IsRejected: isVerfied == false ? true : false,
             ConversationParentId: iNotificationDash.ConversationId,
         }
 
