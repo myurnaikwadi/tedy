@@ -116,7 +116,7 @@
                         <div class="ngRepeatDivForStatus " ng-click="showCoacheeProfile = true;showCoacheeProfileStatus(option)" ng-repeat="option in coachingStatusArray">
 
                             <div class="profileImageCoachingStatus">
-                                <img ng-src="{{option.PhotoURL ? option.PhotoURL : '/Images/icons/profile.png' }}" style="margin: auto auto;float: left;height: 35px;width: 35px;" />
+                                <img ng-src="{{option.PhotoURL ? option.PhotoURL : '/Images/icons/If no Profile photo.png' }}" style="margin: auto auto;float: left;height: 35px;width: 35px;" />
                             </div>
                             <div class="profileNameCoachingStatus">
                                 <h5 class="textAlignCoachingStatus fontClass">{{option.FirstName+" "+option.LastName}}</h5>
@@ -129,18 +129,19 @@
                                     <div style="height: 100%; width: {{option.FeedbackCount+'0%'}};background: #F1201B;"></div>
                                 </div>
                             </div>
-                            <div class="statusCoachingStatus">
-                                <h5 class="fontClass" style="color:#A9A9A9;margin: auto auto;float: left;margin-left: 0;">{{option.FeedbackCount == 1 ? "JUST STARTED" : (option.FeedbackCount == 6 || option.FeedbackClosed == true) ? 'SESSION OVER' : 'IN PROGRESS'}}</h5>
-                            </div>
+                           
                             <div class="treeCoachingStatus">
                                 <img ng-src="{{option.TreeURL}}" style="margin: auto auto;float: left;height: 45px;width: 45px;" />
                             </div>
-                            <div class="communicationsCoachingStatus">
+<div class="statusCoachingStatus">
+    <h5 class="fontClass" style="color:#A9A9A9;margin: auto auto;float: left;margin-left: 0;">{{option.FeedbackCount == 1 ? "JUST STARTED" : (option.FeedbackCount == 6 || option.FeedbackClosed == true) ? 'SESSION OVER' : 'IN PROGRESS'}}</h5>
+</div>
+                            @*<div class="communicationsCoachingStatus">
                                 <img src="" class="iconOnStatusArray" style="visibility:hidden;">
                                 <img src="~/Images/icons/call.png" class="iconOnStatusArray iconOnStatusArrayss">
                                 <img src="" class="iconOnStatusArray" style="visibility:hidden;">
 
-                            </div>
+                            </div>*@
                         </div>
 
                     </div>
