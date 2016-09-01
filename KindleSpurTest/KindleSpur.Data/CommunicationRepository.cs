@@ -70,6 +70,16 @@ namespace KindleSpur.Data
           return  _communicationCollection.FindAllAs<ICommunication>().Select(x=>x.CommunicationId).ToList();                
         }
 
+        public List<ICommunication> GetAllOpenedRequest(string Receiver)
+        {
+            return _communicationCollection.FindAs<ICommunication>(Query.And(Query.EQ("Requests.Verified", false), Query.EQ("Requests.Rejected", false), Query.EQ("To", Receiver))).ToList();
+        }
+
+        public List<ICommunication> GetAllOpenedCommunicationForUser(string Sender)
+        {
+            return _communicationCollection.FindAllAs<ICommunication>().Where(x=>x.SenderName == Sender).ToList();
+        }
+
         public Boolean UpsertRequest(IRequest request)
         {
             bool _transactionStatus = false;
@@ -103,5 +113,18 @@ namespace KindleSpur.Data
             }
             return _transactionStatus;
         }
+
+        public ICommunication UpdateCommunicationRequestStatus(string CommunicationId, bool flag)
+        {
+            ICommunication communication = _communicationCollection.FindOneAs<ICommunication>(Query.EQ("CommunicationId", CommunicationId));
+            if (flag)
+                communication.Requests.Verified = flag;
+            else
+                communication.Requests.Rejected = flag;
+
+            _communicationCollection.Save(communication);
+
+            return communication;
         }
+    }
 }

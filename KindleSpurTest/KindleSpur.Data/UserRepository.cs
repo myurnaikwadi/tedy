@@ -1073,5 +1073,30 @@ namespace KindleSpur.Data
             }
             return _transactionStatus;
         }
+
+        public string GetFullName(string EmailAddress)
+        {            
+            try
+            {
+                var result = _userCollection.FindOneAs<IUser>(Query.EQ("EmailAddress", EmailAddress));
+                return result.FirstName + " " + result.LastName;
+            }
+            catch (MongoException ex)
+            {
+                string message = "{ Error : 'Failed at GetFullName().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ";
+                _logCollection.Insert(message);
+                throw new MongoException("GetFullName() failure!!!");
+            }
+            catch (Exception e)
+            {
+                Exceptionhandle em = new Exceptionhandle();
+                em.Error = "Failed at GetFullName()";
+                em.Log = e.Message.Replace("\r\n", "");
+                var st = new System.Diagnostics.StackTrace(e, true); var frame = st.GetFrame(0);
+                var line = frame.GetFileLineNumber();
+                _logCollection.Insert(em);
+                throw new MongoException("GetFullName() failure!!!");
+            }
+        }
     }
 }

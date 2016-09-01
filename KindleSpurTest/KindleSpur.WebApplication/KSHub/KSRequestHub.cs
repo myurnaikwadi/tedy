@@ -12,30 +12,65 @@ namespace KindleSpur.WebApplication.KSHub
 {
     public class KSRequestHub : Hub 
     {
-        static ConcurrentDictionary<string, string> dic = new ConcurrentDictionary<string, string>();
-        public void Notify(ICommunication Communication)
+        static readonly HashSet<string> Rooms = new HashSet<string>();
+        static List<ICommunication> loggedInUsers = new List<ICommunication>();
+
+        public string Login()
         {
-            if (dic.ContainsKey(Communication.From))
+            string UserId = ((IUser)System.Web.HttpContext.Current.Session["User"]).EmailAddress;
+            CommunicationRepository repo = new CommunicationRepository();
+            var communications = repo.GetAllOpenedRequest(UserId);
+            Clients.Caller.rooms(Rooms.ToArray());
+            Clients.Caller.setInitial(Context.ConnectionId, UserId);
+            loggedInUsers.AddRange(communications);
+            var oSerializer = new System.Web.Script.Serialization.JavaScriptSerializer();
+            string sJSON = oSerializer.Serialize(loggedInUsers);            
+            Clients.Caller.getPendingRequests(sJSON);
+            foreach (var item in communications)
             {
-                Clients.Caller.differentName();
+                Clients.Others.newOnlineUser(item);
+
+            }
+            return UserId;
+        }
+
+
+        public void SendNewRequest(string sender, string receiver,string skillOrTopic, Models.Interfaces.IRequest request)
+        {
+            string fromUserId = Context.ConnectionId;
+            UserRepository userRepo = new UserRepository();
+            CommunicationRepository communicationRepo = new CommunicationRepository();
+            ICommunication communication = new Communication();
+            communication.CommunicationId = request.RequestId;
+            communication.From = sender;
+            communication.To = receiver;
+            communication.SenderName = userRepo.GetFullName(sender);
+            communication.ReceiverName = userRepo.GetFullName(receiver);
+            if (request.Type.ToLower() == "coaching")
+            {
+                request.Content = string.Format("You have Coaching invite for {0} from {1}", skillOrTopic, sender);
+                communication.SkillName = skillOrTopic;
             }
             else
             {
-                dic.TryAdd(Communication.From, Communication.CommunicationId);
-                dic.TryAdd(Communication.To, Communication.CommunicationId);
-                foreach (KeyValuePair<String, String> entry in dic)
-                {
-                    Clients.Caller.online(entry.Key);
-                }
-                Clients.Others.enters(Communication.From);
+                request.Content = string.Format("You have Mentoring invite for {0} from {1}", skillOrTopic, sender);
+                communication.TopicName = skillOrTopic;
             }
+            if (communication.Requests == null) communication.Requests =(Models.Interfaces.IRequest)new Models.Request();
+            communication.Requests = request;
+            loggedInUsers.Add(communication);
+                Clients.Client(receiver).sendRequest(communication);
+                Clients.Caller.sendRequest(communication);
+            communicationRepo.AddCommunication(communication);
+            
         }
 
-        public void SendToSpecific(ICommunication Communication, IChat chat)
+        public void UpdateRequest(Models.Interfaces.IRequest request,Boolean flag)
         {
-            // Call the broadcastMessage method to update clients.
-            Clients.Caller.broadcastMessage(chat.SenderName, chat.Message);
-            Clients.Client(dic[chat.ReceiverName]).broadcastMessage(chat.SenderName, chat.Message);
+            CommunicationRepository communicationRepo = new CommunicationRepository();
+            ICommunication communication = communicationRepo.UpdateCommunicationRequestStatus(request.RequestId, flag);
+            if (!flag) loggedInUsers.Remove(communication);
+            Clients.Client(communication.To).RequestStatus(communication);
         }
 
     }

@@ -29,6 +29,8 @@ namespace KindleSpur.Models.Interfaces
         string RequestId { get; set; }
         string Type { get; set; }   
         string Content { get; set; }
+        Boolean Verified { get; set; }
+        Boolean Rejected { get; set; }
 
     }
  

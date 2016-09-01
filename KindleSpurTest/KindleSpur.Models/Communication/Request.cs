@@ -12,5 +12,7 @@ namespace KindleSpur.Models.Communication
         public string Content { get; set; }
         public string RequestId { get; set; }
         public string Type { get; set; }
+        public Boolean Verified { get; set; }
+        public Boolean Rejected { get; set; }
     }
 }
