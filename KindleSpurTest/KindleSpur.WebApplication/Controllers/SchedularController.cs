@@ -1,4 +1,5 @@
 ﻿using KindleSpur.Data;
+using KindleSpur.Models;
 using KindleSpur.Models.Communication;
 using KindleSpur.Models.Interfaces;
 using KindleSpur.WebApplication.MessageHelper;
@@ -76,15 +77,31 @@ namespace KindleSpur.WebApplication.Controllers
 
             MeetingRepository _repo = new MeetingRepository();
             List<IUser> result = new List<IUser>();
+            List<UserMeetings> result1 = new List<UserMeetings>();
 
             UserRepository ur = new UserRepository();
+            //foreach (var value in _repo.GetAllMeetingRequest(((IUser)Session["User"]).EmailAddress))
+            //{
+            //    var recevicedetails = ur.GetUserDetail(value["From"].ToString());
+            //    result.Add((IUser)recevicedetails);
+                
+            //}
+
             foreach (var value in _repo.GetAllMeetingRequest(((IUser)Session["User"]).EmailAddress))
             {
-                var recevicedetails = ur.GetUserDetail(value["From"].ToString());
-                result.Add((IUser)recevicedetails);
+
+                var recevicedetails = ur.GetUserDetail(value.From);
+                UserMeetings u = new UserMeetings();
+                u.Meeting = value;
+                u.FirstName = recevicedetails.FirstName;
+                u.LastName = recevicedetails.LastName;
+                u.Photo = recevicedetails.Photo;
+                u.EmailAddress = recevicedetails.EmailAddress;
+                result1.Add(u);
+                //result.Add((IUser)recevicedetails);
             }
 
-            return Json(new { Result = result }, JsonRequestBehavior.AllowGet);
+            return Json(new { Result = result1 }, JsonRequestBehavior.AllowGet);
         }
         [HttpPost]
         public bool MeetingSchedularUpdate(string MeetingId, bool flag)

@@ -83,17 +83,22 @@ namespace KindleSpur.Data
             return true;
         }
 
-        public List<BsonDocument> GetAllMeetingRequest(string userId)
+        public List<Meeting> GetAllMeetingRequest(string userId)
         {
             List<BsonDocument> _categories = new List<BsonDocument>();
+            List<Meeting> _categories1 = new List<Meeting>();
 
             try
             {
                 var _query = Query.And(Query<Meeting>.EQ(p => p.IsVerified, false),  Query<Meeting>.EQ(p => p.To, userId));
                 //var _query = Query.And(Query<Meeting>.EQ(p => p.IsVerified, false), Query<Meeting>.EQ(p => p.From, userId), Query<Meeting>.EQ(p => p.To, userId));
-                _categories = _meetingCollection.FindAs<BsonDocument>(
-                    _query
-                    ).ToList();
+                //_categories = _meetingCollection.FindAs<BsonDocument>(
+                //    _query
+                //    ).ToList();
+
+                _categories1 = _meetingCollection.FindAs<Meeting>(
+                   _query
+                   ).ToList();
 
             }
             catch (MongoException ex)
@@ -118,7 +123,8 @@ namespace KindleSpur.Data
 
             }
 
-            return _categories;
+            // return _categories;
+            return _categories1;
         }
 
         public bool UpdateMeetingStatus(string From, string To, bool isVerified, string Role)
