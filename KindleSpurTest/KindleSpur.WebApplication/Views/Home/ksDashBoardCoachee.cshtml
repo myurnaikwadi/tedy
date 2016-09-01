@@ -164,7 +164,7 @@
                 <div class="homeLabelInChat" style="height:7%;border-bottom:1px solid lightgray;">
                     <h5 class="fontClass" style="font-size: 16px;margin-left:1%;">COMMUNICATION</h5>
                 </div>
-                <place-Holder message="No Conversations" ng-show="conversationListNew.length == 0"></place-Holder><place-Holder message="No Conversations" ng-show="conversationListNew.length == 0"></place-Holder>
+                <place-Holder message="No Conversations" ng-show="conversationListNew.length == 0"></place-Holder>
                 <div class="communicationMainPanel" ng-hide="conversationListNew.length == 0">
                     <div ng-if='feedBack.askFeedback' class="feedbackPanel" style="height: 75%;">
                         <feedback-Page role="Coachee" feedback-Type="feedBack.feedBackType" question="array" feedback-Closed="feedBack.icloseFeedBack" conv-Object="openConversation" submit-Feedback="feedBackSave()" close-Callback="closeCallBack()"></feedback-Page>
@@ -191,6 +191,7 @@
                         <cube-Strct ng-show="loadingMessageObject.showLoading" class="cubeParentClass" loading-Object="loadingMessageObject"></cube-Strct>
                         <div ng-hide="loadingMessageObject.showLoading" class="chatParent">
                             <div class="myFeedBackClass" ng-class="{ loadMyFeedBackClass : loadMyFeedback == true }"></div>
+
                             <div class="chatHeader">
                                 <div class="chatStrongHeader">
                                     <div class="chatHalfContainer">
@@ -348,8 +349,9 @@
                     <h5 class="fontClass" style="font-size: 16px;margin-left: 1%;">KNOWLEDGE GARDEN</h5>
                 </div>
                 <div class="" style="float:left;width:100%;height:93%;">
-                    <molecule-Map ng-if="ctsDataForMolecule" cts-Data="ctsDataForMolecule"></molecule-Map>
-                </div>
+                    <place-Holder message="As you haven't received feedback your knowledge tree has not grown" ng-show="coachingStatusArray.length == 0"></place-Holder>
+
+                    <molecule-Map ng-if="ctsDataForMolecule && coachingStatusArray.length >0" cts-Data="ctsDataForMolecule"></molecule-Map>                </div>
             </div>
             @*Select skills - 2*@
             <div class="fullWidthHeightClass" ng-switch-when="2">

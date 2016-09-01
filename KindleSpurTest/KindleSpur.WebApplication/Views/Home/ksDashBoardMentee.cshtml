@@ -176,8 +176,8 @@
                     <h5 class="fontClass" style="font-size: 16px;margin-left: 1%;">KNOWLEDGE GARDEN</h5>
                 </div>
                 <div class="" style="float:left;width:100%;height:93%;">
-                    <place-Holder message="No Conversations" ng-if="!ctsDataForMolecule"></place-Holder>
-                    <molecule-Map ng-if="ctsDataForMolecule" cts-Data="ctsDataForMolecule"></molecule-Map>
+                    <place-Holder message="As you haven't received feedback your knowledge tree has not grown" ng-show="coachingStatusArray.length == 0"></place-Holder>
+                    <molecule-Map ng-if="ctsDataForMolecule &&coachingStatusArray.length > 0" cts-Data="ctsDataForMolecule"></molecule-Map>
                 </div>
             </div>
             @*Add Topics -2 *@
