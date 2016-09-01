@@ -98,7 +98,7 @@ namespace KindleSpur.Data
 
                 _categories1 = _meetingCollection.FindAs<Meeting>(
                    _query
-                   ).ToList();
+                   ).SetFields(Fields.Exclude("_id")).ToList();
 
             }
             catch (MongoException ex)
