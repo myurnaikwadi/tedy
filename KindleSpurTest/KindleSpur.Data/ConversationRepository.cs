@@ -52,6 +52,7 @@ namespace KindleSpur.Data
                     return false;
                 }
                 conversationData.IsRejected = false;
+              
                 _conversationCollection.Insert(conversationData);
 
                 _transactionStatus = true;

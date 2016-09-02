@@ -233,8 +233,11 @@ namespace KindleSpur.WebApplication.Controllers
                     {
                         ResourceFileLink link = new ResourceFileLink();
                         link.Id = ObjectId.GenerateNewId();
+                        link.FileId = Guid.NewGuid().ToString();
                         link.FileName = file.FileName;
                         link.FilePath = file.FilePath;
+                        link.Filesize = file.Filesize;
+                        link.ContentType = file.ContentType;
                         resourcelist.Add(link);
                     }
 

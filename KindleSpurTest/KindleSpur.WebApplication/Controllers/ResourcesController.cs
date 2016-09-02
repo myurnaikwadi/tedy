@@ -62,22 +62,33 @@ namespace KindleSpur.WebApplication.Controllers
 
 
             var filess = Request.Files;
-            Dictionary<int, string> listname = new Dictionary<int, string>();
+            Dictionary<int, List<string>> listname = new Dictionary<int, List<string>>();
             if (filess.Count > 0)
             {
+
                 object[] myfiles = new object[filess.Count];
 
 
                 for (int i = 0; i < filess.Count; i++)
                 {
+                    List<string> filedata = new List<string>();
                     var postfile = filess[i];
                     var fileName = Path.GetFileName(postfile.FileName);
-
-                    listname.Add(i, fileName);
+                    var contenttype = postfile.ContentType;
+                    var Filesize = postfile.ContentLength;
+                    //filedata is must  add 0 th index fileName
+                    filedata.Add(fileName);
+                    //filedata is must  add 1 th index contenttype
+                    filedata.Add(contenttype);
+                    //filedata is must  add 2 th index Filesize
+                    filedata.Add(Filesize.ToString());
+                    //Cannot change Sequence
+                    listname.Add(i, filedata);
                     var ext = Path.GetExtension(postfile.FileName);
 
                     string name = Path.GetFileNameWithoutExtension(fileName.ToString());
                     myfiles[i] = name + ext;
+
 
                     postfile.SaveAs(Path.Combine(Server.MapPath("~/FilePath"), myfiles[i].ToString()));
                 }
@@ -100,6 +111,7 @@ namespace KindleSpur.WebApplication.Controllers
             IUser user = _repo.GetUserDetail(((IUser)System.Web.HttpContext.Current.Session["User"]).EmailAddress);
             return Json(user);
         }
+
         [HttpPost]
         public JsonResult AddBookMakrs(string LinkUrl, string DocumnetName, string tagname)
         {
