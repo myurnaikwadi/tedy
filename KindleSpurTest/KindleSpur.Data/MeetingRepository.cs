@@ -41,10 +41,10 @@ namespace KindleSpur.Data
 
             try
             {
-                var result = _meetingCollection.FindAs<Meeting>(Query.And(Query.EQ("From", meetingSchedularData.From), Query.EQ("To", meetingSchedularData.To))).ToList();
+            //    var result = _meetingCollection.FindAs<Meeting>(Query.And(Query.EQ("From", meetingSchedularData.From), Query.EQ("To", meetingSchedularData.To))).ToList();
 
-                if (result.Count() > 0)
-                    return false;
+          //      if (result.Count() > 0)
+            //        return false;
 
                 _meetingCollection.Insert(meetingSchedularData);
 

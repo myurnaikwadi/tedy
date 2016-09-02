@@ -38,8 +38,10 @@
                        
                     </div>
                 </div>
-                <div class="bottomStripPopup" ng-hide="uploadAttachmentArray.length == 0">                    
+                <div class="bottomStripPopup" ng-hide="uploadAttachmentArray.length == 0">   
+                    <button type="button" style="margin: auto;width: 15%;padding: 0%;margin-right: 7%;height: 22px;font-size: 9px;" ng-click="closePopup()" class="signupButton fontClass btn btn-default">CANCEL</button>                                   
                     <button type="button" style="margin: auto;width: 15%;padding: 0%;margin-right: 7%;height: 22px;font-size: 9px;" ng-click="uploadDataOnServer()" class="signupButton fontClass btn btn-default">UPLOAD</button>                  
+
                 </div>
             </div>
             <div class="podcastsContainer col-md-5 col-sm-12 mosuehover"  style="background-color: #f3f3f3;width: 50%;padding-right: 0;">

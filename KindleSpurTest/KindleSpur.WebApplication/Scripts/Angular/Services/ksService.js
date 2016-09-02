@@ -562,6 +562,35 @@ app.factory('serverCommunication', function ($http) {
             console.error(req)
             $http(req).then(iObj.successCallBack, iObj.failureCallBack);
         },
+        GetAllMeetingPerMonth: function (iObj) {
+            console.error(iObj)
+            //$http.get('/Schedular/GetAllMeetingRequest').then(iObj.successCallBack, iObj.failureCallBack)
+            var req = {
+                method: 'POST',
+                url: '/Schedular/GetAllMeetingPerMonth',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                data: { FromDate: iObj.FromDate, ToDate: iObj.ToDate }
+            }
+            console.error(req)
+            $http(req).then(iObj.successCallBack, iObj.failureCallBack);
+        },
+        MeetingSchedularUpdate: function (iObj) {
+            console.error(iObj)
+            //$http.get('/Schedular/GetAllMeetingRequest').then(iObj.successCallBack, iObj.failureCallBack)
+            var req = {
+                method: 'POST',
+                url: '/Schedular/MeetingSchedularUpdate',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                data: { MeetingId: iObj.MeetingId, flag: iObj.flag }
+            }
+            console.error(req)
+            $http(req).then(iObj.successCallBack, iObj.failureCallBack);
+        },
+        
         saveMeeting: function (iObj) {
             console.error(iObj)
             var req = {

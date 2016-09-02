@@ -11,7 +11,7 @@
     float: left;
     width: 100%;
     height: 100%;
-     background:linear-gradient(to bottom,rgba(0,0,0,0) 0,#2dc3e8 100%);
+    background:linear-gradient(to bottom,rgba(0,0,0,0) 0,#2dc3e8 100%);
 }
 .profileViewParentTop {
     float: left;
@@ -139,9 +139,15 @@
     transition: all 0.7s ease;
 }
 .meetingPersonNameStrc h5{
-        font-size: 15px;
+    font-size: 15px;
     color: black;
     margin: auto;
     text-align: left;
     width: 100%;
+}
+.conflictMeetingAlert{
+    width: 100%;
+    float: left;
+    height: 58%!important;
+    border: 1px solid lightgray;
 }

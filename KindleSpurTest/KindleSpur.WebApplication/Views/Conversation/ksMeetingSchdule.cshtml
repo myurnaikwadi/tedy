@@ -4,7 +4,7 @@
             <h5 class="meetingPersonName fontClass eliipsisClass">SCHEDULE MEETING FOR <b>{{extraParam.openConversation.skill | uppercase}}</b></h5>
             @*<img ng-show="extraParam.closeRequired" ng-click="closePopup()" style="width: 15px;height: 15px;top:5px;right: 5px;bottom: 0;position: absolute;z-index:1;cursor:pointer;" title="Cancel" src="~/Images/cancel.png" />*@
         </div>
-        <div class="schedularBody">
+        <div class="schedularBody" ng-class="{ conflictMeetingAlert :  conflictAlert == true }">
             <div class="meetingSubject">
                 <textarea placeholder="Subject Name" ng-model="MeetingSchedular.Subject" required></textarea>
             </div>
@@ -28,11 +28,11 @@
                 </div>
                 <div style="display: flex;float: left; width: 26%;margin:auto;margin-right: 0">
                     <h5 class="meetingPersonName fontClass genericPointerClass eliipsisClass">FROM</h5>
-                    <input style="margin : auto" type="time" ng-model="MeetingSchedular.TimeFrom" required />
+                    <input style="margin : auto;width: 74px;" type="time" ng-model="MeetingSchedular.TimeFrom" required />
                 </div>
                 <div style="display: flex;float: left; width: 26%;margin:auto;">
                     <h5 class="meetingPersonName fontClass genericPointerClass eliipsisClass">TO</h5>
-                    <input style="margin : auto" type="time" ng-model="MeetingSchedular.TimeTo" required />
+                    <input style="margin : auto;width: 74px;" type="time" ng-model="MeetingSchedular.TimeTo" required />
                 </div>
             </div>
             <div class="meetingCommunicationPanel">
@@ -54,6 +54,9 @@
                     <input style="margin: auto;padding: 5px;" type="text" placeholder="Mention Platform" ng-model="MeetingSchedular.UserId" required />
                 </div>
             </div>
+        </div>
+        <div class="schedularBottom" ng-show="conflictAlert == true">
+            <h5 class="meetingPersonName fontClass eliipsisClass" style="color:red;margin-left:auto;">Conflit Time ! You have already meeting with.</h5>
         </div>
         <div class="schedularBottom">
             <button type="button" style="margin: auto;width: 15%;padding: 0%;margin-right: 7%;height: 22px;font-size: 9px;" ng-click="saveSchedular()" class="signupButton fontClass btn btn-default">SEND</button>

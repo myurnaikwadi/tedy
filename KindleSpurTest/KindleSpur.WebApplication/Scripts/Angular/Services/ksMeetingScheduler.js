@@ -6,7 +6,7 @@
         templateUrl: '/Conversation/ksMeetingSchdule',
         //scope: true,   // optionally create a child scope
         link: function (scope, element, attrs) {
-            scope.MeetingSchedular = {};
+            scope.MeetingSchedular = { Subject: '', PlatformType: '', UserId  : ''};
             scope.MeetingSchedular.MeetingDate = new Date();
             scope.MeetingSchedular.TimeFrom = new Date(scope.MeetingSchedular.MeetingDate);
             scope.MeetingSchedular.TimeTo = new Date(scope.MeetingSchedular.MeetingDate);
@@ -17,9 +17,10 @@
             //scope.MeetingSchedular.TimeTo
             //scope.MeetingSchedular.PlatformType
             //scope.MeetingSchedular.UserId
+            scope.conflictAlert = false;
             scope.saveSchedular = function () {
                 console.error(scope)            
-                
+                //scope.conflictAlert = true;
                 var _startDate = new Date(scope.MeetingSchedular.MeetingDate);
                 _startDate.setHours(new Date(scope.MeetingSchedular.TimeFrom).getHours());
                 _startDate.setMinutes(new Date(scope.MeetingSchedular.TimeFrom).getMinutes());
@@ -28,16 +29,26 @@
                 _endDate.setHours(new Date(scope.MeetingSchedular.TimeTo).getHours());
                 _endDate.setMinutes(new Date(scope.MeetingSchedular.TimeTo).getMinutes());
                 _endDate.setSeconds(0);
-
-                var _endDayTIme = new Date(23,59,59,999);
+                var _endDayTIme = new Date(scope.MeetingSchedular.MeetingDate);
+                _endDayTIme.setHours(23, 59, 59, 999);
+               // var _endDayTIme = new Date(23,59,59,999);
                 if(_startDate < new Date()){
-                    alert('Start Time should be greator than current time');                
+                    alert('Start Time should be greator than current time');
+                    return;
                 } else if (_endDate > _endDayTIme) {
                     alert('Meeting duration should be less than 24 hrs');
+                    return;
                 }
-
-
-                return;
+                
+                if (scope.MeetingSchedular.Subject == '') {
+                    alert('Please enter meeting subject');
+                    return;
+                }
+                if (scope.MeetingSchedular.UserId == '') {
+                    alert('Please specify communication mode');
+                    return;
+                }
+                //return;
 
                 if (scope.extraParam && scope.extraParam.afterAddCallBack)
                     scope.extraParam.afterAddCallBack({ selectedData: scope.MeetingSchedular });

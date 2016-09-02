@@ -1,4 +1,4 @@
-﻿app.controller('ksDashBoardCoacheeController', function ($rootScope, $scope, serverCommunication, $interval, $state) {
+﻿app.controller('ksDashBoardCoacheeController', function ($timeout,$rootScope, $scope, serverCommunication, $interval, $state) {
     window.cocc = $scope;
     $rootScope.currentModule = 'Coachee';
     $scope.loggedEmail = $rootScope.loggedDetail.EmailAddress;
@@ -581,6 +581,45 @@
             }
         });
     };
+
+    $scope.updateMeeting = function (isVerfied, iNotification) {
+
+        //console.error(iNotification)
+        serverCommunication.MeetingSchedularUpdate({
+            MeetingId: iNotification.Meeting.MeetingId,
+            flag: isVerfied,
+            successCallBack: function () {
+                console.debug('In successCallBack');
+                $scope.conversationRequest();
+            },
+            failureCallBack: function (e) {
+                console.debug('In failureCallBack' + e);
+            }
+        });
+
+        return;
+        $scope.conversation.IsVerified = isVerfied;
+
+        var _object = {
+            SenderEmail: SenderEmail,
+            ReceiverEmail: ReceiverEmail,
+            Role: Role,
+            IsVerified: $scope.conversation.IsVerified
+        }
+
+        serverCommunication.updateMeeting({
+            loggedUserDetails: _object,
+            ReceiverName: $scope.ApprovalName,
+            Reason: "",
+            successCallBack: function () {
+                console.debug('In successCallBack');
+                $scope.conversationRequest();
+            },
+            failureCallBack: function (e) {
+                console.debug('In failureCallBack' + e);
+            }
+        });
+    };
     $scope.autoSyncCounter = null;
     $scope.stopFight = function () {
         if (angular.isDefined($scope.autoSyncCounter)) {
@@ -900,42 +939,50 @@
             $scope.feedbackDisplayIcon[k].styleObj['margin-top'] = '0';
     };
 
+    $scope.loadGridView = function () {
+        for (var k = 0 ; k < $scope.notificationData.length ; k++) {
+            $scope.notificationData[k].showFlag = false;
+        }
+        $timeout(function () {
+            for (var k = 0 ; k < $scope.notificationData.length ; k++) {
+                $scope.notificationData[k].showFlag = true;
+            }
+        }, 600);
+    };
+    $scope.notificationData = [];
     $scope.conversationRequest = function () {
-
+        $scope.notificationData = [];
         serverCommunication.getConversationRequest({
             successCallBack: function (iObj) {
                 console.debug('In successCallBack getConversationRequest', iObj);
-
-                function ObjectId(id) { return id; }
-                function ISODate(d) {
-                    return d;
-                }
-
-                $scope.notificationData = iObj.data.Result;
+                $scope.notificationData = $scope.notificationData.concat(iObj.data.Result);
                 $scope.loadingMessageObject = { showLoading: false, loadingMessage: 'Loading' };
+                serverCommunication.getAllMeetingRequest({
+                    ConversationType: "Coaching",
+                    successCallBack: function (iObj) {
+                        console.debug('In getAllMeetingRequest', iObj);
+                        for (var k = 0 ; k < iObj.data.Result.length ; k++) {
+                            iObj.data.Result[k].Meeting.StartDate = new Date(Number(iObj.data.Result[k].Meeting.StartDate.split('(')[1].split(')')[0]));
+                            iObj.data.Result[k].Meeting.EndDate = new Date(Number(iObj.data.Result[k].Meeting.EndDate.split('(')[1].split(')')[0]));
+                        }
+                        $scope.notificationData = $scope.notificationData.concat(iObj.data.Result);
+                        $timeout(function () {
+                            for (var k = 0 ; k < $scope.notificationData.length ; k++) {
+                                $scope.notificationData[k].showFlag = true;
+                            }
+                        }, 600);
+
+                        $scope.loadingMiddleObject = { showLoading: false, loadingMessage: 'Loading' };
+                    },
+                    failureCallBack: function (iObj) {
+                        console.debug('In failureCallBack', iObj);
+                    }
+                });
             },
             failureCallBack: function (iObj) {
                 console.debug('In failureCallBack', iObj);
             }
         });
-
-        serverCommunication.getAllMeetingRequest({
-            successCallBack: function (iObj) {
-                console.debug('In successCallBack', iObj);
-
-                function ObjectId(id) { return id; }
-                function ISODate(d) {
-                    return d;
-                }
-
-                $scope.notificationRequestData = iObj.data.Result;
-                $scope.loadingMiddleObject = { showLoading: false, loadingMessage: 'Loading' };
-            },
-            failureCallBack: function (iObj) {
-                console.debug('In failureCallBack', iObj);
-            }
-        });
-
     };
 
     var _displayAlertMeesage = function (iObj) {
@@ -1203,30 +1250,6 @@
             failureCallBack: function () {
                 console.log('In failureCallBack');
 
-            }
-        });
-    };
-
-    $scope.updateMeeting = function (isVerfied, SenderEmail, ReceiverEmail, Role) {
-        $scope.conversation.IsVerified = isVerfied;
-
-        var _object = {
-            SenderEmail: SenderEmail,
-            ReceiverEmail: ReceiverEmail,
-            Role: Role,
-            IsVerified: $scope.conversation.IsVerified
-        }
-
-        serverCommunication.updateMeeting({
-            loggedUserDetails: _object,
-            ReceiverName: $scope.ApprovalName,
-            Reason: "",
-            successCallBack: function () {
-                console.debug('In successCallBack');
-                $scope.conversationRequest();
-            },
-            failureCallBack: function (e) {
-                console.debug('In failureCallBack' + e);
             }
         });
     };

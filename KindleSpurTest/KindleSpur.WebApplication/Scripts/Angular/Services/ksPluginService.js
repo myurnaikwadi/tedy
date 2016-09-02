@@ -7,7 +7,7 @@ app.controller('monthlyParent', ['$scope', 'authentification', '$location', '$ro
     $rootScope.currentModule = 'Calendar';
     console.error('monthlyParent');
 }]);
-app.directive('monthly', function (dateServiceForMonthlyCalendar, $rootScope) {
+app.directive('monthly', function (dateServiceForMonthlyCalendar, $rootScope, serverCommunication) {
     return {
         scope: {
             moduleName : '@?'
@@ -84,6 +84,22 @@ app.directive('monthly', function (dateServiceForMonthlyCalendar, $rootScope) {
                     }
 
                 }
+                console.error($scope.monthlyArray)
+                serverCommunication.GetAllMeetingPerMonth({
+                    ConversationType: "Mentoring",
+                    FromDate: $scope.monthlyArray[0].cellDate.toJSON(),
+                    ToDate: $scope.monthlyArray[$scope.monthlyArray.length-1].cellDate.toJSON(),
+                    successCallBack: function (iObj) {
+                        console.debug('In GetAllMeetingPerMonth', iObj);
+
+                        
+                       // $scope.loadingMiddleObject = { showLoading: false, loadingMessage: 'Loading' };
+                    },
+                    failureCallBack: function (iObj) {
+                        console.debug('In failureCallBack', iObj);
+                    }
+                });
+                
             };
             $scope.init();
            

@@ -88,7 +88,6 @@
             
                 text-shadow: 0px 0 25px #fff;
                 /*-webkit-transition: all 0.7s ease;*/
-                 transition: all 0.7s ease;
            transition: all 0.7s ease;
         }
        
@@ -116,6 +115,7 @@
             float: left;
             height: 75%;
             width: 100%;
+            transition: all 0.7s ease;
         }
 
         .mainDashBoardWizardParent {
@@ -159,7 +159,7 @@
             float: left;
             overflow-x: scroll;
             overflow-y: hidden;
-            width: 96%;
+            width: 100%;
             
             height: 100%;
         }
@@ -1035,6 +1035,7 @@ border: 1px solid #999;
 .loadUploadPopup {
     width: 50%;
     height: 58%;
+        padding: 5px;
     background:white;
     border: 1px solid #ddd;
     z-index : 1 !important;
@@ -1050,6 +1051,8 @@ border: 1px solid #999;
     float:left;
     position: relative;
     display: flex;
+    border:1px solid lightgray;
+    border-bottom:0;
 }
 .middlteStripPopup {
     width: 100%;
@@ -1057,6 +1060,8 @@ border: 1px solid #999;
     display: flex;
     position: relative;
     float:left;
+    border:1px solid lightgray;
+    border-bottom:0;
 }
 .bottomStripPopup {
     width: 100%;
@@ -1064,6 +1069,8 @@ border: 1px solid #999;
     height: 15%;
     position: relative;
     float:left;
+    border:1px solid lightgray;
+    border-top:0;
 }
 .uploadedAttachment {
     width: 100%;
@@ -1186,3 +1193,46 @@ border: 1px solid #999;
     padding-bottom: 0;
 }
 
+.gridViewLoadedClass {
+    position: relative;
+    float: left;
+    height: 0% !important;
+    width: 100%;
+    overflow:hidden;
+}
+.gridViewLoadedClassForInbox {
+    height: 93% !important;
+    transition: all 1s ease;
+}
+.gridViewLoadedClassForDashBoard {
+    height: 93% !important;
+    transition: all 1s ease;
+}
+.gridViewLoadedParentClass {
+    border: 1px solid lightgray;
+    float: left;
+    margin: 1% !important;
+    margin-right: 0 !important;
+    margin-bottom: 0 !important;
+    display: block;
+    position: relative;
+    box-shadow: 0px 0px 10px 2px #ccc;
+    width: 257px;   
+    height: 219px !important;
+    overflow-x: auto;
+    transition: all 1s ease;
+}
+.rotateIconDownWord {
+    transform: rotate(-90deg);
+    transition: all 1s ease;
+}
+.rotateIconupWord {
+    transform: rotate(90deg);
+    transition: all 1s ease;
+}
+.inlineBlockClass {
+    display:block;
+    transition: all 1s ease;
+        overflow-x: hidden;
+    overflow-y: auto;
+}

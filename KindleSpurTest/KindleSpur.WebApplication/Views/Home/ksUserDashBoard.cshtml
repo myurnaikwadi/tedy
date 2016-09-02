@@ -1,39 +1,129 @@
-﻿<div class="parentBody" ng-controller="ksMainDashBoardController">
+﻿@*<link href="~/Scripts/css/ksDashBoard/ksDashBoardHover.css" rel="stylesheet" />*@
+<div class="parentBody" ng-controller="ksMainDashBoardController">
         <cube-Strct class="cubeParentClass" ng-show="loadingObject.showLoading" loading-Object="loadingObject"></cube-Strct>
         <div ng-hide="loadingObject.showLoading"  class="parentRoleDashboard">
-            <div class="userRoleWizardParentMain">
-                <div class="userRoleWizardParent">
-                    <div class="notificationWiz" style="display:none;" ng-repeat="notification in notificationsArr">
-                        <div ng-if="notification.notificationType == '1'">
-                            <h6 class="notificationWizReason">{{notification.name}}</h6>
-                            <h4 class="notificationWizName">{{notification.assignPerson}}</h4>
-                            <div class="notificationWizButton">
-                                <button style="width:100%;font-size: 10px;padding: 5px;    margin: auto;font-weight: bolder;" class="notificationaccept-Button signupButton fontClass">ACCEPT</button>
+            <div ng-show="gridViewLoaded == true" ng-mouseover="showRotateIcon = true;" ng-mouseleave="showRotateIcon = false;" style="border:0;" class="homeLabelInMainDB" ng-init="gridViewLoaded = false">
+                <div ng-show="gridViewLoaded == true" style="height: 100%;width: 64%;margin: auto;" class="homeLabelInMainDB" ng-init="gridViewLoaded = false">
+                    <h5 class="fontClass" style="font-size: 16px;">INVITES</h5>
+                    <img class="rotateIconDownWord" ng-show="showRotateIcon" ng-class="{ rotateIconupWord : gridViewLoaded == true }" style="width:35px;height : 35px;padding: 5px;cursor:pointer;position:absolute;right:0;top: 4px;" ng-click="gridViewLoaded =! gridViewLoaded;loadGridView()" src="~/Images/left_circle.png" />
+                </div>
+            </div>
+            <div ng-init="gridViewLoaded = false" ng-class="{ gridViewLoadedClassForInbox : gridViewLoaded == true }"style="display: flex;"class="userNotificationParent">                
+                <div class="userRoleWizardParent" style="margin: auto;width: 64%;position: relative;" ng-mouseover="showRotateIcon = true;" ng-mouseleave="showRotateIcon = false;">
+                    <img class="rotateIconDownWord" ng-show="showRotateIcon && gridViewLoaded == false" ng-class="{ rotateIconupWord : gridViewLoaded == true }" style="width:35px;height : 35px;padding: 5px;cursor:pointer;position:absolute;right:0;top: 13px;" ng-click="gridViewLoaded =! gridViewLoaded;loadGridView()" src="~/Images/left_circle.png" />
+                    <div class="notificationWiz" ng-class="{ notificationWizAnimation : notification.showFlag == true , gridViewLoadedParentClass : gridViewLoaded == true }" ng-repeat="notification in notificationData">
+                        <div class="" style="width: 100%;height: 100%;float: left;position: relative;" ng-show="gridViewLoaded">
+                            <img ng-if="notification.Meeting" style="position:absolute;width:25px;height:22px;top:6px;right:9px;" src="~/Images/business-meeting-of-males.png" />
+                            <img ng-if="!notification.Meeting" style="position:absolute;width:25px;height:22px;top:6px;right:9px;" src="~/Images/businessmen-talking-in-business-meeting.png" />
+                            <div class="meetingInvitee" style="width: 100%;height: 50%;display:block;">
+                                <div class="imageConversation" style="width: 100%;height: 70%;">
+                                    <img style="border: 2px solid white;margin:auto;width: 60px;height: 60px;border-radius: 50%;" ng-src="{{notification.Photo ?  notification.Photo  : '../../../Images/icons/If no Profile photo.png'}}" />
+                                </div>
+                                <div class="meetingPersonNameStrc" style="width: 100%;height: 30%;margin-left: 0;">
+                                    <h5 style="font-size: 15px;color:black;text-align: center;width: 85%;" class="leftSideMenuLable fontClass eliipsisClass">{{(notification.FirstName+" "+notification.LastName)}}</h5>
+                                </div>
+                            </div>
+                            <div style="float: left;width: 100%;height: 50%;display:block;">
+                                <div ng-if="notification.Meeting" class="meetingPersonNameStrc" style="width: 100%;height: 15%;margin-left: 0;">
+                                    <h5 title="Meeting Agenda" style="font-size: 12px;color:#999;text-align: center;width: 85%;" class="leftSideMenuLable fontClass eliipsisClass">{{notification.Meeting.Subject }}</h5>
+                                </div>
+                                <div ng-if="!notification.Meeting" class="meetingPersonNameStrc" style="width: 100%;height: 15%;margin-left: 0;">
+                                    <h5 style="font-size: 12px;color:#999;text-align: center;width: 85%;" class="leftSideMenuLable fontClass eliipsisClass">FOR SKILL :</h5>
+                                </div>
+                                <div class="meetingPersonNameStrc" style="width: 100%;height: 15%;margin-left: 0;">
+                                    <h5 ng-if="notification.Meeting" title="Skill or Topic" style="font-size: 12px;color:#999;text-align: center;width: 85%;" class="leftSideMenuLable fontClass eliipsisClass">{{notification.Meeting.SkillName}}</h5>
+                                    <h5 ng-if="!notification.Meeting" title="Skill or Topic" style="font-size: 12px;color:#999;text-align: center;width: 85%;" class="leftSideMenuLable fontClass eliipsisClass">{{notification.skill}}</h5>
+                                </div>
+                                <div ng-if="notification.Meeting" class="meetingPersonNameStrc" style="width: 100%;height: 15%;margin-left: 0;">
+                                    <h5 title="Communication mode" style="font-size: 12px;color:#999;text-align: center;width: 85%;" class="leftSideMenuLable fontClass eliipsisClass">{{notification.Meeting.Status}}</h5>
+                                </div>
+                                <div class="meetingPersonNameStrc" style="width: 100%;height: 15%;margin-left: 0;">
+                                    <h5 style="font-size: 12px;color:#999;text-align: center;width: 85%;" class="leftSideMenuLable fontClass eliipsisClass">{{notification.Meeting.StartDate | date : 'dd/MM/yyyy'}} at {{notification.Meeting.StartDate | date :  'hh:mm a' }}</h5>
+                                </div>
+                                <div ng-if="notification.Meeting" class="meetingPersonNameStrc" style="width: 100%;height: 40%;margin-left: 0;">
+                                    <button style="font-size: 10px;padding: 5px;margin: auto;font-weight: bolder;" class="signupButton fontClass" ng-click="notificationData.splice($index,1);updateMeeting(true,notification)">ACCEPT</button>
+                                    <button style="font-size: 10px;padding: 5px;margin: auto;font-weight: bolder;" class="signupButton fontClass" ng-click="notificationData.splice($index,1);updateMeeting(false,notification)">DECLINE</button>
+                                </div>
+                                <div ng-if="!notification.Meeting" class="meetingPersonNameStrc" style="width: 100%;height: 40%;margin-left: 0;">
+                                    <button style="font-size: 10px;padding: 5px;margin: auto;font-weight: bolder;" class="signupButton fontClass" ng-click="notificationData.splice($index,1);updateConversation(true, loggedEmail, notification.EmailAddress,notification)">ACCEPT</button>
+                                    <button style="font-size: 10px;padding: 5px;margin: auto;font-weight: bolder;" class="signupButton fontClass" ng-click="notificationData.splice($index,1);updateConversation(false, loggedEmail, notification.EmailAddress,notification)">DECLINE</button>
+                                </div>
                             </div>
                         </div>
-                        <div ng-class="{ mentorThemeColor : notification.role =='mentor',coacheeThemeColor : notification.role =='coachee'}" style="float: left;width: 100%;height: 100%;" ng-if="notification.notificationType == '2'">
-                            <div class="notificationWizReason" style="margin :4%;border:0px;color: white; padding : 0;">{{notification.name}}</div>
-                            <div class="notificationTimingPanel">
-                                <h6 class="notificationTiming notificationDate">{{notification.meetingDate}}</h6>
-                                <h6 class="notificationTiming notificationTime">{{notification.meetingTime}}</h6>
-                                <h6 style="float:right;    margin-right: 8%;" class="notificationTiming notificationDiff">{{notification.meetingTimeDiff}}</h6>
+                        <div class="" style="width: 100%;height: 100%;float: left;position: relative;" ng-show="gridViewLoaded == false">
+                            <div ng-if="!notification.Meeting" style="width: 100%;height: 100%;float: left;position: relative;">
+
+                                <img style="position:absolute;width:25px;height:22px;top:6px;right:9px;" src="~/Images/businessmen-talking-in-business-meeting.png" />
+                                <div class="meetingInvitee" style="width: 100%;height: 100%;display:block;">
+                                    <div class="imageConversation" style="width: 30%;height: 100%;">
+                                        <img style="border: 2px solid white;margin:auto;width: 60px;height: 60px;border-radius: 50%;" ng-src="{{notification.Photo ?  notification.Photo  : '../../../Images/icons/If no Profile photo.png'}}" />
+                                    </div>
+                                    <div class="meetingPersonNameStrc" style="display: block;width: 70%;height: 100%;margin-left: 0;">
+                                        <h5 style="font-size: 15px;color:black;text-align: left;width: 85%;margin-top: 13px;" class="leftSideMenuLable fontClass eliipsisClass">{{(notification.FirstName+" "+notification.LastName)}}</h5>
+                                        <h5 style="font-size: 12px;color:#999;text-align: left;width: 85%;margin-top: 3px;" class="leftSideMenuLable fontClass eliipsisClass">{{notification.skill}}</h5>
+                                        @*<h5 style="font-size: 12px;color:#999;text-align: left;width: 85%;margin-top: 3px;" class="leftSideMenuLable fontClass eliipsisClass">{{notification.Meeting.StartDate | date : 'dd/MM/yyyy'}} at {{notification.Meeting.StartDate | date :  'hh:mm a' }}</h5>*@
+                                    </div>
+                                </div>
+                            </div>
+                            <div ng-if="notification.Meeting" style="height: 100%; width :100%;float: left;position: relative;">
+
+                                <img style="position:absolute;width:25px;height:22px;top:6px;right:9px;" src="~/Images/business-meeting-of-males.png" />
+                                <div class="meetingInvitee" style="width: 100%;height: 100%;display:block;">
+                                    <div class="imageConversation" style="width: 30%;height: 100%;">
+                                        <img style="border: 2px solid white;margin:auto;width: 60px;height: 60px;border-radius: 50%;" ng-src="{{notification.Photo ?  notification.Photo  : '../../../Images/icons/If no Profile photo.png'}}" />
+                                    </div>
+                                    <div class="meetingPersonNameStrc" style="display: block;width: 70%;height: 100%;margin-left: 0;">
+
+                                        <h5 style="font-size: 15px;color:black;text-align: left;width: 85%;margin-top: 13px;" class="leftSideMenuLable fontClass eliipsisClass">{{(notification.FirstName+" "+notification.LastName)}}</h5>
+                                        <h5 style="font-size: 12px;color:#999;text-align: left;width: 85%;margin-top: 3px;" class="leftSideMenuLable fontClass eliipsisClass">{{notification.Meeting.SkillName}}</h5>
+                                        <h5 style="font-size: 12px;color:#999;text-align: left;width: 85%;margin-top: 3px;" class="leftSideMenuLable fontClass eliipsisClass">{{notification.Meeting.StartDate | date : 'dd/MM/yyyy'}} at {{notification.Meeting.StartDate | date :  'hh:mm a' }}</h5>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="userRolesParent">
+            <div class="userRolesParent" ng-class="{ gridViewLoadedClass : gridViewLoaded == true }">
                  <div class="userRoleChild">
-                     <div class="roleRepeatWizardMain" ng-mouseover="wizard.selectedOption = true" ng-mouseout="wizard.selectedOption = false" ng-class="{ flipper : wizard.selectedOption == true  ,mentorThemeColor : wizard.name =='MENTOR',menteeThemeColor : wizard.name =='MENTEE',coachThemeColor : wizard.name =='COACH',coacheeThemeColor : wizard.name =='COACHEE'}" ng-click="roleClick($event,wizard)" ng-repeat="wizard in applicationRole">
-                         <div class="flipper flip-DataFront">
+                     <div class="roleRepeatWizardMain" ng-class="{ mentorThemeColor : wizard.name =='MENTOR',menteeThemeColor : wizard.name =='MENTEE',coachThemeColor : wizard.name =='COACH',coacheeThemeColor : wizard.name =='COACHEE'}" ng-click="roleClick($event,wizard)" ng-repeat="wizard in applicationRole">
+                         <div class='containerHover'>
+                             <ul class="ulClassFOrHover">
+                                 <li class="liClassFOrHover">
+                                     <div class="ddddd" style="float:left;width: 100%;height: 100%;">
+                                         <div class="rolelabelPart">
+                                             <div class="roleNameLabel">
+                                                 <h1 class="notificationWizName role-Name" ng-class="{ whiteBackground : wizard.name =='MENTOR' || wizard.name =='COACH' }">{{wizard.name}}</h1>
+                                             </div>
+                                             <div class="roleImage">
+                                                 <img src={{wizard.img}} class="homePageLogo">
+                                             </div>
+                                         </div>
+                                         <div class="roleCountPart">
+                                             <div class="fullWidthHeightClass" style="float:left;">
+                                                 <div class='roleWiseClass'>
+
+                                                 </div>
+                                             </div>
+                                         </div>
+                                     </div>
+                                     <div class='info' style="border: 1px solid #FFF;" ng-class="{ mentorThemeColor : wizard.name =='MENTOR',menteeThemeColor : wizard.name =='MENTEE',coachThemeColor : wizard.name =='COACH',coacheeThemeColor : wizard.name =='COACHEE'}">
+                                         <div class="flip-DataBack">
+                                             <h5 class="fontClass" ng-class="{ whiteBackground : wizard.name =='MENTOR' || wizard.name =='COACH' }" style="margin:auto;width: 70%;font-size: 14px;">{{wizard.message}}</h5>
+                                         </div>
+                                     </div>
+                                 </li>
+                             </ul>
+                         </div>
+                            @*<div class="flipper flip-DataFront">
                              <div class="front">
-                                 <!-- front content -->
+                                  front content 
                                  <div class="flip-DataBack">                                   
                                      <h5 class="fontClass" ng-class="{ whiteBackground : wizard.name =='MENTOR' || wizard.name =='COACH' }" style="margin:auto;width: 70%;font-size: 14px;">{{wizard.message}}</h5>
                                  </div>
                              </div>
                              <div class="back">
-                                 <!-- back content -->
+                                 back content 
                                  <div class="rolelabelPart">
                                      <div class="roleNameLabel">
                                          <h1 class="notificationWizName role-Name" ng-class="{ whiteBackground : wizard.name =='MENTOR' || wizard.name =='COACH' }">{{wizard.name}}</h1>
@@ -50,11 +140,11 @@
                                      </div>
                                  </div>
                              </div>
-                         </div>
+                         </div>*@
                      </div>
                   </div>                  
             </div>           
-            <div class="bottom-BodyParent">
+            <div class="bottom-BodyParent" ng-class="{ gridViewLoadedClass : gridViewLoaded == true }">
                  <div class="bottom-BodyChild">
                      <div class="trending-TopicDiv">
                          <h5 class="fontClass trending-Topic">TRENDING TOPICS</h5>
@@ -87,4 +177,6 @@
             </div>            
         </div>
 </div>
+<script>
 
+</script>

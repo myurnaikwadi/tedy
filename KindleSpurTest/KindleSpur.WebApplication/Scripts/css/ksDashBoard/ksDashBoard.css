@@ -33,9 +33,9 @@
 	position: relative;
 	width: 100%;
 	height: 18%;
-    margin-left:20px;
 	float : left;
 	display: inline-block;
+    transition: all 0.7s ease;
 }
 .userRolesParent{
 	position: relative;
@@ -138,12 +138,21 @@
 .notificationWiz{
     border: 1px solid lightgray;
     float: left;
-    margin-right: 7px;
+    transition: all 1s ease;    
     position: relative;
     display: table;
     width: 265px;
+    margin: 1% !important;
+    margin-bottom: 0!important;
+    margin-right: 0!important;
     height: 75px;
     overflow-x: auto;
+    transform: scale(0);
+   
+}
+.notificationWizAnimation{
+    transform: scale(1) !important;  
+    box-shadow: 0px 0px 10px 2px #ccc;     
 }
 .notificationWizReason {
     float: left;
@@ -1157,3 +1166,4 @@ width: 20%;
     cursor:pointer;
 
 }
+

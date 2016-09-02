@@ -27,7 +27,10 @@
             };
             
             scope.closePopup = function () {
-                console.error(scope)
+                scope.loadUploadPopupFlag = false;
+                // data = [];
+                data = new FormData();
+                tempArray = [];
             };
             scope.attachFiles = function () {
                 console.error(scope)
@@ -58,6 +61,12 @@
                         }
                     }
                 });
+
+                if (Object.keys(_selectedData).length == 0) {
+                    alert('Please select at list one file');
+                    return
+                }
+              
                 if (scope.extraParam && scope.extraParam.afterAddCallBack)
                     scope.extraParam.afterAddCallBack({ selectedData: _selectedData, message: scope.uiFlag.Message });
                 if (scope.extraParam && scope.extraParam.closeCallBack)

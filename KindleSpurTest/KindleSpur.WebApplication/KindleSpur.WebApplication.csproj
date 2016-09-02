@@ -294,6 +294,8 @@
     <Content Include="Images\1.png" />
     <Content Include="Images\add.png" />
     <Content Include="Images\addBold.png" />
+    <Content Include="Images\business-meeting-of-males.png" />
+    <Content Include="Images\businessmen-talking-in-business-meeting.png" />
     <Content Include="Images\calendar.png" />
     <Content Include="Images\camera.png" />
     <Content Include="Images\cancel.png" />
@@ -357,6 +359,7 @@
     <Content Include="Images\icons\verticle.png" />
     <Content Include="Images\icons\If no Profile photo.png" />
     <Content Include="Images\leftSideIcon.png" />
+    <Content Include="Images\left_circle.png" />
     <Content Include="Images\linkedIn.jpg" />
     <Content Include="Images\linkedin_square_gray.png" />
     <Content Include="Images\loginLanding.jpg" />
@@ -449,6 +452,7 @@
     <Content Include="fonts\fontawesome-webfont.svg" />
     <Content Include="fonts\fontawesome-webfont.eot" />
     <Content Include="Scripts\css\ksDashBoard\ksStateHome.css" />
+    <Content Include="Scripts\css\ksDashBoard\ksDashBoardHover.css" />
     <Content Include="Scripts\d3.v3.js" />
     <Content Include="Scripts\d3.v3.min.js" />
     <Content Include="fonts\Roboto-Regular.ttf" />
