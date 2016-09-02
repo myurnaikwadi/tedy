@@ -108,6 +108,7 @@
     <Compile Include="Tasks.cs" />
     <Compile Include="Uploadcoverimage.cs" />
     <Compile Include="User.cs" />
+    <Compile Include="UserMeetings.cs" />
     <Compile Include="UserRole.cs" />
     <Compile Include="ValueCreation.cs" />
     <Compile Include="ValueCreationScore.cs" />
