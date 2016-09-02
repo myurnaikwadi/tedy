@@ -6,6 +6,7 @@ using MongoDB.Driver;
 using MongoDB.Driver.Builders;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -77,7 +78,7 @@ namespace KindleSpur.Data
 
         public bool MeetingSchedularUpdate(string MeetingId,bool flag)
         {
-            var result = _meetingCollection.FindOneAs<Meeting>(Query.EQ("MeetingId", MeetingId));
+            Meeting result = _meetingCollection.FindOneAs<Meeting>(Query.EQ("MeetingId", MeetingId));
             result.IsVerified = flag;
             _meetingCollection.Save(result);
             return true;
@@ -151,11 +152,16 @@ namespace KindleSpur.Data
 
         public List<BsonDocument> GetAllMeetingPerMonth(string userId,DateTime FromDate,DateTime ToDate )
         {
+            
             List<BsonDocument> _categories = new List<BsonDocument>();
 
+            BsonDateTime newFromDate = BsonDateTime.Create(FromDate);
+            BsonDateTime newToDate = BsonDateTime.Create(ToDate);
+
+            
             try
             {
-                var _query = Query.And(Query<Meeting>.GTE(p => p.StartDate, FromDate), Query<Meeting>.LTE(p => p.EndDate, ToDate), Query<Meeting>.EQ(p => p.From, userId), Query<Meeting>.EQ(p => p.To, userId));
+                var _query = Query.And(Query<Meeting>.GTE(p => p.StartDate, newFromDate.ToUniversalTime()), Query<Meeting>.LTE(p => p.EndDate, newToDate.ToUniversalTime()), Query.Or(Query<Meeting>.EQ(p => p.From, userId), Query<Meeting>.EQ(p => p.To, userId)));
 
                 _categories = _meetingCollection.FindAs<BsonDocument>(
                     _query

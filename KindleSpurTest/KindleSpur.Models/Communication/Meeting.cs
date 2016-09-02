@@ -1,4 +1,6 @@
 ﻿using KindleSpur.Models.Interfaces;
+using MongoDB.Bson;
+using MongoDB.Bson.Serialization.Attributes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +11,11 @@ namespace KindleSpur.Models.Communication
 {
     public class Meeting : IMeeting
     {
+        [BsonId]
+        public ObjectId Id
+        {
+            get; set;
+        }
         public  string MeetingId { get; set; }
         public string From { get; set; }
         public string To { get; set; }
