@@ -205,7 +205,7 @@ namespace KindleSpur.Data
 
         //This method to be tested after AngularJS code written
         public List<List<IFeedback>> GetFeedback(string emaiAddress)
-        {          
+        {
             CoacheeOrMentee menteeEntity = new CoacheeOrMentee();
             CoacheeOrMentee coacheeEntity = new CoacheeOrMentee();
             CoachOrMentor mentorEntity = new CoachOrMentor();
@@ -877,78 +877,16 @@ namespace KindleSpur.Data
 
             return userDetail.ValueCreationActivity.ToJson();
         }
-        public bool uploadResourceFile(string EmailAddress, object[] fileName)
+    
+
+        public bool uploadResourceFile(string EmailAddress, object[] filePath, string tagName, Dictionary<int, List<string>> filename)
         {
 
             bool _transactionStatus = false;
             try
             {
                 var userDetail = _userCollection.FindOneAs<User>(Query.EQ("EmailAddress", EmailAddress));
-
-
                 List<FileUpload> path = new List<FileUpload>();
-
-
-                foreach (var r in fileName)
-                {
-                    FileUpload obj = new FileUpload();
-                    obj.Id = ObjectId.GenerateNewId();
-                    obj.FileName = string.Format("ArtiFacts/{0}", r);
-                    path.Add(obj);
-                }
-                //Dictionary<User, string> list = new Dictionary<User, string>();
-                //if (list.ContainsKey(userDetail))
-                //{
-                if (userDetail.Files == null)
-                    userDetail.Files = new List<FileUpload>();
-
-                userDetail.Files.AddRange(path.ToList());
-
-                _userCollection.Save(userDetail);
-                // }
-
-                _transactionStatus = true;
-            }
-            catch (MongoException ex)
-            {
-                string message = "{ Error : 'Failed at UpdateUserPhoto().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ";
-                _logCollection.Insert(message);
-                throw new Exception("User does not Exist!!!");
-            }
-            catch (Exception e)
-            {
-                Exceptionhandle em = new Exceptionhandle();
-                em.Error = "Failed at uploadResourceFile()";
-                em.Log = e.Message.Replace("\r\n", "");
-                var st = new System.Diagnostics.StackTrace(e, true);
-                var frame = st.GetFrame(0);
-                var line = frame.GetFileLineNumber();
-                _logCollection.Insert(em);
-                throw new MongoException("Signup failure!!!");
-            }
-            finally
-            {
-
-            }
-            return _transactionStatus;
-            //_conversationsCollections = con.GetCollection("Conversations");
-            //List<Conversation> typeCoaching = _conversationsCollections.AsQueryable<Conversation>().Where<Conversation>(sb => sb.ConversationType == "Coaching" && sb.Content.StartsWith("COACHING REQUEST BY")).ToList();
-
-        }
-
-        public bool uploadResourceFile(string EmailAddress, object[] filePath, string tagName, Dictionary<int, string> filename)
-        {
-
-            bool _transactionStatus = false;
-            try
-            {
-                var userDetail = _userCollection.FindOneAs<User>(Query.EQ("EmailAddress", EmailAddress));
-
-
-                List<FileUpload> path = new List<FileUpload>();
-
-
-
                 foreach (var f in filename)
                 {
                     if (filename.ContainsKey(f.Key))
@@ -956,9 +894,12 @@ namespace KindleSpur.Data
 
                         FileUpload obj = new FileUpload();
                         obj.Id = ObjectId.GenerateNewId();
-                        obj.FilePath = string.Format("FilePath/{0}", f.Value);
-
-                        obj.FileName = f.Value;
+                        obj.FileId = Guid.NewGuid().ToString();
+                        
+                        obj.FilePath = string.Format("FilePath/{0}", f.Value[0]);
+                        obj.FileName = f.Value[0];
+                        obj.ContentType = f.Value[1];
+                        obj.Filesize = f.Value[2];
                         obj.TagName = tagName;
                         path.Add(obj);
 
@@ -998,8 +939,6 @@ namespace KindleSpur.Data
 
             }
             return _transactionStatus;
-            //_conversationsCollections = con.GetCollection("Conversations");
-            //List<Conversation> typeCoaching = _conversationsCollections.AsQueryable<Conversation>().Where<Conversation>(sb => sb.ConversationType == "Coaching" && sb.Content.StartsWith("COACHING REQUEST BY")).ToList();
 
         }
 
@@ -1075,7 +1014,7 @@ namespace KindleSpur.Data
         }
 
         public string GetFullName(string EmailAddress)
-        {            
+        {
             try
             {
                 var result = _userCollection.FindOneAs<IUser>(Query.EQ("EmailAddress", EmailAddress));
