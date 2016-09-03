@@ -58,6 +58,7 @@
     <Compile Include="ActiveGamesAndPSR.cs" />
     <Compile Include="BookMark.cs" />
     <Compile Include="CoacheeOrMentee.cs" />
+    <Compile Include="CoachingStatus.cs" />
     <Compile Include="CoachOrMentor.cs" />
     <Compile Include="CoachStatus.cs" />
     <Compile Include="Communication\Chat.cs" />
@@ -75,6 +76,7 @@
     <Compile Include="HandleErrorInfo.cs" />
     <Compile Include="Interfaces\ICategory.cs" />
     <Compile Include="Interfaces\ICoacheeOrMentee.cs" />
+    <Compile Include="Interfaces\ICoachingStatus.cs" />
     <Compile Include="Interfaces\ICoachOrMentor.cs" />
     <Compile Include="Interfaces\ICommunication.cs" />
     <Compile Include="Interfaces\IConversation.cs" />

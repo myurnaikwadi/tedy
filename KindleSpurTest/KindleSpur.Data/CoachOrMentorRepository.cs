@@ -116,6 +116,13 @@ namespace KindleSpur.Data
                 feedback.Sender = UserId;
                 feedback.CreateDate = DateTime.Now;
                 entity.Feedbacks.Add(feedback);
+
+
+               ICoachingStatus coachingStatus =  entity.CoachingStatus.Find(x=>x.Sender ==feedback.Sender && x.Skill ==feedback.Skill  );
+                coachingStatus.customerSatisfactionRating = feedback.customerSatisfactionRating;
+                coachingStatus.FeedBackCount += 1;
+                coachingStatus.FeedbackClosed = feedback.FeedbackClosed;
+
                 _coachOrMentorCollection.Save(entity);
 
                 var _users = con.GetCollection("UserDetails");
@@ -533,77 +540,98 @@ namespace KindleSpur.Data
             return null;
         }
 
+        //public List<CoachStatus> GetCoachingStatus(string UserId, string Role)
+        //{
+        //    List<IFeedback> LstCochees = new List<IFeedback>();
+        //    List<CoachStatus> result = new List<CoachStatus>();
+        //    try
+        //    {
+        //        CoachOrMentor coach = _coachOrMentorCollection.FindOneAs<CoachOrMentor>(Query.And(Query.EQ("UserId", UserId), Query.EQ("Role", Role)));
+        //        if (coach != null)
+        //        {
+        //            LstCochees = coach.Feedbacks;
+
+        //            if (LstCochees != null)
+        //            {
+        //                result = (from t in LstCochees
+        //                          group t by new { t.Sender, t.Skill }
+        //                             into grp
+        //                          select new CoachStatus()
+        //                          {
+        //                              EmailAddress = grp.Key.Sender,
+        //                              Skill = grp.Key.Skill,
+        //                              //   FeedbackClosed = grp.OrderByDescending(t => t.CreateDate).FirstOrDefault().FeedbackClosed,
+        //                             FeedbackClosed = false,
+        //                              FeedbackCount = grp.Count(),
+        //                              Rating = grp.OrderByDescending(t => t.customerSatisfactionRating).FirstOrDefault().customerSatisfactionRating
+        //                          }).ToList();
+
+        //                if (result.Count() > 0)
+        //                {
+        //                    for (var i = 0; i < result.Count(); i++)
+        //                    {
+        //                        result[i] = GetCocheeDetails(result[i]);
+        //                        result[i].TreeURL = GetTreeURL(result[i].FeedbackCount, result[i].Rating, result[i].FeedbackClosed);
+        //                    }
+        //                }
+        //            }
+        //        }
+
+        //    }
+        //    catch (MongoException ex)
+        //    {
+        //        string message = "{ Error : 'Failed at GetCoachingStatus().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ";
+        //        _logCollection.Insert(message);
+        //        throw new MongoException("Signup failure!!!");
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        Exceptionhandle em = new Exceptionhandle();
+        //        em.Error = "Failed at GetCoachingStatus()";
+        //        em.Log = e.Message.Replace("\r\n", "");
+        //        var st = new System.Diagnostics.StackTrace(e, true);
+        //        var frame = st.GetFrame(0);
+        //        var line = frame.GetFileLineNumber();
+        //        _logCollection.Insert(em);
+        //        throw new MongoException("Signup failure!!!");
+        //    }
+        //    finally
+        //    {
+
+        //    }
+        //    return result;
+        //}
         public List<CoachStatus> GetCoachingStatus(string UserId, string Role)
         {
+            List<ICoachingStatus> LstCochees = new List<ICoachingStatus>();
             List<CoachStatus> result = new List<CoachStatus>();
             try
             {
-
                 CoachOrMentor coach = _coachOrMentorCollection.FindOneAs<CoachOrMentor>(Query.And(Query.EQ("UserId", UserId), Query.EQ("Role", Role)));
                 if (coach != null)
                 {
-                    string conversationType = string.Empty;
-                    List<Conversation> lstConversation = new List<Conversation>();
-                    List<CoacheeOrMentee> lstCoacheeOrMentee = new List<CoacheeOrMentee>();
-                    if (Role == "Mentor")
-                        conversationType = "Mentoring";
-                    if (Role == "Coach")
-                        conversationType = "Coaching";
-                    lstConversation.AddRange(_conversationCollection.FindAs<Conversation>(Query.And(Query.EQ("ReceiverEmail", UserId), Query.EQ("ConversationType", conversationType), Query.EQ("IsVerified", true), Query.EQ("IsRejected", false))));
+                    LstCochees = coach.CoachingStatus;
 
-                    if (lstConversation != null)
+                    if (LstCochees != null)
                     {
-                        result = (from t in lstConversation
-                                  group t by new { t.SenderEmail, t.skill, t.ConversationClosed }
-                                        into grp
+                        result = (from t in LstCochees
+                                  group t by new { t.Sender, t.Skill }
+                                     into grp
                                   select new CoachStatus()
                                   {
-                                      EmailAddress = grp.Key.SenderEmail,
-                                      Skill = grp.Key.skill,
-                                      FeedbackClosed = grp.Key.ConversationClosed
-                                      //FeedbackCount = grp.Count(),
-                                      // Rating = grp.OrderByDescending(t => t.customerSatisfactionRating).FirstOrDefault().customerSatisfactionRating
+                                      EmailAddress = grp.Key.Sender,
+                                      Skill = grp.Key.Skill,
+                                      FeedbackClosed = grp.OrderByDescending(t => t.CreateDate).FirstOrDefault().FeedbackClosed,
+                                      FeedbackCount = grp.Count(),
+                                      Rating = grp.OrderByDescending(t => t.customerSatisfactionRating).FirstOrDefault().customerSatisfactionRating
                                   }).ToList();
-
-                        int feedbackCount = 0;
 
                         if (result.Count() > 0)
                         {
-                            for (var countOfResult = 0; countOfResult < result.Count(); countOfResult++)
+                            for (var i = 0; i < result.Count(); i++)
                             {
-                                result[countOfResult] = GetCocheeDetails(result[countOfResult]);
-                                CoacheeOrMentee userDetail = _coacheeOrMenteeCollection.FindOneAs<CoacheeOrMentee>(Query.EQ("UserId", result[countOfResult].EmailAddress));
-
-                                for (var countOfTopic = 0; countOfTopic < userDetail.Topics.Count; countOfTopic++)
-                                {
-
-                                    if (userDetail.Feedbacks == null)
-                                    {
-                                        result[countOfResult].FeedbackCount = 0;
-                                        result[countOfResult].Rating = 0;
-                                        result[countOfResult].TreeURL = GetTreeURL(result[countOfResult].FeedbackCount, result[countOfResult].Rating);
-                                    }
-                                    else
-                                    {
-                                        feedbackCount = userDetail.Feedbacks.Count;
-                                        for (int countOfFeedback = 0; countOfFeedback < userDetail.Feedbacks.Count; countOfFeedback++)
-                                        {
-                                            if (userDetail.Feedbacks[countOfFeedback].Skill == result[countOfTopic].Skill)
-                                            {
-                                                result[countOfResult].FeedbackCount = userDetail.Feedbacks.Count();
-                                                result[countOfResult].TreeURL = GetTreeURL(result[countOfResult].FeedbackCount, userDetail.Feedbacks[countOfResult].customerSatisfactionRating);
-
-                                            }
-                                            else
-                                            {
-                                                result[countOfResult].FeedbackCount = 0;
-                                                result[countOfResult].Rating = 0;
-                                                result[countOfResult].TreeURL = GetTreeURL(result[countOfResult].FeedbackCount, result[countOfResult].Rating);
-                                            }
-                                        }
-
-                                    }
-                                }
+                                result[i] = GetCocheeDetails(result[i]);
+                                result[i].TreeURL = GetTreeURL(result[i].FeedbackCount, result[i].Rating, result[i].FeedbackClosed);
                             }
                         }
                     }
@@ -633,7 +661,6 @@ namespace KindleSpur.Data
             }
             return result;
         }
-
         public CoachStatus GetCocheeDetails(CoachStatus c)
         {
             if (c != null)
@@ -653,32 +680,35 @@ namespace KindleSpur.Data
             }
             return c;
         }
-        public string GetTreeURL(int FeedbackCount, int Rating)
+        public string GetTreeURL(int FeedbackCount, int Rating, bool closingStatus)
         {
+
             string TreeURL = "Images/Tree/Stage 1.png";
 
-            if (FeedbackCount == 1)
+            if (closingStatus) return TreeURL = TreeURL = "Images/Tree/Stage 5 with Fruits.png";
+
+            if (FeedbackCount == 2)
             {
                 if (Rating >= 1 && Rating <= 3)
                     TreeURL = "Images/Tree/Stage 2.png";
                 else if (Rating >= 4 && Rating <= 5)
                     TreeURL = "Images/Tree/Stage 2 with water.png";
             }
-            else if (FeedbackCount == 2)
+            else if (FeedbackCount == 3)
             {
                 if (Rating >= 1 && Rating <= 3)
                     TreeURL = "Images/Tree/Stage 3.png";
                 else if (Rating >= 4 && Rating <= 5)
                     TreeURL = "Images/Tree/Stage 3 with flower.png";
             }
-            else if (FeedbackCount == 3)
+            else if (FeedbackCount == 4)
             {
                 if (Rating >= 1 && Rating <= 3)
                     TreeURL = "Images/Tree/Stage 4.png";
                 else if (Rating >= 4 && Rating <= 5)
                     TreeURL = "Images/Tree/Stage 4 with Fruits.png";
             }
-            else if (FeedbackCount >= 4)
+            else if (FeedbackCount >= 5)
             {
                 if (Rating >= 1 && Rating <= 3)
                     TreeURL = "Images/Tree/Stage 5.png";

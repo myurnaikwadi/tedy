@@ -25,6 +25,7 @@ namespace KindleSpur.Models
         public int FeedbackPoints { get; set; }
         public DateTime CreateDate { get; set; }
         public DateTime UpdateDate { get; set; }
+        public List<ICoachingStatus> CoachingStatus { get; set; }
         public List<IProgramConducted> ProgramsConducted { get; set; }
         [BsonId]
         public ObjectId Id

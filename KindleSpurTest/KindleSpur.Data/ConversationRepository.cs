@@ -132,6 +132,22 @@ namespace KindleSpur.Data
                 conversationDetail.UpdateDate = DateTime.Now;
                 conversationDetail.ConversationParentId = ParentId;
                 conversationDetail.IsVerified = isVerified;
+                if(isVerified)
+                {
+                    MongoCollection _coachOrMentorCollection;
+                    _coachOrMentorCollection = con.GetCollection("CoachOrMentor");
+                    CoachOrMentor coach = _coachOrMentorCollection.FindOneAs<CoachOrMentor>(Query.And(Query.EQ("UserId", senderEmail), Query.EQ("Role", "Coach")));
+                    if (coach.CoachingStatus == null) coach.CoachingStatus = new List<ICoachingStatus>();
+                    CoachingStatus coachingStatus = new CoachingStatus();
+                    coachingStatus.CreateDate = DateTime.Now;
+                    coachingStatus.Sender = senderEmail;
+                    coachingStatus.Skill = skill;
+                    coachingStatus.customerSatisfactionRating = 0;
+                    coachingStatus.FeedbackClosed = false;
+                    coachingStatus.FeedBackCount =  0;
+                    coach.CoachingStatus.Add(coachingStatus);
+                    _coachOrMentorCollection.Save(coach);
+                }
                 conversationDetail.IsRejected = isRejected;
                 _conversationCollection.Save(conversationDetail);
                 _transactionStatus = true;
