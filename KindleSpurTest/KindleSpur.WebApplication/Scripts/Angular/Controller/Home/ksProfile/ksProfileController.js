@@ -143,7 +143,16 @@
                 $scope.feedBackArray[k].showFeed = true;
             }
         }, 1500);
-
+        var _object = {
+            EmailAddress: $scope.userInfo.EmailAddress,
+            successCallBack: function (iObj) {
+                console.error('In successCallBack', iObj);
+            },
+            failureCallBack: function () {
+                console.error('In failureCallBack', iObj);
+            }
+        }
+        serverCommunication.getMostRatedFeedback(_object);        
 
         for (var i = 0 ; i < $scope.feedBackArray.length ; i++) {
             for (var j = 1 ; j <= $scope.feedBackArray[i].rating ; j++) {

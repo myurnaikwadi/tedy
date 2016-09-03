@@ -438,6 +438,29 @@ app.factory('serverCommunication', function ($http) {
 
         },
         /**
+          * @auther : MKN
+          * @date : 03/09/2016
+          * @Purpose :
+          */
+        getMostRatedFeedback: function (iObj) {
+            console.error(iObj);
+            
+            // $http.post(_str, iObj.loggedUserDetails).then(iObj.successCallBack, iObj.failureCallBack)
+            var req = {
+                method: 'POST',
+                url: '',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                data: { EmailAddress: iObj.EmailAddress },
+                traditional: true
+            }
+            console.error(req);
+            //  $http(req).then(iObj.successCallBack, iObj.failureCallBack);
+
+        },
+
+        /**
         * @auther : MKN
          * @date : 15/06/2016
          * @Purpose :
