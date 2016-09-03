@@ -1,5 +1,6 @@
 ﻿app.controller('ksDashBoardMentorController', function ($timeout,$rootScope, $scope, serverCommunication, $interval, $state) {
     $rootScope.currentModule = 'Mentor';
+    window.e = $scope;
     $scope.notifications = [
 
                 { notificationType: '1', name: 'YOU HAVE COACHING INVITE  FROM', assignPerson: 'HARSHADA D.' },
@@ -641,6 +642,19 @@
         }
         return _prefix;
     };
+
+    $scope.getFeedBackFromServer = function () {
+        serverCommunication.getFeedback({          
+            openConversation: $scope.openConversation,
+            successCallBack: function (iObj) {
+                console.debug('In getFeedBackFromServer ----- ', iObj);
+            },
+            failureCallBack: function (iObj) {
+                console.debug('In failureCallBack getFeedBackFromServer', iObj);
+            }
+        });
+    };
+
     $scope.showSelectedConversation = function (SenderEmail, ReceiverEmail) {
         serverCommunication.getConversationDetails({
             //senderEmail: SenderEmail,
@@ -648,15 +662,13 @@
             ConversationType: "Mentoring",
             ParentId: $scope.openConversation.ConversationParentId,
             successCallBack: function (iObj) {
-                console.debug('In showSelectedConversation ----- ', iObj);
-
-                function ObjectId(id) { return id; }
-                function ISODate(d) {
-                    return d;
-                }
-
+                console.debug('In showSelectedConversation ----- ', iObj); 
                 $scope.MailRecords = []
-                var MailRecords = eval('(' + iObj.data.Result + ')');
+                var MailRecords = JSON.parse(iObj.data.Result);
+              //  var MailRecords = JSON.parse(MailRecords);
+                console.log(MailRecords); 
+                   
+               // var MailRecords = eval('(' + iObj.data.Result + ')');
 
                 $scope.openConversation.sessionClosed = false;
                 var _flag = false;
@@ -702,16 +714,15 @@
                     b = new Date(b.UpdateDate);
                     return a - b;
                 });
+                $scope.loadingMessageObject = { showLoading: false, loadingMessage: 'Loading' };
+                _setScrollPosition();
+                $scope.getFeedBackFromServer();
                 $scope.feedbackDisplayIcon = [
                     { Name: 'P', replaceNameI: 'Pre Session FeedBack I', replaceNameU: 'Pre Session FeedBack', selected: false, activate: true, style: { 'border': '1px solid', 'overflow': 'hidden', 'color': '#9400D3', 'transition': 'all 1s ease', 'transform': 'scale(1)', 'width': '100%', 'height': '100%' } },
                     { Name: 'G', replaceNameI: 'Click to Give 1st FeedBack', replaceNameU: 'Click to Give 1st FeedBack', selected: false, activate: true, style: { 'border': '1px solid', 'overflow': 'hidden', 'color': 'red', 'transition': 'all 1s ease', 'transform': 'scale(1)', 'width': '100%', 'height': '100%' } },
                     { Name: 'C', replaceNameI: 'Close Session Feedback', replaceNameU: 'Close Session Feedback', selected: false, activate: true, style: { 'border': '1px solid', 'overflow': 'hidden', 'color': 'brown', 'transition': 'all 1s ease', 'transform': 'scale(1)', 'width': '100%', 'height': '100%' } },
                 ];
-                $scope.closeEx();
-                $scope.loadingMessageObject = { showLoading: false, loadingMessage: 'Loading' };
-                //  console.error('ssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss')
-                _setScrollPosition();
-
+                $scope.closeEx(); 
             },
             failureCallBack: function (iObj) {
                 console.debug('In failureCallBack', iObj);

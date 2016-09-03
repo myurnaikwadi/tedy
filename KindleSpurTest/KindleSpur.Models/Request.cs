@@ -19,6 +19,7 @@ namespace KindleSpur.Models
         public string ConversationParentId { get; set; }
         public string Photo { get; set; }
         public List<ResourceFileLink> FilesURLlink { get; set; }
+        public DateTime CreateDate { get; set; }
 
     }
 }

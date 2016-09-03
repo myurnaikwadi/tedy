@@ -182,7 +182,7 @@
                     </h5>
                 </div>
                 <div class="mainDashBoardWizardParent">
-                    <place-Holder message="No Mentee Available" ng-show="coachingStatusArray.length == 0"></place-Holder>
+                    <place-Holder style="float: left;width: 100%;height: 100%;" message="No Mentee Available" ng-show="coachingStatusArray.length == 0"></place-Holder>
                     <div class="statusParentDiv" ng-hide="coachingStatusArray.length == 0">
 
                         <div class="ngRepeatDivForStatus " ng-click="showCoacheeProfile = true;showCoacheeProfileStatus(option)" ng-repeat="option in coachingStatusArray">
@@ -205,9 +205,9 @@
                             <div class="treeCoachingStatus">
                                 <img ng-src="{{option.TreeURL}}" style="margin: auto auto;float: left;height: 45px;width: 45px;" />
                             </div>
-<div class="statusCoachingStatus">
-    <h5 class="fontClass" style="color:#A9A9A9;margin: auto auto;float: left;margin-left: 0;">{{option.FeedbackCount == 1 ? "JUST STARTED" : (option.FeedbackCount == 6 || option.FeedbackClosed == true) ? 'SESSION OVER' : 'IN PROGRESS'}}</h5>
-</div>
+                            <div class="statusCoachingStatus">
+                                <h5 class="fontClass" style="color:#A9A9A9;margin: auto auto;float: left;margin-left: 0;">{{option.FeedbackCount == 0 ? "JUST STARTED" : (option.FeedbackCount == 6 || option.FeedbackClosed == true) ? 'SESSION OVER' : 'IN PROGRESS'}}</h5>
+                            </div>
                             @*<div class="communicationsCoachingStatus">
                                 <img src="" class="iconOnStatusArray" style="visibility:hidden;">
                                 <img src="~/Images/icons/call.png" class="iconOnStatusArray iconOnStatusArrayss">
@@ -225,11 +225,10 @@
                 <div class="homeLabelInChat" style="height:7%;border-bottom:1px solid lightgray;">
                     <h5 class="fontClass" style="font-size: 16px;margin-left: 1%;">KNOWLEDGE GARDEN</h5>
                 </div>
-                <<div class="" style="float:left;width:100%;height:93%;">
-    <place-Holder message="As you haven't received feedback your knowledge tree has not grown" ng-show="coachingStatusArray.length == 0"></place-Holder>
-    <molecule-Map ng-if="ctsDataForMolecule &&coachingStatusArray.length > 0" cts-Data="ctsDataForMolecule"></molecule-Map>
-</div>
-
+                <div class="" style="float:left;width:100%;height:93%;">
+                    <place-Holder message="As you haven't received feedback your knowledge tree has not grown" ng-show="coachingStatusArray.length == 0"></place-Holder>
+                    <molecule-Map ng-if="ctsDataForMolecule &&coachingStatusArray.length > 0" cts-Data="ctsDataForMolecule"></molecule-Map>
+                </div>
             </div>
             @*Communication - 5*@
             <div class="fullWidthHeightClass" ng-switch-when='5'>
