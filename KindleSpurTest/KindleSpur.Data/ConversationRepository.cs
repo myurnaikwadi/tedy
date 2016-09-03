@@ -140,7 +140,7 @@ namespace KindleSpur.Data
                     if (coach.CoachingStatus == null) coach.CoachingStatus = new List<ICoachingStatus>();
                     CoachingStatus coachingStatus = new CoachingStatus();
                     coachingStatus.CreateDate = DateTime.Now;
-                    coachingStatus.Sender = senderEmail;
+                    coachingStatus.Sender = receiverEmail;
                     coachingStatus.Skill = skill;
                     coachingStatus.customerSatisfactionRating = 0;
                     coachingStatus.FeedbackClosed = false;
