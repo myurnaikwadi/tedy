@@ -388,6 +388,7 @@ app.factory('serverCommunication', function ($http) {
             console.error(iObj)
 
             var Data = {
+                FeedbackStatus: iObj.loggedUserDetails.FeedbackType.toUpperCase(),
                 Sender: iObj.loggedUserDetails.Sender,
                 FeedBackId: iObj.loggedUserDetails.FeedBackId,
                 QueAndAns: iObj.loggedUserDetails.FeedBacks,

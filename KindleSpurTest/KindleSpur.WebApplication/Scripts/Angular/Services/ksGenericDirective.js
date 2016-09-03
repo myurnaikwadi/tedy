@@ -1705,7 +1705,7 @@ app.directive('feedbackPage', function ($state, serverCommunication, $timeout, $
             };
 
             $scope.feedBack.sendFeedBackDetail = function () {
-                $scope.feedBack.feedBackDetails.sender = $scope.sender;
+               // $scope.feedBack.feedBackDetails.sender = $scope.sender;
                 console.error($scope.feedBack.feedBackDetails)
 
                 for (var k = 0; k < $scope.displayArray.length; k++) {
@@ -1729,8 +1729,57 @@ app.directive('feedbackPage', function ($state, serverCommunication, $timeout, $
                 }
                 console.error(_feedBacks);
                 var _objectPassed = {
-                    FeedBacks: _feedBacks, FeedBackId: _id, FeedbackClosed: $scope.feedbackClosed, Sender: $scope.sender, Skill: $scope.convObject.skill, customerSatisfactionRating: _rating
+                    FeedbackType: $scope.feedbackType, FeedBacks: _feedBacks, FeedBackId: _id, FeedbackClosed: $scope.feedbackClosed, Sender: $scope.sender, Skill: $scope.convObject.skill, customerSatisfactionRating: _rating
                 };
+                
+                // $scope.feedBack.feedBackDetails = angular.extend($scope.feedBack.feedBackDetails,_objectPassed);
+                serverCommunication.sendFeedback({
+                    role: $scope.role,
+                    loggedUserDetails: _objectPassed,
+    
+                    successCallBack: function (iObj) {
+                        console.error('In successCallBack', iObj);
+                        // if ($scope.feedbackClosed) {
+                        $scope.generateSesstionClosedEntry();
+                        // }
+                        
+                        $scope.getPointsRecord();
+
+                    },
+                    failureCallBack: function (iObj) {
+                        console.error('In failureCallBack', iObj);
+
+                    }
+                });
+                $scope.feedBack.closeFeedBackPopup();
+            };
+
+            $scope.feedBack.sendPreSessionDetail = function () {
+               // $scope.feedBack.feedBackDetails.sender = $scope.sender;
+                console.error($scope.feedBack.feedBackDetails)
+
+                for (var k = 0 ; k < $scope.displayArray.length ; k++) {
+                    $scope.feedBack.feedBackDetails[$scope.displayArray[k].name] = $scope.displayArray[k];
+                };
+                console.error($scope.feedBack.feedBackDetails, $scope.displayArray);
+                $scope.generateSesstionClosedEntry();
+
+                var _rating = 5;
+                var _counter = Math.floor((Math.random() * 10) + 1);
+                var _id = $rootScope.loggedDetail.EmailAddress + (Date.now()) + _counter;
+                var _feedBacks = []
+                for (var _key in $scope.feedBack.feedBackDetails) {
+                    if ($scope.feedBack.feedBackDetails[_key]) {
+                        _feedBacks.push({ Question: _key, Answer: $scope.feedBack.feedBackDetails[_key].actionValue });
+                    }
+                    //    if ($scope.feedBack.feedBackDetails[_key].sessionRating) {
+                    //        _rating = $scope.feedBack.feedBackDetails[_key].actionValue;
+                    //    }
+                }
+                var _objectPassed = {
+                    FeedbackType: $scope.feedbackType, FeedBacks: _feedBacks, FeedBackId: _id, FeedbackClosed: $scope.feedbackClosed, Sender: $scope.sender, Skill: $scope.convObject.skill, customerSatisfactionRating: _rating
+                };
+
                 // $scope.feedBack.feedBackDetails = angular.extend($scope.feedBack.feedBackDetails,_objectPassed);
                 serverCommunication.sendFeedback({
                     role: $scope.role,
@@ -1741,6 +1790,7 @@ app.directive('feedbackPage', function ($state, serverCommunication, $timeout, $
                         // if ($scope.feedbackClosed) {
                         $scope.generateSesstionClosedEntry();
                         // }
+
                         $scope.getPointsRecord();
 
                     },
@@ -1749,18 +1799,8 @@ app.directive('feedbackPage', function ($state, serverCommunication, $timeout, $
 
                     }
                 });
-            };
-
-            $scope.feedBack.sendPreSessionDetail = function () {
-                $scope.feedBack.feedBackDetails.sender = $scope.sender;
-                console.error($scope.feedBack.feedBackDetails)
-
-                for (var k = 0 ; k < $scope.displayArray.length ; k++) {
-                    $scope.feedBack.feedBackDetails[$scope.displayArray[k].name] = $scope.displayArray[k];
-                };
-                console.error($scope.feedBack.feedBackDetails, $scope.displayArray);
-                $scope.generateSesstionClosedEntry();
-                $scope.feedBack.closeFeedBackPopup()
+               
+                $scope.feedBack.closeFeedBackPopup();
                 return
                 // var _counter = Math.floor((Math.random() * 10) + 1);
                 // var _id = $rootScope.loggedDetail.EmailAddress + (Date.now()) + _counter;
