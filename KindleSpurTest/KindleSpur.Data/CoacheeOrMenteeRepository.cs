@@ -203,6 +203,60 @@ namespace KindleSpur.Data
 
         }
 
+        public SearchCoachOrMentor GetProfileDetails(string role, string emailAddress)
+        {
+            SearchCoachOrMentor obj = new SearchCoachOrMentor();
+            try
+            {
+                var result = _coacheeOrMenteeCollection.FindOneAs<CoacheeOrMentee>(Query.And(
+                                                                  Query.EQ("UserId", emailAddress),
+                                                                  Query.EQ("Role", role)
+                                                               ));
+
+                obj.EmailAddress = result.UserId;
+                obj.Role = result.Role;
+                if (result.Role == "Coachee")
+                    obj.Skills = result.Skills;
+                else if (result.Role == "Mentee")
+                    obj.Topics = result.Topics;
+                var _userCollection = con.GetCollection("UserDetails");
+                User userDetail = _userCollection.FindOneAs<User>(Query.EQ("EmailAddress", result.UserId));
+                obj.FirstName = userDetail.FirstName;
+                obj.LastName = userDetail.LastName;
+                obj.PhotoURL = userDetail.Photo;
+                obj.City = userDetail.City;
+                obj.Country = userDetail.Country;
+                obj.State = userDetail.State;
+                obj.Mobile = userDetail.Mobile;
+                obj.LinkdinURL = userDetail.LinkdinURL;
+                obj.description = userDetail.description;
+                return obj;
+            }
+            catch (MongoException ex)
+            {
+                string message = "{ Error : 'Failed at GetProfileDetails().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ";
+                _logCollection.Insert(message);
+                throw new MongoException("Not able to find profile details!!!");
+                //_logCollection.Insert("{ Error : 'Failed at AddNewCoacheeOrMentee().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ");
+                //throw new MongoException("Signup failure!!!");
+            }
+            catch (Exception e)
+            {
+                Exceptionhandle em = new Exceptionhandle();
+                em.Error = "Failed at GetProfileDetails()";
+                em.Log = e.Message.Replace("\r\n", "");
+                var st = new System.Diagnostics.StackTrace(e, true); var frame = st.GetFrame(0);
+                var line = frame.GetFileLineNumber();
+                _logCollection.Insert(em);
+                throw new MongoException("Not able to find profile details!!!");
+            }
+            finally
+            {
+
+            }
+
+        }
+
         public List<SkillOrTopic> GetTopicsForMentee(string UserId)
         {
             // var _collection = _kindleDatabase.GetCollection("CoacheeOrMentee");
@@ -432,8 +486,15 @@ namespace KindleSpur.Data
                 feedback.Sender = UserId;
                 feedback.CreateDate = DateTime.Now;
                 entity.Feedbacks.Add(feedback);
-               
+
+                ICoachingStatus coachingStatus = entity.CoachingStatus.Find(x => x.Sender == feedback.Sender && x.Skill == feedback.Skill);
+                coachingStatus.customerSatisfactionRating = feedback.customerSatisfactionRating;
+                coachingStatus.FeedBackCount += 1;
+                coachingStatus.FeedbackClosed = feedback.FeedbackClosed;
+
+
                 _coacheeOrMenteeCollection.Save(entity);
+
                 var _users = con.GetCollection("UserDetails");
                 User user = _users.FindOneAs<User>(Query.EQ("EmailAddress", UserId));
                 user.BalanceRewardPoints += 5;

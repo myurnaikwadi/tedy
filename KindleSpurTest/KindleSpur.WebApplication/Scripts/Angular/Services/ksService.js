@@ -336,7 +336,7 @@ app.factory('serverCommunication', function ($http) {
         },
         getProfileDetailsUserWise: function (iObj) {
            console.error(iObj)     
-           $http.post('/Coachee/GetRecommendedCoach', iObj).then(iObj.successCallBack, iObj.failureCallBack)
+           $http.post('/Coachee/GetProfileDetails', iObj).then(iObj.successCallBack, iObj.failureCallBack)
         },
         
         getCoaches: function (iObj) {
