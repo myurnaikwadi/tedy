@@ -722,6 +722,17 @@
 
         $scope.showSelectedConversation($scope.loggedEmail, $scope.ReceiverEmail);
     };
+    $scope.getFeedBackFromServer = function () {
+        serverCommunication.getFeedback({
+            openConversation: $scope.openConversation,
+            successCallBack: function (iObj) {
+                console.debug('In getFeedBackFromServer ----- ', iObj);
+            },
+            failureCallBack: function (iObj) {
+                console.debug('In failureCallBack getFeedBackFromServer', iObj);
+            }
+        });
+    };
     var _getMonthNames = function (iMonth, iFull, iSingleMonth) {
         var monthArray = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
         if (iFull == 1)
@@ -834,17 +845,15 @@
                     b = new Date(b.UpdateDate);
                     return a - b;
                 });
+                $scope.loadingMessageObject = { showLoading: false, loadingMessage: 'Loading' };                
+                _setScrollPosition();
+                $scope.getFeedBackFromServer();
                 $scope.feedbackDisplayIcon = [
                      { Name: 'P', replaceNameI: 'Pre Session FeedBack I', replaceNameU: 'Pre Session FeedBack', selected: false, activate: true, style: { 'border': '1px solid', 'overflow': 'hidden', 'color': '#9400D3', 'transition': 'all 1s ease', 'transform': 'scale(1)', 'width': '100%', 'height': '100%' } },
                      { Name: 'G', replaceNameI: 'Click to Give 1st FeedBack', replaceNameU: 'Click to Give 1st FeedBack', selected: false, activate: true, style: { 'border': '1px solid', 'overflow': 'hidden', 'color': 'red', 'transition': 'all 1s ease', 'transform': 'scale(1)', 'width': '100%', 'height': '100%' } },
                      { Name: 'C', replaceNameI: 'Close Session Feedback', replaceNameU: 'Close Session Feedback', selected: false, activate: true, style: { 'border': '1px solid', 'overflow': 'hidden', 'color': 'brown', 'transition': 'all 1s ease', 'transform': 'scale(1)', 'width': '100%', 'height': '100%' } },
                 ];
-                $scope.closeEx();
-                $scope.loadingMessageObject = { showLoading: false, loadingMessage: 'Loading' };
-                //  console.error('ssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss')
-                _setScrollPosition();
-
-
+                $scope.closeEx();               
             },
             failureCallBack: function (iObj) {
                 console.debug('In failureCallBack', iObj);

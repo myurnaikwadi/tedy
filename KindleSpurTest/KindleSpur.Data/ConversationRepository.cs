@@ -300,8 +300,10 @@ namespace KindleSpur.Data
                 for (int i = 0; i < _categories.Count; i++)
                 {
                     string sender = _categories[i].GetElement("SenderEmail").Value.ToString();
-
-                    string receiver = _categories[i].GetElement("ReceiverEmail").Value.ToString();
+                    _categories[i].Remove("_id");
+                    BsonElement element= _categories[i].GetElement("UpdateDate");
+                    _categories[i].RemoveElement(element);
+                     string receiver = _categories[i].GetElement("ReceiverEmail").Value.ToString();
 
                 }
             }
