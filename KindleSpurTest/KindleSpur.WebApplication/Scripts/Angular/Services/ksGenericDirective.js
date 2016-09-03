@@ -1491,6 +1491,7 @@ app.directive('rssFeed', function ($state, serverCommunication, $timeout) {
         link: function ($scope, element, attrs) {
             window.rss = $scope;
             $scope.feedContainArray = [];
+            $scope.placeHolderString = 'Select ' +(($scope.role == "mentor" || $scope.role == "mentee") ? "Topics": "Skills") + ' to view Knowledge Feed';
             $scope.loadingObject = { showLoading: true, loadingMessage: 'Loading Feed' };
             //var _selectedTagFed = [];
             $scope.selectedFeedTag = function (iIndex, iOption) {

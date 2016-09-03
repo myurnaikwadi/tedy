@@ -79,7 +79,7 @@
                             data: {
                                 headingRequired: true, closeRequired: true,
                                 //role: 'Mentee', 
-                                userInfo: $rootScope.loggedDetail
+                                userInfo: iObj.data
                             }
                         });
                     },

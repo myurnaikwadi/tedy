@@ -2,7 +2,7 @@
     <div class="homeLabelfeed">
         <h5 class="fontClass" style="font-size: 16px;margin : auto;margin-left:1%;">KNOWLEDGE FEED</h5>
     </div>
-    <place-Holder message="Skills is not available.You need to add Skill to see feed." ng-show="skill.length == 0"></place-Holder>                    
+    <place-Holder message="{{placeHolderString}}" ng-show="skill.length == 0"></place-Holder>                    
     <div class="skillTaggingArray" ng-hide="skill.length == 0" >
         <h5 class="tagTasks fontClass genericPointerClass eliipsisClass" style="float: left;margin: 7px;width: 131px;height: 30px;" ng-class="{whiteBackground : (role == 'coach' && option.selected == true) || (role == 'mentor' && option.selected == true),  coachThemeColor : option.selected == true &&  role == 'coach' , mentorThemeColor : option.selected == true && role == 'mentor' , menteeThemeColor : option.selected == true && role == 'mentee',coacheeThemeColor : option.selected == true && role == 'coachee'}" ng-click="selectedFeedTag($index,option)" ng-repeat="option in skill">{{option.name | uppercase}}</h5>
     </div>

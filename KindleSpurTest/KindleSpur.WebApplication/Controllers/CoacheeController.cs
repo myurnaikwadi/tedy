@@ -181,6 +181,15 @@ namespace KindleSpur.WebApplication.Controllers
 
             }
         }
+
+        [HttpPost]
+        public JsonResult GetProfileDetails(string role, string emailAddress)
+        {
+            CoacheeOrMenteeRepository _coacheeOrMenteeRepo = new CoacheeOrMenteeRepository();
+
+            return this.Json(_coacheeOrMenteeRepo.GetProfileDetails(role, emailAddress));
+        }
+
         public ActionResult GetCoachingStatus()
         {
             try

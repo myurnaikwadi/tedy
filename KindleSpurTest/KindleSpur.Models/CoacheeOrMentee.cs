@@ -31,6 +31,7 @@ namespace KindleSpur.Models
         public string UpdateDate { get; set; }/**/
         public List<IProgramConducted> ProgramsConducted { get; set; }
         public List<IFeedback> Feedbacks { get; set; }
+        public List<ICoachingStatus> CoachingStatus { get; set; }
 
     }
 }
