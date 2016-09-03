@@ -334,7 +334,11 @@ app.factory('serverCommunication', function ($http) {
             console.error(JSON.stringify(UserRole))
             $http.post('/Coachee/GetRecommendedCoach', iObj).then(iObj.successCallBack, iObj.failureCallBack)
         },
-
+        getProfileDetailsUserWise: function (iObj) {
+           console.error(iObj)     
+           $http.post('/Coachee/GetRecommendedCoach', iObj).then(iObj.successCallBack, iObj.failureCallBack)
+        },
+        
         getCoaches: function (iObj) {
             var req = {
                 method: 'POST',
@@ -530,9 +534,19 @@ app.factory('serverCommunication', function ($http) {
             }
             $http(req).then(iObj.successCallBack, iObj.failureCallBack);
         },
-
-        getConversationRequest: function (iObj) {
+        getAllConversationRequest: function (iObj) {
             console.log(iObj);
+            var req = {
+                method: 'POST',
+                url: '/Conversation/getAllConversationRequest',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                data: {  }
+            }
+            $http(req).then(iObj.successCallBack, iObj.failureCallBack);
+        },
+        getConversationRequest: function (iObj) {
             console.log(iObj);
             var req = {
                 method: 'POST',
@@ -542,19 +556,8 @@ app.factory('serverCommunication', function ($http) {
                 },
                 data: { ConversationType: iObj.ConversationType }
             }
-            $http(req).then(iObj.successCallBack, iObj.failureCallBack);
-            // $http.get('/Conversation/getConversationRequest').then(iObj.successCallBack, iObj.failureCallBack);
-            //var req = {
-            //    method: 'POST',
-            //    url: '/Conversation/getConversationRequest',
-            //    headers: {
-            //        'Content-Type': 'application/json'
-            //    },
-            //    data: { senderEmail: iObj.senderEmail, receiverEmail: iObj.receiverEmail }
-            //}
-            //$http(req).then(iObj.successCallBack, iObj.failureCallBack);
+            $http(req).then(iObj.successCallBack, iObj.failureCallBack);           
         },
-
         sendConversation: function (iObj) {
             console.error('sendConversation --------------- ', iObj);
             var _checkObj = angular.copy(iObj);

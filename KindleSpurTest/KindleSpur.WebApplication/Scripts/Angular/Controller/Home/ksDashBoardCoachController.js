@@ -868,6 +868,9 @@
             ConversationType: "Coaching",
             successCallBack: function (iObj) {
                 console.debug('Conversation Request Call', iObj);
+                for (var k = 0 ; k < iObj.data.Result.length ; k++) {
+                    iObj.data.Result[k].CreateDate = new Date(Number(iObj.data.Result[k].CreateDate.split('(')[1].split(')')[0]));
+                }
                 $scope.notificationData = $scope.notificationData.concat(iObj.data.Result);
                 $scope.loadingMiddleObject = { showLoading: false, loadingMessage: 'Loading' };
                 serverCommunication.getAllMeetingRequest({

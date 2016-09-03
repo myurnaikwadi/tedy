@@ -52,6 +52,10 @@ namespace KindleSpur.WebApplication.Controllers
         {
             return View();
         }
+        public ActionResult ksInboxView()
+        {
+            return View();
+        }
         public ActionResult ksCtcRole()
         {
             return View();

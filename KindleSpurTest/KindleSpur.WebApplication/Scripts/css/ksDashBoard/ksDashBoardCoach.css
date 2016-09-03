@@ -1199,14 +1199,15 @@ border: 1px solid #999;
     height: 0% !important;
     width: 100%;
     overflow:hidden;
+    transition: all 0.7s ease;
 }
 .gridViewLoadedClassForInbox {
     height: 93% !important;
-    transition: all 1s ease;
+    transition: all 0.7s ease;
 }
 .gridViewLoadedClassForDashBoard {
     height: 93% !important;
-    transition: all 1s ease;
+    transition: all 0.7s ease;
 }
 .gridViewLoadedParentClass {
     border: 1px solid lightgray;
@@ -1220,19 +1221,19 @@ border: 1px solid #999;
     width: 257px;   
     height: 219px !important;
     overflow-x: auto;
-    transition: all 1s ease;
+    transition: all 0.7s ease;
 }
 .rotateIconDownWord {
     transform: rotate(-90deg);
-    transition: all 1s ease;
+    transition: all 0.7s ease;
 }
 .rotateIconupWord {
     transform: rotate(90deg);
-    transition: all 1s ease;
+    transition: all 0.7s ease;
 }
 .inlineBlockClass {
     display:block;
-    transition: all 1s ease;
+    transition: all 0.7s ease;
         overflow-x: hidden;
     overflow-y: auto;
 }

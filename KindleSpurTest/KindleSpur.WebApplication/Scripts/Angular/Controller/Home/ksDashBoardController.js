@@ -1,13 +1,8 @@
 app.controller('ksMainDashBoardController', function ($timeout,$scope, $state, serverCommunication, $rootScope) {
         console.error('Dashoard load successfully')
+        window.dashBoard = $scope;
         $scope.loadingObject = { showLoading: true, loadingMessage: 'Loading' };
-        $rootScope.currentModule = 'DashBoard'
-        $scope.notificationsArr = [
-			    { notificationType: '1', name: 'YOU HAVE COACHING INVITE  FROM', assignPerson: 'HARSHADA D.' },
-			    { notificationType: '2', role: 'mentor', name: 'YOUR MEETING HAS BEEN SCHEDULED WITH SAGAR N  ON', meetingDate: '20/05/2016', meetingTime: '11:00PM', meetingTimeDiff: '1 HOUR' },
-			    { notificationType: '2', role: 'coachee', name: 'YOUR MEETING HAS BEEN SCHEDULED WITH SAGAR N  ON', meetingDate: '25/05/2016', meetingTime: '08:00AM', meetingTimeDiff: '2 HOUR' },
-			
-        ];
+        $rootScope.currentModule = 'DashBoard';
 		$scope.leftSideMenus = [{ name : 'DashBoard'},{ name : 'Profile'}]
 		$scope.applicationRole = [{ name: 'COACHEE', img: '../../Images/icons/coachee_logo.png', message: 'You need to be good, no, you need to be great at a skill, subject or sport.' }, { name: 'MENTEE', img: '../../Images/icons/mentee_logo.png', message: 'You wish to take the certain and efficient path to your success, handling all the changes and surprises on the way.' }, { name: 'COACH', img: '../../Images/icons/coach_logo.png', message: 'You help someone learn, improve and maximize at a skill, subject or sport.' }, { name: 'MENTOR', img: '../../Images/icons/mentor_logo.png', message: 'As an expert, you advise and develop a roadmap for people to make the right choices, to overcome hurdles, to grow and to be successful.' }]
 		$scope.roleClick = function (iEvent, iObj) {
@@ -46,60 +41,17 @@ app.controller('ksMainDashBoardController', function ($timeout,$scope, $state, s
             $state.go('login');
             authentification.logout({ loginObject : {}});
 		};
+		$scope.gridViewLoaded = false;
+		$scope.loadGridView = function (iEvent) {
+		    iEvent && iEvent.stopPrapagation();		  
+		    $rootScope.$broadcast("inboxListener", { gridViewLoaded: $scope.gridViewLoaded });
+		};
 
-        $scope.loadGridView = function () {
-            for (var k = 0 ; k < $scope.notificationData.length ; k++) {
-                $scope.notificationData[k].showFlag = false;
-            }
-            $timeout(function () {
-                for (var k = 0 ; k < $scope.notificationData.length ; k++) {
-                    $scope.notificationData[k].showFlag = true;
-                }
-            }, 600);
-        };
-
-		$scope.notificationData =[];
-        $scope.conversationRequest = function () {
-            console.error('Conversation Request Call');
-            $scope.notificationData = [];
-            serverCommunication.getConversationRequest({
-                ConversationType: "Coaching",
-                successCallBack: function (iObj) {
-                    console.debug('Conversation Request Call', iObj);
-                    $scope.notificationData = $scope.notificationData.concat(iObj.data.Result);
-                    $scope.loadingMiddleObject = { showLoading: false, loadingMessage: 'Loading' };
-                    serverCommunication.getAllMeetingRequest({
-                        ConversationType: "Coaching",
-                        successCallBack: function (iObj) {
-                            console.debug('In getAllMeetingRequest', iObj);                        
-                            for(var k = 0 ; k < iObj.data.Result.length ; k++){
-                                iObj.data.Result[k].Meeting.StartDate = new Date(Number(iObj.data.Result[k].Meeting.StartDate.split('(')[1].split(')')[0]));
-                                iObj.data.Result[k].Meeting.EndDate = new Date(Number(iObj.data.Result[k].Meeting.EndDate.split('(')[1].split(')')[0]));
-                            }
-                            $scope.notificationData = $scope.notificationData.concat(iObj.data.Result);
-                            $timeout(function () {
-                                for (var k = 0 ; k < $scope.notificationData.length ; k++) {                            
-                                    $scope.notificationData[k].showFlag = true;
-                                }                         
-                            }, 600);
-                      
-                            $scope.loadingMiddleObject = { showLoading: false, loadingMessage: 'Loading' };
-                        },
-                        failureCallBack: function (iObj) {
-                            console.debug('In failureCallBack', iObj);
-                        }
-                    });
-                },
-                failureCallBack: function (iObj) {
-                    console.debug('In failureCallBack', iObj);
-                }
-            });
-        };
+		$scope.notificationData =[];       
 		$scope.init = function () {
 		   
 		    $scope.trendingTopicLeftArray = [];
-		    $scope.trendingTopicRightArray = [];
-		    $scope.conversationRequest();
+		    $scope.trendingTopicRightArray = [];		  
 		    serverCommunication.getCoachTrandingTopic({
              loggedUserDetails: $rootScope.loggedDetail,
              successCallBack: function (iObj) {

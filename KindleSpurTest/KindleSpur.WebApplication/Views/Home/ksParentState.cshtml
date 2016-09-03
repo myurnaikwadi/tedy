@@ -68,6 +68,7 @@
         <div class="fullWidthHeightClass" style="display: flex;" ng-click="$event.stopPropagation()">
             <common-Repository ng-if="uiFlag.loadModule == 'Attachment'" extra-Param="extraParam" style="width:75%;height:85%;margin:auto;"></common-Repository>
             <schedule-Meeting  ng-if="uiFlag.loadModule == 'Meeting'"  extra-Param="extraParam" style="width:50%;height:60%;margin:auto;"></schedule-Meeting>
+            <profile-Page ng-if="uiFlag.loadModule == 'Profile'" load-Outside="true" user-Info="extraParam.userInfo" close-Popup="closeCallBack()" edit-Required="false" style="width:80%;height:80%;margin:auto;position: relative;background:white;overflow:auto;"></profile-Page>           
         </div>
     </div>
     <div class="applicationTopStrip" ui-view="topMainPanel"></div>

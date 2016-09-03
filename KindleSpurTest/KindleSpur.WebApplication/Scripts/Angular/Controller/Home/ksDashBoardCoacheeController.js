@@ -961,32 +961,23 @@
     $scope.notificationData = [];
     $scope.conversationRequest = function () {
         $scope.notificationData = [];
-        serverCommunication.getConversationRequest({
+        serverCommunication.getAllMeetingRequest({
+            ConversationType: "Coaching",
             successCallBack: function (iObj) {
-                console.debug('In successCallBack getConversationRequest', iObj);
+                console.debug('In getAllMeetingRequest', iObj);
+                for (var k = 0 ; k < iObj.data.Result.length ; k++) {
+                    iObj.data.Result[k].Meeting.StartDate = new Date(Number(iObj.data.Result[k].Meeting.StartDate.split('(')[1].split(')')[0]));
+                    iObj.data.Result[k].Meeting.EndDate = new Date(Number(iObj.data.Result[k].Meeting.EndDate.split('(')[1].split(')')[0]));
+                }
                 $scope.notificationData = $scope.notificationData.concat(iObj.data.Result);
-                $scope.loadingMessageObject = { showLoading: false, loadingMessage: 'Loading' };
-                serverCommunication.getAllMeetingRequest({
-                    ConversationType: "Coaching",
-                    successCallBack: function (iObj) {
-                        console.debug('In getAllMeetingRequest', iObj);
-                        for (var k = 0 ; k < iObj.data.Result.length ; k++) {
-                            iObj.data.Result[k].Meeting.StartDate = new Date(Number(iObj.data.Result[k].Meeting.StartDate.split('(')[1].split(')')[0]));
-                            iObj.data.Result[k].Meeting.EndDate = new Date(Number(iObj.data.Result[k].Meeting.EndDate.split('(')[1].split(')')[0]));
-                        }
-                        $scope.notificationData = $scope.notificationData.concat(iObj.data.Result);
-                        $timeout(function () {
-                            for (var k = 0 ; k < $scope.notificationData.length ; k++) {
-                                $scope.notificationData[k].showFlag = true;
-                            }
-                        }, 600);
-
-                        $scope.loadingMiddleObject = { showLoading: false, loadingMessage: 'Loading' };
-                    },
-                    failureCallBack: function (iObj) {
-                        console.debug('In failureCallBack', iObj);
+                $scope.loadingMiddleObject = { showLoading: false, loadingMessage: 'Loading' };
+                $timeout(function () {
+                    for (var k = 0 ; k < $scope.notificationData.length ; k++) {
+                        $scope.notificationData[k].showFlag = true;
                     }
-                });
+                }, 600);
+
+              
             },
             failureCallBack: function (iObj) {
                 console.debug('In failureCallBack', iObj);

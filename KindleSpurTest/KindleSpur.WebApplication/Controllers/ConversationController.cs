@@ -149,7 +149,45 @@ namespace KindleSpur.WebApplication.Controllers
 
             //return Content(result);
         }
+        public ActionResult getAllConversationRequest()
+        {
+            ConversationRepository _repo = new ConversationRepository();
+            //var result = _repo.GetConversationRequest(((IUser)Session["User"]).EmailAddress).ToJson();
+            List<Request> result = new List<Request>();
 
+            UserRepository ur = new UserRepository();
+            try
+            {
+                foreach (var value in _repo.GetAllConversationRequest(((IUser)Session["User"]).EmailAddress))
+                {
+                    IUser recevicedetails = ur.GetUserDetail(value["SenderEmail"].ToString());
+                    Request req = new Models.Request();
+                    req.FirstName = recevicedetails.FirstName;
+                    req.LastName = recevicedetails.LastName;
+                    req.EmailAddress = recevicedetails.EmailAddress;
+                    req.skill = value["skill"].ToString();
+                    req.SenderEmail = value["SenderEmail"].ToString();
+                    req.ReceiverEmail = value["ReceiverEmail"].ToString();
+                    req.ConversationType = value["ConversationType"].ToString();
+
+                    if (value["ConversationId"] == null) { req.ConversationId = null; } else { req.ConversationId = value["ConversationId"].ToString(); }
+                    if (value["ConversationParentId"] == null) { req.ConversationParentId = null; } else { req.ConversationParentId = value["ConversationParentId"].ToString(); }
+                    //req.ConversationType = value["ConversationType"].ToString();
+                    //recevicedetails.Add(new BsonElement("skill", value["skill"].ToString()));
+                    //recevicedetails.Add(new BsonElement("ConversationType", value["ConversationType"].ToString()));    
+                    result.Add(req);
+
+                }
+                return Json(new { Result = result }, JsonRequestBehavior.AllowGet);
+                //return Content(result);
+            }
+            catch (Exception)
+            {
+
+                return View("Error");
+            }
+
+        }
         public ActionResult getConversationRequest(string ConversationType)
         {
             ConversationRepository _repo = new ConversationRepository();

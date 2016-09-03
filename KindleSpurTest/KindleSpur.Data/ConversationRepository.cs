@@ -305,6 +305,48 @@ namespace KindleSpur.Data
         //    return result;
         //}
 
+
+        public List<BsonDocument> GetAllConversationRequest(string senderEmail)
+        {
+            List<BsonDocument> _categories = new List<BsonDocument>();
+
+            try
+            {
+
+                var _query = Query.And(Query<Conversation>.EQ(p => p.IsRejected, false), Query<Conversation>.EQ(p1 => p1.IsVerified, false), Query<Conversation>.EQ(p1 => p1.ReceiverEmail, senderEmail));
+
+                _categories = _conversationCollection.FindAs<BsonDocument>(_query).ToList();
+
+
+            }
+            catch (MongoException ex)
+            {
+
+                string message = "{ Error : 'Failed at GetConversationRequest().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ";
+                _logCollection.Insert(message);
+                throw new MongoException("New Conversation failure!!!");
+            }
+            catch (Exception e)
+            {
+                Exceptionhandle em = new Exceptionhandle();
+                em.Error = "Failed at GetConversationRequest()";
+                em.Log = e.Message.Replace("\r\n", "");
+                var st = new System.Diagnostics.StackTrace(e, true);
+                var frame = st.GetFrame(0);
+                var line = frame.GetFileLineNumber();
+                _logCollection.Insert(em);
+                throw new MongoException("Signup failure!!!");
+            }
+            finally
+            {
+
+            }
+
+            return _categories;
+
+
+        }
+    
         public List<BsonDocument> GetConversation(string ParentId, string ConversationType)
         {
             List<BsonDocument> _categories = new List<BsonDocument>();

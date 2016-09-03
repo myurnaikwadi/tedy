@@ -57,6 +57,12 @@
             }
         });
     };
+
+    $scope.closeCallBack = function (iEvent) {
+       // $scope.extraParam.closeCallBack();
+        $scope.extraParam.closeCallBack && ($scope.extraParam.closeCallBack());
+        $scope.extraParam.closeMainCallBack && ($scope.extraParam.closeMainCallBack());
+    };
     $scope.uiFlag = { loadRepository: false, loadBottomContain: false ,loadProfileView : false};
     $rootScope.$on("refreshStateHomeView", function (event, iObj) {
         console.error('refreshStateHomeView ---- ', iObj);
@@ -64,9 +70,6 @@
             case 'displayAlert': $scope.displayAlert = iObj.data; break;
             case "loadUpperSlider":
                 $scope.uiFlag.loadRepository = iObj.data.closeFlag ? false : true;
-                if (!iObj.data.closeFlag) {
-
-                }
                 $scope.uiFlag.loadModule = iObj.subType;
                 $scope.extraParam = iObj.data;
                 $scope.extraParam.closeCallBack = function () {

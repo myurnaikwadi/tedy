@@ -409,6 +409,7 @@
     <Content Include="Scripts\Angular\Controller\Home\ksVcsController.js" />
     <Content Include="Scripts\Angular\Services\ksCommonRepo.js" />
     <Content Include="Scripts\Angular\Services\ksGenericDirective.js" />
+    <Content Include="Scripts\Angular\Services\ksInbox.js" />
     <Content Include="Scripts\Angular\Services\ksIsotope.js" />
     <Content Include="Scripts\Angular\Services\ksMeetingScheduler.js" />
     <Content Include="Scripts\Angular\Services\ksPluginService.js" />
@@ -520,6 +521,7 @@
     <Content Include="Views\Home\ksCommonRepository.cshtml" />
     <Content Include="Views\Home\ksParentState.cshtml" />
     <Content Include="Views\Conversation\ksMeetingSchdule.cshtml" />
+    <Content Include="Views\Home\ksInboxView.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
