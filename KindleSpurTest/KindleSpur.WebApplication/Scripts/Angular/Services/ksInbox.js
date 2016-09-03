@@ -69,7 +69,7 @@
             $scope.viewProfileCall = function (iEvent,iUser) {
                 console.error(iUser);               
                 serverCommunication.getProfileDetailsUserWise({
-                    Role: iUser.skill,
+                    Role: iUser.ConversationType == 'Coaching' ? 'Coachee' : 'Mentee',
                     EmailAddress: iUser.EmailAddress,
                     successCallBack: function (iObj) {
                         console.log('In getProfileDetailsUserWise', iObj);
