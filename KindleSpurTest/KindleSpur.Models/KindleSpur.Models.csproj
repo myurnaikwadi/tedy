@@ -96,6 +96,7 @@
     <Compile Include="Interfaces\Repository\IUserRepository.cs" />
     <Compile Include="Invitation.cs" />
     <Compile Include="MeetingSchedular.cs" />
+    <Compile Include="MostRatedFeedback.cs" />
     <Compile Include="ProgramConducted.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PSRAndGamesVM.cs" />

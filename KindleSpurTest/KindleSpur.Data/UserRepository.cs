@@ -31,6 +31,8 @@ namespace KindleSpur.Data
             {
                 _logCollection = con.GetCollection("ErrorLogs");
                 _userCollection = con.GetCollection("UserDetails");
+                _coacheeOrMenteeCollection = con.GetCollection("CoacheeOrMentee");
+                _coachOrMentorCollection = con.GetCollection("CoachOrMentor");
             }
             catch (MongoException ex)
             {
@@ -288,6 +290,26 @@ namespace KindleSpur.Data
 
             }
             return _transactionStatus;
+        }
+
+        public List<MostRatedFeedback> GetMostRatedFeedback(string role, string emailAddress)
+        {
+            List<MostRatedFeedback> lstMostRatedFeedback = new List<MostRatedFeedback>();
+
+            var result = _coacheeOrMenteeCollection.FindOneAs<CoacheeOrMentee>(Query.And(Query.EQ("UserId", emailAddress), Query.EQ("Role", role)));
+            foreach (Feedback feedback in result.Feedbacks)
+            {
+                if (feedback.QueAndAns[8].Answer == "3" || feedback.QueAndAns[8].Answer == "4" || feedback.QueAndAns[8].Answer == "5")
+                {
+                    MostRatedFeedback mostRateFeedback = new MostRatedFeedback();
+                    mostRateFeedback.Rating = feedback.QueAndAns[8].Answer;
+                    mostRateFeedback.FeedbackGiver = feedback.Sender;
+                    mostRateFeedback.feedbackDate = feedback.CreateDate;
+                    lstMostRatedFeedback.Add(mostRateFeedback);
+                }
+            }
+            var result1 = lstMostRatedFeedback.OrderByDescending(C => C.Rating).ToList();
+            return result1;
         }
 
         public bool UpdatePassword(string emailAddress, string password)
@@ -877,7 +899,7 @@ namespace KindleSpur.Data
 
             return userDetail.ValueCreationActivity.ToJson();
         }
-    
+
 
         public bool uploadResourceFile(string EmailAddress, object[] filePath, string tagName, Dictionary<int, List<string>> filename)
         {
@@ -895,7 +917,7 @@ namespace KindleSpur.Data
                         FileUpload obj = new FileUpload();
                         obj.Id = ObjectId.GenerateNewId();
                         obj.FileId = Guid.NewGuid().ToString();
-                        
+
                         obj.FilePath = string.Format("FilePath/{0}", f.Value[0]);
                         obj.FileName = f.Value[0];
                         obj.ContentType = f.Value[1];

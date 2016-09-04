@@ -313,6 +313,14 @@ namespace KindleSpur.WebApplication.Controllers
         }
 
         [HttpPost]
+        public JsonResult GetMostRatedFeedback(string role, string emailAddress)
+        {
+            UserRepository _userRepo = new UserRepository();
+            return this.Json(_userRepo.GetMostRatedFeedback(role, emailAddress));
+        }
+
+
+        [HttpPost]
         public void AddVSCSActivity(VSCS _vscs)
         {
 

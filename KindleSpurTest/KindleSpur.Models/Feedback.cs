@@ -12,11 +12,11 @@ namespace KindleSpur.Models
     {
         public string Sender { get; set; }
         public DateTime CreateDate { get; set; }
-
         public Boolean FeedbackClosed { get; set; }
         public string FeedBackId { get; set; }
         public string Skill { get; set; }
         public int customerSatisfactionRating { get; set; }
         public List<QueAndAns> QueAndAns { get; set; }
+        public string FeedbackStatus { get; set; } //PRESESSION, FEEDBACK, CLOSESESSION
     }
 }
