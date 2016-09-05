@@ -323,19 +323,48 @@ namespace KindleSpur.Data
         public List<MostRatedFeedback> GetMostRatedFeedback(string role, string emailAddress)
         {
             List<MostRatedFeedback> lstMostRatedFeedback = new List<MostRatedFeedback>();
-
-            var result = _coacheeOrMenteeCollection.FindOneAs<CoacheeOrMentee>(Query.And(Query.EQ("UserId", emailAddress), Query.EQ("Role", role)));
-            foreach (Feedback feedback in result.Feedbacks)
+            CoacheeOrMentee coacheeOrMentee = new CoacheeOrMentee();
+            CoachOrMentor coachOrMentor = new CoachOrMentor();
+            
+            if (role == "All")
             {
-                if (feedback.QueAndAns[8].Answer == "3" || feedback.QueAndAns[8].Answer == "4" || feedback.QueAndAns[8].Answer == "5")
+                coacheeOrMentee = _coacheeOrMenteeCollection.FindOneAs<CoacheeOrMentee>(Query.EQ("UserId", emailAddress));
+                coachOrMentor = _coachOrMentorCollection.FindOneAs<CoachOrMentor>(Query.EQ("UserId", emailAddress));
+            }
+            else if (role == "Coach" || role == "Mentor")
+                coachOrMentor = _coachOrMentorCollection.FindOneAs<CoachOrMentor>(Query.And(Query.EQ("UserId", emailAddress), Query.EQ("Role", role)));
+            else if (role == "Coachee" || role == "Mentee")
+                coacheeOrMentee = _coacheeOrMenteeCollection.FindOneAs<CoacheeOrMentee>(Query.And(Query.EQ("UserId", emailAddress), Query.EQ("Role", role)));
+
+            if (coachOrMentor.Feedbacks != null)
+            {
+                foreach (Feedback feedback in coachOrMentor.Feedbacks)
                 {
-                    MostRatedFeedback mostRateFeedback = new MostRatedFeedback();
-                    mostRateFeedback.Rating = feedback.QueAndAns[8].Answer;
-                    mostRateFeedback.FeedbackGiver = feedback.Sender;
-                    mostRateFeedback.feedbackDate = feedback.CreateDate;
-                    lstMostRatedFeedback.Add(mostRateFeedback);
+                    if (feedback.QueAndAns[8].Answer == "3" || feedback.QueAndAns[8].Answer == "4" || feedback.QueAndAns[8].Answer == "5")
+                    {
+                        MostRatedFeedback mostRateFeedback = new MostRatedFeedback();
+                        mostRateFeedback.Rating = feedback.QueAndAns[8].Answer;
+                        mostRateFeedback.FeedbackGiver = feedback.Sender;
+                        mostRateFeedback.feedbackDate = feedback.CreateDate;
+                        lstMostRatedFeedback.Add(mostRateFeedback);
+                    }
                 }
             }
+            if (coacheeOrMentee.Feedbacks != null)
+            {
+                foreach (Feedback feedback in coacheeOrMentee.Feedbacks)
+                {
+                    if (feedback.QueAndAns[8].Answer == "3" || feedback.QueAndAns[8].Answer == "4" || feedback.QueAndAns[8].Answer == "5")
+                    {
+                        MostRatedFeedback mostRateFeedback = new MostRatedFeedback();
+                        mostRateFeedback.Rating = feedback.QueAndAns[8].Answer;
+                        mostRateFeedback.FeedbackGiver = feedback.Sender;
+                        mostRateFeedback.feedbackDate = feedback.CreateDate;
+                        lstMostRatedFeedback.Add(mostRateFeedback);
+                    }
+                }
+            }
+
             var result1 = lstMostRatedFeedback.OrderByDescending(C => C.Rating).ToList();
             return result1;
         }

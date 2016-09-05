@@ -12,5 +12,6 @@ namespace KindleSpur.Models
         public string SkillOrTopic { get; set; }
         public DateTime feedbackDate { get; set; }
         public string FeedbackGiver { get; set; }
+        public string Role { get; set; }
     }
 }
