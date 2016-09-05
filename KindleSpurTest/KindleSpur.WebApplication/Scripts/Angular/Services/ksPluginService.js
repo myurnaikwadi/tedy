@@ -86,7 +86,7 @@ app.directive('monthly', function (dateServiceForMonthlyCalendar, $rootScope, se
                 }
                 console.error($scope.monthlyArray)
                 serverCommunication.GetAllMeetingPerMonth({
-                    ConversationType: "Mentoring",
+                  //  ConversationType: "Mentoring",
                     FromDate: $scope.monthlyArray[0].cellDate.toJSON(),
                     ToDate: $scope.monthlyArray[$scope.monthlyArray.length-1].cellDate.toJSON(),
                     successCallBack: function (iObj) {

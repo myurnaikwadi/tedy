@@ -427,7 +427,7 @@ app.factory('serverCommunication', function ($http) {
             // $http.post(_str, iObj.loggedUserDetails).then(iObj.successCallBack, iObj.failureCallBack)
             var req = {
                 method: 'POST',
-                url: '',
+                url: '/User/GetFeedback',
                 headers: {
                     'Content-Type': 'application/json'
                 },
@@ -449,15 +449,15 @@ app.factory('serverCommunication', function ($http) {
             // $http.post(_str, iObj.loggedUserDetails).then(iObj.successCallBack, iObj.failureCallBack)
             var req = {
                 method: 'POST',
-                url: '',
+                url: '/User/GetMostRatedFeedback',
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                data: { EmailAddress: iObj.EmailAddress },
+                data: { EmailAddress: iObj.EmailAddress, role: iObj.role },
                 traditional: true
             }
             console.error(req);
-            //  $http(req).then(iObj.successCallBack, iObj.failureCallBack);
+            $http(req).then(iObj.successCallBack, iObj.failureCallBack);
 
         },
 

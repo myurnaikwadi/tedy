@@ -145,10 +145,11 @@
         }, 1500);
         var _object = {
             EmailAddress: $scope.userInfo.EmailAddress,
+            role : 'All',
             successCallBack: function (iObj) {
                 console.error('In successCallBack', iObj);
             },
-            failureCallBack: function () {
+            failureCallBack: function (iObj) {
                 console.error('In failureCallBack', iObj);
             }
         }
