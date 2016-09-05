@@ -124,6 +124,7 @@ namespace KindleSpur.Data
         public bool UpdateConversationStatus(string senderEmail, string receiverEmail, string content, bool isVerified, bool isRejected, string ConversationType, string ParentId, string skill)
         {
             bool _transactionStatus = false;
+            CoachOrMentor coach = null;
             try
             {
 
@@ -136,7 +137,10 @@ namespace KindleSpur.Data
                 {
                     MongoCollection _coachOrMentorCollection;
                     _coachOrMentorCollection = con.GetCollection("CoachOrMentor");
-                    CoachOrMentor coach = _coachOrMentorCollection.FindOneAs<CoachOrMentor>(Query.And(Query.EQ("UserId", senderEmail), Query.EQ("Role", "Coach")));
+                    if(ConversationType == "Coaching")
+                     coach = _coachOrMentorCollection.FindOneAs<CoachOrMentor>(Query.And(Query.EQ("UserId", senderEmail), Query.EQ("Role", "Coach")));
+                    else if(ConversationType == "Mentoring")
+                     coach = _coachOrMentorCollection.FindOneAs<CoachOrMentor>(Query.And(Query.EQ("UserId", senderEmail), Query.EQ("Role", "Mentor")));
                     if (coach.CoachingStatus == null) coach.CoachingStatus = new List<ICoachingStatus>();
                     CoachingStatus coachingStatus = new CoachingStatus();
                     coachingStatus.CreateDate = DateTime.Now;
