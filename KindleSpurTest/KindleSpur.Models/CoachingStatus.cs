@@ -1,4 +1,6 @@
 ﻿using KindleSpur.Models.Interfaces;
+using MongoDB.Bson;
+using MongoDB.Bson.Serialization.Attributes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +11,11 @@ namespace KindleSpur.Models
 {
     public class CoachingStatus : ICoachingStatus
     {
+        [BsonId]
+        public ObjectId Id
+        {
+            get; set;
+        }
         public string Sender { get; set; }
         public DateTime CreateDate { get; set; }
         public string Skill { get; set; }

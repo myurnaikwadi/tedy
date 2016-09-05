@@ -12,6 +12,7 @@ using MongoDB.Driver.Builders;
 using MongoDB.Bson;
 using System.Collections;
 using System.Diagnostics;
+using MongoDB.Bson.Serialization;
 
 namespace KindleSpur.Data
 {
@@ -25,6 +26,7 @@ namespace KindleSpur.Data
         MongoCollection _coachOrMentorCollection;
 
 
+
         public UserRepository()
         {
             try
@@ -33,11 +35,37 @@ namespace KindleSpur.Data
                 _userCollection = con.GetCollection("UserDetails");
                 _coacheeOrMenteeCollection = con.GetCollection("CoacheeOrMentee");
                 _coachOrMentorCollection = con.GetCollection("CoachOrMentor");
+                BsonClassMapForDeserializing();
             }
             catch (MongoException ex)
             {
                 _logCollection.Insert("{ Error : 'Database connection failed.', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ");
             }
+        }
+
+        private void BsonClassMapForDeserializing()
+        {
+            if (!BsonClassMap.IsClassMapRegistered(typeof(Feedback)))
+            {
+                BsonClassMap.RegisterClassMap<Feedback>();
+            }
+            if (!BsonClassMap.IsClassMapRegistered(typeof(CoachingStatus)))
+            {
+                BsonClassMap.RegisterClassMap<CoachingStatus>();
+            }
+            if (!BsonClassMap.IsClassMapRegistered(typeof(CoachOrMentor)))
+            {
+                BsonClassMap.RegisterClassMap<CoachOrMentor>();
+            }
+            if (!BsonClassMap.IsClassMapRegistered(typeof(CoacheeOrMentee)))
+            {
+                BsonClassMap.RegisterClassMap<CoacheeOrMentee>();
+            }
+            if (!BsonClassMap.IsClassMapRegistered(typeof(User)))
+            {
+                BsonClassMap.RegisterClassMap<User>();
+            }
+
         }
 
         public UserRepository(string emailAddress) : this()

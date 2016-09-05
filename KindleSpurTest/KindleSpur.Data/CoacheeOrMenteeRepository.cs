@@ -475,9 +475,16 @@ namespace KindleSpur.Data
             try
             {
                 if (Role == "Coachee")
+                {
                     entity = _coacheeOrMenteeCollection.FindOneAs<CoacheeOrMentee>(Query.And(Query.EQ("UserId", feedback.Sender), Query.EQ("Role", Role)));
+                    coachOrMentorEntity = _coachOrMentorCollection.FindOneAs<CoachOrMentor>(Query.And(Query.EQ("UserId", UserId), Query.EQ("Role", "Coach")));
+                }
                 else if (Role == "Mentee")
+                {
                     entity = _coacheeOrMenteeCollection.FindOneAs<CoacheeOrMentee>(Query.And(Query.EQ("UserId", feedback.Sender), Query.EQ("Role", Role)));
+                    coachOrMentorEntity = _coachOrMentorCollection.FindOneAs<CoachOrMentor>(Query.And(Query.EQ("UserId", UserId), Query.EQ("Role", "Mentor")));
+                }
+
                 entity.FeedbackPoints += feedback.customerSatisfactionRating;
                 
                 if (entity.Feedbacks == null) entity.Feedbacks = new List<IFeedback>();
@@ -486,12 +493,6 @@ namespace KindleSpur.Data
                 feedback.Sender = UserId;
                 feedback.CreateDate = DateTime.Now;
                 entity.Feedbacks.Add(feedback);
-
-                ICoachingStatus coachingStatus = entity.CoachingStatus.Find(x => x.Sender == feedback.Sender && x.Skill == feedback.Skill);
-                coachingStatus.customerSatisfactionRating = feedback.customerSatisfactionRating;
-                coachingStatus.FeedBackCount += 1;
-                coachingStatus.FeedbackClosed = feedback.FeedbackClosed;
-
 
                 _coacheeOrMenteeCollection.Save(entity);
 
@@ -502,8 +503,15 @@ namespace KindleSpur.Data
                 _users.Save(user);
 
                 
-                coachOrMentorEntity = _coachOrMentorCollection.FindOneAs<CoachOrMentor>(Query.EQ("UserId", UserId));
+               // coachOrMentorEntity = _coachOrMentorCollection.FindOneAs<CoachOrMentor>(Query.EQ("UserId", UserId));
                 coachOrMentorEntity.RewardPointsGained += 5;
+
+                ICoachingStatus coachingStatus = coachOrMentorEntity.CoachingStatus.Find(x => x.Sender == entity.UserId && x.Skill == feedback.Skill);
+                coachingStatus.customerSatisfactionRating = feedback.customerSatisfactionRating;
+                coachingStatus.FeedBackCount += 1;
+                coachingStatus.FeedbackClosed = feedback.FeedbackClosed;
+
+                coachOrMentorEntity.CoachingStatus.Add(coachingStatus);
                 _coachOrMentorCollection.Save(coachOrMentorEntity);
                 _transactionStatus = true;
                 return user.TotalRewardPoints;
@@ -640,14 +648,14 @@ namespace KindleSpur.Data
                                       Rating = grp.OrderByDescending(t => t.customerSatisfactionRating).FirstOrDefault().customerSatisfactionRating
                                   }).ToList();
 
-                        if (result.Count() > 0)
-                        {
+                        //if (result.Count() > 0)
+                        //{
                             for (var i = 0; i < result.Count(); i++)
                             {
                                 result[i] = GetCocheeDetails(result[i]);
                                 result[i].TreeURL = GetTreeURL(result[i].FeedbackCount, result[i].Rating);
                             }
-                        }
+                       // }
                     }
                 }
 
