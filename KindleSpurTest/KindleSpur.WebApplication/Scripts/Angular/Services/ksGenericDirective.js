@@ -1671,12 +1671,12 @@ app.directive('feedbackPage', function ($state, serverCommunication, $timeout, $
                 if ($scope.feedbackType == 'preSession') {
                     _message = "Feedback Form has been filled by " + $rootScope.loggedDetail.EmailAddress;
                 } else if ($scope.feedbackType == 'closeSession') {
-                    _message = $scope.convObject.ConversationType.toUpperCase() + " " + $scope.convObject.skill + " " + 'WAS CLOSED';
+                    _message = $scope.convObject.ConversationType + " " + $scope.convObject.skill + " " + 'was closed';
                 }
                 var _object = {
                     Content: _message,
-                    SenderEmail: $rootScope.loggedDetail.EmailAddress,
-                    ReceiverEmail: $scope.sender,
+                    SenderEmail: $scope.convObject.SenderEmail,//$rootScope.loggedDetail.EmailAddress,
+                    ReceiverEmail: $scope.convObject.ReceiverEmail,// $scope.sender,
                     SendOrReceive: 'Send',
                     IsVerified: true,
                     ConversationClosed: $scope.feedbackType == 'closeSession' ? true : false,

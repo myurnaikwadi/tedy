@@ -699,5 +699,22 @@ width: 40%;
 .highlightedGrayColorClass {
     background-color: #CBCBCB !important;
     color: white !important;
-
+}
+.systemMessageClass {
+    margin-left: 23% !important;
+    box-shadow: none; 
+    border: 1px solid #ccc;
+    display: flex;
+    padding: 5px;
+    background: #ddd;
+        max-width: 50% !important;
+       
+     float: left; 
+    margin: auto;
+    border-radius: 0px !important;
+}
+.systemMessageClass h5 {
+    color : #999 !important;
+    margin: auto !important;
+     word-break:break-all;
 }

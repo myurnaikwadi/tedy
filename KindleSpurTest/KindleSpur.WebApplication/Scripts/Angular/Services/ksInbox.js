@@ -15,7 +15,7 @@
             $scope.loggedEmail = $rootScope.loggedDetail.EmailAddress;
             $scope.updateConversation = function (isVerfied, SenderEmail, ReceiverEmail, iNotificationDash) {
                 //$scope.conversation.IsVerified = isVerfied;
-                debugger
+               // debugger
                 console.error(iNotificationDash);
                 var contentText = "";
                 if (isVerfied != false)

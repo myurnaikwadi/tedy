@@ -347,19 +347,19 @@ namespace KindleSpur.WebApplication.Controllers
                 User receiverUserDetails = (User)userRepo.GetUserDetail(_obj.ReceiverEmail);
                 if (_repo.UpdateConversationStatus(_obj.SenderEmail, _obj.ReceiverEmail, _obj.Content, _obj.IsVerified,_obj.IsRejected, _obj.ConversationType, _obj.ConversationParentId, _obj.skill))
                 {
-                    string senderFirstName = ((IUser)System.Web.HttpContext.Current.Session["User"]).FirstName;
-                    string senderLastName = ((IUser)System.Web.HttpContext.Current.Session["User"]).LastName;
-                    string uri = Request.Url.AbsoluteUri.ToString();
-                    var list = new List<KeyValuePair<string, string>>()
-                        {
-                            new KeyValuePair<string, string>("SenderFirstName", senderFirstName),
-                            new KeyValuePair<string, string>("SenderLastName", senderLastName),
-                            new KeyValuePair<string, string>("ReceiverName", receiverUserDetails.FirstName),
-                            new KeyValuePair<string, string>("Uri", uri),
-                            new KeyValuePair<string, string>("Role",_obj.ConversationType),
-                        };
-                    EmailNotification.MentoringCoachingAcceptDeclineEmail(_obj, list);
-                    TempData["StatusMessage"] = "Please check your mail for status of conversation!!!";
+                    //string senderFirstName = ((IUser)System.Web.HttpContext.Current.Session["User"]).FirstName;
+                    //string senderLastName = ((IUser)System.Web.HttpContext.Current.Session["User"]).LastName;
+                    //string uri = Request.Url.AbsoluteUri.ToString();
+                    //var list = new List<KeyValuePair<string, string>>()
+                    //    {
+                    //        new KeyValuePair<string, string>("SenderFirstName", senderFirstName),
+                    //        new KeyValuePair<string, string>("SenderLastName", senderLastName),
+                    //        new KeyValuePair<string, string>("ReceiverName", receiverUserDetails.FirstName),
+                    //        new KeyValuePair<string, string>("Uri", uri),
+                    //        new KeyValuePair<string, string>("Role",_obj.ConversationType),
+                    //    };
+                  //  EmailNotification.MentoringCoachingAcceptDeclineEmail(_obj, list);
+                  //  TempData["StatusMessage"] = "Please check your mail for status of conversation!!!";
                 }
             }
             catch (Exception ex)

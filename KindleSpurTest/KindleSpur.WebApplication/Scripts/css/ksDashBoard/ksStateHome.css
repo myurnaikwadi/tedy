@@ -76,12 +76,11 @@
 }
 .meetingSubject textarea{
     margin: auto;
-        margin-bottom: 0;
+    margin-bottom: 0;
     width: 80%;
-     float: left;
+    float: left;
     height: 60%;
     resize: none;
-   
     font-size: 16px;
     border: 0px solid;
     border-bottom: 1px solid;
