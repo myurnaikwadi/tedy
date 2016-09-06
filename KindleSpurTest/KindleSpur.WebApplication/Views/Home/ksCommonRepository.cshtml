@@ -71,8 +71,8 @@
                     </div>
                     <div style="height:11%;width: 100%;float:left;display: flex;" ng-show="extraParam.AttachMode == false">
                         @*<input class="signupButton fontClass btn btn-default" type="button" value="Share" style="margin: auto;margin-right: 0;padding: 0;width: 115px;" />*@
-                        <input class="signupButton fontClass btn btn-default" type="button" value="Upload" ng-click="loadUploadPopup()" style="margin: auto;margin-right: 0;padding: 0;width: 115px;" />
-                        <input class="signupButton fontClass btn btn-default" ng-click="deleteAttachment({ deleteMultiple : true , type : 'artifact' , deletedObject : null })" type="button" value="Delete" style="margin: auto;padding: 0;width: 115px;" />
+                        <input class="signupButton fontClass btn btn-default" type="button" value="Upload" ng-click="loadUploadPopup()" style="margin: auto;margin-right: 0;padding: 0;" />
+                        <input class="signupButton fontClass btn btn-default" ng-click="deleteAttachment({ deleteMultiple : true , type : 'artifact' , deletedObject : null })" type="button" value="Delete" style="margin: auto;padding: 0;" />
                     </div>                   
                 </div>
 
@@ -108,7 +108,7 @@
                         </div>
                         <div style="height:11%;width: 100%;float:left;display: flex;" ng-show="extraParam.AttachMode == false">
                             @*<input class="signupButton fontClass btn btn-default" type="button" value="Share" style="margin: auto;width: 115px;padding: 0;margin-right: 0;" />*@
-                            <input class="signupButton fontClass btn btn-default" ng-click="deleteAttachment({ deleteMultiple : true , type : 'bookMark' , deletedObject : null })" type="button" value="Delete" style="margin: auto;width: 115px;padding: 0;" />
+                            <input class="signupButton fontClass btn btn-default" ng-click="deleteAttachment({ deleteMultiple : true , type : 'bookMark' , deletedObject : null })" type="button" value="Delete" style="margin: auto;padding: 0;" />
                         </div>
                     </div>
                 </div>

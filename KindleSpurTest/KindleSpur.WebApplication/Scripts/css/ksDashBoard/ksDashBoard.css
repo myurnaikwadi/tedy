@@ -1152,7 +1152,7 @@ width: 20%;
 }
 .loadBottomContain {
     width: 0%;
-    display : block !important;
+    display : flex !important;
     height: 0%;
     z-index: 2;
     bottom: 0;

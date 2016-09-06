@@ -10,14 +10,14 @@
             </div>
             <div class="meetingSubjectTwo">
                 <div class="meetingPersonNameParent">
-                    <h4 class="meetingWizName fontClass">Meeting schedule with</h4>
+                    <h5 style="font-weight:bold;font-size:15px;"class="meetingWizName fontClass">ATTENDEE</h5>
                 </div>
                 <div class="meetingInvitee">
                     <div class="imageConversation">
-                        <img style="border: 2px solid white;margin:auto;width: 60px;height: 60px;border-radius: 50%;" ng-src="{{loggedDetail.Photo ?  loggedDetail.Photo  : '../../../Images/icons/If no Profile photo.png'}}" />
+                        <img style="border: 2px solid white;margin:auto;width: 52px;height: 48px;border-radius: 50%;" ng-src="{{loggedDetail.Photo ?  loggedDetail.Photo  : '../../../Images/icons/If no Profile photo.png'}}" />
                     </div>
                     <div class="meetingPersonNameStrc" style="margin-left: 0;">
-                        <h5 style="font-size: 15px;color:black;" class="leftSideMenuLable fontClass eliipsisClass">{{(extraParam.openConversation.FirstName+" "+extraParam.openConversation.LastName) | uppercase}}</h5>
+                        <h5 style="color:black;font-weight:bold" class="leftSideMenuLable fontClass eliipsisClass">{{(extraParam.openConversation.FirstName+" "+extraParam.openConversation.LastName) | uppercase}}</h5>
                     </div>
                 </div>
             </div>
@@ -59,8 +59,8 @@
             <h5 class="meetingPersonName fontClass eliipsisClass" style="color:red;margin-left:auto;">Conflit Time ! You have already meeting with.</h5>
         </div>
         <div class="schedularBottom">
-            <button type="button" style="margin: auto;width: 15%;padding: 0%;margin-right: 7%;height: 22px;font-size: 9px;" ng-click="saveSchedular()" class="signupButton fontClass btn btn-default">SEND</button>
-            <button type="button" style="margin: auto;width: 15%;padding: 0%;margin-left: 0;height: 22px;font-size: 9px;" ng-click="closePopup()" class="signupButton fontClass btn btn-default">CANCEL</button>
+            <button type="button" style="margin: auto;margin-right: 7%;font-size: 9px;padding: 0px;" ng-click="saveSchedular()" class="signupButton fontClass btn btn-default">SEND</button>
+            <button type="button" style="margin: auto;padding: 0%;margin-left: 0;font-size: 9px;" ng-click="closePopup()" class="signupButton fontClass btn btn-default">CANCEL</button>
         </div>
     </div>
 </div>

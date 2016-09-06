@@ -165,9 +165,10 @@ float: left;
     opacity: 1.4;
 }
 .bottomStripOption{
+    display: flex;
 	position: relative;
     float: left;
-    margin: auto
+    margin: auto;
 }
 .bottomStripOption li{
 	position: relative;

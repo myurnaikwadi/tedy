@@ -186,7 +186,7 @@ app.directive('bottomMainStrip', function ($timeout, $rootScope) {
         scope: {
 
         },
-        template: '<div style="float: left;width: 100%;height: 100%;display: flex;"><div ng-style="styleToLeftStrip" style="float:left;position:relative;heigth:100%;"></div><ul class="bottomStripOption"><li class="fontClass" ng-repeat = "option in bottomOptionArray" ng-click="loadAttachment()">{{ option.name}}</li></ul></div>',
+        template: '<div style="float: left;width: 100%;height: 100%;display: flex;"><div ng-style="styleToLeftStrip" style="float:left;position:relative;heigth:100%;"></div><div class="bottomStripOption"><h6 style="margin:10px;font-size: 11px;"class="fontClass biottomStripMargin genericPointerClass" ng-repeat = "option in bottomOptionArray" ng-click="loadAttachment()">{{ option.name}}</h6></div></div>',
         //scope: true,   // optionally create a child scope
         controller: function ($scope) {
             console.error($scope);
