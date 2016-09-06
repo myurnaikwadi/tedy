@@ -323,50 +323,77 @@ namespace KindleSpur.Data
         public List<MostRatedFeedback> GetMostRatedFeedback(string role, string emailAddress)
         {
             List<MostRatedFeedback> lstMostRatedFeedback = new List<MostRatedFeedback>();
-            CoacheeOrMentee coacheeOrMentee = new CoacheeOrMentee();
-            CoachOrMentor coachOrMentor = new CoachOrMentor();
-            
+            MongoCursor<CoacheeOrMentee> coacheeOrMentee;
+            MongoCursor<CoachOrMentor> coachOrMentor;
+            List<CoacheeOrMentee> listcoacheeOrMentee = new List<CoacheeOrMentee>();
+            List<CoachOrMentor> listcoachOrMentor = new List<CoachOrMentor>();
+
             if (role == "All")
             {
-                coacheeOrMentee = _coacheeOrMenteeCollection.FindOneAs<CoacheeOrMentee>(Query.EQ("UserId", emailAddress));
-                coachOrMentor = _coachOrMentorCollection.FindOneAs<CoachOrMentor>(Query.EQ("UserId", emailAddress));
+                coacheeOrMentee = _coacheeOrMenteeCollection.FindAs<CoacheeOrMentee>(Query.EQ("UserId", emailAddress));
+                listcoacheeOrMentee = coacheeOrMentee.ToList();
+
+                coachOrMentor = _coachOrMentorCollection.FindAs<CoachOrMentor>(Query.EQ("UserId", emailAddress));
+                listcoachOrMentor = coachOrMentor.ToList();
             }
             else if (role == "Coach" || role == "Mentor")
-                coachOrMentor = _coachOrMentorCollection.FindOneAs<CoachOrMentor>(Query.And(Query.EQ("UserId", emailAddress), Query.EQ("Role", role)));
+            {
+                coachOrMentor = _coachOrMentorCollection.FindAs<CoachOrMentor>(Query.And(Query.EQ("UserId", emailAddress), Query.EQ("Role", role)));
+                listcoachOrMentor = coachOrMentor.ToList();
+            }
             else if (role == "Coachee" || role == "Mentee")
-                coacheeOrMentee = _coacheeOrMenteeCollection.FindOneAs<CoacheeOrMentee>(Query.And(Query.EQ("UserId", emailAddress), Query.EQ("Role", role)));
-
-            if (coachOrMentor.Feedbacks != null)
             {
-                foreach (Feedback feedback in coachOrMentor.Feedbacks)
+                coacheeOrMentee = _coacheeOrMenteeCollection.FindAs<CoacheeOrMentee>(Query.And(Query.EQ("UserId", emailAddress), Query.EQ("Role", role)));
+                listcoacheeOrMentee = coacheeOrMentee.ToList();
+            }
+
+            if (listcoachOrMentor.Count > 0)
+            {
+                for (int userListCount = 0; userListCount < listcoachOrMentor.Count; userListCount++)
                 {
-                    if (feedback.QueAndAns[8].Answer == "3" || feedback.QueAndAns[8].Answer == "4" || feedback.QueAndAns[8].Answer == "5")
+                    if (listcoachOrMentor[userListCount].Feedbacks != null)
                     {
-                        MostRatedFeedback mostRateFeedback = new MostRatedFeedback();
-                        mostRateFeedback.Rating = feedback.QueAndAns[8].Answer;
-                        mostRateFeedback.FeedbackGiver = feedback.Sender;
-                        mostRateFeedback.feedbackDate = feedback.CreateDate;
-                        lstMostRatedFeedback.Add(mostRateFeedback);
+                        foreach (Feedback feedback in listcoachOrMentor[userListCount].Feedbacks)
+                        {
+                            if ((feedback.QueAndAns[7].Answer == "3" || feedback.QueAndAns[7].Answer == "4" || feedback.QueAndAns[7].Answer == "5") && (feedback.FeedbackClosed == true))
+                            {
+                                MostRatedFeedback mostRateFeedback = new MostRatedFeedback();
+                                mostRateFeedback.Rating = feedback.QueAndAns[7].Answer;
+                                mostRateFeedback.FeedbackGiver = feedback.Sender;
+                                mostRateFeedback.feedbackDate = feedback.CreateDate;
+                                mostRateFeedback.SkillOrTopic = feedback.Skill;
+                                mostRateFeedback.Role = listcoacheeOrMentee[userListCount].Role;
+                                lstMostRatedFeedback.Add(mostRateFeedback);
+                            }
+                        }
                     }
                 }
             }
-            if (coacheeOrMentee.Feedbacks != null)
+            if (listcoacheeOrMentee.Count > 0)
             {
-                foreach (Feedback feedback in coacheeOrMentee.Feedbacks)
+                for (int userListCount = 0; userListCount < listcoacheeOrMentee.Count; userListCount++)
                 {
-                    if (feedback.QueAndAns[8].Answer == "3" || feedback.QueAndAns[8].Answer == "4" || feedback.QueAndAns[8].Answer == "5")
+                    if (listcoacheeOrMentee[userListCount].Feedbacks != null)
                     {
-                        MostRatedFeedback mostRateFeedback = new MostRatedFeedback();
-                        mostRateFeedback.Rating = feedback.QueAndAns[8].Answer;
-                        mostRateFeedback.FeedbackGiver = feedback.Sender;
-                        mostRateFeedback.feedbackDate = feedback.CreateDate;
-                        lstMostRatedFeedback.Add(mostRateFeedback);
+                        foreach (Feedback feedback in listcoacheeOrMentee[userListCount].Feedbacks)
+                        {
+                            if ((feedback.QueAndAns[7].Answer == "3" || feedback.QueAndAns[7].Answer == "4" || feedback.QueAndAns[7].Answer == "5") && (feedback.FeedbackClosed == true))
+                            {
+                                MostRatedFeedback mostRateFeedback = new MostRatedFeedback();
+                                mostRateFeedback.Rating = feedback.QueAndAns[7].Answer;
+                                mostRateFeedback.FeedbackGiver = feedback.Sender;
+                                mostRateFeedback.feedbackDate = feedback.CreateDate;
+                                mostRateFeedback.SkillOrTopic = feedback.Skill;
+                                mostRateFeedback.Role = listcoacheeOrMentee[userListCount].Role;
+                                lstMostRatedFeedback.Add(mostRateFeedback);
+                            }
+                        }
                     }
                 }
             }
 
-            var result1 = lstMostRatedFeedback.OrderByDescending(C => C.Rating).ToList();
-            return result1;
+            var result = lstMostRatedFeedback.OrderByDescending(C => C.Rating).ToList();
+            return result;
         }
 
         public bool UpdatePassword(string emailAddress, string password)
