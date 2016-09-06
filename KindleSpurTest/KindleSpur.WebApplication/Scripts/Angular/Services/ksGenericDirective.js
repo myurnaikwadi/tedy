@@ -1724,11 +1724,11 @@ app.directive('feedbackPage', function ($state, serverCommunication, $timeout, $
                     if ($scope.feedBack.feedBackDetails[_key]) {
                         _feedBacks.push({ Question: _key, Answer: $scope.feedBack.feedBackDetails[_key].actionValue });
                     }
-                    //    if ($scope.feedBack.feedBackDetails[_key].sessionRating) {
-                    //        _rating = $scope.feedBack.feedBackDetails[_key].actionValue;
-                    //    }
+                        if ($scope.feedBack.feedBackDetails[_key].sessionRating) {
+                            _rating = $scope.feedBack.feedBackDetails[_key].actionValue;
+                        }
                 }
-                console.error(_feedBacks);
+                console.error(_rating)
                 var _objectPassed = {
                     FeedbackType: $scope.feedbackType, FeedBacks: _feedBacks, FeedBackId: _id, FeedbackClosed: $scope.feedbackClosed, Sender: $scope.sender, Skill: $scope.convObject.skill, customerSatisfactionRating: _rating
                 };
@@ -1773,10 +1773,11 @@ app.directive('feedbackPage', function ($state, serverCommunication, $timeout, $
                     if ($scope.feedBack.feedBackDetails[_key]) {
                         _feedBacks.push({ Question: _key, Answer: $scope.feedBack.feedBackDetails[_key].actionValue });
                     }
-                    //    if ($scope.feedBack.feedBackDetails[_key].sessionRating) {
-                    //        _rating = $scope.feedBack.feedBackDetails[_key].actionValue;
-                    //    }
+                        if ($scope.feedBack.feedBackDetails[_key].sessionRating) {
+                            _rating = $scope.feedBack.feedBackDetails[_key].actionValue;
+                       }
                 }
+                console.error(_rating)
                 var _objectPassed = {
                     FeedbackType: $scope.feedbackType, FeedBacks: _feedBacks, FeedBackId: _id, FeedbackClosed: $scope.feedbackClosed, Sender: $scope.sender, Skill: $scope.convObject.skill, customerSatisfactionRating: _rating
                 };

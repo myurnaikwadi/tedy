@@ -124,30 +124,47 @@
         }, 1900);
     };
 
+    $scope.showRatingColor = function (iIndex, iQuestion) {
+        console.error('showRatingColor');
+        var _indexArray = []
+        for (var j = 1 ; j <= iIndex ; j++) {
+            if (_indexArray.indexOf(j) == -1)
+                _indexArray.push(j);
+        }
+        return _indexArray;
+    };
+
     $scope.loadFeedBacks = function () {
 
         $scope.feedBackArray = [
-             { name: 'What do you appreciate the most in your interactions with the mentee ? ', showLoad: false, rating: 4, AsPerRole: 'Coach', ratingArray: [] },
-             { name: 'Is the coachee/mentee able to grasp the ideas discussed?', showLoad: false, rating: 3, AsPerRole: 'Mentee', ratingArray: [] },
-             { name: 'What are the Strong Qualities of the Mentee/ Coachee ?', showLoad: false, rating: 5, AsPerRole: 'Mentor', ratingArray: [] },
-             { name: 'What are the areas where the Mentee needs to Improve ? ', showLoad: false, rating: 2, AsPerRole: 'Coachee', ratingArray: [] },
-             { name: 'Are there any critical areas where Mentee/ Coachee needs serious and urgent help/ support ?', showLoad: false, rating: 1, AsPerRole: 'Coach', ratingArray: [] },
-             { name: 'Do you believe that the Mentee will be Successful in the targeted areas after the Mentoring is complete ?', showLoad: false, rating: 4, AsPerRole: 'Mentor', ratingArray: [] },
-             { name: 'Was it worth your time, energy and interest ?', showLoad: false, rating: 5, AsPerRole: 'Coach', ratingArray: [] },
-             { name: 'Rate the session', showLoad: false, rating: 5, AsPerRole: 'Coachee', ratingArray: [] },
+             //{ name: 'What do you appreciate the most in your interactions with the mentee ? ', showLoad: false, rating: 4, AsPerRole: 'Coach', ratingArray: [] },
+             //{ name: 'Is the coachee/mentee able to grasp the ideas discussed?', showLoad: false, rating: 3, AsPerRole: 'Mentee', ratingArray: [] },
+             //{ name: 'What are the Strong Qualities of the Mentee/ Coachee ?', showLoad: false, rating: 5, AsPerRole: 'Mentor', ratingArray: [] },
+             //{ name: 'What are the areas where the Mentee needs to Improve ? ', showLoad: false, rating: 2, AsPerRole: 'Coachee', ratingArray: [] },
+             //{ name: 'Are there any critical areas where Mentee/ Coachee needs serious and urgent help/ support ?', showLoad: false, rating: 1, AsPerRole: 'Coach', ratingArray: [] },
+             //{ name: 'Do you believe that the Mentee will be Successful in the targeted areas after the Mentoring is complete ?', showLoad: false, rating: 4, AsPerRole: 'Mentor', ratingArray: [] },
+             //{ name: 'Was it worth your time, energy and interest ?', showLoad: false, rating: 5, AsPerRole: 'Coach', ratingArray: [] },
+             //{ name: 'Rate the session', showLoad: false, rating: 5, AsPerRole: 'Coachee', ratingArray: [] },
         ];
         $scope.animationActicvate = false;
-        $timeout(function () { $scope.loadingObject = { showLoading: false, loadingMessage: 'Loading Feed' }; }, 1000);
-        $timeout(function () {
-            for (var k = 0; k < $scope.feedBackArray.length ; k++) {
-                $scope.feedBackArray[k].showFeed = true;
-            }
-        }, 1500);
+
         var _object = {
             EmailAddress: $scope.userInfo.EmailAddress,
             role : 'All',
             successCallBack: function (iObj) {
                 console.error('In successCallBack', iObj);
+                if(iObj.data && iObj.data.length > 0){
+                    $scope.feedBackArray = [].concat(iObj.data);
+                    $timeout(function () {
+                        for (var k = 0; k < $scope.feedBackArray.length ; k++) {
+                            $scope.feedBackArray[k].feedbackDate = new Date(Number($scope.feedBackArray[k].feedbackDate.split('(')[1].split(')')[0]));
+                            $scope.feedBackArray[k].ratingArray = $scope.showRatingColor($scope.feedBackArray[k].Rating);
+                            $scope.feedBackArray[k].showFeed = true;
+                        }
+                    }, 1500);
+                }
+                $timeout(function () { $scope.loadingObject = { showLoading: false, loadingMessage: 'Loading Feed' }; }, 1000);
+               
             },
             failureCallBack: function (iObj) {
                 console.error('In failureCallBack', iObj);

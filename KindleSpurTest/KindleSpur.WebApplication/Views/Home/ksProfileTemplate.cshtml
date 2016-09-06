@@ -103,16 +103,16 @@
                         <div class="item fullWidthHeightClass" style="overflow:auto;border-right: 1px solid #cccccc;border-left: 1px solid #cccccc;">
 
                             <cube-Strct class="cubeParentClass" ng-show="loadingObject.showLoading" loading-Object="loadingObject"></cube-Strct>
-                            <div ng-hide="loadingObject.showLoading" ng-class="{ animationToSkillLoading : feedB.showFeed == true, coachColor : feedB.AsPerRole == 'Coach' , coacheeColor : feedB.AsPerRole == 'Coachee' , mentorColor : feedB.AsPerRole == 'Mentor' , menteeColor : feedB.AsPerRole == 'Mentee' }" style="display:flex;width: 95%;max-width: 95%; margin: 18px;margin-top: 4px;margin-bottom:0; float: left;margin-right: 0;border: 1px solid #cccccc;border-left: 8px solid;box-shadow: none;transform: scale(0);transition: all 1s ease;" class="chatSender" ng-repeat="feedB in feedBackArray">
+                            <div ng-hide="loadingObject.showLoading" ng-class="{ animationToSkillLoading : feedB.showFeed == true, coachColor : feedB.Role == 'Coach' , coacheeColor : feedB.Role == 'Coachee' , mentorColor : feedB.Role == 'Mentor' , menteeColor : feedB.Role == 'Mentee' }" style="display:flex;width: 95%;max-width: 95%; margin: 18px;margin-top: 4px;margin-bottom:0; float: left;margin-right: 0;border: 1px solid #cccccc;border-left: 8px solid;box-shadow: none;transform: scale(0);transition: all 1s ease;" class="chatSender" ng-repeat="feedB in feedBackArray">
                                 <div style="float:left;width: 100%;height: 100%;">
                                     <div class="chatSenderImage" style="float:left;width: 6%;">
                                         <div class="imageConversation" style="width: 100%;display: block;">
-                                            <img style="width: 30px;height: 30px;border-radius: 50%;" src="~/Images/tempImage.jpg" />
+                                            <img style="width: 30px;height: 30px;border-radius: 50%;" ng-src="{{ feedB.FeedbackGiverPhoto && feedB.FeedbackGiverPhoto || '../../../Images/icons/If no Profile photo.png' }}" />
                                         </div>
                                     </div>
                                     <div style="width: 94%;float:left;">
-                                        <h5 class="fontClass" style="float:left;margin: 0;color: #333;text-align: left;font-size: 12px;margin-top: 2px;">Alex Ward</h5>
-                                        <h5 class="fontClass" style="float:right;margin: 0;color: #aaa;text-align: left;font-size: 9px;margin-left: 7px; margin-top: 5px;font-weight: lighter;">on June 30,2016</h5>
+                                        <h5 class="fontClass" style="float:left;margin: 0;color: #333;text-align: left;font-size: 12px;margin-top: 2px;">{{feedB.FeedbackGiverFirstName+" "+feedB.FeedbackGiverLastName}}</h5>
+                                        <h5 class="fontClass" style="float:right;margin: 0;color: #aaa;text-align: left;font-size: 9px;margin-left: 7px; margin-top: 5px;font-weight: lighter;">on {{feedB.feedbackDate | date : 'longDate'}}</h5>
                                         <div class="" style="float:left;width: 100%;height: 22px;">
                                             @*<span ng-class="{ fillStarSpan : feedB.ratingArray.indexOf(1) > -1 }" class="starRatingSpan">&#9734</span>
                                                 <span ng-class="{ fillStarSpan : feedB.ratingArray.indexOf(2) > -1 }" class="starRatingSpan">&#9734</span>
@@ -127,7 +127,7 @@
                                             <img ng-src="{{ feedB.ratingArray.indexOf(5) > -1 ? 'Images/redstar.png' : 'Images/silverstar.png' }}" class="" style="width: 15px;height: 15px;" src="~/Images/silverstar.png" />
                                         </div>
                                     </div>
-                                    <h5 class="fontClass" style="font-size: 12px;float:left;margin: 0;margin-top: 6px;margin-bottom: 5px;color: #555;">{{feedB.name}}</h5>
+                                    <h5 class="fontClass" style="font-size: 12px;float:left;margin: 0;margin-top: 6px;margin-bottom: 5px;color: #555;">{{feedB.SkillOrTopic}}</h5>
                                 </div>
                             </div>
                         </div>

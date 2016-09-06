@@ -24,6 +24,7 @@ namespace KindleSpur.Data
         private string emailAddress;
         MongoCollection _coacheeOrMenteeCollection;
         MongoCollection _coachOrMentorCollection;
+       
 
 
 
@@ -322,6 +323,7 @@ namespace KindleSpur.Data
 
         public List<MostRatedFeedback> GetMostRatedFeedback(string role, string emailAddress)
         {
+            UserRepository userRepo = new Data.UserRepository(); 
             List<MostRatedFeedback> lstMostRatedFeedback = new List<MostRatedFeedback>();
             MongoCursor<CoacheeOrMentee> coacheeOrMentee;
             MongoCursor<CoachOrMentor> coachOrMentor;
@@ -355,14 +357,17 @@ namespace KindleSpur.Data
                     {
                         foreach (Feedback feedback in listcoachOrMentor[userListCount].Feedbacks)
                         {
-                            if ((feedback.QueAndAns[7].Answer == "3" || feedback.QueAndAns[7].Answer == "4" || feedback.QueAndAns[7].Answer == "5") && (feedback.FeedbackClosed == true))
+                            if ((feedback.QueAndAns[6].Answer == "3" || feedback.QueAndAns[6].Answer == "4" || feedback.QueAndAns[6].Answer == "5") && (feedback.FeedbackClosed == true))
                             {
                                 MostRatedFeedback mostRateFeedback = new MostRatedFeedback();
-                                mostRateFeedback.Rating = feedback.QueAndAns[7].Answer;
-                                mostRateFeedback.FeedbackGiver = feedback.Sender;
+                                mostRateFeedback.Rating = feedback.QueAndAns[6].Answer;
+                                User userDetails = (User)userRepo.GetUserDetail(feedback.Sender);
+                                mostRateFeedback.FeedbackGiverFirstName = userDetails.FirstName;
+                                mostRateFeedback.FeedbackGiverLastName = userDetails.LastName;
+                                mostRateFeedback.FeedbackGiverPhoto = userDetails.Photo;
                                 mostRateFeedback.feedbackDate = feedback.CreateDate;
                                 mostRateFeedback.SkillOrTopic = feedback.Skill;
-                                mostRateFeedback.Role = listcoacheeOrMentee[userListCount].Role;
+                                mostRateFeedback.Role = listcoachOrMentor[userListCount].Role;
                                 lstMostRatedFeedback.Add(mostRateFeedback);
                             }
                         }
@@ -377,11 +382,14 @@ namespace KindleSpur.Data
                     {
                         foreach (Feedback feedback in listcoacheeOrMentee[userListCount].Feedbacks)
                         {
-                            if ((feedback.QueAndAns[7].Answer == "3" || feedback.QueAndAns[7].Answer == "4" || feedback.QueAndAns[7].Answer == "5") && (feedback.FeedbackClosed == true))
+                            if ((feedback.QueAndAns[6].Answer == "3" || feedback.QueAndAns[6].Answer == "4" || feedback.QueAndAns[6].Answer == "5") && (feedback.FeedbackClosed == true))
                             {
                                 MostRatedFeedback mostRateFeedback = new MostRatedFeedback();
-                                mostRateFeedback.Rating = feedback.QueAndAns[7].Answer;
-                                mostRateFeedback.FeedbackGiver = feedback.Sender;
+                                mostRateFeedback.Rating = feedback.QueAndAns[6].Answer;
+                                User userDetails = (User)userRepo.GetUserDetail(feedback.Sender);
+                                mostRateFeedback.FeedbackGiverFirstName = userDetails.FirstName;
+                                mostRateFeedback.FeedbackGiverLastName = userDetails.LastName;
+                                mostRateFeedback.FeedbackGiverPhoto = userDetails.Photo;
                                 mostRateFeedback.feedbackDate = feedback.CreateDate;
                                 mostRateFeedback.SkillOrTopic = feedback.Skill;
                                 mostRateFeedback.Role = listcoacheeOrMentee[userListCount].Role;
