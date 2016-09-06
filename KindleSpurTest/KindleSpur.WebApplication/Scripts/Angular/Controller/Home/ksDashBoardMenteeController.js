@@ -140,7 +140,7 @@
 
     $scope.generateGarden = function () {
         $scope.ctsDataForMolecule = null;
-        serverCommunication.getCoachingWithStatus({
+        serverCommunication.generateGarden({
             loggedUserDetails: $rootScope.loggedDetail,
             role: 'mentee',
             successCallBack: function (iObj) {

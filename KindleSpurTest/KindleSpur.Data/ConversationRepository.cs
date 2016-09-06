@@ -125,6 +125,7 @@ namespace KindleSpur.Data
         {
             bool _transactionStatus = false;
             CoachOrMentor coach = null;
+            CoacheeOrMentee coacheeOrMentee = null;
             try
             {
 
@@ -137,10 +138,20 @@ namespace KindleSpur.Data
                 {
                     MongoCollection _coachOrMentorCollection;
                     _coachOrMentorCollection = con.GetCollection("CoachOrMentor");
-                    if(ConversationType == "Coaching")
-                     coach = _coachOrMentorCollection.FindOneAs<CoachOrMentor>(Query.And(Query.EQ("UserId", senderEmail), Query.EQ("Role", "Coach")));
-                    else if(ConversationType == "Mentoring")
-                     coach = _coachOrMentorCollection.FindOneAs<CoachOrMentor>(Query.And(Query.EQ("UserId", senderEmail), Query.EQ("Role", "Mentor")));
+                    MongoCollection _coacheeOrMenteeCollection;
+                    _coacheeOrMenteeCollection = con.GetCollection("CoacheeOrMentee");
+
+                    if (ConversationType == "Coaching")
+                    {
+                        coach = _coachOrMentorCollection.FindOneAs<CoachOrMentor>(Query.And(Query.EQ("UserId", senderEmail), Query.EQ("Role", "Coach")));
+                        coacheeOrMentee = _coacheeOrMenteeCollection.FindOneAs<CoacheeOrMentee>(Query.And(Query.EQ("UserId", receiverEmail), Query.EQ("Role", "Coachee")));
+                    }
+                    else if (ConversationType == "Mentoring")
+                    {
+                        coach = _coachOrMentorCollection.FindOneAs<CoachOrMentor>(Query.And(Query.EQ("UserId", senderEmail), Query.EQ("Role", "Mentor")));
+                        coacheeOrMentee = _coacheeOrMenteeCollection.FindOneAs<CoacheeOrMentee>(Query.And(Query.EQ("UserId", receiverEmail), Query.EQ("Role", "Mentee")));
+
+                    }
                     if (coach.CoachingStatus == null) coach.CoachingStatus = new List<ICoachingStatus>();
                     CoachingStatus coachingStatus = new CoachingStatus();
                     coachingStatus.CreateDate = DateTime.Now;
@@ -151,6 +162,17 @@ namespace KindleSpur.Data
                     coachingStatus.FeedBackCount =  0;
                     coach.CoachingStatus.Add(coachingStatus);
                     _coachOrMentorCollection.Save(coach);
+
+                    if (coacheeOrMentee.CoachingStatus == null) coacheeOrMentee.CoachingStatus = new List<ICoachingStatus>();
+                    CoachingStatus coachingStatus1 = new CoachingStatus();
+                    coachingStatus1.CreateDate = DateTime.Now;
+                    coachingStatus1.Sender = senderEmail;
+                    coachingStatus1.Skill = skill;
+                    coachingStatus1.customerSatisfactionRating = 0;
+                    coachingStatus1.FeedbackClosed = false;
+                    coachingStatus1.FeedBackCount = 0;
+                    coacheeOrMentee.CoachingStatus.Add(coachingStatus1);
+                    _coacheeOrMenteeCollection.Save(coacheeOrMentee);
                 }
                 conversationDetail.IsRejected = isRejected;
                 _conversationCollection.Save(conversationDetail);

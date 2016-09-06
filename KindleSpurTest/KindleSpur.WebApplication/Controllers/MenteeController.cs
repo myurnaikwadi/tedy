@@ -130,6 +130,27 @@ namespace KindleSpur.WebApplication.Controllers
             }
 
         }
+
+      
+        public ActionResult GenerateGarden()
+        {
+            try
+            {
+                CoacheeOrMenteeRepository _coachRepo = new CoacheeOrMenteeRepository();
+                var filters = _coachRepo.GenerateGarden(UserId, "Mentee");
+                return Json(new { Filters = filters, Success = true }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                return View("Error");
+            }
+
+            finally
+            {
+
+            }
+
+        }
         public BsonDocument GetRecommendedMentor()
         {
             try

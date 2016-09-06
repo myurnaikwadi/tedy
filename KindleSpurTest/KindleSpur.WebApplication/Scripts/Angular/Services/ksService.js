@@ -367,6 +367,19 @@ app.factory('serverCommunication', function ($http) {
             }
             $http.get(_action, iObj.loggedUserDetails).then(iObj.successCallBack, iObj.failureCallBack)
         },
+
+        generateGarden: function (iObj) {
+            console.error(iObj)
+            var _action = '/Coach/GenerateGarden'
+            if (iObj.role == 'mentor') {
+                _action = "/Mentor/GenerateGarden";
+            } else if (iObj.role == 'mentee') {
+                _action = "/Mentee/GenerateGarden";
+            } else if (iObj.role == 'coachee') {
+                _action = "/Coachee/GenerateGarden";
+            }
+            $http.get(_action, iObj.loggedUserDetails).then(iObj.successCallBack, iObj.failureCallBack)
+        },
         /**
         * @auther : MKN
         * @date : 15/06/2016

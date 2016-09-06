@@ -111,5 +111,25 @@ namespace KindleSpur.WebApplication.Controllers
             
         }
 
+        public ActionResult GenerateGarden()
+        {
+            try
+            {
+                CoachOrMentorRepository _coachRepo = new CoachOrMentorRepository();
+                var filters = _coachRepo.GenerateGarden(UserId, "Mentor");
+                return Json(new { Filters = filters, Success = true }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                return View("Error");
+            }
+
+            finally
+            {
+
+            }
+
+        }
+
     }
 }

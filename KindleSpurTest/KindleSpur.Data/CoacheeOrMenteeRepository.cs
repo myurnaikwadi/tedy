@@ -625,7 +625,7 @@ namespace KindleSpur.Data
 
         public List<CoachStatus> GetCoachingStatus(string UserId, string Role)
         {
-            List<IFeedback> LstCochees = new List<IFeedback>();
+            List<ICoachingStatus> LstCochees = new List<ICoachingStatus>();
             List<CoachStatus> result = new List<CoachStatus>();
             try
             {
@@ -633,7 +633,7 @@ namespace KindleSpur.Data
                 CoacheeOrMentee coach = _coacheeOrMenteeCollection.FindOneAs<CoacheeOrMentee>(Query.And(Query.EQ("UserId", UserId), Query.EQ("Role", Role)));
                 if (coach != null)
                 {
-                    LstCochees = coach.Feedbacks;
+                    LstCochees = coach.CoachingStatus;
 
                     if (LstCochees != null)
                     {
@@ -644,6 +644,7 @@ namespace KindleSpur.Data
                                   {
                                       EmailAddress = grp.Key.Sender,
                                       Skill = grp.Key.Skill,
+                                      FeedbackClosed = grp.OrderByDescending(t => t.CreateDate).FirstOrDefault().FeedbackClosed,
                                       FeedbackCount = grp.Count(),
                                       Rating = grp.OrderByDescending(t => t.customerSatisfactionRating).FirstOrDefault().customerSatisfactionRating
                                   }).ToList();
@@ -683,6 +684,71 @@ namespace KindleSpur.Data
             }
             return result;
         }
+
+        public List<CoachStatus> GenerateGarden(string UserId, string Role)
+        {
+            List<ICoachingStatus> LstCochees = new List<ICoachingStatus>();
+            List<CoachStatus> result = new List<CoachStatus>();
+          
+            Role = Role == "Coachee" ? "Coach" : "Mentor";
+            try
+            {
+
+                CoachOrMentor coach = _coachOrMentorCollection.FindOneAs<CoachOrMentor>(Query.And(Query.EQ("CoachingStatus.Sender", UserId), Query.EQ("Role", Role)));
+                if (coach != null)
+                {
+                    LstCochees = coach.CoachingStatus;
+
+                    if (LstCochees != null)
+                    {
+                        result = (from t in LstCochees
+                                  group t by new { t.Sender, t.Skill }
+                                     into grp
+                                  select new CoachStatus()
+                                  {
+                                      EmailAddress = grp.Key.Sender,
+                                      Skill = grp.Key.Skill,
+                                      FeedbackClosed = grp.OrderByDescending(t => t.CreateDate).FirstOrDefault().FeedbackClosed,
+                                      FeedbackCount = grp.Count(),
+                                      Rating = grp.OrderByDescending(t => t.customerSatisfactionRating).FirstOrDefault().customerSatisfactionRating
+                                  }).ToList();
+
+                        //if (result.Count() > 0)
+                        //{
+                        for (var i = 0; i < result.Count(); i++)
+                        {
+                            result[i] = GetCocheeDetails(result[i]);
+                            result[i].TreeURL = GetTreeURL(result[i].FeedbackCount, result[i].Rating);
+                        }
+                        // }
+                    }
+                }
+
+            }
+            catch (MongoException ex)
+            {
+                string message = "{ Error : 'Failed at GetCoachingStatus().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ";
+                _logCollection.Insert(message);
+                throw new MongoException("Signup failure!!!");
+            }
+            catch (Exception e)
+            {
+                Exceptionhandle em = new Exceptionhandle();
+                em.Error = "Failed at GetCoachingStatus()";
+                em.Log = e.Message.Replace("\r\n", "");
+                var st = new System.Diagnostics.StackTrace(e, true);
+                var frame = st.GetFrame(0);
+                var line = frame.GetFileLineNumber();
+                _logCollection.Insert(em);
+                throw new MongoException("Signup failure!!!");
+            }
+            finally
+            {
+
+            }
+            return result;
+        }
+
         public CoachStatus GetCocheeDetails(CoachStatus c)
         {
             if (c != null)

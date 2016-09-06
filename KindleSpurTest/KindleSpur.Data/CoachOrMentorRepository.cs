@@ -94,6 +94,104 @@ namespace KindleSpur.Data
             return _transactionStatus;
         }
 
+        public List<CoachStatus> GenerateGarden(string UserId, string Role)
+        {
+            List<ICoachingStatus> LstCochees = new List<ICoachingStatus>();
+            Role = Role == "Coach" ? "Coachee" : "Mentee";
+            List<CoachStatus> result = new List<CoachStatus>();
+            try
+            {
+
+                CoacheeOrMentee coach = _coacheeOrMenteeCollection.FindOneAs<CoacheeOrMentee>(Query.And(Query.EQ("CoachingStatus.Sender", UserId), Query.EQ("Role", Role)));
+                if (coach != null)
+                {
+                    LstCochees = coach.CoachingStatus;
+
+                    if (LstCochees != null)
+                    {
+                        result = (from t in LstCochees
+                                  group t by new { t.Sender, t.Skill }
+                                     into grp
+                                  select new CoachStatus()
+                                  {
+                                      EmailAddress = grp.Key.Sender,
+                                      Skill = grp.Key.Skill,
+                                      FeedbackClosed = grp.OrderByDescending(t => t.CreateDate).FirstOrDefault().FeedbackClosed,
+                                      FeedbackCount = grp.Count(),
+                                      Rating = grp.OrderByDescending(t => t.customerSatisfactionRating).FirstOrDefault().customerSatisfactionRating
+                                  }).ToList();
+
+                        //if (result.Count() > 0)
+                        //{
+                        for (var i = 0; i < result.Count(); i++)
+                        {
+                            result[i] = GetCocheeDetails(result[i]);
+                            result[i].TreeURL = GetTreeURL(result[i].FeedbackCount, result[i].Rating);
+                        }
+                        // }
+                    }
+                }
+
+            }
+            catch (MongoException ex)
+            {
+                string message = "{ Error : 'Failed at GetCoachingStatus().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ";
+                _logCollection.Insert(message);
+                throw new MongoException("Signup failure!!!");
+            }
+            catch (Exception e)
+            {
+                Exceptionhandle em = new Exceptionhandle();
+                em.Error = "Failed at GetCoachingStatus()";
+                em.Log = e.Message.Replace("\r\n", "");
+                var st = new System.Diagnostics.StackTrace(e, true);
+                var frame = st.GetFrame(0);
+                var line = frame.GetFileLineNumber();
+                _logCollection.Insert(em);
+                throw new MongoException("Signup failure!!!");
+            }
+            finally
+            {
+
+            }
+            return result;
+        }
+
+        public string GetTreeURL(int FeedbackCount, int Rating)
+        {
+            string TreeURL = "Images/Tree/Stage 1.png";
+
+            if (FeedbackCount == 1)
+            {
+                if (Rating >= 1 && Rating <= 3)
+                    TreeURL = "Images/Tree/Stage 2.png";
+                else if (Rating >= 4 && Rating <= 5)
+                    TreeURL = "Images/Tree/Stage 2 with water.png";
+            }
+            else if (FeedbackCount == 2)
+            {
+                if (Rating >= 1 && Rating <= 3)
+                    TreeURL = "Images/Tree/Stage 3.png";
+                else if (Rating >= 4 && Rating <= 5)
+                    TreeURL = "Images/Tree/Stage 3 with flower.png";
+            }
+            else if (FeedbackCount == 3)
+            {
+                if (Rating >= 1 && Rating <= 3)
+                    TreeURL = "Images/Tree/Stage 4.png";
+                else if (Rating >= 4 && Rating <= 5)
+                    TreeURL = "Images/Tree/Stage 4 with Fruits.png";
+            }
+            else if (FeedbackCount >= 4)
+            {
+                if (Rating >= 1 && Rating <= 3)
+                    TreeURL = "Images/Tree/Stage 5.png";
+                else if (Rating >= 4 && Rating <= 5)
+                    TreeURL = "Images/Tree/Stage 5 with Fruits.png";
+            }
+            return TreeURL;
+        }
+
         public int addFeedback(string UserId, Feedback feedback, string Role)
 {
             bool _transactionStatus = false;
@@ -106,12 +204,12 @@ namespace KindleSpur.Data
                 if (Role == "Coach")
                 {
                     entity = _coachOrMentorCollection.FindOneAs<CoachOrMentor>(Query.And(Query.EQ("UserId", feedback.Sender), Query.EQ("Role", Role)));
-                    newRole = "Coachee";
+                    coacheeOrMenteeEntity = _coacheeOrMenteeCollection.FindOneAs<CoacheeOrMentee>(Query.And(Query.EQ("UserId", UserId), Query.EQ("Role", "Coachee")));
                 }
                 else if (Role == "Mentor")
                 {
                     entity = _coachOrMentorCollection.FindOneAs<CoachOrMentor>(Query.And(Query.EQ("UserId", feedback.Sender), Query.EQ("Role", Role)));
-                    newRole = "Mentee";
+                    coacheeOrMenteeEntity = _coacheeOrMenteeCollection.FindOneAs<CoacheeOrMentee>(Query.And(Query.EQ("UserId", UserId), Query.EQ("Role", "Mentee")));
                 }
 
                 entity.FeedbackPoints += feedback.customerSatisfactionRating;
@@ -122,12 +220,6 @@ namespace KindleSpur.Data
                 feedback.CreateDate = DateTime.Now;
                 entity.Feedbacks.Add(feedback);
 
-
-               //ICoachingStatus coachingStatus =  entity.CoachingStatus.Find(x=>x.Sender ==feedback.Sender && x.Skill ==feedback.Skill  );
-               // coachingStatus.customerSatisfactionRating = feedback.customerSatisfactionRating;
-               // coachingStatus.FeedBackCount += 1;
-               // coachingStatus.FeedbackClosed = feedback.FeedbackClosed;
-
                 _coachOrMentorCollection.Save(entity);
 
                 var _users = con.GetCollection("UserDetails");
@@ -136,9 +228,15 @@ namespace KindleSpur.Data
                 user.TotalRewardPoints += 5;
                 _users.Save(user);
 
-                
-                coacheeOrMenteeEntity = _coacheeOrMenteeCollection.FindOneAs<CoacheeOrMentee>(Query.And(Query.EQ("UserId", feedback.Sender), Query.EQ("Role", newRole)));
                 coacheeOrMenteeEntity.RewardPointsGained += 5;
+
+                ICoachingStatus coachingStatus = coacheeOrMenteeEntity.CoachingStatus.Find(x => x.Sender == entity.UserId && x.Skill == feedback.Skill);
+                coachingStatus.customerSatisfactionRating = feedback.customerSatisfactionRating;
+                coachingStatus.FeedBackCount += 1;
+                coachingStatus.FeedbackClosed = feedback.FeedbackClosed;
+                coacheeOrMenteeEntity.CoachingStatus.Add(coachingStatus);
+                
+                //coacheeOrMenteeEntity = _coacheeOrMenteeCollection.FindOneAs<CoacheeOrMentee>(Query.And(Query.EQ("UserId", feedback.Sender), Query.EQ("Role", newRole)));
                 _coacheeOrMenteeCollection.Save(coacheeOrMenteeEntity);
                 _transactionStatus = true;
                 return user.TotalRewardPoints;
