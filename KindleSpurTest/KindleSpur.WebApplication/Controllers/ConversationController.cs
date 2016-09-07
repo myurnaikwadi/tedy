@@ -337,11 +337,12 @@ namespace KindleSpur.WebApplication.Controllers
 
         // POST: Coversation/UpdateConversationStatus
         [HttpPost]
-        public void CoachingMentoringInvite(Conversation _obj, string ReceiverName, string Role)
+        public bool CoachingMentoringInvite(Conversation _obj, string ReceiverName, string Role)
         {
             ResponseMessage response = new ResponseMessage();
             UserRepository userRepo = new UserRepository();
             ConversationRepository _repo = new ConversationRepository();
+            bool emailStatus = true;
             try
             {
                 User receiverUserDetails = (User)userRepo.GetUserDetail(_obj.ReceiverEmail);
@@ -358,7 +359,7 @@ namespace KindleSpur.WebApplication.Controllers
                             new KeyValuePair<string, string>("Uri", uri),
                             new KeyValuePair<string, string>("Role",_obj.ConversationType),
                         };
-                    EmailNotification.MentoringCoachingAcceptDeclineEmail(_obj, list);
+                    emailStatus = EmailNotification.MentoringCoachingAcceptDeclineEmail(_obj, list);
                     TempData["StatusMessage"] = "Please check your mail for status of conversation!!!";
                 }
             }
@@ -367,7 +368,7 @@ namespace KindleSpur.WebApplication.Controllers
                 throw;
                 // return View("Error");
             }
-
+            return emailStatus;
         }
 
         //

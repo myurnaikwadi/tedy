@@ -19,6 +19,11 @@ namespace KindleSpur.WebApplication.Controllers
             return View();
         }
 
+        public SchedularController()
+        {
+           
+        }
+
         [HttpPost]
         public ActionResult Create(Meeting _obj, string ReceiverName, string Role, string ContentText)
         {
