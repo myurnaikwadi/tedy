@@ -783,7 +783,14 @@ namespace KindleSpur.Data
 
             // RewardPointsGained = (RewardPointsGained - (RewardPointsGained % 10))/10;
             string Id = (BalancePoints / 10).ToString();
-            return _gamesCollection.FindOneAs<Game>(Query.EQ("GameId", Id));
+
+            Game game = _gamesCollection.FindOneAs<Game>(Query.EQ("GameId", Id));
+            if(game==null)
+            {
+                game = _gamesCollection.FindAllAs<Game>().SetSortOrder(SortBy.Descending("GameId")).SetLimit(1).FirstOrDefault();
+            }
+
+            return game;
         }
 
         private Boolean UnlockPSR(int RewardPointsGained, int BalancePoints)
