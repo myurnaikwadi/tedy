@@ -376,6 +376,7 @@
     <Content Include="Images\pointStatusPanel.png" />
     <Content Include="Images\profile.png" />
     <Content Include="Images\psrPlant.png" />
+    <Content Include="Images\rate-star-button.png" />
     <Content Include="Images\rightSideIcon.png" />
     <Content Include="Images\save.png" />
     <Content Include="Images\sendMailFormat.png" />
