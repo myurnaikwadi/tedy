@@ -16,31 +16,49 @@ namespace KindleSpur.WebApplication.KSHub
 
         public void Notify(Communication _obj)
         {
-            if (dic.ContainsKey(_obj.CommunicationId))
+            try
             {
-                Clients.Caller.differentName();
-            }
-            else
-            {
-                dic.TryAdd(_obj.CommunicationId, _obj.CommunicationId);
-                foreach (KeyValuePair<String, String> entry in dic)
+                if (dic.ContainsKey(_obj.CommunicationId))
                 {
-                    Clients.Caller.online(entry.Key);
+                    Clients.Caller.differentName();
                 }
-                Clients.Others.enters(_obj.CommunicationId);
+                else
+                {
+                    dic.TryAdd(_obj.CommunicationId, _obj.CommunicationId);
+                    foreach (KeyValuePair<String, String> entry in dic)
+                    {
+                        Clients.Caller.online(entry.Key);
+                    }
+                    Clients.Others.enters(_obj.CommunicationId);
+                }
             }
+            catch (Exception)
+            {
+
+                throw;
+            }
+           
         }
 
         public void SendToSpecific(Communication _obj,IChat chat)
         {
+            try
+            {
+                Clients.Caller.broadcastMessage(_obj.CommunicationId, chat.SenderName);
+                Clients.Client(dic[_obj.CommunicationId]).broadcastMessage(_obj.CommunicationId, chat.Message);
+                CommunicationRepository _communicationRepo = new CommunicationRepository();
+                _communicationRepo.AddCommunication(_obj);
+                if (_obj.Chats == null) _obj.Chats = new List<IChat>();
+                _obj.Chats.Add(chat);
+                _communicationRepo.Save(_obj);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
             // Call the broadcastMessage method to update clients.
-            Clients.Caller.broadcastMessage(_obj.CommunicationId, chat.SenderName);
-            Clients.Client(dic[_obj.CommunicationId]).broadcastMessage(_obj.CommunicationId, chat.Message);
-            CommunicationRepository _communicationRepo = new CommunicationRepository();
-            _communicationRepo.AddCommunication(_obj);
-            if (_obj.Chats == null) _obj.Chats = new List<IChat>();
-            _obj.Chats.Add(chat);
-            _communicationRepo.Save(_obj);
+           
         }
 
         public override Task OnConnected()
@@ -53,12 +71,20 @@ namespace KindleSpur.WebApplication.KSHub
         {
             CommunicationRepository _communicationRepo = new CommunicationRepository();
             List<string> commIds = _communicationRepo.GetAllOpenedCommunications();
-
-            foreach (string id in commIds)
+            try
             {
-                if (!dic.ContainsKey(id))
-                    dic.TryAdd(id, id);
+                foreach (string id in commIds)
+                {
+                    if (!dic.ContainsKey(id))
+                        dic.TryAdd(id, id);
+                }
             }
+            catch (Exception)
+            {
+
+                throw;
+            }
+           
         }
 
         public override Task OnReconnected()

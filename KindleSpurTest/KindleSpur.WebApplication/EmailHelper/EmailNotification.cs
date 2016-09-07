@@ -115,7 +115,7 @@ namespace KindleSpur.WebApplication.MessageHelper
 
         }
 
-        public static void MentoringCoachingAcceptDeclineEmail(Conversation _obj, List<KeyValuePair<string, string>> listofSenderAndReceiverDetails)
+        public static bool MentoringCoachingAcceptDeclineEmail(Conversation _obj, List<KeyValuePair<string, string>> listofSenderAndReceiverDetails)
         {
             MailMessage message = new MailMessage(aliasemailsendername.ToString(), _obj.ReceiverEmail);
             string receiverName = string.Empty;
@@ -191,6 +191,7 @@ namespace KindleSpur.WebApplication.MessageHelper
             smtp.Credentials = new System.Net.NetworkCredential(emailAddress.ToString(), password.ToString());
             smtp.EnableSsl = true;
             smtp.Send(message);
+            return true;
 
         }
 
