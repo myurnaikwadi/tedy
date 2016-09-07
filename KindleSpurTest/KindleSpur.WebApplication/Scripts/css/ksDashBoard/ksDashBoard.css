@@ -1173,3 +1173,7 @@ width: 20%;
 .userRoleWizardParentHoverChange {
     width: 64% !important;
 }
+
+.viewProfileLinkClass :hover {
+    text-decoration:underline;
+}

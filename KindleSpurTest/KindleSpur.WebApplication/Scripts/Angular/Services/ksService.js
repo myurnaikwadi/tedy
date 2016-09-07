@@ -632,7 +632,21 @@ app.factory('serverCommunication', function ($http) {
             console.error(iObj)
             $http.post('/Conversation/CoachingMentoringInvite', iObj.loggedUserDetails, iObj.ReceiverName, iObj.Role).then(iObj.successCallBack, iObj.failureCallBack)
         },
-
+        
+        getMeetingRequestAsPerRole: function (iObj) {
+            console.error(iObj)
+            //$http.get('/Schedular/GetAllMeetingRequest').then(iObj.successCallBack, iObj.failureCallBack)
+            var req = {
+                method: 'POST',
+                url: '/Schedular/GetAllMeetingRequest',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                data: { Role: iObj.Role }
+            }
+            console.error(req)
+            $http(req).then(iObj.successCallBack, iObj.failureCallBack);
+        },
         getAllMeetingRequest: function (iObj) {
             console.error(iObj)
             //$http.get('/Schedular/GetAllMeetingRequest').then(iObj.successCallBack, iObj.failureCallBack)

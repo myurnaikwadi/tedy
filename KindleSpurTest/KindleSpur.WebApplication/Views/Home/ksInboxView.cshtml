@@ -2,7 +2,7 @@
     <div class="" style="width: 100%;height: 100%;float: left;position: relative;" ng-show="gridViewLoaded">
         <img ng-if="notification.Meeting" style="position:absolute;width:25px;height:22px;top:6px;right:9px;" src="~/Images/business-meeting-of-males.png" />
         <img ng-if="!notification.Meeting" style="position:absolute;width:25px;height:22px;top:6px;right:9px;" src="~/Images/businessmen-talking-in-business-meeting.png" />
-        <div class="meetingInvitee" style="width: 100%;height: 43%;display:block;">
+        <div class="meetingInvitee" style="width: 100%;height: 50%;display:block;">
             <div class="imageConversation" style="width: 100%;height: 70%;">
                 <img style="border: 2px solid white;margin:auto;width: 60px;height: 60px;border-radius: 50%;" ng-src="{{notification.Photo ?  notification.Photo  : '../../../Images/icons/If no Profile photo.png'}}" />
             </div>
@@ -31,8 +31,8 @@
             <div ng-if="!notification.Meeting" class="meetingPersonNameStrc" style="width: 100%;height: 15%;margin-left: 0;">
                 <h5 style="font-size: 12px;color:#999;text-align: center;width: 85%;" class="leftSideMenuLable fontClass eliipsisClass">{{notification.Meeting.StartDate | date : 'dd/MM/yyyy'}} at {{notification.CreateDate | date :  'hh:mm a' }}</h5>
             </div>
-            <div ng-if="!notification.Meeting" class="meetingPersonNameStrc" style="width: 100%;height: 31%;margin-left: 0;">
-                 <h5 ng-click="viewProfileCall($event,notification)" title="Communication mode" style="font-size: 12px;color:#999;text-align: center;width: 100%;border-bottom:1px #3bc7ea solid;border-top:1px #3bc7ea solid;padding:3px;background-color:#3bc7ea;color:black;" class="leftSideMenuLable fontClass eliipsisClass genericPointerClass">View Profile</h5>
+            <div ng-if="!notification.Meeting" class="meetingPersonNameStrc" style="width: 100%;height: 15%;margin-left: 0;">
+                 <h5 ng-click="viewProfileCall($event,notification)" title="Check Profile Details" style="font-size: 12px;color:#999;text-align: center;width: 100%;padding:3px; text-decoration:underline;" class="leftSideMenuLable fontClass eliipsisClass genericPointerClass viewProfileLinkClass">View Profile</h5>
             </div>
             <div ng-if="notification.Meeting" class="meetingPersonNameStrc" style="width: 100%;height: 40%;margin-left: 0;">
                 <button style="background-color: white;border: 1px solid #D60500;color: #D60500;font-size: 10px;padding: 5px;margin: auto;" class="signupButton fontClass" ng-click="notificationData.splice($index,1);updateMeeting(false,notification)">DECLINE</button>

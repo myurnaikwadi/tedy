@@ -652,6 +652,7 @@
             Subject: iMeetingData.selectedData.Subject,
             SkillName: $scope.openConversation.skill,
             //TopicName
+            Role: 'Mentor',
             Status: iMeetingData.selectedData.UserId,
             StartDate: _startDate,
             EndDate: _endDate,

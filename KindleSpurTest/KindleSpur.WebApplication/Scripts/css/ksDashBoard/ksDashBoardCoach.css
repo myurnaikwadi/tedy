@@ -1212,7 +1212,7 @@ border: 1px solid #999;
 .gridViewLoadedParentClass {
     border: 1px solid lightgray;
     float: left;
-    margin: 1% !important;
+    margin: 15px !important;
     margin-right: 0 !important;
     margin-bottom: 0 !important;
     display: block;
