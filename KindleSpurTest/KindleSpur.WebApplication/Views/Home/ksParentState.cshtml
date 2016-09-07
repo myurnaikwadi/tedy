@@ -1,17 +1,18 @@
 ﻿<div class="parentBody" ng-controller="ksStateHomeController">
     <div style="position:absolute;z-index:1;" class="hiddenErrorNotificationClass" ng-class="{ 'showErrorNotificationClass' : displayAlert.showAlert  == true}">
-        <div class="alert-message success" ng-show="displayAlert.formatType == '1'">
-            <p class="alert-message1">{{displayAlert.message}}</p>
-            <h5 class="close" ng-click="displayAlert.showAlert = false">×</h5>
-        </div>
+       
         @*Green*@
-
-        <div class="alert-message error" ng-show="displayAlert.formatType == '2'">
-            <p class="alert-message1">{{displayAlert.message}}</p>
-            <h5 class="close" ng-click="displayAlert.showAlert = false">×</h5>
-
+        <div class="alert alert-success" ng-show="displayAlert.formatType == '1'">
+            <h5 class="closealert-padding close" ng-click="displayAlert.showAlert = false">×</h5>
+            <h5 class="alert-message1">{{displayAlert.message}}</h5>
         </div>
+       
         @*red*@
+        <div class="alert alert-error" ng-show="displayAlert.formatType == '2'">
+            <h5 class="closealert-padding close" ng-click="displayAlert.showAlert = false">×</h5>
+            <h5 class="alert-message1">{{displayAlert.message}}</h5>
+        </div>
+       
     </div>
     <div class="newApplicationStripInvitation" ng-init="load=false" ng-class="{ AminationStrip : load == true }">
         <div class="roundedCornerShape" ng-click="load=!load;invitation={}">
@@ -62,56 +63,81 @@
     <div ng-click="uiFlag.loadBottomContain=false;" ng-class="{ loadBottomContain : uiFlag.loadBottomContain == true}" style="overflow: hidden;display:none; position:absolute;width:100%;height:100%;">
         <div class="aboutUsParent fontClass">
 
-            <div style="background-color:white;margin:auto;width:74%;height:94%;">
+            <div style="background-color:white;margin:auto;width:74%;height:94%;overflow:scroll;">
                 <div style="display:flex;"><img style="height: 4%; width: 11%; margin: auto; margin: 6px 0px 0px 14px;" src="~/Images/icons/kindlespurlogo.png" /></div>
                 <div style="padding:0px 2px 2px 2px">
-                    <div><h1 style="padding:7px 0px 9px 8px;background-color:#e15049;">About Us</h1></div>
-                    <div style="text-align:center;margin-bottom: 17px;">
-                        @*<div>  <h3 style="font-weight:bold;text-align:center;">About K<span style="color:red;">i</span>ndlesp<span style="color:red;">u</span>r</h3>  </div>*@
-                        <div>  <h3 style="font-weight:bold;text-align:center;">About Kindlespur</h3></div>
-                        <div style="display:flex;">
-                            <h5 style="margin:auto; width:2%;width: 82%;word-break: initial;"><span style="color:#080808;font-size:12px;">Welcome to KindleSpur, a unique place which Ignites and Urges you to grow and be successful. Here, you will find powerful channels like <b style="color:rgb(67,129,61); text-shadow:1px 1px 10px #000;">Mentoring</b>, <b style="color:rgb(231,120,23); text-shadow: 1px 1px 10px #000;">Coaching</b>, knowledge feeds, challenger games and many more to achieve your Goals.</span></h5>
-                        </div>
+                    <div><h1 style="padding:7px 0px 9px 8px;background-color:#e15049;">Terms & Conditions</h1></div>
+                    <div style="text-align:center;margin-bottom: 17px;">                    
                     </div>
                 </div>
                 <br />
-                <div style="width:100%;height:100%">
-                    <div style="width:50%;height:50%;float:left;">
-                        <img style="width:97%;height:25%;" src="~/Images/about.png" />
+                <div style="width:95%;height:100%;margin: 0px 0px 0px 39px;font-size: 12px;">
+                    @*<div>  <h5 style="font-weight:bold">Terms & Conditions</h5>  </div>*@
+                    <div>
+                        Welcome to KindleSpur.com. is owned and managed by RIIT Solutions Pvt. Ltd. (herein after referred to as RIIT). If you continue to browse and use this website you are agreeing to comply with and be bound by the following terms and conditions of use, which together with our privacy policy govern KindleSpur/RIIT’s relationship with you in relation to this website.
+                    </div>
+                    <br />
+                    <div>The term KindleSpur/RIIT or 'us' or 'we' refers to the owner of the website whose registered office is C3/103 Kumar Parisar, Behind Gandhi Bhavan, Sahajanand society, Kothrud,Pune   411038</div>
+                    <div>Our company registration number is 153877, India. The term 'you' refers to the user or viewer of our website.</div>
+                    <br />
+                    <div>
+                        The use of this website is subject to the following terms of use:
+                    </div>
+                    <br />
 
+                    <div style="display:inline-flex">
+                        <div><h6 style="border-radius:15%;border:3px solid;color:black;width:2%;"></h6></div>&nbsp;&nbsp;
+                        <div><h6>The content of the pages of this website is for your general information and use only. It is subject to change without notice.</h6></div>
+                    </div>
+                    <br />
+                    <div style="display:inline-flex">
+                        <div><h6 style="border-radius:15%;border:3px solid;color:black;width:2%;"></h6></div>&nbsp;&nbsp;
+                        <div><h6>Neither we nor any third parties provide any warranty or guarantee as to the accuracy, timeliness, performance, completeness or suitability of the information and materials found or offered on this website for any particular purpose. You acknowledge that such information and materials may contain inaccuracies or errors and we expressly exclude liability for any such inaccuracies or errors to the fullest extent permitted by law. </h6></div>
+                    </div>
+                    <br />
+                    <div style="display:inline-flex">
+                        <div><h6 style="border-radius:15%;border:3px solid;color:black;width:2%;"></h6></div>&nbsp;&nbsp;
+                        <div><h6>Your use of any information or materials on this website is entirely at your own risk, for which we shall not be liable. It shall be your own responsibility to ensure that any products, services or information available through this website meet your specific requirements.</h6></div>
+                    </div>
+                    <br />
+                    <div style="display:inline-flex">
+                        <div><h6 style="border-radius:15%;border:3px solid;color:black;width:2%;"></h6></div>&nbsp;&nbsp;
+                        <div><h6>This website contains material which is owned by or licensed to us. This material includes, but is not limited to, the design, layout, look, appearance and graphics. Reproduction is prohibited other than in accordance with the copyright notice, which forms part of these terms and conditions. All trademarks reproduced in this website which are not the property of, or licensed to RIIT are acknowledged on the website.</h6></div>
+                    </div>
+                    <br />
+                    <div style="display:inline-flex">
+                        <div><h6 style="border-radius:15%;border:3px solid;color:black;width:2%;"></h6></div>&nbsp;&nbsp;
+                        <div><h6>Unauthorized use of this website may give rise to a claim for damages and/or be a criminal offence. From time to time this website may also include links to other websites. These links are provided for your convenience to provide further information. They do not signify that We are committed to ensuring that your information is secure. In order to prevent unauthorized access or disclosure we have put in place suitable physical, electronic and managerial procedures to safeguard and secure the information we collect online.</h6></div>
                     </div>
 
-
-                    <div style="width:50%;height:50%;float:left;padding:0px 20px 0px 24px;">
-
-                        <div>  <h5 style="font-weight:bold">Mission</h5>  </div>
-                        <div style="font-size:12px;">
-                            Our mission is simple:
-                            <br />
-                            <div style="display:inline-flex">
-                                <div><h6 style="border-radius:100%;border:5px solid;color:#e15049;width:2%;"></h6></div>&nbsp;
-                                <div><h6>To Accelerate Professional growth through Mentoring,Coaching,Innovative knowledge channels & games.</h6></div>
-                            </div>  
-                            <br />      
-                            @*<div style="display:inline-flex">
-                                <div><h6 style="border-radius:100%;border:5px solid;color:#e15049;width:2%;"></h6></div>&nbsp;
-                                <div> <h6> through Mentoring,Coaching,Innovative knowledge channels & games.</h6></div>
-                            </div>*@
-                           
-                        </div>
-                        <div>  <h5 style="font-weight:bold">Company Info</h5>  </div>
-                        <div style="font-size:12px;">
-                            KindleSpur started in summer of 2016 as a project by its founders, who are passionate about finding innovative ways for professional development.
-
-                            KindleSpur is a privately held company based in India. Its founders are seasoned professionals from technology and business.
-
-                            For more information about Mentoring and Coaching, please visit our Special Info page.
-
-                            For more information about Innovative knowledge channels and Games, please visit our Special Info page.
-
-                            For specific Queries, please write to us at curiosity@kindlespur.com
-                        </div>
+                  
+                    <div>  <h5 style="font-weight:bold">How we use cookies</h5>  </div>
+                    <div>A cookie is a small file which asks permission to be placed on your computer's hard drive. Once you agree, the file is added and the cookie helps analyze web traffic or lets you know when you visit a particular site. Cookies allow web applications to respond to you as an individual. The web application can tailor its operations to your needs, likes and dislikes by gathering and remembering information about your preferences.</div>
+                    <div>We use traffic log cookies to identify which pages are being used. This helps us analyze data about webpage traffic and improve our website in order to tailor it to customer needs. We only use this information for statistical analysis purposes and then the data is removed from the system.Overall, cookies help us provide you with a better website, by enabling us to monitor which pages you find useful and which you do not. A cookie in no way gives us access to your computer or any information about you, other than the data you choose to share with us. You can choose to accept or decline cookies. Most web browsers automatically accept cookies, but you can usually modify your browser setting to decline cookies if you prefer. This may prevent you from taking full advantage of the website.</div>
+                    <br />
+                    <div>  <h5 style="font-weight:bold">Links to other websites</h5>  </div>
+                    <br />
+                    <div>
+                        Our website may contain links to other websites of interest. However, once you have used these links to leave our site, you should note that we do not have any control over that other website. Therefore, we cannot be responsible for the protection and privacy of any information which you provide whilst visiting such sites and such sites are not governed by this privacy statement. You should exercise caution and look at the privacy statement applicable to the website in question.
                     </div>
+                    <div>  <h5 style="font-weight:bold">Controlling your Personal Information</h5>  </div>
+                    <div>
+                        You may choose to restrict the collection or use of your personal information in the following ways:
+                    </div>
+                    <br />
+
+                    <div style="display:inline-flex">
+                        <div><h6 style="border-radius:15%;border:3px solid;color:black;width:2%;"></h6></div>&nbsp;&nbsp;
+                        <div><h6>whenever you are asked to fill in a form on the website, look for the box that you can click to indicate that you do not want the information to be used by anybody for promotional purposes. If such box is not available, you may choose not to fill such form. However, by submitting the filled enquiry form, you will be construed to have foregone your right and Company may choose to send promotional emails and materials from time to time.we endorse the website(s). We have no responsibility for the content of the linked website(s).</h6></div>
+                    </div>
+                    <br />
+                    <div style="display:inline-flex">
+                        <div><h6 style="border-radius:15%;border:3px solid;color:black;width:2%;"></h6></div>&nbsp;&nbsp;
+                        <div><h6>You may not create a link to this website from another website or document without RIIT’s prior written consent. Your use of this website and any dispute arising out of such use of the website is subject to the laws of India or regulatory authority within the country of India. </h6></div>
+                    </div>                   
+                </div>
+
+
                 </div>
 
 
@@ -119,7 +145,7 @@
             </div>
 
 
-        </div>
+        
 
 
     </div>
