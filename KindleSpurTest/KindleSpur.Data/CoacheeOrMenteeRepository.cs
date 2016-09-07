@@ -485,11 +485,12 @@ namespace KindleSpur.Data
                     coachOrMentorEntity = _coachOrMentorCollection.FindOneAs<CoachOrMentor>(Query.And(Query.EQ("UserId", UserId), Query.EQ("Role", "Mentor")));
                 }
 
-                entity.FeedbackPoints += feedback.customerSatisfactionRating;
+                if(feedback.FeedbackStatus == "PRESESSION")
+                    entity.FeedbackPoints = feedback.customerSatisfactionRating;
+                else
+                    entity.FeedbackPoints += feedback.customerSatisfactionRating;
                 
                 if (entity.Feedbacks == null) entity.Feedbacks = new List<IFeedback>();
-               
-                
                 feedback.Sender = UserId;
                 feedback.CreateDate = DateTime.Now;
                 entity.Feedbacks.Add(feedback);
@@ -498,17 +499,19 @@ namespace KindleSpur.Data
 
                 var _users = con.GetCollection("UserDetails");
                 User user = _users.FindOneAs<User>(Query.EQ("EmailAddress", UserId));
-                user.BalanceRewardPoints += 5;
-                user.TotalRewardPoints += 5;
-                _users.Save(user);
 
-                
-               // coachOrMentorEntity = _coachOrMentorCollection.FindOneAs<CoachOrMentor>(Query.EQ("UserId", UserId));
-                coachOrMentorEntity.RewardPointsGained += 5;
+                if (feedback.FeedbackStatus == "FEEDBACK")
+                {
+                    user.BalanceRewardPoints += 5;
+                    user.TotalRewardPoints += 5;
+                    coachOrMentorEntity.RewardPointsGained += 5;
+                }
+                _users.Save(user);
 
                 ICoachingStatus coachingStatus = coachOrMentorEntity.CoachingStatus.Find(x => x.Sender == entity.UserId && x.Skill == feedback.Skill);
                 coachingStatus.customerSatisfactionRating = feedback.customerSatisfactionRating;
-                coachingStatus.FeedBackCount += 1;
+                if (feedback.FeedbackStatus != "PRESESSION")
+                    coachingStatus.FeedBackCount += 1;
                 coachingStatus.FeedbackClosed = feedback.FeedbackClosed;
 
                 coachOrMentorEntity.CoachingStatus.Add(coachingStatus);

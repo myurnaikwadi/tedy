@@ -357,7 +357,7 @@ namespace KindleSpur.Data
                     {
                         foreach (Feedback feedback in listcoachOrMentor[userListCount].Feedbacks)
                         {
-                            if ((feedback.QueAndAns[6].Answer == "3" || feedback.QueAndAns[6].Answer == "4" || feedback.QueAndAns[6].Answer == "5") && (feedback.FeedbackClosed == true))
+                            if ((feedback.QueAndAns[6].Answer == "3" || feedback.QueAndAns[6].Answer == "4" || feedback.QueAndAns[6].Answer == "5") && (feedback.FeedbackStatus == "CLOSESESSION"))
                             {
                                 MostRatedFeedback mostRateFeedback = new MostRatedFeedback();
                                 mostRateFeedback.Rating = feedback.QueAndAns[6].Answer;
@@ -382,7 +382,7 @@ namespace KindleSpur.Data
                     {
                         foreach (Feedback feedback in listcoacheeOrMentee[userListCount].Feedbacks)
                         {
-                            if ((feedback.QueAndAns[6].Answer == "3" || feedback.QueAndAns[6].Answer == "4" || feedback.QueAndAns[6].Answer == "5") && (feedback.FeedbackClosed == true))
+                            if ((feedback.QueAndAns[6].Answer == "3" || feedback.QueAndAns[6].Answer == "4" || feedback.QueAndAns[6].Answer == "5") && (feedback.FeedbackStatus == "CLOSESESSION"))
                             {
                                 MostRatedFeedback mostRateFeedback = new MostRatedFeedback();
                                 mostRateFeedback.Rating = feedback.QueAndAns[6].Answer;

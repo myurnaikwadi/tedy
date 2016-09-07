@@ -28,6 +28,8 @@ namespace KindleSpur.Models.Interfaces
         //List<FileUploadConversation> FilesConversations { get; set; }
         List<ResourceFileLink> FilesURLlink { get; set; }
         Boolean IsRejected { get; set; }
+        bool Active { get; set; }
+
 
     }
 }
