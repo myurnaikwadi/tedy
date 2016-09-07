@@ -212,7 +212,10 @@ namespace KindleSpur.Data
                     coacheeOrMenteeEntity = _coacheeOrMenteeCollection.FindOneAs<CoacheeOrMentee>(Query.And(Query.EQ("UserId", UserId), Query.EQ("Role", "Mentee")));
                 }
 
-                entity.FeedbackPoints += feedback.customerSatisfactionRating;
+                if (feedback.FeedbackStatus == "PRESESSION")
+                    entity.FeedbackPoints = feedback.customerSatisfactionRating;
+                else
+                    entity.FeedbackPoints += feedback.customerSatisfactionRating;
 
                 if (entity.Feedbacks == null) entity.Feedbacks = new List<IFeedback>();
 
@@ -224,15 +227,20 @@ namespace KindleSpur.Data
 
                 var _users = con.GetCollection("UserDetails");
                 User user = _users.FindOneAs<User>(Query.EQ("EmailAddress", UserId));
-                user.BalanceRewardPoints += 5;
-                user.TotalRewardPoints += 5;
+                if (feedback.FeedbackStatus == "FEEDBACK")
+                { 
+                    user.BalanceRewardPoints += 5;
+                    user.TotalRewardPoints += 5;
+                    coacheeOrMenteeEntity.RewardPointsGained += 5;
+                }
                 _users.Save(user);
 
-                coacheeOrMenteeEntity.RewardPointsGained += 5;
+                
 
                 ICoachingStatus coachingStatus = coacheeOrMenteeEntity.CoachingStatus.Find(x => x.Sender == entity.UserId && x.Skill == feedback.Skill);
                 coachingStatus.customerSatisfactionRating = feedback.customerSatisfactionRating;
-                coachingStatus.FeedBackCount += 1;
+                if (feedback.FeedbackStatus != "PRESESSION")
+                    coachingStatus.FeedBackCount += 1;
                 coachingStatus.FeedbackClosed = feedback.FeedbackClosed;
                 coacheeOrMenteeEntity.CoachingStatus.Add(coachingStatus);
                 

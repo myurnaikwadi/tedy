@@ -30,5 +30,6 @@ namespace KindleSpur.Models
         public string ConversationType { get; set; }
         public string ConversationId { get; set; }
         public string ConversationParentId { get; set; }
+        public bool Active { get; set; }
     }
 }

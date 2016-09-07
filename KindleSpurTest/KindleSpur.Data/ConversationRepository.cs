@@ -48,8 +48,16 @@ namespace KindleSpur.Data
 
                 if (result.Count() > 0 && conversationData.Content == null)
                 {
-                    _transactionStatus = false;
-                    return false;
+                    if (result[0]["IsRejected"] == false && result[0]["IsVerified"] == false && result[0]["Active"] == false)
+                    {                      
+                        _conversationCollection.Update(Query.And(Query.EQ("SenderEmail", conversationData.SenderEmail), Query.EQ("ReceiverEmail", conversationData.ReceiverEmail), Query.EQ("skill", conversationData.skill)), Update<Conversation>.Set(c => c.IsRejected, false).Set(q =>q.Active, true));
+                        return true;
+                    }
+                    else
+                    {
+                        _transactionStatus = false;
+                        return false;
+                    }
                 }
                 conversationData.IsRejected = false;
               
@@ -173,6 +181,11 @@ namespace KindleSpur.Data
                     coachingStatus1.FeedBackCount = 0;
                     coacheeOrMentee.CoachingStatus.Add(coachingStatus1);
                     _coacheeOrMenteeCollection.Save(coacheeOrMentee);
+                }
+                else
+                {
+                    _conversationCollection.Update(Query.And(Query.EQ("SenderEmail", conversationDetail.SenderEmail), Query.EQ("ReceiverEmail", conversationDetail.ReceiverEmail), Query.EQ("skill", conversationDetail.skill)), Update<Conversation>.Set(c => c.IsRejected, false).Set(q => q.Active, false));
+                    return true;
                 }
                 conversationDetail.IsRejected = isRejected;
                 _conversationCollection.Save(conversationDetail);
