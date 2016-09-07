@@ -513,7 +513,19 @@
             $scope.autoSyncCounter = undefined;
         }
     };
-
+    $scope.saveBookmark = function (iCate) {
+        console.error(iCate)
+        serverCommunication.bookMarkLink({
+            bookMarkObject: { FilePath: iCate.FileName, FileName: iCate.FilePath },
+            successCallBack: function () {
+                scope.closePopup();
+            },
+            failureCallBack: function () {
+                // $scope.conversation.Message = "";
+                console.debug('In failureCallBack');
+            }
+        });
+    };
 
     $scope.autoSyncRoutine = function (iTime) {
         console.error('autoSyncRoutine')

@@ -6,7 +6,7 @@
     
     <div ng-style="styleUI.middle" style="float: left;width: 100%;height: 93%;background-color: #f3f3f3;">
         <div style="float: left;width: 100%;height: 100%;position: relative;display:flex;" class="col-md-12">
-            <div class="uploadPopup" ng-class="{ loadUploadPopup : loadUploadPopupFlag == true}">
+            <div class="uploadPopup" ng-class="{ loadUploadPopup : loadUploadPopupFlag == true && artictFact == true }">
                 <div class="topStripPopup">
                     <h5 style="margin: auto;margin-left:6%;" class="fontClass ValueFeedsHeade">UPLOAD FILES</h5>
                     <button type="button" ng-click="triggerUpload('uploadInput')" style="margin: auto;width: 16%;padding: 0%;margin-right: 7%;height: 22px;font-size: 9px;" class="signupButton fontClass btn btn-default">SELECT FILE +</button>                  
@@ -44,6 +44,31 @@
 
                 </div>
             </div>
+            <div class="uploadPopup" ng-class="{ loadUploadPopup : loadUploadPopupFlag == true && artictFact == false }">
+                <div class="topStripPopup">
+                    <h5 style="margin: auto;margin-left:6%;" class="fontClass ValueFeedsHeade">ADD BOOKMARK</h5>                   
+                </div>
+                <div class="middlteStripPopup">
+                    <div class="fullWidthHeightClass" style="margin: auto;width: 87%; height: 94%;overflow:auto;">                       
+                        <div class="statusCoachingStatus" style="width: 100%;height: 25%;">
+                            <h5 class="fontClass" style="color:#A9A9A9;margin: auto auto;float: left;margin-left: 0;">BookMark Name</h5>
+                        </div>
+                        <div class="statusCoachingStatus" style="width: 100%;height: 25%;">
+                            <input class="inputTagStyle fontClass" style="margin: auto;width: 90%;height: 70%;" type="text" ng-model="bookmark.FileName" placeholder="BookMark Name" ng-required />
+                        </div>
+                        <div class="statusCoachingStatus" style="width: 100%;height: 25%;">
+                            <h5 class="fontClass" style="color:#A9A9A9;margin: auto auto;float: left;margin-left: 0;">BookMark Url</h5>
+                        </div>
+                        <div class="statusCoachingStatus" style="width: 100%;height: 25%;">
+                            <input class="inputTagStyle fontClass" style="margin: auto;width: 90%;height: 70%;"  type="text" ng-model="bookmark.FilePath" placeholder="BookMark Name" ng-required />
+                        </div>
+                    </div>
+                </div>
+                <div class="bottomStripPopup">
+                    <button type="button" style="margin: auto;width: 15%;padding: 0%;margin-right: 7%;height: 22px;font-size: 9px;" ng-click="closePopup()" class="signupButton fontClass btn btn-default">CANCEL</button>
+                    <button type="button" style="margin: auto;width: 15%;padding: 0%;margin-left: 0%;height: 22px;font-size: 9px;" ng-click="saveBookmark()" class="signupButton fontClass btn btn-default">ADD</button>
+                </div>
+            </div>
             <div class="podcastsContainer col-md-5 col-sm-12 mosuehover"  style="background-color: #f3f3f3;width: 50%;padding-right: 0;">
                 <div class="podcastHeader">
                     <h5 style="margin: auto;margin-left: 2%;" class="fontClass ValueFeedsHeade">ARTIFACTS</h5>
@@ -51,6 +76,9 @@
                 <div style="height:90%;width:100%;float:left">
                     <div style="height: 88%;width: 100%;float:left;overflow:auto;">
                         <div ng-hide="artifactsArray.length == 0" class="ImpactZoneChildDiv mouseOverEffectDiv" ng-repeat="option in artifactsArray">
+                            <div ng-show="extraParam.deleteIcon == true" class="profileImageCoachingStatus">
+                                <img ng-src="{{ option.bookMarked ? 'Images/rate-star-button.png' : 'Images/silverstar.png' }}" ng-click="option.bookMarked =! option.bookMarked; saveBookmark(option)" style="margin: auto; float: left;height: 15px;width: 20px;" />
+                            </div>
                             <div class="profileImageCoachingStatus">
                                 <img ng-src="{{option.PhotoURL ? option.PhotoURL : '/Images/icons/Microsoft_Word_2013_icon.png' }}" style="margin: auto auto;float: left;height: 35px;width: 35px;" />                               
                             </div>
@@ -64,15 +92,15 @@
                                 <input style="float: left;margin: auto;" value="true" ng-model="option.selected" type="checkbox" />
                             </div>
                             <div class="profileImageCoachingStatus">                                
-                                <img src="/Images/icons/61391.png" ng-click="deleteAttachment({ deleteMultiple : false , type : 'artifact' , deletedObject : option , index : $index })" style="margin: auto; float: left;height: 18px;width: 20px;opacity: 0.4;" />
+                                <img src="~/Images/delete.png" ng-click="deleteAttachment({ deleteMultiple : false , type : 'artifact' , deletedObject : option , index : $index })" style="margin: auto; float: left;height: 15px;width: 20px;;" />
                             </div>
                         </div>
                         <place-Holder message="No Attachment Uploaded" ng-show="artifactsArray.length == 0" ></place-Holder>
                     </div>
                     <div style="height:11%;width: 100%;float:left;display: flex;" ng-show="extraParam.AttachMode == false">
                         @*<input class="signupButton fontClass btn btn-default" type="button" value="Share" style="margin: auto;margin-right: 0;padding: 0;width: 115px;" />*@
-                        <input class="signupButton fontClass btn btn-default" type="button" value="Upload" ng-click="loadUploadPopup()" style="margin: auto;margin-right: 0;padding: 0;" />
-                        <input class="signupButton fontClass btn btn-default" ng-click="deleteAttachment({ deleteMultiple : true , type : 'artifact' , deletedObject : null })" type="button" value="Delete" style="margin: auto;padding: 0;" />
+                        <input class="signupButton fontClass btn btn-default"  ng-style="{ 'margin-right': artifactsArray.length > 0 ? 0 : 'auto'}" type="button" value="Upload" ng-click="loadUploadPopup()" style="margin: auto;padding: 0;" />
+                        <input class="signupButton fontClass btn btn-default" ng-show="artifactsArray.length > 0" ng-click="deleteAttachment({ deleteMultiple : true , type : 'artifact' , deletedObject : null })" type="button" value="Delete" style="margin: auto;padding: 0;" />
                     </div>                   
                 </div>
 
@@ -89,26 +117,24 @@
                                     <img ng-src="{{option.PhotoURL ? option.PhotoURL : '/Images/icons/Microsoft_Word_2013_icon.png' }}" style="margin: auto auto;float: left;height: 35px;width: 35px;" />
                                 </div>
                                 <div class="statusCoachingStatus" style="width: 50%;">
-                                    <h5 class="fontClass" style="color:#A9A9A9;margin: auto auto;float: left;margin-left: 0;">{{option.DocumentName}}</h5>
+                                    <h5 class="fontClass" style="color:#A9A9A9;margin: auto auto;float: left;margin-left: 0;">{{option.FileName}}</h5>
                                 </div>
                                 <div class="profileImageCoachingStatus">
                                     <img ng-src="{{option.PhotoURL ? option.PhotoURL : '/Images/icons/Microsoft_Word_2013_icon.png' }}" style="margin: auto auto;float: left;height: 35px;width: 35px;" />
-                                </div>
-                                <div class="communicationsCoachingStatus" style="width: 14%;    margin-right: 0;">
-                                    <h5 class="fontClass" style="color:#A9A9A9;margin: auto auto;float: left;margin-left: 0;">{{option.size}}</h5>
-                                </div>
+                                </div>                              
                                 <div style="float: left;display: flex;width: 5%;height: 100%; position: relative;">
                                     <input style="float: left;margin: auto;" type="checkbox" />
                                 </div>
                                 <div ng-show="extraParam.deleteIcon == true" class="profileImageCoachingStatus">
-                                    <img src="/Images/icons/61391.png" ng-click="deleteAttachment({ deleteMultiple : false , type : 'bookMark' , deletedObject : option , index : $index })" style="margin: auto; float: left;height: 18px;width: 20px;opacity: 0.4;" />
+                                    <img src="~/Images/delete.png" ng-click="deleteAttachment({ deleteMultiple : false , type : 'bookMark' , deletedObject : option , index : $index })" style="margin: auto; float: left;height: 15px;width: 20px;" />
                                 </div>
+                               
                             </div>    
                             <place-Holder message="No Bookmark Present" ng-show="bookMarkArray.length == 0"></place-Holder>                        
                         </div>
                         <div style="height:11%;width: 100%;float:left;display: flex;" ng-show="extraParam.AttachMode == false">
-                            @*<input class="signupButton fontClass btn btn-default" type="button" value="Share" style="margin: auto;width: 115px;padding: 0;margin-right: 0;" />*@
-                            <input class="signupButton fontClass btn btn-default" ng-click="deleteAttachment({ deleteMultiple : true , type : 'bookMark' , deletedObject : null })" type="button" value="Delete" style="margin: auto;padding: 0;" />
+                            <input class="signupButton fontClass btn btn-default" ng-style="{ 'margin-right': bookMarkArray.length > 0 ? 0 : 'auto'}" type="button" value="Add" ng-click="addBookMark()" style="margin: auto;padding: 0;" />
+                            <input class="signupButton fontClass btn btn-default"  ng-show="bookMarkArray.length > 0"  ng-click="deleteAttachment({ deleteMultiple : true , type : 'bookMark' , deletedObject : null })" type="button" value="Delete" style="margin: auto;padding: 0;" />
                         </div>
                     </div>
                 </div>

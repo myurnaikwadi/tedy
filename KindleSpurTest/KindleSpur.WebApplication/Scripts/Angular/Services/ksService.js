@@ -247,9 +247,8 @@ app.factory('serverCommunication', function ($http) {
             if (iObj.role == 'mentee')
                 _action = '/Mentee/SaveTopics';
             $http.post(_action, iObj.selectedArray).then(iObj.successCallBack, iObj.failureCallBack);
-        },
-
-
+        },        
+        
         /**
          * @auther : MKN
          * @date : 15/06/2016
@@ -472,6 +471,26 @@ app.factory('serverCommunication', function ($http) {
             console.error(req);
             $http(req).then(iObj.successCallBack, iObj.failureCallBack);
 
+        },
+
+        /**
+       * @auther : MKN
+       * @date : 15/06/2016
+       * @Purpose :
+       */
+        bookMarkLink: function (iObj) {
+            console.error(iObj)
+            var req = {
+                method: 'POST',
+                url: '',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                data: { BookMarks: iObj.bookMarkObject },
+                traditional: true
+            }
+            console.error(req);
+            //$http(req).then(iObj.successCallBack, iObj.failureCallBack);
         },
 
         /**

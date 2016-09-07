@@ -326,16 +326,19 @@
                                             <h5 ng-hide="(MailRecord.Content.indexOf('has been filled by ') > -1 || MailRecord.Content.indexOf('was closed') > -1 || MailRecord.Content.indexOf(' has been accepted') > -1)"  class="fontClass" style="margin: 0;margin-bottom: 5px;color: #1d89cf;height: auto;font-size:11px;font-size: 10px;width: 100%;" ng-class="{chatTimeReceiver : MailRecord.SenderEmail === loggedEmail, chatTime : MailRecord.ReceiverEmail === loggedEmail}">{{(MailRecord.Name) | uppercase }} </h5>
                                             <h5 class="fontClass" style="margin: 0;margin-bottom: 5px;color: #555;">{{MailRecord.Content}}</h5>
 
-                                            <div ng-show="MailRecord.FilesURLlink && MailRecord.FilesURLlink.length > 0" class="imageConversation" style="width: 100%;display: block;height:auto;">
-                                                <div class="ImpactZoneChildDiv mouseOverEffectDiv" style="border-top: 1px solid #ddd;" ng-repeat="option in MailRecord.FilesURLlink">
-                                                    <div class="profileImageCoachingStatus">
-                                                        <img ng-src="{{option.PhotoURL ? option.PhotoURL : '/Images/icons/Microsoft_Word_2013_icon.png' }}" style="margin: auto auto;float: left;height: 35px;width: 35px;" />
+                                            <div ng-show="MailRecord.FilesURLlink && MailRecord.FilesURLlink.length > 0" class="imageConversation" style="width: 300px;display: block;height:auto;">
+                                                <div class="ImpactZoneChildDiv mouseOverEffectDiv" style="border-top: 1px solid #ddd;overflow: hidden;" ng-repeat="option in MailRecord.FilesURLlink">
+                                                    <div class="profileImageCoachingStatus" style="width:30px;">
+                                                        <img ng-src="{{option.PhotoURL ? option.PhotoURL : '/Images/icons/Microsoft_Word_2013_icon.png' }}" style="margin: auto auto;float: left;height: 25px;width: 25px;" />
                                                     </div>
                                                     <div class="statusCoachingStatus" style="width: 50%;">
                                                         <h5 class="fontClass genericPointerClass" ng-click="loadFeedOnNextTab(option)"  style="color:#A9A9A9;margin: auto auto;float: left;margin-left: 0;">{{option.FileName}}</h5>
                                                     </div>
                                                     <div class="communicationsCoachingStatus" style="width: 14%;    margin-right: 0;">
                                                         <h5 class="fontClass" style="color:#A9A9A9;margin: auto auto;float: left;margin-left: 0;">{{option.size}}</h5>
+                                                    </div>
+                                                    <div class="profileImageCoachingStatus">
+                                                        <img ng-src="{{ option.bookMarked ? 'Images/rate-star-button.png' : 'Images/silverstar.png' }}" ng-click="option.bookMarked =! option.bookMarked; saveBookmark(option)" style="margin: auto; float: left;height: 15px;width: 20px;" />
                                                     </div>
                                                 </div>
                                             </div>

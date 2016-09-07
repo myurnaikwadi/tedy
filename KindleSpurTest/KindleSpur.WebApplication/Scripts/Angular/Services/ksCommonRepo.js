@@ -19,19 +19,61 @@
             var data = new FormData();
             var tempArray = [];
             scope.loadUploadPopupFlag = false;
+            scope.artictFact = false;
+            scope.bookmark = { FilePath  : '', FileName: ''};
             scope.loadUploadPopup = function () {
+                scope.artictFact = true;
                 scope.loadUploadPopupFlag = true;
                 // data = [];
                 data = new FormData();
                 tempArray = [];
             };
+
+            scope.addBookMark = function () {
+                scope.artictFact = false;
+                scope.loadUploadPopupFlag = true;
+                // data = [];
+                data = new FormData();
+                tempArray = [];
+            };            
             
             scope.closePopup = function () {
                 scope.loadUploadPopupFlag = false;
                 // data = [];
                 data = new FormData();
                 tempArray = [];
+                scope.artictFact = null;
+                scope.bookmark = { FilePath  : '', FileName: ''};
+                if (scope.extraParam && scope.extraParam.closeCallBack)
+                    scope.extraParam.closeCallBack();
             };
+
+            scope.saveBookmark = function (iArtifacts) {
+                var _callServerSide = false;
+                if (iArtifacts) {
+                    if (iArtifacts.bookMarked) {
+                        _callServerSide = true;
+                        scope.bookmark = { FilePath: iArtifacts.FileName, FileName: iArtifacts.FilePath };
+                    } else {
+                        _callServerSide = false;
+                        scope.deleteAttachment({ deleteMultiple: false, type: 'bookMark', deletedObject: iArtifacts, index: -1 })
+                    }                   
+                }
+                if (_callServerSide) {
+                    scope.bookMarkArray.push(scope.bookmark);
+                    serverCommunication.bookMarkLink({
+                        bookMarkObject: scope.bookmark,
+                        successCallBack: function () {
+                            scope.closePopup();
+                        },
+                        failureCallBack: function () {
+                            // $scope.conversation.Message = "";
+                            console.debug('In failureCallBack');
+                        }
+                    });
+                }               
+            };
+
             scope.attachFiles = function () {
                 console.error(scope)
                 var _selectedData = {};
@@ -72,10 +114,7 @@
                 if (scope.extraParam && scope.extraParam.closeCallBack)
                     scope.extraParam.closeCallBack();
             };
-            scope.closePopup = function () {
-                if (scope.extraParam && scope.extraParam.closeCallBack)
-                    scope.extraParam.closeCallBack();
-            };
+            
             scope.uploadDataOnServer = function () {
                 console.error(scope.artifactsArray)
                 scope.artifactsArray = scope.artifactsArray.concat(tempArray);
@@ -124,7 +163,7 @@
                     } else {
                         _selectedData['Artifact'] = {};
                         _selectedData['Artifact'][iObj.deletedObject.FileName] = iObj.deletedObject;
-                        scope.artifactsArray.splice(iObj.index, 1);
+                        if (iObj.index > -1)  scope.artifactsArray.splice(iObj.index, 1);
                     }
                 } else {
                     if (iObj.deleteMultiple) {
@@ -155,7 +194,7 @@
                     } else {
                         _selectedData['bookMark'] = {};
                         _selectedData['bookMark'][iObj.deletedObject.FileName] = iObj.deletedObject;
-                        scope.bookMarkArray.splice(iObj.index, 1);
+                        if(iObj.index > -1) scope.bookMarkArray.splice(iObj.index, 1);
                     }
                 }
                 console.error(_selectedData)

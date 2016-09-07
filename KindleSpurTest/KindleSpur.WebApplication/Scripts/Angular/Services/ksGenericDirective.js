@@ -1534,6 +1534,26 @@ app.directive('rssFeed', function ($state, serverCommunication, $timeout) {
                 window.open(iFeed.url);
             };
 
+            $scope.bookMarkLink = function (iEvent, iFeed) {
+                iEvent && (iEvent.stopPropagation());
+                console.error(iFeed);
+                var _obj = {
+                    FileName: iFeed.name,
+                    FilePath: iFeed.url,
+                }
+                serverCommunication.bookMarkLink({
+                    bookMarkObject: _obj,                   
+                    successCallBack: function () {
+                        // $scope.conversation.Message = "";
+                        // console.debug('In successCallBack');
+                    },
+                    failureCallBack: function () {
+                        // $scope.conversation.Message = "";
+                        console.debug('In failureCallBack');
+                    }
+                });
+            };
+
             $scope.getRssFeedData = function (iString) {
                 var params = {
                     // Request parameters
