@@ -598,7 +598,7 @@ app.factory('serverCommunication', function ($http) {
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                data: {  }
+                data: { ConversationType: iObj.ConversationType }
             }
             $http(req).then(iObj.successCallBack, iObj.failureCallBack);
         },

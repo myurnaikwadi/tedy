@@ -136,7 +136,7 @@
                 $scope.notificationData = [];
                 if ($scope.requiredField.indexOf("REQ") > -1) {
                     serverCommunication.getAllConversationRequest({
-                        ConversationType: "Coaching",
+                        ConversationType: ($scope.role == 'Coach') ? 'Coaching': 'Mentoring',
                         successCallBack: function (iObj) {
                             console.debug('Conversation Request Call', iObj);
                             for (var k = 0 ; k < iObj.data.Result.length ; k++) {

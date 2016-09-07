@@ -75,7 +75,7 @@
         $scope.stopFight();
         $scope.loadingMiddleObject = { showLoading: true, loadingMessage: 'Loading' };
         switch (iIndex) {
-            case 0: $scope.autoSyncRoutine(_conversationTime); $scope.conversationRequest(); break;
+            case 0: $scope.loadingMiddleObject = { showLoading: false, loadingMessage: 'Loading' };  break;//$scope.conversationRequest();  $scope.autoSyncRoutine(_conversationTime); break;
             case 1: $scope.getCoachRecord(); break;
             case 3: $scope.generateGarden(); break;
             case 4: $scope.getRssFeedData(); break;
@@ -461,7 +461,7 @@
             flag        : isVerfied,
             successCallBack: function () {
                 console.debug('In successCallBack');
-                $scope.conversationRequest();
+               // $scope.conversationRequest();
             },
             failureCallBack: function (e) {
                 console.debug('In failureCallBack' + e);
@@ -484,7 +484,7 @@
             Reason: "",
             successCallBack: function () {
                 console.debug('In successCallBack');
-                $scope.conversationRequest();
+               // $scope.conversationRequest();
             },
             failureCallBack: function (e) {
                 console.debug('In failureCallBack' + e);
@@ -831,15 +831,12 @@
             $scope.feedbackDisplayIcon[k].styleObj['margin-top'] = '0';
     };
 
+    $scope.gridViewLoaded = false;
     $scope.loadGridView = function () {
-        for (var k = 0 ; k < $scope.notificationData.length ; k++) {
-            $scope.notificationData[k].showFlag = false;
-        }
-        $timeout(function () {
-            for (var k = 0 ; k < $scope.notificationData.length ; k++) {
-                $scope.notificationData[k].showFlag = true;
-            }
-        }, 600);
+        //debugger
+        $scope.gridViewLoaded = !$scope.gridViewLoaded;
+        //console.error($scope.gridViewLoaded)
+        $rootScope.$broadcast("inboxListener", { gridViewLoaded: $scope.gridViewLoaded });
     };
 
     $scope.notificationData = [];
@@ -1083,9 +1080,10 @@
             $scope.selectedMenu = '6';
         } else {
             $scope.selectedMenu = '0';
+            $scope.menuClick(0, $scope.leftSideMenus[0]);
             // $scope.conversationStartData($scope.loggedEmail);
-            $scope.conversationRequest();
-            $scope.autoSyncRoutine(_conversationTime);
+            //$scope.conversationRequest();
+            //$scope.autoSyncRoutine(_conversationTime);
         }
     };
 
