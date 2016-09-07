@@ -301,14 +301,22 @@ namespace KindleSpur.WebApplication.Controllers
         {
             Reward reward = new Reward();
             UserRepository _userRepo = new UserRepository();
-            string EmailAddress = ((IUser)System.Web.HttpContext.Current.Session["User"]).EmailAddress;
-            _userRepo.GetRewardPoints(EmailAddress, ref reward);
+            try
+            {
+                string EmailAddress = ((IUser)System.Web.HttpContext.Current.Session["User"]).EmailAddress;
+                _userRepo.GetRewardPoints(EmailAddress, ref reward);
 
-            CoachOrMentorRepository _coachOrMentorRepo = new CoachOrMentorRepository();
-            _coachOrMentorRepo.GetRewardPoints(EmailAddress, ref reward);
+                CoachOrMentorRepository _coachOrMentorRepo = new CoachOrMentorRepository();
+                _coachOrMentorRepo.GetRewardPoints(EmailAddress, ref reward);
 
-            CoacheeOrMenteeRepository _coacheeOrMenteeRepo = new CoacheeOrMenteeRepository();
-            _coacheeOrMenteeRepo.GetRewardPoints(EmailAddress, ref reward);
+                CoacheeOrMenteeRepository _coacheeOrMenteeRepo = new CoacheeOrMenteeRepository();
+                _coacheeOrMenteeRepo.GetRewardPoints(EmailAddress, ref reward);
+            }
+            catch (Exception ex)
+            {
+                response.FailureCallBack(ex.Message);
+            }
+
             return reward.ToJson();
         }
 
@@ -403,9 +411,7 @@ namespace KindleSpur.WebApplication.Controllers
             }
             catch (Exception ex)
             {
-                return "Opss contact to Administrator";
-
-
+                response.FailureCallBack(ex.Message);
             }
             return response.ToJson();
         }

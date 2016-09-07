@@ -89,30 +89,47 @@ namespace KindleSpur.WebApplication.Controllers
             //{
             //    var recevicedetails = ur.GetUserDetail(value["From"].ToString());
             //    result.Add((IUser)recevicedetails);
-                
-            //}
 
-            foreach (var value in _repo.GetAllMeetingRequest(((IUser)Session["User"]).EmailAddress))
+            //}
+            try
+            {
+                foreach (var value in _repo.GetAllMeetingRequest(((IUser)Session["User"]).EmailAddress))
+                {
+
+                    var recevicedetails = ur.GetUserDetail(value.From);
+                    UserMeetings u = new UserMeetings();
+                    u.Meeting = value;
+                    u.FirstName = recevicedetails.FirstName;
+                    u.LastName = recevicedetails.LastName;
+                    u.Photo = recevicedetails.Photo;
+                    u.EmailAddress = recevicedetails.EmailAddress;
+                    result1.Add(u);
+                    //result.Add((IUser)recevicedetails);
+                }
+
+                return Json(new { Result = result1 }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception)
             {
 
-                var recevicedetails = ur.GetUserDetail(value.From);
-                UserMeetings u = new UserMeetings();
-                u.Meeting = value;
-                u.FirstName = recevicedetails.FirstName;
-                u.LastName = recevicedetails.LastName;
-                u.Photo = recevicedetails.Photo;
-                u.EmailAddress = recevicedetails.EmailAddress;
-                result1.Add(u);
-                //result.Add((IUser)recevicedetails);
+                return View();
             }
-
-            return Json(new { Result = result1 }, JsonRequestBehavior.AllowGet);
+           
         }
         [HttpPost]
         public bool MeetingSchedularUpdate(string MeetingId, bool flag)
         {
             MeetingRepository _repo = new MeetingRepository();
-            return _repo.MeetingSchedularUpdate(MeetingId, flag);            
+            try
+            {
+                return _repo.MeetingSchedularUpdate(MeetingId, flag);
+
+            }
+            catch (Exception)
+            {
+
+                return true;
+            }
         }
         [HttpPost]
         public ActionResult GetAllMeetingPerMonth(DateTime FromDate, DateTime ToDate)
@@ -127,8 +144,17 @@ namespace KindleSpur.WebApplication.Controllers
             //List<IUser> result = new List<IUser>();
 
             UserRepository ur = new UserRepository();
-           var result = _repo.GetAllMeetingPerMonth(( ((IUser)Session["User"]).EmailAddress),FromDate,ToDate);           
-            return Json(new { Result = result }, JsonRequestBehavior.AllowGet);
+            try
+            {
+                var result = _repo.GetAllMeetingPerMonth((((IUser)Session["User"]).EmailAddress), FromDate, ToDate);
+                return Json(new { Result = result }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception)
+            {
+
+                return View();
+            }
+          
         }
 
 

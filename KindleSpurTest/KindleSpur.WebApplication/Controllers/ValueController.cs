@@ -30,16 +30,34 @@ namespace KindleSpur.WebApplication.Controllers
         public string SaveValueFeedStory(ValueFeedStory story)
         {
             ResponseMessage response = new ResponseMessage();
-            if(!_userRepo.SaveValueFeedStory(story))
+            try
             {
-                 response.FailureCallBack("Unable to create your story");
+                if (!_userRepo.SaveValueFeedStory(story))
+                {
+                    response.FailureCallBack("Unable to create your story");
+                }
+                return response.ToJson();
             }
-            return response.ToJson();
+            catch (Exception)
+            {
+
+                throw;
+            }
+            
         }
 
         public JsonResult GetValueFeedStories(ValueFeedStorySearch search)
         {
-            return this.Json(_userRepo.GetValueFeedStories(search.ImpactZone));
+            try
+            {
+                return this.Json(_userRepo.GetValueFeedStories(search.ImpactZone));
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
     }
 }

@@ -111,7 +111,7 @@ namespace KindleSpur.WebApplication.Controllers
             catch (Exception)
             {
 
-                throw;
+                return View();
             }
            
 
