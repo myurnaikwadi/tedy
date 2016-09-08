@@ -617,6 +617,7 @@ app.factory('serverCommunication', function ($http) {
         sendConversation: function (iObj) {
             console.error('sendConversation --------------- ', iObj);
             var _checkObj = angular.copy(iObj);
+            var _action = _checkObj.loggedUserDetails.IsVerified == false ? '/Conversation/MentoringCoachingInvite' : '/Conversation/ConversationExchanged';
             var req = {
                 method: 'POST',
                 url: '/Conversation/MentoringCoachingInvite',
