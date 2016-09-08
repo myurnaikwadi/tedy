@@ -4,6 +4,7 @@
     $rootScope.currentModule = 'Coach';   
    // $scope.redeemAction = { actionName: "GAME" };
     $scope.navigateToProfile = function () {
+        $rootScope.currentModule = 'Profile';   
         $state.go('home.dashBoard.profile');
     };
     $scope.loadingObject = { showLoading: true, loadingMessage: 'Loading' };

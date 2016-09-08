@@ -49,7 +49,14 @@
         console.error(_str);
         $scope.myInfo.displayAddress = _str;
     };
-
+    var _displayDescription = function () {
+        var _str = '';
+        if ($scope.userInfo.description)
+            _str = $scope.userInfo.description;
+       
+        console.error(_str);
+       return _str;
+    };
     $scope.selectedMenuIndex = -1;
     $scope.switchRoleDropDown = 'All';
     $scope.switchRoleDropDowns = { role: 'All' };
@@ -179,15 +186,18 @@
             }
         }
     };
+    $scope.descriptionLoad = false;
     $scope.localModel = { Password: '', ConfirmPassword  : '' };
     $scope.loadSettingDetail = function () {
         $timeout(function () { $scope.loadingObject = { showLoading: false, loadingMessage: 'Loading Feed' }; }, 1000);
         $timeout(function () {
             $scope.animationActicvate = true;
           //  console.error($scope.animationActicvate);
-            $scope.localModel = {};
-            $scope.profileHoverFlag = true;
+            $scope.localModel = {};          
             $scope.localModel = angular.copy($scope.myInfo);
+            $scope.profileHoverFlag = true;
+            $scope.localModel.description = _displayDescription();
+            $scope.descriptionLoad = true;
             setTimeout(function () {
                 _setElementFocus('userId');
             }, 400);
@@ -439,7 +449,7 @@
         $scope.editDescription = false;
         $scope.myInfo = angular.copy($scope.localModel);
       //  console.error($scope.myInfo)
-        $scope.myInfo.description = $scope.myInfo.descriptiontoDisplay;
+       // $scope.myInfo.description = $scope.myInfo.descriptiontoDisplay;
         var _object = {
             changeDetails: {
                 description: $scope.myInfo.description

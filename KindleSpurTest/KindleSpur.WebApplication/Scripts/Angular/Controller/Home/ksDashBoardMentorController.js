@@ -10,6 +10,7 @@
     ];
     $scope.loadingObject = { showLoading: true, loadingMessage: 'Loading' };
     $scope.navigateToProfile = function () {
+        $rootScope.currentModule = 'Profile';   
         $state.go('home.dashBoard.profile');
     };
     $scope.loggedEmail = $rootScope.loggedDetail.EmailAddress;

@@ -82,6 +82,7 @@ display: flex;
 .descriptionLabelMessage{
     float: left;
     width: 100%;
+    transition: 0.4s all ease;
     height: calc(100% - 45px);
     position: relative;
     display: flex;
@@ -258,4 +259,24 @@ display: flex;
 }
 .StrongClass{
     width:100%;
-}                            
+}
+.profileDescriptionHide {
+    margin-top: -57%;
+     transition: 0.4s all ease;
+     overflow:hidden;
+     height:0;
+}
+.profileDescriptionLoad {
+    margin-top: 0% !important;
+    overflow:hidden;    
+    height: 88%;
+     transition: 0.4s all ease;
+}
+.profileDescriptionLoad textarea {
+     margin : auto;
+}
+.profileDescriptionHideText {
+    height:0;
+    overflow:hidden;
+     transition: 0.4s all ease;
+}

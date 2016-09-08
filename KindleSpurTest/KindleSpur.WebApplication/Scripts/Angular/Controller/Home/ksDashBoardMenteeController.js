@@ -10,6 +10,7 @@
     $scope.objectForResourceTab = { deleteIcon : true, AttachMode: false, headingRequired: true, closeRequired: false, styleUI: { top: { 'height': '7%' }, middle: { 'height': '93%' }, bottom: {} } };
     $scope.loadingObject = { showLoading: true, loadingMessage: 'Loading' };
     $scope.navigateToProfile = function () {
+        $rootScope.currentModule = 'Profile';   
         $state.go('home.dashBoard.profile');
     };
     $scope.selectedMenu = '0';

@@ -7,6 +7,7 @@
     $scope.loadingObject = { showLoading: true, loadingMessage: 'Loading' };
     $scope.ReceiverName = "";
     $scope.navigateToProfile = function () {
+        $rootScope.currentModule = 'Profile';   
         $state.go('home.dashBoard.profile');
     };
     $scope.notifications = [
