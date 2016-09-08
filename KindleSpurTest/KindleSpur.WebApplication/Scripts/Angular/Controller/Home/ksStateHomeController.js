@@ -78,7 +78,14 @@
                     $scope.uiFlag.loadModule = '';
                 }
                 break;
-            case "loadBottomContain": $scope.uiFlag.loadBottomContain = true; break;
+            case "loadBottomContain":
+                                        $scope.uiFlag.loadBottomContain = true;
+                                        $scope.extraParam = iObj.data; 
+                                        $scope.extraParam.closeCallBack = function () {
+                                            console.error('sssss')
+                                            $scope.uiFlag.loadBottomContain = false;                                            
+                                        };
+                                        break;
             case "loadProfileContain": $scope.extraParam = iObj.data; $scope.uiFlag.loadProfileView = iObj.data.toggleFlag; break;
         }
 

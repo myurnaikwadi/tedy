@@ -186,7 +186,7 @@ app.directive('bottomMainStrip', function ($timeout, $rootScope) {
         scope: {
 
         },
-        template: '<div style="float: left;width: 100%;height: 100%;display: flex;"><div ng-style="styleToLeftStrip" style="float:left;position:relative;heigth:100%;"></div><div class="bottomStripOption"><h6 style="margin:10px;font-size: 11px;"class="fontClass biottomStripMargin genericPointerClass" ng-repeat = "option in bottomOptionArray" ng-click="loadAttachment()">{{ option.name}}</h6></div></div>',
+        template: '<div style="float: left;width: 100%;height: 100%;display: flex;"><div ng-style="styleToLeftStrip" style="float:left;position:relative;heigth:100%;"></div><div class="bottomStripOption"><h6 style="margin:10px;font-size: 11px;"class="fontClass biottomStripMargin genericPointerClass" ng-repeat = "option in bottomOptionArray" ng-click="loadPageClcik($index,option)">{{ option.name}}</h6></div></div>',
         //scope: true,   // optionally create a child scope
         controller: function ($scope) {
             console.error($scope);
@@ -213,8 +213,15 @@ app.directive('bottomMainStrip', function ($timeout, $rootScope) {
                         { name: 'PRIVACY POLICY' },
                         { name: 'TERMS AND CONDITIONS' },
             ];
-            $scope.loadAttachment = function () {
-                $rootScope.$broadcast("refreshStateHomeView", { type: 'loadBottomContain' });
+            $scope.loadPageClcik = function (iIndex, iOption) {
+                var _tempateUrl = '';
+                switch (iIndex) {
+                    case 0: _tempateUrl = '1'; break;
+                    case 1: _tempateUrl = '2'; break;
+                    case 2: _tempateUrl = '3'; break;
+                    case 3: _tempateUrl = '4'; break;
+                }
+                $rootScope.$broadcast("refreshStateHomeView", { type: 'loadBottomContain', data: { templateUrl: _tempateUrl } });
             };
         }
     }
