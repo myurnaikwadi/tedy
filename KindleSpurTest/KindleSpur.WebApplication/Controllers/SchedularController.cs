@@ -136,7 +136,7 @@ namespace KindleSpur.WebApplication.Controllers
         }
 
         [HttpPost]
-        public JsonResult GetAllMeetingPerMonth(DateTime FromDate, DateTime ToDate)
+        public ActionResult GetAllMeetingPerMonth(DateTime FromDate, DateTime ToDate)
         {
 
             MeetingRepository _repo = new MeetingRepository();

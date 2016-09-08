@@ -151,10 +151,10 @@ namespace KindleSpur.Data
             return _transactionStatus;
         }
 
-        public List<BsonDocument> GetAllMeetingPerMonth(string userId,DateTime FromDate,DateTime ToDate )
+        public List<Meeting> GetAllMeetingPerMonth(string userId,DateTime FromDate,DateTime ToDate )
         {
             
-            List<BsonDocument> _categories = new List<BsonDocument>();
+            List<Meeting> _categories = new List<Meeting>();
 
             BsonDateTime newFromDate = BsonDateTime.Create(FromDate);
             BsonDateTime newToDate = BsonDateTime.Create(ToDate);
@@ -163,8 +163,8 @@ namespace KindleSpur.Data
             try
             {
                 var _query = Query.And(Query<Meeting>.GTE(p => p.StartDate, newFromDate.ToUniversalTime()), Query<Meeting>.LTE(p => p.EndDate, newToDate.ToUniversalTime()), Query.Or(Query<Meeting>.EQ(p => p.From, userId), Query<Meeting>.EQ(p => p.To, userId)));
-
-                _categories = _meetingCollection.FindAs<BsonDocument>(
+               
+                _categories = _meetingCollection.FindAs<Meeting>(
                     _query
                     ).ToList();
 
