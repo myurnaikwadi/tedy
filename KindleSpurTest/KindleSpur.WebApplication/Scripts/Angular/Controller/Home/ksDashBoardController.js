@@ -75,29 +75,13 @@ app.controller('ksMainDashBoardController', function ($timeout,$scope, $state, s
 		$timeout(function () {
 		    var nodes = document.querySelectorAll('li'),
                 _nodes = [].slice.call(nodes, 0);
-		    console.error(_nodes)
-		    var getDirection = function (ev, obj) {
-		        console.error(obj)
-		        console.error('w - ' + obj.offsetWidth)
-		        console.error('h - ' + obj.offsetHeight)
-		        console.error('offsetLeft - ' + obj.offsetLeft)
-		        console.error('offsetTop - ' + obj.offsetTop)
-		        console.error('pageX - ' + ev.pageX)
-		        console.error('pageY - ' + ev.pageY)
+		  //  console.error(_nodes)
+		    var getDirection = function (ev, obj) {		
 		        var w = obj.offsetWidth,
                     h = obj.offsetHeight,
                     x = (ev.pageX - obj.offsetLeft - (w / 2) * (w > h ? (h / w) : 1)),
                     y = (ev.pageY - obj.offsetTop - (h / 2) * (h > w ? (w / h) : 1));
-		        console.error('x - ' + x)
-		        console.error('y - ' + y)
-		        var d = Math.round(Math.atan2(y, x) / 1.57079633) % 4;
-		      //  console.error(Math.atan2(y, x))
-		      //  console.error(Math.atan2(y, x) / 1.57079633)
-		       // console.error(Math.atan2(y, x) / 1.57079633 + 5)
-		        console.error('x - ' + x)
-		        console.error('y - ' + y)
-		        console.error('d - ' + d)
-		        
+		        var d = Math.round(Math.atan2(y, x) / 1.57079633) % 4;		        
 		        return d;
 		    };
 
@@ -106,7 +90,7 @@ app.controller('ksMainDashBoardController', function ($timeout,$scope, $state, s
 		        var direction = 0;//getDirection(ev, obj),
                    
                     class_suffix = "";
-		        console.error(direction)
+		     //   console.error(direction)
 		        obj.className = "liClassFOrHover";
 
 		        switch (direction) {
