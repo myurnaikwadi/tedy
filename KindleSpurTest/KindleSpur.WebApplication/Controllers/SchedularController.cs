@@ -72,7 +72,7 @@ namespace KindleSpur.WebApplication.Controllers
             }
         }
         [HttpPost]
-        public ActionResult GetAllMeetingRequest()
+        public ActionResult GetAllMeetingRequest(string role)
         {
 
             //MeetingSchedularRepository _repo = new MeetingSchedularRepository();
@@ -93,7 +93,7 @@ namespace KindleSpur.WebApplication.Controllers
             //}
             try
             {
-                foreach (var value in _repo.GetAllMeetingRequest(((IUser)Session["User"]).EmailAddress))
+                foreach (var value in _repo.GetAllMeetingRequest(role,((IUser)Session["User"]).EmailAddress))
                 {
 
                     var recevicedetails = ur.GetUserDetail(value.From);

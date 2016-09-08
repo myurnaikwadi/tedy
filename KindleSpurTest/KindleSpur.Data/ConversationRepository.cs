@@ -38,7 +38,7 @@ namespace KindleSpur.Data
             }
         }
 
-        public bool AddNewConversation(IConversation conversationData)
+        public bool AddNewInvite(IConversation conversationData)
         {
             bool _transactionStatus = false;
 
@@ -46,11 +46,64 @@ namespace KindleSpur.Data
             {
                 var result = _conversationCollection.FindAs<BsonDocument>(Query.And(Query.EQ("SenderEmail", conversationData.SenderEmail), Query.EQ("ReceiverEmail", conversationData.ReceiverEmail), Query.EQ("skill", conversationData.skill))).ToList();
 
-                if (result.Count() > 0 && conversationData.Content == null)
+                if (result.Count() > 0 && conversationData.Content == null && conversationData.FilesURLlink == null)
                 {
                     if (result[0]["IsRejected"] == false && result[0]["IsVerified"] == false && result[0]["Active"] == false)
                     {                      
                         _conversationCollection.Update(Query.And(Query.EQ("SenderEmail", conversationData.SenderEmail), Query.EQ("ReceiverEmail", conversationData.ReceiverEmail), Query.EQ("skill", conversationData.skill)), Update<Conversation>.Set(c => c.IsRejected, false).Set(q =>q.Active, true));
+                        return true;
+                    }
+                    else
+                    {
+                        _transactionStatus = false;
+                        return false;
+                    }
+                }
+                conversationData.IsRejected = false;
+              
+                _conversationCollection.Insert(conversationData);
+
+                _transactionStatus = true;
+            }
+            catch (MongoException ex)
+            {
+                string message = "{ Error : 'Failed at GetCoachingStatus().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ";
+                _logCollection.Insert(message);
+                throw new MongoException("New Conversation failure!!!");
+            }
+            catch (Exception e)
+            {
+                Exceptionhandle em = new Exceptionhandle();
+                em.Error = "Failed at GetCoachingStatus()";
+                em.Log = e.Message.Replace("\r\n", "");
+                var st = new System.Diagnostics.StackTrace(e, true);
+                var frame = st.GetFrame(0);
+                var line = frame.GetFileLineNumber();
+                _logCollection.Insert(em);
+                throw new MongoException("Signup failure!!!");
+            }
+            finally
+            {
+
+            }
+
+            return _transactionStatus;
+        }
+
+        public bool AddNewConversation(IConversation conversationData)
+        {
+            bool _transactionStatus = false;
+            string swappingEmail = string.Empty;
+           
+            try
+            {
+                var result = _conversationCollection.FindAs<BsonDocument>(Query.And(Query.EQ("SenderEmail", conversationData.SenderEmail), Query.EQ("ReceiverEmail", conversationData.ReceiverEmail), Query.EQ("skill", conversationData.skill))).ToList();
+
+                if (result.Count() > 0 && conversationData.Content == null && conversationData.FilesURLlink == null)
+                {
+                    if (result[0]["IsRejected"] == false && result[0]["IsVerified"] == false && result[0]["Active"] == false)
+                    {
+                        _conversationCollection.Update(Query.And(Query.EQ("SenderEmail", conversationData.SenderEmail), Query.EQ("ReceiverEmail", conversationData.ReceiverEmail), Query.EQ("skill", conversationData.skill)), Update<Conversation>.Set(c => c.IsRejected, false).Set(q => q.Active, true));
                         return true;
                     }
                     else
@@ -400,6 +453,7 @@ namespace KindleSpur.Data
                     _categories[i].Remove("_id");
                     BsonElement element= _categories[i].GetElement("UpdateDate");
                     _categories[i].RemoveElement(element);
+                    _categories[i].Add(new BsonElement("UpdateDate", element.Value.ToString().TrimEnd('Z')));
                      string receiver = _categories[i].GetElement("ReceiverEmail").Value.ToString();
 
                 }

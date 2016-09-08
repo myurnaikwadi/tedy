@@ -149,7 +149,7 @@ namespace KindleSpur.WebApplication.Controllers
 
             //return Content(result);
         }
-        public ActionResult getAllConversationRequest()
+        public ActionResult getAllConversationRequest(string conversationType)
         {
             ConversationRepository _repo = new ConversationRepository();
             //var result = _repo.GetConversationRequest(((IUser)Session["User"]).EmailAddress).ToJson();
@@ -272,7 +272,7 @@ namespace KindleSpur.WebApplication.Controllers
                     foreach (var file in _obj.FilesURLlink)
                     {
                         ResourceFileLink link = new ResourceFileLink();
-                        link.Id = ObjectId.GenerateNewId();
+                       // link.Id = ObjectId.GenerateNewId();
                         link.FileId = Guid.NewGuid().ToString();
                         link.FileName = file.FileName;
                         link.FilePath = file.FilePath;
@@ -293,7 +293,8 @@ namespace KindleSpur.WebApplication.Controllers
 
                 _obj.CreateDate = DateTime.Now.ToShortDateString();
                 _obj.UpdateDate = DateTime.Now;
-                if (_repo.AddNewConversation(_obj))
+               
+                if (_repo.AddNewInvite(_obj))
                 {
                     if (_obj.Content == null)
                     {
@@ -335,10 +336,61 @@ namespace KindleSpur.WebApplication.Controllers
             return this.Json(response);
         }
 
+        [HttpPost]
+        public JsonResult ConversationExchanged(Conversation _obj, string receiverName, string role)
+        {
+            ResponseMessage response = new ResponseMessage();
+            UserRepository userRepo = new UserRepository();
+            //var _conversationCollection = con.GetCollection("Conversations");
+            //  var userDetail = _conversationCollection.FindOneAs<Conversation>(Query.EQ("_id", _obj.Id));
+            try
+            {
+                User receiverUserDetails = (User)userRepo.GetUserDetail(_obj.ReceiverEmail);
+                ConversationRepository _repo = new ConversationRepository();
+
+                List<ResourceFileLink> resourcelist = new List<ResourceFileLink>();
+                if (_obj.FilesURLlink != null)
+                {
+
+                    foreach (var file in _obj.FilesURLlink)
+                    {
+                        ResourceFileLink link = new ResourceFileLink();
+                        // link.Id = ObjectId.GenerateNewId();
+                        link.FileId = Guid.NewGuid().ToString();
+                        link.FileName = file.FileName;
+                        link.FilePath = file.FilePath;
+                        link.Filesize = file.Filesize;
+                        link.ContentType = file.ContentType;
+                        resourcelist.Add(link);
+                    }
+
+
+                    if (_obj.FilesURLlink == null)
+                        _obj.FilesURLlink = new List<ResourceFileLink>();
+
+                    _obj.FilesURLlink.Clear();
+                    _obj.FilesURLlink.AddRange(resourcelist.ToList());
+                    
+                }
+
+
+                _obj.CreateDate = DateTime.Now.ToShortDateString();
+                _obj.UpdateDate = DateTime.Now;
+
+                bool transactionStatus = _repo.AddNewConversation(_obj);
+            }
+            catch (Exception Ex)
+            {
+
+                //return View();
+            }
+            return this.Json(response);
+        }
+
         // POST: Coversation/UpdateConversationStatus
         [HttpPost]
         public bool CoachingMentoringInvite(Conversation _obj, string ReceiverName, string Role)
-        {
+       {
             ResponseMessage response = new ResponseMessage();
             UserRepository userRepo = new UserRepository();
             ConversationRepository _repo = new ConversationRepository();

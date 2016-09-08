@@ -62,6 +62,7 @@ namespace KindleSpur.Models.Interfaces
         String TimeSlot { get; set; }
         DateTime EndDate { get; set; }
         Boolean IsVerified { get; set; }
+        string Role { get; set; }
     }
 
     public interface IDocument

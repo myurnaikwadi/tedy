@@ -27,5 +27,6 @@ namespace KindleSpur.Models.Communication
         public String TimeSlot { get; set; }
         public DateTime EndDate { get; set; }
         public Boolean IsVerified { get; set; }
+        public string Role { get; set; }
     }
 }

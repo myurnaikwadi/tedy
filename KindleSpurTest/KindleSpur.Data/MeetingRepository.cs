@@ -84,22 +84,23 @@ namespace KindleSpur.Data
             return true;
         }
 
-        public List<Meeting> GetAllMeetingRequest(string userId)
+        public List<Meeting> GetAllMeetingRequest(string role, string userId)
         {
             List<BsonDocument> _categories = new List<BsonDocument>();
             List<Meeting> _categories1 = new List<Meeting>();
-
+           
+           
             try
             {
-                var _query = Query.And(Query<Meeting>.EQ(p => p.IsVerified, false),  Query<Meeting>.EQ(p => p.To, userId));
-                //var _query = Query.And(Query<Meeting>.EQ(p => p.IsVerified, false), Query<Meeting>.EQ(p => p.From, userId), Query<Meeting>.EQ(p => p.To, userId));
-                //_categories = _meetingCollection.FindAs<BsonDocument>(
-                //    _query
-                //    ).ToList();
+                IMongoQuery  _query= Query.And(Query<Meeting>.EQ(p => p.IsVerified, false), Query<Meeting>.EQ(p => p.To, userId));
+                if (role != null)
+                {
+                     _query = Query.And(_query, Query<Meeting>.EQ(p => p.Role, role));                  
+                }
 
                 _categories1 = _meetingCollection.FindAs<Meeting>(
-                   _query
-                   ).SetFields(Fields.Exclude("_id")).ToList();
+                    _query
+                    ).SetFields(Fields.Exclude("_id")).ToList();
 
             }
             catch (MongoException ex)
