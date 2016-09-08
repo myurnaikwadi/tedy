@@ -48,10 +48,15 @@ namespace KindleSpur.Data
 
                 if (result.Count() > 0 && conversationData.Content == null && conversationData.FilesURLlink == null)
                 {
-                    if (result[0]["IsRejected"] == false && result[0]["IsVerified"] == false && result[0]["Active"] == false)
+                    if (result[result.Count-1]["IsRejected"] == false && result[result.Count - 1]["IsVerified"] == false && result[result.Count - 1]["Active"] == false)
                     {                      
                         _conversationCollection.Update(Query.And(Query.EQ("SenderEmail", conversationData.SenderEmail), Query.EQ("ReceiverEmail", conversationData.ReceiverEmail), Query.EQ("skill", conversationData.skill)), Update<Conversation>.Set(c => c.IsRejected, false).Set(q =>q.Active, true));
                         return true;
+                    }
+                    else if(result[result.Count - 1]["ConversationClosed"] == true)
+                    {
+                        conversationData.Active = true;
+                        
                     }
                     else
                     {
@@ -101,7 +106,7 @@ namespace KindleSpur.Data
 
                 if (result.Count() > 0 && conversationData.Content == null && conversationData.FilesURLlink == null)
                 {
-                    if (result[0]["IsRejected"] == false && result[0]["IsVerified"] == false && result[0]["Active"] == false)
+                    if (result[result.Count - 1]["IsRejected"] == false && result[result.Count - 1]["IsVerified"] == false && result[result.Count - 1]["Active"] == false)
                     {
                         _conversationCollection.Update(Query.And(Query.EQ("SenderEmail", conversationData.SenderEmail), Query.EQ("ReceiverEmail", conversationData.ReceiverEmail), Query.EQ("skill", conversationData.skill)), Update<Conversation>.Set(c => c.IsRejected, false).Set(q => q.Active, true));
                         return true;

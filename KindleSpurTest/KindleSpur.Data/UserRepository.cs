@@ -24,7 +24,7 @@ namespace KindleSpur.Data
         private string emailAddress;
         MongoCollection _coacheeOrMenteeCollection;
         MongoCollection _coachOrMentorCollection;
-       
+
 
 
 
@@ -235,24 +235,46 @@ namespace KindleSpur.Data
         }
 
         //This method to be tested after AngularJS code written
-        public List<List<IFeedback>> GetFeedback(string emaiAddress)
+        public List<List<Feedback>> GetFeedback(string senderEmail, string receiverEmail, string role, string skill)
         {
-            CoacheeOrMentee menteeEntity = new CoacheeOrMentee();
-            CoacheeOrMentee coacheeEntity = new CoacheeOrMentee();
-            CoachOrMentor mentorEntity = new CoachOrMentor();
-            CoachOrMentor coachEntity = new CoachOrMentor();
-            List<List<IFeedback>> entireFeedback = new List<List<IFeedback>>();
             try
             {
-                coacheeEntity = _coacheeOrMenteeCollection.FindOneAs<CoacheeOrMentee>(Query.And(Query.EQ("UserId", emailAddress), Query.EQ("Role", "Coachee")));
-                menteeEntity = _coacheeOrMenteeCollection.FindOneAs<CoacheeOrMentee>(Query.And(Query.EQ("UserId", emailAddress), Query.EQ("Role", "Mentee")));
-                coachEntity = _coachOrMentorCollection.FindOneAs<CoachOrMentor>(Query.And(Query.EQ("UserId", emailAddress), Query.EQ("Role", "Coach")));
-                mentorEntity = _coachOrMentorCollection.FindOneAs<CoachOrMentor>(Query.And(Query.EQ("UserId", emailAddress), Query.EQ("Role", "Mentor")));
+                List<List<Feedback>> entireFeedback = new List<List<Feedback>>();
+                CoacheeOrMentee coacheeOrMenteeEntity = new CoacheeOrMentee();
+                CoachOrMentor coachOrMentorEntity = new CoachOrMentor();
 
-                entireFeedback.Add(coacheeEntity.Feedbacks);
-                entireFeedback.Add(menteeEntity.Feedbacks);
-                entireFeedback.Add(mentorEntity.Feedbacks);
-                entireFeedback.Add(coachEntity.Feedbacks);
+                string newRole = string.Empty;
+                IMongoQuery _query = (Query.And(Query.EQ("Sender", senderEmail), Query.EQ("UserId", receiverEmail), Query.EQ("Role", role), Query.EQ("Feedbacks.Skill", skill)));
+                IMongoQuery _query1 = (Query.And(Query.EQ("Sender", receiverEmail), Query.EQ("UserId", senderEmail), Query.EQ("Role", newRole), Query.EQ("Feedbacks.Skill", skill)));
+
+                if (role == "Coach" || role == "Mentor")
+                {
+                    _query = Query.And(_query, Query.EQ("Role", role));
+                    newRole = (role == "Mentor") ? "Mentee" : "Coachee";
+                    _query1 = Query.And(_query, Query.EQ("Role", role));
+                    coachOrMentorEntity = _coachOrMentorCollection.FindOneAs<CoachOrMentor>(_query);
+                    coacheeOrMenteeEntity = _coacheeOrMenteeCollection.FindOneAs<CoacheeOrMentee>(_query1);
+                }
+                if (role == "Coachee" || role == "Mentee")
+                {
+                    _query = Query.And(_query, Query.EQ("Role", role));
+                    newRole = (role == "Mentee") ? "Mentor" : "Coach";
+                    _query1 = Query.And(_query, Query.EQ("Role", role));
+                    coacheeOrMenteeEntity = _coacheeOrMenteeCollection.FindOneAs<CoacheeOrMentee>(_query);
+                    coachOrMentorEntity = _coachOrMentorCollection.FindOneAs<CoachOrMentor>(_query1);
+                }
+
+                List<Feedback> feedback1 = new List<Feedback>();
+                List<Feedback> feedback2 = new List<Feedback>();
+                foreach (Feedback k in coacheeOrMenteeEntity.Feedbacks)
+                    feedback1.Add(k);
+               
+                foreach (Feedback k1 in coachOrMentorEntity.Feedbacks)
+                    feedback2.Add(k1);
+                
+                entireFeedback.Add(feedback1);
+                entireFeedback.Add(feedback2);
+                return entireFeedback;
             }
             catch (MongoException ex)
             {
@@ -276,7 +298,7 @@ namespace KindleSpur.Data
             {
 
             }
-            return entireFeedback;
+            return null;
         }
 
         public bool UpdateUserDetails(string EmailAddress, IUser userData)
@@ -323,7 +345,7 @@ namespace KindleSpur.Data
 
         public List<MostRatedFeedback> GetMostRatedFeedback(string role, string emailAddress)
         {
-            UserRepository userRepo = new Data.UserRepository(); 
+            UserRepository userRepo = new Data.UserRepository();
             List<MostRatedFeedback> lstMostRatedFeedback = new List<MostRatedFeedback>();
             MongoCursor<CoacheeOrMentee> coacheeOrMentee;
             MongoCursor<CoachOrMentor> coachOrMentor;
@@ -785,7 +807,7 @@ namespace KindleSpur.Data
             string Id = (BalancePoints / 10).ToString();
 
             Game game = _gamesCollection.FindOneAs<Game>(Query.EQ("GameId", Id));
-            if(game==null)
+            if (game == null)
             {
                 game = _gamesCollection.FindAllAs<Game>().SetSortOrder(SortBy.Descending("GameId")).SetLimit(1).FirstOrDefault();
             }

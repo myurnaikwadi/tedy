@@ -21,5 +21,6 @@ namespace KindleSpur.Models.Interfaces
         int customerSatisfactionRating { get; set; }
         bool FeedbackClosed { get; set; }
          int FeedBackCount { get; set; }
+         bool ReInvite { get; set; }
     }
 }

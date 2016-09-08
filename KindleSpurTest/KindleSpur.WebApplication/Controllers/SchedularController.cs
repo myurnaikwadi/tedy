@@ -71,8 +71,10 @@ namespace KindleSpur.WebApplication.Controllers
                 return View();
             }
         }
+
+        
         [HttpPost]
-        public ActionResult GetAllMeetingRequest(string role)
+        public JsonResult GetAllMeetingRequest(string role)
         {
 
             //MeetingSchedularRepository _repo = new MeetingSchedularRepository();
@@ -112,8 +114,9 @@ namespace KindleSpur.WebApplication.Controllers
             catch (Exception)
             {
 
-                return View();
+                return null;
             }
+            return null;
            
         }
         [HttpPost]
@@ -131,33 +134,24 @@ namespace KindleSpur.WebApplication.Controllers
                 return true;
             }
         }
+
         [HttpPost]
-        public ActionResult GetAllMeetingPerMonth(DateTime FromDate, DateTime ToDate)
+        public JsonResult GetAllMeetingPerMonth(DateTime FromDate, DateTime ToDate)
         {
 
-            //MeetingSchedularRepository _repo = new MeetingSchedularRepository();
-            //var result = _repo.GetAllMeetingRequest().ToJson();
-            //return Json(new { Result = result }, JsonRequestBehavior.AllowGet);
-            //return Content(result);
-
             MeetingRepository _repo = new MeetingRepository();
-            //List<IUser> result = new List<IUser>();
-
             UserRepository ur = new UserRepository();
             try
             {
                 var result = _repo.GetAllMeetingPerMonth((((IUser)Session["User"]).EmailAddress), FromDate, ToDate);
-                return Json(new { Result = result }, JsonRequestBehavior.AllowGet);
+                return Json(result, JsonRequestBehavior.AllowGet);
             }
             catch (Exception)
             {
 
-                return View();
+                return null;
             }
-          
         }
-
-
-
+        
     }
 }

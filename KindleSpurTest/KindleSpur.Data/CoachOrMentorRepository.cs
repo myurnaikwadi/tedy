@@ -242,6 +242,8 @@ namespace KindleSpur.Data
                 if (feedback.FeedbackStatus != "PRESESSION")
                     coachingStatus.FeedBackCount += 1;
                 coachingStatus.FeedbackClosed = feedback.FeedbackClosed;
+                if (feedback.FeedbackStatus != "CLOSED")
+                    coachingStatus.ReInvite = true;
                 coacheeOrMenteeEntity.CoachingStatus.Add(coachingStatus);
                 
                 //coacheeOrMenteeEntity = _coacheeOrMenteeCollection.FindOneAs<CoacheeOrMentee>(Query.And(Query.EQ("UserId", feedback.Sender), Query.EQ("Role", newRole)));
@@ -1007,7 +1009,7 @@ namespace KindleSpur.Data
                         for (int i = 0; i < lstTopicOrSkill.Count; i++)
                         {
                             var j = c.CoachingStatus.Find(x => x.Skill == lstTopicOrSkill[i]);
-                            if (j != null)
+                            if (j != null && j.FeedbackClosed == false && j.ReInvite == false)
                                 c.Skills.RemoveAll(k => k.Name == j.Skill);
                         }
                     }
@@ -1022,7 +1024,7 @@ namespace KindleSpur.Data
                         for (int i = 0; i < lstTopicOrSkill.Count; i++)
                         {
                             var j = c.CoachingStatus.Find(x => x.Skill == lstTopicOrSkill[i]);
-                            if (j != null)
+                            if (j != null && j.FeedbackClosed == false && j.ReInvite == false)
                                 c.Topics.RemoveAll(k => k.Name == j.Skill);
                         }
                     }

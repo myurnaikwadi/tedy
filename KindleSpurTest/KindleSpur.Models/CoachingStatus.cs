@@ -22,5 +22,7 @@ namespace KindleSpur.Models
         public int customerSatisfactionRating { get; set; }
         public bool FeedbackClosed { get; set; }
         public int FeedBackCount { get; set; }
+        public bool ReInvite { get; set; }
+
     }
 }

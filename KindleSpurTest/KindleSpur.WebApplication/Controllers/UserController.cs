@@ -107,11 +107,11 @@ namespace KindleSpur.WebApplication.Controllers
 
         //This method to be tested after AngularJS code written
         [HttpPost]
-        public List<List<IFeedback>> GetFeedback()
+        public JsonResult GetFeedback(string senderEmail, string role, string skill)
         {
                 UserRepository _userRepo = new UserRepository();
-                string emailAddress = ((IUser)System.Web.HttpContext.Current.Session["User"]).EmailAddress;
-                return(_userRepo.GetFeedback(emailAddress));
+                string receiverEmail = ((IUser)System.Web.HttpContext.Current.Session["User"]).EmailAddress;
+                return this.Json(_userRepo.GetFeedback(senderEmail, receiverEmail, role, skill));
         }
 
 
