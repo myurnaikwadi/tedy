@@ -1,13 +1,13 @@
 ﻿<div class="notificationWiz" ng-class="{ notificationWizAnimation : notification.showFlag == true , gridViewLoadedParentClass : gridViewLoaded == true }" ng-repeat="notification in notificationData">
     <div class="" style="width: 100%;height: 100%;float: left;position: relative;" ng-show="gridViewLoaded">
-        <img ng-if="notification.Meeting" style="position:absolute;width:25px;height:22px;top:6px;right:9px;" src="~/Images/business-meeting-of-males.png" />
-        <img ng-if="!notification.Meeting" style="position:absolute;width:25px;height:22px;top:6px;right:9px;" src="~/Images/businessmen-talking-in-business-meeting.png" />
+        @*<img ng-if="notification.Meeting" style="position:absolute;width:25px;height:22px;top:6px;right:9px;" src="~/Images/business-meeting-of-males.png" />
+        <img ng-if="!notification.Meeting" style="position:absolute;width:25px;height:22px;top:6px;right:9px;" src="~/Images/businessmen-talking-in-business-meeting.png" />*@
         <div class="meetingInvitee" style="width: 100%;height: 50%;display:block;">
             <div class="imageConversation" style="width: 100%;height: 70%;">
-                <img style="border: 2px solid white;margin:auto;width: 60px;height: 60px;border-radius: 50%;" ng-src="{{notification.Photo ?  notification.Photo  : '../../../Images/icons/If no Profile photo.png'}}" />
+                <img ng-click="viewProfileCall($event,notification)" class="genericPointerClass" style="border: 2px solid white;margin:auto;width: 60px;height: 60px;border-radius: 50%;" ng-src="{{notification.Photo ?  notification.Photo  : '../../../Images/icons/If no Profile photo.png'}}" />
             </div>
             <div class="meetingPersonNameStrc" style="width: 100%;height: 30%;margin-left: 0;">
-                <h5 style="font-size: 15px;color:black;text-align: center;width: 85%;" class="leftSideMenuLable fontClass eliipsisClass">{{(notification.FirstName+" "+notification.LastName)}}</h5>
+                <h5 ng-click="viewProfileCall($event,notification)" style="font-size: 15px;color:black;text-align: center;width: 100%;background-color:#a0e4f5;" class="leftSideMenuLable fontClass eliipsisClass genericPointerClass">{{(notification.FirstName+" "+notification.LastName)}}</h5>
             </div>
         </div>
         <div style="float: left;width: 100%;height: 50%;display:block;">
@@ -31,9 +31,9 @@
             <div ng-if="!notification.Meeting" class="meetingPersonNameStrc" style="width: 100%;height: 15%;margin-left: 0;">
                 <h5 style="font-size: 12px;color:#999;text-align: center;width: 85%;" class="leftSideMenuLable fontClass eliipsisClass">{{notification.Meeting.StartDate | date : 'dd/MM/yyyy'}} at {{notification.CreateDate | date :  'hh:mm a' }}</h5>
             </div>
-            <div ng-if="!notification.Meeting" class="meetingPersonNameStrc" style="width: 100%;height: 15%;margin-left: 0;">
-                 <h5 ng-click="viewProfileCall($event,notification)" title="Check Profile Details" style="font-size: 12px;color:#999;text-align: center;width: 100%;padding:3px; text-decoration:underline;" class="leftSideMenuLable fontClass eliipsisClass genericPointerClass viewProfileLinkClass">View Profile</h5>
-            </div>
+            @*<div ng-if="!notification.Meeting" class="meetingPersonNameStrc" style="width: 100%;height: 15%;margin-left: 0;">
+                 <h5 ng-click="viewProfileCall($event,notification)" title="Check Profile Details" style="font-size: 12px;color:#999;text-align: center;width: 100%;padding:3px; text-decoration:underline;background-color:#a8e6f6;color:black;" class="leftSideMenuLable fontClass eliipsisClass genericPointerClass viewProfileLinkClass">View Profile</h5>
+            </div>*@
             <div ng-if="notification.Meeting" class="meetingPersonNameStrc" style="width: 100%;height: 40%;margin-left: 0;">
                 <button style="background-color: white;border: 1px solid #D60500;color: #D60500;font-size: 10px;padding: 5px;margin: auto;" class="signupButton fontClass" ng-click="notificationData.splice($index,1);updateMeeting(false,notification)">DECLINE</button>
                 <button style="background-color: white;border: 1px solid #06d600;color: #06d600;font-size: 10px;padding: 5px;margin: auto;" class="signupButton fontClass" ng-click="notificationData.splice($index,1);updateMeeting(true,notification)">ACCEPT</button>

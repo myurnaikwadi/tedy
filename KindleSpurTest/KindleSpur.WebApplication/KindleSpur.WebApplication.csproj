@@ -294,11 +294,13 @@
     <Content Include="Images\1.png" />
     <Content Include="Images\add.png" />
     <Content Include="Images\addBold.png" />
+    <Content Include="Images\addProfile.png" />
     <Content Include="Images\business-meeting-of-males.png" />
     <Content Include="Images\businessmen-talking-in-business-meeting.png" />
     <Content Include="Images\calendar.png" />
     <Content Include="Images\camera.png" />
     <Content Include="Images\cancel.png" />
+    <Content Include="Images\minus.png" />
     <Content Include="Images\cancelWhiteIcon.png" />
     <Content Include="Images\Coaching1.png" />
     <Content Include="Images\communication\betterCompetitors.png" />
