@@ -215,9 +215,11 @@
                                         <div class="podcastHeader" style="border: 1px solid #ccc;border-bottom: 0;height: 15%;margin: 7px;margin-bottom: 0;">
                                             <h5 style="margin: auto; font-weight: bold;color:#696565;" class="fontClass ValueFeedsHeade">Login Information</h5>
                                         </div>
-                                        <div class="ImpactZoneChildDiv heightZeroClassProfile" ng-init="changeOccLogInfo = false" ng-class="{ heightAnimationProfile : animationActicvate == true }" style="border: 1px solid #ccc;margin: 7px;margin-top: 0;">
-                                          
-                                              <div class="userNameProfile" style="height: 30%;width: 100%;display:block;">
+                                        <div class="ImpactZoneChildDiv heightZeroClassProfile" ng-init="changeOccLogInfo = false" ng-class="{ heightAnimationProfile : animationActicvate == true }" style="position: relative;border: 1px solid #ccc;margin: 7px;margin-top: 0;">
+                                             <div class="fullWidthHeightClass" style="position: absolute;background: rgba(0,0,0,.48);display:flex;z-index: 1;" ng-show="myInfo.IsExternalAuthentication">
+                                                 <h5 class="fontClass" style="float:left;margin: 15px;margin-bottom: 0;color: white;margin:auto;">External authentication can't save password</h5>
+                                             </div>                                           
+                                             <div class="userNameProfile" style="height: 30%;width: 100%;display:block;">
                                                 <h5 class="fontClass" style="float:left;width: 92%;margin: 15px;margin-bottom: 0;color: #777777;">New Password</h5>
                                                 <input ng-model="localModel.Password"  minlength="0" maxlength="20" ng-change="fun(uiFlag.Password,localModel.Password);changeOccLogInfo = true;" class="inputTagStyle fontClass" style="height: 28px;padding:5px;width: 60% !important;margin: 15px;margin-bottom: 0;margin-right: 0;" type="password" />
                                                 <span class="passwordIconWithInput" style="float:left;"><img src="~/Images/passwordIcon.png" /></span>  

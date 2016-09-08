@@ -24,6 +24,7 @@
         linkedInLink: $scope.userInfo.LinkdinURL ? $scope.userInfo.LinkdinURL : null,
         firstName: $scope.userInfo.FirstName.toUpperCase(),
         lastName: $scope.userInfo.LastName.toUpperCase(),
+        IsExternalAuthentication : $scope.userInfo.IsExternalAuthentication,
         State: $scope.userInfo.State ? $scope.userInfo.State : '',// ? $scope.userInfo.State : 'No Description Available',
         City: $scope.userInfo.City ? $scope.userInfo.City : '',// ? $scope.userInfo.City : 'No Description Available',
         Country: $scope.userInfo.Country ? $scope.userInfo.Country : '', //? $scope.userInfo.Country : 'No Description Available',
@@ -46,7 +47,7 @@
             _str += $scope.myInfo.State + " ";
         if($scope.myInfo.Country)
             _str += $scope.myInfo.Country + " ";
-        console.error(_str);
+      //  console.error(_str);
         $scope.myInfo.displayAddress = _str;
     };
     var _displayDescription = function () {
@@ -54,7 +55,7 @@
         if ($scope.userInfo.description)
             _str = $scope.userInfo.description;
        
-        console.error(_str);
+       // console.error(_str);
        return _str;
     };
     $scope.selectedMenuIndex = -1;
