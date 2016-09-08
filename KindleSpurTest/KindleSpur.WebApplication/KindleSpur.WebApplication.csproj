@@ -523,6 +523,9 @@
     <Content Include="Views\Home\ksParentState.cshtml" />
     <Content Include="Views\Conversation\ksMeetingSchdule.cshtml" />
     <Content Include="Views\Home\ksInboxView.cshtml" />
+    <Content Include="Views\Home\ksAboutUs.cshtml" />
+    <Content Include="Views\Home\ksPrivacyPolicy.cshtml" />
+    <Content Include="Views\Home\ksTermsCondition.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

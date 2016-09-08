@@ -184,6 +184,19 @@ namespace KindleSpur.WebApplication.Controllers
            
 
         }
+        public ActionResult ksAboutUs()
+        {
+            return View();
+        }
+        public ActionResult ksPrivacyPolicy()
+        {
+            return View();
+        }
+        public ActionResult ksTermsCondition()
+        {
+
+            return View();
+        }
         public ActionResult ksFeedBackPanel()
         {
             return View();

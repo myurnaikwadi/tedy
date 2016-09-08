@@ -61,7 +61,7 @@
         </div>
     </div>
     <div ng-click="uiFlag.loadBottomContain=false;" ng-class="{ loadBottomContain : uiFlag.loadBottomContain == true}" style="overflow: hidden;display:none; position:absolute;width:100%;height:100%;">
-        <div class="aboutUsParent fontClass" ng-include src="extraParam.templateUrl"></div>
+        <div class="fullWidthHeightClass aboutUsParent fontClass" ng-include src="extraParam.templateUrl"></div>
     </div>
     <div ng-click="uiFlag.loadRepository=false;uiFlag.loadModule = null" ng-class="{ loadRepository : uiFlag.loadRepository == true}" style="overflow: hidden;display:none; position:absolute;width:100%;height:100%;">
         <div class="fullWidthHeightClass" style="display: flex;" ng-click="$event.stopPropagation()">

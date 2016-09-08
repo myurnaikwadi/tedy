@@ -209,17 +209,16 @@ app.directive('bottomMainStrip', function ($timeout, $rootScope) {
             //console.error(scope.bottomStrip)
             $scope.bottomOptionArray = [
                         { name: 'ABOUT' },
-                        { name: 'FEEDBACK' },
                         { name: 'PRIVACY POLICY' },
                         { name: 'TERMS AND CONDITIONS' },
             ];
             $scope.loadPageClcik = function (iIndex, iOption) {
                 var _tempateUrl = '';
                 switch (iIndex) {
-                    case 0: _tempateUrl = '1'; break;
-                    case 1: _tempateUrl = '2'; break;
-                    case 2: _tempateUrl = '3'; break;
-                    case 3: _tempateUrl = '4'; break;
+                    case 0: _tempateUrl = '/Home/ksAboutUs'; break;
+                    //case 1: _tempateUrl = '2'; break;
+                    case 1: _tempateUrl = '/Home/ksPrivacyPolicy'; break;
+                    case 2: _tempateUrl = '/Home/ksTermsCondition'; break;
                 }
                 $rootScope.$broadcast("refreshStateHomeView", { type: 'loadBottomContain', data: { templateUrl: _tempateUrl } });
             };
