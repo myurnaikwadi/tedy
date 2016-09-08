@@ -631,6 +631,8 @@
     $scope.getFeedBackFromServer = function () {
         serverCommunication.getFeedback({
             openConversation: $scope.openConversation,
+            role: 'Coach',
+            senderEmail : $scope.openConversation.SenderEmail == $scope.loggedEmail ? $scope.openConversation.ReceiverEmail : $scope.openConversation.SenderEmail,
             successCallBack: function (iObj) {
                 console.debug('In getFeedBackFromServer ----- ', iObj);
             },

@@ -432,9 +432,10 @@ app.factory('serverCommunication', function ($http) {
         getFeedback: function (iObj) {
             console.error(iObj);
             var Data = {
+                role : iObj.role,
                 Skill: iObj.openConversation.skill,
-                SenderMail: iObj.openConversation.SenderEmail,
-                ReceiverMail: iObj.openConversation.ReceiverEmail
+                senderEmail: iObj.senderEmail,
+                //ReceiverMail: iObj.openConversation.ReceiverEmail
             };
             // $http.post(_str, iObj.loggedUserDetails).then(iObj.successCallBack, iObj.failureCallBack)
             var req = {
@@ -447,7 +448,7 @@ app.factory('serverCommunication', function ($http) {
                 traditional: true
             }
             console.error(req);
-          //  $http(req).then(iObj.successCallBack, iObj.failureCallBack);
+           $http(req).then(iObj.successCallBack, iObj.failureCallBack);
 
         },
         /**
