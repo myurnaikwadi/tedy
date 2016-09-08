@@ -758,7 +758,7 @@ app.factory('serverCommunication', function ($http) {
                 transformRequest: angular.identity
             }).then(iObj.successCallBack, iObj.failureCallBack);
         },
-            getArtifactBookMarks: function (iObj) {
+        getArtifactBookMarks: function (iObj) {
             console.error('getArtifactBookMarks --------------- ', iObj);
 
             var req = {
@@ -771,7 +771,22 @@ app.factory('serverCommunication', function ($http) {
                 traditional: true
             }
             $http(req).then(iObj.successCallBack, iObj.failureCallBack);
-            },  
+        },
+        deleteFilesServer: function (iObj) {
+            console.error('deleteFilesServer --------------- ', iObj);
+
+            var req = {
+                method: 'POST',
+                url : '',
+                headers: {
+                     'Content-Type': 'application/json'
+                },
+                data: { deletedArray : iObj.deletedArray },
+                traditional: true
+            }
+           // $http(req).then(iObj.successCallBack, iObj.failureCallBack);
+        },
+        
         sendInvitationToFriend: function (iObj) {
             console.error('sendInvitationTOFriend --------------- ', iObj);
             var _checkObj = angular.copy(iObj);

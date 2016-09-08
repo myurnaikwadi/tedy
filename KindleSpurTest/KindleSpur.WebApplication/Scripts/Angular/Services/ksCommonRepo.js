@@ -165,6 +165,10 @@
                         _selectedData['Artifact'][iObj.deletedObject.FileName] = iObj.deletedObject;
                         if (iObj.index > -1)  scope.artifactsArray.splice(iObj.index, 1);
                     }
+                    for(var _key in _selectedData['Artifact']){
+                        _deletedArray.push(_selectedData['Artifact'][_key]);
+                    }
+
                 } else {
                     if (iObj.deleteMultiple) {
                         scope.bookMarkArray.some(function (iContain, iIndex) {
@@ -196,8 +200,25 @@
                         _selectedData['bookMark'][iObj.deletedObject.FileName] = iObj.deletedObject;
                         if(iObj.index > -1) scope.bookMarkArray.splice(iObj.index, 1);
                     }
+                    for (var _key in _selectedData['Artifact']) {
+                        _deletedArray.push(_selectedData['Artifact'][_key]);
+                    }
                 }
                 console.error(_selectedData)
+                 serverCommunication.deleteFilesServer({
+
+                    deletedArray: _deletedArray,
+                    successCallBack: function (iObj) {
+                        console.error('serverrrrr', iObj)
+                        if (iObj.data['Artifacts'])
+                            scope.artifactsArray = iObj.data['Artifacts'];
+                        if (iObj.data['Bookmarks'])
+                            scope.bookMarkArray = iObj.data['Bookmarks'];
+                       
+                    }, failureCallBack: function (iObj) {
+                        console.error('serverrrrr', iObj)
+                    }
+                });              
             };
             scope.triggerUpload = function (iId) {
                 console.error('iId --- ', iId)
