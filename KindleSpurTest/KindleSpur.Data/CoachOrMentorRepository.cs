@@ -242,8 +242,7 @@ namespace KindleSpur.Data
                 if (feedback.FeedbackStatus != "PRESESSION")
                     coachingStatus.FeedBackCount += 1;
                 coachingStatus.FeedbackClosed = feedback.FeedbackClosed;
-                if (feedback.FeedbackStatus != "CLOSED")
-                    coachingStatus.ReInvite = true;
+              
                 coacheeOrMenteeEntity.CoachingStatus.Add(coachingStatus);
                 
                 //coacheeOrMenteeEntity = _coacheeOrMenteeCollection.FindOneAs<CoacheeOrMentee>(Query.And(Query.EQ("UserId", feedback.Sender), Query.EQ("Role", newRole)));
@@ -787,7 +786,7 @@ namespace KindleSpur.Data
                 }
                 foreach (SkillOrTopic s1 in lstSkillforCochee)
                 {
-                    lstCoach.AddRange(_coachOrMentorCollection.FindAs<CoachOrMentor>(Query.And(Query.EQ("Skills.Name", s1.Name), Query.EQ("Role", Role))).SetFields(Fields.Exclude("Feedbacks")));
+                    lstCoach.AddRange(_coachOrMentorCollection.FindAs<CoachOrMentor>(Query.And(Query.EQ("Skills.Name", s1.Name), Query.EQ("Role", Role))));
                 }
 
             }
@@ -1009,7 +1008,7 @@ namespace KindleSpur.Data
                         for (int i = 0; i < lstTopicOrSkill.Count; i++)
                         {
                             var j = c.CoachingStatus.Find(x => x.Skill == lstTopicOrSkill[i]);
-                            if (j != null && j.FeedbackClosed == false && j.ReInvite == false)
+                            if (j != null)
                                 c.Skills.RemoveAll(k => k.Name == j.Skill);
                         }
                     }
@@ -1024,7 +1023,7 @@ namespace KindleSpur.Data
                         for (int i = 0; i < lstTopicOrSkill.Count; i++)
                         {
                             var j = c.CoachingStatus.Find(x => x.Skill == lstTopicOrSkill[i]);
-                            if (j != null && j.FeedbackClosed == false && j.ReInvite == false)
+                            if (j != null)
                                 c.Topics.RemoveAll(k => k.Name == j.Skill);
                         }
                     }
