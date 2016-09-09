@@ -81,14 +81,14 @@
     float: left;
     height: 60%;
     resize: none;
-    font-size: 16px;
+    font-size: 14px;
     border: 0px solid;
     border-bottom: 1px solid;
 }
 .meetingSubjectTwo{
     float: left;
     display: flex;
-    width: 80%;
+    width: 87%;
     height: 35%;
 }
 .meetingTimePanel {
@@ -124,7 +124,7 @@
 .meetingPersonNameParent{
     margin: auto;
       float: left;
-    margin-right: 0;
+    margin-right: 10px;
     width: auto;
 }
 .meetingPersonNameStrc {

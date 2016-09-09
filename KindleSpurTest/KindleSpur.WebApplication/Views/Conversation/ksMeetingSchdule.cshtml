@@ -1,5 +1,6 @@
-﻿<div class="scheduleMeetingParentDiv">
-    <div class="schedularContent fullWidthHeightClass">
+﻿<div class="scheduleMeetingParentDiv " style="width:80%;height:80%;">
+ 
+       <div class="schedularContent fullWidthHeightClass">
         <div class="schedularHeader">
             <h5 class="meetingPersonName fontClass eliipsisClass">SCHEDULE MEETING FOR <b>{{extraParam.openConversation.skill | uppercase}}</b></h5>
             @*<img ng-show="extraParam.closeRequired" ng-click="closePopup()" style="width: 15px;height: 15px;top:5px;right: 5px;bottom: 0;position: absolute;z-index:1;cursor:pointer;" title="Cancel" src="~/Images/cancel.png" />*@
@@ -10,19 +11,19 @@
             </div>
             <div class="meetingSubjectTwo">
                 <div class="meetingPersonNameParent">
-                    <h5 style="font-weight:bold;font-size:15px;"class="meetingWizName fontClass">ATTENDEE</h5>
+                    <h5 style="font-weight:bold;font-size:14px;"class="meetingWizName fontClass">ATTENDEE</h5>
                 </div>
                 <div class="meetingInvitee">
                     <div class="imageConversation">
                         <img style="border: 2px solid white;margin:auto;width: 52px;height: 48px;border-radius: 50%;" ng-src="{{loggedDetail.Photo ?  loggedDetail.Photo  : '../../../Images/icons/If no Profile photo.png'}}" />
                     </div>
-                    <div class="meetingPersonNameStrc" style="margin-left: 0;">
+                    <div class="meetingPersonNameStrc" style="margin-left: 10px;">
                         <h5 style="color:black;font-weight:bold" class="leftSideMenuLable fontClass eliipsisClass">{{(extraParam.openConversation.FirstName+" "+extraParam.openConversation.LastName) | uppercase}}</h5>
                     </div>
                 </div>
             </div>
             <div class="meetingTimePanel">
-                <div style="display: flex;float: left; width: 33.33%;margin:auto;margin-right: 0">
+                <div style="display: flex;float: left; width: 40.33%;margin:auto;margin-right: 0">
                     <h5 style="margin : auto" class="meetingPersonName fontClass genericPointerClass eliipsisClass">DATE</h5>
                     <input style="margin : auto" type="date" ng-model="MeetingSchedular.MeetingDate" required />
                 </div>

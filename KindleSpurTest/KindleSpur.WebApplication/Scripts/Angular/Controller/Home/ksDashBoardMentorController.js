@@ -841,7 +841,11 @@
         //console.error($scope.gridViewLoaded)
         $rootScope.$broadcast("inboxListener", { gridViewLoaded: $scope.gridViewLoaded });
     };
-
+    $rootScope.$on("closeInbox", function (event, iObj) {
+        console.error('refreshStateHomeView ---- ', iObj);
+        $scope.gridViewLoaded = false;
+        //$scope.loadGridView();
+    });
     $scope.notificationData = [];
     $scope.conversationRequest = function () {
         $scope.notificationData = [];

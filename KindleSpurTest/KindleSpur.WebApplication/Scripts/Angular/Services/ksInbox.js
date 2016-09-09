@@ -13,6 +13,7 @@
             $scope.autoSyncCounter = null;
             $scope.ApprovalName = $rootScope.loggedDetail.FirstName + " " + $rootScope.loggedDetail.LastName;
             $scope.loggedEmail = $rootScope.loggedDetail.EmailAddress;
+
             $scope.updateConversation = function (isVerfied, SenderEmail, ReceiverEmail, iNotificationDash) {
                 //$scope.conversation.IsVerified = isVerfied;
                // debugger
@@ -35,7 +36,7 @@
                     ConversationId: _id,
                     ConversationParentId: iNotificationDash.ConversationId,
                 }
-
+                _autoClosePopup();
                 serverCommunication.updateConversation({
                     loggedUserDetails: _object,
                     ReceiverName: $scope.ApprovalName,
@@ -233,14 +234,21 @@
                 } else {
                     $scope.conversationRequest();
                     $scope.autoSyncRoutine();
-                }
-                
+                }                
             };
             $scope.init();
             $scope.$on("$destroy", function handleDestroyEvent() {
                 $scope.stopFight();
             });
-           
+
+            //Close Inbox view automatically
+            var _autoClosePopup = function () {
+                if ($scope.notificationData.length == 0) {
+                    $rootScope.$broadcast("closeInbox", { closeInboxFlag: true });
+                    $scope.gridViewLoaded = false;
+                    $scope.loadGridView();
+                }
+            }
             $rootScope.$on("inboxListener", function (event, iObj) {
                 console.error('refreshStateHomeView ---- ', iObj);
                 $scope.gridViewLoaded = iObj.gridViewLoaded;

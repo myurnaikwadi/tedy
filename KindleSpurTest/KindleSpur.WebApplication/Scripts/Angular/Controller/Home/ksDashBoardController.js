@@ -46,7 +46,11 @@ app.controller('ksMainDashBoardController', function ($timeout,$scope, $state, s
 		    iEvent && iEvent.stopPrapagation();		  
 		    $rootScope.$broadcast("inboxListener", { gridViewLoaded: $scope.gridViewLoaded });
 		};
-
+		$rootScope.$on("closeInbox", function (event, iObj) {
+		    console.error('refreshStateHomeView ---- ', iObj);
+		    $scope.gridViewLoaded = false;
+		    //$scope.loadGridView();
+		});
 		$scope.notificationData =[];       
 		$scope.init = function () {
 		   

@@ -381,6 +381,7 @@
     <Content Include="Images\rate-star-button.png" />
     <Content Include="Images\rightSideIcon.png" />
     <Content Include="Images\save.png" />
+    <Content Include="Images\saveTick.png" />
     <Content Include="Images\sendMailFormat.png" />
     <Content Include="Images\tempImage.jpg" />
     <Content Include="Images\Tree\plant.png" />
