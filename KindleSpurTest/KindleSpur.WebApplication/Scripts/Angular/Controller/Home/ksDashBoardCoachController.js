@@ -627,14 +627,126 @@
 
         $scope.showSelectedConversation($scope.loggedEmail, $scope.ReceiverEmail);
     };
-
+    $scope.allFeedBack = {};
     $scope.getFeedBackFromServer = function () {
+        $scope.allFeedBack = {};
         serverCommunication.getFeedback({
             openConversation: $scope.openConversation,
             role: 'Coach',
             senderEmail : $scope.openConversation.SenderEmail == $scope.loggedEmail ? $scope.openConversation.ReceiverEmail : $scope.openConversation.SenderEmail,
             successCallBack: function (iObj) {
                 console.debug('In getFeedBackFromServer ----- ', iObj);
+                if (iObj.data) {
+                    var _feedBack = {};
+                    var _self = {};
+                    var _other = {};
+                    for (var k = 0 ; k < iObj.data.length ; k++) {
+                        iObj.data[k].CreateDate = new Date(Number(iObj.data[k].CreateDate.split('(')[1].split(')')[0]));
+                        iObj.data[k].FeedBackGiver = 'Other';
+                        if (iObj.data[k].Sender == $scope.loggedEmail) {
+                            iObj.data[k].FeedBackGiver = 'Self';
+                            if(!_self[iObj.data[k].FeedbackStatus]){
+                                _self[iObj.data[k].FeedbackStatus]= [];
+                            }
+                            _self[iObj.data[k].FeedbackStatus].push(iObj.data[k]);
+                        }else{
+                            if (!_other[iObj.data[k].FeedbackStatus]) {
+                                _other[iObj.data[k].FeedbackStatus] = [];
+                            }
+                            _other[iObj.data[k].FeedbackStatus].push(iObj.data[k]);
+                        }
+                      //  iObj.data[k].feedBackCount = 0;                        
+                    }
+                    for (var _key in _self) {
+                        _self[_key].sort(function (a, b) {
+                            var _date = new Date(a.CreateDate);
+                            var _secondDate = new Date(b.CreateDate);
+                            return _date - _secondDate;
+                        });
+                        if (!$scope.allFeedBack[_key]) {
+                            $scope.allFeedBack[_key] = {};
+                        }
+                        
+                        for (var k = 0 ; k < _self[_key].length; k++) {
+                            var _count = k + 1;
+                            if (!$scope.allFeedBack[_key][_count]) {
+                                $scope.allFeedBack[_key][_count] = {};
+                            }
+                            $scope.allFeedBack[_key][_count]['Self'] = _self[_key][k];
+                        }
+                    }
+                    for (var _key in _other) {
+                        _other[_key].sort(function (a, b) {
+                            var _date = new Date(a.CreateDate);
+                            var _secondDate = new Date(b.CreateDate);
+                            return _date - _secondDate;
+                        });
+                        if (!$scope.allFeedBack[_key]) {
+                            $scope.allFeedBack[_key] = {};
+                        }
+                        for (var k = 0 ; k < _other[_key].length; k++) {
+                            var _count = k + 1;
+                            if (!$scope.allFeedBack[_key][_count]) {
+                                $scope.allFeedBack[_key][_count] = {};
+                            }
+                            $scope.allFeedBack[_key][_count]['Other'] = _other[_key][k];
+                        }
+
+                    }
+                   // console.error(_self,_other);
+                   // console.error($scope.allFeedBack)
+                    $scope.feedbackDisplayIcon = [];
+                    //Pre seesion block
+                    var _presessionBlock = {
+                        Name: 'P',
+                        feedBackArr: $scope.allFeedBack['PRESESSION'] ? $scope.allFeedBack['PRESESSION'] : {},
+                        replaceNameI: ($scope.allFeedBack['PRESESSION'] && $scope.allFeedBack['PRESESSION']['Self']) ? 'Clik to See FeedBack' : 'Click to Give Pre-session',
+                        replaceNameU: ($scope.allFeedBack['PRESESSION'] && $scope.allFeedBack['PRESESSION']['Other']) ? 'Clik to See FeedBack' : 'No Feedback received',
+                        selected: false,
+                        activate: false,
+                        style: { 'border': '1px solid', 'overflow': 'hidden', 'color': '#9400D3', 'transition': 'all 1s ease', 'transform': 'scale(1)', 'width': '100%', 'height': '100%' }
+                    };
+                    $scope.feedbackDisplayIcon.push(_presessionBlock);
+
+                    //Normal FeedBack Block
+                    var _colorArray = ['','red','green','yellow'];
+                    for (var k = 1; k < 7; k++) {
+                        var _normalFeedBack = {
+                            Name: k,
+                            feedBackArr: ($scope.allFeedBack['FEEDBACK'] && $scope.allFeedBack['FEEDBACK'][k]) ? $scope.allFeedBack['FEEDBACK'][k] : {},
+                            replaceNameI: ($scope.allFeedBack['FEEDBACK'] && $scope.allFeedBack['FEEDBACK'][k] && $scope.allFeedBack['FEEDBACK'][k]['Self']) ? 'Click to see the given feedBack' : 'Click to give geedBack',
+                            replaceNameU: ($scope.allFeedBack['FEEDBACK'] && $scope.allFeedBack['FEEDBACK'][k] && $scope.allFeedBack['FEEDBACK'][k]['Other']) ? 'Click to see the given feedBack' : 'No feedback received',
+                            selected: false,
+                            activate: true,
+                            style: { 'border': '1px solid', 'overflow': 'hidden', 'color': _colorArray[k] ?  _colorArray[k] : 'green', 'transition': 'all 1s ease', 'transform': 'scale(1)', 'width': '100%', 'height': '100%' }
+                        };
+                        $scope.feedbackDisplayIcon.push(_normalFeedBack);
+                    }
+
+                    //Close session feedBack - closeSession - CLOSESESSION
+                    var _closeSessionBlock = {
+                        Name: 'C',
+                        feedBackArr: $scope.allFeedBack['CLOSESESSION'] ? $scope.allFeedBack['CLOSESESSION'] : {},
+                        replaceNameI: ($scope.allFeedBack['CLOSESESSION'] && $scope.allFeedBack['CLOSESESSION']['Self']) ? 'Clik to See FeedBack' : 'Click to Give Pre-session',
+                        replaceNameU: ($scope.allFeedBack['CLOSESESSION'] && $scope.allFeedBack['CLOSESESSION']['Other']) ? 'Clik to See FeedBack' : 'No Feedback received',
+                        selected: false,
+                        activate: false,
+                        style: { 'border': '1px solid', 'overflow': 'hidden', 'color': 'brown', 'transition': 'all 1s ease', 'transform': 'scale(1)', 'width': '100%', 'height': '100%' }
+                    };
+                    $scope.feedbackDisplayIcon.push(_closeSessionBlock);
+                    //$scope.feedbackDisplayIcon = [
+
+                    //  { Name: '1', replaceNameI: ($scope.allFeedBack['FEEDBACK'] && $scope.allFeedBack['FEEDBACK'][1] && $scope.allFeedBack['FEEDBACK'][1].FeedBackGiver) == 'Self' ? 'Clik to See 1st FeedBack' : 'Click to Give 1st FeedBack', replaceNameU: ($scope.allFeedBack['FEEDBACK'] && $scope.allFeedBack['FEEDBACK'][1] && $scope.allFeedBack['FEEDBACK'][1].FeedBackGiver) != 'Self' ? 'Clik to See 1st FeedBack' : 'No Feedback received', selected: false, activate: true, style: { 'border': '1px solid', 'overflow': 'hidden', 'color': 'red', 'transition': 'all 1s ease', 'transform': 'scale(1)', 'width': '100%', 'height': '100%' } },
+                    //  { Name: '2', replaceNameI: ($scope.allFeedBack['FEEDBACK'] && $scope.allFeedBack['FEEDBACK'][2] && $scope.allFeedBack['FEEDBACK'][2].FeedBackGiver) == 'Self' ? 'Clik to See 2nd FeedBack' : 'Click to Give 2nd FeedBack', replaceNameU: ($scope.allFeedBack['FEEDBACK'] && $scope.allFeedBack['FEEDBACK'][2] && $scope.allFeedBack['FEEDBACK'][2].FeedBackGiver) != 'Self' ? 'Clik to See 2nd FeedBack' : 'No Feedback received', selected: false, activate: true, style: { 'border': '1px solid', 'overflow': 'hidden', 'color': 'red', 'transition': 'all 1s ease', 'transform': 'scale(1)', 'width': '100%', 'height': '100%' } },
+                    //  { Name: '3', replaceNameI: ($scope.allFeedBack['FEEDBACK'] && $scope.allFeedBack['FEEDBACK'][3] && $scope.allFeedBack['FEEDBACK'][3].FeedBackGiver) == 'Self' ? 'Clik to See 3rd FeedBack' : 'Click to Give 3rd FeedBack', replaceNameU: ($scope.allFeedBack['FEEDBACK'] && $scope.allFeedBack['FEEDBACK'][3] && $scope.allFeedBack['FEEDBACK'][3].FeedBackGiver) != 'Self' ? 'Clik to See 3rd FeedBack' : 'No Feedback received', selected: false, activate: true, style: { 'border': '1px solid', 'overflow': 'hidden', 'color': 'red', 'transition': 'all 1s ease', 'transform': 'scale(1)', 'width': '100%', 'height': '100%' } },
+                    //  { Name: '4', replaceNameI: ($scope.allFeedBack['FEEDBACK'] && $scope.allFeedBack['FEEDBACK'][4] && $scope.allFeedBack['FEEDBACK'][4].FeedBackGiver) == 'Self' ? 'Clik to See 4th FeedBack' : 'Click to Give 4th FeedBack', replaceNameU: ($scope.allFeedBack['FEEDBACK'] && $scope.allFeedBack['FEEDBACK'][4] && $scope.allFeedBack['FEEDBACK'][4].FeedBackGiver) != 'Self' ? 'Clik to See 4th FeedBack' : 'No Feedback received', selected: false, activate: true, style: { 'border': '1px solid', 'overflow': 'hidden', 'color': 'red', 'transition': 'all 1s ease', 'transform': 'scale(1)', 'width': '100%', 'height': '100%' } },
+                    //  { Name: '5', replaceNameI: ($scope.allFeedBack['FEEDBACK'] && $scope.allFeedBack['FEEDBACK'][5] && $scope.allFeedBack['FEEDBACK'][5].FeedBackGiver) == 'Self' ? 'Clik to See 5th FeedBack' : 'Click to Give 5th FeedBack', replaceNameU: ($scope.allFeedBack['FEEDBACK'] && $scope.allFeedBack['FEEDBACK'][5] && $scope.allFeedBack['FEEDBACK'][5].FeedBackGiver) != 'Self' ? 'Clik to See 5th FeedBack' : 'No Feedback received', selected: false, activate: true, style: { 'border': '1px solid', 'overflow': 'hidden', 'color': 'red', 'transition': 'all 1s ease', 'transform': 'scale(1)', 'width': '100%', 'height': '100%' } },
+                    //  { Name: '6', replaceNameI: ($scope.allFeedBack['FEEDBACK'] && $scope.allFeedBack['FEEDBACK'][6] && $scope.allFeedBack['FEEDBACK'][6].FeedBackGiver) == 'Self' ? 'Clik to See 6th FeedBack' : 'Click to Give 6th FeedBack', replaceNameU: ($scope.allFeedBack['FEEDBACK'] && $scope.allFeedBack['FEEDBACK'][6] && $scope.allFeedBack['FEEDBACK'][6].FeedBackGiver) != 'Self' ? 'Clik to See 6th FeedBack' : 'No Feedback received', selected: false, activate: true, style: { 'border': '1px solid', 'overflow': 'hidden', 'color': 'red', 'transition': 'all 1s ease', 'transform': 'scale(1)', 'width': '100%', 'height': '100%' } },
+                    //  { Name: 'C', replaceNameI: 'Close Session Feedback', replaceNameU: 'Close Session Feedback', selected: false, activate: true, style: { 'border': '1px solid', 'overflow': 'hidden', 'color': 'brown', 'transition': 'all 1s ease', 'transform': 'scale(1)', 'width': '100%', 'height': '100%' } },
+                    //];
+                    $scope.closeEx();                    
+                   
+                }
             },
             failureCallBack: function (iObj) {
                 console.debug('In failureCallBack getFeedBackFromServer', iObj);
@@ -760,13 +872,6 @@
                 //  console.error('ssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss')
                 _setScrollPosition();
                 $scope.getFeedBackFromServer();
-                $scope.feedbackDisplayIcon = [
-                     { Name: 'P', replaceNameI: 'Pre Session FeedBack I', replaceNameU: 'Pre Session FeedBack', selected: false, activate: true, style: { 'border': '1px solid', 'overflow': 'hidden', 'color': '#9400D3', 'transition': 'all 1s ease', 'transform': 'scale(1)', 'width': '100%', 'height': '100%' } },
-                     { Name: 'G', replaceNameI: 'Click to Give 1st FeedBack', replaceNameU: 'Click to Give 1st FeedBack', selected: false, activate: true, style: { 'border': '1px solid', 'overflow': 'hidden', 'color': 'red', 'transition': 'all 1s ease', 'transform': 'scale(1)', 'width': '100%', 'height': '100%' } },
-                     { Name: 'C', replaceNameI: 'Close Session Feedback', replaceNameU: 'Close Session Feedback', selected: false, activate: true, style: { 'border': '1px solid', 'overflow': 'hidden', 'color': 'brown', 'transition': 'all 1s ease', 'transform': 'scale(1)', 'width': '100%', 'height': '100%' } },
-                ];
-                $scope.closeEx();
-
                 // $scope.feedbackDisplayIcon.push({ Name: 'P', style: {} });
             },
             failureCallBack: function (iObj) {

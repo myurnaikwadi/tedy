@@ -195,7 +195,7 @@ app.controller('ksLoginController', ['$scope', 'authentification', '$location', 
 
 
         var _object = {
-            EmailAddress: $scope.loginDetails.emailAddress,
+            EmailAddress: $scope.loginDetails.emailAddress.toLowerCase(),
             Password: $scope.loginDetails.password,
         }
         console.error(_object)
@@ -315,7 +315,7 @@ app.controller('ksLoginController', ['$scope', 'authentification', '$location', 
         var _object = {
             FirstName: $scope.signupDetails.FirstName,
             LastName: $scope.signupDetails.LastName,
-            EmailAddress: $scope.signupDetails.EmailAddress,
+            EmailAddress: $scope.signupDetails.EmailAddress.toLowerCase(),
         }
         authentification.signup({ signupObject: _object, successCallBack: _successCallBack, failureCallBack: _failureLoginCallBack });
     };
@@ -333,7 +333,7 @@ app.controller('ksLoginController', ['$scope', 'authentification', '$location', 
         $scope.displayAlert.message ="Please check mail";
         $scope.displayAlert.formatType = '1';
         var _object = {
-            EmailAddress: $scope.signupDetails.EmailAddress
+            EmailAddress: $scope.signupDetails.EmailAddress.toLowerCase()
         }
         authentification.verifyEmailAddress({
             signupObject: _object, successCallBack: _successCallBack, failureCallBack: _failureLoginCallBack
@@ -360,7 +360,7 @@ app.controller('ksLoginController', ['$scope', 'authentification', '$location', 
 							        $rootScope.loggedDetail.LinkdinURL = userprofile.publicProfileUrl;
 
 							        var _object = {
-							            EmailAddress: userprofile.emailAddress,
+							            EmailAddress: userprofile.emailAddress.toLowerCase(),
 							            Password: '',
 							        }
 							        console.error(_object)
