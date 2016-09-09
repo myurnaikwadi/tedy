@@ -62,44 +62,46 @@ app.directive('monthly', function (dateServiceForMonthlyCalendar, $rootScope, se
                 $scope.monthlyArray[iIndex].styleObj['margin-top'] = '0';
             };
 
-            $scope.init = function () {
-                $rootScope.$broadcast("refreshView", { type : 'refreshUI' });
-                $scope.monthlyArray = [].concat(dateServiceForMonthlyCalendar.initializeMonthlyCell($scope.monthDate));
-                $scope.dayName = [{ name: "Sun" }, { name: "Mon" }, { name: "Tue" }, { name: "Wed" }, { name: "Thu" }, { name: "Fri" }, { name: "Sat" }];//day name array reqiured for weekly view
-                $scope.closeExpandDateView();
-               var _indexArr = [1,21,13,35,38,28,40]
-                for (var k = 0 ; k < $scope.monthlyArray.length ; k++) {
-                    if (k % 2 == 0) {
-                        if (_indexArr.indexOf(k) > -1)
-                            $scope.monthlyArray[k].meetingArray = [{ role: 'Coach', Name: 'Meeting With Alex Ward' }, { role: 'Coachee', Name: 'Request with Will Watson' }];
-                      
-                           
-
-                    } else {
-                        if (_indexArr.indexOf(k) == -1)
-                            $scope.monthlyArray[k].meetingArray = [{ role: 'Mentor', Name: 'Request with  John Allens' }, { role: 'Mentor', Name: 'Request with  Mike Howard' }, { role: 'Coach', Name: 'Request with  Mike Howard' }, { role: 'Mentee', Name: 'Meeting With Jo Wood' }];
-                        else {
-
+            var _renderMeeting = function (iObj) {
+                console.error(iObj)
+                for (var k = 0 ; k < iObj.data.length ; k++) {
+                    iObj.data[k].StartDate = new Date(Number(iObj.data[k].StartDate.split('(')[1].split(')')[0]));
+                    iObj.data[k].EndDate = new Date(Number(iObj.data[k].EndDate.split('(')[1].split(')')[0]));                  
+                    var _indexForCheck = dateServiceForMonthlyCalendar.getDayDifference({ startTime: new Date($scope.monthlyArray[0].cellDate), endTime: new Date(iObj.data[k].StartDate) })
+                    var _arrayIndex = _indexForCheck;
+                    console.error(_arrayIndex)
+                    if (_arrayIndex > -1) {
+                        if (iObj.data[k].ConversationType == "Coaching" || iObj.data[k].ConversationType == "Mentoring") {
+                            iObj.data[k].Role = iObj.data[k].ConversationType == "Coaching" ? 'Coach' : 'Mentor';
                         }
+                        if (!$scope.monthlyArray[_arrayIndex].meetingArray) $scope.monthlyArray[_arrayIndex].meetingArray = [];
+                        $scope.monthlyArray[_arrayIndex].meetingArray.push(iObj.data[k]);
                     }
-
                 }
-                console.error($scope.monthlyArray)
+               // console.error($scope.monthlyArray)
+            };
+            var _getMeetingFromServer = function () {
                 serverCommunication.GetAllMeetingPerMonth({
-                  //  ConversationType: "Mentoring",
+                    //  ConversationType: "Mentoring",
                     FromDate: $scope.monthlyArray[0].cellDate.toJSON(),
-                    ToDate: $scope.monthlyArray[$scope.monthlyArray.length-1].cellDate.toJSON(),
+                    ToDate: $scope.monthlyArray[$scope.monthlyArray.length - 1].cellDate.toJSON(),
                     successCallBack: function (iObj) {
                         console.debug('In GetAllMeetingPerMonth', iObj);
-
-                        
-                       // $scope.loadingMiddleObject = { showLoading: false, loadingMessage: 'Loading' };
+                        _renderMeeting(iObj);
+                        // $scope.loadingMiddleObject = { showLoading: false, loadingMessage: 'Loading' };
                     },
                     failureCallBack: function (iObj) {
                         console.debug('In failureCallBack', iObj);
                     }
                 });
-                
+            };
+
+            $scope.init = function () {
+                $rootScope.$broadcast("refreshView", { type : 'refreshUI' });
+                $scope.monthlyArray = [].concat(dateServiceForMonthlyCalendar.initializeMonthlyCell($scope.monthDate));
+                $scope.dayName = [{ name: "Sun" }, { name: "Mon" }, { name: "Tue" }, { name: "Wed" }, { name: "Thu" }, { name: "Fri" }, { name: "Sat" }];//day name array reqiured for weekly view
+                $scope.closeExpandDateView();              
+                _getMeetingFromServer();
             };
             $scope.init();
            
@@ -247,8 +249,18 @@ app.factory("dateServiceForMonthlyCalendar", function () {
                 return 29;
             else
                 return 28;
-        },
+        }, getDayDifference: function (iObj, onlyTimeFlag) {
+            var oneDayInMilliseconds = 24 * 60 * 60 * 1000; // hours*minutes*seconds*milliseconds
+            var firstDate = new Date(iObj.startTime);
+            var secondDate = new Date(iObj.endTime);
+            if (onlyTimeFlag)
+                return Math.abs(firstDate.getTime() - secondDate.getTime());
 
+            if (firstDate.getTime() > secondDate.getTime())
+                return -1;
+            else
+                return Math.round(Math.abs((firstDate.getTime() - secondDate.getTime()) / (oneDayInMilliseconds)));
+        },
 
         initializeWeeklyCell: function (dateObjAr, $scope, iFlag) {
 

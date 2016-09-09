@@ -28,8 +28,8 @@
                     <h5 class="monthlyClassForTodayHeading fontClass">TODAY</h5>
                 </div>*@
                 <div class="monthDayInnerEventRow" ng-show="dateNumberArr.meetingArray.length>0">
-                    <h5 class="eliipsisClass fontClass genericPointerClass" ng-repeat="request in dateNumberArr.meetingArray | limitTo : 3"  ng-class="{ coachThemeColor : request.role == 'Coach' , coacheeThemeColor : request.role == 'Coachee' , mentorThemeColor : request.role == 'Mentor' , menteeThemeColor : request.role == 'Mentee' }">
-                        {{request.Name}}
+                    <h5 class="eliipsisClass fontClass genericPointerClass" ng-repeat="request in dateNumberArr.meetingArray | limitTo : 3"  ng-class="{ coachThemeColor : request.Role == 'Coach' , coacheeThemeColor : request.Role == 'Coachee' , mentorThemeColor : request.Role == 'Mentor' , menteeThemeColor : request.Role == 'Mentee' }">
+                        {{request.Subject}}
                     </h5>                    
                 </div>          
                 <div class="monthDayInnerEventRow" style="height: 15px;display:flex;" ng-show="dateNumberArr.meetingArray.length > 3">

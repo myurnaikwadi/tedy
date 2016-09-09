@@ -86,11 +86,7 @@
                     failureCallBack: function (e) {
                         console.debug('In failureCallBack' + e);
                     }
-                });
-
-
-
-               
+                });               
             };
 
             $scope.loadGridView = function (iEvent) {
