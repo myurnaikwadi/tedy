@@ -242,7 +242,7 @@ namespace KindleSpur.Data
                 }
                 else
                 {
-                    _conversationCollection.Update(Query.And(Query.EQ("SenderEmail", conversationDetail.SenderEmail), Query.EQ("ReceiverEmail", conversationDetail.ReceiverEmail), Query.EQ("skill", conversationDetail.skill)), Update<Conversation>.Set(c => c.IsRejected, false).Set(q => q.Active, false));
+                    _conversationCollection.Update(Query.And(Query.EQ("SenderEmail", conversationDetail.SenderEmail), Query.EQ("ReceiverEmail", conversationDetail.ReceiverEmail), Query.EQ("skill", conversationDetail.skill)), Update<Conversation>.Set(c => c.IsRejected, false).Set(q => q.Active, true));
                     return true;
                 }
                 conversationDetail.IsRejected = isRejected;
@@ -416,7 +416,7 @@ namespace KindleSpur.Data
             try
             {
 
-                var _query = Query.And(Query<Conversation>.EQ(p => p.IsRejected, false), Query<Conversation>.EQ(p1 => p1.IsVerified, false), Query<Conversation>.EQ(p1 => p1.ReceiverEmail, senderEmail));
+                var _query = Query.And(Query<Conversation>.EQ(p => p.IsRejected, false), Query<Conversation>.EQ(p1 => p1.IsVerified, false), Query<Conversation>.EQ(p1 => p1.ReceiverEmail, senderEmail), Query<Conversation>.EQ(p1 => p1.Active, false));
 
                 _categories = _conversationCollection.FindAs<BsonDocument>(_query).ToList();
 
