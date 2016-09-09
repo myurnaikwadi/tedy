@@ -621,7 +621,7 @@ app.factory('serverCommunication', function ($http) {
             var _action = _checkObj.loggedUserDetails.IsVerified == false ? '/Conversation/MentoringCoachingInvite' : '/Conversation/ConversationExchanged';
             var req = {
                 method: 'POST',
-                url: '/Conversation/MentoringCoachingInvite',
+                url: _action,
                 headers: {
                     'Content-Type': 'application/json'
                 },

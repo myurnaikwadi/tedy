@@ -223,7 +223,7 @@ namespace KindleSpur.Data
                 User userDetail = _userCollection.FindOneAs<User>(Query.EQ("EmailAddress", result.UserId));
                 obj.FirstName = userDetail.FirstName;
                 obj.LastName = userDetail.LastName;
-                obj.PhotoURL = userDetail.Photo;
+                obj.Photo = userDetail.Photo;
                 obj.City = userDetail.City;
                 obj.Country = userDetail.Country;
                 obj.State = userDetail.State;

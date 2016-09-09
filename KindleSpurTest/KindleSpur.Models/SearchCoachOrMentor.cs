@@ -16,6 +16,7 @@ namespace KindleSpur.Models
         public List<SkillOrTopic> Topics { get; set; }
         public string LinkdinURL { get; set; }
         public string PhotoURL { get; set; }
+        public string Photo { get; set; }
         public string State { get; set; }
         public string City { get; set; }
         public string Country { get; set; }
