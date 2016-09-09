@@ -52,42 +52,45 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="ctsCategoryPanelMainPanel" style="overflow-y:scroll;">
-                                <h5 class="margin-small" style="margin-bottom: 0;">RECOMMENDED MENTORS</h5>
-                                <div class="filterListContainer">
-                                    <div class="mentor-list">
-                                        <div class="row" style="margin:0px;">
-                                            <div style="display: flex;width: 100%;height: 35px;" ng-repeat-start="timeSlot in timeSlots">
-                                                <div style="margin:auto;width: 100%;display: flex;">
-                                                    <div style="width:33.33%;height:100%;float:left;margin: auto;">
-                                                        <div style="height:1px;width:100%;border-bottom:1px solid rgba(214,214,214,.61);"></div>
-                                                    </div>
-                                                    <div style="width:33.33%;height:100%;float:left;margin: auto;display:flex;">
-                                                        <h5 class="genericEventHeadings genericMarginZero genericEllipsis" style="margin: auto;color: #a9a9a9;font-size:13px;" title="{{timeSlot}}">{{timeSlot}}</h5>
-                                                    </div>
-                                                    <div style="width:33.33%;height:100%;float:left;margin: auto;">
-                                                        <div style="height:1px;width:100%;border-bottom:1px solid rgba(214,214,214,.61);"></div>
-                                                    </div>
+                            <place-Holder message="No recommended Mentees" ng-show="Coaches.length == 0"></place-Holder>
+                            <div class="ctsCategoryPanelMainPanel" style="overflow-y:scroll;" ng-hide="Coaches.length == 0">
+                            
+                                    <h5 class="margin-small" style="margin-bottom: 0;">RECOMMENDED MENTORS</h5>
+                                    <div class="filterListContainer">
+                                        <div class="mentor-list">
+                                            <div class="row" style="margin:0px;">
+                                                <div style="display: flex;width: 100%;height: 35px;" ng-repeat-start="timeSlot in timeSlots">
+                                                    <div style="margin:auto;width: 100%;display: flex;">
+                                                        <div style="width:33.33%;height:100%;float:left;margin: auto;">
+                                                            <div style="height:1px;width:100%;border-bottom:1px solid rgba(214,214,214,.61);"></div>
+                                                        </div>
+                                                        <div style="width:33.33%;height:100%;float:left;margin: auto;display:flex;">
+                                                            <h5 class="genericEventHeadings genericMarginZero genericEllipsis" style="margin: auto;color: #a9a9a9;font-size:13px;" title="{{timeSlot}}">{{timeSlot}}</h5>
+                                                        </div>
+                                                        <div style="width:33.33%;height:100%;float:left;margin: auto;">
+                                                            <div style="height:1px;width:100%;border-bottom:1px solid rgba(214,214,214,.61);"></div>
+                                                        </div>
 
-                                                </div>
-                                            </div>
-                                            <div class="mentor-card mentorBorderColor" style="border-top-width:4px !important; border-right: 1px solid #ddd !important;border-left: 1px solid #ddd !important;border-bottom: 1px solid #ddd !important;" ng-init="coach.showOption = false" ng-mouseleave="coach.showOption = false" ng-mouseover="coach.showOption = true" ng-class="{ mentorCardAnimation : coach.showLoad == true }" ng-repeat-end="" ng-repeat="coach in Coaches" ng-if="coach.Skill.Name == timeSlot">
-                                                <cube-Strct ng-style="coach.loadingSearchCoach.loadingEffectCss" ng-show="coach.loadingSearchCoach.showLoading == true" class="cubeParentClass" loading-Object="coach.loadingSearchCoach"></cube-Strct>
-                                                <div class="mentor-actions" ng-class="{ mentorActionsActivate : coach.showOption == true}">
-                                                    <h5 class="genericEventHeadings" style="margin: auto;color: white;font-size:13px;" title="View Profile" ng-click="openmentorprofile(coach)">View Profile</h5>
-                                                    <h5 class="genericEventHeadings" style="margin: auto;color: white;font-size:13px;" title="Send Mentoring Request" ng-click="sendCoachingRequest(false, coach)">Request</h5>
-                                                </div>
-                                                <div class="mentor-info">
-                                                    <span class="profile-close" ng-click="Coaches.splice($index,1);" style="float:right;top:10px;right:10px;"><i class="fa fa-times"></i></span>
-                                                    <div class="profile-image" style="display:flex;">
-                                                        <img ng-src="{{coach.PhotoURL ? coach.PhotoURL : 'Images/icons/If no Profile photo.png'}}" class="img-circle" />
-                                                        <h5 class="fontClass eliipsisClass" style="background: rgb(5, 33, 29);color: white; border: 1px solid #CCCCCC;font-size: 11px;padding: 5px;text-align: center;float: left;margin: auto;margin-right: 0;width: 97px;height: 25px;">{{coach.Skill.profiLevel == '0' ? 'Basic' : (coach.Skill.profiLevel == '1' ?'Intermediate' : 'Expert')}}</h5>
                                                     </div>
-                                                    <div class="profile-info">
-                                                        <h5 class="mentor-name fontClass eliipsisClass">{{ (coach.FirstName +" "+coach.LastName) | uppercase }}</h5>
-                                                        <h5 class="mentor-skils fontClass eliipsisClass" style="font-size: 12px;margin-top: 17px;">{{ coach.EmailAddress }}</h5>
-                                                        <h5 class="mentor-skils fontClass eliipsisClass" style="font-size: 10px;">Topic - {{coach.Skill.Name | uppercase}}</h5>
-                                                        <h5 class="mentor-location fontClass eliipsisClass" style="font-size: 10px;">{{displayAddress(coach)}}</h5>
+                                                </div>
+                                                <div class="mentor-card mentorBorderColor" style="border-top-width:4px !important; border-right: 1px solid #ddd !important;border-left: 1px solid #ddd !important;border-bottom: 1px solid #ddd !important;" ng-init="coach.showOption = false" ng-mouseleave="coach.showOption = false" ng-mouseover="coach.showOption = true" ng-class="{ mentorCardAnimation : coach.showLoad == true }" ng-repeat-end="" ng-repeat="coach in Coaches" ng-if="coach.Skill.Name == timeSlot">
+                                                    <cube-Strct ng-style="coach.loadingSearchCoach.loadingEffectCss" ng-show="coach.loadingSearchCoach.showLoading == true" class="cubeParentClass" loading-Object="coach.loadingSearchCoach"></cube-Strct>
+                                                    <div class="mentor-actions" ng-class="{ mentorActionsActivate : coach.showOption == true}">
+                                                        <h5 class="genericEventHeadings" style="margin: auto;color: white;font-size:13px;" title="View Profile" ng-click="openmentorprofile(coach)">View Profile</h5>
+                                                        <h5 class="genericEventHeadings" style="margin: auto;color: white;font-size:13px;" title="Send Mentoring Request" ng-click="sendCoachingRequest(false, coach)">Request</h5>
+                                                    </div>
+                                                    <div class="mentor-info">
+                                                        <span class="profile-close" ng-click="Coaches.splice($index,1);" style="float:right;top:10px;right:10px;"><i class="fa fa-times"></i></span>
+                                                        <div class="profile-image" style="display:flex;">
+                                                            <img ng-src="{{coach.PhotoURL ? coach.PhotoURL : 'Images/icons/If no Profile photo.png'}}" class="img-circle" />
+                                                            <h5 class="fontClass eliipsisClass" style="background: rgb(5, 33, 29);color: white; border: 1px solid #CCCCCC;font-size: 11px;padding: 5px;text-align: center;float: left;margin: auto;margin-right: 0;width: 97px;height: 25px;">{{coach.Skill.profiLevel == '0' ? 'Basic' : (coach.Skill.profiLevel == '1' ?'Intermediate' : 'Expert')}}</h5>
+                                                        </div>
+                                                        <div class="profile-info">
+                                                            <h5 class="mentor-name fontClass eliipsisClass">{{ (coach.FirstName +" "+coach.LastName) | uppercase }}</h5>
+                                                            <h5 class="mentor-skils fontClass eliipsisClass" style="font-size: 12px;margin-top: 17px;">{{ coach.EmailAddress }}</h5>
+                                                            <h5 class="mentor-skils fontClass eliipsisClass" style="font-size: 10px;">Topic - {{coach.Skill.Name | uppercase}}</h5>
+                                                            <h5 class="mentor-location fontClass eliipsisClass" style="font-size: 10px;">{{displayAddress(coach)}}</h5>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -95,7 +98,6 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
                     </div>
             </div>
             @*RESOURCES - 7*@

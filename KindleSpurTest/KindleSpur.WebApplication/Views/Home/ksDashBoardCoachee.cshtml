@@ -83,7 +83,8 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="ctsCategoryPanelMainPanel" style="overflow-y:scroll;">
+                            <place-Holder message="No recommended Coaches" ng-show="Coaches.length == 0"></place-Holder>
+                            <div class="ctsCategoryPanelMainPanel" style="overflow-y:scroll;" ng-hide="Coaches.length == 0">
                                 <h5 class="margin-small" style="margin-bottom: 0;">RECOMMENDED COACHES</h5>
                                 <div class="filterListContainer">
                                     <div class="mentor-list">
