@@ -244,14 +244,14 @@ namespace KindleSpur.Data
                 CoachOrMentor coachOrMentorEntity = new CoachOrMentor();
 
                 string newRole = string.Empty;
-                IMongoQuery _query = (Query.And(Query.EQ("Sender", senderEmail), Query.EQ("UserId", receiverEmail), Query.EQ("Role", role), Query.EQ("Feedbacks.Skill", skill)));
-                IMongoQuery _query1 = (Query.And(Query.EQ("Sender", receiverEmail), Query.EQ("UserId", senderEmail), Query.EQ("Role", newRole), Query.EQ("Feedbacks.Skill", skill)));
+                IMongoQuery _query = (Query.And(Query.EQ("Feedbacks.Sender", senderEmail), Query.EQ("UserId", receiverEmail), Query.EQ("Feedbacks.Skill", skill)));
+                IMongoQuery _query1 = (Query.And(Query.EQ("Feedbacks.Sender", receiverEmail), Query.EQ("UserId", senderEmail), Query.EQ("Feedbacks.Skill", skill)));
 
                 if (role == "Coach" || role == "Mentor")
                 {
                     _query = Query.And(_query, Query.EQ("Role", role));
                     newRole = (role == "Mentor") ? "Mentee" : "Coachee";
-                    _query1 = Query.And(_query, Query.EQ("Role", role));
+                    _query1 = Query.And(_query1, Query.EQ("Role", newRole));
                     coachOrMentorEntity = _coachOrMentorCollection.FindOneAs<CoachOrMentor>(_query);
                     coacheeOrMenteeEntity = _coacheeOrMenteeCollection.FindOneAs<CoacheeOrMentee>(_query1);
                 }
@@ -259,7 +259,7 @@ namespace KindleSpur.Data
                 {
                     _query = Query.And(_query, Query.EQ("Role", role));
                     newRole = (role == "Mentee") ? "Mentor" : "Coach";
-                    _query1 = Query.And(_query, Query.EQ("Role", role));
+                    _query1 = Query.And(_query1, Query.EQ("Role", newRole));
                     coacheeOrMenteeEntity = _coacheeOrMenteeCollection.FindOneAs<CoacheeOrMentee>(_query);
                     coachOrMentorEntity = _coachOrMentorCollection.FindOneAs<CoachOrMentor>(_query1);
                 }
