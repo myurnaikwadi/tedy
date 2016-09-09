@@ -1633,6 +1633,7 @@ app.directive('feedbackPage', function ($state, serverCommunication, $timeout, $
             role: "@",
             closeCallback: "&",
             convObject: "=",
+            readOnly: "=",
             feedbackType: "=",
             feedbackClosed: "=",
         },
@@ -1748,7 +1749,7 @@ app.directive('feedbackPage', function ($state, serverCommunication, $timeout, $
                 var _feedBacks = []
                 for (var _key in $scope.feedBack.feedBackDetails) {
                     if ($scope.feedBack.feedBackDetails[_key]) {
-                        _feedBacks.push({ Question: _key, Answer: $scope.feedBack.feedBackDetails[_key].actionValue });
+                        _feedBacks.push({ DataType: $scope.feedBack.feedBackDetails[_key].type, Question: _key, Answer: $scope.feedBack.feedBackDetails[_key].actionValue });
                     }
                         if ($scope.feedBack.feedBackDetails[_key].sessionRating) {
                             _rating = $scope.feedBack.feedBackDetails[_key].actionValue;
@@ -1797,7 +1798,7 @@ app.directive('feedbackPage', function ($state, serverCommunication, $timeout, $
                 var _feedBacks = []
                 for (var _key in $scope.feedBack.feedBackDetails) {
                     if ($scope.feedBack.feedBackDetails[_key]) {
-                        _feedBacks.push({ Question: _key, Answer: $scope.feedBack.feedBackDetails[_key].actionValue });
+                        _feedBacks.push({ DataType: $scope.feedBack.feedBackDetails[_key].type, Question: _key, Answer: $scope.feedBack.feedBackDetails[_key].actionValue });
                     }
                         if ($scope.feedBack.feedBackDetails[_key].sessionRating) {
                             _rating = $scope.feedBack.feedBackDetails[_key].actionValue;
@@ -1864,7 +1865,7 @@ app.directive('feedbackPage', function ($state, serverCommunication, $timeout, $
                 console.error('111')
 
                 var _loadArray = [];
-                $scope.indexArray = []
+                $scope.indexArray = [];
                 for (var k = 0 ; k < $scope.displayArray.length ; k++) {
                     $scope.feedBack.feedBackDetails[$scope.displayArray[k].name] = angular.copy($scope.displayArray[k]);
                 };
@@ -1924,11 +1925,13 @@ app.directive('feedbackPage', function ($state, serverCommunication, $timeout, $
             $scope.indexArray = [];
             $scope.showRatingColor = function (iIndex, iQuestion) {
                 console.error('showRatingColor')
-
-                $scope.indexArray = []
+                if (iQuestion.disbaled) {
+                    return;
+                }
+                iQuestion.indexArray = []
                 for (var j = 1 ; j <= iIndex ; j++) {
-                    if ($scope.indexArray.indexOf(j) == -1)
-                        $scope.indexArray.push(j);
+                    if (iQuestion.indexArray.indexOf(j) == -1)
+                        iQuestion.indexArray.push(j);
                 }
 
                 iQuestion.actionValue = iIndex;

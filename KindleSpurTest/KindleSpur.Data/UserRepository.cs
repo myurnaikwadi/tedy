@@ -383,18 +383,21 @@ namespace KindleSpur.Data
                     {
                         foreach (Feedback feedback in listcoachOrMentor[userListCount].Feedbacks)
                         {
-                            if ((feedback.QueAndAns[6].Answer == "3" || feedback.QueAndAns[6].Answer == "4" || feedback.QueAndAns[6].Answer == "5") && (feedback.FeedbackStatus == "CLOSESESSION"))
+                            if (feedback.FeedbackStatus == "CLOSESESSION")
                             {
-                                MostRatedFeedback mostRateFeedback = new MostRatedFeedback();
-                                mostRateFeedback.Rating = feedback.QueAndAns[6].Answer;
-                                User userDetails = (User)userRepo.GetUserDetail(feedback.Sender);
-                                mostRateFeedback.FeedbackGiverFirstName = userDetails.FirstName;
-                                mostRateFeedback.FeedbackGiverLastName = userDetails.LastName;
-                                mostRateFeedback.FeedbackGiverPhoto = userDetails.Photo;
-                                mostRateFeedback.feedbackDate = feedback.CreateDate;
-                                mostRateFeedback.SkillOrTopic = feedback.Skill;
-                                mostRateFeedback.Role = listcoachOrMentor[userListCount].Role;
-                                lstMostRatedFeedback.Add(mostRateFeedback);
+                                if ((feedback.QueAndAns[6].Answer == "3" || feedback.QueAndAns[6].Answer == "4" || feedback.QueAndAns[6].Answer == "5"))
+                                {
+                                    MostRatedFeedback mostRateFeedback = new MostRatedFeedback();
+                                    mostRateFeedback.Rating = feedback.QueAndAns[6].Answer;
+                                    User userDetails = (User)userRepo.GetUserDetail(feedback.Sender);
+                                    mostRateFeedback.FeedbackGiverFirstName = userDetails.FirstName;
+                                    mostRateFeedback.FeedbackGiverLastName = userDetails.LastName;
+                                    mostRateFeedback.FeedbackGiverPhoto = userDetails.Photo;
+                                    mostRateFeedback.feedbackDate = feedback.CreateDate;
+                                    mostRateFeedback.SkillOrTopic = feedback.Skill;
+                                    mostRateFeedback.Role = listcoachOrMentor[userListCount].Role;
+                                    lstMostRatedFeedback.Add(mostRateFeedback);
+                                }
                             }
                         }
                     }
@@ -408,18 +411,21 @@ namespace KindleSpur.Data
                     {
                         foreach (Feedback feedback in listcoacheeOrMentee[userListCount].Feedbacks)
                         {
-                            if ((feedback.QueAndAns[6].Answer == "3" || feedback.QueAndAns[6].Answer == "4" || feedback.QueAndAns[6].Answer == "5") && (feedback.FeedbackStatus == "CLOSESESSION"))
+                            if (feedback.FeedbackStatus == "CLOSESESSION")
                             {
-                                MostRatedFeedback mostRateFeedback = new MostRatedFeedback();
-                                mostRateFeedback.Rating = feedback.QueAndAns[6].Answer;
-                                User userDetails = (User)userRepo.GetUserDetail(feedback.Sender);
-                                mostRateFeedback.FeedbackGiverFirstName = userDetails.FirstName;
-                                mostRateFeedback.FeedbackGiverLastName = userDetails.LastName;
-                                mostRateFeedback.FeedbackGiverPhoto = userDetails.Photo;
-                                mostRateFeedback.feedbackDate = feedback.CreateDate;
-                                mostRateFeedback.SkillOrTopic = feedback.Skill;
-                                mostRateFeedback.Role = listcoacheeOrMentee[userListCount].Role;
-                                lstMostRatedFeedback.Add(mostRateFeedback);
+                                if ((feedback.QueAndAns[6].Answer == "3" || feedback.QueAndAns[6].Answer == "4" || feedback.QueAndAns[6].Answer == "5"))
+                                {
+                                    MostRatedFeedback mostRateFeedback = new MostRatedFeedback();
+                                    mostRateFeedback.Rating = feedback.QueAndAns[6].Answer;
+                                    User userDetails = (User)userRepo.GetUserDetail(feedback.Sender);
+                                    mostRateFeedback.FeedbackGiverFirstName = userDetails.FirstName;
+                                    mostRateFeedback.FeedbackGiverLastName = userDetails.LastName;
+                                    mostRateFeedback.FeedbackGiverPhoto = userDetails.Photo;
+                                    mostRateFeedback.feedbackDate = feedback.CreateDate;
+                                    mostRateFeedback.SkillOrTopic = feedback.Skill;
+                                    mostRateFeedback.Role = listcoacheeOrMentee[userListCount].Role;
+                                    lstMostRatedFeedback.Add(mostRateFeedback);
+                                }
                             }
                         }
                     }
