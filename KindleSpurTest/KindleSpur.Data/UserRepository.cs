@@ -235,7 +235,7 @@ namespace KindleSpur.Data
         }
 
         //This method to be tested after AngularJS code written
-        public List<List<Feedback>> GetFeedback(string senderEmail, string receiverEmail, string role, string skill)
+        public List<Feedback> GetFeedback(string senderEmail, string receiverEmail, string role, string skill)
         {
             try
             {
@@ -264,17 +264,21 @@ namespace KindleSpur.Data
                     coachOrMentorEntity = _coachOrMentorCollection.FindOneAs<CoachOrMentor>(_query1);
                 }
 
-                List<Feedback> feedback1 = new List<Feedback>();
-                List<Feedback> feedback2 = new List<Feedback>();
-                foreach (Feedback k in coacheeOrMenteeEntity.Feedbacks)
-                    feedback1.Add(k);
+                List<Feedback> feedback = new List<Feedback>();
                
-                foreach (Feedback k1 in coachOrMentorEntity.Feedbacks)
-                    feedback2.Add(k1);
-                
-                entireFeedback.Add(feedback1);
-                entireFeedback.Add(feedback2);
-                return entireFeedback;
+                if (coacheeOrMenteeEntity != null)
+                {
+                    foreach (Feedback k in coacheeOrMenteeEntity.Feedbacks)
+                        feedback.Add(k);
+                }
+
+                if (coachOrMentorEntity != null)
+                {
+                    foreach (Feedback k1 in coachOrMentorEntity.Feedbacks)
+                        feedback.Add(k1);
+                }
+
+                return feedback;
             }
             catch (MongoException ex)
             {
