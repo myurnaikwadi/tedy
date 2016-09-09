@@ -1893,6 +1893,7 @@ app.directive('feedbackPage', function ($state, serverCommunication, $timeout, $
                 $scope.displayArray = [].concat(_loadArray);
                 setTimeout(function () {
                     for (var k = 0 ; k < $scope.displayArray.length ; k++) {
+                        $scope.showRatingColor($scope.displayArray[k].actionValue, $scope.displayArray[k]);
                         $scope.displayArray[k].showLoad = true;
                     }
                     $scope.$apply();
@@ -1925,15 +1926,15 @@ app.directive('feedbackPage', function ($state, serverCommunication, $timeout, $
             $scope.indexArray = [];
             $scope.showRatingColor = function (iIndex, iQuestion) {
                 console.error('showRatingColor')
-                if (iQuestion.disbaled) {
-                    return;
-                }
+                
                 iQuestion.indexArray = []
                 for (var j = 1 ; j <= iIndex ; j++) {
                     if (iQuestion.indexArray.indexOf(j) == -1)
                         iQuestion.indexArray.push(j);
                 }
-
+                if (iQuestion.disbaled) {
+                    return;
+                }
                 iQuestion.actionValue = iIndex;
                 return
                 var _index = $scope.indexArray.indexOf(iIndex);
