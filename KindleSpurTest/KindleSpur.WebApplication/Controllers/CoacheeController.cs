@@ -16,7 +16,7 @@ namespace KindleSpur.WebApplication.Controllers
         MongoCollection _logCollection;
         private readonly CTSRepository _ctsRepo = new CTSRepository();
         private readonly CoacheeOrMenteeRepository _coacheeRepo = new CoacheeOrMenteeRepository();
-        private readonly string UserId = null;
+        private readonly string UserId;
         public CoacheeController()
         {
           

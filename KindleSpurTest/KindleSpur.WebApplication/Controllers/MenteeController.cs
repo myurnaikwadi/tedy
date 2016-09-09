@@ -14,7 +14,7 @@ namespace KindleSpur.WebApplication.Controllers
     public class MenteeController : Controller
     {
         MongoCollection _logCollection;
-        private readonly string UserId=null;
+        private readonly string UserId;
         public MenteeController()
         {
             

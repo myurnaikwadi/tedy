@@ -161,7 +161,7 @@
                                             </div>
                                             <div class="userNameProfile" style="height: 20%;display:block;width: 100%;">
                                                 <div class="activityNameInputBox" style="width: 49%;margin-right: 2%;">
-                                                    <input class="profileInputTag homeLogininput"  style="color: #4f4f4f !important;font-size: 12px !important;letter-spacing: 1px; font-weight: 100 !important;" type="text" required ng-keydown="autoCompleteEmailId($event,'mobile');" ng-blur="resetAutoComplete('mobile');closeAlertMessage('mobile')" ng-change='selectedIndexMobile=-1;changeOccPerInfo = true' name="username" id="mobile" ng-model="localModel.mobileNumber" tabindex="0" autocomplete="off">
+                                                    <input class="profileInputTag homeLogininput" allow-pattern="[0-9]" maxlength="20"  style="color: #4f4f4f !important;font-size: 12px !important;letter-spacing: 1px; font-weight: 100 !important;" type="text" required ng-keydown="autoCompleteEmailId($event,'mobile');" ng-blur="resetAutoComplete('mobile');closeAlertMessage('mobile')" ng-change='selectedIndexMobile=-1;changeOccPerInfo = true' name="username" id="mobile" ng-model="localModel.mobileNumber" tabindex="0" autocomplete="off">
                                                     <span class="highlight"></span>
                                                     <span class="bar" style="background:rebeccapurple"></span>
                                                     <label class="homeLoginlabel fontClass" style="">Mobile</label>
