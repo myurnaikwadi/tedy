@@ -23,8 +23,8 @@
                 <div style="position:relative;width:85%; height:56%; padding: 8px;margin:auto;margin-top:3%;border: 1px solid #ccc;">
                     <div class="podcastHeader" style="height: 20%;">
                         <h5 style="margin: auto;font-weight: bold;color:#696565;" class="fontClass ValueFeedsHeade">About Me</h5>
-                        <img ng-show="descriptionLoad == true && selectedMenuIndex == 2" ng-click="localModel.description=''" style="width: 11px;float: right;height: 11px;margin: auto 0;margin-left: 1%;right: 2%;bottom: 0;cursor:pointer;" title="Reset" src="~/Images/cancel.png" />
-                        <img ng-show="descriptionLoad == true && selectedMenuIndex == 2" ng-click="sendDescDetailsToServer()" style="width:11px; float: right; height: 11px;margin: auto 0;margin-left: 1%;right: 7%;bottom: 0;cursor:pointer;" title="Save" src="~/Images/saveTick.png" />
+                        <img ng-show="descriptionLoad == true && selectedMenuIndex == 2" ng-click="localModel.description=''" style="width: 15px;float: right;height: 13px;margin: auto 0;margin-left: 1%;right: 2%;bottom: 0;cursor:pointer;border: 1px solid gray;padding:1px;" title="Reset" src="~/Images/cancel.png" />
+                        <img ng-show="descriptionLoad == true && selectedMenuIndex == 2" ng-click="sendDescDetailsToServer()" style="width:15px; float: right; height: 13px;margin: auto 0;margin-left: 1%;right: 7%;bottom: 0;cursor:pointer;border: 1px solid gray;padding:1px;" title="Save" src="~/Images/saveTick.png" />
                     </div>
                     <div class="descriptionLabelMessage profileDescriptionHide" ng-class="{ profileDescriptionLoad : descriptionLoad == true && selectedMenuIndex == 2}">
                         <textArea style="resize: none; font-size: 13px;   height: 80%;width: 100%;" placeholder="No Description Available" ng-model="localModel.description"></textArea>
