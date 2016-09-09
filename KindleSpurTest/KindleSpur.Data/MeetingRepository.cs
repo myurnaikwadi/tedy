@@ -21,6 +21,7 @@ namespace KindleSpur.Data
         MongoDatabase _kindleDatabase;
         MongoCollection _logCollection;
         MongoCollection _meetingCollection;
+     
 
         public MeetingRepository()
         {
@@ -29,6 +30,7 @@ namespace KindleSpur.Data
             {
                 _meetingCollection = con.GetCollection("Meeting");
                 _logCollection = con.GetCollection("ErrorLogs");
+            
             }
             catch (MongoException ex)
             {
@@ -101,7 +103,7 @@ namespace KindleSpur.Data
                 _categories1 = _meetingCollection.FindAs<Meeting>(
                     _query
                     ).SetFields(Fields.Exclude("_id")).ToList();
-
+                
             }
             catch (MongoException ex)
             {
@@ -155,7 +157,7 @@ namespace KindleSpur.Data
         {
             
             List<Meeting> _categories = new List<Meeting>();
-
+            UserRepository userRepo = new Data.UserRepository();
             BsonDateTime newFromDate = BsonDateTime.Create(FromDate);
             BsonDateTime newToDate = BsonDateTime.Create(ToDate);
 
@@ -167,6 +169,21 @@ namespace KindleSpur.Data
                 _categories = _meetingCollection.FindAs<Meeting>(
                     _query
                     ).ToList();
+                for(int count =0;count<_categories.Count; count++)
+                {
+                    User userDetails = (User)userRepo.GetUserDetail(_categories[count].To);
+                    User userDetails1 = (User)userRepo.GetUserDetail(_categories[count].From);
+
+                    _categories[count].ToFirstName = userDetails.FirstName;
+                    _categories[count].ToLastName = userDetails.LastName;
+                    _categories[count].ToPhoto = userDetails.Photo;
+
+                    _categories[count].FromFirstName = userDetails1.FirstName;
+                    _categories[count].FromLastName = userDetails1.LastName;
+                    _categories[count].FromPhoto = userDetails1.Photo;
+                }
+
+               
 
             }
             catch (MongoException ex)

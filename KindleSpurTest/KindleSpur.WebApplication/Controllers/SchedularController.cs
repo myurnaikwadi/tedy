@@ -13,6 +13,8 @@ namespace KindleSpur.WebApplication.Controllers
 {
     public class SchedularController : Controller
     {
+        ConversationRepository _conversationrepo = new ConversationRepository();
+
         // GET: Schedular
         public ActionResult Index()
         {
@@ -143,8 +145,12 @@ namespace KindleSpur.WebApplication.Controllers
             UserRepository ur = new UserRepository();
             try
             {
-                var result = _repo.GetAllMeetingPerMonth((((IUser)Session["User"]).EmailAddress), FromDate, ToDate);
-                return Json(result, JsonRequestBehavior.AllowGet);
+                string userId = (((IUser)Session["User"]).EmailAddress);
+                var meeting = _repo.GetAllMeetingPerMonth(userId, FromDate, ToDate);
+                var invite = _conversationrepo.GetAllConversationRequestPerMonth(userId, FromDate, ToDate);
+                var result3 = new { meeting, invite };
+                return Json(result3, JsonRequestBehavior.AllowGet);
+               
             }
             catch (Exception)
             {

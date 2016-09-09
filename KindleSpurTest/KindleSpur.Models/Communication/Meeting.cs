@@ -19,6 +19,12 @@ namespace KindleSpur.Models.Communication
         public  string MeetingId { get; set; }
         public string From { get; set; }
         public string To { get; set; }
+        public string FromFirstName { get; set; }
+        public string FromLastName { get; set; }
+        public string FromPhoto { get; set; }
+        public string ToFirstName { get; set; }
+        public string ToLastName { get; set; }
+        public string ToPhoto { get; set; }
         public string SkillName { get; set; }
         public string TopicName { get; set; }
         public string Subject { get; set; }
