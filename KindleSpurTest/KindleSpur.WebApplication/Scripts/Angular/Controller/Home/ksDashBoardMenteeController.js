@@ -923,7 +923,7 @@
                     $scope.feedbackDisplayIcon.push(_presessionBlock);
 
                     //Normal FeedBack Block
-                    var _colorArray = ['', 'red', 'green', 'yellow'];
+                    var _colorArray = ['', '#9400D3', '#0000FF', '#C70039', '#A04000', '#9400D3', '#0000FF', '#C70039'];
                     for (var k = 1; k < 7; k++) {
                         var _normalFeedBack = {
                             Name: k,
