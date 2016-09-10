@@ -999,18 +999,14 @@ namespace KindleSpur.Data
             {
                 obj.EmailAddress = c.UserId;
                 obj.Role = c.Role;
-                if (c.Role == "Coach")
+                 if (c.Role == "Coach")
                 {
                     
                     c.Skills = c.Skills.Where(i => lstTopicOrSkill.Contains(i.Name)).ToList();
                     if (c.CoachingStatus != null)
                     {
-                        for (int i = 0; i < lstTopicOrSkill.Count; i++)
-                        {
-                            var j = c.CoachingStatus.Find(x => x.Skill == lstTopicOrSkill[i]);
-                            if (j != null)
-                                c.Skills.RemoveAll(k => k.Name == j.Skill);
-                        }
+                       List<string> skills=  c.CoachingStatus.Where(i => lstTopicOrSkill.Contains(i.Skill)).Select(x => x.Skill).ToList();
+                        c.Skills.RemoveAll(x=> skills.Contains(x.Name));
                     }
                     obj.Skills = c.Skills;
                 }
@@ -1020,12 +1016,8 @@ namespace KindleSpur.Data
 
                     if (c.CoachingStatus != null)
                     {
-                        for (int i = 0; i < lstTopicOrSkill.Count; i++)
-                        {
-                            var j = c.CoachingStatus.Find(x => x.Skill == lstTopicOrSkill[i]);
-                            if (j != null)
-                                c.Topics.RemoveAll(k => k.Name == j.Skill);
-                        }
+                        List<string> topics = c.CoachingStatus.Where(i => lstTopicOrSkill.Contains(i.Skill)).Select(x => x.Skill).ToList();
+                        c.Topics.RemoveAll(x => topics.Contains(x.Name));
                     }
                     obj.Topics = c.Topics;
                 }

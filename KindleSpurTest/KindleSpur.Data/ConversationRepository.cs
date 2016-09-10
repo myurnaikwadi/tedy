@@ -48,14 +48,15 @@ namespace KindleSpur.Data
 
                 if (result.Count() > 0 && conversationData.Content == null && conversationData.FilesURLlink == null)
                 {
-                    if (result[result.Count-1]["IsRejected"] == false && result[result.Count - 1]["IsVerified"] == false && result[result.Count - 1]["Active"] == false)
-                    {                      
-                        _conversationCollection.Update(Query.And(Query.EQ("SenderEmail", conversationData.SenderEmail), Query.EQ("ReceiverEmail", conversationData.ReceiverEmail), Query.EQ("skill", conversationData.skill)), Update<Conversation>.Set(c => c.IsRejected, false).Set(q =>q.Active, true));
-                        return true;
-                    }
-                    else if(result[result.Count - 1]["ConversationClosed"] == true)
+                    if (result[result.Count - 1]["ConversationClosed"] == true)
                     {
                         conversationData.Active = true;
+
+                    }
+                    else if (result[result.Count - 1]["IsRejected"] == false && result[result.Count - 1]["IsVerified"] == false && result[result.Count - 1]["Active"] == true)
+                    {
+                        _conversationCollection.Update(Query.And(Query.EQ("SenderEmail", conversationData.SenderEmail), Query.EQ("ReceiverEmail", conversationData.ReceiverEmail), Query.EQ("skill", conversationData.skill)), Update<Conversation>.Set(c => c.IsRejected, false).Set(q => q.Active, false));
+                        return true;
                         
                     }
                     else
@@ -65,7 +66,7 @@ namespace KindleSpur.Data
                     }
                 }
                 conversationData.IsRejected = false;
-              
+
                 _conversationCollection.Insert(conversationData);
 
                 _transactionStatus = true;
@@ -99,16 +100,16 @@ namespace KindleSpur.Data
         {
             bool _transactionStatus = false;
             string swappingEmail = string.Empty;
-           
+
             try
             {
                 var result = _conversationCollection.FindAs<BsonDocument>(Query.And(Query.EQ("SenderEmail", conversationData.SenderEmail), Query.EQ("ReceiverEmail", conversationData.ReceiverEmail), Query.EQ("skill", conversationData.skill))).ToList();
 
                 if (result.Count() > 0 && conversationData.Content == null && conversationData.FilesURLlink == null)
                 {
-                    if (result[result.Count - 1]["IsRejected"] == false && result[result.Count - 1]["IsVerified"] == false && result[result.Count - 1]["Active"] == false)
+                    if (result[result.Count - 1]["IsRejected"] == false && result[result.Count - 1]["IsVerified"] == false && result[result.Count - 1]["Active"] == true)
                     {
-                        _conversationCollection.Update(Query.And(Query.EQ("SenderEmail", conversationData.SenderEmail), Query.EQ("ReceiverEmail", conversationData.ReceiverEmail), Query.EQ("skill", conversationData.skill)), Update<Conversation>.Set(c => c.IsRejected, false).Set(q => q.Active, true));
+                        _conversationCollection.Update(Query.And(Query.EQ("SenderEmail", conversationData.SenderEmail), Query.EQ("ReceiverEmail", conversationData.ReceiverEmail), Query.EQ("skill", conversationData.skill)), Update<Conversation>.Set(c => c.IsRejected, false).Set(q => q.Active, false));
                         return true;
                     }
                     else
@@ -118,7 +119,7 @@ namespace KindleSpur.Data
                     }
                 }
                 conversationData.IsRejected = false;
-              
+
                 _conversationCollection.Insert(conversationData);
 
                 _transactionStatus = true;
@@ -200,7 +201,7 @@ namespace KindleSpur.Data
                 conversationDetail.UpdateDate = DateTime.Now;
                 conversationDetail.ConversationParentId = ParentId;
                 conversationDetail.IsVerified = isVerified;
-                if(isVerified)
+                if (isVerified)
                 {
                     MongoCollection _coachOrMentorCollection;
                     _coachOrMentorCollection = con.GetCollection("CoachOrMentor");
@@ -225,7 +226,7 @@ namespace KindleSpur.Data
                     coachingStatus.Skill = skill;
                     coachingStatus.customerSatisfactionRating = 0;
                     coachingStatus.FeedbackClosed = false;
-                    coachingStatus.FeedBackCount =  0;
+                    coachingStatus.FeedBackCount = 0;
                     coach.CoachingStatus.Add(coachingStatus);
                     _coachOrMentorCollection.Save(coach);
 
@@ -407,8 +408,8 @@ namespace KindleSpur.Data
         //}
         #endregion
 
-       
-         //This method is used on dashboard to get all the coaching/mentoring invites
+
+        //This method is used on dashboard to get all the coaching/mentoring invites
         public List<BsonDocument> GetAllConversationRequest(string senderEmail)
         {
             List<BsonDocument> _categories = new List<BsonDocument>();
@@ -458,10 +459,10 @@ namespace KindleSpur.Data
 
             try
             {
-               
+
                 var _query = Query.And(Query<Conversation>.GTE(p => p.UpdateDate, newFromDate.ToUniversalTime()), Query<Conversation>.LTE(p => p.UpdateDate, newToDate.ToUniversalTime()), Query<Conversation>.EQ(p => p.IsRejected, false), Query<Conversation>.EQ(p1 => p1.IsVerified, false), Query<Conversation>.EQ(p1 => p1.ReceiverEmail, userId));
                 _categories = _conversationCollection.FindAs<Conversation>(_query).ToList();
-               
+
             }
             catch (MongoException ex)
             {
@@ -503,10 +504,10 @@ namespace KindleSpur.Data
                 {
                     string sender = _categories[i].GetElement("SenderEmail").Value.ToString();
                     _categories[i].Remove("_id");
-                    BsonElement element= _categories[i].GetElement("UpdateDate");
+                    BsonElement element = _categories[i].GetElement("UpdateDate");
                     _categories[i].RemoveElement(element);
                     _categories[i].Add(new BsonElement("UpdateDate", element.Value.ToString().TrimEnd('Z')));
-                     string receiver = _categories[i].GetElement("ReceiverEmail").Value.ToString();
+                    string receiver = _categories[i].GetElement("ReceiverEmail").Value.ToString();
 
                 }
             }
