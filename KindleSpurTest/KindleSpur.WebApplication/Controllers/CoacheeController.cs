@@ -98,7 +98,7 @@ namespace KindleSpur.WebApplication.Controllers
             {
                 CoachOrMentorRepository _coachRep = new CoachOrMentorRepository();
                 // var result = _coacheeRepo.GetAllCoacheeOrMentee(ctsFilter);
-                var result = _coachRep.GetAllCoachOrMentors(ctsFilter, Role);
+                var result = _coachRep.GetAllCoachOrMentors(ctsFilter, Role, UserId);
                 return result.ToJson();
 
             }
