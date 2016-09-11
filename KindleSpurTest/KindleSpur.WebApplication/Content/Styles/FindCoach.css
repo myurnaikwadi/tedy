@@ -133,7 +133,8 @@
 
     /* style icon */
     .inner-addon .fa {
-        position: absolute;
+        position: relative;
+        float:left;
         padding: 10px;
     }
 
@@ -186,7 +187,15 @@
    height:45px !important;
    background : rgba(0,0,0,.48);
    opacity:1 !important;
-   overflow:hidden;
-   
+   overflow:hidden;   
    transition:all 0.7s ease;
-}  
+}
+.dividePanelSarchCoachResult {
+     transition:all 0.7s ease;
+     height:93% !important;
+}
+.dividePanelSarchCoachRecoCoach {
+     transition:all 0.7s ease;
+     height:7% !important;
+     overflow:hidden !important; 
+}

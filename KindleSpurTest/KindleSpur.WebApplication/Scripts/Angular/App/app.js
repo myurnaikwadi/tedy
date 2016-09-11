@@ -16,6 +16,17 @@ app.run(function ($rootScope, $timeout, $state) {
             }
         }           
     });
+
+    //var lastDigestRun = new Date();
+    //$rootScope.$watch(function detectIdle() {
+    //    var now = new Date
+    //    console.error(lastDigestRun)
+    //    if (now - lastDigestRun > 60 * 60) {
+    //        // logout here, like delete cookie, navigate to login ...
+    //        alert('sessio')
+    //    }
+    //    lastDigestRun = now;
+    //});
 });
 var rootScope = null;
 function onLinkedInLoad() {

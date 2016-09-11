@@ -6,6 +6,7 @@
     $scope.conversation = { Message: '' };
     $scope.loadingObject = { showLoading: true, loadingMessage: 'Loading' };
     $scope.ReceiverName = "";
+    $scope.searchCoachObj = {}
     $scope.navigateToProfile = function () {
         $rootScope.currentModule = 'Profile';   
         $state.go('home.dashBoard.profile');
@@ -49,7 +50,7 @@
             _str += iObj.State + " ";
         if (iObj.Country)
             _str += iObj.Country + " ";
-        console.error(_str);
+       // console.error(_str);
         return _str;
     };
     //$scope.leftSideMenus = [{ name: 'DASHBOARD' },
@@ -67,7 +68,7 @@
     $scope.opencoachprofile = function (iOption) {
         $scope.showCoacheeProfile = true;
         $scope.userInfo = iOption;
-        console.log(iOption)
+       // console.log(iOption)
     };
 
 
@@ -283,7 +284,7 @@
 
     };
     $scope.availableSkills = [];
-    $scope.searchKey = '';
+    $scope.searchCoachObj.searchKey = '';
     $scope.searching = false;
     $scope.selectedSkill = {};
     $scope.conversationList = [{ name: 'HARSHADA D' }
@@ -293,13 +294,13 @@
 
     ]
     $scope.skillFilter = function (skill) {
-        var regExp = new RegExp($scope.searchKey, 'i');
-        return !$scope.searchKey || regExp.test(skill.Name);
+        var regExp = new RegExp($scope.searchCoachObj.searchKey, 'i');
+        return !$scope.searchCoachObj.searchKey || regExp.test(skill.Name);
     };
 
-    $scope.selectSkill = function (skill) {
+    $scope.searchCoachObj.selectSkill = function (skill) {
         $scope.selectedSkill = skill;
-        $scope.searchKey = skill.Name;
+        $scope.searchCoachObj.searchKey = skill.Name;
         $scope.searching = false;
         serverCommunication.getCoaches({
             filter: skill,
@@ -307,6 +308,7 @@
             successCallBack: function (result) {
                 console.log('Result - ', result);
                 if (result.data) {
+                    $scope.searchCoachObj.searchingActive = true;
                     _createCoachArray(result);
                 }
                 $scope.loadingMiddleObject = { showLoading: false, loadingMessage: 'Loading' };
@@ -317,12 +319,14 @@
             }
         });
     };
-
+  
     $scope.clearSearch = function (skill) {
-        $scope.searchKey = '';
+        $scope.searchCoachObj.searchKey = '';
         $scope.selectedSkill = {};
-        $scope.searching = true;
-    }
+        $scope.searching = true;        
+        $scope.searchCoachObj.searchingActive = false;
+        $scope.getCoachRecord();
+    };
     $scope.generateGarden = function () {
         $scope.ctsDataForMolecule = null;
         serverCommunication.generateGarden({
@@ -363,7 +367,12 @@
         $scope.timeSlots = [];
         var _coachFinalArr = [];
         for (var k = 0; k < iResult.data.length; k++) {
+            console.error($scope.searchCoachObj.searchKey);
             for (var i = 0; i < iResult.data[k].Skills.length; i++) {
+                if ($scope.searchCoachObj.searchKey != '') {
+                    if ($scope.searchCoachObj.searchKey != iResult.data[k].Skills[i].Name)
+                         continue;
+                }
                 var _coach = angular.copy(iResult.data[k]);
                 _coach.Skill = {};
                 _coach.Skill = angular.copy(iResult.data[k].Skills[i]);
@@ -1517,27 +1526,4 @@ app.directive('ctsDropdown', function () {
             }
         }
     }
-})
-app.directive('ctsMentorCard', function () {
-    return {
-        link: function (scope, element, attrs) {
-
-            element.bind('mouseenter', function (evt) {
-                var info = $(element).find('div.mentor-info');
-                $(info).addClass('grid-out')
-                var position = $(info).position();
-                var action = $(element).find('div.mentor-actions');
-                $(action).css(position);
-                $(action).show();
-            });
-
-            element.bind('mouseleave', function (evt) {
-                var action = $(element).find('div.mentor-actions');
-                var info = $(element).find('div.mentor-info');
-                $(action).hide();
-                $(info).removeClass('grid-out')
-            });
-        }
-    }
-})
-;
+});
