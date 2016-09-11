@@ -278,15 +278,19 @@ app.directive('ctcRole', function ($state, serverCommunication) {
             };
             scope.suggestCts.sendCtsInfoToAdmin = function () {
                 console.error(scope.suggestCts);
-                serverCommunication.sendAddCtsInfoToAdmin({
-                    displayArray: scope.suggestCts.displayArray,
-                    successCallBack: function (iObj) {
-                        scope.suggestCts.suggestPanelOpenClose();
-                    },
-                    failureCallBack: function (iObj) {
-                        console.error('In failureCallBack', iObj);
-                    }
-                });
+                if (scope.suggestCts.displayArray.length > 0) {
+                    serverCommunication.sendAddCtsInfoToAdmin({
+                        displayArray: scope.suggestCts.displayArray,
+                        successCallBack: function (iObj) {
+                            scope.suggestCts.suggestPanelOpenClose();
+                        },
+                        failureCallBack: function (iObj) {
+                            console.error('In failureCallBack', iObj);
+                        }
+                    });
+                } else {
+                    
+                }               
             };
             
             var _deleteArray = {};
