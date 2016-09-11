@@ -593,7 +593,7 @@ namespace KindleSpur.Data
             return result;
         }
 
-        public List<SearchCoachOrMentor> GetAllCoachOrMentors(CTSFilter ctsFilter, string Role)
+        public List<SearchCoachOrMentor> GetAllCoachOrMentors(CTSFilter ctsFilter, string Role, string userId)
         {
             List<CoachOrMentor> lstCoachOrMentor = new List<CoachOrMentor>();
             try
@@ -647,9 +647,9 @@ namespace KindleSpur.Data
 
             }
 
-
+            
             if (lstCoachOrMentor.Count > 0)
-                return FillSerachData(lstCoachOrMentor);
+                return FillSerachData(lstCoachOrMentor, userId);
             return null;
         }
 
@@ -863,14 +863,16 @@ namespace KindleSpur.Data
             return null;
         }
 
-        private List<SearchCoachOrMentor> FillSerachData(List<CoachOrMentor> lstCoachOrMentor)
+        private List<SearchCoachOrMentor> FillSerachData(List<CoachOrMentor> lstCoachOrMentor, string UserId)
         {
             List<SearchCoachOrMentor> lstSearchCoachOrMentor = new List<SearchCoachOrMentor>();
             try
             {
-                lstCoachOrMentor = lstCoachOrMentor.GroupBy(test => test.UserId)
-                           .Select(grp => grp.First())
-                           .ToList();
+                lstCoachOrMentor = lstCoachOrMentor.Where(t => t.UserId != UserId)
+               .GroupBy(test => test.UserId)
+              .Select(grp => grp.First())
+              .ToList();
+
                 if (lstCoachOrMentor.Count > 0)
                 {
                     for (int i = 0; i < lstCoachOrMentor.Count; i++)
