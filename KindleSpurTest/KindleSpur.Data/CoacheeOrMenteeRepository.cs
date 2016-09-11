@@ -99,10 +99,10 @@ namespace KindleSpur.Data
 
                 if (Data.Role == "Coachee")
                 {
-                    bool blnDelete = true;
+                   
                     for (int i = _entity.Skills.Count - 1; i >= 0; i--)
                     {
-
+                        bool blnDelete = true;
                         foreach (SkillOrTopic item in Data.Skills)
                         {
                             if (item.Id == _entity.Skills[i].Id)
@@ -136,10 +136,10 @@ namespace KindleSpur.Data
                 if (Data.Role == "Mentee")
                 {
 
-                    bool blnDelete = true;
+                    
                     for (int i = _entity.Topics.Count - 1; i >= 0; i--)
                     {
-
+                        bool blnDelete = true;
                         foreach (SkillOrTopic item in Data.Topics)
                         {
                             if (item.Id == _entity.Topics[i].Id)
