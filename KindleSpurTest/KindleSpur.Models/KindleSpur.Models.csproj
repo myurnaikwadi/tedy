@@ -108,6 +108,7 @@
     <Compile Include="SearchCoachOrMentor.cs" />
     <Compile Include="Skill.cs" />
     <Compile Include="SubmitImage.cs" />
+    <Compile Include="Suggestion.cs" />
     <Compile Include="Tasks.cs" />
     <Compile Include="Uploadcoverimage.cs" />
     <Compile Include="User.cs" />

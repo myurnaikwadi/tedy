@@ -89,7 +89,36 @@ namespace KindleSpur.WebApplication.Controllers
             return response.ToJson();
         }
 
-      [HttpPost]
+        [HttpPost]
+        public string SendEmailForCategorySuggestion(List<Suggestion> suggestion)
+        {
+            response = new ResponseMessage();
+            UserRepository _repo = new UserRepository();
+            try
+            {
+
+                string emailAddress = ((IUser)System.Web.HttpContext.Current.Session["User"]).EmailAddress;
+                User u = (User)_repo.GetUserDetail(emailAddress);
+
+                if (u != null)
+                {
+                    u.FirstName = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(u.FirstName.ToLower());
+                    u.LastName = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(u.LastName.ToLower());
+                    EmailNotification.SendEmailForCategorySuggestion(u, suggestion);
+                }
+                else
+                {
+                    response.FailureCallBack("UserId does not exists!!!");
+                }
+            }
+            catch (Exception ex)
+            {
+                response.FailureCallBack(ex.Message);
+            }
+            return response.ToJson();
+        }
+
+        [HttpPost]
         public ActionResult SavePassword(User signupObject)
         {
             UserRepository _repo = new UserRepository();

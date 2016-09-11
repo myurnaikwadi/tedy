@@ -115,6 +115,32 @@ namespace KindleSpur.WebApplication.MessageHelper
 
         }
 
+        public static void SendEmailForCategorySuggestion(User signupObject, List<Suggestion> suggestion)
+        {
+            MailAddress to = new MailAddress("admin@kindlespur.com");
+
+            MailMessage message = new MailMessage(aliasemailsendername.ToString(), to.ToString());
+            message.Subject = "Category Suggestion from " + signupObject.EmailAddress;
+            string firstName = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(signupObject.FirstName);
+            string body = "Hello Admin,";
+            body += "<br/>";
+            body += "<br/><b>Suggestion from " + signupObject.FirstName + " " + signupObject.LastName + "</b>";
+            for(int count = 0; count < suggestion.Count; count++)
+            {
+                body += "<p><tab1> Category - " + suggestion[count].Category +"</p></tab1>"; 
+                body += "<p><tab1> Description - " + suggestion[count].Description + "</p></tab1>";
+                body += "<br/>";
+            }
+            body += "<br/>Thanks, <br/>";
+            body += "KindleSpur Team";
+            message.Body = body;
+            message.IsBodyHtml = true;
+            SmtpClient smtp = new SmtpClient(smtpServer.ToString(), portNumber);
+            smtp.Credentials = new System.Net.NetworkCredential(emailAddress.ToString(), password.ToString());
+            smtp.EnableSsl = true;
+            smtp.Send(message);
+        }
+
         public static bool MentoringCoachingAcceptDeclineEmail(Conversation _obj, List<KeyValuePair<string, string>> listofSenderAndReceiverDetails)
         {
             MailMessage message = new MailMessage(aliasemailsendername.ToString(), _obj.ReceiverEmail);
