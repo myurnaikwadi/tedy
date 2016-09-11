@@ -24,7 +24,6 @@ namespace KindleSpur.WebApplication.Controllers
 
         [HttpPost]
         public Boolean SaveTopics(List<SkillOrTopic> selectedArray)
-
         {
             try
             {
