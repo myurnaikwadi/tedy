@@ -797,7 +797,7 @@ app.factory('serverCommunication', function ($http) {
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                data: { displayArray : iObj.displayArray },
+                data: { Suggestion : iObj.displayArray },
                 traditional: true
             }
             $http(req).then(iObj.successCallBack, iObj.failureCallBack);
