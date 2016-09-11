@@ -77,6 +77,7 @@
         $scope.showCoacheeProfile = false;
         $scope.userInfo = null;
     };
+
     $scope.Coaches = [];
 
     $scope.selectedMenu = 0;
@@ -91,7 +92,7 @@
         switch (iIndex) {
             case 0: $scope.loadingMiddleObject = { showLoading: false, loadingMessage: 'Loading' }; break;//$scope.conversationRequest();  $scope.autoSyncRoutine(_conversationTime); break;
             case 4: $scope.getRssFeedData(); break;
-            case 3: $scope.getCoachRecord(); break;
+            case 3: $scope.clearSearch(); _getSkillTopicFromServer(); $scope.getCoachRecord(); break;
             case 1: $scope.generateGarden(); break;
                 //case 6: $scope.getPointsRecord(); break;
             case 5: $scope.conversationLoading(); $scope.autoSyncRoutine(_chatMessageTime); break;
@@ -320,12 +321,12 @@
         });
     };
   
-    $scope.clearSearch = function (skill) {
+    $scope.clearSearch = function (IAvoidCall) {
         $scope.searchCoachObj.searchKey = '';
         $scope.selectedSkill = {};
-        $scope.searching = true;        
+        $scope.searching = false;        
         $scope.searchCoachObj.searchingActive = false;
-        $scope.getCoachRecord();
+        if(!IAvoidCall) $scope.getCoachRecord();
     };
     $scope.generateGarden = function () {
         $scope.ctsDataForMolecule = null;
@@ -407,6 +408,29 @@
         }, 500);
     };
 
+    var _getSkillTopicFromServer = function () {
+        $scope.availableSkills = [];
+        serverCommunication.getCTSFilters({
+            Role: 'Coach',
+            successCallBack: function (iResult) {
+                console.error(iResult)
+
+                iResult.data.Filters.some(function (iCts) {
+                    if (iCts.Type == 2) {
+
+                        $scope.availableSkills.push(iCts);
+                    }
+                });
+
+                // $scope.availableSkills.splice(0, $scope.availableSkills.length);
+                //$scope.availableSkills.push.apply($scope.availableSkills, result.data.Filters);
+            },
+            failureCallBack: function () {
+                // console.error('In failureCallBack');
+
+            }
+        });
+    };
     $scope.getCoachRecord = function () {
         serverCommunication.getRecommendedCoach({
             Role: 'Coach',
@@ -424,25 +448,7 @@
                     _createCoachArray(result);
                     //  $scope.loadingMiddleObject = { showLoading: false, loadingMessage: 'Loading' };
                 }
-                $scope.loadingMiddleObject = { showLoading: false, loadingMessage: 'Loading' };
-                serverCommunication.getCTSFilters({
-                    Role: 'Coach',
-                    successCallBack: function (iResult) {
-                        console.error(iResult)
-                        iResult.data.Filters.some(function (iCts) {
-                            if (iCts.Type == 2) {
-                                $scope.availableSkills.push(iCts);
-                            }
-                        });
-
-                        // $scope.availableSkills.splice(0, $scope.availableSkills.length);
-                        //$scope.availableSkills.push.apply($scope.availableSkills, result.data.Filters);
-                    },
-                    failureCallBack: function () {
-                        // console.error('In failureCallBack');
-
-                    }
-                });
+                $scope.loadingMiddleObject = { showLoading: false, loadingMessage: 'Loading' };             
             },
             failureCallBack: function () {
                 // console.error('In failureCallBack');

@@ -13,6 +13,7 @@
         $rootScope.currentModule = 'Profile';   
         $state.go('home.dashBoard.profile');
     };
+    $scope.searchCoachObj = {}
     $scope.selectedMenu = '0';
     $scope.leftSideMenus = [{ name: 'DASHBOARD' }
                  //, { name: 'MENTORING STATUS' }
@@ -41,7 +42,7 @@
             _str += iObj.State + " ";
         if (iObj.Country)
             _str += iObj.Country + " ";
-        console.error(_str);
+      //  console.error(_str);
         return _str;
     };
     $scope.closeProfilePic = function () {
@@ -79,26 +80,28 @@
 
 
     $scope.availableSkills = [];
-    $scope.searchKey = '';
+    $scope.searchCoachObj.searchKey = '';
     $scope.searching = false;
     $scope.selectedSkill = {
     };
     $scope.skillFilter = function (skill) {
-        var regExp = new RegExp($scope.searchKey, 'i');
-        return !$scope.searchKey || regExp.test(skill.Name);
+        var regExp = new RegExp($scope.searchCoachObj.searchKey, 'i');
+        return !$scope.searchCoachObj.searchKey || regExp.test(skill.Name);
     };
 
-    $scope.selectSkill = function (skill) {
+    $scope.searchCoachObj.selectSkill = function (skill) {
         $scope.selectedSkill = skill;
-        $scope.searchKey = skill.Name;
+        $scope.searchCoachObj.searchKey = skill.Name;
         $scope.searching = false;
         serverCommunication.getCoaches({
             filter: skill,
             role: 'Mentor',
             successCallBack: function (result) {
-                console.log('Result - ', result);
-                if (result.data)
-                    $scope.Coaches = [].concat(result.data);
+                console.log('Result - ', result);              
+                if (result.data) {
+                    $scope.searchCoachObj.searchingActive = true;
+                    _createCoachArray(result);
+                }
             },
             failureCallBack: function () {
                 console.error('In failureCallBack');
@@ -106,11 +109,12 @@
         });
     };
 
-    $scope.clearSearch = function (skill) {
-        $scope.searchKey = '';
-        $scope.selectedSkill = {
-        };
-        $scope.searching = true;
+    $scope.clearSearch = function (IAvoidCall) {
+        $scope.searchCoachObj.searchKey = '';
+        $scope.selectedSkill = {};
+        $scope.searchCoachObj.searchingActive = false;
+        if (!IAvoidCall) $scope.getCoachRecord();
+        $scope.searching = false;
     }
     var _chatMessageTime = 30000;
     var _conversationTime = 60000;
@@ -123,7 +127,7 @@
         switch (iIndex) {
             case 0: $scope.loadingMiddleObject = { showLoading: false, loadingMessage: 'Loading' }; break;//$scope.conversationRequest();  $scope.autoSyncRoutine(_conversationTime); break;
             case 1: $scope.generateGarden(); break;
-            case 3: $scope.getCoachRecord(); break;
+            case 3: $scope.clearSearch(); $scope.getCoachRecord(); break;
             case 4: $scope.getRssFeedData(); break;
             case 5: $scope.autoSyncRoutine(_chatMessageTime); $scope.conversationLoading(); break;
             case 2:
@@ -179,10 +183,14 @@
         $scope.timeSlots = [];
         var _coachFinalArr = [];
         for (var k = 0; k < iResult.data.length; k++) {
+           // console.error($scope.searchCoachObj.searchKey);
             for (var i = 0; i < iResult.data[k].Topics.length; i++) {
+                if ($scope.searchCoachObj.searchKey != '') {
+                    if ($scope.searchCoachObj.searchKey != iResult.data[k].Topics[i].Name)
+                         continue;
+                }
                 var _coach = angular.copy(iResult.data[k]);
-                _coach.Skill = {
-                };
+                _coach.Skill = {};
                 _coach.Skill = angular.copy(iResult.data[k].Topics[i]);
                 //  _coach.Skill = Object.assign(_coach.Skill, result.data[k].Skills[i]);
                 if ($scope.timeSlots.length > 0) {
@@ -209,7 +217,7 @@
         setTimeout(function () {
             for (var k = 0; k < $scope.Coaches.length; k++) {
                 $scope.Coaches[k].showLoad = true;
-            }
+            }            
             $scope.$apply();
         }, 500);
     };
@@ -1559,7 +1567,8 @@
         serverCommunication.getCTSFilters({
             Role: 'Mentor',
             successCallBack: function (result) {
-                console.error(result)
+                console.error(result);
+                 $scope.availableSkills = [];
                 result.data.Filters.some(function (iCts) {
                     if (iCts.Type == 1) {
                         $scope.availableSkills.push(iCts);

@@ -38,12 +38,12 @@
                                 </div>
                                 <div class="search-mentor">
                                     <div class="inner-addon left-addon">
-                                        <span ng-show="searchKey.length > 0" class="filter-icon" ng-click="clearSearch()"><i class="fa fa-times-circle"></i></span>
-                                        <span ng-show="searchKey.length == 0" class="filter-icon"><i class="fa fa-search"></i></span>
-                                        <input type="text" class="auto-complete" cts-dropdown ng-model="searchKey" key="searchKey" searching="searching" skill="selectedSkill" placeholder="Type to search" />
+                                        <span ng-show="searchCoachObj.searchKey.length > 0" style="position: absolute;" class="filter-icon" ng-click="clearSearch()"><i class="fa fa-times-circle"></i></span>
+                                        <span ng-show="searchCoachObj.searchKey.length == 0" style="position: absolute;" class="filter-icon"><i class="fa fa-search"></i></span>
+                                        <input type="text" class="auto-complete" cts-dropdown ng-model="searchCoachObj.searchKey" key="searchCoachObj.searchKey" searching="searching" skill="selectedSkill" placeholder="Type to search" />
                                     </div>
                                     <div class="auto-complete-container" ng-show="searching" ng-class="{hide:!searching}">
-                                        <div class="item" ng-click="selectSkill(skill)" ng-repeat="skill in skills = (availableSkills | filter: skillFilter)">
+                                        <div class="item" ng-click="searchCoachObj.selectSkill(skill)" ng-repeat="skill in skills = (availableSkills | filter: skillFilter)">
                                             <div>{{skill.Name}}</div>
                                         </div>
                                         <div ng-show="!skills.length && searching" class="no-result">
@@ -55,7 +55,7 @@
                             <place-Holder message="No recommended Mentees" ng-show="Coaches.length == 0"></place-Holder>
                             <div class="ctsCategoryPanelMainPanel" style="overflow-y:scroll;" ng-hide="Coaches.length == 0">
                             
-                                    <h5 class="margin-small" style="margin-bottom: 0;">RECOMMENDED MENTORS</h5>
+                                    <h5 class="margin-small" style="margin-bottom: 0;">{{ searchCoachObj.searchingActive ? 'SEARCH RESULTS' : 'RECOMMENDED COACHES'}}</h5>
                                     <div class="filterListContainer">
                                         <div class="mentor-list">
                                             <div class="row" style="margin:0px;">

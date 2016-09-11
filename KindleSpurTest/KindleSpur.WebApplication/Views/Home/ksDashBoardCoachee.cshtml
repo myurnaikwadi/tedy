@@ -74,8 +74,8 @@
                                         <input type="text" class="auto-complete" cts-dropdown ng-model="searchCoachObj.searchKey" key="searchCoachObj.searchKey" searching="searching" skill="selectedSkill" placeholder="Type to search" />
                                     </div>
                                     <div class="auto-complete-container" ng-show="searching" ng-class="{hide:!searching}">
-                                        <div class="item" ng-repeat="skill in skills = (availableSkills | filter: skillFilter)">
-                                            <div ng-click="searchCoachObj.selectSkill(skill)">{{skill.Name}}</div>
+                                        <div ng-click="searchCoachObj.selectSkill(skill)" class="item" ng-repeat="skill in skills = (availableSkills | filter: skillFilter)">
+                                            <div>{{skill.Name}}</div>
                                         </div>
                                         <div ng-show="!skills.length && searching" class="no-result">
                                             No result found.
