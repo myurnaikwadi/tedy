@@ -789,6 +789,20 @@ app.factory('serverCommunication', function ($http) {
            // $http(req).then(iObj.successCallBack, iObj.failureCallBack);
         },
         
+        sendAddCtsInfoToAdmin: function (iObj) {
+            console.error('sendAddCtsInfoToAdmin --------------- ', iObj);           
+            var req = {
+                method: 'POST',
+                url: '/User/SendEmailForCategorySuggestion',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                data: { displayArray : iObj.displayArray },
+                traditional: true
+            }
+            $http(req).then(iObj.successCallBack, iObj.failureCallBack);
+        },
+
         sendInvitationToFriend: function (iObj) {
             console.error('sendInvitationTOFriend --------------- ', iObj);
             var _checkObj = angular.copy(iObj);

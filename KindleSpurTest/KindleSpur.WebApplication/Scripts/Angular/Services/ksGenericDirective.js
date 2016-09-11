@@ -253,6 +253,42 @@ app.directive('ctcRole', function ($state, serverCommunication) {
             scope.selectedSkills = -1;
             scope.selectedCategoryValue = null;
             scope.categoryDisplay = true;
+
+            /**
+            *  Suggest Cts Panel
+            * 
+            */
+            scope.suggestCts = {
+                inputModel : { Category: '',  Description: '' },              
+                displayArray : [],
+                loadSuggestPopup : false,
+            };
+            scope.suggestCts.suggestPanelOpenClose = function () {
+                scope.suggestCts.loadSuggestPopup = !scope.suggestCts.loadSuggestPopup;
+                scope.suggestCts.inputModel.Category = '';
+                scope.suggestCts.inputModel.Description = '';
+                scope.suggestCts.displayArray = [];
+            };
+            
+            scope.suggestCts.addSuggestedCategory = function () {
+                console.error(scope.suggestCts);
+                scope.suggestCts.displayArray.push(angular.copy(scope.suggestCts.inputModel));
+                scope.suggestCts.inputModel.Category = '';
+                scope.suggestCts.inputModel.Description = '';
+            };
+            scope.suggestCts.sendCtsInfoToAdmin = function () {
+                console.error(scope.suggestCts);
+                serverCommunication.sendAddCtsInfoToAdmin({
+                    displayArray: scope.suggestCts.displayArray,
+                    successCallBack: function (iObj) {
+                        scope.suggestCts.suggestPanelOpenClose();
+                    },
+                    failureCallBack: function (iObj) {
+                        console.error('In failureCallBack', iObj);
+                    }
+                });
+            };
+            
             var _deleteArray = {};
             var _updateArray = {};
             scope.styleToCTS = {};

@@ -6,12 +6,57 @@
                 <h5 ng-show="mySelection" style="font-size: 16px;margin: auto;margin-left: 1%;margin-right:0px;" class="fontClass" margin-top:15px;>MY SELECTION</h5>
                
                 <img ng-show="categoryDisplay && mySelection == false" ng-class="{ coachThemeColor : role == 'coach' , coacheeThemeColor : role == 'coachee' , mentorThemeColor : role == 'mentor' , menteeThemeColor : role == 'mentee' }" style="width:26px;height:24px;margin: auto auto;padding :6px;cursor:pointer;margin-left:1%;margin-right:0px;" ng-click="backButtonClick()" src="~/Images/cancel.png" />
-                 <h5 ng-hide="mySelection" style="font-size: 16px;margin: auto;margin-left: 1%;margin-right:0px;" class="fontClass">{{ categoryDisplay ? 'CATEGORIES' : selectedCategoryValue.Category | uppercase }}</h5>
-                                         
+                <h5 ng-hide="mySelection" style="font-size: 16px;margin: auto;margin-left: 1%;margin-right:0px;" class="fontClass">{{ categoryDisplay ? 'CATEGORIES' : selectedCategoryValue.Category | uppercase }}</h5>
+                <div class="ctsCategoryPanelSuggestPanel" ng-hide="mySelection">
+                    <h5 ng-class="{highlightedSelection : suggestCts.loadSuggestPopup}" ng-click="suggestCts.suggestPanelOpenClose()" style="border-color:#2dc3e8;font-size: 12px;margin: auto;margin-right:0;color:#2dc3e8;" class="fontClass genericPointerClass">Suggest Category</h5>
+                </div>                        
             </div>
             <cube-Strct class="cubeParentClass" ng-show="loadingObject.showLoading" loading-Object="loadingObject"></cube-Strct>
             <div class="ctsCategoryPanelMainPanel" ng-if="mySelection && loadingObject.showLoading == false">
                 <molecule-Map ng-if="ctsDataForMolecule" cts-Data="ctsDataForMolecule"></molecule-Map>
+            </div>
+            <div class="ctsCategoryPanelMainPanel" ng-show="suggestCts.loadSuggestPopup" style="display:flex;background-color: rgba(0,0,0,.48);z-index:3;top: 7%;position: absolute;transition:all 0.7s ease;">                
+                <div class="ctsSuggestPanel">
+                    <div class="ctsSuggestPanelParent">
+                        <div class="ctsCategoryHeading" style="height:9%;">
+                            <h5 style="font-size: 13px;font-weight: 800;margin: auto;margin-left: 1%;margin-right:0px;" class="fontClass">Suggest Category/Topic/Skill</h5>
+                            <img style="width:10px;height:10px;margin: auto auto;cursor:pointer;margin-right:1%;" ng-click="suggestCts.suggestPanelOpenClose()" src="~/Images/cancel.png" />
+                        </div>
+                        <div class="ctsCategoryPanelMainPanel" style="height:81%;border-bottom: 1px solid lightgray;">
+                            <div class="inlineCtsAddField">
+                                <div class="inlineCtsAddFieldInput">
+                                    <h5 style="font-size: 13px;font-weight: 800;width: 8%;margin: auto;margin-left: 1%;margin-right:0px;" class="fontClass" title="Enter Category/Topic/Skill">Enter CTS</h5>
+                                    <input type="text" placeholder="Enter Category/Topic/Skill name" ng-model="suggestCts.inputModel.Category">
+                                </div>
+                                <div class="inlineCtsAddFieldInput">
+                                    <h5 style="font-size: 13px;font-weight: 800;width: 8%;margin: auto;margin-left: 1%;margin-right:0px;" class="fontClass">Description</h5>
+                                    <textarea placeholder="Reason" ng-model="suggestCts.inputModel.Description" required></textarea>
+                                </div>
+                                <div class="ctsCategoryHeading" style="height:34%;border-bottom: 0;">
+                                    <button class="signupButton fontClass" ng-click="suggestCts.addSuggestedCategory()" style="margin: auto;width: 100px;padding: 0;">Add</button>
+                                </div>
+                            </div>
+                            <div class="inlineCtsDisplayField">
+                                <div class="taskListPanelRepeatDiv" ng-repeat="tasks in suggestCts.displayArray" style="border-bottom: 1px solid lightgray;background: white;height: 25%;">
+                                    <div class="taskLavelParentDiv" style="display:block;">
+                                        <div class="ctsLabelParentDiv">
+                                            <h5 style="font-size: 14px;font-weight: bold;" class="fontClass">{{tasks.Category}}</h5>                                            
+                                        </div>
+                                        <div class="ctsLabelParentDiv">
+                                            <h5 class="fontClass" style="font-size: 12px;">{{tasks.Description}}</h5>
+                                        </div>
+                                        <div class="removeIconCts">                                            
+                                            <img src="../../Images/delete.png" title="Delete" ng-click="suggestCts.displayArray.splice($index,1);"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="ctsCategoryHeading" style="height:10%;border-bottom: 0;">
+                            <button class="signupButton fontClass" ng-click="suggestCts.sendCtsInfoToAdmin()" style="margin: auto;width: 100px;padding: 0;">Send to Admin</button>
+                        </div>
+                    </div>
+                </div>
             </div>
             <div class="ctsCategoryPanelMainPanel" ng-hide="mySelection">
                 <div class="ctsCategoryPanel">
@@ -79,7 +124,7 @@
                     </div>
                 </div>
             </div>
-
+            
         </div>
     </div>
 </div>
