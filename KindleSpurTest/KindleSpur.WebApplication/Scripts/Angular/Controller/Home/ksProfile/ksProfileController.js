@@ -371,12 +371,16 @@
         });
     };
     $scope.sendDetailsToServer = function () {
-        $scope.editModeProfile = false;       
+        $scope.editModeProfile = false;
+        if (!$scope.localModel.firstName || $scope.localModel.firstName == '' || !$scope.localModel.lastName || $scope.localModel.lastName == '') {
+            _displayAlertMeesage({ message: "Please Enter First Name and Last Name", formatType: '2' });
+            return;
+        }
+
+       // return
         $scope.myInfo = angular.copy($scope.localModel);
        // console.error($scope.myInfo)
-        //if ($scope.userInfo.Mobile == $scope.myInfo.mobileNumber || $scope.userInfo.FirstName == $scope.myInfo.firstName || $scope.userInfo.LastName == $scope.myInfo.lastName) {
-        //    return;
-        //}
+        
         $scope.userInfo.FirstName = $scope.myInfo.firstName;
         $scope.userInfo.LastName = $scope.myInfo.lastName;
         $scope.userInfo.Mobile = $scope.myInfo.mobileNumber;
