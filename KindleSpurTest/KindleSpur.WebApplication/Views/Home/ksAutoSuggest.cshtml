@@ -1,0 +1,20 @@
+﻿<div class="tags-wrapper" id="ssssss">
+	<div id="tagsList" class="tags-cloud">
+	    <div ng-if="format=='tags'" class="autosuggestList" > 
+		    <div ng-show="suggestionChange == true" id="{{selectedTag.email}}" style="margin:2px;width: auto" ng-repeat="selectedTag in selectedTags track by $index" class="suggestionBoxSelected genericBorderAll"  ng-dblclick="makeEditable($index,selectedTag)">
+				<span class="inviteeBox-name ellipsis" style="width: auto;margin: 0px 5px;">{{selectedTag.name}}</span>
+			<svg class="genericSvgMenusBlack" style="height:12px;transform:rotate(45deg);margin:0px 5px;position:relative;float:left;cursor: pointer;" getsvg="addBig" viewBox="0 0 64 64" ng-mousedown="removeTag($index,selectedTag)"></svg>
+			</div>
+		</div>  
+		<div style="cursor:pointer;" class="addOrgMenuRow" ng-show="selectedTags.length >0 && suggestionChange == false && format == 'tags'" ng-click="blurAllList();">
+			<h4 class="genericLabels ellipsis" ng-show="selectedTags.length == 1" title="{{selectedTags[0].name}}">{{selectedTags[0].name}}</h4 >
+			<h4 class="genericLabels ellipsis" ng-hide="selectedTags.length == 1 || selectedTags.length == 0" title="{{selectedTags[0].name}} and {{selectedTags.length - 1}} more">{{selectedTags[0].name}} and {{selectedTags.length - 1}} more</h4 >
+		</div>
+	   	<div  class="addOrgMenuRow genericBorderBottom">
+			<input class="addOrgInput" type="text" placeholder="Enter Here" id='{{tempId}}' ng-keydown="checkKeyDown($event)" ng-focus="focusOnTab($event,changeInInviteeParentFuncParam)" ng-blur="blurOnTab($event,changeInInviteeParentFuncParam)" class="form-control" ng-model="searchText" ng-change="search()"/>
+		</div>
+	</div>
+</div>
+
+
+

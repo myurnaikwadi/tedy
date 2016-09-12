@@ -1,0 +1,16 @@
+﻿<div class="autosuggestionPopup genericBorderAll" id="ssssss" ng-show="suggestionChange==true && suggestions.length>0 && autoComplete.suggestionListPosition" ng-style="autoComplete.suggestionListPosition">
+    <!-- ng-class="{'autosuggestionPopup':showDropFlag,'autosuggestionPopupHide':!showDropFlag}"  -->
+
+    <div class="autosuggestContainer genericBorderBottom" id="sameer" ng-repeat="suggestion in suggestionResults = (suggestions | filter : layoutModeD)" ng-mousedown="addToSelectedTags(suggestion,tempId)" ng-mouseover="$parent.selectedIndex=$index" ng-class="{ workspaceDropdownseleted : selectedIndex == $index}" smooth-scroll scroll-if="{{selectedIndex == $index && flagForSuggestOnkey==true}}">
+        @*<div class="autosuggestImage" layout="row" layout-align="center center">
+            <div class="genericCircular" style="background-image: url('{{suggestion.img}}');">
+                <div title="{{suggestion.onlineOffLineStausColor}}" class="onlineStatusOnContact" ng-class="{onlineStatusOfflineColor:suggestion.onlineOfflineStatus==2,onlineStatusOnlineColor:suggestion.onlineOfflineStatus==1,onlineStatusBusylineColor:suggestion.onlineOfflineStatus==3}"></div>
+            </div>
+        </div>*@
+        <div class="autosuggestDetails">           
+            <div style="float: left;position:relative; margin: auto;margin-left:4%;">
+                <h5 class="genericTitles ellipsis" style="font-size: 12px;">{{suggestion.name}}</h5>
+            </div>
+        </div>
+    </div>
+</div>
