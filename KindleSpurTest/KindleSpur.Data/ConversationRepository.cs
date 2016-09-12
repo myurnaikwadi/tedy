@@ -223,6 +223,7 @@ namespace KindleSpur.Data
                     CoachingStatus coachingStatus = new CoachingStatus();
                     coachingStatus.CreateDate = DateTime.Now;
                     coachingStatus.Sender = receiverEmail;
+                    coachingStatus.Receiver = senderEmail;
                     coachingStatus.Skill = skill;
                     coachingStatus.customerSatisfactionRating = 0;
                     coachingStatus.FeedbackClosed = false;
@@ -234,6 +235,7 @@ namespace KindleSpur.Data
                     CoachingStatus coachingStatus1 = new CoachingStatus();
                     coachingStatus1.CreateDate = DateTime.Now;
                     coachingStatus1.Sender = senderEmail;
+                    coachingStatus1.Receiver = receiverEmail;
                     coachingStatus1.Skill = skill;
                     coachingStatus1.customerSatisfactionRating = 0;
                     coachingStatus1.FeedbackClosed = false;

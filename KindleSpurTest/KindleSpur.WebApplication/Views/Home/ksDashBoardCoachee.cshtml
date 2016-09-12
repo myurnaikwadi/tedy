@@ -109,7 +109,7 @@
                                                 <cube-Strct ng-style="coach.loadingSearchCoach.loadingEffectCss" ng-show="coach.loadingSearchCoach.showLoading == true" class="cubeParentClass" loading-Object="coach.loadingSearchCoach"></cube-Strct>
                                                 <div class="mentor-actions" ng-class="{ mentorActionsActivate : coach.showOption == true}">
                                                     <h5 class="genericEventHeadings" style="margin: auto;color: white;font-size:13px;" title="View Profile" ng-click="opencoachprofile(coach)">View Profile</h5>
-                                                    <h5 class="genericEventHeadings" style="margin: auto;color: white;font-size:13px;" title="Send Mentoring Request" ng-click="sendCoachingRequest(false, coach)">Request</h5>
+                                                    <h5 class="genericEventHeadings" style="margin: auto;color: white;font-size:13px;" title="Send Coaching Request" ng-click="sendCoachingRequest(false, coach)">Request</h5>
                                                 </div>
                                                 <div class="mentor-info">
                                                     <span class="profile-close" ng-click="Coaches.splice($index,1);" style="float:right;top:10px;right:10px;"><i class="fa fa-times"></i></span>
@@ -286,7 +286,7 @@
                     <h5 class="fontClass" style="font-size: 16px;margin-left: 1%;">KNOWLEDGE GARDEN</h5>
                 </div>
                 <div class="" style="float:left;width:100%;height:93%;">
-                    <place-Holder message="As you haven't received feedback your knowledge tree has not grown" ng-show="coachingStatusArray.length == 0"></place-Holder>
+                    <place-Holder message="As no coaching has started your Knowledge Garden has not grown!" ng-show="coachingStatusArray.length == 0"></place-Holder>
                     <molecule-Map ng-if="ctsDataForMolecule && coachingStatusArray.length >0" cts-Data="ctsDataForMolecule"></molecule-Map>
                 </div>
             </div>           

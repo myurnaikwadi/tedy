@@ -34,7 +34,7 @@
                                 </div>
                             </div>
                         </div>
-                        <place-Holder message="Please Upload Some Files" ng-show="uploadAttachmentArray.length == 0"></place-Holder>
+                        <place-Holder message="Upload Files" ng-show="uploadAttachmentArray.length == 0"></place-Holder>
                        
                     </div>
                 </div>
@@ -71,7 +71,7 @@
             </div>
             <div class="podcastsContainer col-md-5 col-sm-12 mosuehover"  style="background-color: #f3f3f3;width: 50%;padding-right: 0;">
                 <div class="podcastHeader">
-                    <h5 style="margin: auto;margin-left: 2%;" class="fontClass ValueFeedsHeade">ARTIFACTS</h5>
+                    <h5 style="margin: auto;margin-left: 2%; font-weight: 700;" class="fontClass ValueFeedsHeade" >ARTIFACTS</h5>
                 </div>
                 <div style="height:90%;width:100%;float:left">
                     <div style="height: 88%;width: 100%;float:left;overflow:auto;">
@@ -95,7 +95,7 @@
                                 <img src="~/Images/delete.png" ng-click="deleteAttachment({ deleteMultiple : false , type : 'artifact' , deletedObject : option , index : $index })" style="margin: auto; float: left;height: 15px;width: 20px;;" />
                             </div>
                         </div>
-                        <place-Holder message="No Attachment Uploaded" ng-show="artifactsArray.length == 0" ></place-Holder>
+                        <place-Holder message="No File Uploaded" ng-show="artifactsArray.length == 0" ></place-Holder>
                     </div>
                     <div style="height:11%;width: 100%;float:left;display: flex;" ng-show="extraParam.AttachMode == false">
                         @*<input class="signupButton fontClass btn btn-default" type="button" value="Share" style="margin: auto;margin-right: 0;padding: 0;width: 115px;" />*@
@@ -107,7 +107,7 @@
             </div>
             <div class="podcastsContainer col-md-5 mosuehover" style="background-color: #f3f3f3;">
                 <div class="podcastHeader">
-                    <h5 class="fontClass" style="margin:auto;margin-left: 2%;font-size:14px;padding-left: 0;">BOOKMARKS</h5>
+                    <h5 class="fontClass" style="margin:auto;margin-left: 2%;font-size:14px;padding-left: 0; font-weight: 700;">BOOKMARKS</h5>
                 </div>
                 <div class="ImpactZoneChildDiv" style="height: 90%;">
                     <div style="height:100%;width:100%;float:left">
@@ -130,7 +130,7 @@
                                 </div>
                                
                             </div>    
-                            <place-Holder message="No Bookmark Present" ng-show="bookMarkArray.length == 0"></place-Holder>                        
+                            <place-Holder message="No Bookmark Added" ng-show="bookMarkArray.length == 0"></place-Holder>                        
                         </div>
                         <div style="height:11%;width: 100%;float:left;display: flex;" ng-show="extraParam.AttachMode == false">
                             <input class="signupButton fontClass btn btn-default" ng-style="{ 'margin-right': bookMarkArray.length > 0 ? 0 : 'auto'}" type="button" value="Add" ng-click="addBookMark()" style="margin: auto;padding: 0;" />

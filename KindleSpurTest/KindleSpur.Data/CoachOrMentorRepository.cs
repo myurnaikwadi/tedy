@@ -110,11 +110,11 @@ namespace KindleSpur.Data
                     if (LstCochees != null)
                     {
                         result = (from t in LstCochees
-                                  group t by new { t.Sender, t.Skill }
+                                  group t by new { t.Receiver, t.Skill }
                                      into grp
                                   select new CoachStatus()
                                   {
-                                      EmailAddress = grp.Key.Sender,
+                                      EmailAddress = grp.Key.Receiver,
                                       Skill = grp.Key.Skill,
                                       FeedbackClosed = grp.OrderByDescending(t => t.CreateDate).FirstOrDefault().FeedbackClosed,
                                       FeedbackCount = grp.Count(),
@@ -160,35 +160,53 @@ namespace KindleSpur.Data
         public string GetTreeURL(int FeedbackCount, int Rating)
         {
             string TreeURL = "Images/Tree/Stage 1.png";
-
-            if (FeedbackCount == 1)
-            {
-                if (Rating >= 1 && Rating <= 3)
-                    TreeURL = "Images/Tree/Stage 2.png";
-                else if (Rating >= 4 && Rating <= 5)
-                    TreeURL = "Images/Tree/Stage 2 with water.png";
-            }
-            else if (FeedbackCount == 2)
-            {
-                if (Rating >= 1 && Rating <= 3)
-                    TreeURL = "Images/Tree/Stage 3.png";
-                else if (Rating >= 4 && Rating <= 5)
-                    TreeURL = "Images/Tree/Stage 3 with flower.png";
-            }
+            if (FeedbackCount == 2)
+                TreeURL = "Images/Tree/Stage 2.png";
             else if (FeedbackCount == 3)
-            {
-                if (Rating >= 1 && Rating <= 3)
-                    TreeURL = "Images/Tree/Stage 4.png";
-                else if (Rating >= 4 && Rating <= 5)
-                    TreeURL = "Images/Tree/Stage 4 with Fruits.png";
-            }
-            else if (FeedbackCount >= 4)
-            {
-                if (Rating >= 1 && Rating <= 3)
-                    TreeURL = "Images/Tree/Stage 5.png";
-                else if (Rating >= 4 && Rating <= 5)
-                    TreeURL = "Images/Tree/Stage 5 with Fruits.png";
-            }
+                TreeURL = "Images/Tree/Stage 2 with water.png";
+            else if (FeedbackCount == 4)
+                TreeURL = "Images/Tree/Stage 3.png";
+            else if (FeedbackCount == 5)
+                TreeURL = "Images/Tree/Stage 3 with flower.png";
+            else if (FeedbackCount == 6)
+                TreeURL = "Images/Tree/Stage 4.png";
+            else if (FeedbackCount == 7)
+                TreeURL = "Images/Tree/Stage 4 with Fruits.png";
+            else if (FeedbackCount == 8)
+                TreeURL = "Images/Tree/Stage 5.png";
+            else if (FeedbackCount == 9)
+                TreeURL = "Images/Tree/Stage 5 with Fruits.png";
+
+            //    string TreeURL = "Images/Tree/Stage 1.png";
+
+            //    if (FeedbackCount == 1)
+            //    {
+            //        if (Rating >= 1 && Rating <= 3)
+            //            TreeURL = "Images/Tree/Stage 2.png";
+            //        else if (Rating >= 4 && Rating <= 5)
+            //            TreeURL = "Images/Tree/Stage 2 with water.png";
+            //    }
+            //    else if (FeedbackCount == 2)
+            //    {
+            //        if (Rating >= 1 && Rating <= 3)
+            //            TreeURL = "Images/Tree/Stage 3.png";
+            //        else if (Rating >= 4 && Rating <= 5)
+            //            TreeURL = "Images/Tree/Stage 3 with flower.png";
+            //    }
+            //    else if (FeedbackCount == 3)
+            //    {
+            //        if (Rating >= 1 && Rating <= 3)
+            //            TreeURL = "Images/Tree/Stage 4.png";
+            //        else if (Rating >= 4 && Rating <= 5)
+            //            TreeURL = "Images/Tree/Stage 4 with Fruits.png";
+            //    }
+            //    else if (FeedbackCount >= 4)
+            //    {
+            //        if (Rating >= 1 && Rating <= 3)
+            //            TreeURL = "Images/Tree/Stage 5.png";
+            //        else if (Rating >= 4 && Rating <= 5)
+            //            TreeURL = "Images/Tree/Stage 5 with Fruits.png";
+            //    }
             return TreeURL;
         }
 
@@ -212,10 +230,7 @@ namespace KindleSpur.Data
                     coacheeOrMenteeEntity = _coacheeOrMenteeCollection.FindOneAs<CoacheeOrMentee>(Query.And(Query.EQ("UserId", UserId), Query.EQ("Role", "Mentee")));
                 }
 
-                if (feedback.FeedbackStatus == "PRESESSION")
-                    entity.FeedbackPoints = feedback.customerSatisfactionRating;
-                else
-                    entity.FeedbackPoints += feedback.customerSatisfactionRating;
+                entity.FeedbackPoints += feedback.customerSatisfactionRating;
 
                 if (entity.Feedbacks == null) entity.Feedbacks = new List<IFeedback>();
 
@@ -227,29 +242,21 @@ namespace KindleSpur.Data
 
                 var _users = con.GetCollection("UserDetails");
                 User user = _users.FindOneAs<User>(Query.EQ("EmailAddress", UserId));
-                if (feedback.FeedbackStatus == "FEEDBACK")
-                { 
-                    user.BalanceRewardPoints += 5;
-                    user.TotalRewardPoints += 5;
-                    coacheeOrMenteeEntity.RewardPointsGained += 5;
-                }
+                user.BalanceRewardPoints += 5;
+                user.TotalRewardPoints += 5;
+                coacheeOrMenteeEntity.RewardPointsGained += 5;
                 _users.Save(user);
-
-                
 
                 ICoachingStatus coachingStatus = coacheeOrMenteeEntity.CoachingStatus.Find(x => x.Sender == entity.UserId && x.Skill == feedback.Skill);
                 coachingStatus.customerSatisfactionRating = feedback.customerSatisfactionRating;
-                if (feedback.FeedbackStatus != "PRESESSION")
-                    coachingStatus.FeedBackCount += 1;
+                coachingStatus.FeedBackCount += 1;
                 coachingStatus.FeedbackClosed = feedback.FeedbackClosed;
-              
                 coacheeOrMenteeEntity.CoachingStatus.Add(coachingStatus);
                 
                 //coacheeOrMenteeEntity = _coacheeOrMenteeCollection.FindOneAs<CoacheeOrMentee>(Query.And(Query.EQ("UserId", feedback.Sender), Query.EQ("Role", newRole)));
                 _coacheeOrMenteeCollection.Save(coacheeOrMenteeEntity);
                 _transactionStatus = true;
                 return user.TotalRewardPoints;
-
 
             }
 
@@ -740,37 +747,22 @@ namespace KindleSpur.Data
         {
 
             string TreeURL = "Images/Tree/Stage 1.png";
-
-            if (closingStatus) return TreeURL = TreeURL = "Images/Tree/Stage 5 with Fruits.png";
-
             if (FeedbackCount == 2)
-            {
-                if (Rating >= 1 && Rating <= 3)
-                    TreeURL = "Images/Tree/Stage 2.png";
-                else if (Rating >= 4 && Rating <= 5)
-                    TreeURL = "Images/Tree/Stage 2 with water.png";
-            }
+                TreeURL = "Images/Tree/Stage 2.png";
             else if (FeedbackCount == 3)
-            {
-                if (Rating >= 1 && Rating <= 3)
-                    TreeURL = "Images/Tree/Stage 3.png";
-                else if (Rating >= 4 && Rating <= 5)
-                    TreeURL = "Images/Tree/Stage 3 with flower.png";
-            }
+                TreeURL = "Images/Tree/Stage 2 with water.png";
             else if (FeedbackCount == 4)
-            {
-                if (Rating >= 1 && Rating <= 3)
-                    TreeURL = "Images/Tree/Stage 4.png";
-                else if (Rating >= 4 && Rating <= 5)
-                    TreeURL = "Images/Tree/Stage 4 with Fruits.png";
-            }
-            else if (FeedbackCount >= 5)
-            {
-                if (Rating >= 1 && Rating <= 3)
-                    TreeURL = "Images/Tree/Stage 5.png";
-                else if (Rating >= 4 && Rating <= 5)
-                    TreeURL = "Images/Tree/Stage 5 with Fruits.png";
-            }
+                TreeURL = "Images/Tree/Stage 3.png";
+            else if (FeedbackCount == 5)
+                TreeURL = "Images/Tree/Stage 3 with flower.png";
+            else if (FeedbackCount == 6)
+                TreeURL = "Images/Tree/Stage 4.png";
+            else if (FeedbackCount == 7)
+                TreeURL = "Images/Tree/Stage 4 with Fruits.png";
+            else if (FeedbackCount == 8)
+                TreeURL = "Images/Tree/Stage 5.png";
+            else if (FeedbackCount == 9)
+                TreeURL = "Images/Tree/Stage 5 with Fruits.png";
             return TreeURL;
         }
 

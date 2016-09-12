@@ -218,7 +218,7 @@
     var _presessionQuestion = [
        { name: 'What is the ultimate goal you want to accomplish by the end of this coaching/ mentoring session?', actionValue: '', type: 'textArea', showLoad: false },
        { name: 'Any issue/challenge/problem you would like your coach/mentor to work with you on it? Any steps your have taken so far to tackle these problem areas?', actionValue: '', type: 'textArea', showLoad: false },
-       { name: 'Your preferred time and mode of communication - Time Box for time,mode of communication', actionValue: '', type: 'textArea', showLoad: false },
+       { name: 'Your preferred time and mode of communication', actionValue: '', type: 'textArea', showLoad: false },
        { name: 'Five attributes that you would like your coach/ mentor to know about you', actionValue: '', type: 'textArea', showLoad: false },
     ];
     $scope.feedBack.closeFeedBackPopup = function () {
