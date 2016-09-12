@@ -708,7 +708,7 @@ namespace KindleSpur.Data
             {
                 var userDetail = _userCollection.FindOneByIdAs<User>(userId);
 
-                Game _game = UnlockGames(userDetail.TotalRewardPoints, userDetail.BalanceRewardPoints);
+                Game _game = UnlockGames(userDetail.TotalRewardPoints, userDetail.BalanceRewardPoints, userDetail.EmailAddress);
                 if (_game != null)
                 {
                     if (userDetail.Games == null) userDetail.Games = new List<Game>();
@@ -717,8 +717,10 @@ namespace KindleSpur.Data
                     {
                         _game.UnlockedDate = DateTime.Now;
                         userDetail.Games.Add(_game);
-                        userDetail.BalanceRewardPoints -= (int.Parse(_game.GameId) * 10);
-                        userDetail.RedeemedPoints += (int.Parse(_game.GameId) * 10);
+                        //userDetail.BalanceRewardPoints -= (int.Parse(_game.GameId) * 10);
+                        //userDetail.RedeemedPoints += (int.Parse(_game.GameId) * 10);
+                        userDetail.BalanceRewardPoints -= 10;
+                        userDetail.RedeemedPoints += 10;
                         _userCollection.Save(userDetail);
                     }
                     _transactionStatus = true;
@@ -804,7 +806,7 @@ namespace KindleSpur.Data
             return "";
         }
 
-        private Game UnlockGames(int RewardPointsGained, int BalancePoints)
+        private Game UnlockGames(int RewardPointsGained, int BalancePoints, string UnlockedBy)
         {
             var _gamesCollection = con.GetCollection("BrainGames");
 
@@ -814,13 +816,26 @@ namespace KindleSpur.Data
             }
 
             // RewardPointsGained = (RewardPointsGained - (RewardPointsGained % 10))/10;
-            string Id = (BalancePoints / 10).ToString();
+            // string Id = (BalancePoints / 10).ToString();
 
-            Game game = _gamesCollection.FindOneAs<Game>(Query.EQ("GameId", Id));
-            if (game == null)
+            //Game game = _gamesCollection.FindOneAs<Game>(Query.EQ("GameId", Id));
+            //if (game == null)
+            //{
+            //    game = _gamesCollection.FindAllAs<Game>().SetSortOrder(SortBy.Descending("GameId")).SetLimit(1).FirstOrDefault();
+            //}
+
+            Game game = _gamesCollection.FindOneAs<Game>(Query.NotExists("UnlockedBy"));
+
+            if(game!=null)
             {
-                game = _gamesCollection.FindAllAs<Game>().SetSortOrder(SortBy.Descending("GameId")).SetLimit(1).FirstOrDefault();
+                game.UnlockedDate = DateTime.Now;
+                game.UnlockedBy = UnlockedBy;
+                _gamesCollection.Save(game);    
             }
+            //if (game == null)
+            //{
+            //    game = _gamesCollection.FindAllAs<Game>().SetSortOrder(SortBy.Descending("GameId")).SetLimit(1).FirstOrDefault();
+            //}
 
             return game;
         }
