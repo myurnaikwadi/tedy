@@ -17,6 +17,8 @@ namespace KindleSpur.Models
             get; set;
         }
         public string Sender { get; set; }
+
+        public string Receiver { get; set; }
         public DateTime CreateDate { get; set; }
         public string Skill { get; set; }
         public int customerSatisfactionRating { get; set; }

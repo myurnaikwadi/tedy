@@ -372,7 +372,7 @@
     };
     $scope.sendDetailsToServer = function () {
         $scope.editModeProfile = false;
-        if ($scope.localModel.firstName || $scope.localModel.firstName == '') {
+        if (!$scope.localModel.firstName || $scope.localModel.firstName == '') {
             _displayAlertMeesage({ message: "Please enter first name.", formatType: '2' });
             return;
         }else if(!$scope.localModel.lastName || $scope.localModel.lastName == ''){
@@ -428,7 +428,7 @@
     $scope.sendPasswordDetailsToServer = function () {
        
         console.error($scope.localModel)
-        if ($scope.localModel.Password == '') {
+        if (!$scope.localModel.Password || $scope.localModel.Password == '') {
             _displayAlertMeesage({ message: "Please Enter Password", formatType: '2' });
             return;
         }

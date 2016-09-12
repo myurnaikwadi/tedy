@@ -116,6 +116,14 @@ namespace KindleSpur.WebApplication.Controllers
         {
             return View();
         }
+        public ActionResult ksAutoSuggest()
+        {
+            return View();
+        }
+        public ActionResult ksAutoSuggestSuggestion()
+        {
+            return View();
+        }
         [HttpPost]
         public JsonResult UpdateUserPhoto(SubmitImage model)
         {

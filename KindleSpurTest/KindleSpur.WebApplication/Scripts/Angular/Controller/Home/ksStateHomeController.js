@@ -86,8 +86,73 @@
                                             $scope.uiFlag.loadBottomContain = false;                                            
                                         };
                                         break;
-            case "loadProfileContain": $scope.extraParam = iObj.data; $scope.uiFlag.loadProfileView = iObj.data.toggleFlag; break;
+            case "loadProfileContain": $scope.extraParam = iObj.data; 
+                                       $scope.uiFlag.loadProfileView = iObj.data.toggleFlag;
+                                       
+                                       if ($scope.uiFlag.loadProfileView == true) {
+                                           $scope.setFocusOnProfile();
+                                       }
+                                        break;
         }
 
     });
+
+    $scope.closeMyPopup = function () {
+        console.error('closeMyPopup')
+        $scope.load = false;
+        $scope.invitation = {}
+    };
 });
+
+app.directive("outsideClick", ['$document', '$parse', function ($document, $parse) {
+    return {
+        scope : {
+            outSide: "&",
+            idArr : '='
+        },
+        link: function ($scope, $element, $attributes) {          
+            var _id = $scope.id;
+           // console.error($element)
+           var onDocumentClick = function (event) {
+              // console.error($scope.idArr)
+               //console.error(event.target)     
+              
+                var scopeExpression = $attributes.outsideClick;
+              //  console.error($scope)
+                var isChild = $element.find(event.target).length > 0;
+              //  console.error(isChild)
+                if ($scope.idArr && $scope.idArr.length > 0) {
+                    var _index = $scope.idArr.indexOf(event.target.id) ;
+                    if (_index > -1)
+                        isChild = true;
+                }
+                if (!isChild) {
+                    $scope.outSide()();
+                    $scope.$apply();
+                }
+            };
+          
+            $document.on("click", onDocumentClick);             
+
+            $scope.$on('$destroy', function () {
+               // console.error('ddd');
+                if($scope.id == _id)
+                 $document.off("click", onDocumentClick);               
+            });
+            
+        }
+    }
+}]);
+//app.directive('hideLogin', function ($document) {
+//    return {
+//        restrict: 'A',
+//        link: function (scope, elem, attr, ctrl) {
+//            elem.bind('click', function (e) {
+//                e.stopPropagation();
+//            });
+//            $document.bind('click', function () {
+//                scope.$apply(attr.hideLogin);
+//            })
+//        }
+//    }
+//});

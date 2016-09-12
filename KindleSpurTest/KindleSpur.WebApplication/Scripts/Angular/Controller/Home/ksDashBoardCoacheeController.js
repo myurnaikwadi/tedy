@@ -11,6 +11,47 @@
         $rootScope.currentModule = 'Profile';   
         $state.go('home.dashBoard.profile');
     };
+
+  //  $scope.fff = [{ CML_TITLE: 'dd' }, { CML_TITLE: 'ddddd' }, { CML_TITLE: 'dddd' }];
+    $scope.objFormat = { firstName: 'Name', id: 'Id', email: 'Name', imgPath: 'img' } //format needed for autosuggest
+    
+    $scope.callBackInTyping = function (iObj) {
+       // console.error(iObj)
+          $scope.searchCoachObj.searchKey = iObj.searchText;
+    };
+    $scope.callBackBeforeAdd = function (iObj,iCallBack) {
+       // console.error(iObj)
+        iCallBack()
+    };
+    $scope.callBackAfterChangeValue = function (iSkill) {
+        var _skill = iSkill;
+        $scope.availableSkills.some(function (iSkillLoop) {
+            if (iSkillLoop.Id == iSkill.Id) {
+                _skill = { Id: iSkill.Id, Name: iSkill.Name, Type: iSkill.Type, ParentId: iSkill.ParentId };
+            }
+        });
+        $scope.searchCoachObj.searchKey = iSkill.Name;
+        $scope.searching = false;
+        serverCommunication.getCoaches({
+            filter: _skill,
+            role: 'Coach',
+            successCallBack: function (result) {
+                console.log('Result - ', result);
+                if (result.data) {
+                    $scope.searchCoachObj.searchingActive = true;
+                    _createCoachArray(result);
+                }
+                $scope.loadingMiddleObject = { showLoading: false, loadingMessage: 'Loading' };
+                if (!$scope.$$phase) $scope.$digest();
+            },
+            failureCallBack: function () {
+                console.error('In failureCallBack');
+            }
+        });
+    }
+    $scope.callBackBeforeRemove = function (iObj) {
+       // console.error(iObj)
+    }
     $scope.notifications = [
 
                 { notificationType: '1', name: 'You have Coaching invite from', assignPerson: 'HARSHADA D.' },
@@ -177,7 +218,7 @@
     var _presessionQuestion = [
        { name: 'What is the ultimate goal you want to accomplish by the end of this coaching/ mentoring session?', actionValue: '', type: 'textArea', showLoad: false },
        { name: 'Any issue/challenge/problem you would like your coach/mentor to work with you on it? Any steps your have taken so far to tackle these problem areas?', actionValue: '', type: 'textArea', showLoad: false },
-       { name: 'Your preferred time and mode of communication - Time Box for time,mode of communication', actionValue: '', type: 'textArea', showLoad: false },
+       { name: 'Your preferred time and mode of communication', actionValue: '', type: 'textArea', showLoad: false },
        { name: 'Five attributes that you would like your coach/ mentor to know about you', actionValue: '', type: 'textArea', showLoad: false },
     ];
     $scope.feedBack.closeFeedBackPopup = function () {
@@ -420,10 +461,7 @@
 
                         $scope.availableSkills.push(iCts);
                     }
-                });
-
-                // $scope.availableSkills.splice(0, $scope.availableSkills.length);
-                //$scope.availableSkills.push.apply($scope.availableSkills, result.data.Filters);
+                });  
             },
             failureCallBack: function () {
                 // console.error('In failureCallBack');

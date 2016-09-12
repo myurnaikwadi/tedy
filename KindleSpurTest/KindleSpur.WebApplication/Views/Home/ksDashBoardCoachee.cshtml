@@ -64,23 +64,24 @@
                     <div class="ctsParentMain">
                         <div class="ctsParentMainPanel">
                             <div class="ctsCategoryHeading">
-                                <div class="homeLabelInChat" style="height:100%;display: flex;">
+                                <div class="homeLabelInChat" style="width: 78%;height:100%;display: flex;">
                                     <h5 class="fontClass" style="font-size: 16px;margin: auto;margin-left: 1%;">SEARCH COACH</h5>
                                 </div>
-                                <div class="search-mentor">
-                                    <div class="inner-addon left-addon">
-                                        <span ng-show="searchCoachObj.searchKey.length > 0" style="position: absolute;" class="filter-icon" ng-click="clearSearch()"><i class="fa fa-times-circle"></i></span>
-                                        <span ng-show="searchCoachObj.searchKey.length == 0" style="position: absolute;" class="filter-icon"><i class="fa fa-search"></i></span>
-                                        <input type="text" class="auto-complete" cts-dropdown ng-model="searchCoachObj.searchKey" key="searchCoachObj.searchKey" searching="searching" skill="selectedSkill" placeholder="Type to search" />
+                                <div class="search-mentor" style="width: 22%;">
+                                    <div class="inner-addon left-addon" style="float: left;">
+                                        <span ng-show="searchCoachObj.searchKey.length > 0" style="z-index: 2;position: absolute;" class="filter-icon" ng-click="clearSearch()"><i class="fa fa-times-circle"></i></span>
+                                        <span ng-show="searchCoachObj.searchKey.length == 0" style="z-index: 2;position: absolute;" class="filter-icon"><i class="fa fa-search"></i></span>
+                                        @*<input type="text" class="auto-complete" cts-dropdown ng-model="searchCoachObj.searchKey" key="searchCoachObj.searchKey" searching="searching" skill="selectedSkill" placeholder="Type to search" />*@
+                                        <auto-Complete ng-if="availableSkills.length > 0" style="float: left;z-index: 1;position: absolute;width: 85%;left: 30px; height: 100%;" width-Height="35" model="groupmemberTo" format="suggestion" open-For="TO" layout-mode="'1'" listing-Data="availableSkills" call-Back-Typing="callBackInTyping" call-Back-In-Change="callBackAfterChangeValue" call-Back-Before-Add="callBackBeforeAdd(iACAddTag,iACCallback,iType)" call-Back-Before-Remove="callBackBeforeRemove" object-Params="objFormat"></auto-Complete>
                                     </div>
-                                    <div class="auto-complete-container" ng-show="searching" ng-class="{hide:!searching}">
+                                    @*<div class="auto-complete-container" ng-show="searching" ng-class="{hide:!searching}">
                                         <div ng-click="searchCoachObj.selectSkill(skill)" class="item" ng-repeat="skill in skills = (availableSkills | filter: skillFilter)">
                                             <div>{{skill.Name}}</div>
                                         </div>
                                         <div ng-show="!skills.length && searching" class="no-result">
                                             No result found.
                                         </div>
-                                    </div>
+                                    </div>*@
                                 </div>
                             </div>
                             <place-Holder message="No recommended Coaches" ng-show="Coaches.length == 0"></place-Holder>
@@ -108,7 +109,7 @@
                                                 <cube-Strct ng-style="coach.loadingSearchCoach.loadingEffectCss" ng-show="coach.loadingSearchCoach.showLoading == true" class="cubeParentClass" loading-Object="coach.loadingSearchCoach"></cube-Strct>
                                                 <div class="mentor-actions" ng-class="{ mentorActionsActivate : coach.showOption == true}">
                                                     <h5 class="genericEventHeadings" style="margin: auto;color: white;font-size:13px;" title="View Profile" ng-click="opencoachprofile(coach)">View Profile</h5>
-                                                    <h5 class="genericEventHeadings" style="margin: auto;color: white;font-size:13px;" title="Send Mentoring Request" ng-click="sendCoachingRequest(false, coach)">Request</h5>
+                                                    <h5 class="genericEventHeadings" style="margin: auto;color: white;font-size:13px;" title="Send Coaching Request" ng-click="sendCoachingRequest(false, coach)">Request</h5>
                                                 </div>
                                                 <div class="mentor-info">
                                                     <span class="profile-close" ng-click="Coaches.splice($index,1);" style="float:right;top:10px;right:10px;"><i class="fa fa-times"></i></span>
@@ -285,7 +286,7 @@
                     <h5 class="fontClass" style="font-size: 16px;margin-left: 1%;">KNOWLEDGE GARDEN</h5>
                 </div>
                 <div class="" style="float:left;width:100%;height:93%;">
-                    <place-Holder message="As you haven't received feedback your knowledge tree has not grown" ng-show="coachingStatusArray.length == 0"></place-Holder>
+                    <place-Holder message="As no coaching has started your Knowledge Garden has not grown!" ng-show="coachingStatusArray.length == 0"></place-Holder>
                     <molecule-Map ng-if="ctsDataForMolecule && coachingStatusArray.length >0" cts-Data="ctsDataForMolecule"></molecule-Map>
                 </div>
             </div>           

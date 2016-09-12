@@ -20,7 +20,8 @@ namespace KindleSpur.Models.Interfaces
         string Skill { get; set; }
         int customerSatisfactionRating { get; set; }
         bool FeedbackClosed { get; set; }
-         int FeedBackCount { get; set; }
-  
+        int FeedBackCount { get; set; }
+        string Receiver { get; set; }
+
     }
 }

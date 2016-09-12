@@ -253,3 +253,5 @@ _Pvt_Extensions
 /KindleSpurTest/KindleSpur.WebApplication/Images/left_circle.png
 /KindleSpurTest/KindleSpur.WebApplication/Images/businessmen-talking-in-business-meeting.png
 /KindleSpurTest/KindleSpur.WebApplication/Images/business-meeting-of-males.png
+/KindleSpurTest/KindleSpur.WebApplication/Views/Home/ksAutoSuggestSuggestion.cshtml
+/KindleSpurTest/KindleSpur.WebApplication/Views/Home/ksAutoSuggest.cshtml
