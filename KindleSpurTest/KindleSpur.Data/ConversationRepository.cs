@@ -57,7 +57,7 @@ namespace KindleSpur.Data
                     {
                         _conversationCollection.Update(Query.And(Query.EQ("SenderEmail", conversationData.SenderEmail), Query.EQ("ReceiverEmail", conversationData.ReceiverEmail), Query.EQ("skill", conversationData.skill)), Update<Conversation>.Set(c => c.IsRejected, false).Set(q => q.Active, false));
                         return true;
-                        
+
                     }
                     else
                     {
@@ -668,6 +668,7 @@ namespace KindleSpur.Data
 
 
                 //  var list = new List<object>();
+
                 list.Add(SkillFilterListCoaching);
                 list.Add(TopicFilterListMentoring);
 
@@ -701,7 +702,7 @@ namespace KindleSpur.Data
 
         }
 
-        public bool Bookmarks(string UserId, string documnetname, string Url, string tagname)
+        public bool Bookmarks(string UserId, List<BookMark> bookmarks)
         {
             bool _transactionStatus = false;
             try
@@ -709,14 +710,16 @@ namespace KindleSpur.Data
                 var _userCollection = con.GetCollection("UserDetails");
                 var userDetail = _userCollection.FindOneAs<User>(Query.EQ("EmailAddress", UserId));
                 List<BookMark> path = new List<BookMark>();
+                foreach (var bookmark in bookmarks)
+                {
+                    BookMark Link = new BookMark();
+                    Link.Id = ObjectId.GenerateNewId();
+                    Link.LinkUrl = bookmark.LinkUrl;
+                    Link.DocumentName = bookmark.DocumentName;
+                    Link.TagName = bookmark.TagName;
 
-                BookMark Link = new BookMark();
-                Link.Id = ObjectId.GenerateNewId();
-                Link.LinkUrl = Url;
-                Link.DocumentName = documnetname;
-                Link.TagName = tagname;
-
-                path.Add(Link);
+                    path.Add(Link);
+                }
                 if (userDetail.BookMarks == null)
                     userDetail.BookMarks = new List<BookMark>();
                 userDetail.BookMarks.AddRange(path.ToList());

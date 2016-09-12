@@ -483,15 +483,15 @@ app.factory('serverCommunication', function ($http) {
             console.error(iObj)
             var req = {
                 method: 'POST',
-                url: '',
+                url: '/Resources/AddBookMakrs',
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                data: { BookMarks: iObj.bookMarkObject },
+                data: { user: {BookMarks: [iObj.bookMarkObject] } },
                 traditional: true
             }
             console.error(req);
-            //$http(req).then(iObj.successCallBack, iObj.failureCallBack);
+            $http(req).then(iObj.successCallBack, iObj.failureCallBack);
         },
 
         /**
@@ -776,17 +776,21 @@ app.factory('serverCommunication', function ($http) {
         },
         deleteFilesServer: function (iObj) {
             console.error('deleteFilesServer --------------- ', iObj);
-
+            var _form = new FormData();
+            angular.forEach(iObj.deletedArray, function (value, key) {
+               // value.TagName = "sssss"
+                _form.append(key, value);
+                console.error(key, value)
+            });
+           
             var req = {
                 method: 'POST',
-                url : '',
-                headers: {
-                     'Content-Type': 'application/json'
-                },
-                data: { deletedArray : iObj.deletedArray },
+                url: '/Resources/DeleteFiles',
+                headers : {'Content-Type': 'application/x-www-form-urlencoded'} ,
+                data: { Obj: iObj.deletedArray },
                 traditional: true
             }
-           // $http(req).then(iObj.successCallBack, iObj.failureCallBack);
+            $http(req).then(iObj.successCallBack, iObj.failureCallBack);
         },
         
         sendAddCtsInfoToAdmin: function (iObj) {

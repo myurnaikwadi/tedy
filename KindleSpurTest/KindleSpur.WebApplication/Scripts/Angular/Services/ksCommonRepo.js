@@ -49,7 +49,8 @@
             };
 
             scope.saveBookmark = function (iArtifacts) {
-                var _callServerSide = false;
+                ///debugger
+                var _callServerSide = true;
                 if (iArtifacts) {
                     if (iArtifacts.bookMarked) {
                         _callServerSide = true;
@@ -59,10 +60,13 @@
                         scope.deleteAttachment({ deleteMultiple: false, type: 'bookMark', deletedObject: iArtifacts, index: -1 })
                     }                   
                 }
+                //console.error(_callServerSide)
                 if (_callServerSide) {
+                    scope.bookmark.LinkUrl = scope.bookmark.FilePath;
+                    scope.bookmark.DocumentName = scope.bookmark.FileName;
                     scope.bookMarkArray.push(scope.bookmark);
                     serverCommunication.bookMarkLink({
-                        bookMarkObject: scope.bookmark,
+                        bookMarkObject: { LinkUrl : scope.bookmark.FilePath, DocumentName : scope.bookmark.FileName } ,
                         successCallBack: function () {
                             scope.closePopup();
                         },

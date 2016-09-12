@@ -1584,8 +1584,8 @@ app.directive('rssFeed', function ($state, serverCommunication, $timeout) {
                 iEvent && (iEvent.stopPropagation());
                 console.error(iFeed);
                 var _obj = {
-                    FileName: iFeed.name,
-                    FilePath: iFeed.url,
+                    LinkUrl: iFeed.name,
+                    DocumentName: iFeed.url,
                 }
                 serverCommunication.bookMarkLink({
                     bookMarkObject: _obj,                   

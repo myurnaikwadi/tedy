@@ -132,7 +132,7 @@ namespace KindleSpur.WebApplication.Controllers
         }
 
         [HttpPost]
-        public JsonResult AddBookMakrs(string LinkUrl, string DocumnetName, string tagname)
+        public JsonResult AddBookMakrs(User user)
         {
             //hardcoded value
             //string LinkUrl = "www.fb.co.in";
@@ -143,7 +143,7 @@ namespace KindleSpur.WebApplication.Controllers
             ConversationRepository cs = new ConversationRepository();
             try
             {
-                return Json(cs.Bookmarks(UserId, DocumnetName, LinkUrl, tagname));
+                return Json(cs.Bookmarks(user.EmailAddress,user.BookMarks));
 
             }
             catch (Exception)
@@ -153,7 +153,7 @@ namespace KindleSpur.WebApplication.Controllers
             }
         }
         [HttpPost]
-        public JsonResult DeketeFiles(List<FileUpload> Obj)
+        public JsonResult DeleteFiles(List<KindleSpur.Models.FileUpload> Obj)
         {
             UserRepository user = new UserRepository();
             try
