@@ -413,6 +413,7 @@
     <Content Include="Scripts\Angular\Controller\Home\ksStateHomeController.js" />
     <Content Include="Scripts\Angular\Controller\Home\ksVCGController.js" />
     <Content Include="Scripts\Angular\Controller\Home\ksVcsController.js" />
+    <Content Include="Scripts\Angular\Services\ksAutoSuggest.js" />
     <Content Include="Scripts\Angular\Services\ksCommonRepo.js" />
     <Content Include="Scripts\Angular\Services\ksGenericDirective.js" />
     <Content Include="Scripts\Angular\Services\ksInbox.js" />
@@ -458,6 +459,7 @@
     <Content Include="fonts\fontawesome-webfont.ttf" />
     <Content Include="fonts\fontawesome-webfont.svg" />
     <Content Include="fonts\fontawesome-webfont.eot" />
+    <Content Include="Scripts\css\ksDashBoard\ksAutoSuggest.css" />
     <Content Include="Scripts\css\ksDashBoard\ksStateHome.css" />
     <Content Include="Scripts\css\ksDashBoard\ksDashBoardHover.css" />
     <Content Include="Scripts\d3.v3.js" />
