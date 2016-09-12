@@ -531,6 +531,8 @@
     <Content Include="Views\Home\ksAboutUs.cshtml" />
     <Content Include="Views\Home\ksPrivacyPolicy.cshtml" />
     <Content Include="Views\Home\ksTermsCondition.cshtml" />
+    <Content Include="Views\Home\ksAutoSuggest.cshtml" />
+    <Content Include="Views\Home\ksAutoSuggestSuggestion.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

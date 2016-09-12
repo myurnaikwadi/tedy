@@ -1,4 +1,4 @@
-﻿var app = angular.module('app', ['ui.router']);
+﻿var app = angular.module('app', ['ui.router','smoothScroll']);
 app.run(function ($rootScope, $timeout, $state) {
     $rootScope.$on('$locationChangeSuccess', function () {
         var _userDetails = _getMyDetailsFromCookies();

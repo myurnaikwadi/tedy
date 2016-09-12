@@ -78,7 +78,46 @@
     $scope.ReceiverName = "";
 
 
+    $scope.objFormat = { firstName: 'Name', id: 'Id', email: 'Name', imgPath: 'img' } //format needed for autosuggest
 
+    $scope.callBackInTyping = function (iObj) {
+        //console.error(iObj)
+        $scope.searchCoachObj.searchKey = iObj.searchText;
+       // $scope.searching = true;
+    };
+    $scope.callBackBeforeAdd = function (iObj, iCallBack) {
+        //console.error(iObj)
+        iCallBack()
+    };
+    $scope.callBackAfterChangeValue = function (iSkill) {
+        var _skill = iSkill;
+        $scope.availableSkills.some(function (iSkillLoop) {
+            if (iSkillLoop.Id == iSkill.Id) {
+                _skill = { Id: iSkill.Id, Name: iSkill.Name, Type: iSkill.Type, ParentId: iSkill.ParentId };
+            }
+        });
+        $scope.searchCoachObj.searchKey = iSkill.Name;
+        $scope.searching = false;
+        serverCommunication.getCoaches({
+            filter: _skill,
+            role: 'Mentor',
+            successCallBack: function (result) {
+                console.log('Result - ', result);
+                if (result.data) {
+                    $scope.searchCoachObj.searchingActive = true;
+                    _createCoachArray(result);
+                }
+                $scope.loadingMiddleObject = { showLoading: false, loadingMessage: 'Loading' };
+                if (!$scope.$$phase) $scope.$digest();
+            },
+            failureCallBack: function () {
+                console.error('In failureCallBack');
+            }
+        });
+    }
+    $scope.callBackBeforeRemove = function (iObj) {
+        console.error(iObj)
+    }
     $scope.availableSkills = [];
     $scope.searchCoachObj.searchKey = '';
     $scope.searching = false;
