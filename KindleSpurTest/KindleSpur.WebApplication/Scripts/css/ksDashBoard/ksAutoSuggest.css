@@ -1,0 +1,120 @@
+﻿
+
+.customeContent{
+    position: absolute;
+      top: 0;
+      left: 0;
+      z-index:9999;
+}
+/* Auto suggest css : Start */
+.autosuggestContainer{
+	position: relative;
+	float: left;
+	width: 100%;
+	height: 35px;
+	background-color: #fff;
+}
+.theme3 .autosuggestContainer{
+	position: relative;
+	float: left;
+	width: 100%;
+	height: 55px;
+	background-color: #616161;
+}
+.autosuggestionPopup{
+	position :absolute;
+	overflow-y: auto;
+    overflow-x: hidden;
+    max-height: 165px;
+    height: auto;
+    float: left;
+    z-index: 100;
+    width: 230px;
+    -webkit-transition: max-height 500ms cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    -moz-transition: max-height 500ms cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  	transition: max-height 500ms cubic-bezier(0.175, 0.885, 0.32, 1.275); 
+    opacity: 1;
+    background-color: #fff;
+}
+.theme3 .autosuggestionPopup{
+	position :absolute;
+	overflow-y: auto;
+    overflow-x: hidden;
+    max-height: 165px;
+    height: auto;
+    float: left;
+    z-index: 100;
+    width: 230px;
+    -webkit-transition: max-height 500ms cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    -moz-transition: max-height 500ms cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  	transition: max-height 500ms cubic-bezier(0.175, 0.885, 0.32, 1.275); 
+    opacity: 1;
+    background-color: #616161;
+}
+.autosuggestImage{
+	position: relative;
+	float: left;
+	width: 25%;
+	height: 100%; 
+}
+.autosuggestDetails{
+	position: relative;
+	float: left;
+	width: 100%;
+	height: 100%; 
+    display: flex;
+}
+.tags-wrapper {
+   	position: relative;
+    width: 100%;
+    height: auto;
+}
+.autosuggestList{
+	position: relative;
+    width: 100%;
+    height: auto;
+    max-height: 104px;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+.inviteeBox-name{
+	float: left;
+	font-size: 12px;
+	height: 15px !important;
+	width: auto;
+	max-width:100px;
+	line-height: 1.2;
+	
+}
+.addOrgMenuRow{
+	position:relative;
+	width:100%;
+	height:35px;
+	float:left;
+}
+.genericLabels{
+	font-family: varela Round;
+	font-weight: 500;
+	font-size: 13px;
+	color:#131f24;
+	float:left;
+}
+.genericBorderBottom{
+	border-bottom:1px solid #edf2f6;
+}
+.addOrgInput{
+	font-family: 'Roboto-Regular';
+	font-weight: 500;
+	font-size: 12px !important;
+	border-radius : 1px;
+	height: 100%;
+	border:0px solid #C0C0C0 !important;
+	border-radius : 0px !important;
+	box-shadow: none !important;
+	-moz-box-shadow: none !important;
+	width: 100%;
+	background-color: transparent !important;
+}
+.workspaceDropdownseleted {
+    background:#f3f3f3;
+}
