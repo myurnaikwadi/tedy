@@ -1061,7 +1061,7 @@ namespace KindleSpur.Data
                     {
 
                         FileUpload obj = new FileUpload();
-                        obj.Id = ObjectId.GenerateNewId();
+                       obj.Id = ObjectId.GenerateNewId();
                         obj.FileId = Guid.NewGuid().ToString();
 
                         obj.FilePath = string.Format("FilePath/{0}", f.Value[0]);
@@ -1110,17 +1110,23 @@ namespace KindleSpur.Data
 
         }
 
-        public bool DeleteResourceFiles(List<FileUpload> list)
+        public bool DeleteResourceFiles(List<FileUpload> list, string emailAddress)
         {
             bool _transactionStatus = false;
             try
             {
+                //write a query to get the entire User object
+                User userDetail = (User)GetUserDetail(emailAddress);
+            
                 foreach (var r in list)
                 {
-                    var query = Query.And(Query.EQ("_id", r.Id));
-                    _userCollection.Remove(query);
-
+                    userDetail.Files.RemoveAll(x => x.FileId == r.FileId);
+                   
                 }
+
+                _userCollection.Update(Query.EQ("EmailAddress", userDetail.EmailAddress), Update<User>.Set(c => c.Files, userDetail.Files));
+
+
                 _transactionStatus = true;
             }
             catch (MongoException ex)
@@ -1145,17 +1151,21 @@ namespace KindleSpur.Data
             }
             return _transactionStatus;
         }
-        public bool DeleteBookMarks(List<BookMark> list)
+        public bool DeleteBookMarks(List<BookMark> list,string EmailAddress)
         {
             bool _transactionStatus = false;
             try
             {
+                User userDetail = (User)GetUserDetail(EmailAddress);
+
                 foreach (var r in list)
                 {
-                    var query = Query.And(Query.EQ("_id", r.Id));
-                    _userCollection.Remove(query);
+                    userDetail.BookMarks.RemoveAll(x => x.BookMarkId == r.BookMarkId);
 
                 }
+
+                _userCollection.Update(Query.EQ("EmailAddress", userDetail.EmailAddress), Update<User>.Set(c => c.BookMarks, userDetail.BookMarks));
+
                 _transactionStatus = true;
             }
             catch (MongoException ex)

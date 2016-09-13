@@ -776,17 +776,11 @@ app.factory('serverCommunication', function ($http) {
         },
         deleteFilesServer: function (iObj) {
             console.error('deleteFilesServer --------------- ', iObj);
-            var _form = new FormData();
-            angular.forEach(iObj.deletedArray, function (value, key) {
-               // value.TagName = "sssss"
-                _form.append(key, value);
-                console.error(key, value)
-            });
            
             var req = {
                 method: 'POST',
-                url: '/Resources/DeleteFiles',
-                headers : {'Content-Type': 'application/x-www-form-urlencoded'} ,
+                url: iObj.type == 'artifact' ? '/Resources/DeleteFiles' : '/Resources/DeleteBookmarks',
+                headers: { 'Content-Type': 'application/json' },
                 data: { Obj: iObj.deletedArray },
                 traditional: true
             }
