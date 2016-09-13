@@ -13,6 +13,7 @@ namespace KindleSpur.Models.Interfaces
         string GameId { get; set; }
          string Name { get; set; }
          string Key { get; set; }
+        string UnlockedBy { get; set; }
         string ExpiredInDays { get; set; }
         [BsonId]
         ObjectId Id { get; set; }
