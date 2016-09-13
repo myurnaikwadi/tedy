@@ -413,6 +413,7 @@
     <Content Include="Scripts\Angular\Controller\Home\ksStateHomeController.js" />
     <Content Include="Scripts\Angular\Controller\Home\ksVCGController.js" />
     <Content Include="Scripts\Angular\Controller\Home\ksVcsController.js" />
+    <Content Include="Scripts\Angular\Library Files\autoScroll.js" />
     <Content Include="Scripts\Angular\Services\ksAutoSuggest.js" />
     <Content Include="Scripts\Angular\Services\ksCommonRepo.js" />
     <Content Include="Scripts\Angular\Services\ksGenericDirective.js" />
