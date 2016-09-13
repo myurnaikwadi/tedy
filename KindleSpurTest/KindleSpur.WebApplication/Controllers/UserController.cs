@@ -69,7 +69,7 @@ namespace KindleSpur.WebApplication.Controllers
             try
             {
                 User u = (User)_repo.GetUserDetail(signupObject.EmailAddress);
-               
+
                 if (u != null)
                 {
                     u.FirstName = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(u.FirstName.ToLower());
@@ -127,9 +127,9 @@ namespace KindleSpur.WebApplication.Controllers
             string Id = Request.UrlReferrer.Query.TrimStart('?').Split('=')[1];
             if (Id != null)
                 obj = _repo.SavePassword(Id, signupObject);
-           else
+            else
                 obj = _repo.SavePassword(((IUser)System.Web.HttpContext.Current.Session["User"]).Id.ToString(), signupObject);
-             
+
             return View();
         }
 
@@ -138,9 +138,9 @@ namespace KindleSpur.WebApplication.Controllers
         [HttpPost]
         public JsonResult GetFeedback(string senderEmail, string role, string skill)
         {
-                UserRepository _userRepo = new UserRepository();
-                string receiverEmail = ((IUser)System.Web.HttpContext.Current.Session["User"]).EmailAddress;
-                return this.Json(_userRepo.GetFeedback(senderEmail, receiverEmail, role, skill));
+            UserRepository _userRepo = new UserRepository();
+            string receiverEmail = ((IUser)System.Web.HttpContext.Current.Session["User"]).EmailAddress;
+            return this.Json(_userRepo.GetFeedback(senderEmail, receiverEmail, role, skill));
         }
 
 
@@ -167,8 +167,8 @@ namespace KindleSpur.WebApplication.Controllers
 
         [HttpPost]
         public string LoginResult(User signupObject)
-         {
-            
+        {
+
             response = new ResponseMessage();
             UserRepository _repo = new UserRepository();
             HttpCookie cookie = new HttpCookie("ksUser");
@@ -231,7 +231,7 @@ namespace KindleSpur.WebApplication.Controllers
                         Response.SetCookie(cookie);
 
                         Session["User"] = u;
-                       
+
                         if (u.IsExternalAuthentication)
                         {
                             cookie[u.EmailAddress] = new JavaScriptSerializer().Serialize(u);
@@ -248,21 +248,53 @@ namespace KindleSpur.WebApplication.Controllers
                     }
                 }
                 catch (Exception ex)
-            {
+                {
                     response.FailureCallBack(ex.Message);
                 }
-               // return response.ToJson();
+                // return response.ToJson();
             }
         }
         [HttpPost]
         public void UpdateUserDesc(User _obj)
         {
             UserRepository _repo = new UserRepository();
-            if (_repo.UpdateUserDesc(((IUser)System.Web.HttpContext.Current.Session["User"]).EmailAddress, _obj.description))
+            string emailAddress = ((IUser)System.Web.HttpContext.Current.Session["User"]).EmailAddress;
+            if (_repo.UpdateUserDesc(emailAddress, _obj.description))
             {
+                response = new ResponseMessage();
+                HttpCookie cookie = new HttpCookie("ksUser");
+                try
+                {
+                    IUser u = _repo.GetUserDetail(emailAddress);
+                    if (u != null)
+                    {
+
+                        cookie[u.EmailAddress] = new JavaScriptSerializer().Serialize(u);
+                        Response.SetCookie(cookie);
+
+                        Session["User"] = u;
+
+                        if (u.IsExternalAuthentication)
+                        {
+                            cookie[u.EmailAddress] = new JavaScriptSerializer().Serialize(u);
+                            Response.SetCookie(cookie);
+
+                            Session["User"] = u;
+                        }
+
+                    }
+                    else
+                    {
+                        response.FailureCallBack("User does not exists, Please Sign up!!!");
+
+                    }
+                }
+                catch (Exception ex)
+                {
+                    response.FailureCallBack(ex.Message);
+                }
 
             }
-
         }
 
         [HttpPost]
@@ -298,7 +330,7 @@ namespace KindleSpur.WebApplication.Controllers
                     {
                         response.FailureCallBack("User does not exists, Please Sign up!!!");
 
-            }
+                    }
                 }
                 catch (Exception ex)
                 {

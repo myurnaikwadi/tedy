@@ -79,12 +79,13 @@
         }, 600);
     };
 
-    $scope.selectedMenuProfile = function (iIndex) {
+    $scope.selectedMenuProfile = function (iIndex) {        
         $scope.selectedMenuIndex = iIndex;
         $scope.animationActicvate = false;
         $scope.loadingObject = { showLoading: true, loadingMessage: 'Loading Feed' };
         $scope.localModel = {};
         $scope.profileHoverFlag =false;
+        $("#carousel").carousel(iIndex);
         for (var k = 0; k < $scope.topicArray.length ; k++) {
             $scope.topicArray[k].showSkill = false;
         }

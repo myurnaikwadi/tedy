@@ -191,7 +191,7 @@
         { name: 'Are there any critical areas where Mentee/ Coachee needs serious and urgent help/ support ?', actionValue: '', type: 'textArea', showLoad: false },
         { name: 'Do you believe that the Mentee will be Successful in the targeted areas after the Mentoring is complete ?', actionValue: '', type: 'radio', showLoad: false },
         { name: 'Was it worth your time, energy and interest ?', type: 'radio', showLoad: false, actionValue: '', },
-        { name: 'Rate the session', sessionRating: true, type: 'rating', showLoad: false, actionValue: '', },
+        { name: 'Rate the session', sessionRating: true, type: 'rating', showLoad: false, actionValue: '1', },
     ];
     var _arrayCloseSession = [
         { name: 'Was the mentee/coachee receptive and well prepared for the sessions.', actionValue: '', type: 'radio', showLoad: false },
@@ -200,8 +200,8 @@
         { name: 'How did you know about KindleSpur ?', actionValue: '', type: 'radio', showLoad: false },
         { name: 'Would you like to refer anyone to try KindleSpur ?', actionValue: '', type: 'radio', showLoad: false },
         { name: 'Would you take Mentoring/ Coaching again at KindleSpur (for another Objective/ Goal) ?', actionValue: '', type: 'radio', showLoad: false },
-        { name: 'Overall rating for Mentee/ coachee.', type: 'rating', showLoad: false, actionValue: '', },
-        { name: ' Overall rating for KindleSpur.', sessionRating: true, type: 'rating', showLoad: false, actionValue: '', },
+        { name: 'Overall rating for Mentee/ coachee.', type: 'rating', showLoad: false, actionValue: '1', },
+        { name: ' Overall rating for KindleSpur.', sessionRating: true, type: 'rating', showLoad: false, actionValue: '1', },
     ];
     var _presessionQuestion = [
       { name: 'The broad level areas that will get covered under these sessions', actionValue: '', type: 'textArea', showLoad: false },
@@ -686,21 +686,23 @@
                     var _self = {};
                     var _other = {};
                     for (var k = 0 ; k < iObj.data.length ; k++) {
-                        iObj.data[k].CreateDate = new Date(Number(iObj.data[k].CreateDate.split('(')[1].split(')')[0]));
-                        iObj.data[k].FeedBackGiver = 'Other';
-                        if (iObj.data[k].Sender == $scope.loggedEmail) {
-                            iObj.data[k].FeedBackGiver = 'Self';
-                            if (!_self[iObj.data[k].FeedbackStatus]) {
-                                _self[iObj.data[k].FeedbackStatus] = [];
+                        if (iObj.data[k].Skill == $scope.openConversation.skill) {
+                            iObj.data[k].CreateDate = new Date(Number(iObj.data[k].CreateDate.split('(')[1].split(')')[0]));
+                            iObj.data[k].FeedBackGiver = 'Other';
+                            if (iObj.data[k].Sender == $scope.loggedEmail) {
+                                iObj.data[k].FeedBackGiver = 'Self';
+                                if (!_self[iObj.data[k].FeedbackStatus]) {
+                                    _self[iObj.data[k].FeedbackStatus] = [];
+                                }
+                                _self[iObj.data[k].FeedbackStatus].push(iObj.data[k]);
+                            } else {
+                                if (!_other[iObj.data[k].FeedbackStatus]) {
+                                    _other[iObj.data[k].FeedbackStatus] = [];
+                                }
+                                _other[iObj.data[k].FeedbackStatus].push(iObj.data[k]);
                             }
-                            _self[iObj.data[k].FeedbackStatus].push(iObj.data[k]);
-                        } else {
-                            if (!_other[iObj.data[k].FeedbackStatus]) {
-                                _other[iObj.data[k].FeedbackStatus] = [];
-                            }
-                            _other[iObj.data[k].FeedbackStatus].push(iObj.data[k]);
+                            //  iObj.data[k].feedBackCount = 0;        
                         }
-                        //  iObj.data[k].feedBackCount = 0;                        
                     }
                     for (var _key in _self) {
                         _self[_key].sort(function (a, b) {
@@ -896,37 +898,42 @@
         //   $scope.feedbackDisplayIcon[iIndex].style['transform'] = 'scale(1.1)';
         console.error(iObj)
         if (iObj.event) iObj.event.stopPropagation();
-        $scope.selectedMode = iObj.mode;
         switch (iObj.icon.Name) {
             case 'P':
                 if (Object.keys(iObj.icon.feedBackArr).length > 0) {
                     if (iObj.icon.feedBackArr[iObj.mode]) {
+                        $scope.selectedMode = iObj.mode;
                         var _feedBackArr = []
                         for (var k = 0 ; k < iObj.icon.feedBackArr[iObj.mode].QueAndAns.length ; k++) {
                             var _feed = { name: iObj.icon.feedBackArr[iObj.mode].QueAndAns[k].Question, actionValue: iObj.icon.feedBackArr[iObj.mode].QueAndAns[k].Answer, type: iObj.icon.feedBackArr[iObj.mode].QueAndAns[k].DataType, disbaled: true, showLoad: false };
                             _feedBackArr.push(_feed);
                         }
                         $scope.askFeedBackFunc(3, _feedBackArr);
-                    } else {
+                    } else if (iObj.mode == 'Self') {
+                        $scope.selectedMode = iObj.mode;
                         $scope.askFeedBackFunc(3);
                     }
-                } else {
+                } else if (iObj.mode == 'Self') {
+                    $scope.selectedMode = iObj.mode;
                     $scope.askFeedBackFunc(3);
                 }
                 break;
             case 'C':
                 if (Object.keys(iObj.icon.feedBackArr).length > 0) {
                     if (iObj.icon.feedBackArr[iObj.mode]) {
+                        $scope.selectedMode = iObj.mode;
                         var _feedBackArr = []
                         for (var k = 0 ; k < iObj.icon.feedBackArr[iObj.mode].QueAndAns.length ; k++) {
                             var _feed = { name: iObj.icon.feedBackArr[iObj.mode].QueAndAns[k].Question, actionValue: iObj.icon.feedBackArr[iObj.mode].QueAndAns[k].Answer, type: iObj.icon.feedBackArr[iObj.mode].QueAndAns[k].DataType, disbaled: true, showLoad: false };
                             _feedBackArr.push(_feed);
                         }
                         $scope.askFeedBackFunc(true, _feedBackArr);
-                    } else {
+                    } else if (iObj.mode == 'Self') {
+                        $scope.selectedMode = iObj.mode;
                         $scope.askFeedBackFunc(true);
                     }
-                } else {
+                } else if (iObj.mode == 'Self') {
+                    $scope.selectedMode = iObj.mode;
                     $scope.askFeedBackFunc(true);
                 }
                 break;
@@ -945,16 +952,19 @@
             case 6:
                 if (Object.keys(iObj.icon.feedBackArr).length > 0) {
                     if (iObj.icon.feedBackArr[iObj.mode]) {
+                        $scope.selectedMode = iObj.mode;
                         var _feedBackArr = []
                         for (var k = 0 ; k < iObj.icon.feedBackArr[iObj.mode].QueAndAns.length ; k++) {
                             var _feed = { name: iObj.icon.feedBackArr[iObj.mode].QueAndAns[k].Question, actionValue: iObj.icon.feedBackArr[iObj.mode].QueAndAns[k].Answer, type: iObj.icon.feedBackArr[iObj.mode].QueAndAns[k].DataType, disbaled: true, showLoad: false };
                             _feedBackArr.push(_feed);
                         }
                         $scope.askFeedBackFunc(false, _feedBackArr);
-                    } else {
+                    } else if (iObj.mode == 'Self') {
+                        $scope.selectedMode = iObj.mode;
                         $scope.askFeedBackFunc(false);
                     }
-                } else {
+                } else if (iObj.mode == 'Self') {
+                    $scope.selectedMode = iObj.mode;
                     $scope.askFeedBackFunc(false);
                 }
                 break;

@@ -94,14 +94,14 @@ app.directive('topMainStrip', function ($state, $rootScope, authentification) {
 
             console.error($rootScope.currentModule)
             scope.loadCalendarView = function (iEvent) {
-
                 if (iEvent) iEvent.stopPropagation();
                 $state.go('home.dashBoard.calendar');
             };
 
             scope.navigateToProfile = function (iEvent) {
-                console.error('navigateToProfile')
+              //  console.error('navigateToProfile')
                 if (iEvent) iEvent.stopPropagation();
+                $rootScope.currentModule = 'Profile';
                 $state.go('home.dashBoard.profile');
             };
             scope.logout = function (iEvent) {
@@ -1830,7 +1830,7 @@ app.directive('feedbackPage', function ($state, serverCommunication, $timeout, $
                     $scope.feedBack.feedBackDetails[$scope.displayArray[k].name] = $scope.displayArray[k];
                 };
                 console.error($scope.feedBack.feedBackDetails, $scope.displayArray);
-                $scope.generateSesstionClosedEntry();
+             //   $scope.generateSesstionClosedEntry();
 
                 var _rating = 5;
                 var _counter = Math.floor((Math.random() * 10) + 1);
@@ -1928,6 +1928,12 @@ app.directive('feedbackPage', function ($state, serverCommunication, $timeout, $
                         }
                     }
 
+                }
+
+                for (var l = 0; l < _loadArray.length ; l++) {
+                    if ($scope.feedBack.feedBackDetails[_loadArray[l].name]) {                       
+                        _loadArray[l].actionValue = $scope.feedBack.feedBackDetails[_loadArray[l].name].actionValue
+                    }                       
                 }
                 console.error($scope.question, _loadArray);
                 $scope.displayArray = [].concat(_loadArray);
