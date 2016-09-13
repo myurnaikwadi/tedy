@@ -117,11 +117,14 @@
                                     <img ng-src="{{option.PhotoURL ? option.PhotoURL : '/Images/icons/Microsoft_Word_2013_icon.png' }}" style="margin: auto auto;float: left;height: 35px;width: 35px;" />
                                 </div>
                                 <div class="statusCoachingStatus" style="width: 50%;">
-                                    <h5 class="fontClass" style="color:#A9A9A9;margin: auto auto;float: left;margin-left: 0;">{{option.FileName}}</h5>
+                                    <h5 class="fontClass" style="color:#A9A9A9;margin: auto auto;float: left;margin-left: 0;">{{option.DocumentName}}</h5>
                                 </div>
-                                <div class="profileImageCoachingStatus">
+                                <div class="statusCoachingStatus" style="width: 50%;">
+                                    <h5 class="fontClass" style="color:#A9A9A9;margin: auto auto;float: left;margin-left: 0;">{{option.LinkUrl}}</h5>
+                                </div>
+                                @*<div class="profileImageCoachingStatus">
                                     <img ng-src="{{option.PhotoURL ? option.PhotoURL : '/Images/icons/Microsoft_Word_2013_icon.png' }}" style="margin: auto auto;float: left;height: 35px;width: 35px;" />
-                                </div>                              
+                                </div>*@                              
                                 <div style="float: left;display: flex;width: 5%;height: 100%; position: relative;">
                                     <input style="float: left;margin: auto;" type="checkbox" />
                                 </div>

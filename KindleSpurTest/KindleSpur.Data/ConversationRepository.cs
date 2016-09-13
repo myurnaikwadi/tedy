@@ -716,6 +716,7 @@ namespace KindleSpur.Data
                 {
                     BookMark Link = new BookMark();
                     Link.Id = ObjectId.GenerateNewId();
+                    Link.BookMarkId= Guid.NewGuid().ToString();
                     Link.LinkUrl = bookmark.LinkUrl;
                     Link.DocumentName = bookmark.DocumentName;
                     Link.TagName = bookmark.TagName;

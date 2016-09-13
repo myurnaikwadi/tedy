@@ -201,16 +201,17 @@
                         
                     } else {
                         _selectedData['bookMark'] = {};
-                        _selectedData['bookMark'][iObj.deletedObject.FileName] = iObj.deletedObject;
+                        _selectedData['bookMark'][iObj.deletedObject.DocumentName] = iObj.deletedObject;
                         if(iObj.index > -1) scope.bookMarkArray.splice(iObj.index, 1);
                     }
-                    for (var _key in _selectedData['Artifact']) {
-                        _deletedArray.push(_selectedData['Artifact'][_key]);
+                    
+                    for (var _key in _selectedData['bookMark']) {
+                        _deletedArray.push(_selectedData['bookMark'][_key]);
                     }
                 }
                 console.error(_selectedData)
                  serverCommunication.deleteFilesServer({
-
+                    type :  iObj.type,
                     deletedArray: _deletedArray,
                     successCallBack: function (iObj) {
                         console.error('serverrrrr', iObj)
