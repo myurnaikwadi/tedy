@@ -206,7 +206,7 @@
     var _presessionQuestion = [
       { name: 'The broad level areas that will get covered under these sessions', actionValue: '', type: 'textArea', showLoad: false },
       { name: 'Knowledge areas you would like the recipient to aware of before the session', actionValue: '', type: 'textArea', showLoad: false },
-      { name: 'Your preferred time and mode of communication- Time Box for time,mode of communication ', actionValue: '', type: 'textArea', showLoad: false },
+      { name: 'Your preferred time and mode of communication', actionValue: '', type: 'textArea', showLoad: false },
       { name: 'Five attributes that you would like your coachee/ mentee to know about you', actionValue: '', type: 'textArea', showLoad: false },
     ];
 

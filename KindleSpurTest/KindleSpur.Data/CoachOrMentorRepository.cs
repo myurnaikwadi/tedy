@@ -251,6 +251,8 @@ namespace KindleSpur.Data
                 coachingStatus.customerSatisfactionRating = feedback.customerSatisfactionRating;
                 coachingStatus.FeedBackCount += 1;
                 coachingStatus.FeedbackClosed = feedback.FeedbackClosed;
+                if (feedback.FeedbackStatus == "PRESESSION")
+                    coachingStatus.FeedbackClosed = false;
                 coacheeOrMenteeEntity.CoachingStatus.Add(coachingStatus);
                 
                 //coacheeOrMenteeEntity = _coacheeOrMenteeCollection.FindOneAs<CoacheeOrMentee>(Query.And(Query.EQ("UserId", feedback.Sender), Query.EQ("Role", newRole)));
