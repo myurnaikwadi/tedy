@@ -14,11 +14,15 @@ namespace KindleSpur.Data
         private MongoClient _mongoClient;
         private MongoServer _mongoServer;
         private MongoDatabase _kindleDatabase;
+        
         //This key is for localhost
         private string mongoServerConfig = "mongodb://127.0.0.1:27017";
 
-        //This key is for deployemnt
+        //This key is for production (NOT TO BE UNCOMMENTED WITHOUT DISCUSSION
         //private string mongoServerConfig = "mongodb://52.187.47.86:27017";
+
+        //This key is for pre-staging server
+        //private string mongoServerConfig = "mongodb://52.163.88.129:27017";
 
 
 
