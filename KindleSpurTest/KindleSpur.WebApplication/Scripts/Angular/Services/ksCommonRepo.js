@@ -141,7 +141,7 @@
                     if (iObj.deleteMultiple) {
                         scope.artifactsArray.some(function (iContain, iIndex) {
                             console.error(iIndex)
-                            //debugger
+                          
                             //console.error(iContain)
                             if (iContain.selected) {
                                 _indexArray.push(iIndex);
@@ -155,7 +155,7 @@
                             }
                         });                       
                         if (_indexArray.length == 0) {
-                            alert('please Select ')
+                            alert('please select some artifacts')
                         } else {
                             _indexArray.sort(function (a, b) { return b - a });
                             console.error(_indexArray)
@@ -174,6 +174,7 @@
                     }
 
                 } else {
+                    var _indexArray = [];
                     if (iObj.deleteMultiple) {
                         scope.bookMarkArray.some(function (iContain, iIndex) {
                             console.error(iIndex)
@@ -181,16 +182,16 @@
                                 if (iContain.selected) {
                                     _indexArray.push(iIndex);
                                     if (_selectedData['bookMark'])
-                                        _selectedData['bookMark'][iContain.FileName] = iContain;
+                                        _selectedData['bookMark'][iContain.DocumentName] = iContain;
                                     else {
                                         _selectedData['bookMark'] = {};
-                                        _selectedData['bookMark'][iContain.FileName] = iContain;
+                                        _selectedData['bookMark'][iContain.DocumentName] = iContain;
                                     }
                                 }
                             }
                         });
                         if (_indexArray.length == 0) {
-                            alert('please Select ')
+                            alert('please select some bookmarks')
                         } else {
                             _indexArray.sort(function (a, b) { return b - a });
                             console.error(_indexArray)

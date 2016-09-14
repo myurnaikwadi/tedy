@@ -15,10 +15,11 @@ namespace KindleSpur.WebApplication.Controllers
     {
         // GET: Resources
         readonly string UserId;
+        private ResponseMessage response;
         public ResourcesController()
         {
             UserId = ((IUser)System.Web.HttpContext.Current.Session["User"]).EmailAddress;
-             // AddBookMakrs();
+            // AddBookMakrs();
 
         }
         public ActionResult Index()
@@ -59,7 +60,7 @@ namespace KindleSpur.WebApplication.Controllers
 
                 return null;
             }
-            
+
 
 
 
@@ -124,23 +125,23 @@ namespace KindleSpur.WebApplication.Controllers
                 throw;
             }
 
-            
 
 
 
-           
+
+
         }
 
         [HttpPost]
         public JsonResult AddBookMakrs(User user)
         {
-           
+
 
 
             ConversationRepository cs = new ConversationRepository();
             try
             {
-                return Json(cs.Bookmarks(UserId,user.BookMarks));
+                return Json(cs.Bookmarks(UserId, user.BookMarks));
 
             }
             catch (Exception)
@@ -155,14 +156,16 @@ namespace KindleSpur.WebApplication.Controllers
             UserRepository user = new UserRepository();
             try
             {
-                return Json(user.DeleteResourceFiles(Obj, UserId));
+                if (Obj != null)
+                    user.DeleteResourceFiles(Obj, UserId);
 
             }
-            catch (Exception)
+            catch (Exception ex)
             {
 
-                throw;
+                response.FailureCallBack(ex.Message);
             }
+            return Json(user);
         }
         [HttpPost]
         public JsonResult DeleteBookmarks(List<Models.BookMark> Obj)
@@ -170,14 +173,16 @@ namespace KindleSpur.WebApplication.Controllers
             UserRepository user = new UserRepository();
             try
             {
-                return Json(user.DeleteBookMarks(Obj, UserId));
+                if (Obj != null)
+                    user.DeleteBookMarks(Obj, UserId);
 
             }
-            catch (Exception)
+            catch (Exception ex)
             {
 
-                throw;
+                response.FailureCallBack(ex.Message);
             }
+            return Json(user);
         }
 
 

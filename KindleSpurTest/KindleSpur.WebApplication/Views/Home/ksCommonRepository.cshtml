@@ -126,7 +126,7 @@
                                     <img ng-src="{{option.PhotoURL ? option.PhotoURL : '/Images/icons/Microsoft_Word_2013_icon.png' }}" style="margin: auto auto;float: left;height: 35px;width: 35px;" />
                                 </div>*@                              
                                 <div style="float: left;display: flex;width: 5%;height: 100%; position: relative;">
-                                    <input style="float: left;margin: auto;" type="checkbox" />
+                                    <input style="float: left;margin: auto;" value="true" ng-model="option.selected" type="checkbox" />
                                 </div>
                                 <div ng-show="extraParam.deleteIcon == true" class="profileImageCoachingStatus">
                                     <img src="~/Images/delete.png" ng-click="deleteAttachment({ deleteMultiple : false , type : 'bookMark' , deletedObject : option , index : $index })" style="margin: auto; float: left;height: 15px;width: 20px;" />
