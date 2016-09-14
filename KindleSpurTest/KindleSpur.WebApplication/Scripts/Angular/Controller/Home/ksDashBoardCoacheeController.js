@@ -993,7 +993,7 @@
             //senderEmail: SenderEmail,
             //receiverEmail: ReceiverEmail,
             ConversationType: "Coaching",
-
+            Role : 'Coachee',
             ParentId: $scope.openConversation.ConversationParentId,
             successCallBack: function (iObj) {
                 console.debug('In successCallBack', iObj);

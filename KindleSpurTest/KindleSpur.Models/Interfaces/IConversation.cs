@@ -19,7 +19,7 @@ namespace KindleSpur.Models.Interfaces
         string SendOrReceive { get; set; }
         //List<Message> Content { get; set; }
         //int group_id { get; set; }
-        Boolean isRead { get; set; }
+        string isRead { get; set; }
         Boolean IsVerified { get; set; }
         string CreateDate { get; set; }
         DateTime UpdateDate { get; set; }

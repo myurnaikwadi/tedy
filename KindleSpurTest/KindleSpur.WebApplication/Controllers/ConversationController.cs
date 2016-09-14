@@ -50,6 +50,8 @@ namespace KindleSpur.WebApplication.Controllers
         //    return Json(new { Result = result }, JsonRequestBehavior.AllowGet);
         //}
 
+
+        //Coachee or Mentee list in the communication window
         public ActionResult GetConversationForSender(string loggedEmail, string ConversationType)
         {
             try
@@ -132,13 +134,14 @@ namespace KindleSpur.WebApplication.Controllers
 
         }
 
-        public ActionResult GetConversationDetails(string ParentId, string ConversationType)
+        //This method is used to retrieve the chat
+        public ActionResult GetConversationDetails(string ParentId, string ConversationType, string Role)
         {
             try
             {
 
                 ConversationRepository _repo = new ConversationRepository();
-                var result = _repo.GetConversation(ParentId, ConversationType).ToJson();
+                var result = _repo.GetConversation(ParentId, ConversationType, Role).ToJson();
                 return Json(new { Result = result }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception)

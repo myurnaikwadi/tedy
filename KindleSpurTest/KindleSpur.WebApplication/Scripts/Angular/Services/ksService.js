@@ -587,7 +587,7 @@ app.factory('serverCommunication', function ($http) {
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                data: { ParentId: iObj.ParentId, ConversationType: iObj.ConversationType }
+                data: { ParentId: iObj.ParentId, ConversationType: iObj.ConversationType, Role: iObj.Role, }
             }
             $http(req).then(iObj.successCallBack, iObj.failureCallBack);
         },

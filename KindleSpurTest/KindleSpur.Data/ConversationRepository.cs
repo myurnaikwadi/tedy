@@ -118,6 +118,9 @@ namespace KindleSpur.Data
                         return false;
                     }
                 }
+
+                conversationData.isRead = "Coachee";
+                conversationData.SendOrReceive = "Coach";
                 conversationData.IsRejected = false;
 
                 _conversationCollection.Insert(conversationData);
@@ -201,6 +204,8 @@ namespace KindleSpur.Data
                 conversationDetail.UpdateDate = DateTime.Now;
                 conversationDetail.ConversationParentId = ParentId;
                 conversationDetail.IsVerified = isVerified;
+                conversationDetail.SendOrReceive = "Coach";
+                conversationDetail.isRead = "Coachee";
                 if (isVerified)
                 {
                     MongoCollection _coachOrMentorCollection;
@@ -276,6 +281,7 @@ namespace KindleSpur.Data
             return _transactionStatus;
         }
 
+        //Coach or Mentor list in the communication window
         public List<BsonDocument> ListConversationForReceiver(string loggedEmail, string ConversationType)
         {
             List<BsonDocument> _categories = new List<BsonDocument>();
@@ -283,31 +289,9 @@ namespace KindleSpur.Data
 
             try
             {
-                //var _query = Query.And(Query.Or(Query<Conversation>.EQ(p => p.SenderEmail, loggedEmail), Query<Conversation>.EQ(p => p.ReceiverEmail, loggedEmail)), Query<Conversation>.EQ(p => p.IsVerified, true), Query<Conversation>.EQ(p1 => p1.ConversationType, ConversationType));
-
-
-                //_checkUser = _conversationCollection.Find(_query).ToList();
-                //if (_checkUser.Count() > 0)
-                //{
                 var _query1 = Query.And(Query<Conversation>.EQ(p => p.ReceiverEmail, loggedEmail), Query<Conversation>.EQ(p => p.IsVerified, true), Query<Conversation>.EQ(p => p.IsRejected, false), Query<Conversation>.EQ(p1 => p1.ConversationType, ConversationType));
                 _categories = _conversationCollection.FindAs<BsonDocument>(_query1).SetFields(Fields.Exclude("_id").Include("ReceiverEmail", "SenderEmail", "skill", "ConversationType", "ConversationId", "ConversationParentId")).Distinct().ToList();
 
-                //}
-                //else
-                //{
-                //    var _query1 = //Query.Or(
-                //                  // Query.And(
-                //                  //             Query<Conversation>.EQ(p => p.SenderEmail, loggedEmail), Query<Conversation>.EQ(p => p.IsVerified, true)),
-                //    Query.And(
-                //                Query<Conversation>.EQ(p => p.ReceiverEmail, loggedEmail), Query<Conversation>.EQ(p => p.IsVerified, true), Query<Conversation>.EQ(p1 => p1.ConversationType, ConversationType))
-                //        ;
-                //    _categories = _conversationCollection.Find(
-                //    _query1
-                //    ).SetFields(Fields.Exclude("_id").Include("SenderEmail", "skill", "ConversationType", "ConversationId", "ConversationParentId")).Distinct().ToList();
-                //}
-
-
-                //_categories = _conversationCollection.Find().SetFields(Fields.Exclude("_id")).ToList();
             }
             catch (MongoException ex)
             {
@@ -333,6 +317,8 @@ namespace KindleSpur.Data
 
             return _categories;
         }
+
+        //Coachee or Mentee list in the communication window
         public List<BsonDocument> ListConversationForSender(string loggedEmail, string ConversationType)
         {
             List<BsonDocument> _categories = new List<BsonDocument>();
@@ -341,9 +327,8 @@ namespace KindleSpur.Data
             try
             {
 
-                _categories = _conversationCollection.FindAs<BsonDocument>(Query.And(Query<Conversation>.EQ(p => p.SenderEmail, loggedEmail), Query<Conversation>.EQ(p => p.IsVerified, true), Query<Conversation>.EQ(p1 => p1.ConversationType, ConversationType))).SetFields(Fields.Exclude("_id").Include("SenderEmail", "ReceiverEmail", "skill", "ConversationType", "ConversationId", "ConversationParentId")).Distinct().ToList();
+                _categories = _conversationCollection.FindAs<BsonDocument>(Query.And(Query<Conversation>.EQ(p => p.SenderEmail, loggedEmail), Query<Conversation>.EQ(p => p.IsVerified, true), Query<Conversation>.EQ(p1 => p1.ConversationType, ConversationType), Query<Conversation>.EQ(p2 => p2.SendOrReceive, "Coachee"), Query<Conversation>.EQ(p3 => p3.isRead, "Coach"))).SetFields(Fields.Exclude("_id").Include("SenderEmail", "ReceiverEmail", "skill", "ConversationType", "ConversationId", "ConversationParentId")).Distinct().ToList();
 
-                //_categories = _conversationCollection.Find().SetFields(Fields.Exclude("_id")).ToList();
             }
             catch (MongoException ex)
             {
@@ -494,11 +479,14 @@ namespace KindleSpur.Data
 
         }
 
-        public List<BsonDocument> GetConversation(string ParentId, string ConversationType)
+        public List<BsonDocument> GetConversation(string ParentId, string ConversationType, string Role)
         {
             List<BsonDocument> _categories = new List<BsonDocument>();
 
-            _categories = _conversationCollection.FindAs<BsonDocument>(Query.And(Query.EQ("ConversationParentId", ParentId), Query.EQ("ConversationType", ConversationType))).ToList();
+            string newRole = Role == "Coach" ? "Coachee" : "Mentee";
+
+            _categories = _conversationCollection.FindAs<BsonDocument>(Query.And(Query.EQ("ConversationParentId", ParentId), Query.EQ("ConversationType", ConversationType), Query.EQ("SendOrReceive",Role), Query.EQ("isRead", newRole))).ToList();
+
             var _userDetailsCollection = con.GetCollection("UserDetails");
             try
             {

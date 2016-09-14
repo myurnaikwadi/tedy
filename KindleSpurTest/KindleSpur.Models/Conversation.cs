@@ -18,7 +18,7 @@ namespace KindleSpur.Models
         //public List<Message> Content { get; set; }
         public string SendOrReceive { get; set; }
         //public int group_id { get; set; }
-        public Boolean isRead { get; set; }
+        public string isRead { get; set; }
         public Boolean IsVerified { get; set; }
         public Boolean IsRejected { get; set; }
         public string CreateDate { get; set; }

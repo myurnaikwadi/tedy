@@ -816,6 +816,7 @@
             //senderEmail: SenderEmail,
             //receiverEmail: ReceiverEmail,
             ConversationType: "Mentoring",
+            Role: 'Mentor',
             ParentId: $scope.openConversation.ConversationParentId,
             successCallBack: function (iObj) {
                 console.debug('In showSelectedConversation ----- ', iObj); 

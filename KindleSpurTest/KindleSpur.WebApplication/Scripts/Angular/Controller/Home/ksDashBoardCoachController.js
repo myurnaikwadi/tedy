@@ -832,6 +832,7 @@
         serverCommunication.getConversationDetails({
             //senderEmail: SenderEmail,
             //receiverEmail: ReceiverEmail,
+            Role : 'Coach',
             ConversationType: "Coaching",
             ParentId : $scope.openConversation.ConversationParentId,
             successCallBack: function (iObj) {
