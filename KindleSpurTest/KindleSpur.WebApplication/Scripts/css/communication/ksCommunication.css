@@ -718,3 +718,6 @@ width: 40%;
     margin: auto !important;
      word-break:break-all;
 }
+.heightClassFeed {
+    height: 35px !important;
+}
