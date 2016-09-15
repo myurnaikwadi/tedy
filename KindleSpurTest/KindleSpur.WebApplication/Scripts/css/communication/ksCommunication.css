@@ -373,6 +373,7 @@ width: 40%;
 .conversationList{
 	float : left;
 	width : 99%;
+    transition: all 0.5s ease;
 	height : 13%;
 	border: 1px solid #ddd;
     margin: 4px 0 0 0;
@@ -720,4 +721,8 @@ width: 40%;
 }
 .heightClassFeed {
     height: 35px !important;
+}
+.expandedSelectedRequest {
+    height: 35% !important;
+    transition: all 0.5s ease;
 }

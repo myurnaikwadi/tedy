@@ -29,7 +29,7 @@
                 </div>*@
                 <div class="monthDayInnerEventRow" ng-show="dateNumberArr.meetingArray.length>0">
                     <h5 class="eliipsisClass fontClass genericPointerClass" ng-repeat="request in dateNumberArr.meetingArray | limitTo : 3"  ng-class="{ coachThemeColor : request.Role == 'Coach' , coacheeThemeColor : request.Role == 'Coachee' , mentorThemeColor : request.Role == 'Mentor' , menteeThemeColor : request.Role == 'Mentee' }">
-                        {{request.Subject}}
+                        {{request.ConversationType ? (request.ConversationType+' request for skill ') : request.Subject}}
                     </h5>                    
                 </div>          
                 <div class="monthDayInnerEventRow" style="height: 15px;display:flex;" ng-show="dateNumberArr.meetingArray.length > 3">
@@ -50,19 +50,35 @@
                         <div class="podcastHeader">
                             <h5 style="margin: auto;margin-left: 2%;" class="fontClass ValueFeedsHeade">REQUEST</h5>
                         </div>
-                        <div style="height:90%;width:100%;float:left">
-                            <div class="conversationList" ng-class="{ highlightedSelctedConversationParent  : conversation.selectedConversation == true}" ng-click="conversationLoad($index,conversation)" ng-repeat="conversation in conversationListNew">
+                        <div style="height:90%;width:100%;float:left;overflow: auto;">
+                            <div class="conversationList" style="height: 17%;" ng-class="{ expandedSelectedRequest  : conversation.selectedConversation == true}" ng-click="expandRequest($index,conversation,invitesRequest)" ng-repeat="conversation in invitesRequest">
                                 <div class="conversationParentDiv">
-                                    <div class="imageConversation">
-                                        <img ng-class="{ activeSessionCLass :  conversation.sessionClosed == false, closeSessionClass :  conversation.sessionClosed == true }" style="margin:auto auto;width: 40px;height: 40px;border-radius: 50%;" src="~/Images/icons/If no Profile photo.png" />
+                                    <div ng-show="conversation.selectedConversation == true" class="highlightedSelctedConversation"></div>
+                                    <div class="imageConversation" ng-style="{ 'height' : conversation.selectedConversation == true ? '50%' : '100%'}">
+                                        <img ng-if="!conversation.MeetingId" ng-class="{ activeSessionCLass :  conversation.expiredMeeting == false, closeSessionClass :  conversation.expiredMeeting == true }" ng-src="{{ conversation.Photo ? conversation.Photo  : 'Images/icons/If no Profile photo.png'}}" style="margin:auto auto;width: 40px;height: 40px;border-radius: 50%;" src="~/Images/icons/If no Profile photo.png" />
+                                        <img ng-if="conversation.MeetingId" ng-class="{ activeSessionCLass :  conversation.expiredMeeting == false, closeSessionClass :  conversation.expiredMeeting == true }" ng-src="{{ conversation.FromPhoto ? conversation.FromPhoto  : 'Images/icons/If no Profile photo.png'}}" style="margin:auto auto;width: 40px;height: 40px;border-radius: 50%;" src="~/Images/icons/If no Profile photo.png" />
                                     </div>
-                                    <div class="nameMessageConversation">
-                                        <div style="margin:auto auto;float:left; width: 100%;height: 55%;">
-                                            <h5 class="textFormatConversation fontClass" style="color:#797979;">{{(conversation.FirstName +" "+conversation.LastName) | uppercase }}</h5>
-                                            <h5 class="textFormatConversation eliipsisClass fontClass" style="color:#aaa; font-size: 12px;font-weight: 100;">{{conversation.skill  | uppercase }}</h5>
+                                    <div class="nameMessageConversation"  ng-style="{'height' : conversation.selectedConversation == true ? '50%' : '100%'}">
+                                        <div ng-if="!conversation.MeetingId" style="margin:auto auto;float:left; width: 100%;height: 55%;">
+                                            <h5 class="textFormatConversation fontClass" style="color:#797979;text-align: left;">{{(conversation.FirstName +" "+conversation.LastName) | uppercase }}</h5>
+                                            <h5 class="textFormatConversation eliipsisClass fontClass" style="color:#aaa;text-align: left; font-size: 12px;font-weight: 100;">{{conversation.skill  | uppercase }}</h5>
+                                        </div>
+                                        <div ng-if="conversation.MeetingId" style="margin:auto auto;float:left; width: 100%;height: 55%;">
+                                            <h5 class="textFormatConversation fontClass" style="color:#797979;text-align: left;">{{(conversation.FromFirstName +" "+conversation.FromLastName) | uppercase }}</h5>
+                                            <h5 class="textFormatConversation eliipsisClass fontClass" style="text-align: left;color:#aaa; font-size: 12px;font-weight: 100;">{{conversation.SkillName  | uppercase }}</h5>
                                         </div>
                                     </div>
-                                    <div ng-show="conversation.selectedConversation == true" class="highlightedSelctedConversation"></div>
+                                    <div class="nameMessageConversation" ng-style="{'width':'99%', 'height' : conversation.selectedConversation == true ? '50%' : '0%', 'overflow':'hidden'}">
+                                        <div ng-if="conversation.MeetingId" class="meetingPersonNameStrc" style="width: 100%;height: 40%;margin-left: 0;">
+                                            <button style="background-color: white;border: 1px solid #D60500;color: #D60500;font-size: 10px;padding: 5px;margin: auto;" class="signupButton fontClass" ng-click="invitesRequest.splice($index,1);updateMeeting(false,conversation)">DECLINE</button>
+                                            <button style="background-color: white;border: 1px solid #06d600;color: #06d600;font-size: 10px;padding: 5px;margin: auto;" class="signupButton fontClass" ng-click="invitesRequest.splice($index,1);updateMeeting(true,conversation)">ACCEPT</button>
+
+                                        </div>
+                                        <div ng-if="!conversation.MeetingId" class="meetingPersonNameStrc" style="width: 100%;height: 40%;margin-left: 0;">
+                                            <button style="background-color: white;border: 1px solid #D60500;color: #D60500;font-size: 10px;padding: 5px;margin: auto;" class="signupButton fontClass" ng-click="invitesRequest.splice($index,1);updateConversation(false, loggedEmail, conversation.EmailAddress,conversation)">DECLINE</button>
+                                            <button style="background-color: white;border: 1px solid #06d600;color: #06d600;font-size: 10px;padding: 5px;margin: auto;" class="signupButton fontClass" ng-click="invitesRequest.splice($index,1);updateConversation(true, loggedEmail, conversation.EmailAddress,conversation)">ACCEPT</button>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -72,16 +88,54 @@
                         <div class="podcastHeader">
                             <h5 class="fontClass" style="margin:auto;margin-left: 2%;font-size:14px;padding-left: 0;">SCHEDULED MEETINGS</h5>
                         </div>
-                        <div class="ImpactZoneChildDiv" style="height: 90%;">                            
-
+                        <div class="ImpactZoneChildDiv" style="height: 90%;overflow: auto;">                            
+                            <div class="conversationList" style="height: 17%;" ng-class="{ expandedSelectedRequest  : conversation.selectedConversation == true}" ng-click="expandRequest($index,conversation,meetingRequest)" ng-repeat="conversation in meetingRequest">
+                                <div class="conversationParentDiv">
+                                    <div ng-show="conversation.selectedConversation == true" class="highlightedSelctedConversation"></div>
+                                    <div class="imageConversation" ng-style="{ 'height' : conversation.selectedConversation == true ? '50%' : '100%'}">                                      
+                                        <img ng-class="{ activeSessionCLass :  conversation.expiredMeeting == false, closeSessionClass :  conversation.expiredMeeting == true }" ng-src="{{ conversation.FromPhoto ? conversation.FromPhoto  : 'Images/icons/If no Profile photo.png'}}" style="margin:auto auto;width: 40px;height: 40px;border-radius: 50%;" src="~/Images/icons/If no Profile photo.png" />
+                                    </div>
+                                    <div class="nameMessageConversation" ng-style="{'height' : conversation.selectedConversation == true ? '50%' : '100%'}">                                        
+                                        <div style="margin:auto auto;float:left; width: 100%;height: 55%;">
+                                            <h5 class="textFormatConversation fontClass" style="color:#797979;text-align: left;">{{(conversation.FromFirstName +" "+conversation.FromLastName) | uppercase }}</h5>
+                                            <h5 class="textFormatConversation eliipsisClass fontClass" style="color:#aaa;text-align: left; font-size: 12px;font-weight: 100;">{{conversation.SkillName  | uppercase }}</h5>
+                                        </div>
+                                    </div>
+                                    <div class="nameMessageConversation" ng-style="{'width':'99%', 'height' : conversation.selectedConversation == true ? '50%' : '0%', 'overflow':'hidden'}">
+                                        <div class="meetingPersonNameStrc" style="width: 100%;height: 40%;margin-left: 0;">
+                                            <button style="background-color: white;border: 1px solid #D60500;color: #D60500;font-size: 10px;padding: 5px;margin: auto;" class="signupButton fontClass" ng-click="meetingRequest.splice($index,1);updateMeeting(false,notification)">DECLINE</button>
+                                            <button style="background-color: white;border: 1px solid #06d600;color: #06d600;font-size: 10px;padding: 5px;margin: auto;" class="signupButton fontClass" ng-click="meetingRequest.splice($index,1);updateMeeting(true,notification)">ACCEPT</button>
+                                        </div>                                       
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div class="podcastsContainer col-md-5 mosuehover" style="width: 33.33%;background-color: #f3f3f3;">
                         <div class="podcastHeader">
                             <h5 class="fontClass" style="margin:auto;margin-left: 2%;font-size:14px;padding-left: 0;">UPCOMING MEETINGS</h5>
                         </div>
-                        <div class="ImpactZoneChildDiv" style="height: 90%;">
-                            
+                        <div class="ImpactZoneChildDiv" style="height: 90%;overflow: auto;">
+                            <div class="conversationList" style="height: 17%;" ng-class="{ expandedSelectedRequest  : conversation.selectedConversation == true}" ng-click="expandRequest($index,conversation,upcomingMeetingRequest)" ng-repeat="conversation in upcomingMeetingRequest">
+                                <div class="conversationParentDiv">
+                                    <div ng-show="conversation.selectedConversation == true" class="highlightedSelctedConversation"></div>
+                                    <div class="imageConversation" ng-style="{ 'height' : conversation.selectedConversation == true ? '50%' : '100%'}">
+                                        <img ng-class="{ activeSessionCLass :  conversation.expiredMeeting == false, closeSessionClass :  conversation.expiredMeeting == true }" ng-src="{{ conversation.FromPhoto ? conversation.FromPhoto  : 'Images/icons/If no Profile photo.png'}}" style="margin:auto auto;width: 40px;height: 40px;border-radius: 50%;" src="~/Images/icons/If no Profile photo.png" />
+                                    </div>
+                                    <div class="nameMessageConversation" ng-style="{'height' : conversation.selectedConversation == true ? '50%' : '100%'}">
+                                        <div style="margin:auto auto;float:left; width: 100%;height: 55%;">
+                                            <h5 class="textFormatConversation fontClass" style="color:#797979;text-align: left;">{{(conversation.FromFirstName +" "+conversation.FromLastName) | uppercase }}</h5>
+                                            <h5 class="textFormatConversation eliipsisClass fontClass" style="color:#aaa; font-size: 12px;font-weight: 100;text-align: left;">{{conversation.SkillName  | uppercase }}</h5>
+                                        </div>
+                                    </div>
+                                    <div class="nameMessageConversation" ng-style="{'width':'99%', 'height' : conversation.selectedConversation == true ? '50%' : '0%', 'overflow':'hidden'}">
+                                        <div class="meetingPersonNameStrc" style="width: 100%;height: 40%;margin-left: 0;">
+                                            <button style="background-color: white;border: 1px solid #D60500;color: #D60500;font-size: 10px;padding: 5px;margin: auto;" class="signupButton fontClass" ng-click="notificationData.splice($index,1);updateMeeting(false,notification)">DECLINE</button>
+                                            <button style="background-color: white;border: 1px solid #06d600;color: #06d600;font-size: 10px;padding: 5px;margin: auto;" class="signupButton fontClass" ng-click="notificationData.splice($index,1);updateMeeting(true,notification)">ACCEPT</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

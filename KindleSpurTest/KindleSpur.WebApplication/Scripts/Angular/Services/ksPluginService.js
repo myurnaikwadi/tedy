@@ -18,6 +18,8 @@ app.directive('monthly', function (dateServiceForMonthlyCalendar, $rootScope, se
             if ($scope.moduleName)
                 $rootScope.currentModule = $scope.moduleName;
             $scope.monthDate = new Date();
+            $scope.loggedEmail = $rootScope.loggedDetail.EmailAddress;
+            $scope.ApprovalName = $rootScope.loggedDetail.FirstName + " " + $rootScope.loggedDetail.LastName;
             $scope.dateNavigation = function (iValue) {
                 if (iValue == '1') {
                     $scope.monthDate.setMonth($scope.monthDate.getMonth() + 1);
@@ -40,6 +42,64 @@ app.directive('monthly', function (dateServiceForMonthlyCalendar, $rootScope, se
                 msIsotopeFunc.prototype.genericHeightChange(_obj);
             };
 
+            $scope.expandRequest = function (iIndex, iRequest, iArr) {
+                for (var k = 0 ; k < iArr.length ; k++) {
+                    iArr[k].selectedConversation = false;
+                }
+                iRequest.selectedConversation = true;                
+            };
+            $scope.updateConversation = function (isVerfied, SenderEmail, ReceiverEmail, iNotificationDash) {
+                //$scope.conversation.IsVerified = isVerfied;
+              //  debugger
+              //  console.error(iNotificationDash);
+                var contentText = "";
+                if (isVerfied != false)
+                    contentText = iNotificationDash.ConversationType + ' Request by ' + $scope.ApprovalName + ' has been ' + (isVerfied == true ? 'accepted' : 'Declined');
+                else
+                    contentText = null;
+                var _id = iNotificationDash.ConversationId + ":CHT#" + (Date.now()) + (Math.floor((Math.random() * 10) + 1));
+                var _object = {
+                    SenderEmail: SenderEmail,
+                    ReceiverEmail: ReceiverEmail,
+                    Content: contentText,
+                    IsVerified: isVerfied,
+                    ConversationClosed: false,
+                    ConversationType: iNotificationDash.ConversationType,
+                    IsRejected: isVerfied == false ? true : false,
+                    Skill: iNotificationDash.skill,
+                    ConversationId: _id,
+                    ConversationParentId: iNotificationDash.ConversationId,
+                }
+            
+                serverCommunication.updateConversation({
+                    loggedUserDetails: _object,
+                    ReceiverName: $scope.ApprovalName,
+                    Role: iNotificationDash.ConversationType == "Coaching" ? 'Coachee' : 'Mentee',
+                    successCallBack: function () {
+                        //$scope.menuClick(5, "CONVERSATIONS");               
+                        console.debug('In successCallBack');
+
+                    },
+                    failureCallBack: function (e) {
+                        console.debug('In failureCallBack' + e);
+                    }
+                });
+            };
+
+            $scope.updateMeeting = function (isVerfied, iNotification) {
+                //console.error(iNotification)
+                serverCommunication.MeetingSchedularUpdate({
+                    MeetingId: iNotification.MeetingId,
+                    flag: isVerfied,
+                    successCallBack: function () {
+                        console.debug('In successCallBack');
+                        $scope.conversationRequest();
+                    },
+                    failureCallBack: function (e) {
+                        console.debug('In failureCallBack' + e);
+                    }
+                });
+            };
             $scope.expandIndex = -1;
             $scope.expandDay = null;
             $scope.cellClickFunc = function (iCell, iIndex, iEvent) {
@@ -47,6 +107,9 @@ app.directive('monthly', function (dateServiceForMonthlyCalendar, $rootScope, se
                 $scope.expandIndex = iIndex;
                 var _tempHeight = document.getElementById('monthlycontroller').getBoundingClientRect().height;
                 $scope.expandDay = iCell;
+                $scope.invitesRequest = [];
+                $scope.meetingRequest = [];
+                $scope.upcomingMeetingRequest = [];
                 //_dayWeekMonthView.expandIndex = iIndex;
                 var _object = {
                     iHeight: _tempHeight / 6,
@@ -60,22 +123,62 @@ app.directive('monthly', function (dateServiceForMonthlyCalendar, $rootScope, se
                 msIsotopeFunc.prototype.expandForFloat(_object);
                 console.error($scope.monthlyArray[iIndex].styleObj)
                 $scope.monthlyArray[iIndex].styleObj['margin-top'] = '0';
+                if (iCell.inviteObject && Object.keys(iCell.inviteObject).length > 0) {
+                    if (iCell.inviteObject.invite && Object.keys(iCell.inviteObject.invite).length > 0) {
+                        $scope.invitesRequest = [];
+                        for (var key in iCell.inviteObject.invite) {
+                            $scope.invitesRequest.push(iCell.inviteObject.invite[key]);
+                        }
+                    }
+                    if (iCell.inviteObject.meeting && Object.keys(iCell.inviteObject.meeting).length > 0) {
+                        $scope.meetingRequest = [];
+                        for (var key in iCell.inviteObject.meeting) {
+                            if (iCell.inviteObject.meeting[key].IsVerified) {
+                                $scope.meetingRequest.push(iCell.inviteObject.meeting[key]);
+                                if (new Date(iCell.inviteObject.meeting[key].StartDate) > new Date()) {
+                                    $scope.upcomingMeetingRequest.push(angular.copy(iCell.inviteObject.meeting[key]));
+                                }
+                               
+                            } else {
+                                iCell.inviteObject.meeting[key].expiredMeeting = false;
+                                if (new Date(iCell.inviteObject.meeting[key].StartDate) < new Date()) {
+                                    iCell.inviteObject.meeting[key].expiredMeeting = true;
+                                }
+                                $scope.invitesRequest.push(iCell.inviteObject.meeting[key]);
+                            }
+                        }
+                    }
+                }
+                  
             };
 
             var _renderMeeting = function (iObj) {
                 console.error(iObj)
+              //  debugger
                 for (var k = 0 ; k < iObj.data.length ; k++) {
-                    iObj.data[k].StartDate = new Date(Number(iObj.data[k].StartDate.split('(')[1].split(')')[0]));
-                    iObj.data[k].EndDate = new Date(Number(iObj.data[k].EndDate.split('(')[1].split(')')[0]));                  
-                    var _indexForCheck = dateServiceForMonthlyCalendar.getDayDifference({ startTime: new Date($scope.monthlyArray[0].cellDate), endTime: new Date(iObj.data[k].StartDate) })
-                    var _arrayIndex = _indexForCheck;
-                    console.error(_arrayIndex)
+                    iObj.data[k].UpdateDate && (iObj.data[k].UpdateDate = new Date(Number(iObj.data[k].UpdateDate.split('(')[1].split(')')[0])));
+                    iObj.data[k].StartDate && (iObj.data[k].StartDate = new Date(Number(iObj.data[k].StartDate.split('(')[1].split(')')[0])));
+                    iObj.data[k].EndDate && (iObj.data[k].EndDate = new Date(Number(iObj.data[k].EndDate.split('(')[1].split(')')[0])));
+                    var _indexForCheck = -1;
+                    if (iObj.data[k].StartDate)
+                        _indexForCheck = dateServiceForMonthlyCalendar.getDayDifference({ startTime: new Date($scope.monthlyArray[0].cellDate), endTime: new Date(iObj.data[k].StartDate) })
+                    else if (iObj.data[k].UpdateDate)
+                        _indexForCheck = dateServiceForMonthlyCalendar.getDayDifference({ startTime: new Date($scope.monthlyArray[0].cellDate), endTime: new Date(iObj.data[k].UpdateDate) })
+                    var _arrayIndex = _indexForCheck -1;
+                 //   console.error(_arrayIndex)
                     if (_arrayIndex > -1) {
                         if (iObj.data[k].ConversationType == "Coaching" || iObj.data[k].ConversationType == "Mentoring") {
                             iObj.data[k].Role = iObj.data[k].ConversationType == "Coaching" ? 'Coach' : 'Mentor';
                         }
                         if (!$scope.monthlyArray[_arrayIndex].meetingArray) $scope.monthlyArray[_arrayIndex].meetingArray = [];
                         $scope.monthlyArray[_arrayIndex].meetingArray.push(iObj.data[k]);
+                        if (!$scope.monthlyArray[_arrayIndex].inviteObject) $scope.monthlyArray[_arrayIndex].inviteObject = { invite: {}, meeting: {}};
+                        if (iObj.invite) {
+                            $scope.monthlyArray[_arrayIndex].inviteObject['invite'][iObj.data[k].ConversationId] = iObj.data[k];
+                        }
+                        if (iObj.Meeting) {
+                            $scope.monthlyArray[_arrayIndex].inviteObject['meeting'][iObj.data[k].MeetingId] = iObj.data[k];
+                        }
                     }
                 }
                // console.error($scope.monthlyArray)
@@ -87,7 +190,15 @@ app.directive('monthly', function (dateServiceForMonthlyCalendar, $rootScope, se
                     ToDate: $scope.monthlyArray[$scope.monthlyArray.length - 1].cellDate.toJSON(),
                     successCallBack: function (iObj) {
                         console.debug('In GetAllMeetingPerMonth', iObj);
-                        _renderMeeting(iObj);
+                        if(iObj.data){
+                            if (iObj.data['invite'] && iObj.data['invite'].length > 0) {
+                                _renderMeeting({ data: iObj.data['invite'], invite: true });
+                            }
+                            if (iObj.data['meeting'] && iObj.data['meeting'].length > 0) {
+                                _renderMeeting({ data: iObj.data['meeting'] ,Meeting : true });
+                            }
+                        }
+                       
                         // $scope.loadingMiddleObject = { showLoading: false, loadingMessage: 'Loading' };
                     },
                     failureCallBack: function (iObj) {

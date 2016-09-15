@@ -154,7 +154,7 @@
         }
                 
         .userRoleWizardParent {
-            display: inline-flex;
+            display: block;
             overflow: auto;
             float: left;
             overflow-x: scroll;
@@ -1234,7 +1234,7 @@ border: 1px solid #999;
     transition: all 0.7s ease;
 }
 .inlineBlockClass {
-    display: block;
+    display: block !important;
     transition: all 0.7s ease;
     overflow-x: hidden;
     overflow-y: auto;
