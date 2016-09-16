@@ -1,4 +1,5 @@
-﻿<div class="notificationWiz" ng-class="{ notificationWizAnimation : notification.showFlag == true , gridViewLoadedParentClass : gridViewLoaded == true }" ng-repeat="notification in notificationData">
+﻿<place-Holder style="float: left;width: 100%;height: 100%;" message="No Invites" ng-show="notificationData.length == 0"></place-Holder>
+<div class="notificationWiz" ng-class="{ notificationWizAnimation : notification.showFlag == true , gridViewLoadedParentClass : gridViewLoaded == true }" ng-repeat="notification in notificationData">
     <div class="" style="width: 100%;height: 100%;float: left;position: relative;" ng-show="gridViewLoaded">
         @*<img ng-if="notification.Meeting" style="position:absolute;width:25px;height:22px;top:6px;right:9px;" src="~/Images/business-meeting-of-males.png" />
         <img ng-if="!notification.Meeting" style="position:absolute;width:25px;height:22px;top:6px;right:9px;" src="~/Images/businessmen-talking-in-business-meeting.png" />*@

@@ -39,8 +39,8 @@
 
         </div>
         <div class="newApplicationStripInvitation" ng-click="$event.stopPropagation();" ng-init="load=false" ng-class="{ AminationStrip : load == true }">
-            <div id="1" class="roundedCornerShape" ng-click="load=!load;invitation={}">
-                <img id="1" ng-hide="load" src="~/Images/Mail_Send_Email_Envelope.png" />
+            <div  id="1" title="invite your friends to register" class="roundedCornerShape" ng-click="load=!load;invitation={}">
+                <img id="1" title="invite your friends to register" ng-hide="load" src="~/Images/Mail_Send_Email_Envelope.png" />
                 <img id="1" ng-show="load" src="~/Images/cancelWhiteIcon.png" />
             </div>
             <div class="stripInvitationBody">
