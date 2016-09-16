@@ -11,7 +11,7 @@
             <div ng-init="gridViewLoaded = false" ng-class="{ gridViewLoadedClassForInbox : gridViewLoaded == true }"style="display: flex;"class="userNotificationParent">                
                 <div class="userRoleWizardParent" style="margin: auto;width: 64%;position: relative;" ng-mouseover="showRotateIcon = true;" ng-mouseleave="showRotateIcon = false;">
                     <img class="rotateIconDownWord" ng-show="showRotateIcon && gridViewLoaded == false" ng-class="{ rotateIconupWord : gridViewLoaded == true }" style="width:35px;height : 35px;z-index: 1;padding: 5px;cursor:pointer;position:absolute;right:0;top: 13px;" ng-click="gridViewLoaded =! gridViewLoaded;loadGridView()" src="~/Images/left_circle.png" />
-                    <invites-View style="overflow-x: scroll;overflow-y: hidden;display: inline-flex;width: 100%;height: 100%;float: left;position: relative;" role="All" required-Field="['REQ','MTG']"></invites-View>
+                    <invites-View  ng-class="{ inlineBlockClass : gridViewLoaded == true }" style="overflow-x: scroll;overflow-y: hidden;display: inline-flex;width: 100%;height: 100%;float: left;position: relative;" role="All" required-Field="['REQ','MTG']"></invites-View>
                 </div>
             </div>
             <div class="userRolesParent" ng-class="{ gridViewLoadedClass : gridViewLoaded == true }">

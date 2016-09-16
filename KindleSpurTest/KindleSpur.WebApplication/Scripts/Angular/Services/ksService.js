@@ -672,7 +672,7 @@ app.factory('serverCommunication', function ($http) {
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                data: { FromDate: iObj.FromDate, ToDate: iObj.ToDate }
+                data: { FromDate: iObj.FromDate, ToDate: iObj.ToDate, Value: iObj.Value }
             }
             console.error(req)
             $http(req).then(iObj.successCallBack, iObj.failureCallBack);

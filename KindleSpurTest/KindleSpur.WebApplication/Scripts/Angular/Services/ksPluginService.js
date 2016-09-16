@@ -41,12 +41,35 @@ app.directive('monthly', function (dateServiceForMonthlyCalendar, $rootScope, se
                 };
                 msIsotopeFunc.prototype.genericHeightChange(_obj);
             };
-
-            $scope.expandRequest = function (iIndex, iRequest, iArr) {
-                for (var k = 0 ; k < iArr.length ; k++) {
-                    iArr[k].selectedConversation = false;
+            $scope.expandRequestFlag = -1;           
+            $scope.expandRequest = function (iEvent, iIndex) {               
+                if (iEvent) iEvent.stopPropagation();
+                if ($scope.expandRequestFlag == iIndex) {
+                    $scope.expandRequestFlag = -1;
+                } else {
+                    $scope.expandRequestFlag = iIndex;
                 }
-                iRequest.selectedConversation = true;                
+                
+            };
+            $scope.expandRequestScheduledMeetingFlag = -1;
+            $scope.expandRequestScheduledMeeting = function (iEvent, iIndex) {
+                if (iEvent) iEvent.stopPropagation();
+                if ($scope.expandRequestScheduledMeetingFlag == iIndex) {
+                    $scope.expandRequestScheduledMeetingFlag = -1;
+                } else {
+                    $scope.expandRequestScheduledMeetingFlag = iIndex;
+                }
+
+            };
+            $scope.expandRequestUpcomingMeetingFlag = -1;
+            $scope.expandRequestUpcomingMeeting = function (iEvent, iIndex) {
+                if (iEvent) iEvent.stopPropagation();
+                if ($scope.expandRequestUpcomingMeetingFlag == iIndex) {
+                    $scope.expandRequestUpcomingMeetingFlag = -1;
+                } else {
+                    $scope.expandRequestUpcomingMeetingFlag = iIndex;
+                }
+
             };
             $scope.updateConversation = function (isVerfied, SenderEmail, ReceiverEmail, iNotificationDash) {
                 //$scope.conversation.IsVerified = isVerfied;
@@ -93,7 +116,7 @@ app.directive('monthly', function (dateServiceForMonthlyCalendar, $rootScope, se
                     flag: isVerfied,
                     successCallBack: function () {
                         console.debug('In successCallBack');
-                        $scope.conversationRequest();
+                        //$scope.conversationRequest();
                     },
                     failureCallBack: function (e) {
                         console.debug('In failureCallBack' + e);
@@ -134,9 +157,10 @@ app.directive('monthly', function (dateServiceForMonthlyCalendar, $rootScope, se
                         $scope.meetingRequest = [];
                         for (var key in iCell.inviteObject.meeting) {
                             if (iCell.inviteObject.meeting[key].IsVerified) {
-                                $scope.meetingRequest.push(iCell.inviteObject.meeting[key]);
+                                var _data = angular.copy(iCell.inviteObject.meeting[key]);
+                                $scope.meetingRequest.push(_data);
                                 if (new Date(iCell.inviteObject.meeting[key].StartDate) > new Date()) {
-                                    $scope.upcomingMeetingRequest.push(angular.copy(iCell.inviteObject.meeting[key]));
+                                    $scope.upcomingMeetingRequest.push(_data);
                                 }
                                
                             } else {
@@ -186,6 +210,7 @@ app.directive('monthly', function (dateServiceForMonthlyCalendar, $rootScope, se
             var _getMeetingFromServer = function () {
                 serverCommunication.GetAllMeetingPerMonth({
                     //  ConversationType: "Mentoring",
+                    Value: 'All',
                     FromDate: $scope.monthlyArray[0].cellDate.toJSON(),
                     ToDate: $scope.monthlyArray[$scope.monthlyArray.length - 1].cellDate.toJSON(),
                     successCallBack: function (iObj) {

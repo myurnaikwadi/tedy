@@ -56,8 +56,27 @@
 
 .schedularBody {
     width: 100%;
+    position:relative;
     float: left;
+     transition: all 0.7s ease;
     height: 72%;
+    border: 1px solid lightgray;
+}
+.schedularBodyHidden {
+     width: 100%;
+     position:absolute;
+    float: left;
+     transition: all 0.7s ease;
+    height: 0% !important;
+    border: 1px solid lightgray;
+}
+.schedularBodyMask {
+     width: 100%;
+    float: left;
+     position:absolute;
+    height: 100% !important;
+    transition: all 0.7s ease;
+    background-color: rgba(0,0,0,.48);
     border: 1px solid lightgray;
 }
 .schedularBottom {
@@ -67,6 +86,8 @@
     height: 11%;
     border: 1px solid lightgray;
     border-top: 0;
+     transition: all 0.7s ease;
+     overflow:hidden;
 }
 .meetingSubject {
     float: left;
@@ -146,10 +167,12 @@
 }
 .conflictMeetingAlert{
     width: 100%;
+    transition: all 0.7s ease;
     float: left;
-    height: 58%!important;
+    height: 0%!important;
     border: 1px solid lightgray;
 }
+
 .progressBarUploadIdle {
     height: 16px;
 	display: block;

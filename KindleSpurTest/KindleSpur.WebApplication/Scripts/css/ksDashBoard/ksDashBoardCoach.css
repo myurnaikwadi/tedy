@@ -1236,8 +1236,8 @@ border: 1px solid #999;
 .inlineBlockClass {
     display: block !important;
     transition: all 0.7s ease;
-    overflow-x: hidden;
-    overflow-y: auto;
+    overflow-x: hidden !important;
+    overflow-y: auto !important;
 }
 .feedbackAnsDiv{
     margin-top: 10px;
