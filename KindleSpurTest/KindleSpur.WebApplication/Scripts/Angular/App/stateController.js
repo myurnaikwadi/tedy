@@ -3,7 +3,7 @@
 /// <reference path="C:\Users\User\Desktop\KindleSpurTest\KindleSpurTest\KindleSpur.WebApplication\Views/User/ksUserDashBoard.cshtml" />
 /// <reference path="C:\Users\User\Desktop\KindleSpurTest\KindleSpurTest\KindleSpur.WebApplication\Views/User/Login.cshtml" />
 /// <reference path="C:\Users\User\Desktop\KindleSpurTest\KindleSpurTest\KindleSpur.WebApplication\Views/User/PasswordPromp.cshtml" />
-app.config(['$stateProvider', '$urlRouterProvider','$locationProvider',function($stateProvider, $urlRouterProvider,$locationProvider){
+app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', 'KeepaliveProvider', 'IdleProvider', function ($stateProvider, $urlRouterProvider, $locationProvider, KeepaliveProvider, IdleProvider) {
    
     var _string = window.location.href;
     if (_string.indexOf('PasswordPro') > -1) {
@@ -13,7 +13,9 @@ app.config(['$stateProvider', '$urlRouterProvider','$locationProvider',function(
     }else{
          $urlRouterProvider.otherwise('login');
     }
-
+    IdleProvider.idle(900);
+    IdleProvider.timeout(10);
+    KeepaliveProvider.interval(10);
     //$locationProvider.html5Mode(true);
     $stateProvider
     .state('/', {

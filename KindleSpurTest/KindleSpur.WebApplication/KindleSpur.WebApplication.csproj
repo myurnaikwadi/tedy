@@ -403,9 +403,6 @@
     <Content Include="Img\Chrysanthemum.jpg" />
     <Content Include="Img\Desert.jpg" />
     <Content Include="Img\Tulips.jpg" />
-    <Content Include="Scripts\ai.0.15.0-build58334.js" />
-    <Content Include="Scripts\ai.0.15.0-build58334.min.js" />
-    <Content Include="Scripts\angular.js" />
     <Content Include="Scripts\Angular\Ajax Call\ajaxCallMgmt.js" />
     <Content Include="Scripts\Angular\App\app.js" />
     <Content Include="Scripts\Angular\App\stateController.js" />
@@ -415,6 +412,7 @@
     <Content Include="Scripts\Angular\Controller\Home\ksStateHomeController.js" />
     <Content Include="Scripts\Angular\Controller\Home\ksVCGController.js" />
     <Content Include="Scripts\Angular\Controller\Home\ksVcsController.js" />
+    <Content Include="Scripts\Angular\Library Files\angular-idle.js" />
     <Content Include="Scripts\Angular\Library Files\autoScroll.js" />
     <Content Include="Scripts\Angular\Services\ksAutoSuggest.js" />
     <Content Include="Scripts\Angular\Services\ksCommonRepo.js" />
@@ -423,30 +421,16 @@
     <Content Include="Scripts\Angular\Services\ksIsotope.js" />
     <Content Include="Scripts\Angular\Services\ksMeetingScheduler.js" />
     <Content Include="Scripts\Angular\Services\ksPluginService.js" />
-    <Content Include="Scripts\bootstrap.js" />
-    <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Scripts\Angular\Library Files\bootstrap.js" />
     <Content Include="Scripts\css\communication\ksCommunication.css" />
     <Content Include="Scripts\Angular\Controller\Home\ksDashBoardMenteeController.js" />
     <Content Include="Scripts\Angular\Controller\Home\ksDashBoardCoacheeController.js" />
     <Content Include="Scripts\Angular\Controller\Home\ksDashBoardCoachController.js" />
     <Content Include="Scripts\Angular\Controller\Home\ksDashBoardController.js" />
     <Content Include="Scripts\Angular\Controller\Login\ksLoginController.js" />
-    <Content Include="Scripts\Angular\Library Files\angular-animate.js" />
-    <Content Include="Scripts\Angular\Library Files\angular-animate.min.js" />
-    <Content Include="Scripts\Angular\Library Files\angular-cookies.js" />
-    <Content Include="Scripts\Angular\Library Files\angular-cookies.min.js" />
-    <Content Include="Scripts\Angular\Library Files\angular-csp.css" />
-    <Content Include="Scripts\Angular\Library Files\angular-route.js" />
-    <Content Include="Scripts\Angular\Library Files\angular-route.min.js" />
     <Content Include="Scripts\Angular\Library Files\angular-ui-router.js" />
-    <Content Include="Scripts\Angular\Library Files\angular-ui-router.min.js" />
     <Content Include="Scripts\Angular\Library Files\angular.js" />
-    <Content Include="Scripts\Angular\Library Files\angular.min.js" />
     <Content Include="Scripts\Angular\Services\ksService.js" />
-    <Content Include="Scripts\Angular\Library Files\angular-animate.min.js.map" />
-    <Content Include="Scripts\Angular\Library Files\angular-cookies.min.js.map" />
-    <Content Include="Scripts\Angular\Library Files\angular-route.min.js.map" />
-    <Content Include="Scripts\Angular\Library Files\angular.min.js.map" />
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
@@ -465,10 +449,8 @@
     <Content Include="Scripts\css\ksDashBoard\ksAutoSuggest.css" />
     <Content Include="Scripts\css\ksDashBoard\ksStateHome.css" />
     <Content Include="Scripts\css\ksDashBoard\ksDashBoardHover.css" />
-    <Content Include="Scripts\d3.v3.js" />
-    <Content Include="Scripts\d3.v3.min.js" />
+    <Content Include="Scripts\Angular\Library Files\d3.v3.min.js" />
     <Content Include="fonts\Roboto-Regular.ttf" />
-    <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\css\ksDashBoard\ksDashBoard.css" />
     <Content Include="Scripts\css\ksDashBoard\ksDashBoardCoach.css" />
     <Content Include="Scripts\css\ksDashBoard\ksDashBoardCoachee.css" />
@@ -480,23 +462,8 @@
     <Content Include="Scripts\css\ksProfile\ksProfile.css" />
     <Content Include="Scripts\css\rewards\ksRewardProgram.css" />
     <Content Include="Scripts\css\VCS\ksVcs.css" />
-    <Content Include="Scripts\angular-ui-router.js" />
-    <Content Include="Scripts\glow.js" />
-    <Content Include="Scripts\jquery-1.10.2.js" />
-    <Content Include="Scripts\jquery-1.10.2.min.js" />
-    <Content Include="Scripts\jquery-1.10.2.min.map" />
-    <None Include="Scripts\jquery-2.2.3.intellisense.js" />
-    <Content Include="Scripts\jquery-2.2.3.js" />
-    <Content Include="Scripts\jquery-2.2.3.min.js" />
-    <Content Include="Scripts\jquery-2.2.3.min.map" />
-    <None Include="Scripts\jquery.validate-vsdoc.js" />
-    <Content Include="Scripts\jquery.validate.js" />
-    <Content Include="Scripts\jquery.validate.unobtrusive.js" />
-    <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
-    <Content Include="Scripts\modernizr-2.6.2.js" />
-    <Content Include="Scripts\respond.js" />
-    <Content Include="Scripts\respond.min.js" />
-    <Content Include="Scripts\_references.js" />
+    <Content Include="Scripts\Angular\Library Files\glow.js" />
+    <Content Include="Scripts\Angular\Library Files\jquery-2.2.3.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -553,6 +520,7 @@
   <ItemGroup>
     <Content Include="packages.config" />
     <None Include="Project_Readme.html" />
+    <Content Include="Views\Home\ksGenericTemplate.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\KindleSpur.Data\KindleSpur.Data.csproj">

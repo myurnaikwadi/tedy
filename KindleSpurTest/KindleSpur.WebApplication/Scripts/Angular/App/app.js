@@ -1,6 +1,12 @@
-﻿var app = angular.module('app', ['ui.router','smoothScroll']);
-app.run(function ($rootScope, $timeout, $state) {
+﻿var app = angular.module('app', ['ui.router', 'smoothScroll', 'ngIdle']);
+app.run(function ($rootScope, $timeout, $state, Idle) {
+    
     $rootScope.$on('$locationChangeSuccess', function () {
+        if (window.location.href.indexOf('home') > -1) {            
+            Idle.watch();
+        } else {
+            Idle.unwatch();
+        }
         var _userDetails = _getMyDetailsFromCookies();
         if (_userDetails) {
             $rootScope.loggedDetail = _userDetails;

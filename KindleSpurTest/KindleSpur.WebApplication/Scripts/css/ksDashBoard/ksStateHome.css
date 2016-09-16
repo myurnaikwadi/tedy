@@ -150,3 +150,43 @@
     height: 58%!important;
     border: 1px solid lightgray;
 }
+.progressBarUploadIdle {
+    height: 16px;
+	display: block;
+    width:75%;
+    float: left;
+    margin: auto;
+    background:white;
+    float: left;
+	/* Important Thing */
+	-webkit-appearance: none;
+    border-radius: 50px;
+	border: 1px solid lightgray;
+}
+.progressBarUploadIdle::-webkit-progress-bar {
+	background: white;
+	border-radius: 50px;
+	padding: 2px;
+	box-shadow: 0 1px 0px 0 rgba(255, 255, 255, 0.2);
+}
+.progressBarUploadIdle::-webkit-progress-value {
+	border-radius: 50px !important;
+	box-shadow: inset 0 1px 1px 0 rgba(255, 255, 255, 0.4) !important;
+	background: -moz-linear-gradient(45deg, rgba(231,180,0,1) 0%, rgba(231,120,23,1) 25%, rgba(213,158,13,1) 35%, rgba(187,217,0,1) 50%, rgba(95,150,46,1) 69%, rgba(67,129,61,1) 75%, rgba(67,129,61,1) 78%, rgba(67,129,61,1) 100%); /* ff3.6+ */
+    background: -webkit-gradient(linear, left bottom, right top, color-stop(0%, rgba(231,180,0,1)), color-stop(25%, rgba(231,120,23,1)), color-stop(35%, rgba(213,158,13,1)), color-stop(50%, rgba(187,217,0,1)), color-stop(69%, rgba(95,150,46,1)), color-stop(75%, rgba(67,129,61,1)), color-stop(78%, rgba(67,129,61,1)), color-stop(100%, rgba(67,129,61,1))); /* safari4+,chrome */
+    background: -webkit-linear-gradient(45deg, rgba(231,180,0,1) 0%, rgba(231,120,23,1) 25%, rgba(213,158,13,1) 35%, rgba(187,217,0,1) 50%, rgba(95,150,46,1) 69%, rgba(67,129,61,1) 75%, rgba(67,129,61,1) 78%, rgba(67,129,61,1) 100%); /* safari5.1+,chrome10+ */
+    background: -o-linear-gradient(45deg, rgba(231,180,0,1) 0%, rgba(231,120,23,1) 25%, rgba(213,158,13,1) 35%, rgba(187,217,0,1) 50%, rgba(95,150,46,1) 69%, rgba(67,129,61,1) 75%, rgba(67,129,61,1) 78%, rgba(67,129,61,1) 100%); /* opera 11.10+ */
+    background: -ms-linear-gradient(45deg, rgba(231,180,0,1) 0%, rgba(231,120,23,1) 25%, rgba(213,158,13,1) 35%, rgba(187,217,0,1) 50%, rgba(95,150,46,1) 69%, rgba(67,129,61,1) 75%, rgba(67,129,61,1) 78%, rgba(67,129,61,1) 100%); /* ie10+ */
+    background: linear-gradient(45deg, rgba(231,180,0,1) 0%, rgba(231,120,23,1) 25%, rgba(213,158,13,1) 35%, rgba(187,217,0,1) 50%, rgba(95,150,46,1) 69%, rgba(67,129,61,1) 75%, rgba(67,129,61,1) 78%, rgba(67,129,61,1) 100%); /* w3c */
+	/*rgb(231,120,23) rgb(187,217,0)  rgb(67,129,61) Looks great, now animating it */
+	background-size: 25px 14px, 100% 100%, 100% 100% !important; 
+	animation: moveProgressBarUploadIdle 5s linear 0 infinite !important;
+}
+
+/* That's it! Now let's try creating a new stripe pattern and animate it using animation and keyframes properties  */
+
+@-webkit-keyframes moveProgressBarUploadIdle {
+	0% {background-position: 0px 0px, 0 0, 0 0}
+	100% {background-position: -100px 0px, 0 0, 0 0}
+}
+

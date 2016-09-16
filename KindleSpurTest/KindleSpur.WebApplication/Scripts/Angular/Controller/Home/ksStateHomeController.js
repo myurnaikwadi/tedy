@@ -1,4 +1,4 @@
-﻿app.controller('ksStateHomeController', function ($rootScope, $scope, serverCommunication, $interval, $state) {
+﻿app.controller('ksStateHomeController', function ($rootScope, $scope, serverCommunication, $interval, $state, authentification) {
     window.parent = $scope;
     console.error('Application Home controller --- ');
     //$scope.bottomStrip = { style : '' };
@@ -6,8 +6,16 @@
     $scope.displayAlert = {
         showAlert: false,
         message: '',
+        idleAlert : { showAlert: false,  formatType: '1',message: '', },
         formatType: '1'
-    };    $scope.checkEmailValidation = function (iObj) {
+    };    $scope.logout = function (iEvent) {
+       // console.error('logout')
+        if (iEvent) iEvent.stopPropagation();
+        //  console.error(IN.User)
+        if (IN.User) IN.User.logout();
+        authentification.logout({ loginObject: {} });
+        $state.go('login');
+    };    $scope.checkEmailValidation = function (iObj) {
               if ((iObj.event && (iObj.event.keyCode == 186)) || iObj.otherCall) {
            console.log(iObj.email);
            var _stringSplit = iObj.email.split(';');           for (var k = 0; k < _stringSplit.length; k++) {
@@ -98,6 +106,30 @@
         $scope.load = false;
         $scope.invitation = {}
     };
+    $scope.$on('IdleStart', function () {
+        $scope.displayAlert.idleAlert = {          
+            showAlert: true,
+            formatType: '1',
+            message: ''           
+        };
+    });
+
+    $scope.$on('IdleEnd', function () {
+        $scope.displayAlert.idleAlert = {
+            showAlert: false,
+            formatType: '1',
+            message: ''
+        };
+    });
+
+    $scope.$on('IdleTimeout', function () {
+        $scope.displayAlert.idleAlert = {
+            showAlert: false,
+            formatType: '2',
+            message: ''
+        };
+        $scope.logout();
+    });
 });
 
 app.directive("outsideClick", ['$document', '$parse', function ($document, $parse) {
