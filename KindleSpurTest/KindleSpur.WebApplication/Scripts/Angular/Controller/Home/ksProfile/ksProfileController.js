@@ -374,10 +374,10 @@
     $scope.sendDetailsToServer = function () {
         $scope.editModeProfile = false;
         if (!$scope.localModel.firstName || $scope.localModel.firstName == '') {
-            _displayAlertMeesage({ message: "Please enter first name.", formatType: '2' });
+            _displayAlertMeesage({ message: "Please enter your first name.", formatType: '2' });
             return;
         }else if(!$scope.localModel.lastName || $scope.localModel.lastName == ''){
-            _displayAlertMeesage({ message: "Please Enter last name.", formatType: '2' });
+            _displayAlertMeesage({ message: "Please Enter your last name.", formatType: '2' });
             return;
         }       
 
@@ -404,7 +404,7 @@
             },
             successCallBack: function () {
                 console.error('In successCallBack');
-                _displayAlertMeesage({ message: "Your details saved.", formatType: '1' });
+                _displayAlertMeesage({ message: "Your details has been saved.", formatType: '1' });
 
             },
             failureCallBack: function () {
@@ -430,11 +430,11 @@
        
         console.error($scope.localModel)
         if (!$scope.localModel.Password || $scope.localModel.Password == '') {
-            _displayAlertMeesage({ message: "Please Enter Password", formatType: '2' });
+            _displayAlertMeesage({ message: "Please Enter your Password", formatType: '2' });
             return;
         }
        else if (($scope.localModel.Password) != ($scope.localModel.ConfirmPassword)) {
-            _displayAlertMeesage({ message: "The passwords are not same", formatType: '2' });
+            _displayAlertMeesage({ message: "password and Confirm password are not same", formatType: '2' });
             return;
        }
       
@@ -446,7 +446,7 @@
             },
             successCallBack: function () {
                 console.error('In successCallBack');
-                _displayAlertMeesage({ message: "Your password saved.", formatType: '1' });
+                _displayAlertMeesage({ message: "Your password has been saved.", formatType: '1' });
             },
             failureCallBack: function () {
                 console.error('In failureCallBack');
@@ -457,6 +457,11 @@
     };
 
     $scope.sendDescDetailsToServer = function () {
+        console.error($scope.localModel)
+        if (!$scope.localModel.description || $scope.localModel.description == '') {
+            _displayAlertMeesage({ message: "Description cannot be empty.", formatType: '2' });
+            return;
+        }
         $scope.editDescription = false;
         $scope.myInfo = angular.copy($scope.localModel);
       //  console.error($scope.myInfo)
@@ -467,7 +472,8 @@
             },
             successCallBack: function () {
                 console.error('In successCallBack');
-
+                _displayAlertMeesage({ message: "Description has been saved", formatType: '1' });
+                return;
             },
             failureCallBack: function () {
                 console.error('In failureCallBack');
