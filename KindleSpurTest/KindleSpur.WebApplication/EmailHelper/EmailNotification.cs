@@ -14,10 +14,9 @@ namespace KindleSpur.WebApplication.MessageHelper
         static string emailAddress = "kindlespur@livewireprojects.com";
         // static string emailAddress = "support@kindlespur.com";
         static string password = "livewireprojects";
-        //static string password = "dreamwewillachieve";
+        //static string password = "dreamswesee";
         static MailAddress aliasemailsendername = new MailAddress(emailAddress.ToString(), "KindleSpur Support Team");
         static int portNumber = 587;
-        //static string smtpServer = "smtpout.asia.secureserver.net";
         static string smtpServer = "smtp.gmail.com";
         static string link = "www.kindlespur.com";
 
@@ -249,6 +248,8 @@ namespace KindleSpur.WebApplication.MessageHelper
 
         public static void SendEmailOnInvitation(User userDetails, Invitation invitation, string uri)
         {
+            if (invitation.Description == null)
+                invitation.Description = "I would like to invite you to join KindleSpur. It is a great platform to Grow Knowledge!";
             foreach (var inviteEmailAddress in invitation.Invites)
             {
                 MailMessage message = new MailMessage(aliasemailsendername.ToString(), inviteEmailAddress);
