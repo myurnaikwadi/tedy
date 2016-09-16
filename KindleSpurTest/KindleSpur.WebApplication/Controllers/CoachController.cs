@@ -35,7 +35,7 @@ namespace KindleSpur.WebApplication.Controllers
                 if (_obj.Skills == null) _obj.Skills = new List<SkillOrTopic>();
                 if (selectedArray != null)
                     _obj.Skills.AddRange(selectedArray);
-                // if (selectedArray != null)
+            
                 _coachRepo.AddNewCoachOrMentor(_obj);
             }
             catch (Exception ex)
@@ -141,13 +141,10 @@ namespace KindleSpur.WebApplication.Controllers
             try
             {
                 CoachOrMentorRepository _coachRepo = new CoachOrMentorRepository();
-               
-
             }
             
             catch (Exception ex)
             {
-                //return partialView("Error");
                 throw new Exception("system error");
             }
 

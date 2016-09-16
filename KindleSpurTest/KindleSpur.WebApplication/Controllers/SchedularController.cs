@@ -33,8 +33,6 @@ namespace KindleSpur.WebApplication.Controllers
             {
 
                 MeetingRepository _repo = new MeetingRepository();
-               // _obj.CreateDate = DateTime.Now;
-               // _obj.UpdateDate = DateTime.Now;
                 if (_repo.AddNewMeeting(_obj))
                 {
                     if (_obj.IsVerified == false)
@@ -57,7 +55,6 @@ namespace KindleSpur.WebApplication.Controllers
 
                         content += "<br/><br/>To accept or decline please click on the following link - <a href = '" + uri + "'>" + uri + "</a>";
                         content += "<br /><br />Regards, <br/> KindleSpur Team.";
-                       // EmailNotification EmailNotification = new EmailNotification();
                         EmailNotification.SendMeetingEmail(_obj, uri, subject, content);
                         TempData["StatusMessage"] = "Please check your mail for meeting request!!!";
                     }
@@ -79,22 +76,11 @@ namespace KindleSpur.WebApplication.Controllers
         public JsonResult GetAllMeetingRequest(string role)
         {
 
-            //MeetingSchedularRepository _repo = new MeetingSchedularRepository();
-            //var result = _repo.GetAllMeetingRequest().ToJson();
-            //return Json(new { Result = result }, JsonRequestBehavior.AllowGet);
-            //return Content(result);
-
             MeetingRepository _repo = new MeetingRepository();
             List<IUser> result = new List<IUser>();
             List<UserMeetings> result1 = new List<UserMeetings>();
 
             UserRepository ur = new UserRepository();
-            //foreach (var value in _repo.GetAllMeetingRequest(((IUser)Session["User"]).EmailAddress))
-            //{
-            //    var recevicedetails = ur.GetUserDetail(value["From"].ToString());
-            //    result.Add((IUser)recevicedetails);
-
-            //}
             try
             {
                 foreach (var value in _repo.GetAllMeetingRequest(role,((IUser)Session["User"]).EmailAddress))
@@ -108,7 +94,6 @@ namespace KindleSpur.WebApplication.Controllers
                     u.Photo = recevicedetails.Photo;
                     u.EmailAddress = recevicedetails.EmailAddress;
                     result1.Add(u);
-                    //result.Add((IUser)recevicedetails);
                 }
 
                 return Json(new { Result = result1 }, JsonRequestBehavior.AllowGet);
@@ -138,7 +123,7 @@ namespace KindleSpur.WebApplication.Controllers
         }
 
         [HttpPost]
-        public ActionResult GetAllMeetingPerMonth(DateTime FromDate, DateTime ToDate)
+        public ActionResult GetAllMeetingPerMonth(DateTime FromDate, DateTime ToDate, string Value)
         {
 
             MeetingRepository _repo = new MeetingRepository();
@@ -146,9 +131,27 @@ namespace KindleSpur.WebApplication.Controllers
             try
             {
                 string userId = (((IUser)Session["User"]).EmailAddress);
-                var meeting = _repo.GetAllMeetingPerMonth(userId, FromDate, ToDate);
-                var invite = _conversationrepo.GetAllConversationRequestPerMonth(userId, FromDate, ToDate);
-                var result3 = new { meeting, invite };
+                object result3 = null;
+                object meeting = null;
+                object invite = null;
+
+                if (Value == "Meeting")
+                {
+                    meeting = _repo.GetAllMeetingPerMonth(userId, FromDate, ToDate);
+                    result3 = new { meeting};
+                }
+                else if (Value == "Invite")
+                {
+                    invite = _conversationrepo.GetAllConversationRequestPerMonth(userId, FromDate, ToDate);
+                    result3 = new {invite};
+                }
+                else if (Value == "All")
+                {
+                    meeting = _repo.GetAllMeetingPerMonth(userId, FromDate, ToDate);
+                    invite = _conversationrepo.GetAllConversationRequestPerMonth(userId, FromDate, ToDate);
+                    result3 = new { meeting, invite };
+                }
+                
                 return Json(result3, JsonRequestBehavior.AllowGet);
                
             }
