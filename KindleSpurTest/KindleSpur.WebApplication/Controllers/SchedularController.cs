@@ -138,7 +138,7 @@ namespace KindleSpur.WebApplication.Controllers
         }
 
         [HttpPost]
-        public ActionResult GetAllMeetingPerMonth(DateTime FromDate, DateTime ToDate)
+        public ActionResult GetAllMeetingPerMonth(DateTime FromDate, DateTime ToDate, string Value)
         {
 
             MeetingRepository _repo = new MeetingRepository();
@@ -146,9 +146,27 @@ namespace KindleSpur.WebApplication.Controllers
             try
             {
                 string userId = (((IUser)Session["User"]).EmailAddress);
-                var meeting = _repo.GetAllMeetingPerMonth(userId, FromDate, ToDate);
-                var invite = _conversationrepo.GetAllConversationRequestPerMonth(userId, FromDate, ToDate);
-                var result3 = new { meeting, invite };
+                object result3 = null;
+                object meeting = null;
+                object invite = null;
+
+                if (Value == "Meeting")
+                {
+                    meeting = _repo.GetAllMeetingPerMonth(userId, FromDate, ToDate);
+                    result3 = new { meeting};
+                }
+                else if (Value == "Invite")
+                {
+                    invite = _conversationrepo.GetAllConversationRequestPerMonth(userId, FromDate, ToDate);
+                    result3 = new {invite};
+                }
+                else if (Value == "All")
+                {
+                    meeting = _repo.GetAllMeetingPerMonth(userId, FromDate, ToDate);
+                    invite = _conversationrepo.GetAllConversationRequestPerMonth(userId, FromDate, ToDate);
+                    result3 = new { meeting, invite };
+                }
+                
                 return Json(result3, JsonRequestBehavior.AllowGet);
                
             }
