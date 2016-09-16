@@ -11,10 +11,7 @@ namespace KindleSpur.WebApplication.Controllers
     {
         private readonly CTSRepository _ctsRepo = new CTSRepository();
         string uid;
-        //public CTSController()
-        //{
-        //    GetRecordsOfSkillAndTopics(uid);
-        //}
+        
         public string GetCTS()
         {
 
@@ -62,10 +59,7 @@ namespace KindleSpur.WebApplication.Controllers
         {
             try
             {
-             
-
                 CTSRepository repo = new CTSRepository();
-
                 return this.Json(repo.GetAllSkillAndTopics(user.EmailAddress));
             }
             catch (Exception ex)

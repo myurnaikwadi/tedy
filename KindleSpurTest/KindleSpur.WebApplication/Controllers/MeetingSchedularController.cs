@@ -39,11 +39,6 @@ namespace KindleSpur.WebApplication.Controllers
         {
             try
             {
-                //MeetingSchedularRepository _repo = new MeetingSchedularRepository();
-                //_obj.CreateDate = _obj.UpdateDate = DateTime.Now;
-                //_repo.AddNewMeeting(_obj);
-
-                //return RedirectToAction("Index");
                 MeetingSchedularRepository _repo = new MeetingSchedularRepository();
                 _obj.CreateDate = DateTime.Now;
                 _obj.UpdateDate = DateTime.Now;
@@ -88,11 +83,6 @@ namespace KindleSpur.WebApplication.Controllers
 
         public ActionResult GetAllMeetingRequest()
         {
-
-            //MeetingSchedularRepository _repo = new MeetingSchedularRepository();
-            //var result = _repo.GetAllMeetingRequest().ToJson();
-            //return Json(new { Result = result }, JsonRequestBehavior.AllowGet);
-            //return Content(result);
 
             MeetingSchedularRepository _repo = new MeetingSchedularRepository();
             try

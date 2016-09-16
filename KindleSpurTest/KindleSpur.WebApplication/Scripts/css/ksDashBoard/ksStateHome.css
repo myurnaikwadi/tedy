@@ -68,16 +68,16 @@
     float: left;
      transition: all 0.7s ease;
     height: 0% !important;
-    border: 1px solid lightgray;
 }
 .schedularBodyMask {
      width: 100%;
     float: left;
+    display:flex;
+    z-index:1;
+        background: white;
      position:absolute;
     height: 100% !important;
     transition: all 0.7s ease;
-    background-color: rgba(0,0,0,.48);
-    border: 1px solid lightgray;
 }
 .schedularBottom {
     width: 100%;

@@ -310,7 +310,6 @@ namespace KindleSpur.Data
             bool _transactionStatus = false;
             try
             {
-                //var userDetail = _userCollection.FindOneByIdAs<User>(userId);
                 var userDetail = _userCollection.FindOneAs<User>(Query.EQ("EmailAddress", EmailAddress));
                 userDetail.FirstName = userData.FirstName;
                 userDetail.EmailAddress = EmailAddress;
@@ -441,7 +440,6 @@ namespace KindleSpur.Data
             bool _transactionStatus = false;
             try
             {
-                //var userDetail = _userCollection.FindOneByIdAs<User>(userId);
                 var userDetail = _userCollection.FindOneAs<User>(Query.EQ("EmailAddress", emailAddress));
                 userDetail.Password = password;
                 _userCollection.Save(userDetail);
@@ -476,7 +474,6 @@ namespace KindleSpur.Data
             bool _transactionStatus = false;
             try
             {
-                //var userDetail = _userCollection.FindOneByIdAs<IUser>(EmailAddress);
                 var userDetail = _userCollection.FindOneAs<User>(Query.EQ("EmailAddress", EmailAddress));
                 userDetail.description = description;
                 _userCollection.Save(userDetail);
@@ -556,7 +553,7 @@ namespace KindleSpur.Data
                 {
                     oneInviteEmailAddress = invitation.Invites[countOfInvites];
                     inviteEmailAddress.Add(oneInviteEmailAddress);
-                    //invite.Invites.Add(oneInviteEmailAddress);
+                  
                 }
                 invite.Invites = inviteEmailAddress;
                 invite.Description = invitation.Description;
@@ -717,8 +714,6 @@ namespace KindleSpur.Data
                     {
                         _game.UnlockedDate = DateTime.Now;
                         userDetail.Games.Add(_game);
-                        //userDetail.BalanceRewardPoints -= (int.Parse(_game.GameId) * 10);
-                        //userDetail.RedeemedPoints += (int.Parse(_game.GameId) * 10);
                         userDetail.BalanceRewardPoints -= 10;
                         userDetail.RedeemedPoints += 10;
                         _userCollection.Save(userDetail);
@@ -815,15 +810,6 @@ namespace KindleSpur.Data
                 return null;
             }
 
-            // RewardPointsGained = (RewardPointsGained - (RewardPointsGained % 10))/10;
-            // string Id = (BalancePoints / 10).ToString();
-
-            //Game game = _gamesCollection.FindOneAs<Game>(Query.EQ("GameId", Id));
-            //if (game == null)
-            //{
-            //    game = _gamesCollection.FindAllAs<Game>().SetSortOrder(SortBy.Descending("GameId")).SetLimit(1).FirstOrDefault();
-            //}
-
             Game game = _gamesCollection.FindOneAs<Game>(Query.NotExists("UnlockedBy"));
 
             if(game!=null)
@@ -832,11 +818,6 @@ namespace KindleSpur.Data
                 game.UnlockedBy = UnlockedBy;
                 _gamesCollection.Save(game);    
             }
-            //if (game == null)
-            //{
-            //    game = _gamesCollection.FindAllAs<Game>().SetSortOrder(SortBy.Descending("GameId")).SetLimit(1).FirstOrDefault();
-            //}
-
             return game;
         }
 
@@ -1016,18 +997,6 @@ namespace KindleSpur.Data
 
         public List<ValueFeedStory> GetValueFeedStories(string ImpactZone)
         {
-            //var matchMember = new BsonDocument { { "$match", new BsonDocument { { "ValueFeedStories.ImpactZone", ImpactZone } } } };
-            //var unwindStories = new BsonDocument { { "$unwind", "$ValueFeedStories" } };
-            //var sortOperation = new BsonDocument { { "$sort", new BsonDocument { { "CreateDate", 1 } } } };
-            ////var ProjectFinal = new BsonDocument { { "$project", new BsonDocument { { "_id", 0 }, { "UserId", "EmailAddress" }, { "ValueFeedStories", "$ValueFeedStories" } } } };
-            //IEnumerable<BsonDocument> pipeline = new[] { matchMember, unwindStories, sortOperation };
-
-            //var args = new AggregateArgs();
-            //args.Pipeline = pipeline;
-            //args.AllowDiskUse = true;
-
-            //return _userCollection.Aggregate(args).ToJson();
-            //_userCollection = con.GetCollection("UserDetails");
             MongoCursor<User> result = _userCollection.FindAs<User>(Query.EQ("ValueFeedStories.ImpactZone", ImpactZone));
             List<ValueFeedStory> stories = new List<ValueFeedStory>();
             foreach (var item in result)

@@ -336,7 +336,6 @@ namespace KindleSpur.WebApplication.Controllers
                 {
                     response.FailureCallBack(ex.Message);
                 }
-                // return response.ToJson();
             }
 
         }
@@ -414,25 +413,6 @@ namespace KindleSpur.WebApplication.Controllers
             _userRepo.RemoveVCSCActivity(EmailAddress, _vscs);
         }
 
-        //[HttpPost]
-        //public ActionResult ForgotPassword(string EmailAddress)
-        //{            
-        //    UserRepository _repo = new UserRepository();
-        //    IUser u = _repo.GetUserDetail(EmailAddress);
-        //    if (u != null)
-        //    {
-        //        User signupObject = new User();
-        //        string uri = Request.Url.AbsoluteUri.Replace("/User/Login", "/User/PasswordPromp?UserId=" + signupObject.Id);
-        //        EmailNotification.SendEmail(signupObject, uri);
-        //        ViewBag.message = "Please check your e-Mail for further procedure..";
-        //    }
-        //    else
-        //    {
-        //        ViewBag.Error = "UserName doesnot Exists!!! Please SignUp";
-        //    }
-
-        //    return PartialView();
-        //}
         public JsonResult GetSkills()
         {
             ConversationRepository repo = new ConversationRepository();

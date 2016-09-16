@@ -125,7 +125,7 @@ namespace KindleSpur.Data
                     conversationData.CoacheeOrMentee = conversationData.ReceiverEmail;
                 }
 
-                else if(role == "Coachee" || role == "Mentee")
+                else if (role == "Coachee" || role == "Mentee")
                 {
                     conversationData.CoachOrMentor = conversationData.ReceiverEmail;
                     conversationData.CoacheeOrMentee = conversationData.SenderEmail;
@@ -170,10 +170,7 @@ namespace KindleSpur.Data
                 var conversationDetail = _conversationCollection.FindOneAs<IConversation>(Query.EQ("_id", ObjectId.Parse(conversationId)));
                 conversationDetail.SenderEmail = conversationData.SenderEmail;
                 conversationDetail.ReceiverEmail = conversationData.ReceiverEmail;
-                //conversationDetail.Content = conversationData.Content;
                 conversationDetail.UpdateDate = DateTime.Now;
-                //conversationDetail.IsVerified = true;
-
                 _conversationCollection.Save(conversationDetail);
                 _transactionStatus = true;
             }
@@ -341,13 +338,13 @@ namespace KindleSpur.Data
         //Coachee or Mentee list in the communication window
         public List<BsonDocument> ListConversationForSender(string loggedEmail, string ConversationType, string role)
         {
-            
+
             List<BsonDocument> _categories = new List<BsonDocument>();
             List<BsonDocument> _checkUser = new List<BsonDocument>();
 
             try
             {
-                if(role == "Coach"|| role == "Mentor")
+                if (role == "Coach" || role == "Mentor")
                     _categories = _conversationCollection.FindAs<BsonDocument>(Query.And(Query<Conversation>.EQ(p => p.SenderEmail, loggedEmail), Query<Conversation>.EQ(p => p.IsVerified, true), Query<Conversation>.EQ(p11 => p11.CoachOrMentor, loggedEmail), Query<Conversation>.EQ(p1 => p1.ConversationType, ConversationType))).SetFields(Fields.Exclude("_id").Include("SenderEmail", "ReceiverEmail", "skill", "ConversationType", "ConversationId", "ConversationParentId")).Distinct().ToList();
                 else if (role == "Coachee" || role == "Mentee")
                     _categories = _conversationCollection.FindAs<BsonDocument>(Query.And(Query<Conversation>.EQ(p => p.SenderEmail, loggedEmail), Query<Conversation>.EQ(p => p.IsVerified, true), Query<Conversation>.EQ(p11 => p11.CoacheeOrMentee, loggedEmail), Query<Conversation>.EQ(p1 => p1.ConversationType, ConversationType))).SetFields(Fields.Exclude("_id").Include("SenderEmail", "ReceiverEmail", "skill", "ConversationType", "ConversationId", "ConversationParentId")).Distinct().ToList();
@@ -378,46 +375,9 @@ namespace KindleSpur.Data
 
             return _categories;
 
-            #region commented code
-            //var _conversationCollection = _kindleDatabase.GetCollection("Conversations");
-            //IQueryable<BsonDocument> convEntities = default(IQueryable<BsonDocument>);
-
-            //try
-            //{
-            //    var res1 = new List<BsonDocument>();
-
-            //    convEntities = _conversationCollection.FindAll().ToList().AsQueryable();
-
-            //}
-            //catch (MongoException ex)
-            //{
-            //    _logCollection.Insert("{ Error : 'Failed at ListConversation().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ");
-            //}
-
-            //return convEntities.ToList();
-            #endregion
         }
 
-        #region commented code
 
-        //public List<BsonDocument> ListConversation()
-        //{
-        //    List<BsonDocument> result = null;
-
-        //    try
-        //    {
-        //        var _conversationCollection = _kindleDatabase.GetCollection("Conversations");
-        //        result = _conversationCollection.FindAll().ToList();
-
-        //    }
-        //    catch (MongoException ex)
-        //    {
-        //        _logCollection.Insert("{ Error : 'Failed at ListConversation().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ");
-        //    }
-
-        //    return result;
-        //}
-        #endregion
 
 
         //This method is used on dashboard to get all the coaching/mentoring invites
@@ -523,7 +483,7 @@ namespace KindleSpur.Data
             List<BsonDocument> _categories = new List<BsonDocument>();
 
 
-            if (role == "Coach"|| role == "Mentor")
+            if (role == "Coach" || role == "Mentor")
                 _categories = _conversationCollection.FindAs<BsonDocument>(Query.And(Query.EQ("ConversationParentId", ParentId), Query.EQ("CoachOrMentor", loggedinEmailAddress), Query.EQ("ConversationType", ConversationType))).ToList();
             else if (role == "Coachee" || role == "Mentee")
                 _categories = _conversationCollection.FindAs<BsonDocument>(Query.And(Query.EQ("ConversationParentId", ParentId), Query.EQ("CoacheeOrMentee", loggedinEmailAddress), Query.EQ("ConversationType", ConversationType))).ToList();
@@ -566,33 +526,6 @@ namespace KindleSpur.Data
             {
 
             }
-            //_query
-            //Query.And(
-            //    Query.Or(
-            //                Query<Conversation>.EQ(p => p.SenderEmail, senderEmail), Query<Conversation>.EQ(p => p.SenderEmail, receiverEmail)),
-            //    Query.Or(
-            //                Query<Conversation>.EQ(p => p.ReceiverEmail, senderEmail), Query<Conversation>.EQ(p => p.ReceiverEmail, receiverEmail))
-            //        )
-
-
-            //_categories = _conversationCollection.Find(Query.Or(Query.EQ("SenderEmail", senderEmail), Query.EQ("ReceiverEmail", receiverEmail))).ToList();
-
-            //            var query =
-            //from e in _conversationCollection.AsQueryable<Conversation>().ToList()
-            //where (e.ReceiverEmail == receiverEmail || e.ReceiverEmail == senderEmail) && (e.SenderEmail == receiverEmail || e.SenderEmail == senderEmail)
-            //select e;
-
-
-            //_categories = _conversationCollection.Find(Query.And(Query.EQ("SenderEmail", senderEmail), Query.EQ("ReceiverEmail", receiverEmail), Query.EQ("SenderEmail", receiverEmail), Query.EQ("ReceiverEmail", senderEmail))).ToList();
-
-            //_categories = _conversationCollection.Find(Query.And(Query.EQ("SenderEmail", senderEmail), Query.EQ("ReceiverEmail", receiverEmail))).ToList();
-            //_categories = _categories.Find(Query.And((Query.EQ("SenderEmail", senderEmail), Query.EQ("ReceiverEmail", receiverEmail))).Query.And(Query.EQ("SenderEmail", receiverEmail), Query.EQ("ReceiverEmail", senderEmail)).ToList();
-
-            //var _ctsCollection = _kindleDatabase.GetCollection("Conversations");
-            //_categories = _ctsCollection.FindAll().SetFields(Fields.Exclude("_id")).ToList();
-
-
-
 
             return _categories;
 
@@ -697,10 +630,6 @@ namespace KindleSpur.Data
                     }
                 }
                 List<string> TopicFilterListMentoring = skillListMentoring.Distinct().Take(5).ToList();
-
-
-                //  var list = new List<object>();
-
                 list.Add(SkillFilterListCoaching);
                 list.Add(TopicFilterListMentoring);
 
@@ -712,7 +641,6 @@ namespace KindleSpur.Data
 
                 string message = "{ Error : 'Failed at GetSkillsForConversation().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ";
                 _logCollection.Insert(message);
-                //throw new MongoException("New Conversation failure!!!");
             }
             catch (Exception e)
             {
@@ -723,7 +651,7 @@ namespace KindleSpur.Data
                 var frame = st.GetFrame(0);
                 var line = frame.GetFileLineNumber();
                 _logCollection.Insert(em);
-                //throw new MongoException("Signup failure!!!");
+
             }
             finally
             {
@@ -746,7 +674,7 @@ namespace KindleSpur.Data
                 {
                     BookMark Link = new BookMark();
                     Link.Id = ObjectId.GenerateNewId();
-                    Link.BookMarkId= Guid.NewGuid().ToString();
+                    Link.BookMarkId = Guid.NewGuid().ToString();
                     Link.LinkUrl = bookmark.LinkUrl;
                     Link.DocumentName = bookmark.DocumentName;
                     Link.TagName = bookmark.TagName;
@@ -756,10 +684,6 @@ namespace KindleSpur.Data
                 if (userDetail.BookMarks == null)
                     userDetail.BookMarks = new List<BookMark>();
                 userDetail.BookMarks.AddRange(path.ToList());
-
-
-
-
                 _userCollection.Save(userDetail);
                 _transactionStatus = true;
             }
@@ -785,19 +709,13 @@ namespace KindleSpur.Data
 
             }
             return _transactionStatus;
-
-
         }
 
 
         public List<FileUpload> getFiles(string UserId)
         {
             var _UserrCollection = con.GetCollection("UserDetails");
-
             var userDetail = _UserrCollection.FindOneAs<User>(Query.EQ("EmailAddress", UserId));
-
-
-
 
             if (userDetail != null)
                 return userDetail.Files;
@@ -860,9 +778,5 @@ namespace KindleSpur.Data
 
             return _transactionStatus;
         }
-
-
-
-
     }
 }

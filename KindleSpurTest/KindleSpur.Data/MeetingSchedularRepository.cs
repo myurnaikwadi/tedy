@@ -43,12 +43,7 @@ namespace KindleSpur.Data
             try
             {
                 var result = _meetingCollection.FindAs<MeetingSchedular>(Query.And(Query.EQ("SenderEmail", meetingSchedularData.SenderEmail), Query.EQ("ReceiverEmail", meetingSchedularData.ReceiverEmail))).ToList();
-
-                //if (result.Count() > 0)
-                //    return false;
-
                 _meetingCollection.Insert(meetingSchedularData);
-
                 _transactionStatus = true;
             }
             catch (MongoException ex)
