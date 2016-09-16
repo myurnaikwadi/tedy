@@ -28,8 +28,8 @@ namespace KindleSpur.WebApplication.Controllers
         public ActionResult Index()
         {
             ConversationRepository _repo = new ConversationRepository();
-            _repo.ListConversationForSender(((IUser)Session["User"]).EmailAddress, "Coaching");
-            _repo.ListConversationForReceiver(((IUser)Session["User"]).EmailAddress, "Coaching");
+           _repo.ListConversationForSender(((IUser)Session["User"]).EmailAddress, "Coaching", "Coachee");
+           _repo.ListConversationForReceiver(((IUser)Session["User"]).EmailAddress, "Coaching", "Coach");
             return View();
         }
 
@@ -52,7 +52,7 @@ namespace KindleSpur.WebApplication.Controllers
 
 
         //Coachee or Mentee list in the communication window
-        public ActionResult GetConversationForSender(string loggedEmail, string ConversationType)
+        public ActionResult GetConversationForSender(string loggedEmail, string ConversationType, string role)
         {
             try
             {
@@ -60,7 +60,7 @@ namespace KindleSpur.WebApplication.Controllers
                 List<Request> result = new List<Request>();
 
                 UserRepository ur = new UserRepository();
-                foreach (var value in _repo.ListConversationForSender(((IUser)Session["User"]).EmailAddress, ConversationType))
+                foreach (var value in _repo.ListConversationForSender(((IUser)Session["User"]).EmailAddress, ConversationType, role))
                 {
                     var recevicedetails = ur.GetUserDetail(value[0].ToString());
                     Request req = new Models.Request();
@@ -97,15 +97,16 @@ namespace KindleSpur.WebApplication.Controllers
 
         }
 
-        public ActionResult ListConversationForReceiver(string loggedEmail, string ConversationType)
+        public ActionResult ListConversationForReceiver(string loggedEmail, string ConversationType, string role)
         {
             try
             {
+               
                 ConversationRepository _repo = new ConversationRepository();
                 List<Request> result = new List<Request>();
 
                 UserRepository ur = new UserRepository();
-                foreach (var value in _repo.ListConversationForReceiver(((IUser)Session["User"]).EmailAddress, ConversationType))
+                foreach (var value in _repo.ListConversationForReceiver(((IUser)Session["User"]).EmailAddress, ConversationType, role))
                 {
                     var recevicedetails = ur.GetUserDetail(value[0].ToString());
                     Request req = new Models.Request();
@@ -125,7 +126,7 @@ namespace KindleSpur.WebApplication.Controllers
 
                 return Json(new { Result = result }, JsonRequestBehavior.AllowGet);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
 
                 return View("Error");
@@ -141,7 +142,7 @@ namespace KindleSpur.WebApplication.Controllers
             {
 
                 ConversationRepository _repo = new ConversationRepository();
-                var result = _repo.GetConversation(ParentId, ConversationType, Role).ToJson();
+                var result = _repo.GetConversation(ParentId, ConversationType, Role, ((IUser)Session["User"]).EmailAddress).ToJson();
                 return Json(new { Result = result }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception)
@@ -380,7 +381,7 @@ namespace KindleSpur.WebApplication.Controllers
                 _obj.CreateDate = DateTime.Now.ToShortDateString();
                 _obj.UpdateDate = DateTime.Now;
 
-                bool transactionStatus = _repo.AddNewConversation(_obj);
+                bool transactionStatus = _repo.AddNewConversation(_obj, role);
             }
             catch (Exception Ex)
             {

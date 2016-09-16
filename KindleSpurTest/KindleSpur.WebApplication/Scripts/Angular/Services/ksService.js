@@ -573,7 +573,7 @@ app.factory('serverCommunication', function ($http) {
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                data: { loggedEmail: iObj.loggedEmail, ConversationType: iObj.ConversationType }
+                data: { loggedEmail: iObj.loggedEmail, ConversationType: iObj.ConversationType, role: iObj.Role }
             }
             console.error(req);
             $http(req).then(iObj.successCallBack, iObj.failureCallBack);

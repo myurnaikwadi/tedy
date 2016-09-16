@@ -1213,7 +1213,7 @@
                 serverCommunication.sendConversation({
                     loggedUserDetails: _object,
                     ReceiverName: $scope.ReceiverName,
-                    Role: 'Mentee',
+                    Role: 'Mentor',
                     successCallBack: function () {
                         $scope.conversation.Message = "";
 

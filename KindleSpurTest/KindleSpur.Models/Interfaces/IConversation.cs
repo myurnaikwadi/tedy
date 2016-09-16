@@ -29,7 +29,8 @@ namespace KindleSpur.Models.Interfaces
         List<ResourceFileLink> FilesURLlink { get; set; }
         Boolean IsRejected { get; set; }
         bool Active { get; set; }
-
+        string CoachOrMentor { get; set; }
+        string CoacheeOrMentee { get; set; }
 
     }
 }

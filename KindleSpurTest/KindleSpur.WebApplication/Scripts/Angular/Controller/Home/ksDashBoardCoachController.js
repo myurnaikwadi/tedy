@@ -1236,7 +1236,7 @@
                 serverCommunication.sendConversation({
                     loggedUserDetails: _object,
                     ReceiverName: $scope.ReceiverName,
-                    Role: 'Coachee',
+                    Role: 'Coach',
                     successCallBack: function () {
                         $scope.conversation.Message = "";
 
