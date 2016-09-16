@@ -382,13 +382,11 @@ namespace KindleSpur.Data
 
                     foreach (BsonDocument category in _categories)
                     {
-                       // filters.Add(new CTSFilter() { Id = category["Id"].ToString(), Name = category["Category"].ToString(), Type = FilterType.Category });
                         if (category.Contains("Topics"))
                         {
                             BsonArray topics = (BsonArray)category["Topics"];
                             foreach (BsonDocument topic in topics)
                             {
-                               // filters.Add(new CTSFilter() { Id = topic["Id"].ToString(), Name = topic["Name"].ToString(), Type = FilterType.Topic, ParentId = category["Id"].ToString() });
                                 if (topic.Contains("Skills"))
                                 {
                                     BsonArray skills = (BsonArray)topic["Skills"];
@@ -407,7 +405,6 @@ namespace KindleSpur.Data
 
                     foreach (BsonDocument category in _categories)
                     {
-                        // filters.Add(new CTSFilter() { Id = category["Id"].ToString(), Name = category["Category"].ToString(), Type = FilterType.Category });
                         if (category.Contains("Topics"))
                         {
                             BsonArray topics = (BsonArray)category["Topics"];
@@ -492,7 +489,6 @@ namespace KindleSpur.Data
         {
             BsonDocument _Category = new BsonDocument();
             var _collection = con.GetCollection("CoachOrMentor");
-            //var result = _collection.Find(Query.And(Query.EQ("UserId", Data.UserId), Query.EQ("Role", Data.Role))).ToList();
             return _Category;
         }
 

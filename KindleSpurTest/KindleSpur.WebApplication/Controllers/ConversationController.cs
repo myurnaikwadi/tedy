@@ -386,7 +386,6 @@ namespace KindleSpur.WebApplication.Controllers
             catch (Exception Ex)
             {
 
-                //return View();
             }
             return this.Json(response);
         }
@@ -427,7 +426,7 @@ namespace KindleSpur.WebApplication.Controllers
             return emailStatus;
         }
 
-        //
+     
         // GET: /Coversation/Edit/5
         public ActionResult Edit(int id)
         {

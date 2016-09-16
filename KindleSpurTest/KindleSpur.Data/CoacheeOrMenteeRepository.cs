@@ -15,9 +15,6 @@ namespace KindleSpur.Data
     public class CoacheeOrMenteeRepository
     {
         Connection con = new Connection();
-        //MongoClient _mongoClient;
-        //MongoServer _mongoServer;
-    //    MongoDatabase _kindleDatabase;
         MongoCollection _logCollection;
         MongoCollection _coacheeOrMenteeCollection;
         MongoCollection _coachOrMentorCollection;
@@ -44,7 +41,6 @@ namespace KindleSpur.Data
 
             try
             {
-                //     var _collection = _kindleDatabase.GetCollection("CoacheeOrMentee");
 
                 var result = _coacheeOrMenteeCollection.FindAs<CoacheeOrMentee>(Query.And(Query.EQ("UserId", Data.UserId), Query.EQ("Role", Data.Role))).ToList();
 
@@ -64,8 +60,6 @@ namespace KindleSpur.Data
                 string message = "{ Error : 'Failed at AddNewCoacheeOrMentee().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ";
                 _logCollection.Insert(message);
                 throw new MongoException("Signup failure!!!");
-                // _logCollection.Insert("{ Error : 'Failed at AddNewCoacheeOrMentee().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ");
-                //throw new MongoException("Signup failure!!!");
             }
             catch (Exception e)
             {
@@ -99,7 +93,7 @@ namespace KindleSpur.Data
 
                 if (Data.Role == "Coachee")
                 {
-                   
+
                     for (int i = _entity.Skills.Count - 1; i >= 0; i--)
                     {
                         bool blnDelete = true;
@@ -136,7 +130,7 @@ namespace KindleSpur.Data
                 if (Data.Role == "Mentee")
                 {
 
-                    
+
                     for (int i = _entity.Topics.Count - 1; i >= 0; i--)
                     {
                         bool blnDelete = true;
@@ -182,7 +176,6 @@ namespace KindleSpur.Data
                 string message = "{ Error : 'Failed at EditCoacheeOrMentee().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ";
                 _logCollection.Insert(message);
                 throw new MongoException("Signup failure!!!");
-                //_logCollection.Insert("{ Error : 'Failed at EditUser().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ");
             }
             catch (Exception e)
             {
@@ -237,8 +230,6 @@ namespace KindleSpur.Data
                 string message = "{ Error : 'Failed at GetProfileDetails().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ";
                 _logCollection.Insert(message);
                 throw new MongoException("Not able to find profile details!!!");
-                //_logCollection.Insert("{ Error : 'Failed at AddNewCoacheeOrMentee().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ");
-                //throw new MongoException("Signup failure!!!");
             }
             catch (Exception e)
             {
@@ -259,7 +250,6 @@ namespace KindleSpur.Data
 
         public List<SkillOrTopic> GetTopicsForMentee(string UserId)
         {
-            // var _collection = _kindleDatabase.GetCollection("CoacheeOrMentee");
             var result = _coacheeOrMenteeCollection.FindOneAs<CoacheeOrMentee>(Query.And(
                                                                     Query.EQ("UserId", UserId),
                                                                     Query.EQ("Role", "Mentee")
@@ -283,8 +273,6 @@ namespace KindleSpur.Data
                 string message = "{ Error : 'Failed at DeleteCoacheeOrMentee().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ";
                 _logCollection.Insert(message);
                 throw new MongoException("Signup failure!!!");
-                //_logCollection.Insert("{ Error : 'Failed at AddNewCoacheeOrMentee().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ");
-                //throw new MongoException("Signup failure!!!");
             }
             catch (Exception e)
             {
@@ -314,7 +302,6 @@ namespace KindleSpur.Data
                 string message = "{ Error : 'Failed at GetRecommended().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ";
                 _logCollection.Insert(message);
                 throw new MongoException("Signup failure!!!");
-                // _logCollection.Insert("{ Error : 'Failed at EditUser().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ");
             }
             catch (Exception e)
             {
@@ -485,9 +472,9 @@ namespace KindleSpur.Data
                     coachOrMentorEntity = _coachOrMentorCollection.FindOneAs<CoachOrMentor>(Query.And(Query.EQ("UserId", UserId), Query.EQ("Role", "Mentor")));
                 }
 
-               
+
                 entity.FeedbackPoints += feedback.customerSatisfactionRating;
-                
+
                 if (entity.Feedbacks == null) entity.Feedbacks = new List<IFeedback>();
                 feedback.Sender = UserId;
                 feedback.CreateDate = DateTime.Now;
@@ -519,7 +506,6 @@ namespace KindleSpur.Data
                 string message = "{ Error : 'Failed at addFeedback().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ";
                 _logCollection.Insert(message);
                 throw new MongoException("Signup failure!!!");
-                //_transactionStatus = false;
             }
             catch (Exception e)
             {
@@ -530,7 +516,6 @@ namespace KindleSpur.Data
                 var frame = st.GetFrame(0);
                 var line = frame.GetFileLineNumber();
                 _logCollection.Insert(em);
-              //  throw new MongoException("Signup failure!!!");
             }
             finally
             {
@@ -647,14 +632,11 @@ namespace KindleSpur.Data
                                       Rating = grp.OrderByDescending(t => t.customerSatisfactionRating).FirstOrDefault().customerSatisfactionRating
                                   }).ToList();
 
-                        //if (result.Count() > 0)
-                        //{
-                            for (var i = 0; i < result.Count(); i++)
-                            {
-                                result[i] = GetCocheeDetails(result[i]);
-                                result[i].TreeURL = GetTreeURL(result[i].FeedbackCount, result[i].Rating);
-                            }
-                       // }
+                        for (var i = 0; i < result.Count(); i++)
+                        {
+                            result[i] = GetCocheeDetails(result[i]);
+                            result[i].TreeURL = GetTreeURL(result[i].FeedbackCount, result[i].Rating);
+                        }
                     }
                 }
 
@@ -687,7 +669,7 @@ namespace KindleSpur.Data
         {
             List<ICoachingStatus> LstCochees = new List<ICoachingStatus>();
             List<CoachStatus> result = new List<CoachStatus>();
-          
+
             Role = Role == "Coachee" ? "Coach" : "Mentor";
             try
             {
@@ -711,14 +693,11 @@ namespace KindleSpur.Data
                                       Rating = grp.OrderByDescending(t => t.customerSatisfactionRating).FirstOrDefault().customerSatisfactionRating
                                   }).ToList();
 
-                        //if (result.Count() > 0)
-                        //{
                         for (var i = 0; i < result.Count(); i++)
                         {
                             result[i] = GetCocheeDetails(result[i]);
                             result[i].TreeURL = GetTreeURL(result[i].FeedbackCount, result[i].Rating);
                         }
-                        // }
                     }
                 }
 
@@ -761,7 +740,6 @@ namespace KindleSpur.Data
                 c.description = userDetail.description;
 
                 CoacheeOrMenteeRepository _coacheeRepo = new CoacheeOrMenteeRepository();
-                //c.topics = _coacheeRepo.GetTopicsForMentee(c.EmailAddress);
                 c.skills = _coacheeRepo.GetSkillsForCoachee(c.EmailAddress);
             }
             return c;
@@ -769,7 +747,7 @@ namespace KindleSpur.Data
         public string GetTreeURL(int FeedbackCount, int Rating)
         {
             string TreeURL = "Images/Tree/Stage 1.png";
-            
+
             if (FeedbackCount == 2)
                 TreeURL = "Images/Tree/Stage 2.png";
             else if (FeedbackCount == 3)
@@ -787,34 +765,6 @@ namespace KindleSpur.Data
             else if (FeedbackCount == 9)
                 TreeURL = "Images/Tree/Stage 5 with Fruits.png";
 
-            //if (FeedbackCount == 1)
-            //{
-            //    if (Rating >= 1 && Rating <= 3)
-            //        TreeURL = "Images/Tree/Stage 2.png";
-            //    else if (Rating >= 4 && Rating <= 5)
-            //        TreeURL = "Images/Tree/Stage 2 with water.png";
-            //}
-            //else if (FeedbackCount == 2)
-            //{
-            //    if (Rating >= 1 && Rating <= 3)
-            //        TreeURL = "Images/Tree/Stage 3.png";
-            //    else if (Rating >= 4 && Rating <= 5)
-            //        TreeURL = "Images/Tree/Stage 3 with flower.png";
-            //}
-            //else if (FeedbackCount == 3)
-            //{
-            //    if (Rating >= 1 && Rating <= 3)
-            //        TreeURL = "Images/Tree/Stage 4.png";
-            //    else if (Rating >= 4 && Rating <= 5)
-            //        TreeURL = "Images/Tree/Stage 4 with Fruits.png";
-            //}
-            //else if (FeedbackCount >= 4)
-            //{
-            //    if (Rating >= 1 && Rating <= 3)
-            //        TreeURL = "Images/Tree/Stage 5.png";
-            //    else if (Rating >= 4 && Rating <= 5)
-            //        TreeURL = "Images/Tree/Stage 5 with Fruits.png";
-            //}
             return TreeURL;
         }
     }

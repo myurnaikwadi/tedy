@@ -34,7 +34,6 @@ namespace KindleSpur.Data
                 string message = "{ Error : 'Failed at CoachOrMentorRepository().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ";
                 _logCollection.Insert(message);
                 throw new MongoException("Signup failure!!!");
-                //_logCollection.Insert("{ Error : 'Database connection failed.', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ");
             }
             catch (Exception e)
             {
@@ -121,14 +120,11 @@ namespace KindleSpur.Data
                                       Rating = grp.OrderByDescending(t => t.customerSatisfactionRating).FirstOrDefault().customerSatisfactionRating
                                   }).ToList();
 
-                        //if (result.Count() > 0)
-                        //{
                         for (var i = 0; i < result.Count(); i++)
                         {
                             result[i] = GetCocheeDetails(result[i]);
                             result[i].TreeURL = GetTreeURL(result[i].FeedbackCount, result[i].Rating);
                         }
-                        // }
                     }
                 }
 
@@ -177,36 +173,7 @@ namespace KindleSpur.Data
             else if (FeedbackCount == 9)
                 TreeURL = "Images/Tree/Stage 5 with Fruits.png";
 
-            //    string TreeURL = "Images/Tree/Stage 1.png";
-
-            //    if (FeedbackCount == 1)
-            //    {
-            //        if (Rating >= 1 && Rating <= 3)
-            //            TreeURL = "Images/Tree/Stage 2.png";
-            //        else if (Rating >= 4 && Rating <= 5)
-            //            TreeURL = "Images/Tree/Stage 2 with water.png";
-            //    }
-            //    else if (FeedbackCount == 2)
-            //    {
-            //        if (Rating >= 1 && Rating <= 3)
-            //            TreeURL = "Images/Tree/Stage 3.png";
-            //        else if (Rating >= 4 && Rating <= 5)
-            //            TreeURL = "Images/Tree/Stage 3 with flower.png";
-            //    }
-            //    else if (FeedbackCount == 3)
-            //    {
-            //        if (Rating >= 1 && Rating <= 3)
-            //            TreeURL = "Images/Tree/Stage 4.png";
-            //        else if (Rating >= 4 && Rating <= 5)
-            //            TreeURL = "Images/Tree/Stage 4 with Fruits.png";
-            //    }
-            //    else if (FeedbackCount >= 4)
-            //    {
-            //        if (Rating >= 1 && Rating <= 3)
-            //            TreeURL = "Images/Tree/Stage 5.png";
-            //        else if (Rating >= 4 && Rating <= 5)
-            //            TreeURL = "Images/Tree/Stage 5 with Fruits.png";
-            //    }
+           
             return TreeURL;
         }
 
@@ -218,7 +185,6 @@ namespace KindleSpur.Data
             CoacheeOrMentee coacheeOrMenteeEntity = new CoacheeOrMentee();
             try
             {
-                // CoachOrMentor entity = _coachOrMentorCollection.FindOneAs<CoachOrMentor>(Query.And(Query.EQ("UserId", feedback.Sender), Query.EQ("Role", "Coach")));
                 if (Role == "Coach")
                 {
                     entity = _coachOrMentorCollection.FindOneAs<CoachOrMentor>(Query.And(Query.EQ("UserId", feedback.Sender), Query.EQ("Role", Role)));
@@ -255,7 +221,6 @@ namespace KindleSpur.Data
                     coachingStatus.FeedbackClosed = false;
                 coacheeOrMenteeEntity.CoachingStatus.Add(coachingStatus);
                 
-                //coacheeOrMenteeEntity = _coacheeOrMenteeCollection.FindOneAs<CoacheeOrMentee>(Query.And(Query.EQ("UserId", feedback.Sender), Query.EQ("Role", newRole)));
                 _coacheeOrMenteeCollection.Save(coacheeOrMenteeEntity);
                 _transactionStatus = true;
                 return user.TotalRewardPoints;
@@ -439,7 +404,6 @@ namespace KindleSpur.Data
                 string message = "{ Error : 'Failed at EditCoachOrMentor().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ";
                 _logCollection.Insert(message);
                 throw new MongoException("Signup failure!!!");
-                //_logCollection.Insert("{ Error : 'Failed at EditUser().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ");
             }
             catch (Exception e)
             {
@@ -481,8 +445,6 @@ namespace KindleSpur.Data
                 string message = "{ Error : 'Failed at GetRewardPoints().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ";
                 _logCollection.Insert(message);
                 throw new MongoException("Signup failure!!!");
-                //_logCollection.Insert("{ Error : 'Failed at AddNewCoachOrMentor().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ");
-                //throw new MongoException("Signup failure!!!");
             }
             catch (Exception e)
             {
@@ -514,7 +476,6 @@ namespace KindleSpur.Data
                 string message = "{ Error : 'Failed at GetAllCoachOrMentorDetails().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ";
                 _logCollection.Insert(message);
                 throw new MongoException("Signup failure!!!");
-                // _logCollection.Insert("{ Error : 'Failed at EditUser().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ");
             }
             catch (Exception e)
             {
@@ -548,7 +509,6 @@ namespace KindleSpur.Data
                 string message = "{ Error : 'Failed at GetRecommended().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ";
                 _logCollection.Insert(message);
                 throw new MongoException("Signup failure!!!");
-                // _logCollection.Insert("{ Error : 'Failed at EditUser().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ");
             }
             catch (Exception e)
             {
@@ -581,7 +541,6 @@ namespace KindleSpur.Data
                 string message = "{ Error : 'Failed at GetCoachOrMentorDetail().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ";
                 _logCollection.Insert(message);
                 throw new MongoException("Signup failure!!!");
-                //_logCollection.Insert("{ Error : 'Failed at EditUser().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ");
             }
             catch (Exception e)
             {
@@ -617,12 +576,7 @@ namespace KindleSpur.Data
                     {
                         CTSRepository ctsrep = new CTSRepository();
                         ctsrep.GetSkillsForTopic(ctsFilter.Name);
-                        //coachEntities = _coachOrMentorCollection.FindAs<CoachOrMentor>(Query.ElemMatch("Topics", Query.EQ("Name", ctsFilter.Name))).AsQueryable();
                     }
-                    //else if (ctsFilter.Type == FilterType.Category && _coachOrMentorCollection.Count() > 0)
-                    // {
-                    //     coachEntities = new List<CoachOrMentor>().AsQueryable();
-                    // }
                 }
                 else if (Role == "Mentor")
                 {
@@ -637,7 +591,6 @@ namespace KindleSpur.Data
                 string message = "{ Error : 'Failed at GetAllCoachOrMentors().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ";
                 _logCollection.Insert(message);
                 throw new MongoException("Signup failure!!!");
-                // _logCollection.Insert("{ Error : 'Failed at  GetAllCoachOrMentors().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ");
 
             }
             catch (Exception e)
@@ -688,14 +641,11 @@ namespace KindleSpur.Data
                                       Rating = grp.OrderByDescending(t => t.customerSatisfactionRating).FirstOrDefault().customerSatisfactionRating
                                   }).ToList();
 
-                       // if (result.Count() > 0)
-                       // {
                             for (var i = 0; i < result.Count(); i++)
                             {
                                 result[i] = GetCocheeDetails(result[i]);
                                 result[i].TreeURL = GetTreeURL(result[i].FeedbackCount, result[i].Rating, result[i].FeedbackClosed);
                             }
-                       // }
                     }
                 }
 
@@ -740,7 +690,6 @@ namespace KindleSpur.Data
                 c.description = userDetail.description;
 
                 CoacheeOrMenteeRepository _coacheeRepo = new CoacheeOrMenteeRepository();
-                //c.topics = _coacheeRepo.GetTopicsForMentee(c.EmailAddress);
                 c.skills = _coacheeRepo.GetSkillsForCoachee(c.EmailAddress);
             }
             return c;
@@ -789,7 +738,6 @@ namespace KindleSpur.Data
                 string message = "{ Error : 'Failed at GetRecommendedCoachList().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ";
                 _logCollection.Insert(message);
                 throw new MongoException("Signup failure!!!");
-                // _logCollection.Insert("{ Error : 'Failed at  GetRecommendedCoachList().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ");
             }
             catch (Exception e)
             {
@@ -807,7 +755,6 @@ namespace KindleSpur.Data
 
             }
             if (lstCoach.Count > 0)
-                //  return FillSerachData(lstCoach);
                 return RecommendedFillSerachData(lstCoach, lstTopicOrSkill, UserId);
             return null;
         }
@@ -834,7 +781,6 @@ namespace KindleSpur.Data
                 _logCollection.Insert(message);
                 throw new MongoException("Signup failure!!!");
 
-                //_logCollection.Insert("{ Error : 'Failed at  GetRecommendedMentorList().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ");
             }
             catch (Exception e)
             {
@@ -852,7 +798,6 @@ namespace KindleSpur.Data
 
             }
             if (lstCoach.Count > 0)
-                //  return FillSerachData(lstCoach);
                 return RecommendedFillSerachData(lstCoach, lstTopicOrSkill, UserId);
             return null;
         }
@@ -880,7 +825,6 @@ namespace KindleSpur.Data
                 string message = "{ Error : 'Failed at FillSerachData().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ";
                 _logCollection.Insert(message);
                 throw new MongoException("Signup failure!!!");
-                //_logCollection.Insert("{ Error : 'Failed at  FillSerachData().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ");
             }
             catch (Exception e)
             {
@@ -928,7 +872,6 @@ namespace KindleSpur.Data
                 string message = "{ Error : 'Failed at GetCoachOrMentorSearchDetails().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ";
                 _logCollection.Insert(message);
                 throw new MongoException("Signup failure!!!");
-                // _logCollection.Insert("{ Error : 'Failed at  GetCoachOrMentorSearchDetails().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ");
 
             }
             catch (Exception e)
@@ -970,7 +913,6 @@ namespace KindleSpur.Data
                 string message = "{ Error : 'Failed at RecommendedFillSerachData().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ";
                 _logCollection.Insert(message);
                 throw new MongoException("Signup failure!!!");
-                // _logCollection.Insert("{ Error : 'Failed at  RecommendedFillSerachData().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ");
             }
             catch (Exception e)
             {
@@ -1031,7 +973,6 @@ namespace KindleSpur.Data
                 string message = "{ Error : 'Failed at GetRecommendedCoachOrMentorSearchDetails().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ";
                 _logCollection.Insert(message);
                 throw new MongoException("Signup failure!!!");
-                // _logCollection.Insert("{ Error : 'Failed at  GetRecommendedCoachOrMentorSearchDetails().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ");
             }
             catch (Exception e)
             {

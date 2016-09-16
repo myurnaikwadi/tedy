@@ -14,20 +14,6 @@ namespace KindleSpur.WebApplication.Controllers
 {
     public class HomeController : Controller
     {
-        //protected override void OnException(ExceptionContext filterContext)
-        //{
-        //    Exception ex = filterContext.Exception;
-        //    filterContext.ExceptionHandled = true;
-
-        //    var model = new HandleErrorInfo(filterContext.Exception, "Home", "error");
-
-        //    filterContext.Result = new ViewResult()
-        //    {
-        //        ViewName = "Error",
-        //        ViewData = new ViewDataDictionary(model)
-        //    };
-
-        //}
         public ActionResult error()
         {
           
