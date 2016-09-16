@@ -467,12 +467,26 @@ namespace KindleSpur.Data
             BsonDateTime newFromDate = BsonDateTime.Create(FromDate);
             BsonDateTime newToDate = BsonDateTime.Create(ToDate);
             List<Conversation> _categories = new List<Conversation>();
+            UserRepository userRepo = new Data.UserRepository();
 
             try
             {
 
                 var _query = Query.And(Query<Conversation>.GTE(p => p.UpdateDate, newFromDate.ToUniversalTime()), Query<Conversation>.LTE(p => p.UpdateDate, newToDate.ToUniversalTime()), Query<Conversation>.EQ(p => p.IsRejected, false), Query<Conversation>.EQ(p1 => p1.IsVerified, false), Query<Conversation>.EQ(p1 => p1.ReceiverEmail, userId));
                 _categories = _conversationCollection.FindAs<Conversation>(_query).ToList();
+                for (int count = 0; count < _categories.Count; count++)
+                {
+                    User userDetails = (User)userRepo.GetUserDetail(_categories[count].ReceiverEmail);
+                    User userDetails1 = (User)userRepo.GetUserDetail(_categories[count].SenderEmail);
+
+                    _categories[count].ToFirstName = userDetails.FirstName;
+                    _categories[count].ToLastName = userDetails.LastName;
+                    _categories[count].ToPhoto = userDetails.Photo;
+
+                    _categories[count].FromFirstName = userDetails1.FirstName;
+                    _categories[count].FromLastName = userDetails1.LastName;
+                    _categories[count].FromPhoto = userDetails1.Photo;
+                }
 
             }
             catch (MongoException ex)

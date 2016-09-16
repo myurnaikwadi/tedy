@@ -33,5 +33,12 @@ namespace KindleSpur.Models
         public bool Active { get; set; }
         public string CoachOrMentor { get; set; }
         public string CoacheeOrMentee { get; set; }
+
+        public string FromFirstName { get; set; }
+        public string FromLastName { get; set; }
+        public string FromPhoto { get; set; }
+        public string ToFirstName { get; set; }
+        public string ToLastName { get; set; }
+        public string ToPhoto { get; set; }
     }
 }
