@@ -15,29 +15,29 @@
     </div>
 </div>
 <div id="monthlycontroller" style="width:100%; height:86%;float:left;">
-    <div id="{{$index+'month'}}" class="monthlyCell" smooth-scroll scroll-if="{{expandIndex == $index}}" ng-repeat="dateNumberArr in monthlyArray" ng-style="dateNumberArr.styleObj" >
+    <div id="{{$index+'month'}}" class="monthlyCell" smooth-scroll scroll-if="{{expandIndex == $index}}" ng-repeat="dateNumberArr in monthlyArray" ng-style="dateNumberArr.styleObj">
         <!-- ng-click="cellClickFunc(dateNumberArr,$index);ng-class="{removeClick : expandIndex != $index || expandIndex != -1}"" -->
         <div style="height:100%;width:100%;position:relative;position: relative;">
             <div class="monthDayInnerContainer" ng-click="cellClickFunc(dateNumberArr,$index,iEvent)" ng-if="expandIndex != $index" ng-class="{ makeItPast:dateNumberArr.flag == 0, monthDayInnerBorderForToday:dateNumberArr.value=='TODAY',selectedDateOnonthly: indexClickedOn == $index && dateNumberArr.value!='TODAY'}">
-                <div class="monthDayInnerRow" >                    
+                <div class="monthDayInnerRow">
                     <h4 class="fontClass" style="margin: auto;margin-right: 8%;padding:0;" ng-class="{monthDayInnerRowDayNameCurrentMonth:dateNumberArr.flag==1,monthDayInnerRowDayName:dateNumberArr.flag==0,monthDayInnerRowDayNameToday:dateNumberArr.value=='TODAY'}">
                         {{dateNumberArr.dateNumber}}
                     </h4>
-                </div>               
+                </div>
                 @*<div class="monthDayInnerRow" ng-show="dateNumberArr.value=='TODAY'">
-                    <h5 class="monthlyClassForTodayHeading fontClass">TODAY</h5>
-                </div>*@
+                        <h5 class="monthlyClassForTodayHeading fontClass">TODAY</h5>
+                    </div>*@
                 <div class="monthDayInnerEventRow" ng-show="dateNumberArr.meetingArray.length>0">
-                    <h5 class="eliipsisClass fontClass genericPointerClass" ng-repeat="request in dateNumberArr.meetingArray | limitTo : 3"  ng-class="{ coachThemeColor : request.Role == 'Coach' , coacheeThemeColor : request.Role == 'Coachee' , mentorThemeColor : request.Role == 'Mentor' , menteeThemeColor : request.Role == 'Mentee' }">
+                    <h5 class="eliipsisClass fontClass genericPointerClass" ng-repeat="request in dateNumberArr.meetingArray | limitTo : 3" ng-class="{ coachThemeColor : request.Role == 'Coach' , coacheeThemeColor : request.Role == 'Coachee' , mentorThemeColor : request.Role == 'Mentor' , menteeThemeColor : request.Role == 'Mentee' }">
                         {{request.ConversationType ? (request.ConversationType+' request for skill ') : request.Subject}}
-                    </h5>                    
-                </div>          
+                    </h5>
+                </div>
                 <div class="monthDayInnerEventRow" style="height: 15px;display:flex;" ng-show="dateNumberArr.meetingArray.length > 3">
-                   <div style="display:flex;width:30%;margin:auto;">
-                       <h4 style="margin:auto;border: 3px solid #ddd;border-radius:100%;" class="eliipsisClass fontClass"></h4>
-                       <h4 style="margin:auto;border: 3px solid #ddd;border-radius:100%;" class="eliipsisClass fontClass"></h4>
-                       <h4 style="margin:auto;border: 3px solid #ddd;border-radius:100%;" class="eliipsisClass fontClass"></h4>
-                   </div>
+                    <div style="display:flex;width:30%;margin:auto;">
+                        <h4 style="margin:auto;border: 3px solid #ddd;border-radius:100%;" class="eliipsisClass fontClass"></h4>
+                        <h4 style="margin:auto;border: 3px solid #ddd;border-radius:100%;" class="eliipsisClass fontClass"></h4>
+                        <h4 style="margin:auto;border: 3px solid #ddd;border-radius:100%;" class="eliipsisClass fontClass"></h4>
+                    </div>
                 </div>
             </div>
             <div ng-if="expandIndex == $index" ng-click="$event.preventDefault()" class="monthlyExpandedDiv" style="transition:none;height:100%">
@@ -55,9 +55,9 @@
                                 <div class="conversationParentDiv">
                                     <div ng-show="expandRequestFlag == $index" class="highlightedSelctedConversation"></div>
                                     <div class="imageConversation" ng-style="{ 'height' : expandRequestFlag == $index ? '50%' : '100%'}">
-                                        <img ng-class="{ coachColor : (!conversation.MeetingId && conversation.Role == 'Coach'),mentorColor : (!conversation.MeetingId && conversation.Role == 'Mentor'),activeSessionCLass :  conversation.expiredMeeting == false, closeSessionClass :  conversation.expiredMeeting == true }" ng-src="{{ conversation.Photo ? conversation.Photo  : 'Images/icons/If no Profile photo.png'}}" style="margin:auto auto;width: 40px;height: 40px;border-radius: 50%;border:1px solid;" src="~/Images/icons/If no Profile photo.png" />                                        
+                                        <img ng-class="{ coachColor : (!conversation.MeetingId && conversation.Role == 'Coach'),mentorColor : (!conversation.MeetingId && conversation.Role == 'Mentor'),activeSessionCLass :  conversation.expiredMeeting == false, closeSessionClass :  conversation.expiredMeeting == true }" ng-src="{{ conversation.Photo ? conversation.Photo  : 'Images/icons/If no Profile photo.png'}}" style="margin:auto auto;width: 40px;height: 40px;border-radius: 50%;border:1px solid;" src="~/Images/icons/If no Profile photo.png" />
                                     </div>
-                                    <div class="nameMessageConversation"  ng-style="{'height' : expandRequestFlag == $index ? '50%' : '100%'}">
+                                    <div class="nameMessageConversation" ng-style="{'height' : expandRequestFlag == $index ? '50%' : '100%'}">
                                         <div style="margin:auto auto;float:left; width: 100%;">
                                             <h5 class="textFormatConversation fontClass" style="color:#797979;text-align: left;">{{(conversation.FromFirstName +" "+conversation.FromLastName) | uppercase }}</h5>
                                             <h5 class="textFormatConversation eliipsisClass fontClass" style="text-align: left;color:#aaa; font-size: 12px;font-weight: 100;">{{( conversation.skill ? conversation.skill : conversation.SkillName)  | uppercase }}</h5>
@@ -65,7 +65,7 @@
                                             <h5 ng-show="expandRequestFlag == $index && (conversation.MeetingId)" class="textFormatConversation fontClass" style="text-align: left;color:#aaa; font-size: 12px;font-weight: 100;">{{conversation.StartDate | date : 'dd/MM/yyyy'}} at {{conversation.StartDate | date :  'hh:mm a'}}</h5>
                                         </div>
                                     </div>
-                                    
+
                                     <div class="nameMessageConversation" ng-style="{'width':'99%', 'height' : expandRequestFlag == $index ? '50%' : '0%', 'overflow':'hidden'}">
                                         <div ng-if="conversation.MeetingId" class="meetingPersonNameStrc" style="width: 100%;margin-left: 0;">
                                             <button style="background-color: white;border: 1px solid #D60500;color: #D60500;font-size: 10px;padding: 5px;margin: auto;" class="signupButton fontClass" ng-click="invitesRequest.splice($index,1);updateMeeting(false,conversation)">DECLINE</button>
@@ -86,18 +86,18 @@
                         <div class="podcastHeader">
                             <h5 class="fontClass" style="margin:auto;margin-left: 2%;font-size:14px;padding-left: 0;">SCHEDULED MEETINGS</h5>
                         </div>
-                        <div class="ImpactZoneChildDiv" style="height: 90%;overflow: auto;">                            
+                        <div class="ImpactZoneChildDiv" style="height: 90%;overflow: auto;">
                             <div class="conversationList" style="height: 17%;" ng-class="{ expandedSelectedMeetingRequest  : expandRequestScheduledMeetingFlag == $index}" ng-click="expandRequestScheduledMeeting($event,$index)" ng-repeat="conversation in meetingRequest">
-                                <div class="conversationParentDiv" ng-hide="expandRequestScheduledMeetingFlag == $index">                                    
-                                    <div class="imageConversation">                                      
+                                <div class="conversationParentDiv" ng-hide="expandRequestScheduledMeetingFlag == $index">
+                                    <div class="imageConversation">
                                         <img ng-class="{ activeSessionCLass :  conversation.expiredMeeting == false, closeSessionClass :  conversation.expiredMeeting == true }" ng-src="{{ conversation.FromPhoto ? conversation.FromPhoto  : 'Images/icons/If no Profile photo.png'}}" style="margin:auto auto;width: 40px;height: 40px;border-radius: 50%;" src="~/Images/icons/If no Profile photo.png" />
                                     </div>
-                                    <div class="nameMessageConversation">                                        
+                                    <div class="nameMessageConversation">
                                         <div style="margin:auto auto;float:left; width: 100%;height: 55%;">
-                                            <h5 class="textFormatConversation fontClass" style="color:#797979;text-align: left;">{{(conversation.FromFirstName +" "+conversation.FromLastName) | uppercase }}</h5>
+                                            <h5 class="textFormatConversation fontClass" style="color:#797979;text-align: left;font-size: 13px;">{{(conversation.FromFirstName +" "+conversation.FromLastName) | uppercase }}</h5>
                                             <h5 class="textFormatConversation eliipsisClass fontClass" style="color:#aaa;text-align: left; font-size: 12px;font-weight: 100;">{{conversation.SkillName  | uppercase }}</h5>
                                         </div>
-                                    </div>                                   
+                                    </div>
                                 </div>
                                 <div class="conversationParentDiv" ng-show="expandRequestScheduledMeetingFlag == $index">
                                     <div class="conversationParentDiv" style="height: 22%;border-bottom:1px solid lightgray">
@@ -106,18 +106,38 @@
                                         </div>
                                         <div class="nameMessageConversation">
                                             <div style="margin:auto auto;float:left; width: 100%;height: 55%;">
-                                                <h5 class="textFormatConversation fontClass" style="color:#797979;text-align: left;">{{(conversation.FromFirstName +" "+conversation.FromLastName) | uppercase }}</h5>
+                                                <h5 class="textFormatConversation fontClass" style="color:#797979;text-align: left;font-size: 13px;">{{(conversation.FromFirstName +" "+conversation.FromLastName) | uppercase }}</h5>
                                                 <h5 class="textFormatConversation eliipsisClass fontClass" style="color:#aaa;text-align: left; font-size: 12px;font-weight: 100;">{{conversation.SkillName  | uppercase }}</h5>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="conversationParentDiv" style="height: 78%;border-bottom:1px solid lightgray">
-                                        <div class="nameMessageConversation">
-                                            <div style="margin:auto auto;float:left; width: 100%;height: 55%;">
-                                                <h5 class="textFormatConversation fontClass" style="color:#797979;text-align: left;">{{(conversation.FromFirstName +" "+conversation.FromLastName) | uppercase }}</h5>
-                                                <h5 class="textFormatConversation eliipsisClass fontClass" style="color:#aaa;text-align: left; font-size: 12px;font-weight: 100;">{{conversation.SkillName  | uppercase }}</h5>
-                                            </div>
+                                        <div class="nameMessageConversation" style="float:left;display:flex;width:100%;height:17.5%;border-bottom:1px solid lightgray">
+                                            <h5 class="fontClass" style="margin:auto;margin-left:5%;width:20%;text-align:left;color: #797979;font-size:12px">Agenda</h5>
+                                            <h5 class="fontClass" style="margin:auto;width:70%;color: #797979;font-size:12px;text-align: left;">{{conversation.Subject}}</h5>
                                         </div>
+                                        <div class="nameMessageConversation" style="float:left;display:flex;width:100%;height:17.5%;border-bottom:1px solid lightgray">
+                                            <h5 class="fontClass" style="margin:auto;color: #797979;margin-left:5%;text-align:left;width:20%;font-size:12px">Time</h5>
+                                            <h5 class="fontClass" style="margin:auto;color: #797979;width:70%;font-size:12px">{{(conversation.StartDate | date : 'MMM d, y h:mm a') +"--"+(conversation.EndDate | date : 'h:mm a')}}</h5>
+                                        </div>
+                                        <div class="nameMessageConversation" style="float:left;display:flex;width:100%;height:17.5%;border-bottom:1px solid lightgray">
+                                            <h5 class="fontClass" style="margin:auto;color: #797979;margin-left:5%;text-align:left;width:20%;font-size:12px">For</h5>
+                                            <h5 class="fontClass" style="margin:auto;color: #797979;width:70%;font-size:12px;">{{conversation.SkillName}}</h5>
+                                        </div>
+                                        <div class="nameMessageConversation" style="float:left;display:flex;width:100%;height:17.5%;border-bottom:1px solid lightgray">
+                                            <h5 class="fontClass" style="margin:auto;color: #797979;margin-left:5%;text-align:left;width:20%;font-size:12px">Communication Medium</h5>
+                                            <h5 class="fontClass" style="margin:auto;color: #797979;width:70%;font-size:12px;text-align: left;">sdsdsss</h5>
+                                        </div>
+                                        <div class="nameMessageConversation" style="float:left;display:flex;width:100%;height:30%;border-bottom:1px solid lightgray">
+                                            <h5 class="fontClass" style="margin:auto;color: #797979;margin-left:5%;text-align:left;width:20%;font-size:12px">Attendee</h5>
+                                            <div style="margin:auto;color: #797979;margin-left:5%;text-align:left;width:70%;display:flex;height: 100%;">
+                                                <img style="width: 40px;margin:auto;margin-right: 0;" src="~/Images/icons/If no Profile photo.png" />
+                                                <img style="width: 40px;margin:auto;margin-left: 10%;" src="~/Images/icons/If no Profile photo.png" />
+                                            </div>
+                                            
+                                        </div>
+
+
                                     </div>
                                 </div>
                             </div>
@@ -129,19 +149,54 @@
                         </div>
                         <div class="ImpactZoneChildDiv" style="height: 90%;overflow: auto;">
                             <div class="conversationList" style="height: 17%;" ng-class="{ expandedSelectedMeetingRequest  : expandRequestUpcomingMeetingFlag == $index}" ng-click="expandRequestUpcomingMeeting($event,$index)" ng-repeat="conversation in upcomingMeetingRequest">
-                                <div class="conversationParentDiv">
-                                    <div ng-show="expandRequestFlag == $index" class="highlightedSelctedConversation"></div>
-                                    <div class="imageConversation" ng-style="{ 'height' : expandRequestFlag == $index ? '50%' : '100%'}">
+                                
+                                <div class="conversationParentDiv" ng-hide="expandRequestUpcomingMeetingFlag == $index">
+                                    <div class="imageConversation">
                                         <img ng-class="{ activeSessionCLass :  conversation.expiredMeeting == false, closeSessionClass :  conversation.expiredMeeting == true }" ng-src="{{ conversation.FromPhoto ? conversation.FromPhoto  : 'Images/icons/If no Profile photo.png'}}" style="margin:auto auto;width: 40px;height: 40px;border-radius: 50%;" src="~/Images/icons/If no Profile photo.png" />
                                     </div>
-                                    <div class="nameMessageConversation" ng-style="{'height' : expandRequestFlag == $index ? '50%' : '100%'}">
+                                    <div class="nameMessageConversation">
                                         <div style="margin:auto auto;float:left; width: 100%;height: 55%;">
-                                            <h5 class="textFormatConversation fontClass" style="color:#797979;text-align: left;">{{(conversation.FromFirstName +" "+conversation.FromLastName) | uppercase }}</h5>
-                                            <h5 class="textFormatConversation eliipsisClass fontClass" style="color:#aaa; font-size: 12px;font-weight: 100;text-align: left;">{{conversation.SkillName  | uppercase }}</h5>
+                                            <h5 class="textFormatConversation fontClass" style="color:#797979;text-align: left;font-size:13px;">{{(conversation.FromFirstName +" "+conversation.FromLastName) | uppercase }}</h5>
+                                            <h5 class="textFormatConversation eliipsisClass fontClass" style="color:#aaa;text-align: left; font-size: 12px;font-weight: 100;">{{conversation.SkillName  | uppercase }}</h5>
                                         </div>
                                     </div>
-                                    <div class="nameMessageConversation" ng-style="{'width':'99%', 'height' : expandRequestFlag == $index ? '50%' : '0%', 'overflow':'hidden'}">
-                                      
+                                </div>
+                                <div class="conversationParentDiv" ng-show="expandRequestUpcomingMeetingFlag == $index">
+                                    <div class="conversationParentDiv" style="height: 22%;border-bottom:1px solid lightgray">
+                                        <div class="imageConversation">
+                                            <img ng-class="{ activeSessionCLass :  conversation.expiredMeeting == false, closeSessionClass :  conversation.expiredMeeting == true }" ng-src="{{ conversation.FromPhoto ? conversation.FromPhoto  : 'Images/icons/If no Profile photo.png'}}" style="margin:auto auto;width: 40px;height: 40px;border-radius: 50%;" src="~/Images/icons/If no Profile photo.png" />
+                                        </div>
+                                        <div class="nameMessageConversation">
+                                            <div style="margin:auto auto;float:left; width: 100%;height: 55%;">
+                                                <h5 class="textFormatConversation fontClass" style="color:#797979;text-align: left;font-size:13px;">{{(conversation.FromFirstName +" "+conversation.FromLastName) | uppercase }}</h5>
+                                                <h5 class="textFormatConversation eliipsisClass fontClass" style="color:#aaa;text-align: left; font-size: 12px;font-weight: 100;">{{conversation.SkillName  | uppercase }}</h5>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="conversationParentDiv" style="height: 78%;border-bottom:1px solid lightgray">
+                                        <div class="nameMessageConversation" style="float:left;display:flex;width:100%;height:17.5%;border-bottom:1px solid lightgray">
+                                            <h5 class="fontClass" style="margin:auto;margin-left:5%;width:20%;text-align:left;color: #797979;font-size:12px">Agenda</h5>
+                                            <h5 class="fontClass" style="margin:auto;width:70%;color: #797979;font-size:12px;text-align:left">{{conversation.Subject}}</h5>
+                                        </div>
+                                        <div class="nameMessageConversation" style="float:left;display:flex;width:100%;height:17.5%;border-bottom:1px solid lightgray">
+                                            <h5 class="fontClass" style="margin:auto;color: #797979;margin-left:5%;text-align:left;width:20%;font-size:12px">Time</h5>
+                                            <h5 class="fontClass" style="margin:auto;color: #797979;width:70%;font-size:12px;text-align:left">{{(conversation.StartDate | date : 'MMM d, y h:mm a') +"--"+(conversation.EndDate | date : 'h:mm a')}}</h5>
+                                        </div>
+                                        <div class="nameMessageConversation" style="float:left;display:flex;width:100%;height:17.5%;border-bottom:1px solid lightgray">
+                                            <h5 class="fontClass" style="margin:auto;color: #797979;margin-left:5%;text-align:left;width:20%;font-size:12px">For</h5>
+                                            <h5 class="fontClass" style="margin:auto;color: #797979;width:70%;font-size:12px;text-align:left">{{conversation.SkillName}}</h5>
+                                        </div>
+                                        <div class="nameMessageConversation" style="float:left;display:flex;width:100%;height:17.5%;border-bottom:1px solid lightgray">
+                                            <h5 class="fontClass" style="margin:auto;color: #797979;margin-left:5%;text-align:left;width:20%;font-size:12px">Communication Medium</h5>
+                                            <h5 class="fontClass" style="margin:auto;color: #797979;width:70%;font-size:12px;text-align:left">sdsdsss</h5>
+                                        </div>
+                                        <div class="nameMessageConversation" style="float:left;display:flex;width:100%;height:30%;border-bottom:1px solid lightgray">
+                                            <h5 class="fontClass" style="margin:auto;color: #797979;margin-left:5%;text-align:left;width:20%;font-size:12px">Attendee</h5>
+                                            <div style="margin:auto;color: #797979;margin-left:5%;text-align:left;width:70%;display:flex;height: 100%;">
+                                                <img style="width: 40px;margin:auto;margin-right: 0;" src="~/Images/icons/If no Profile photo.png" />
+                                                <img style="width: 40px;margin:auto;margin-left: 10%;" src="~/Images/icons/If no Profile photo.png" />
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

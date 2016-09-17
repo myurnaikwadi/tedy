@@ -299,6 +299,7 @@
     <Content Include="Images\addProfile.png" />
     <Content Include="Images\business-meeting-of-males.png" />
     <Content Include="Images\businessmen-talking-in-business-meeting.png" />
+    <Content Include="Images\error png.png" />
     <Content Include="Images\meetingScheduler.png" />
     <Content Include="Images\calendar.png" />
     <Content Include="Images\camera.png" />

@@ -168,7 +168,15 @@ app.directive('monthly', function (dateServiceForMonthlyCalendar, $rootScope, se
                                 if (new Date(iCell.inviteObject.meeting[key].StartDate) < new Date()) {
                                     iCell.inviteObject.meeting[key].expiredMeeting = true;
                                 }
-                                $scope.invitesRequest.push(iCell.inviteObject.meeting[key]);
+                                if (iCell.inviteObject.meeting[key].From != $scope.loggedEmail)
+                                    $scope.invitesRequest.push(iCell.inviteObject.meeting[key]);
+                                else {
+                                    var _data = angular.copy(iCell.inviteObject.meeting[key]);
+                                    $scope.meetingRequest.push(_data);
+                                    if (new Date(iCell.inviteObject.meeting[key].StartDate) > new Date()) {
+                                        $scope.upcomingMeetingRequest.push(_data);
+                                    }
+                                }
                             }
                         }
                     }

@@ -2,14 +2,14 @@
  
        <div class="schedularContent fullWidthHeightClass">
         <div class="schedularHeader">
-            <h5 class="meetingPersonName fontClass eliipsisClass">SCHEDULE MEETING FOR <b>{{extraParam.openConversation.skill | uppercase}}</b></h5>
+            <h5 class="meetingPersonName fontClass eliipsisClass"><b>SCHEDULE MEETING FOR {{extraParam.openConversation.skill | uppercase}}</b></h5>
             @*<img ng-show="extraParam.closeRequired" ng-click="closePopup()" style="width: 15px;height: 15px;top:5px;right: 5px;bottom: 0;position: absolute;z-index:1;cursor:pointer;" title="Cancel" src="~/Images/cancel.png" />*@
         </div>
         <div class="schedularBody">
             <div class="schedularBodyHidden" ng-class="{ schedularBodyMask : conflictAlert.showAlert == true }" ng-show="conflictAlert.showAlert == true">                
                 <div style="margin:auto auto;float:left;height: 100%;width: 100%;">
                     <div class="imageConversation" style="width: 100%;height: 55%;">
-                        <img style="width: 55px;height: 55px;float:left;margin:auto; position: relative;z-index:1;" src="~/Images/cancel.png" />
+                        <img style="width: 8%; height: 85%;float:left;margin:auto; position: relative;z-index:1;" src="~/Images/error png.png" />
                     </div>
                     <div class="nameMessageConversation" style="width: 100%;height: 15%;">
                         <div style="margin:auto auto;float:left; height: 100%;">
