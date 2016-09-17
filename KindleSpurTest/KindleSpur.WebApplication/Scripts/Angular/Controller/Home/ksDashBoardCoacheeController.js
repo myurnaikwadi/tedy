@@ -1018,6 +1018,7 @@
         }
         return _prefix;
     };
+    $scope.iconMgmt = { iIconClicked: false, uIconClicked  : false };
     $scope.showSelectedConversation = function (SenderEmail, ReceiverEmail) {
         serverCommunication.getConversationDetails({
             //senderEmail: SenderEmail,
@@ -1038,8 +1039,7 @@
                 console.error(MailRecords);
                 $scope.openConversation.sessionClosed = false;
                 $scope.applyAnimatonToFeedBack = false;
-                $scope.iIconClicked = false;
-                $scope.uIconClicked = false;
+                $scope.iconMgmt = { iIconClicked: false, uIconClicked: false };
                 
                 
                 var _flag = false;

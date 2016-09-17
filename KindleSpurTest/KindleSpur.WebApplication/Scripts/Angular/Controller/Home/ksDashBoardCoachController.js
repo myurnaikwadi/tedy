@@ -855,27 +855,25 @@
         }
         return _prefix;
     };
+
+    $scope.iconMgmt = { iIconClicked: false, uIconClicked  : false };
     $scope.showSelectedConversation = function (SenderEmail, ReceiverEmail) {
         serverCommunication.getConversationDetails({
             //senderEmail: SenderEmail,
             //receiverEmail: ReceiverEmail,
-            Role : 'Coach',
-            ConversationType: "Coaching",
-            ParentId : $scope.openConversation.ConversationParentId,
-            successCallBack: function (iObj) {
+                Role : 'Coach',
+                ConversationType: "Coaching",
+                ParentId : $scope.openConversation.ConversationParentId,
+                successCallBack: function (iObj) {
                 console.debug('In showSelectedConversation ----- ', iObj);
-
-                function ObjectId(id) { return id; }
-                function ISODate(d) {
-                    return d;
-                }
+                   
                 $scope.MailRecords = []
                 var MailRecords = eval('(' + iObj.data.Result + ')');
                 console.error(MailRecords);
                 $scope.openConversation.sessionClosed = false;
                 $scope.applyAnimatonToFeedBack = false;
-                $scope.iIconClicked = false;
-                $scope.uIconClicked = false;
+                $scope.iconMgmt.iIconClicked = false;
+                $scope.iconMgmt.uIconClicked = false;
 
                 var _flag = false;
                 $scope.timeSlots = [];
@@ -884,7 +882,7 @@
                         console.error(dd.ConversationClosed)
                         $scope.openConversation.sessionClosed = true;
 
-                    }
+                }
 
                     if (dd.SenderEmail == $scope.loggedEmail) {
                         dd.Name = $rootScope.loggedDetail.FirstName + " " + $rootScope.loggedDetail.LastName;
@@ -892,25 +890,25 @@
                     } else {
                         dd.Name = $scope.openConversation.FirstName + " " + $scope.openConversation.LastName;
                         dd.Photo = $scope.openConversation.Photo;
-                    }
-                  
-                    
+                }
+
+
                     dd.displayDate = _displayDate(dd.UpdateDate);
                     if ($scope.timeSlots.length > 0) {
                         _flag = true;
                         for (var j = 0; j < $scope.timeSlots.length; j++) {
                             if (dd.displayDate == $scope.timeSlots[j].displayDate) {
                                 _flag = false;
-                            }
                         }
+                    }
                         if (_flag == true) {
                             $scope.timeSlots.push({ displayDate: dd.displayDate, compareDate: dd.UpdateDate });
                             _flag = false;
-                        }
+                    }
                     } else {
                         _flag = false;
                         $scope.timeSlots.push({ displayDate: dd.displayDate, compareDate: dd.UpdateDate });
-                    }
+                }
                     $scope.MailRecords.push(angular.copy(dd));
                 });
                 $scope.timeSlots.sort(function(a, b) {
@@ -922,17 +920,17 @@
                     a = new Date(a.UpdateDate);
                     b = new Date(b.UpdateDate);
                     return a - b;
-                });               
+                });
                 $scope.loadingMessageObject = { showLoading: false, loadingMessage: 'Loading' };
-                //  console.error('ssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss')
+                    //  console.error('ssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss')
                 _setScrollPosition();
                   $scope.showFeedBack = false;
                 $scope.getFeedBackFromServer();
-                // $scope.feedbackDisplayIcon.push({ Name: 'P', style: {} });
-            },
-            failureCallBack: function (iObj) {
+                    // $scope.feedbackDisplayIcon.push({ Name: 'P', style: {} });
+        },
+                failureCallBack: function (iObj) {
                 console.debug('In failureCallBack', iObj);
-            }
+        }
         });
     };
 

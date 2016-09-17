@@ -837,7 +837,8 @@
         else
             $scope.applyAnimatonToFeedBack = true;
 
-        };
+    };
+    $scope.iconMgmt = { iIconClicked: false, uIconClicked: false };
     $scope.showSelectedConversation = function (SenderEmail, ReceiverEmail) {
         serverCommunication.getConversationDetails({
             //senderEmail: SenderEmail,
@@ -856,8 +857,7 @@
 
                 $scope.openConversation.sessionClosed = false;
                 $scope.applyAnimatonToFeedBack = false;
-                $scope.iIconClicked = false;
-                $scope.uIconClicked = false;
+                $scope.iconMgmt = { iIconClicked: false, uIconClicked  : false };
 
                 var _flag = false;
                 $scope.timeSlots = [];

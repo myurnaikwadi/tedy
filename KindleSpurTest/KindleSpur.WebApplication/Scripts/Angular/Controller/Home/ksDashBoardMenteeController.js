@@ -1103,6 +1103,7 @@
         }
         return _prefix;
     };
+    $scope.iconMgmt = { iIconClicked: false, uIconClicked: false };
     $scope.showSelectedConversation = function (SenderEmail, ReceiverEmail) {
         serverCommunication.getConversationDetails({
             //senderEmail: SenderEmail,
@@ -1118,8 +1119,7 @@
                 $scope.openConversation.sessionClosed = false;
                 var _flag = false;
                 $scope.applyAnimatonToFeedBack = false;
-                $scope.iIconClicked = false;
-                $scope.uIconClicked = false;
+                $scope.iconMgmt = { iIconClicked: false, uIconClicked  : false };
 
                 $scope.timeSlots =[];
                 MailRecords.some(function (dd) {
