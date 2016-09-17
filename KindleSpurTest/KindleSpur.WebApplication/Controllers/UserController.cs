@@ -54,7 +54,7 @@ namespace KindleSpur.WebApplication.Controllers
             TempData["UserId"] = Request["UserId"].ToString();
             UserRepository _repo = new UserRepository();
             User u = (User)_repo.GetUserDetails(TempData["UserId"].ToString());
-
+            
             if (u!=null &&!u.IsVerified )
             {
                 TempData.Keep("UserId");
@@ -62,14 +62,14 @@ namespace KindleSpur.WebApplication.Controllers
             }
             else
             {
-                return View("RedirectToLogin");
+                return RedirectToLogin(u);
             }
                      
         }
 
-        public ActionResult RedirectToLogin()
+        public ActionResult RedirectToLogin(IUser user)
         {
-            return View();
+            return View(user);
         }
 
         public ActionResult ForgotPasswordEmail()

@@ -1,4 +1,4 @@
-﻿
+﻿@model KindleSpur.Models.User
 @{
     Layout = null;
 }
@@ -12,6 +12,7 @@
 </head>
 <body>
     <div> 
+        @Html.LabelFor(model => model.FirstName);
         This link is de-activated !!! <a href="\Home\Index">Click here to login</a>
     </div>
 </body>
