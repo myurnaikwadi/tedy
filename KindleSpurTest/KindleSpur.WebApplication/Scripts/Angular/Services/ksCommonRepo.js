@@ -48,8 +48,21 @@
                     scope.extraParam.closeCallBack();
             };
 
+            var _displayAlertMeesage = function (iObj) {
+                var _displayAlert = {
+                    showAlert: true,
+                    message: iObj.message,
+                    formatType: iObj.formatType,
+                };
+                $rootScope.$broadcast("refreshStateHomeView", {
+                    type: 'displayAlert',
+                    // subType: 'Meeting',
+                    data: _displayAlert
+                });
+            };
+
             scope.saveBookmark = function (iArtifacts) {
-                ///debugger
+                //debugger
                 var _callServerSide = true;
                 if (iArtifacts) {
                     if (iArtifacts.bookMarked) {
@@ -68,6 +81,12 @@
                         scope.deleteAttachment({ deleteMultiple: false, type: 'bookMark', deletedObject: _foundElement ? _foundElement.contain : iArtifacts, index: _foundElement ? _foundElement.index : -1 })
                     }                   
                 }
+
+                if (scope.bookmark.FilePath == '' || scope.bookmark.FileName == '') {
+                    _displayAlertMeesage({ message: 'Please Enter empty fields', formatType: '2' });
+                    return;
+                }
+                
                 //console.error(_callServerSide)
                 if (_callServerSide) {
                     scope.bookmark.LinkUrl = scope.bookmark.FilePath;
@@ -138,8 +157,10 @@
                     scope.uploadAttachmentArray = [];
                     scope.loadUploadPopupFlag = false;
                     console.error(iPath)
+                   
+
                 });
-               
+                scope.closePopup();
             };
             //{ deleteMultiple : false , type : 'artifact' , deletedObject : option , index : $index }
             scope.deleteAttachment = function (iObj) {
@@ -237,6 +258,7 @@
                     }
                 });              
             };
+
             scope.triggerUpload = function (iId) {
                 console.error('iId --- ', iId)
                 var obj = {

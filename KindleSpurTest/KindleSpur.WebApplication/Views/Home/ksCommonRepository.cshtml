@@ -38,9 +38,9 @@
                        
                     </div>
                 </div>
-                <div class="bottomStripPopup" ng-hide="uploadAttachmentArray.length == 0">   
-                    <button type="button" style="margin: auto;width: 15%;padding: 0%;margin-right: 7%;height: 22px;font-size: 9px;" ng-click="closePopup()" class="signupButton fontClass btn btn-default">CANCEL</button>                                   
-                    <button type="button" style="margin: auto;width: 15%;padding: 0%;margin-right: 7%;height: 22px;font-size: 9px;" ng-click="uploadDataOnServer()" class="signupButton fontClass btn btn-default">UPLOAD</button>                  
+                <div class="bottomStripPopup">   
+                    <button type="button" style="margin: auto;width: 15%;padding: 0%;margin-right: 7%;height: 22px;font-size: 9px;" ng-click="closePopup()" class="signupButton fontClass btn btn-default">CANCEL</button>
+                    <button  ng-hide="uploadAttachmentArray.length == 0" type="button" style="margin: auto;width: 15%;padding: 0%;margin-right: 7%;height: 22px;font-size: 9px;" ng-click="uploadDataOnServer()" class="signupButton fontClass btn btn-default">UPLOAD</button>                  
 
                 </div>
             </div>
@@ -50,17 +50,13 @@
                 </div>
                 <div class="middlteStripPopup">
                     <div class="fullWidthHeightClass" style="margin: auto;width: 87%; height: 94%;overflow:auto;">                       
-                        <div class="statusCoachingStatus" style="width: 100%;height: 25%;">
-                            <h5 class="fontClass" style="color:#A9A9A9;margin: auto auto;float: left;margin-left: 0;">BookMark Name</h5>
+   
+                        <div class="statusCoachingStatus" style="width: 100%;height: 50%;">
+                            <input class="inputTagStyle fontClass" style="margin: auto;width: 90%;height: 41%;" type="text" ng-model="bookmark.FileName" placeholder="BookMark Name" ng-required />
                         </div>
-                        <div class="statusCoachingStatus" style="width: 100%;height: 25%;">
-                            <input class="inputTagStyle fontClass" style="margin: auto;width: 90%;height: 70%;" type="text" ng-model="bookmark.FileName" placeholder="BookMark Name" ng-required />
-                        </div>
-                        <div class="statusCoachingStatus" style="width: 100%;height: 25%;">
-                            <h5 class="fontClass" style="color:#A9A9A9;margin: auto auto;float: left;margin-left: 0;">BookMark Url</h5>
-                        </div>
-                        <div class="statusCoachingStatus" style="width: 100%;height: 25%;">
-                            <input class="inputTagStyle fontClass" style="margin: auto;width: 90%;height: 70%;"  type="text" ng-model="bookmark.FilePath" placeholder="BookMark Name" ng-required />
+         
+                        <div class="statusCoachingStatus" style="width: 100%;height: 50%;">
+                            <input class="inputTagStyle fontClass" style="margin: auto;width: 90%;height: 41%;"  type="text" ng-model="bookmark.FilePath" placeholder="BookMark Url" ng-required />
                         </div>
                     </div>
                 </div>

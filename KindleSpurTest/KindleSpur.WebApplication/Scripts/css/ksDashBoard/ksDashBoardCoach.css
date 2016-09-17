@@ -442,12 +442,10 @@
 }
 .cateGoryFormDetails{
     position: relative;
-    width: 100%;
     float: left;
     height: 100%;
-    margin: 2%;
-    margin-left: 0;
-    margin-right: 0;
+    margin:auto;
+    margin-top:15px;
 }
 .cancelLink{
     float: left;
