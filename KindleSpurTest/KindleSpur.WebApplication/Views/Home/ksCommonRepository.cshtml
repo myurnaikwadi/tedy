@@ -16,9 +16,10 @@
                     <div class="fullWidthHeightClass" style="margin: auto;width: 87%; height: 90%;overflow:auto;">
                         <div ng-hide="uploadAttachmentArray.length == 0" class="uploadedAttachment" ng-repeat="attachment in uploadAttachmentArray">
                             <div class="uploadDataTypeDiv">                
-                                <img ng-show="attachment.fileType == 'document'" src="/Images/icons/Microsoft_Word_2013_icon.png" style="margin: auto auto;float: left;height: 28px;width: 28px;" />                               
-                                <img ng-show="attachment.fileType == 'sheet'" src="/Images/icons/microsoft-excel-icon.png" style="margin: auto auto;float: left;height: 28px;width: 28px;" />
-                                <img ng-show="attachment.fileType == 'default'" src="/Images/defaultAttachment.png" style="margin: auto auto;float: left;height: 28px;width: 28px;" />
+                                <img ng-if="attachment.ContentType.indexOf('document') > -1 && attachment.ContentType.indexOf('sheet') == -1" src="~/Images/icons/msDoc.png" style="margin: auto auto;float: left;height: 35px;width: 35px;" />                               
+                                <img ng-if="attachment.ContentType.indexOf('sheet') > -1" src="~/Images/icons/xlSheet.png" style="margin: auto auto;float: left;height: 35px;width: 35px;" />
+                                <img ng-if="attachment.ContentType.indexOf('pdf') > -1" src="~/Images/icons/defaultDoc.png" style="margin: auto auto;float: left;height: 35px;width: 35px;" />
+                                <img ng-if="attachment.ContentType.indexOf('image') > -1" ng-src="{{attachment.FilePath}}" style="margin: auto auto;float: left;height: 35px;width: 35px;" />
                             </div>
                             <div class="uploadDataBarDiv">
                                 <div class="uploadBarDataParent">
@@ -27,10 +28,10 @@
                                         <progress class="progressBarUpload" value="22" max="100"></progress>
                                         <h5 class="fontClass ValueFeedsHeade eliipsisClass" style="float:right;width: 8%;">30%</h5>
                                     </div>
-                                    <div class="uploadedDataHeading" style="display:flex;">
+                                    @*<div class="uploadedDataHeading" style="display:flex;">
                                         <h5 style="width: 8%;" class="fontClass ValueFeedsHeade">TAG</h5>
                                         <input ng-model="myInfo.lastName" class="inputTagStyle tagBarUploadProfile fontClass" style="padding:2px;margin-left: 2%;" type="text" placeholder="LAST NAME" />
-                                    </div>
+                                    </div>*@
                                 </div>
                             </div>
                         </div>
@@ -76,7 +77,10 @@
                                 <img ng-src="{{ option.bookMarked ? 'Images/rate-star-button.png' : 'Images/silverstar.png' }}" ng-click="option.bookMarked =! option.bookMarked; saveBookmark(option)" style="margin: auto; float: left;height: 20px;width: 20px;" />
                             </div>
                             <div class="profileImageCoachingStatus">
-                                <img ng-src="{{option.PhotoURL ? option.PhotoURL : '/Images/icons/Microsoft_Word_2013_icon.png' }}" style="margin: auto auto;float: left;height: 28px;width: 28px;" />                               
+                                <img ng-if="option.ContentType.indexOf('document') > -1 && option.ContentType.indexOf('sheet') == -1" src="~/Images/icons/msDoc.png" style="margin: auto auto;float: left;height: 35px;width: 35px;" />
+                                <img ng-if="option.ContentType.indexOf('sheet') > -1" src="~/Images/icons/xlSheet.png" style="margin: auto auto;float: left;height: 35px;width: 35px;" />
+                                <img ng-if="option.ContentType.indexOf('pdf') > -1" src="~/Images/icons/defaultDoc.png" style="margin: auto auto;float: left;height: 35px;width: 35px;" />
+                                <img ng-if="option.ContentType.indexOf('image') > -1" ng-src="{{option.FilePath}}" style="margin: auto auto;float: left;height: 35px;width: 35px;" />                              
                             </div>
                             <div class="statusCoachingStatus" style="width: 50%;">
                                 <h5 class="fontClass" style="color:#A9A9A9;margin: auto auto;float: left;margin-left: 0;font-size:13px;">{{option.FileName}}</h5>                               

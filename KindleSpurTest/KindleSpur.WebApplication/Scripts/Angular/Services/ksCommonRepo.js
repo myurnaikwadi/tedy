@@ -278,20 +278,14 @@
                     //serverCommunication.changeProfileImageDetails(data, null, function (iPath) {    
                     for (var k = 0 ; k < valueFile.length ; k++) {
                        // data.append('photo[' + k + ']', valueFile[k]);
-                       // ajaxData.append('photo[' + i + ']', file);
-                      
-                        if (valueFile[k].type.indexOf('document') > -1)
-                            valueFile[k].fileType = 'document';
-                        else if (valueFile[k].type.indexOf('sheet') > -1)
-                            valueFile[k].fileType = 'sheet';
-                        else
-                            valueFile[k].fileType = 'default';
-                      
+                        // ajaxData.append('photo[' + i + ']', file);
+                        valueFile[k].ContentType = valueFile[k].type;
                         scope.uploadAttachmentArray.push(valueFile[k]);
                         var _obj = {                            
                             FileName :  valueFile[k].name,
                             fileType : valueFile[k].fileType,
-                            FilePath:  valueFile[k].name,
+                            FilePath: valueFile[k].name,
+                            ContentType: valueFile[k].type
                         }                 
                         //});                 
                         tempArray.push(_obj);
