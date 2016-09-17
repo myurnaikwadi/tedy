@@ -1129,7 +1129,9 @@
         if ($scope.feedBack.askFeedback == true)
             return;
         if (iObj.icon.activate == false && iObj.mode == 'Self') {
-            alert('You can not perform this operation as previous feedback is not filled');
+            $scope.displayAlert.showAlert = true;
+            $scope.displayAlert.message = 'You can not perform this operation as previous feedback is not filled';
+            $scope.displayAlert.formatType = '2';
             return;
         }
 
