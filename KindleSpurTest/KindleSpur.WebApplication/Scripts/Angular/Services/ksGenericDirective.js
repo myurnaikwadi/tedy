@@ -449,7 +449,7 @@ app.directive('ctcRole', function ($state, serverCommunication) {
                             //    //}
                             //}                           
                         }
-                        scope.skillsArray = scope.skillsArray.concat(iTopic.Skills);
+                        scope.skillsArray = scope.skillsArray.concat(angular.copy(iTopic.Skills));
                     } else {
                         if (!iTopic.profiLevel) iTopic.profiLevel = '0';
                         scope.createStyleArrayAsPerSelected(iTopic, true);
