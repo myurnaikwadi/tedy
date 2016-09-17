@@ -75,40 +75,57 @@
                             </div>
                         </div>
                         <div class="topicSkillPanel" ng-if="categoryDisplay == false">
-                            <div id="topicDynamic"  class="topicClassParent" ng-class="{ heightTopicClass : skillRequired == false}">
-                                <div class="topicHeadingSection">
-                                    <h5 class="topicHeadingBar">TOPICS</h5>
+                            <div  id="topicDynamic"  ng-style="{ 'transition':'all 0.8s ease','overflow' : 'hidden', 'height':  gridViewSkill.gridViewLoaded == true ? '93%' : (gridViewSkill.gridViewSkillLoaded == true ? '35px' : '50%')}" class="topicClassParent" ng-class="{ heightTopicClass : skillRequired == false}">
+                                <div class="topicHeadingSection" ng-style="{ 'transition':'all 0.8s ease','overflow' : 'hidden', 'height':  gridViewSkill.gridViewLoaded == true ? '35px' : (gridViewSkill.gridViewSkillLoaded == true ? '35px' : '35px') }">
+                                    <h5 class="topicHeadingBar fontClass">TOPICS</h5>
+                                    <img ng-show="skillRequired == true" ng-class="{ rotateIconupWord  : gridViewSkill.gridViewLoaded == true,rotateIconDownWord:  gridViewSkill.gridViewLoaded == false,}" style="width:35px;height : 35px;position: absolute;right: 1%;float:right;margin: auto auto;margin-right: 0;border-radius: 30px;padding: 5px;cursor:pointer;" ng-click="gridViewSkill.gridViewLoaded =! gridViewSkill.gridViewLoaded;gridViewSkill.gridViewSkillLoaded=false;" src="~/Images/left_circle.png" />
                                 </div>
-                                <div class="topicListingSection">
+                                <div class="topicListingSection" ng-style="{ 'transition':'all 0.8s ease','height':  gridViewSkill.gridViewLoaded == true ? '93%' : (gridViewSkill.gridViewSkillLoaded == true ? '0' : '85%') }">
                                     <div class="topicListingPanel">
                                         <div ng-show="topicArray.length == 0" class="topicHeadingPlaceholdr">
                                             <h5 style="color:gray;margin: auto;font-size: 14px;" class="leftSideMenuLable fontClass">
                                                 NO TOPIC SELECTED
                                             </h5>
                                         </div>
-                                        <div class="topicsList"  title="{{skill.Name+''+(skill.Tooltip ? (' :- '+skill.Tooltip) : '')}}" ng-repeat="skill in topicArray">
+                                        <div ng-init="mouseOverEffectFlag= false"  class="topicsList"  title="{{skill.Name+''+(skill.Tooltip ? (' :- '+skill.Tooltip) : '')}}" ng-repeat="skill in topicArray">
+                                            <div ng-mouseover="mouseOverEffectFlag= true" ng-mouseleave="mouseOverEffectFlag= false" class="tagTasks" ng-click="topicSelection($event,$index,skill)" ng-style="styleToCTSText[skill.Name]" style="display:flex;float: left;width: 100%;height: 60px;z-index: 2;position: relative;">
+                                                <h5 class="fontClass multilineEllipsis" style="font-size: 11px;margin:auto;float: left;position: relative;">{{skill.Name | uppercase}}</h5>
+                                                @*<h5 class="fontClass multilineEllipsis" style="font-size: 11px;margin:auto;float: left;position: relative;height: 100%">{{skill.Tooltip | uppercase}}</h5>*@
+                                                <div ng-show="skillRequired == false" class="mentor-actions" style="left:0;" ng-class="{ ctsMouseOverEffct : mouseOverEffectFlag == true}">
+                                                    <h5 class="genericEventHeadings" style="border:0; margin: auto;color: white;font-size:13px;" title="{{skill.Tooltip}}">{{skill.Tooltip | uppercase}}</h5>
 
-                                            <h5 ng-click="topicSelection($event,$index,skill)" class="tagTasks fontClass eliipsisClass" ng-style="styleToCTSText[skill.Name]" style="float: left;width: 100%;height: 28px;z-index: 2;position: relative;">{{skill.Name | uppercase}}</h5>
+                                                </div>
+                                            </div>
+
+                                            
                                             <div ng-show="skill.selected == true" ng-style="styleToCTS[skill.Name]"></div>
                                             <input ng-show="skillRequired == false && skill.selected == true" ng-click="$event.stopPropagation()" ng-change="changeslider(skill)" ng-model="skill.profiLevel" name="Proficiency Level" title="{{ 'Proficiency Level - '+ (skill.profiLevel == 0 ? 'Basic' : (skill.profiLevel == 1 ? 'Intermediate' : 'Expert') )}}" min="0" step="1" max="2" style="float: left;padding: 0;width: 100%;margin-top: 5px;" type="range" />
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <div id="skillDynamic" class="skillsClassParent" ng-if="skillRequired">
-                                <div class="topicHeadingSection">
-                                    <h5 class="topicHeadingBar">SKILLS</h5>
+                            <div id="skillDynamic" class="skillsClassParent" ng-if="skillRequired" ng-style="{ 'transition':'all 0.8s ease','overflow' : 'hidden', 'height':  gridViewSkill.gridViewLoaded == true ? '35px' : (gridViewSkill.gridViewSkillLoaded == true ? '93%': '50%')}">
+                                <div class="topicHeadingSection" ng-style="{ 'transition':'all 0.8s ease','overflow' : 'hidden', 'height':  gridViewSkill.gridViewLoaded == true ? '100%' : (gridViewSkill.gridViewSkillLoaded == true ? '35px': '35px')}">
+                                    <h5 class="topicHeadingBar fontClass">SKILLS</h5>
+                                    <img ng-class="{ rotateIconDownWord : gridViewSkill.gridViewSkillLoaded == true,rotateIconupWord :   gridViewSkill.gridViewSkillLoaded == false,}" style="position: absolute;right: 1%;width:35px;height : 35px;float:right;margin: auto auto;margin-right: 0;border-radius: 30px;padding: 5px;cursor:pointer;" ng-click="gridViewSkill.gridViewLoaded = false;gridViewSkill.gridViewSkillLoaded =! gridViewSkill.gridViewSkillLoaded;" src="~/Images/left_circle.png" />
                                 </div>
-                                <div class="topicListingSection">
+                                <div class="topicListingSection" ng-style="{ 'transition':'all 0.8s ease', 'height':  gridViewSkill.gridViewLoaded == true ? '0%' : (gridViewSkill.gridViewSkillLoaded == true ? '93%': '85%')}">
                                     <div ng-show="skillsArray.length == 0" class="topicHeadingPlaceholdr">
                                         <h5 style="color:gray;margin: auto;font-size: 14px;" class="leftSideMenuLable fontClass">
                                             No Topic Selected
                                         </h5>
                                     </div>
 
-                                    <div class="topicsList" title="{{skill.Name+''+(skill.Tooltip ? (' :- '+skill.Tooltip) : '')}}" ng-repeat="skill in skillsArray" >
-                                                                  
-                                        <h5 ng-click="skillSelection($event,$index,skill)" class="tagTasks fontClass eliipsisClass" ng-style="styleToCTSText[skill.Name]" style="float: left;width: 100%;height: 28px;z-index: 2;position: relative;">{{skill.Name | uppercase}}</h5>
+                                    <div  ng-init="mouseOverEffectFlag= false" class="topicsList" title="{{skill.Name+''+(skill.Tooltip ? (' :- '+skill.Tooltip) : '')}}" ng-repeat="skill in skillsArray" >                                                     
+                                        @*<h5 ng-click="skillSelection($event,$index,skill)" class="tagTasks fontClass multilineEllipsis" ng-style="styleToCTSText[skill.Name]" style="float: left;width: 100%;height: 45px;z-index: 2;position: relative;">{{skill.Name | uppercase}}</h5>*@
+                                        <div ng-mouseover="mouseOverEffectFlag= true" ng-mouseleave="mouseOverEffectFlag= false"class="tagTasks" ng-style="styleToCTSText[skill.Name]" style="display:flex;float: left;width: 100%;height: 60px;z-index: 2;position: relative;" ng-click="skillSelection($event,$index,skill)">
+                                            <h5 class="fontClass multilineEllipsis" style="font-size: 11px;margin:auto;float: left;position: relative;">{{skill.Name | uppercase}}</h5>
+                                            @*<h5 class="fontClass multilineEllipsis" style="font-size: 11px;margin:auto;float: left;position: relative;height: 100%">{{skill.Tooltip | uppercase}}</h5>*@
+                                            <div class="mentor-actions" style="left:0;" ng-class="{ ctsMouseOverEffct : mouseOverEffectFlag == true}">
+                                                <h5 class="genericEventHeadings" style="border:0; margin: auto;color: white;font-size:13px;" title="{{skill.Tooltip}}" >{{skill.Tooltip | uppercase}}</h5>
+                                                
+                                            </div>
+                                        </div>
                                         <div ng-show="skill.selected == true" ng-style="styleToCTS[skill.Name]"></div>  
                                         <input ng-show="skill.selected == true" ng-click="$event.stopPropagation()" ng-change="changeslider(skill)" ng-model="skill.profiLevel" name="Proficiency Level" title="{{ 'Proficiency Level - '+ (skill.profiLevel == 0 ? 'Basic' : (skill.profiLevel == 1 ? 'Intermediate' : 'Expert') )}}" min="0" step="1" max="2" style="float: left;padding: 0;width: 100%;margin-top: 5px;" type="range" />
                                     </div>

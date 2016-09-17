@@ -26,6 +26,15 @@ a:hover, a:focus, a:active {
     overflow: hidden;
     text-overflow: ellipsis;
 }
+.multilineEllipsis {
+   display: block;
+    display: -webkit-box;
+    line-height: 1.4;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
 .notAllowd{
     cursor:not-allowed;
 }

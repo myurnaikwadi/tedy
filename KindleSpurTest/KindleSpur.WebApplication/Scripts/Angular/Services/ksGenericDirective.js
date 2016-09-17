@@ -335,13 +335,13 @@ app.directive('ctcRole', function ($state, serverCommunication) {
                         _color = _colorArray[scope.role][iSkill.profiLevel];
                     }
 
-                    scope.styleToCTS[iSkill.Name] = { 'position': 'absolute', 'height': '28px', 'width': (_width + "%"), 'background': _color, 'transition': 'all 0.7s ease' };
+                    scope.styleToCTS[iSkill.Name] = { 'position': 'absolute', 'height': '60px', 'width': (_width + "%"), 'background': _color, 'transition': 'all 0.7s ease' };
                 } else {
                     // De select
                 }
             };
-
-
+            scope.gridViewSkill = {gridViewLoaded : false, gridViewSkillLoaded : false };
+            
             scope.categoryClick = function (iEvent, iIndex, iCategory) {
                 // scope.selectedCategory = iIndex;
                 iCategory.type = 'C';
@@ -1526,7 +1526,7 @@ app.directive('moleculeMap', function ($rootScope) {
 });
 
 
-app.directive('rssFeed', function ($state, serverCommunication, $timeout, $rootScope) {
+app.directive('rssFeed', function ($state, serverCommunication, $timeout) {
     return {
         scope: {
             skill: "=",
@@ -1579,19 +1579,7 @@ app.directive('rssFeed', function ($state, serverCommunication, $timeout, $rootS
             $scope.loadFeedOnNextTab = function (iFeed) {
                 window.open(iFeed.url);
             };
-            var _displayAlertMeesage = function (iObj) {
-                var _displayAlert = {
-                    showAlert: true,
-                    message: iObj.message,
-                    formatType: iObj.formatType,
-                };
-                $rootScope.$broadcast("refreshStateHomeView", {
-                    type: 'displayAlert',
-                    // subType: 'Meeting',
-                    data: _displayAlert
-                });
-            };
-            debugger
+
             $scope.bookMarkLink = function (iEvent, iFeed) {
                 iEvent && (iEvent.stopPropagation());
                 console.error(iFeed);
@@ -1601,9 +1589,7 @@ app.directive('rssFeed', function ($state, serverCommunication, $timeout, $rootS
                 }
                 serverCommunication.bookMarkLink({
                     bookMarkObject: _obj,                   
-                    successCallBack: function (iObj) {
-                        _displayAlertMeesage({ message: "Bookmark is added to Knowledge Workspace", formatType: '1' });
-
+                    successCallBack: function () {
                         // $scope.conversation.Message = "";
                         // console.debug('In successCallBack');
                     },
