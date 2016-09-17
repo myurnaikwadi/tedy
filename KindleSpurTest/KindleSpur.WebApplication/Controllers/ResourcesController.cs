@@ -151,6 +151,23 @@ namespace KindleSpur.WebApplication.Controllers
             }
         }
         [HttpPost]
+        public JsonResult DiselectBookmarkRemove(List<Models.BookMark> Obj)
+        {
+            UserRepository user = new UserRepository();
+            try
+            {
+                if (Obj != null)
+                    user.BookmarkRemoveDiselect(Obj, UserId);
+
+            }
+            catch (Exception ex)
+            {
+
+                response.FailureCallBack(ex.Message);
+            }
+            return Json(user);
+        }
+        [HttpPost]
         public JsonResult DeleteFiles(List<Models.FileUpload> Obj)
         {
             UserRepository user = new UserRepository();

@@ -200,6 +200,7 @@ namespace KindleSpur.Data
 
         public bool UpdateConversationStatus(string senderEmail, string receiverEmail, string content, bool isVerified, bool isRejected, string ConversationType, string ParentId, string skill)
         {
+
             bool _transactionStatus = false;
             CoachOrMentor coach = null;
             CoacheeOrMentee coacheeOrMentee = null;
@@ -665,25 +666,55 @@ namespace KindleSpur.Data
         public bool Bookmarks(string UserId, List<BookMark> bookmarks)
         {
             bool _transactionStatus = false;
+
             try
             {
                 var _userCollection = con.GetCollection("UserDetails");
                 var userDetail = _userCollection.FindOneAs<User>(Query.EQ("EmailAddress", UserId));
                 List<BookMark> path = new List<BookMark>();
+               
+                //var result = _userCollection.FindAs<BsonDocument>(Query.And(Query.EQ("EmailAddress", userDetail.EmailAddress), Query.EQ("Files", userDetail.Files.Select(c => c.FileId ==))).ToList();
+               // List<FileUpload> fileupdate = new List<FileUpload>();
                 foreach (var bookmark in bookmarks)
                 {
+                 //   FileUpload file = new FileUpload();
                     BookMark Link = new BookMark();
                     Link.Id = ObjectId.GenerateNewId();
                     Link.BookMarkId = Guid.NewGuid().ToString();
                     Link.LinkUrl = bookmark.LinkUrl;
                     Link.DocumentName = bookmark.DocumentName;
-                    Link.TagName = bookmark.TagName;
+                    Link.ParentFileId = bookmark.ParentFileId;
 
                     path.Add(Link);
+                    foreach (var fileid in userDetail.Files.Where(w => w.FileId == bookmark.ParentFileId))
+                    {
+                        fileid.bookMarked = bookmark.ParentFileId;
+                           _userCollection.Update(Query.EQ("EmailAddress", userDetail.EmailAddress), Update<User>.Set(c => c.Files, userDetail.Files));
+
+                    }
+                    //foreach (var fileid in userDetail.Files)
+                    //{
+                    //   if( fileid.FileId == bookmark.ParentFileId)
+                    //    {
+
+                    //        file.bookMarked = bookmark.ParentFileId;
+                    //        // fileupdate.Add(file);
+                    //        userDetail.Files.Where(w => w.FileId == fileid.FileId);
+                    //        _userCollection.Update(Query.EQ("EmailAddress", userDetail.EmailAddress), Update<User>.Set(c => c.Files, userDetail.Files));
+
+                    //    }
+                    //}
+                    //var update = Update<FileUpload>.Set(e => e.bookMarked, bookmark.ParentFileId);
+
+                    //   fileupdate.Add(file);
+                    //  _userCollection.Update(query3, update);
+
+
                 }
                 if (userDetail.BookMarks == null)
                     userDetail.BookMarks = new List<BookMark>();
                 userDetail.BookMarks.AddRange(path.ToList());
+              
                 _userCollection.Save(userDetail);
                 _transactionStatus = true;
             }

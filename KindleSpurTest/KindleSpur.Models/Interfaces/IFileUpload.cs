@@ -16,5 +16,6 @@ namespace KindleSpur.Models.Interfaces
         string TagName { get; set; }
         string ContentType { get; set; }
         string Filesize { get; set; }
+        string bookMarked { get; set; }
     }
 }

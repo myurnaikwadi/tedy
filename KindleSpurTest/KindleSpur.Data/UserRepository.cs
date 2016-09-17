@@ -264,7 +264,7 @@ namespace KindleSpur.Data
                 }
 
                 List<Feedback> feedback = new List<Feedback>();
-               
+
                 if (coacheeOrMenteeEntity != null)
                 {
                     foreach (Feedback k in coacheeOrMenteeEntity.Feedbacks)
@@ -552,7 +552,7 @@ namespace KindleSpur.Data
                 {
                     oneInviteEmailAddress = invitation.Invites[countOfInvites];
                     inviteEmailAddress.Add(oneInviteEmailAddress);
-                  
+
                 }
                 invite.Invites = inviteEmailAddress;
                 invite.Description = invitation.Description;
@@ -811,11 +811,11 @@ namespace KindleSpur.Data
 
             Game game = _gamesCollection.FindOneAs<Game>(Query.NotExists("UnlockedBy"));
 
-            if(game!=null)
+            if (game != null)
             {
                 game.UnlockedDate = DateTime.Now;
                 game.UnlockedBy = UnlockedBy;
-                _gamesCollection.Save(game);    
+                _gamesCollection.Save(game);
             }
             return game;
         }
@@ -1029,7 +1029,7 @@ namespace KindleSpur.Data
                     {
 
                         FileUpload obj = new FileUpload();
-                       obj.Id = ObjectId.GenerateNewId();
+                        obj.Id = ObjectId.GenerateNewId();
                         obj.FileId = Guid.NewGuid().ToString();
 
                         obj.FilePath = string.Format("FilePath/{0}", f.Value[0]);
@@ -1077,7 +1077,46 @@ namespace KindleSpur.Data
             return _transactionStatus;
 
         }
+        public bool BookmarkRemoveDiselect(List<BookMark> list, string EmailAddress)
+        {
+            bool _transactionStatus = false;
+            try
+            {
+                User userDetail = (User)GetUserDetail(EmailAddress);
 
+                foreach (var r in list)
+                {
+                  
+                        userDetail.BookMarks.RemoveAll(x => x.BookMarkId == r.BookMarkId);
+
+                }
+
+                _userCollection.Update(Query.EQ("EmailAddress", userDetail.EmailAddress), Update<User>.Set(c => c.BookMarks, userDetail.BookMarks));
+
+                _transactionStatus = true;
+            }
+            catch (MongoException ex)
+            {
+                string message = "{ Error : 'Failed at DeleteCoacheeOrMentee().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ";
+                _logCollection.Insert(message);
+                throw new MongoException("Signup failure!!!");
+            }
+            catch (Exception e)
+            {
+                Exceptionhandle em = new Exceptionhandle();
+                em.Error = "Failed at DeleteCoacheeOrMentee()";
+                em.Log = e.Message.Replace("\r\n", "");
+                var st = new System.Diagnostics.StackTrace(e, true); var frame = st.GetFrame(0);
+                var line = frame.GetFileLineNumber();
+                _logCollection.Insert(em);
+                throw new MongoException("Signup failure!!!");
+            }
+            finally
+            {
+
+            }
+            return _transactionStatus;
+        }
         public bool DeleteResourceFiles(List<FileUpload> list, string emailAddress)
         {
             bool _transactionStatus = false;
@@ -1085,11 +1124,11 @@ namespace KindleSpur.Data
             {
                 //write a query to get the entire User object
                 User userDetail = (User)GetUserDetail(emailAddress);
-            
+
                 foreach (var r in list)
                 {
                     userDetail.Files.RemoveAll(x => x.FileId == r.FileId);
-                   
+
                 }
 
                 _userCollection.Update(Query.EQ("EmailAddress", userDetail.EmailAddress), Update<User>.Set(c => c.Files, userDetail.Files));
@@ -1119,7 +1158,7 @@ namespace KindleSpur.Data
             }
             return _transactionStatus;
         }
-        public bool DeleteBookMarks(List<BookMark> list,string EmailAddress)
+        public bool DeleteBookMarks(List<BookMark> list, string EmailAddress)
         {
             bool _transactionStatus = false;
             try

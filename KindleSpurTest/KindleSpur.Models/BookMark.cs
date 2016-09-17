@@ -13,6 +13,6 @@ namespace KindleSpur.Models
         public string BookMarkId { get; set; }
         public string LinkUrl { get; set; }
         public string DocumentName { get; set; }
-        public string TagName { get; set; }
+        public string ParentFileId { get; set; }
     }
 }
