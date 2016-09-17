@@ -492,9 +492,10 @@ app.directive('ctcRole', function ($state, serverCommunication) {
                     //  scope.selectedCategory = -1;
                     scope.selectedTopic = -1;
                     scope.selectedSkills = -1;
-                    scope.selectedCategoryValue = null;
+                    scope.selectedCategoryValue = null;                    
                 }
                 else {
+                    scope.styleToCTSText = { };
                     scope.categoryDisplay = true;
                     for (var k = 0; k < scope.catogoryArray.length ; k++) {
                         scope.catogoryArray[k].selectedCategory = false;
