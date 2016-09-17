@@ -335,13 +335,13 @@ app.directive('ctcRole', function ($state, serverCommunication) {
                         _color = _colorArray[scope.role][iSkill.profiLevel];
                     }
 
-                    scope.styleToCTS[iSkill.Name] = { 'position': 'absolute', 'height': '28px', 'width': (_width + "%"), 'background': _color, 'transition': 'all 0.7s ease' };
+                    scope.styleToCTS[iSkill.Name] = { 'position': 'absolute', 'height': '60px', 'width': (_width + "%"), 'background': _color, 'transition': 'all 0.7s ease' };
                 } else {
                     // De select
                 }
             };
-
-
+            scope.gridViewSkill = {gridViewLoaded : false, gridViewSkillLoaded : false };
+            
             scope.categoryClick = function (iEvent, iIndex, iCategory) {
                 // scope.selectedCategory = iIndex;
                 iCategory.type = 'C';

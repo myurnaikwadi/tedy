@@ -121,6 +121,8 @@
                             } else {
                                 iDateObj.callBack && (iDateObj.callBack([]));
                             }
+                        } else {
+                            iDateObj.callBack && (iDateObj.callBack([]));
                         }
                     },
                     failureCallBack: function (iObj) {
