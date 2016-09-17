@@ -53,20 +53,31 @@
                 var _callServerSide = true;
                 if (iArtifacts) {
                     if (iArtifacts.bookMarked) {
-                        _callServerSide = true;
-                        scope.bookmark = { FilePath: iArtifacts.FileName, FileName: iArtifacts.FilePath };
+                        _callServerSide = true;                        
+                        scope.bookmark = { ParentFileId :  iArtifacts.FileId, FileId: iArtifacts.FileId, FilePath: iArtifacts.FileName, FileName: iArtifacts.FilePath };
                     } else {
                         _callServerSide = false;
-                        scope.deleteAttachment({ deleteMultiple: false, type: 'bookMark', deletedObject: iArtifacts, index: -1 })
+                        var _foundElement = null;
+                        scope.bookMarkArray.some(function (iContain, iIndex) {
+                            console.error(iIndex)
+                            if (iContain.ParentFileId == iArtifacts.FileId) {
+                                _foundElement.index = iIndex;
+                                _foundElement.contain = iContain;
+                            }
+                        });
+                        scope.deleteAttachment({ deleteMultiple: false, type: 'bookMark', deletedObject: _foundElement ? _foundElement.contain : iArtifacts, index: _foundElement ? _foundElement.index : -1 })
                     }                   
                 }
                 //console.error(_callServerSide)
                 if (_callServerSide) {
                     scope.bookmark.LinkUrl = scope.bookmark.FilePath;
                     scope.bookmark.DocumentName = scope.bookmark.FileName;
+                    if (scope.bookmark.FileId) {
+                        scope.bookmark.ParentFileId = scope.bookmark.FileId;
+                    }
                     scope.bookMarkArray.push(scope.bookmark);
                     serverCommunication.bookMarkLink({
-                        bookMarkObject: { LinkUrl : scope.bookmark.FilePath, DocumentName : scope.bookmark.FileName } ,
+                        bookMarkObject: {ParentFileId :  scope.bookmark.ParentFileId,LinkUrl : scope.bookmark.FilePath, DocumentName : scope.bookmark.FileName } ,
                         successCallBack: function () {
                             scope.closePopup();
                         },
@@ -284,6 +295,7 @@
                         if (iObj.data['Bookmarks'])
                             scope.bookMarkArray = iObj.data['Bookmarks'];
                        
+
                     }, failureCallBack: function (iObj) {
                         console.error('serverrrrr', iObj)
                     }
