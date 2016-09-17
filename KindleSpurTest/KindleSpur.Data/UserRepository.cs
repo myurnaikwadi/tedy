@@ -177,7 +177,7 @@ namespace KindleSpur.Data
             return (User)userDetail;
         }
 
-        public IUser GetUserDetail(int userId)
+        public IUser GetUserDetails(string userId)
         {
             try
             {

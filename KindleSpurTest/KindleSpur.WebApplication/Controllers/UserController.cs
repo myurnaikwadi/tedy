@@ -52,8 +52,19 @@ namespace KindleSpur.WebApplication.Controllers
         public ActionResult PasswordPromp(int? UserId)
         {
             TempData["UserId"] = Request["UserId"].ToString();
-            TempData.Keep("UserId");
-            return View();
+            UserRepository _repo = new UserRepository();
+
+            User u = (User)_repo.GetUserDetails(TempData["UserId"].ToString());
+
+            if (!u.IsVerified )
+            {
+                TempData.Keep("UserId");
+                return View();
+            }
+            else
+            {
+                return View("Login");
+            }
         }
 
         public ActionResult ForgotPasswordEmail()

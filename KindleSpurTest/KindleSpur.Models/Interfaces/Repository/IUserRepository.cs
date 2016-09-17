@@ -11,6 +11,6 @@ namespace KindleSpur.Models.Interfaces.Repository
 
             bool EditUser(string id, IUser userData);
 
-            IUser GetUserDetail(int userId);
+            IUser GetUserDetails(string userId);
     }
 }
