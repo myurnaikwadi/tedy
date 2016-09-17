@@ -16,9 +16,9 @@
                     <div class="fullWidthHeightClass" style="margin: auto;width: 87%; height: 90%;overflow:auto;">
                         <div ng-hide="uploadAttachmentArray.length == 0" class="uploadedAttachment" ng-repeat="attachment in uploadAttachmentArray">
                             <div class="uploadDataTypeDiv">                
-                                <img ng-show="attachment.fileType == 'document'" src="/Images/icons/Microsoft_Word_2013_icon.png" style="margin: auto auto;float: left;height: 30px;width: 30px;" />                               
-                                <img ng-show="attachment.fileType == 'sheet'" src="/Images/icons/microsoft-excel-icon.png" style="margin: auto auto;float: left;height: 30px;width: 30px;" />
-                                <img ng-show="attachment.fileType == 'default'" src="/Images/defaultAttachment.png" style="margin: auto auto;float: left;height: 30px;width: 30px;" />
+                                <img ng-show="attachment.fileType == 'document'" src="/Images/icons/Microsoft_Word_2013_icon.png" style="margin: auto auto;float: left;height: 28px;width: 28px;" />                               
+                                <img ng-show="attachment.fileType == 'sheet'" src="/Images/icons/microsoft-excel-icon.png" style="margin: auto auto;float: left;height: 28px;width: 28px;" />
+                                <img ng-show="attachment.fileType == 'default'" src="/Images/defaultAttachment.png" style="margin: auto auto;float: left;height: 28px;width: 28px;" />
                             </div>
                             <div class="uploadDataBarDiv">
                                 <div class="uploadBarDataParent">
@@ -77,13 +77,13 @@
                     <div style="height: 88%;width: 100%;float:left;overflow:auto;">
                         <div ng-hide="artifactsArray.length == 0" class="ImpactZoneChildDiv mouseOverEffectDiv" ng-repeat="option in artifactsArray">
                             <div ng-show="extraParam.deleteIcon == true" class="profileImageCoachingStatus">
-                                <img ng-src="{{ option.bookMarked ? 'Images/rate-star-button.png' : 'Images/silverstar.png' }}" ng-click="option.bookMarked =! option.bookMarked; saveBookmark(option)" style="margin: auto; float: left;height: 15px;width: 20px;" />
+                                <img ng-src="{{ option.bookMarked ? 'Images/rate-star-button.png' : 'Images/silverstar.png' }}" ng-click="option.bookMarked =! option.bookMarked; saveBookmark(option)" style="margin: auto; float: left;height: 20px;width: 20px;" />
                             </div>
                             <div class="profileImageCoachingStatus">
-                                <img ng-src="{{option.PhotoURL ? option.PhotoURL : '/Images/icons/Microsoft_Word_2013_icon.png' }}" style="margin: auto auto;float: left;height: 35px;width: 35px;" />                               
+                                <img ng-src="{{option.PhotoURL ? option.PhotoURL : '/Images/icons/Microsoft_Word_2013_icon.png' }}" style="margin: auto auto;float: left;height: 28px;width: 28px;" />                               
                             </div>
                             <div class="statusCoachingStatus" style="width: 50%;">
-                                <h5 class="fontClass" style="color:#A9A9A9;margin: auto auto;float: left;margin-left: 0;">{{option.FileName}}</h5>                               
+                                <h5 class="fontClass" style="color:#A9A9A9;margin: auto auto;float: left;margin-left: 0;font-size:13px;">{{option.FileName}}</h5>                               
                             </div>
                             <div class="communicationsCoachingStatus" style="width: 14%;margin-right: 0;">                               
                                 <h5 class="fontClass" style="color:#A9A9A9;margin: auto auto;float: left;margin-left: 0;">{{option.size}}</h5>   
@@ -114,13 +114,13 @@
                         <div style="height: 88%;width: 100%;float:left;overflow:auto">
                             <div class="ImpactZoneChildDiv mouseOverEffectDiv" ng-hide="bookMarkArray.length == 0" ng-repeat="option in bookMarkArray">
                                 <div class="profileImageCoachingStatus">
-                                    <img ng-src="{{option.PhotoURL ? option.PhotoURL : '/Images/icons/Microsoft_Word_2013_icon.png' }}" style="margin: auto auto;float: left;height: 35px;width: 35px;" />
+                                    <img ng-src="{{option.PhotoURL ? option.PhotoURL : '/Images/icons/Microsoft_Word_2013_icon.png' }}" style="margin: auto auto;float: left;height: 28px;width: 28px;" />
                                 </div>
                                 <div class="statusCoachingStatus" style="width: 50%;">
-                                    <h5 class="fontClass" style="color:#A9A9A9;margin: auto auto;float: left;margin-left: 0;">{{option.DocumentName}}</h5>
+                                    <h5 class="fontClass" style="color:#A9A9A9;margin: auto auto;float: left;margin-left: 0;font-size:13px;">{{option.DocumentName}}</h5>
                                 </div>
                                 <div class="statusCoachingStatus" style="width: 50%;">
-                                    <h5 class="fontClass" style="color:#A9A9A9;margin: auto auto;float: left;margin-left: 0;">{{option.LinkUrl}}</h5>
+                                    <h5 class="fontClass" style="color:#A9A9A9;margin: auto auto;float: left;margin-left: 0;font-size:13px;">{{option.LinkUrl}}</h5>
                                 </div>
                                 @*<div class="profileImageCoachingStatus">
                                     <img ng-src="{{option.PhotoURL ? option.PhotoURL : '/Images/icons/Microsoft_Word_2013_icon.png' }}" style="margin: auto auto;float: left;height: 35px;width: 35px;" />
