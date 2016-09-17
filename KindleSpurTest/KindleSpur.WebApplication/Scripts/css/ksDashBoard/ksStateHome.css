@@ -61,6 +61,7 @@
      transition: all 0.7s ease;
     height: 72%;
     border: 1px solid lightgray;
+    border-bottom: 0px;
 }
 .schedularBodyHidden {
      width: 100%;
@@ -83,7 +84,7 @@
     width: 100%;
     float: left;
     display: flex;
-    height: 11%;
+    height: 14%;
     border: 1px solid lightgray;
     border-top: 0;
      transition: all 0.7s ease;
