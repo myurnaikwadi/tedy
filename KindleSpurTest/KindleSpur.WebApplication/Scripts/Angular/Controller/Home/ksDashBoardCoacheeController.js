@@ -70,7 +70,7 @@
                  //  , { name: 'RESOURCES' }
                   // , { name: 'SEARCH COACH' }
                    , { name: 'MY REWARDS' }
-                     , { name: 'RESOURCES' }
+                     , { name: 'KNOWLEDGE WORKSPACE' }
                    // , { name: 'ADD SKILLS' }
     ];
     $scope.rightSideDashBoardArray = [
@@ -79,7 +79,7 @@
                { name: 'KNOWLEDGE FEED', url: '../../Images/icons/Knowledge_feed.png' },
                { name: 'COMMUNICATION', url: '../../Images/icons/communication.png ' },
                { name: 'MY REWARDS', url: '../../Images/icons/my_rewords.png ' },
-               { name: 'RESOURCES', url: '../../Images/icons/resources1.png ' }
+               { name: 'KNOWLEDGE WORKSPACE', url: '../../Images/icons/resources1.png ' }
 
 
     ];

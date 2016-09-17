@@ -23,7 +23,7 @@
                    , { name: 'KNOWLEDGE FEED' }
                  , { name: 'COMMUNICATION' }
                  , { name: 'MY REWARDS' }
-                 , { name: 'RESOURCES' }
+                 , { name: 'KNOWLEDGE WORKSPACE' }
                  //, { name: 'ADD TOPICS' }
     ]
     $scope.applicationRole = [{ name: 'COACHEE' }, { name: 'MENTEE' }, { name: 'COACH' }, { name: 'MENTOR' }]
@@ -66,7 +66,7 @@
                     {
                         name: 'MY REWARDS', url: '../../Images/icons/my_rewords.png '
                     },
-                    { name: 'RESOURCES', url: '../../Images/icons/resources1.png ' }
+                    { name: 'KNOWLEDGE WORKSPACE', url: '../../Images/icons/resources1.png ' }
 
     ];
 
