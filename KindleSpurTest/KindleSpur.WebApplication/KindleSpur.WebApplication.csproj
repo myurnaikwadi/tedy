@@ -521,6 +521,7 @@
     <Content Include="packages.config" />
     <None Include="Project_Readme.html" />
     <Content Include="Views\Home\ksGenericTemplate.cshtml" />
+    <Content Include="Views\User\RedirectToLogin.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\KindleSpur.Data\KindleSpur.Data.csproj">

@@ -86,7 +86,6 @@ namespace KindleSpur.Data
                     return false;
 
                 userData.UpdateDate = DateTime.Now;
-                userData.IsVerified = true;
                 _userCollection.Insert(userData);
 
                 _transactionStatus = true;
@@ -181,7 +180,7 @@ namespace KindleSpur.Data
         {
             try
             {
-                return _userCollection.FindOneByIdAs<IUser>(userId);
+                return _userCollection.FindOneAs<User>(Query.EQ("_id", ObjectId.Parse(userId)));
             }
             catch (MongoException ex)
             {
