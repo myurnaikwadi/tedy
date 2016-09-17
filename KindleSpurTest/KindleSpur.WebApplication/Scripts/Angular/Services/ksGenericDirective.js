@@ -487,6 +487,7 @@ app.directive('ctcRole', function ($state, serverCommunication) {
 
             scope.backButtonClick = function () {
                 console.error(scope.categoryDisplay)
+                scope.gridViewSkill = {gridViewLoaded : false, gridViewSkillLoaded : false };
                 if (scope.categoryDisplay == true) {
                     scope.mySelection = true;
                     //  scope.selectedCategory = -1;

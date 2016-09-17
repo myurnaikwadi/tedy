@@ -80,7 +80,7 @@
                                     <h5 class="topicHeadingBar fontClass">TOPICS</h5>
                                     <img ng-show="skillRequired == true" ng-class="{ rotateIconupWord  : gridViewSkill.gridViewLoaded == true,rotateIconDownWord:  gridViewSkill.gridViewLoaded == false,}" style="width:35px;height : 35px;position: absolute;right: 1%;float:right;margin: auto auto;margin-right: 0;border-radius: 30px;padding: 5px;cursor:pointer;" ng-click="gridViewSkill.gridViewLoaded =! gridViewSkill.gridViewLoaded;gridViewSkill.gridViewSkillLoaded=false;" src="~/Images/left_circle.png" />
                                 </div>
-                                <div class="topicListingSection" ng-style="{ 'transition':'all 0.8s ease','height':  gridViewSkill.gridViewLoaded == true ? '93%' : (gridViewSkill.gridViewSkillLoaded == true ? '0' : '85%') }">
+                                <div class="topicListingSection" ng-style="{ 'display':'flex','transition':'all 0.8s ease','height':  gridViewSkill.gridViewLoaded == true ? '93%' : (gridViewSkill.gridViewSkillLoaded == true ? '0' : '85%') }">
                                     <div class="topicListingPanel">
                                         <div ng-show="topicArray.length == 0" class="topicHeadingPlaceholdr">
                                             <h5 style="color:gray;margin: auto;font-size: 14px;" class="leftSideMenuLable fontClass">
