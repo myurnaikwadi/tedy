@@ -300,6 +300,7 @@
     <Content Include="Images\business-meeting-of-males.png" />
     <Content Include="Images\businessmen-talking-in-business-meeting.png" />
     <Content Include="Images\error png.png" />
+    <Content Include="Images\iCircle.png" />
     <Content Include="Images\icons\defaultDoc.png" />
     <Content Include="Images\icons\msDoc.png" />
     <Content Include="Images\icons\xlSheet.png" />
@@ -407,6 +408,7 @@
     <Content Include="Images\Tree\Stage 5.png" />
     <Content Include="Images\tree_psr.png" />
     <Content Include="Images\u.png" />
+    <Content Include="Images\uCircle.png" />
     <Content Include="Images\userprofile.png" />
     <Content Include="Img\Chrysanthemum.jpg" />
     <Content Include="Img\Desert.jpg" />

@@ -676,7 +676,7 @@ width: 40%;
 }
 .feedBackPanelButton {
     margin:auto;
-    transition:all 1s ease;
+    transition:all 0.8s ease;
     transform: scale(1);
     float: left; 
     position:relative;
@@ -764,7 +764,7 @@ width: 40%;
 .ChangeHeightIUIcon {
     transition:all 0.8s ease;
     border-radius:0  !important;
-    width:100% !important;
+    width: 47px !important;
     color:red !important;
     border-color:#f28a5e !important;
     opacity:1;
@@ -784,23 +784,24 @@ width: 40%;
   float: left;
   background: white;
        width: 48px;
-           border-left: 1px solid #555;
-    border-right: 1px solid #555;
-    border-bottom: 1px solid #555;
+           border-left: 1px solid lightgray;
+    border-right: 1px solid lightgray;
+    border-bottom: 1px solid lightgray;
 }
  .sub-menu li {
      -webkit-transform-origin: 50% 0%;
   -o-transform-origin: 50% 0%;
+  position: relative;
   transform-origin: 50% 0%;
   -webkit-transform: perspective(350px) rotateX(-90deg);
   -o-transform: perspective(350px) rotateX(-90deg);
   transform: perspective(350px) rotateX(-90deg);
-  border-top: 1px solid #555;
+  border-top: 1px solid lightgray;
 
         text-align: center;
     font-size: 12px;
     height: 22px;
-    opacity:0.5;
+
  }
 .activeClass {
     opacity:1 !important;

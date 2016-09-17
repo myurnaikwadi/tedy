@@ -959,7 +959,7 @@
                     // console.error(_self,_other);
                     // console.error($scope.allFeedBack)
                     $scope.feedbackDisplayIcon = [];
-                    //Pre seesion block
+                    //Pre seesion block                   
                     var _presessionBlock = {
                         Name: 'Pre',
                         feedBackArr: ($scope.allFeedBack['PRESESSION'] && $scope.allFeedBack['PRESESSION'][1]) ? $scope.allFeedBack['PRESESSION'][1] : {},
@@ -967,36 +967,66 @@
                         replaceNameU: ($scope.allFeedBack['PRESESSION'] && $scope.allFeedBack['PRESESSION'][1] && $scope.allFeedBack['PRESESSION'][1]['Other']) ? 'Click to see the given Pre-session' : 'No Pre-session form received',
                         selected: false,
                         activate: true,
-                        style: { 'border': '1px solid', 'overflow': 'hidden', 'color': '#999', 'transition': 'all 1s ease', 'transform': 'scale(1)', 'width': '100%', 'height': '100%' }
+                        styleI: { 'transition': 'all 1s ease','opacity':'1' },
+                        styleU: { 'transition': 'all 1s ease','opacity':'0.5' }
                     };
-                    $scope.feedbackDisplayIcon.push(_presessionBlock);
+                    
+                    if (($scope.allFeedBack['PRESESSION'] && $scope.allFeedBack['PRESESSION'][1] && $scope.allFeedBack['PRESESSION'][1]['Self'])) {
+                        _presessionBlock.styleI['font-weight'] = '900';
+                        _presessionBlock.styleI['color'] = '#4dc725';
+                        _presessionBlock.styleI['opacity'] = '1';
+                    }
+                    if (($scope.allFeedBack['PRESESSION'] && $scope.allFeedBack['PRESESSION'][1] && $scope.allFeedBack['PRESESSION'][1]['Other'])) {
+                        _presessionBlock.styleU['font-weight'] = '900';
+                        _presessionBlock.styleU['color'] = '#4dc725';
+                        _presessionBlock.styleU['opacity'] = '1';
+                    }
+                    $scope.feedbackDisplayIcon.push(angular.copy(_presessionBlock));
 
                     //Normal FeedBack Block
                     var _colorArray = ['', '#9400D3', '#0000FF', '#C70039', '#A04000', '#9400D3', '#0000FF', '#C70039'];
                     var _previousActivate = false;
                     for (var k = 1; k < 7; k++) {
-
+                       
                         var _normalFeedBack = {
-                            Name: 'F - ' + k,
+                            Name: 'F - '+k,
                             feedBackArr: ($scope.allFeedBack['FEEDBACK'] && $scope.allFeedBack['FEEDBACK'][k]) ? $scope.allFeedBack['FEEDBACK'][k] : {},
                             replaceNameI: ($scope.allFeedBack['FEEDBACK'] && $scope.allFeedBack['FEEDBACK'][k] && $scope.allFeedBack['FEEDBACK'][k]['Self']) ? 'Click to see the given feedBack' : 'Click to give feedback',
                             replaceNameU: ($scope.allFeedBack['FEEDBACK'] && $scope.allFeedBack['FEEDBACK'][k] && $scope.allFeedBack['FEEDBACK'][k]['Other']) ? 'Click to see the given feedBack' : 'No feedback received',
                             selected: false,
                             activate: ($scope.allFeedBack['FEEDBACK'] && $scope.allFeedBack['FEEDBACK'][k] && $scope.allFeedBack['FEEDBACK'][k]['Self']) ? true : false,
-                            style: { 'border': '1px solid', 'overflow': 'hidden', 'color': _colorArray[k] ? _colorArray[k] : 'green', 'transition': 'all 1s ease', 'transform': 'scale(1)', 'width': '100%', 'height': '100%' }
+                            styleI: { 'transition': 'all 1s ease','opacity':'0.5' },
+                            styleU: { 'transition': 'all 1s ease','opacity':'0.5' }
                         };
+                       
+                         _normalFeedBack.nextToBeFilled = false;
                         if (_previousActivate) {
                             _normalFeedBack.activate = true;
+                            _normalFeedBack.nextToBeFilled = true;
+                            _normalFeedBack.styleI['color'] = 'orange';
+                            _normalFeedBack.styleI['opacity'] = '1';
                         }
-                        if ($scope.allFeedBack['FEEDBACK'] && $scope.allFeedBack['FEEDBACK'][k] && $scope.allFeedBack['FEEDBACK'][k]['Self'])
+                        if ($scope.allFeedBack['FEEDBACK'] && $scope.allFeedBack['FEEDBACK'][k] && $scope.allFeedBack['FEEDBACK'][k]['Self']) {
                             _previousActivate = true;
-                        else
+                            _normalFeedBack.filledFeedback = true;
+                            _normalFeedBack.styleI['font-weight'] = '900';
+                            _normalFeedBack.styleI['opacity'] = '1';
+                            _normalFeedBack.styleI['color'] = '#4dc725';
+                        } else
                             _previousActivate = false;
 
-                        if (k == 1) {
-                            _normalFeedBack.activate = true;
+                        if ($scope.allFeedBack['FEEDBACK'] && $scope.allFeedBack['FEEDBACK'][k]&& $scope.allFeedBack['FEEDBACK'][k]['Other']) {
+                            _normalFeedBack.styleU['font-weight'] = '900';
+                            _normalFeedBack.styleU['color'] = '#4dc725';
+                            _normalFeedBack.styleU['opacity'] = '1';
                         }
-                        $scope.feedbackDisplayIcon.push(_normalFeedBack);
+                        if (k == 1 && _previousActivate == false) {
+                            _normalFeedBack.activate = true;
+                            _normalFeedBack.nextToBeFilled = true;
+                            _normalFeedBack.styleI['opacity']= '1';
+                            _normalFeedBack.styleI['color'] = 'orange';
+                        }
+                        $scope.feedbackDisplayIcon.push(angular.copy(_normalFeedBack));
                     }
                     //var _normalFeedBack = {
                     //        Name: 'F',
@@ -1017,9 +1047,21 @@
                         replaceNameU: ($scope.allFeedBack['CLOSESESSION'] && $scope.allFeedBack['CLOSESESSION'][1] && $scope.allFeedBack['CLOSESESSION'][1]['Other']) ? 'Click to see the given feedBack' : 'No feedback received',
                         selected: false,
                         activate: true,
-                        style: { 'border': '1px solid', 'overflow': 'hidden', 'color': '#999', 'transition': 'all 1s ease', 'transform': 'scale(1)', 'width': '100%', 'height': '100%' }
+                        styleI: { 'transition': 'all 1s ease','opacity':'1' },
+                        styleU: { 'transition': 'all 1s ease','opacity':'0.5' }
                     };
-                    $scope.feedbackDisplayIcon.push(_closeSessionBlock);
+                    
+                    if (($scope.allFeedBack['CLOSESESSION'] && $scope.allFeedBack['CLOSESESSION'][1] && $scope.allFeedBack['CLOSESESSION'][1]['Self'])) {
+                        _closeSessionBlock.styleI['font-weight'] = '900';
+                        _closeSessionBlock.styleI['opacity'] = '1';
+                        _closeSessionBlock.styleI['color'] = '#4dc725';
+                    }
+                    if (($scope.allFeedBack['CLOSESESSION'] && $scope.allFeedBack['CLOSESESSION'][1] && $scope.allFeedBack['CLOSESESSION'][1]['Other'])) {
+                        _closeSessionBlock.styleU['font-weight'] = '900';
+                        _closeSessionBlock.styleU['color'] = '#4dc725';
+                        _closeSessionBlock.styleU['opacity'] = '1';
+                    }
+                    $scope.feedbackDisplayIcon.push(angular.copy(_closeSessionBlock));
                     //$scope.feedbackDisplayIcon = [
 
                     //  { Name: '1', replaceNameI: ($scope.allFeedBack['FEEDBACK'] && $scope.allFeedBack['FEEDBACK'][1] && $scope.allFeedBack['FEEDBACK'][1].FeedBackGiver) == 'Self' ? 'Clik to See 1st FeedBack' : 'Click to Give 1st FeedBack', replaceNameU: ($scope.allFeedBack['FEEDBACK'] && $scope.allFeedBack['FEEDBACK'][1] && $scope.allFeedBack['FEEDBACK'][1].FeedBackGiver) != 'Self' ? 'Clik to See 1st FeedBack' : 'No Feedback received', selected: false, activate: true, style: { 'border': '1px solid', 'overflow': 'hidden', 'color': 'red', 'transition': 'all 1s ease', 'transform': 'scale(1)', 'width': '100%', 'height': '100%' } },
