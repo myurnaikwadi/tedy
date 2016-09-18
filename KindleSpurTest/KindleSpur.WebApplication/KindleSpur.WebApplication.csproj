@@ -305,6 +305,7 @@
     <Content Include="Images\iCircle.png" />
     <Content Include="Images\icons\defaultDoc.png" />
     <Content Include="Images\icons\msDoc.png" />
+    <Content Include="Images\icons\pdfDoc.png" />
     <Content Include="Images\icons\xlSheet.png" />
     <Content Include="Images\meetingScheduler.png" />
     <Content Include="Images\calendar.png" />

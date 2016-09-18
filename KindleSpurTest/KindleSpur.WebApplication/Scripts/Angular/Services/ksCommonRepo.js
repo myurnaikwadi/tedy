@@ -35,7 +35,11 @@
                 // data = [];
                 data = new FormData();
                 tempArray = [];
-            };            
+            };
+
+            scope.loadFeedOnNextTab = function (iFeed) {
+                    window.open(iFeed.FilePath);
+            };
             
             scope.closePopup = function () {
                 scope.loadUploadPopupFlag = false;
