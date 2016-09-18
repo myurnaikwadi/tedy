@@ -87,7 +87,7 @@
                                                 NO TOPIC SELECTED
                                             </h5>
                                         </div>
-                                        <div ng-init="mouseOverEffectFlag= false"  class="topicsList"  title="{{skill.Name+''+(skill.Tooltip ? (' :- '+skill.Tooltip) : '')}}" ng-repeat="skill in topicArray">
+                                        <div ng-init="mouseOverEffectFlag= false"  class="topicsList"  ng-repeat="skill in topicArray">
                                             <div ng-mouseover="mouseOverEffectFlag= true" ng-mouseleave="mouseOverEffectFlag= false" class="tagTasks" ng-click="topicSelection($event,$index,skill)" ng-style="styleToCTSText[skill.Name]" style="display:flex;float: left;width: 100%;height: 60px;z-index: 2;position: relative;">
                                                 <h5 class="fontClass multilineEllipsis" style="font-size: 11px;margin:auto;float: left;position: relative;">{{skill.Name | uppercase}}</h5>
                                                 @*<h5 class="fontClass multilineEllipsis" style="font-size: 11px;margin:auto;float: left;position: relative;height: 100%">{{skill.Tooltip | uppercase}}</h5>*@
@@ -116,7 +116,7 @@
                                         </h5>
                                     </div>
 
-                                    <div  ng-init="mouseOverEffectFlag= false" class="topicsList" title="{{skill.Name+''+(skill.Tooltip ? (' :- '+skill.Tooltip) : '')}}" ng-repeat="skill in skillsArray" >                                                     
+                                    <div  ng-init="mouseOverEffectFlag= false" class="topicsList" ng-repeat="skill in skillsArray" >                                                     
                                         @*<h5 ng-click="skillSelection($event,$index,skill)" class="tagTasks fontClass multilineEllipsis" ng-style="styleToCTSText[skill.Name]" style="float: left;width: 100%;height: 45px;z-index: 2;position: relative;">{{skill.Name | uppercase}}</h5>*@
                                         <div ng-mouseover="mouseOverEffectFlag= true" ng-mouseleave="mouseOverEffectFlag= false"class="tagTasks" ng-style="styleToCTSText[skill.Name]" style="display:flex;float: left;width: 100%;height: 60px;z-index: 2;position: relative;" ng-click="skillSelection($event,$index,skill)">
                                             <h5 class="fontClass multilineEllipsis" style="font-size: 11px;margin:auto;float: left;position: relative;">{{skill.Name | uppercase}}</h5>

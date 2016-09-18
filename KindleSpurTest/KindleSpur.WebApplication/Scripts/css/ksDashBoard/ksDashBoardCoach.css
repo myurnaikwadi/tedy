@@ -963,7 +963,7 @@ border: 1px solid #999;
     height: 25px;
     padding-right: 10px;
     position: relative;
-    width: 50px;
+    width: 60px;
     -webkit-appearance: none;
     -webkit-transition: .15s;
 }
@@ -977,11 +977,11 @@ border: 1px solid #999;
                 0 0 2px hsla(0,0%,0%,.25);
     content: '';
     display: block;
-    height: 30px;
+    height: 25px;
     left: 0;
     position: relative;
     top: 0;
-    width: 30px;
+    width: 25px;
     border-radius: 100%;
 }
 .radioFeedBack:checked {
@@ -991,10 +991,9 @@ border: 1px solid #999;
 }
 .radioFeedBack:before {
     color: #eee;
-    content: 'Yes';
-    font: 12.5px/20px sans-serif;
+    content: 'Yes';    
     height: 20px;
-    left: 33px;
+    left: 29px;
     letter-spacing: 1px;
     position: absolute;
     text-align: center;

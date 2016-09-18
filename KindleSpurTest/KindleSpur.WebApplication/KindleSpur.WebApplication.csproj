@@ -300,6 +300,8 @@
     <Content Include="Images\business-meeting-of-males.png" />
     <Content Include="Images\businessmen-talking-in-business-meeting.png" />
     <Content Include="Images\error png.png" />
+    <Content Include="Images\gamepad.png" />
+    <Content Include="Images\girlchild.png" />
     <Content Include="Images\iCircle.png" />
     <Content Include="Images\icons\defaultDoc.png" />
     <Content Include="Images\icons\msDoc.png" />
@@ -388,6 +390,7 @@
     <Content Include="Images\profile.png" />
     <Content Include="Images\psrPlant.png" />
     <Content Include="Images\rate-star-button.png" />
+    <Content Include="Images\redirectLogin.png" />
     <Content Include="Images\redstar.png" />
     <Content Include="Images\reset.png" />
     <Content Include="Images\rightSideIcon.png" />
