@@ -110,6 +110,7 @@
                         "symbol": _str.toUpperCase(),
                         "image": $scope.coachingStatusArray[k].TreeURL,
                         "size": 45,
+                        "Skill": $scope.coachingStatusArray[k].Skill,
                         "id": Math.random() + k,
                         "bonds": 1
                     });
@@ -1312,8 +1313,10 @@
     };
 
     $scope.updateConversation = function (isVerfied, SenderEmail, ReceiverEmail, iNotificationDash) {
+        debugger
         $scope.conversation.IsVerified = isVerfied;
         console.error(iNotificationDash);
+        
         var contentText = "";
         if (isVerfied != false)
             contentText = 'MENTORING REQUEST BY ' + $scope.ApprovalName + ' HAS BEEN ACCEPTED';

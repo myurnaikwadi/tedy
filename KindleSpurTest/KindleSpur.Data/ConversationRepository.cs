@@ -443,10 +443,12 @@ namespace KindleSpur.Data
                     _categories[count].ToFirstName = userDetails.FirstName;
                     _categories[count].ToLastName = userDetails.LastName;
                     _categories[count].ToPhoto = userDetails.Photo;
+                    _categories[count].ReceiverEmail = userDetails.EmailAddress;
 
                     _categories[count].FromFirstName = userDetails1.FirstName;
                     _categories[count].FromLastName = userDetails1.LastName;
                     _categories[count].FromPhoto = userDetails1.Photo;
+                    _categories[count].SenderEmail = userDetails1.EmailAddress;
                 }
 
             }
