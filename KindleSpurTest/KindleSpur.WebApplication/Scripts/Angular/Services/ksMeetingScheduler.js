@@ -57,22 +57,23 @@
                     StartDate: _startTimeForSelectedDay,
                     EndDate: _endTimeForSelectedDay,
                     callBack: function (iResult) {
+                        debugger
                         if (iResult.length > 0) {
                             for (var k = 0 ; k < iResult.length ; k++) {
                                 if (new Date(iResult[k].StartDate) > new Date(_startDate) || new Date(_startDate) < new Date(iResult[k].EndDate)) {
                                     scope.conflictAlert = { showAlert: true, message:  ''};
                                     if(iResult[k].From != $rootScope.loggedDetail.EmailAddress){
-                                        scope.conflictAlert.message = (iResult[k].FromFirstName+" "+ iResult[k].FromLastName)+" regarding subject "+iResult[k].Subject;
+                                        scope.conflictAlert.message = (iResult[k].FromFirstName+" "+ iResult[k].FromLastName)+" regarding  "+iResult[k].Subject;
                                     }else if(iResult[k].To != $rootScope.loggedDetail.EmailAddress){
-                                        scope.conflictAlert.message = (iResult[k].ToFirstName + " " + iResult[k].ToLastName) + " regarding subject " + iResult[k].Subject;
+                                        scope.conflictAlert.message = (iResult[k].ToFirstName + " " + iResult[k].ToLastName) + " regarding  " + iResult[k].Subject;
                                     }
                                     break;
                                 } else if (new Date(iResult[k].StartDate) > new Date(_endDate) || new Date(_endDate) < new Date(iResult[k].EndDate)) {
                                     scope.conflictAlert = { showAlert: true, message: '' };
                                     if(iResult[k].From != $rootScope.loggedDetail.EmailAddress){
-                                        scope.conflictAlert.message = (iResult[k].FromFirstName + " " + iResult[k].FromLastName) + " regarding subject " + iResult[k].Subject;
+                                        scope.conflictAlert.message = (iResult[k].FromFirstName + " " + iResult[k].FromLastName) + " regarding  " + iResult[k].Subject;
                                     }else if(iResult[k].To != $rootScope.loggedDetail.EmailAddress){
-                                        scope.conflictAlert.message = (iResult[k].ToFirstName + " " + iResult[k].ToLastName) + " regarding subject " + iResult[k].Subject;
+                                        scope.conflictAlert.message = (iResult[k].ToFirstName + " " + iResult[k].ToLastName) + " regarding  " + iResult[k].Subject;
                                     }
                                     break;
                                 }
