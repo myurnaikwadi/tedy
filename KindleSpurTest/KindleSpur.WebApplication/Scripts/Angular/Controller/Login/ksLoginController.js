@@ -251,7 +251,7 @@ app.controller('ksLoginController', ['$scope', 'authentification', '$location', 
             if ($scope.signupDetails.LastName == '' && $scope.signupDetails.EmailAddress == '') {
                 //alert('Please enter First,last name and Email address')
                 $scope.displayAlert.showAlert = true;
-                $scope.displayAlert.message = 'Please enter first,last name and email address';
+                $scope.displayAlert.message = 'Please enter first, last name and email address';
                 $scope.displayAlert.formatType = '2';
 
             } else if ($scope.signupDetails.FirstName == '' && $scope.signupDetails.LastName == '') {
@@ -337,7 +337,7 @@ app.controller('ksLoginController', ['$scope', 'authentification', '$location', 
         }
         else {
             $scope.displayAlert.showAlert = true;
-            $scope.displayAlert.message = "Please check mail";
+            $scope.displayAlert.message = "Verification link sent to registered email address";
             $scope.displayAlert.formatType = '1';
         }
         var _object = {
