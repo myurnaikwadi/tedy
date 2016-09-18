@@ -433,7 +433,7 @@ namespace KindleSpur.Data
             try
             {
 
-                var _query = Query.And(Query<Conversation>.GTE(p => p.UpdateDate, newFromDate.ToUniversalTime()), Query<Conversation>.LTE(p => p.UpdateDate, newToDate.ToUniversalTime()), Query<Conversation>.EQ(p => p.IsRejected, false), Query<Conversation>.EQ(p1 => p1.IsVerified, false), Query<Conversation>.EQ(p1 => p1.ReceiverEmail, userId));
+                var _query = Query.And(Query<Conversation>.GTE(p => p.UpdateDate, newFromDate.ToUniversalTime()), Query<Conversation>.LTE(p => p.UpdateDate, newToDate.ToUniversalTime()), Query<Conversation>.EQ(p => p.IsRejected, false), Query<Conversation>.EQ(p1 => p1.IsVerified, false), Query<Conversation>.EQ(p5 => p5.Active, false), Query<Conversation>.EQ(p1 => p1.ReceiverEmail, userId));
                 _categories = _conversationCollection.FindAs<Conversation>(_query).ToList();
                 for (int count = 0; count < _categories.Count; count++)
                 {
@@ -543,7 +543,7 @@ namespace KindleSpur.Data
             try
             {
 
-                var _query = Query.And(Query<Conversation>.EQ(p => p.IsRejected, false), Query<Conversation>.EQ(p1 => p1.IsVerified, false), Query<Conversation>.EQ(p1 => p1.ReceiverEmail, senderEmail), Query<Conversation>.EQ(p1 => p1.ConversationType, ConversationType));
+                var _query = Query.And(Query<Conversation>.EQ(p => p.IsRejected, false), Query<Conversation>.EQ(p3 => p3.Active, false), Query<Conversation>.EQ(p1 => p1.IsVerified, false), Query<Conversation>.EQ(p1 => p1.ReceiverEmail, senderEmail), Query<Conversation>.EQ(p1 => p1.ConversationType, ConversationType), Query<Conversation>.EQ(p1 => p1.ConversationType, ConversationType));
 
                 _categories = _conversationCollection.FindAs<BsonDocument>(_query).ToList();
 

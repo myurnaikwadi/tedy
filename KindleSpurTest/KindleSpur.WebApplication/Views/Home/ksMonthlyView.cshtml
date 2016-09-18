@@ -102,7 +102,7 @@
                                 <div class="conversationParentDiv" ng-show="expandRequestScheduledMeetingFlag == $index">
                                     <div class="conversationParentDiv" style="height: 22%;border-bottom:1px solid lightgray">
                                         <div class="imageConversation">
-                                            <img ng-class="{ activeSessionCLass :  conversation.expiredMeeting == false, closeSessionClass :  conversation.expiredMeeting == true }" ng-src="{{ conversation.FromPhoto ? conversation.FromPhoto  : 'Images/icons/If no Profile photo.png'}}" style="margin:auto auto;width: 40px;height: 40px;border-radius: 50%;" src="~/Images/icons/If no Profile photo.png" />
+                                            <img title="{{(conversation.FromFirstName +' '+conversation.FromLastName)}}" ng-class="{ activeSessionCLass :  conversation.expiredMeeting == false, closeSessionClass :  conversation.expiredMeeting == true }" ng-src="{{ conversation.FromPhoto ? conversation.FromPhoto  : 'Images/icons/If no Profile photo.png'}}" style="margin:auto auto;width: 40px;height: 40px;border-radius: 50%;" src="~/Images/icons/If no Profile photo.png" />
                                         </div>
                                         <div class="nameMessageConversation">
                                             <div style="margin:auto auto;float:left; width: 100%;height: 55%;">
@@ -118,11 +118,11 @@
                                         </div>
                                         <div class="nameMessageConversation" style="float:left;display:flex;width:100%;height:17.5%;border-bottom:1px solid lightgray">
                                             <h5 class="fontClass" style="margin:auto;color: #797979;margin-left:5%;text-align:left;width:20%;font-size:12px">Time</h5>
-                                            <h5 class="fontClass" style="margin:auto;color: #797979;width:70%;font-size:12px">{{(conversation.StartDate | date : 'MMM d, y h:mm a') +"--"+(conversation.EndDate | date : 'h:mm a')}}</h5>
+                                            <h5 class="fontClass" style="margin:auto;color: #797979;width:70%;text-align:left;font-size:12px">{{(conversation.StartDate | date : 'h:mm a') +"--"+(conversation.EndDate | date : 'h:mm a')}}</h5>
                                         </div>
                                         <div class="nameMessageConversation" style="float:left;display:flex;width:100%;height:17.5%;border-bottom:1px solid lightgray">
                                             <h5 class="fontClass" style="margin:auto;color: #797979;margin-left:5%;text-align:left;width:20%;font-size:12px">For</h5>
-                                            <h5 class="fontClass" style="margin:auto;color: #797979;width:70%;font-size:12px;">{{conversation.SkillName}}</h5>
+                                            <h5 class="fontClass" style="margin:auto;color: #797979;width:70%;text-align:left;font-size:12px;">{{conversation.SkillName}}</h5>
                                         </div>
                                         <div class="nameMessageConversation" style="float:left;display:flex;width:100%;height:17.5%;border-bottom:1px solid lightgray">
                                             <h5 class="fontClass" style="margin:auto;color: #797979;margin-left:5%;text-align:left;width:20%;font-size:12px">Contact</h5>
@@ -131,8 +131,8 @@
                                         <div class="nameMessageConversation" style="float:left;display:flex;width:100%;height:30%;border-bottom:1px solid lightgray">
                                             <h5 class="fontClass" style="margin:auto;color: #797979;margin-left:5%;text-align:left;width:20%;font-size:12px">Attendee</h5>
                                             <div style="margin:auto;color: #797979;margin-left:5%;text-align:left;width:70%;display:flex;height: 100%;">
-                                                <img style="width: 40px;margin:auto;margin-right: 0;" src="~/Images/icons/If no Profile photo.png" />
-                                                <img style="width: 40px;margin:auto;margin-left: 10%;" src="~/Images/icons/If no Profile photo.png" />
+                                                <img style="width: 40px;margin:auto;margin-right: 0;" title="{{(conversation.FromFirstName +' '+conversation.FromLastName)}}" ng-src="{{ conversation.FromPhoto ? conversation.FromPhoto  : 'Images/icons/If no Profile photo.png'}}" src="~/Images/icons/If no Profile photo.png" />
+                                                <img style="width: 40px;margin:auto;margin-left: 10%;" title="{{(conversation.ToFirstName +' '+conversation.ToLastName)}}" ng-src="{{ conversation.ToPhoto ? conversation.ToPhoto  : 'Images/icons/If no Profile photo.png'}}" src="~/Images/icons/If no Profile photo.png" />
                                             </div>
                                             
                                         </div>
@@ -152,7 +152,7 @@
                                 
                                 <div class="conversationParentDiv" ng-hide="expandRequestUpcomingMeetingFlag == $index">
                                     <div class="imageConversation">
-                                        <img ng-class="{ activeSessionCLass :  conversation.expiredMeeting == false, closeSessionClass :  conversation.expiredMeeting == true }" ng-src="{{ conversation.FromPhoto ? conversation.FromPhoto  : 'Images/icons/If no Profile photo.png'}}" style="margin:auto auto;width: 40px;height: 40px;border-radius: 50%;" src="~/Images/icons/If no Profile photo.png" />
+                                        <img title="{{(conversation.FromFirstName +' '+conversation.FromLastName)}}" ng-class="{ activeSessionCLass :  conversation.expiredMeeting == false, closeSessionClass :  conversation.expiredMeeting == true }" ng-src="{{ conversation.FromPhoto ? conversation.FromPhoto  : 'Images/icons/If no Profile photo.png'}}" style="margin:auto auto;width: 40px;height: 40px;border-radius: 50%;" src="~/Images/icons/If no Profile photo.png" />
                                     </div>
                                     <div class="nameMessageConversation">
                                         <div style="margin:auto auto;float:left; width: 100%;height: 55%;">
@@ -180,7 +180,7 @@
                                         </div>
                                         <div class="nameMessageConversation" style="float:left;display:flex;width:100%;height:17.5%;border-bottom:1px solid lightgray">
                                             <h5 class="fontClass" style="margin:auto;color: #797979;margin-left:5%;text-align:left;width:20%;font-size:12px">Time</h5>
-                                            <h5 class="fontClass" style="margin:auto;color: #797979;width:70%;font-size:12px;text-align:left">{{(conversation.StartDate | date : 'MMM d, y h:mm a') +"--"+(conversation.EndDate | date : 'h:mm a')}}</h5>
+                                            <h5 class="fontClass" style="margin:auto;color: #797979;width:70%;font-size:12px;text-align:left">{{(conversation.StartDate | date : 'h:mm a') +"--"+(conversation.EndDate | date : 'h:mm a')}}</h5>
                                         </div>
                                         <div class="nameMessageConversation" style="float:left;display:flex;width:100%;height:17.5%;border-bottom:1px solid lightgray">
                                             <h5 class="fontClass" style="margin:auto;color: #797979;margin-left:5%;text-align:left;width:20%;font-size:12px">For</h5>
@@ -193,8 +193,8 @@
                                         <div class="nameMessageConversation" style="float:left;display:flex;width:100%;height:30%;border-bottom:1px solid lightgray">
                                             <h5 class="fontClass" style="margin:auto;color: #797979;margin-left:5%;text-align:left;width:20%;font-size:12px">Attendee</h5>
                                             <div style="margin:auto;color: #797979;margin-left:5%;text-align:left;width:70%;display:flex;height: 100%;">
-                                                <img style="width: 40px;margin:auto;margin-right: 0;" src="~/Images/icons/If no Profile photo.png" />
-                                                <img style="width: 40px;margin:auto;margin-left: 10%;" src="~/Images/icons/If no Profile photo.png" />
+                                                <img style="width: 40px;margin:auto;margin-right: 0;" title="{{(conversation.FromFirstName +' '+conversation.FromLastName)}}" ng-src="{{ conversation.FromPhoto ? conversation.FromPhoto  : 'Images/icons/If no Profile photo.png'}}" src="~/Images/icons/If no Profile photo.png" />
+                                                <img style="width: 40px;margin:auto;margin-left: 10%;" title="{{(conversation.ToFirstName +' '+conversation.ToLastName)}}" ng-src="{{ conversation.ToPhoto ? conversation.ToPhoto  : 'Images/icons/If no Profile photo.png'}}" src="~/Images/icons/If no Profile photo.png" />
                                             </div>
                                         </div>
                                     </div>
