@@ -57,7 +57,7 @@
                     StartDate: _startTimeForSelectedDay,
                     EndDate: _endTimeForSelectedDay,
                     callBack: function (iResult) {
-                        debugger
+                        
                         if (iResult.length > 0) {
                             for (var k = 0 ; k < iResult.length ; k++) {
                                 if (new Date(iResult[k].StartDate) > new Date(_startDate) || new Date(_startDate) < new Date(iResult[k].EndDate)) {
