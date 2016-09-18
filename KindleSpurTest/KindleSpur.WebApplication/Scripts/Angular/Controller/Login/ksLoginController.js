@@ -25,8 +25,19 @@ app.controller('ksLoginController', ['$scope', 'authentification', '$location', 
         password: '',
         confirmPassword: ''
     };
-    console.error($stateParams);
 
+    $scope.uiFlag = { loadRepository: false, loadBottomContain: false, loadProfileView: false };
+    $rootScope.$on("refreshStateHomeView", function (event, iObj) {
+        switch (iObj.type) {          
+            case "loadBottomContain":
+                $scope.uiFlag.loadBottomContain = true;
+                $scope.extraParam = iObj.data;
+                $scope.extraParam.closeCallBack = function () {
+                    $scope.uiFlag.loadBottomContain = false;
+                };
+                break;
+        }
+    });
     $scope.emailValidate = true;
     $scope.emailValidation = function (iEmail) {
         var _validFlag = false;
