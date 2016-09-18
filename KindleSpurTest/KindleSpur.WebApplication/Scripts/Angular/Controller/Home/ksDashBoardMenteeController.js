@@ -197,6 +197,7 @@
                         "symbol": _str.toUpperCase(),
                         "image": $scope.coachingStatusArray[k].TreeURL,
                         "size": 45,
+                        "Skill": $scope.coachingStatusArray[k].Skill,
                         "id": Math.random() + k,
                         "bonds": 1
                     });

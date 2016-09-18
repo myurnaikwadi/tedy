@@ -73,8 +73,9 @@ app.directive('monthly', function (dateServiceForMonthlyCalendar, $rootScope, se
             };
             $scope.updateConversation = function (isVerfied, SenderEmail, ReceiverEmail, iNotificationDash) {
                 //$scope.conversation.IsVerified = isVerfied;
-              //  debugger
-              //  console.error(iNotificationDash);
+                debugger
+                //  console.error(iNotificationDash);
+                ReceiverEmail = iNotificationDash.SenderEmail;
                 var contentText = "";
                 if (isVerfied != false)
                     contentText = iNotificationDash.ConversationType + ' Request by ' + $scope.ApprovalName + ' has been ' + (isVerfied == true ? 'accepted' : 'Declined');
