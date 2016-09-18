@@ -688,28 +688,19 @@ namespace KindleSpur.Data
                     Link.ParentFileId = bookmark.ParentFileId;
 
                     path.Add(Link);
-                    foreach (var fileid in userDetail.Files.Where(w => w.FileId == bookmark.ParentFileId))
+                    if (bookmark.ParentFileId != null)
                     {
-                        fileid.bookMarked = bookmark.ParentFileId;
-                           _userCollection.Update(Query.EQ("EmailAddress", userDetail.EmailAddress), Update<User>.Set(c => c.Files, userDetail.Files));
+                        foreach (var fileid in userDetail.Files.Where(w => w.FileId == bookmark.ParentFileId))
+                        {
+                            fileid.bookMarked = bookmark.ParentFileId;
+                            _userCollection.Update(Query.EQ("EmailAddress", userDetail.EmailAddress), Update<User>.Set(c => c.Files, userDetail.Files));
 
+                        }
                     }
-                    //foreach (var fileid in userDetail.Files)
-                    //{
-                    //   if( fileid.FileId == bookmark.ParentFileId)
-                    //    {
-
-                    //        file.bookMarked = bookmark.ParentFileId;
-                    //        // fileupdate.Add(file);
-                    //        userDetail.Files.Where(w => w.FileId == fileid.FileId);
-                    //        _userCollection.Update(Query.EQ("EmailAddress", userDetail.EmailAddress), Update<User>.Set(c => c.Files, userDetail.Files));
-
-                    //    }
-                    //}
-                    //var update = Update<FileUpload>.Set(e => e.bookMarked, bookmark.ParentFileId);
-
-                    //   fileupdate.Add(file);
-                    //  _userCollection.Update(query3, update);
+                    else
+                    {
+                        _userCollection.Update(Query.EQ("EmailAddress", userDetail.EmailAddress), Update<User>.Set(c => c.Files, userDetail.Files));
+                    }
 
 
                 }
