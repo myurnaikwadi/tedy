@@ -1796,7 +1796,7 @@ app.directive('feedbackPage', function ($state, serverCommunication, $timeout, $
                 };
                 if (_checkValue) {
                     _displayAlertMeesage({
-                            message: 'You need to fill all question', formatType: '2'
+                            message: 'Please fill all questions', formatType: '2'
                     });
                     return;
                 }
@@ -1856,7 +1856,7 @@ app.directive('feedbackPage', function ($state, serverCommunication, $timeout, $
                 };
                 if (_checkValue) {
                     _displayAlertMeesage({
-                            message: 'You need to fill all question', formatType: '2'
+                            message: 'Please fill all questions', formatType: '2'
                     });
                     return;
                 }
@@ -1958,7 +1958,7 @@ app.directive('feedbackPage', function ($state, serverCommunication, $timeout, $
                 };
                 if (_checkValue && iMode == 1) {
                     _displayAlertMeesage({
-                            message: 'You need to fill all question', formatType: '2'
+                        message: 'Please fill all questions', formatType: '2'
                     });
                     return;
                 }
