@@ -121,7 +121,7 @@
                                     <img ng-if="option.ContentType.indexOf('image') > -1" ng-src="{{option.FilePath}}" style="margin: auto auto;float: left;height: 35px;width: 35px;" />*@                              
                                 </div>
                                 <div class="statusCoachingStatus" style="width: 72%;margin-left: 3%;">
-                                    <h5 class="fontClass" style="color:#A9A9A9;margin: auto auto;float: left;margin-left: 0;font-size:13px;">{{option.DocumentName}}</h5>
+                                    <h5 ng-click="loadFeedOnNextTab({ FilePath : option.LinkUrl})"  class="fontClass genericPointerClass" style="color:#A9A9A9;margin: auto auto;float: left;margin-left: 0;font-size:13px;">{{option.DocumentName}}</h5>
                                 </div>
                                 @*<div class="statusCoachingStatus" style="width: 50%;">
                                     <h5 class="fontClass" style="color:#A9A9A9;margin: auto auto;float: left;margin-left: 0;font-size:13px;">{{option.LinkUrl}}</h5>
