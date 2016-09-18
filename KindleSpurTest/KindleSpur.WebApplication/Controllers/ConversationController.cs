@@ -173,12 +173,13 @@ namespace KindleSpur.WebApplication.Controllers
                     req.SenderEmail = value["SenderEmail"].ToString();
                     req.ReceiverEmail = value["ReceiverEmail"].ToString();
                     req.ConversationType = value["ConversationType"].ToString();
-
+                    string date = value["CreateDate"].ToString();
                     if (value["ConversationId"] == null) { req.ConversationId = null; } else { req.ConversationId = value["ConversationId"].ToString(); }
                     if (value["ConversationParentId"] == null) { req.ConversationParentId = null; } else { req.ConversationParentId = value["ConversationParentId"].ToString(); }
                     //req.ConversationType = value["ConversationType"].ToString();
                     //recevicedetails.Add(new BsonElement("skill", value["skill"].ToString()));
                     //recevicedetails.Add(new BsonElement("ConversationType", value["ConversationType"].ToString()));    
+                    req.CreateDate = DateTime.Parse(date);
                     result.Add(req);
 
                 }

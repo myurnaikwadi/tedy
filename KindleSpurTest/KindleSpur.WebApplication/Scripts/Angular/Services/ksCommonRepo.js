@@ -297,7 +297,8 @@
                     //console.error(scope.uploadAttachmentArray, tempArray);
                   
                     document.getElementById(iId).value = "";
-                    scope.$apply();
+                    if (!scope.$$phase && !scope.$root.$$phase)
+                        scope.$apply();
                 });
             };
 

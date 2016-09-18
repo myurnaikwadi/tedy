@@ -1190,7 +1190,7 @@ app.directive('moleculeMap', function ($rootScope) {
                                              .attr("x", "40")
                                              .attr("y", "105")
                                              .attr("text-anchor", "middle")
-                                             .style("font-size", function (d) { return Math.min(2 * (radius(d.size)), (2 * d.r - 8) / this.getComputedTextLength() * 24) + "px"; })
+                                             .style("font-size", function (d) { return Math.min(2 * (radius(d.size)), (2 * d.r -8) / this.getComputedTextLength() * 24) + "px"; })  
                                              .text(function (d) {
                                                  return d.Skill;
                                              });
@@ -1786,8 +1786,20 @@ app.directive('feedbackPage', function ($state, serverCommunication, $timeout, $
 
             $scope.feedBack.sendFeedBackDetail = function () {
                // $scope.feedBack.feedBackDetails.sender = $scope.sender;
-                console.error($scope.feedBack.feedBackDetails)
-
+                //console.error($scope.feedBack.feedBackDetails)
+                var _checkValue = false;
+                for (var k = 0; k < $scope.displayArray.length; k++) {
+                    if($scope.displayArray[k].actionValue == '') {
+                        _checkValue = true;
+                    }
+                    $scope.feedBack.feedBackDetails[$scope.displayArray[k].name]= angular.copy($scope.displayArray[k]);
+                };
+                if (_checkValue) {
+                    _displayAlertMeesage({
+                            message: 'You need to fill all question', formatType: '2'
+                    });
+                    return;
+                }
                 for (var k = 0; k < $scope.displayArray.length; k++) {
                     $scope.feedBack.feedBackDetails[$scope.displayArray[k].name] = '';
                     console.error($scope.displayArray[k].actionValue);
@@ -1821,23 +1833,33 @@ app.directive('feedbackPage', function ($state, serverCommunication, $timeout, $
                         console.error('In successCallBack', iObj);
                         // if ($scope.feedbackClosed) {
                         $scope.generateSesstionClosedEntry();
-                        // }
-                        
+                        $scope.feedBack.formValue = '5';                        
                         $scope.getPointsRecord();
-
                     },
                     failureCallBack: function (iObj) {
                         console.error('In failureCallBack', iObj);
 
                     }
                 });
-                $scope.feedBack.closeFeedBackPopup();
+                
             };
 
             $scope.feedBack.sendPreSessionDetail = function () {
                // $scope.feedBack.feedBackDetails.sender = $scope.sender;
-                console.error($scope.feedBack.feedBackDetails)
-
+                //console.error($scope.feedBack.feedBackDetails)
+                var _checkValue = false;
+                for (var k = 0; k < $scope.displayArray.length; k++) {
+                    if($scope.displayArray[k].actionValue == '') {
+                        _checkValue = true;
+                    }
+                    $scope.feedBack.feedBackDetails[$scope.displayArray[k].name]= angular.copy($scope.displayArray[k]);
+                };
+                if (_checkValue) {
+                    _displayAlertMeesage({
+                            message: 'You need to fill all question', formatType: '2'
+                    });
+                    return;
+                }
                 for (var k = 0 ; k < $scope.displayArray.length ; k++) {
                     $scope.feedBack.feedBackDetails[$scope.displayArray[k].name] = $scope.displayArray[k];
                 };
@@ -1912,15 +1934,36 @@ app.directive('feedbackPage', function ($state, serverCommunication, $timeout, $
 
             $scope.displayArray = [];
             $scope.counter = 4;
+            var _displayAlertMeesage = function (iObj) {
+                var _displayAlert = {
+                    showAlert: true,
+                    message: iObj.message,
+                    formatType: iObj.formatType,
+                };
+                $rootScope.$broadcast("refreshStateHomeView", {
+                    type: 'displayAlert',
+                    // subType: 'Meeting',
+                    data: _displayAlert
+                });
+            };
 
             $scope.loadSlideData = function (iMode, IcallfromHtml) {
-                console.error('111')
-
-                var _loadArray = [];
-                $scope.indexArray = [];
-                for (var k = 0 ; k < $scope.displayArray.length ; k++) {
-                    $scope.feedBack.feedBackDetails[$scope.displayArray[k].name] = angular.copy($scope.displayArray[k]);
+                //console.error('111')
+                var _checkValue = false;
+                for (var k = 0; k < $scope.displayArray.length; k++) {
+                    if($scope.displayArray[k].actionValue == '') {
+                        _checkValue = true;
+                    }
+                    $scope.feedBack.feedBackDetails[$scope.displayArray[k].name]= angular.copy($scope.displayArray[k]);
                 };
+                if (_checkValue && iMode == 1) {
+                    _displayAlertMeesage({
+                            message: 'You need to fill all question', formatType: '2'
+                    });
+                    return;
+                }
+                var _loadArray = [];
+                $scope.indexArray = [];               
                 $scope.displayArray = [];
                 if (iMode == 0) {
                     if (IcallfromHtml)
@@ -1931,7 +1974,7 @@ app.directive('feedbackPage', function ($state, serverCommunication, $timeout, $
                             break;
                         }
                     }
-                } else {
+                } else {                   
                     $("#carousel-example").carousel('next');
                     for (var k = 4 ; k < $scope.question.length ; k++) {
                         _loadArray.push(angular.copy($scope.question[k]));
@@ -2073,7 +2116,7 @@ app.filter('myFormat', function () {
 });
 
 var fireEvent = function (element, event, iOptions) {
-
+   
     var _bubble = true, _cancel = true;
 
     if (iOptions && 'bubble' in iOptions)
@@ -2083,7 +2126,7 @@ var fireEvent = function (element, event, iOptions) {
         _cancel = _cancel && iOptions.cancel;
 
     if (element) {
-        if (event == "click" && (typeof InstallTrigger !== 'undefined')) {
+        if (event == "click") {
             element.click && element.click();
             return;
         }
