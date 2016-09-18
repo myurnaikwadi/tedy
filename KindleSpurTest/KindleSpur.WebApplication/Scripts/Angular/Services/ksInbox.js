@@ -16,8 +16,8 @@
 
             $scope.updateConversation = function (isVerfied, SenderEmail, ReceiverEmail, iNotificationDash) {
                 //$scope.conversation.IsVerified = isVerfied;
-                debugger
-                console.error(iNotificationDash);
+               
+              //  console.error(iNotificationDash);
                 var contentText = "";
                 if (isVerfied != false)
                     contentText = iNotificationDash.ConversationType+' Request by ' + $scope.ApprovalName + ' has been '+ (isVerfied == true ? 'accepted': 'Declined');
