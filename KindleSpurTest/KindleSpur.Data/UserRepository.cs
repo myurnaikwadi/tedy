@@ -752,7 +752,7 @@ namespace KindleSpur.Data
             try
             {
                 var userDetail = _userCollection.FindOneByIdAs<User>(userId);
-
+                Random random = new Random();
                 Boolean _psr = UnlockPSR(userDetail.TotalRewardPoints, userDetail.BalanceRewardPoints);
                 if (_psr)
                 {
@@ -762,8 +762,8 @@ namespace KindleSpur.Data
 
                     Game _game = new Game();
                     _game.Id = new ObjectId();
-                    _game.Name = "PSR" + count;
-                    _game.Key = "";
+                    _game.Key = Convert.ToString(random.Next(100, 1000));
+                    _game.Name = "PSR " + _game.Key;
 
                     _game.UnlockedDate = DateTime.Now;
 

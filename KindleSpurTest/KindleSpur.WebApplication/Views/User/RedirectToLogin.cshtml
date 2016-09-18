@@ -1,19 +1,43 @@
 ﻿@model KindleSpur.Models.User
-@{
-    Layout = null;
-}
 
 <!DOCTYPE html>
-
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
-    <title>RedirectToLogin</title>
+    <title>KindleSpur - ignite. urge.</title>
+    <link href="~/Scripts/css/global.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap.css" rel="stylesheet" />
+    <link href="~/Content/font-awesome.css" rel="stylesheet" />
+    <link href="~/Scripts/css/ksLogin/ksLogin.css" rel="stylesheet" />
+    <link href="~/Scripts/css/ksLogin/ksRedirectToLogin.css" rel="stylesheet" />
 </head>
-<body>
-    <div> 
-        @Html.LabelFor(model => model.FirstName);
-        This link is de-activated !!! <a href="\Home\Index">Click here to login</a>
+<body class="parentBody middleBackgroundImage">
+    <div class="applicationMiddleStrip">
+        <div class="parentDivNotoficationBox">
+            <div class="applicationLogo">
+                <img class="genericPointerClass" src="~/Images/icons/kindlespurlogo.png" alt="logo" style="height: auto; width: 150px; margin: auto;" />
+            </div>
+            <div class="personalInfoRedirectTologin">
+                <div class="personalInfoParent" style="margin-right: -24px;">
+                    <span>@Html.LabelFor(model => model.FirstName);</span>
+                </div>
+                <div class="profilePersonalInfoParent">
+                    <img src="~/Images/icons/If no Profile photo.png" />
+                </div>
+                <div class="personalInfoParent" style="margin-left: -24px;width: 35%;">
+                    <span>@Html.LabelFor(model => model.LastName);</span>
+                </div>
+            </div>
+            <div class="notificationRedirectTologinBox">
+                <h5>This link is de-activated !!! </h5>
+            </div>
+            <div class="redirectTologinBox">
+                <img src="~/Images/redirectLogin.png" />
+                <a class="redirectTologinBoxa" href="\Home\Index">Redirect to KindleSpur</a>
+                <h5 id="bar" class="redirectTologinBoxh5"></h5>
+            </div>
+
+        </div>
     </div>
 </body>
 </html>
