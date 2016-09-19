@@ -68,13 +68,13 @@
 
                                     <div class="nameMessageConversation" ng-style="{'width':'99%', 'height' : expandRequestFlag == $index ? '50%' : '0%', 'overflow':'hidden'}">
                                         <div ng-if="conversation.MeetingId" class="meetingPersonNameStrc" style="width: 100%;margin-left: 0;">
-                                            <button style="background-color: white;border: 1px solid #D60500;color: #D60500;font-size: 10px;padding: 5px;margin: auto;" class="signupButton fontClass" ng-click="invitesRequest.splice($index,1);updateMeeting(false,conversation)">DECLINE</button>
-                                            <button style="background-color: white;border: 1px solid #06d600;color: #06d600;font-size: 10px;padding: 5px;margin: auto;" class="signupButton fontClass" ng-click="invitesRequest.splice($index,1);updateMeeting(true,conversation)">ACCEPT</button>
+                                            <button style="background-color: white;border: 1px solid #D60500;color: #D60500;font-size: 10px;padding: 5px;margin: auto;" class="signupButton fontClass" ng-click="updateMeeting($index,false,conversation)">DECLINE</button>
+                                            <button style="background-color: white;border: 1px solid #06d600;color: #06d600;font-size: 10px;padding: 5px;margin: auto;" class="signupButton fontClass" ng-click="updateMeeting($index,true,conversation)">ACCEPT</button>
 
                                         </div>
                                         <div ng-if="!conversation.MeetingId" class="meetingPersonNameStrc" style="width: 100%;margin-left: 0;">
-                                            <button style="background-color: white;border: 1px solid #D60500;color: #D60500;font-size: 10px;padding: 5px;margin: auto;" class="signupButton fontClass" ng-click="invitesRequest.splice($index,1);updateConversation(false, loggedEmail, conversation.EmailAddress,conversation)">DECLINE</button>
-                                            <button style="background-color: white;border: 1px solid #06d600;color: #06d600;font-size: 10px;padding: 5px;margin: auto;" class="signupButton fontClass" ng-click="invitesRequest.splice($index,1);updateConversation(true, loggedEmail, conversation.EmailAddress,conversation)">ACCEPT</button>
+                                            <button style="background-color: white;border: 1px solid #D60500;color: #D60500;font-size: 10px;padding: 5px;margin: auto;" class="signupButton fontClass" ng-click="updateConversation({ index: $index,verified : false, SenderEmail : loggedEmail, ReceiverEmail : conversation.EmailAddress , notification : conversation })">DECLINE</button>
+                                            <button style="background-color: white;border: 1px solid #06d600;color: #06d600;font-size: 10px;padding: 5px;margin: auto;" class="signupButton fontClass" ng-click="updateConversation({ index: $index,verified : true, SenderEmail : loggedEmail, ReceiverEmail : conversation.EmailAddress , notification : conversation })">ACCEPT</button>
                                         </div>
                                     </div>
                                 </div>

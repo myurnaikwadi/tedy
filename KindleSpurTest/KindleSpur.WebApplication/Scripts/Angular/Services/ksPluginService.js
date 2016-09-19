@@ -71,38 +71,46 @@ app.directive('monthly', function (dateServiceForMonthlyCalendar, $rootScope, se
                 }
 
             };
-            $scope.updateConversation = function (isVerfied, SenderEmail, ReceiverEmail, iNotificationDash) {
-                //$scope.conversation.IsVerified = isVerfied;
-                debugger
-                //  console.error(iNotificationDash);
-                ReceiverEmail = iNotificationDash.SenderEmail;
+            $scope.updateConversation = function (iObj) {
+                
                 var contentText = "";
-                if (isVerfied != false)
-                    contentText = iNotificationDash.ConversationType + ' Request by ' + $scope.ApprovalName + ' has been ' + (isVerfied == true ? 'accepted' : 'Declined');
+                if (iObj.verified != false)
+                    contentText = iObj.notification.ConversationType + ' Request by ' + $scope.ApprovalName + ' has been ' + (iObj.verified == true ? 'accepted' : 'Declined');
                 else
                     contentText = null;
-                var _id = iNotificationDash.ConversationId + ":CHT#" + (Date.now()) + (Math.floor((Math.random() * 10) + 1));
+                var _id = iObj.notification.ConversationId + ":CHT#" + (Date.now()) + (Math.floor((Math.random() * 10) + 1));
                 var _object = {
-                    SenderEmail: SenderEmail,
-                    ReceiverEmail: ReceiverEmail,
+                    SenderEmail: iObj.SenderEmail,
+                    ReceiverEmail: iObj.notification.SenderEmail,
                     Content: contentText,
-                    IsVerified: isVerfied,
+                    IsVerified: iObj.verified,
                     ConversationClosed: false,
-                    ConversationType: iNotificationDash.ConversationType,
-                    IsRejected: isVerfied == false ? true : false,
-                    Skill: iNotificationDash.skill,
+                    ConversationType: iObj.notification.ConversationType,
+                    IsRejected: iObj.verified == false ? true : false,
+                    Skill: iObj.notification.skill,
                     ConversationId: _id,
-                    ConversationParentId: iNotificationDash.ConversationId,
+                    ConversationParentId: iObj.notification.ConversationId,
                 }
-            
+                $scope.invitesRequest.splice(iObj.index, 1);
+                if ($scope.monthlyArray[$scope.expandIndex] && $scope.monthlyArray[$scope.expandIndex].meetingArray) {
+                    for (var k = 0 ; k < $scope.monthlyArray[$scope.expandIndex].meetingArray.length ; k++) {
+                        if ($scope.monthlyArray[$scope.expandIndex].meetingArray[k].ConversationId == iObj.notification.ConversationId) {
+                            $scope.monthlyArray[$scope.expandIndex].meetingArray.splice(k, 1);
+                            break;
+                        }
+                    }
+                }
+                if ($scope.monthlyArray[$scope.expandIndex].inviteObject && $scope.monthlyArray[$scope.expandIndex].inviteObject['invite'] && $scope.monthlyArray[$scope.expandIndex].inviteObject['invite'][iObj.notification.ConversationId]) {
+                    delete $scope.monthlyArray[$scope.expandIndex].inviteObject['invite'][iObj.notification.ConversationId];
+                }
                 serverCommunication.updateConversation({
                     loggedUserDetails: _object,
                     ReceiverName: $scope.ApprovalName,
-                    Role: iNotificationDash.ConversationType == "Coaching" ? 'Coachee' : 'Mentee',
+                    Role: iObj.notification.ConversationType == "Coaching" ? 'Coachee' : 'Mentee',
                     successCallBack: function () {
                         //$scope.menuClick(5, "CONVERSATIONS");               
                         console.debug('In successCallBack');
-
+                        
                     },
                     failureCallBack: function (e) {
                         console.debug('In failureCallBack' + e);
@@ -110,14 +118,27 @@ app.directive('monthly', function (dateServiceForMonthlyCalendar, $rootScope, se
                 });
             };
 
-            $scope.updateMeeting = function (isVerfied, iNotification) {
+            $scope.updateMeeting = function (index,isVerfied, iNotification) {
                 //console.error(iNotification)
+                $scope.invitesRequest.splice(index, 1);
+                if ($scope.monthlyArray[$scope.expandIndex] && $scope.monthlyArray[$scope.expandIndex].meetingArray) {
+                    for (var k = 0 ; k < $scope.monthlyArray[$scope.expandIndex].meetingArray.length ; k++) {
+                        if ($scope.monthlyArray[$scope.expandIndex].meetingArray[k].MeetingId == iNotification.MeetingId) {
+                            $scope.monthlyArray[$scope.expandIndex].meetingArray.splice(k, 1);
+                            break;
+                        }
+                    }
+                }
+                if ($scope.monthlyArray[$scope.expandIndex].inviteObject && $scope.monthlyArray[$scope.expandIndex].inviteObject['meeting'] && $scope.monthlyArray[$scope.expandIndex].inviteObject['meeting'][iNotification.MeetingId]) {
+                    delete $scope.monthlyArray[$scope.expandIndex].inviteObject['meeting'][iNotification.MeetingId];
+                }
                 serverCommunication.MeetingSchedularUpdate({
                     MeetingId: iNotification.MeetingId,
                     flag: isVerfied,
                     successCallBack: function () {
                         console.debug('In successCallBack');
                         //$scope.conversationRequest();
+                        
                     },
                     failureCallBack: function (e) {
                         console.debug('In failureCallBack' + e);
