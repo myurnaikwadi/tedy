@@ -353,8 +353,8 @@
         console.error(_array)
         var _object = {
             Content: iObj.message,
-            SenderEmail: $scope.openConversation.SenderEmail,
-            ReceiverEmail: $scope.openConversation.ReceiverEmail,
+            SenderEmail: $scope.loggedEmail,
+            ReceiverEmail: $scope.openConversation.SenderEmail == $scope.loggedEmail ? $scope.loggedEmail : $scope.openConversation.ReceiverEmail,
             SendOrReceive: 'send',
             IsVerified: true,
             ConversationClosed: false,
@@ -377,6 +377,7 @@
         } else {
             _replica.Name = $scope.openConversation.FirstName + " " + $scope.openConversation.LastName;
             _replica.Photo = $scope.openConversation.Photo;
+
         }
         _replica.UpdateDate = new Date();
         //  _replica.UpdateDate.setDate(6);
@@ -520,9 +521,9 @@
     $scope.saveBookmark = function (iCate) {      
         console.error(iCate)
         serverCommunication.bookMarkLink({
-            bookMarkObject: { FilePath: iCate.FileName, FileName: iCate.FilePath },
+            bookMarkObject: { ParentFileId: iCate.FileId, DocumentName: iCate.FileName, LinkUrl: iCate.FilePath },
             successCallBack: function () {
-                scope.closePopup();
+               
             },
             failureCallBack: function () {
                 // $scope.conversation.Message = "";
@@ -891,12 +892,14 @@
             ParentId: $scope.openConversation.ConversationParentId,
             successCallBack: function (iObj) {
                 console.debug('In showSelectedConversation ----- ', iObj); 
-                $scope.MailRecords = []
-                var MailRecords = JSON.parse(iObj.data.Result);
+                $scope.MailRecords = [];
+                function ObjectId(id) { return id; }
+                function ISODate(d) { return d; }
+               // var MailRecords = JSON.parse(iObj.data.Result);
               //  var MailRecords = JSON.parse(MailRecords);
-                console.log(MailRecords); 
+                //console.log(MailRecords); 
                    
-               // var MailRecords = eval('(' + iObj.data.Result + ')');
+                var MailRecords = eval('(' + iObj.data.Result + ')');
 
                 $scope.openConversation.sessionClosed = false;
                 $scope.applyAnimatonToFeedBack = false;

@@ -534,8 +534,8 @@
         console.error(_array)
         var _object = {
             Content: iObj.message,
-            SenderEmail: $scope.openConversation.SenderEmail,
-            ReceiverEmail: $scope.openConversation.ReceiverEmail,
+            SenderEmail: $scope.loggedEmail,
+            ReceiverEmail: $scope.openConversation.SenderEmail == $scope.loggedEmail ? $scope.loggedEmail : $scope.openConversation.ReceiverEmail,
             SendOrReceive: 'send',
             IsVerified: true,
             ConversationClosed: false,
@@ -699,9 +699,9 @@
     $scope.saveBookmark = function (iCate) {
         console.error(iCate)
         serverCommunication.bookMarkLink({
-            bookMarkObject: { FilePath: iCate.FileName, FileName: iCate.FilePath },
+            bookMarkObject: { ParentFileId: iCate.FileId, DocumentName: iCate.FileName, LinkUrl: iCate.FilePath },
             successCallBack: function () {
-                scope.closePopup();
+               
             },
             failureCallBack: function () {
                 // $scope.conversation.Message = "";
@@ -1073,9 +1073,7 @@
                 console.debug('In successCallBack', iObj);
 
                 function ObjectId(id) { return id; }
-                function ISODate(d) {
-                    return d;
-                }
+                function ISODate(d) { return d; }
                 //    console.debug(ParentId)
                 $scope.MailRecords = []
                 var MailRecords = eval('(' + iObj.data.Result + ')');

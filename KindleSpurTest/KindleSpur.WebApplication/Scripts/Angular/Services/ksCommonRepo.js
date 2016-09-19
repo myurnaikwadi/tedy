@@ -287,7 +287,7 @@
                         scope.uploadAttachmentArray.push(valueFile[k]);
                         var _obj = {                            
                             FileName :  valueFile[k].name,
-                            fileType : valueFile[k].fileType,
+                         //   fileType : valueFile[k].fileType,
                             FilePath: valueFile[k].name,
                             ContentType: valueFile[k].type
                         }                 
