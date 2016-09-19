@@ -54,8 +54,8 @@ namespace KindleSpur.WebApplication.Controllers
             TempData["UserId"] = Request["UserId"].ToString();
             UserRepository _repo = new UserRepository();
             User u = (User)_repo.GetUserDetails(TempData["UserId"].ToString());
-            
-            if (u!=null &&!u.IsVerified )
+
+            if (u != null && !u.IsVerified)
             {
                 TempData.Keep("UserId");
                 return View();
@@ -64,7 +64,7 @@ namespace KindleSpur.WebApplication.Controllers
             {
                 return RedirectToLogin(u);
             }
-                     
+
         }
 
         public ActionResult RedirectToLogin(IUser user)
@@ -356,7 +356,18 @@ namespace KindleSpur.WebApplication.Controllers
 
         }
 
+        [HttpPost]
+        public int logout()
+        {
+            if (Request.Cookies["ksUser"] != null)
+            {
+                HttpCookie cookie = new HttpCookie("ksUser");
+                cookie.Expires = DateTime.Now.AddDays(-1d);
+                Response.Cookies.Add(cookie);
+            }
+            return 1;
 
+        }
         public string UnlockGame()
         {
             UserRepository _repo = new UserRepository();
