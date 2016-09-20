@@ -351,10 +351,15 @@
         }
 
         console.error(_array)
+        var _receiverName = $scope.openConversation.ReceiverEmail;
+        if ($scope.openConversation.SenderEmail == $scope.loggedEmail)
+            _receiverName = $scope.openConversation.ReceiverEmail;
+        if ($scope.openConversation.ReceiverEmail == $scope.loggedEmail)
+            _receiverName = $scope.openConversation.SenderEmail;
         var _object = {
             Content: iObj.message,
             SenderEmail: $scope.loggedEmail,
-            ReceiverEmail: $scope.openConversation.SenderEmail == $scope.loggedEmail ? $scope.loggedEmail : $scope.openConversation.ReceiverEmail,
+            ReceiverEmail: _receiverName,
             SendOrReceive: 'send',
             IsVerified: true,
             ConversationClosed: false,
