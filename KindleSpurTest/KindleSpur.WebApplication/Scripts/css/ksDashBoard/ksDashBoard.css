@@ -1044,7 +1044,7 @@ width: 20%;
 
 .newApplicationStripInvitation {
     position: absolute;
-    bottom: 0;
+    bottom: 9px;
     right: -19%;
     width: 22%;
     height: 30%;
