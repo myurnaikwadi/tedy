@@ -485,11 +485,10 @@ namespace KindleSpur.Data
         {
             List<BsonDocument> _categories = new List<BsonDocument>();
 
-
             if (role == "Coach" || role == "Mentor")
-                _categories = _conversationCollection.FindAs<BsonDocument>(Query.And(Query.EQ("ConversationParentId", ParentId), Query.EQ("CoachOrMentor", loggedinEmailAddress), Query.EQ("ConversationType", ConversationType))).ToList();
+                _categories = _conversationCollection.FindAs<BsonDocument>(Query.And(Query.EQ("ConversationParentId", ParentId), Query.EQ("ConversationType", ConversationType))).ToList();
             else if (role == "Coachee" || role == "Mentee")
-                _categories = _conversationCollection.FindAs<BsonDocument>(Query.And(Query.EQ("ConversationParentId", ParentId), Query.EQ("CoacheeOrMentee", loggedinEmailAddress), Query.EQ("ConversationType", ConversationType))).ToList();
+                _categories = _conversationCollection.FindAs<BsonDocument>(Query.And(Query.EQ("ConversationParentId", ParentId), Query.EQ("ConversationType", ConversationType))).ToList();
 
 
             var _userDetailsCollection = con.GetCollection("UserDetails");
@@ -674,12 +673,12 @@ namespace KindleSpur.Data
                 var _userCollection = con.GetCollection("UserDetails");
                 var userDetail = _userCollection.FindOneAs<User>(Query.EQ("EmailAddress", UserId));
                 List<BookMark> path = new List<BookMark>();
-               
+
                 //var result = _userCollection.FindAs<BsonDocument>(Query.And(Query.EQ("EmailAddress", userDetail.EmailAddress), Query.EQ("Files", userDetail.Files.Select(c => c.FileId ==))).ToList();
-               // List<FileUpload> fileupdate = new List<FileUpload>();
+                // List<FileUpload> fileupdate = new List<FileUpload>();
                 foreach (var bookmark in bookmarks)
                 {
-                 //   FileUpload file = new FileUpload();
+                    //   FileUpload file = new FileUpload();
                     BookMark Link = new BookMark();
                     Link.Id = ObjectId.GenerateNewId();
                     Link.BookMarkId = Guid.NewGuid().ToString();
@@ -707,7 +706,7 @@ namespace KindleSpur.Data
                 if (userDetail.BookMarks == null)
                     userDetail.BookMarks = new List<BookMark>();
                 userDetail.BookMarks.AddRange(path.ToList());
-              
+
                 _userCollection.Save(userDetail);
                 _transactionStatus = true;
             }

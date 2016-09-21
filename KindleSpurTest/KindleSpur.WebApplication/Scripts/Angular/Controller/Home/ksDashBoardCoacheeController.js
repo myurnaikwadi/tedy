@@ -1,4 +1,4 @@
-﻿app.controller('ksDashBoardCoacheeController', function ($timeout,$rootScope, $scope, serverCommunication, $interval, $state) {
+﻿app.controller('ksDashBoardCoacheeController', function ($timeout, $rootScope, $scope, serverCommunication, $interval, $state) {
     window.cocc = $scope;
     $rootScope.currentModule = 'Coachee';
     $scope.loggedEmail = $rootScope.loggedDetail.EmailAddress;
@@ -8,19 +8,19 @@
     $scope.ReceiverName = "";
     $scope.searchCoachObj = {}
     $scope.navigateToProfile = function () {
-        $rootScope.currentModule = 'Profile';   
+        $rootScope.currentModule = 'Profile';
         $state.go('home.dashBoard.profile');
     };
 
-  //  $scope.fff = [{ CML_TITLE: 'dd' }, { CML_TITLE: 'ddddd' }, { CML_TITLE: 'dddd' }];
+    //  $scope.fff = [{ CML_TITLE: 'dd' }, { CML_TITLE: 'ddddd' }, { CML_TITLE: 'dddd' }];
     $scope.objFormat = { firstName: 'Name', id: 'Id', email: 'Name', imgPath: 'img' } //format needed for autosuggest
-    
+
     $scope.callBackInTyping = function (iObj) {
-       // console.error(iObj)
-          $scope.searchCoachObj.searchKey = iObj.searchText;
+        // console.error(iObj)
+        $scope.searchCoachObj.searchKey = iObj.searchText;
     };
-    $scope.callBackBeforeAdd = function (iObj,iCallBack) {
-       // console.error(iObj)
+    $scope.callBackBeforeAdd = function (iObj, iCallBack) {
+        // console.error(iObj)
         iCallBack()
     };
     $scope.callBackAfterChangeValue = function (iSkill) {
@@ -50,7 +50,7 @@
         });
     }
     $scope.callBackBeforeRemove = function (iObj) {
-       // console.error(iObj)
+        // console.error(iObj)
     }
     $scope.notifications = [
 
@@ -91,7 +91,7 @@
             _str += iObj.State + " ";
         if (iObj.Country)
             _str += iObj.Country + " ";
-       // console.error(_str);
+        // console.error(_str);
         return _str;
     };
     //$scope.leftSideMenus = [{ name: 'DASHBOARD' },
@@ -109,7 +109,7 @@
     $scope.opencoachprofile = function (iOption) {
         $scope.showCoacheeProfile = true;
         $scope.userInfo = iOption;
-       // console.log(iOption)
+        // console.log(iOption)
     };
 
 
@@ -128,7 +128,7 @@
         $scope.selectedMenu = iIndex;
         $scope.stopFight();
         $scope.feedBack.closeFeedBackPopup();
-        $scope.feedContainArray =[];
+        $scope.feedContainArray = [];
         $scope.loadingMiddleObject = { showLoading: true, loadingMessage: 'Loading' };
         switch (iIndex) {
             case 0: $scope.loadingMiddleObject = { showLoading: false, loadingMessage: 'Loading' }; break;//$scope.conversationRequest();  $scope.autoSyncRoutine(_conversationTime); break;
@@ -157,12 +157,12 @@
             }
         }
     };
-    $scope.feedBack = { feedBackMode : false }
+    $scope.feedBack = { feedBackMode: false }
     $scope.feedBack.askFeedback = false;
     $scope.feedBack.formValue = '0';
     $scope.feedBack.icloseFeedBack = false;
     $scope.feedBack.feedBackType = 'feedBack';
-    $scope.askFeedBackFunc = function (icloseFeedBack,iArray) {
+    $scope.askFeedBackFunc = function (icloseFeedBack, iArray) {
 
         $scope.feedBack.askFeedback = true;
         $scope.feedBack.formValue = '1';
@@ -172,7 +172,7 @@
         if (iArray)
             $scope.feedBack.feedBackMode = true;
         if (icloseFeedBack == 3) {
-           // $scope.feedBack.feedBackMode = false;
+            // $scope.feedBack.feedBackMode = false;
             $scope.feedBack.feedBackType = 'preSession';
             if (iArray)
                 $scope.array = [].concat(angular.copy(iArray));
@@ -224,7 +224,7 @@
     $scope.feedBack.closeFeedBackPopup = function () {
         $scope.feedBack.askFeedback = false;
         $scope.feedBack.formValue = '1';
-        $scope.feedBack.icloseFeedBack  = false;
+        $scope.feedBack.icloseFeedBack = false;
 
     };
 
@@ -361,13 +361,13 @@
             }
         });
     };
-  
+
     $scope.clearSearch = function (IAvoidCall) {
         $scope.searchCoachObj.searchKey = '';
         $scope.selectedSkill = {};
-        $scope.searching = false;        
+        $scope.searching = false;
         $scope.searchCoachObj.searchingActive = false;
-        if(!IAvoidCall) $scope.getCoachRecord();
+        if (!IAvoidCall) $scope.getCoachRecord();
     };
     $scope.generateGarden = function () {
         $scope.ctsDataForMolecule = null;
@@ -414,7 +414,7 @@
             for (var i = 0; i < iResult.data[k].Skills.length; i++) {
                 if ($scope.searchCoachObj.searchKey != '') {
                     if ($scope.searchCoachObj.searchKey != iResult.data[k].Skills[i].Name)
-                         continue;
+                        continue;
                 }
                 var _coach = angular.copy(iResult.data[k]);
                 _coach.Skill = {};
@@ -462,7 +462,7 @@
 
                         $scope.availableSkills.push(iCts);
                     }
-                });  
+                });
             },
             failureCallBack: function () {
                 // console.error('In failureCallBack');
@@ -487,7 +487,7 @@
                     _createCoachArray(result);
                     //  $scope.loadingMiddleObject = { showLoading: false, loadingMessage: 'Loading' };
                 }
-                $scope.loadingMiddleObject = { showLoading: false, loadingMessage: 'Loading' };             
+                $scope.loadingMiddleObject = { showLoading: false, loadingMessage: 'Loading' };
             },
             failureCallBack: function () {
                 // console.error('In failureCallBack');
@@ -539,7 +539,7 @@
         var _object = {
             Content: iObj.message,
             SenderEmail: $scope.loggedEmail,
-            ReceiverEmail:_receiverName,
+            ReceiverEmail: _receiverName,
             SendOrReceive: 'send',
             IsVerified: true,
             ConversationClosed: false,
@@ -705,7 +705,7 @@
         serverCommunication.bookMarkLink({
             bookMarkObject: { ParentFileId: iCate.FileId, DocumentName: iCate.FileName, LinkUrl: iCate.FilePath },
             successCallBack: function () {
-               
+
             },
             failureCallBack: function () {
                 // $scope.conversation.Message = "";
@@ -713,7 +713,7 @@
             }
         });
     };
-  
+
     $scope.autoSyncRoutine = function (iTime) {
         console.error('autoSyncRoutine')
         $scope.autoSyncCounter = $interval(function () {
@@ -886,10 +886,10 @@
                         replaceNameU: ($scope.allFeedBack['PRESESSION'] && $scope.allFeedBack['PRESESSION'][1] && $scope.allFeedBack['PRESESSION'][1]['Other']) ? 'Click to see the given Pre-session' : 'No Pre-session form received',
                         selected: false,
                         activate: true,
-                        styleI: { 'transition': 'all 1s ease','opacity':'1' },
-                        styleU: { 'transition': 'all 1s ease','opacity':'0.5' }
+                        styleI: { 'transition': 'all 1s ease', 'opacity': '1' },
+                        styleU: { 'transition': 'all 1s ease', 'opacity': '0.5' }
                     };
-                    
+
                     if (($scope.allFeedBack['PRESESSION'] && $scope.allFeedBack['PRESESSION'][1] && $scope.allFeedBack['PRESESSION'][1]['Self'])) {
                         _presessionBlock.styleI['font-weight'] = '900';
                         _presessionBlock.styleI['color'] = '#4dc725';
@@ -906,19 +906,19 @@
                     var _colorArray = ['', '#9400D3', '#0000FF', '#C70039', '#A04000', '#9400D3', '#0000FF', '#C70039'];
                     var _previousActivate = false;
                     for (var k = 1; k < 7; k++) {
-                       
+
                         var _normalFeedBack = {
-                            Name: 'F - '+k,
+                            Name: 'F - ' + k,
                             feedBackArr: ($scope.allFeedBack['FEEDBACK'] && $scope.allFeedBack['FEEDBACK'][k]) ? $scope.allFeedBack['FEEDBACK'][k] : {},
                             replaceNameI: ($scope.allFeedBack['FEEDBACK'] && $scope.allFeedBack['FEEDBACK'][k] && $scope.allFeedBack['FEEDBACK'][k]['Self']) ? 'Click to see the given feedBack' : 'Click to give feedback',
                             replaceNameU: ($scope.allFeedBack['FEEDBACK'] && $scope.allFeedBack['FEEDBACK'][k] && $scope.allFeedBack['FEEDBACK'][k]['Other']) ? 'Click to see the given feedBack' : 'No feedback received',
                             selected: false,
                             activate: ($scope.allFeedBack['FEEDBACK'] && $scope.allFeedBack['FEEDBACK'][k] && $scope.allFeedBack['FEEDBACK'][k]['Self']) ? true : false,
-                            styleI: { 'transition': 'all 1s ease','opacity':'0.5' },
-                            styleU: { 'transition': 'all 1s ease','opacity':'0.5' }
+                            styleI: { 'transition': 'all 1s ease', 'opacity': '0.5' },
+                            styleU: { 'transition': 'all 1s ease', 'opacity': '0.5' }
                         };
-                       
-                         _normalFeedBack.nextToBeFilled = false;
+
+                        _normalFeedBack.nextToBeFilled = false;
                         if (_previousActivate) {
                             _normalFeedBack.activate = true;
                             _normalFeedBack.nextToBeFilled = true;
@@ -934,7 +934,7 @@
                         } else
                             _previousActivate = false;
 
-                        if ($scope.allFeedBack['FEEDBACK'] && $scope.allFeedBack['FEEDBACK'][k]&& $scope.allFeedBack['FEEDBACK'][k]['Other']) {
+                        if ($scope.allFeedBack['FEEDBACK'] && $scope.allFeedBack['FEEDBACK'][k] && $scope.allFeedBack['FEEDBACK'][k]['Other']) {
                             _normalFeedBack.styleU['font-weight'] = '900';
                             _normalFeedBack.styleU['color'] = '#4dc725';
                             _normalFeedBack.styleU['opacity'] = '1';
@@ -942,7 +942,7 @@
                         if (k == 1 && _previousActivate == false) {
                             _normalFeedBack.activate = true;
                             _normalFeedBack.nextToBeFilled = true;
-                            _normalFeedBack.styleI['opacity']= '1';
+                            _normalFeedBack.styleI['opacity'] = '1';
                             _normalFeedBack.styleI['color'] = 'orange';
                         }
                         $scope.feedbackDisplayIcon.push(angular.copy(_normalFeedBack));
@@ -966,10 +966,10 @@
                         replaceNameU: ($scope.allFeedBack['CLOSESESSION'] && $scope.allFeedBack['CLOSESESSION'][1] && $scope.allFeedBack['CLOSESESSION'][1]['Other']) ? 'Click to see the given feedBack' : 'No feedback received',
                         selected: false,
                         activate: true,
-                        styleI: { 'transition': 'all 1s ease','opacity':'1' },
-                        styleU: { 'transition': 'all 1s ease','opacity':'0.5' }
+                        styleI: { 'transition': 'all 1s ease', 'opacity': '1' },
+                        styleU: { 'transition': 'all 1s ease', 'opacity': '0.5' }
                     };
-                    
+
                     if (($scope.allFeedBack['CLOSESESSION'] && $scope.allFeedBack['CLOSESESSION'][1] && $scope.allFeedBack['CLOSESESSION'][1]['Self'])) {
                         _closeSessionBlock.styleI['font-weight'] = '900';
                         _closeSessionBlock.styleI['opacity'] = '1';
@@ -1005,11 +1005,11 @@
             }
         });
     };
-    
+
 
     $scope.applyAnimatonToFeedBack = false;
     $scope.iUClickFunc = function () {
-        
+
         if ($scope.applyAnimatonToFeedBack)
             $scope.applyAnimatonToFeedBack = false;
         else
@@ -1065,13 +1065,13 @@
         }
         return _prefix;
     };
-    $scope.iconMgmt = { iIconClicked: false, uIconClicked  : false };
+    $scope.iconMgmt = { iIconClicked: false, uIconClicked: false };
     $scope.showSelectedConversation = function (SenderEmail, ReceiverEmail) {
         serverCommunication.getConversationDetails({
             //senderEmail: SenderEmail,
             //receiverEmail: ReceiverEmail,
             ConversationType: "Coaching",
-            Role : 'Coachee',
+            Role: 'Coachee',
             ParentId: $scope.openConversation.ConversationParentId,
             successCallBack: function (iObj) {
                 console.debug('In successCallBack', iObj);
@@ -1085,8 +1085,8 @@
                 $scope.openConversation.sessionClosed = false;
                 $scope.applyAnimatonToFeedBack = false;
                 $scope.iconMgmt = { iIconClicked: false, uIconClicked: false };
-                
-                
+
+
                 var _flag = false;
                 $scope.timeSlots = [];
                 MailRecords.some(function (dd) {
@@ -1113,12 +1113,12 @@
                             }
                         }
                         if (_flag == true) {
-                            $scope.timeSlots.push({ displayDate: dd.displayDate, compareDate: dd.UpdateDate});
+                            $scope.timeSlots.push({ displayDate: dd.displayDate, compareDate: dd.UpdateDate });
                             _flag = false;
                         }
                     } else {
                         _flag = false;
-                        $scope.timeSlots.push({ displayDate: dd.displayDate, compareDate: dd.UpdateDate});
+                        $scope.timeSlots.push({ displayDate: dd.displayDate, compareDate: dd.UpdateDate });
                     }
                     $scope.MailRecords.push(angular.copy(dd));
                 });
@@ -1132,7 +1132,7 @@
                     b = new Date(b.UpdateDate);
                     return a - b;
                 });
-                $scope.loadingMessageObject = { showLoading: false, loadingMessage: 'Loading' };                
+                $scope.loadingMessageObject = { showLoading: false, loadingMessage: 'Loading' };
                 _setScrollPosition();
                 $scope.showFeedBack = false;
                 $scope.getFeedBackFromServer();
@@ -1170,7 +1170,7 @@
         //$scope.feedbackDisplayIcon[iIndex].style = { 'border': '1px solid ' + _colorArray[iIndex], 'color': _colorArray[iIndex], 'transition': 'all 1s ease', 'transform': 'scale(1)', 'width': '100%', 'height': '100%' };
         //   $scope.feedbackDisplayIcon[iIndex].style['transform'] = 'scale(1.1)';
         //console.error(iObj)
-       // console.error(iObj)
+        // console.error(iObj)
         if ($scope.feedBack.askFeedback == true)
             return;
         if (iObj.icon.activate == false && iObj.mode == 'Self') {
@@ -1235,7 +1235,7 @@
             case 5:
             case 'F - 6':
             case 6:
-               
+
                 if (Object.keys(iObj.icon.feedBackArr).length > 0) {
                     if (iObj.icon.feedBackArr[iObj.mode]) {
                         iObj.icon.selectedModeInner = iObj.mode;
@@ -1348,7 +1348,7 @@
         $rootScope.$broadcast("inboxListener", { gridViewLoaded: $scope.gridViewLoaded });
     };
     $rootScope.$on("closeInbox", function (event, iObj) {
-       // console.error('refreshStateHomeView ---- ', iObj);
+        // console.error('refreshStateHomeView ---- ', iObj);
         $scope.gridViewLoaded = false;
         //$scope.loadGridView();
     });
@@ -1371,7 +1371,7 @@
                     }
                 }, 600);
 
-              
+
             },
             failureCallBack: function (iObj) {
                 console.debug('In failureCallBack', iObj);
@@ -1383,7 +1383,7 @@
         var _displayAlert = {
             showAlert: true,
             message: iObj.message,
-            formatType:  iObj.formatType,
+            formatType: iObj.formatType,
         };
         $rootScope.$broadcast("refreshStateHomeView", {
             type: 'displayAlert',
@@ -1391,7 +1391,7 @@
             data: _displayAlert
         });
     };
-   
+
     $scope.sendCoachingRequest = function (isVerified, iCoach) {
 
         $scope.conversation.SenderEmail = $scope.loggedEmail;
@@ -1453,7 +1453,7 @@
 
     }
 
-    var _resizeDateFilter = function(iChatMessage) {
+    var _resizeDateFilter = function (iChatMessage) {
         if ($scope.timeSlots.length > 0) {
             _flag = true;
             for (var j = 0; j < $scope.timeSlots.length; j++) {
@@ -1466,13 +1466,13 @@
                 $scope.timeSlots.push({ displayDate: iChatMessage.displayDate, compareDate: iChatMessage.UpdateDate });
                 _flag = false;
             }
-        }else {
+        } else {
             _flag = false;
             $scope.timeSlots.push({ displayDate: iChatMessage.displayDate, compareDate: iChatMessage.UpdateDate });
         }
     };
 
-    var _sortArray = function() {
+    var _sortArray = function () {
         $scope.timeSlots.sort(function (a, b) {
             a = new Date(a.compareDate);
             b = new Date(b.compareDate);
@@ -1481,7 +1481,7 @@
         $scope.MailRecords.sort(function (a, b) {
             a = new Date(a.UpdateDate);
             b = new Date(b.UpdateDate);
-            return a -  b;
+            return a - b;
         });
     };
     $scope.conversationClick = function (iEvent, iClickFlag) {
@@ -1503,7 +1503,7 @@
                 var _parentId = $scope.openConversation.ConversationParentId ? $scope.openConversation.ConversationParentId : $scope.openConversation.ConversationId;
                 if ($scope.conversation.SenderEmail === "" || $scope.conversation.ReceiverEmail === "")
                     return false;
-                var _id = _parentId + ":CHT#" +(Date.now()) +(Math.floor((Math.random() * 10) + 1));
+                var _id = _parentId + ":CHT#" + (Date.now()) + (Math.floor((Math.random() * 10) + 1));
                 var _object = {
                     Content: $scope.conversation.Content,
                     SenderEmail: $scope.conversation.SenderEmail,
@@ -1653,7 +1653,7 @@
     /*END: Conversation Module Code*/
 
     $scope.init = function () {
-       // $scope.conversationRequest();
+        // $scope.conversationRequest();
         $scope.loadingObject = { showLoading: false, loadingMessage: 'Loading' };
         // $scope.autoSyncRoutine(_conversationTime);
         $scope.menuClick(0, $scope.leftSideMenus[0]);
