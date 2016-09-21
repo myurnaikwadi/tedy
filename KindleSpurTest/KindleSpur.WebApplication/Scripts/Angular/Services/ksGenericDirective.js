@@ -81,7 +81,7 @@ app.directive('topMainStrip', function ($state, $rootScope, authentification) {
         //scope: true,   // optionally create a child scope
         link: function (scope, element, attrs) {
             scope.loggedDetail = $rootScope.loggedDetail;
-            scope.selectedRole = 0;
+           // scope.selectedRole = -1;
             scope.uiFlag = {
                 notification: false,
                 calendar: true,
@@ -159,6 +159,10 @@ app.directive('topMainStrip', function ($state, $rootScope, authentification) {
                         scope.uiFlag.profileLogo = true;
                         scope.uiFlag.notification = true;
                         break;
+                    case 'Coach': scope.selectedRole = 1; break;
+                    case 'Coachee': scope.selectedRole = 0; break;
+                    case 'Mentee': scope.selectedRole = 2; break; 
+                    case 'Mentor': scope.selectedRole = 3; break;
                         //   default :  break;
                 }
             };
