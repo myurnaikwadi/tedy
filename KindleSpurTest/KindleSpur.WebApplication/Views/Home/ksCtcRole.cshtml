@@ -8,7 +8,7 @@
                 <img ng-show="categoryDisplay && mySelection == false" ng-class="{ coachThemeColor : role == 'coach' , coacheeThemeColor : role == 'coachee' , mentorThemeColor : role == 'mentor' , menteeThemeColor : role == 'mentee' }" style="width:26px;height:24px;margin: auto auto;padding :6px;cursor:pointer;margin-left:1%;margin-right:0px;" ng-click="backButtonClick()" src="~/Images/minus.png" />
                 <h5 ng-hide="mySelection" style="font-size: 16px;margin: auto;margin-left: 1%;margin-right:0px;" class="fontClass">{{ categoryDisplay ? 'CATEGORIES' : selectedCategoryValue.Category | uppercase }}</h5>
                 <div class="ctsCategoryPanelSuggestPanel" ng-hide="mySelection">
-                    <h5 ng-class="{highlightedSelection : suggestCts.loadSuggestPopup}" ng-click="suggestCts.suggestPanelOpenClose()" style="border-color:#2dc3e8;font-size: 12px;margin: auto;margin-right:0;color:#2dc3e8;" class="fontClass genericPointerClass">Suggest Category</h5>
+                    <h5 ng-class="{highlightedSelection : suggestCts.loadSuggestPopup}" ng-click="suggestCts.suggestPanelOpenClose()" style="border-color:#2dc3e8;font-size: 11px;margin: auto;margin-right:0;color:#2dc3e8;" class="fontClass genericPointerClass">Suggest Category</h5>
                 </div>                        
             </div>
             <cube-Strct class="cubeParentClass" ng-show="loadingObject.showLoading" loading-Object="loadingObject"></cube-Strct>

@@ -27,28 +27,22 @@
         </div>
     </div>
     <div class="roleIcons" ng-show="uiFlag.roleIcon">
-        <div style="margin: auto;height: 63%;margin-bottom: 0;position:relative;">
+        <div class="roleIconTriangleParent">
             <div class="roleIconCircle coacheeBorderColor genericPointerClass" ng-click="navigateAsPerRole(0)"></div>
-            <div ng-if="selectedRole == 0" style="position: absolute;bottom: 15%;left: 10%;border-bottom-color: lightgray;border-width:7px;" class="triangleArrowUp"></div>
+            <div ng-if="selectedRole == 0" class="roleIconTriangle triangleArrowUp"></div>
         </div>
-        <div style="margin: auto;height: 63%;margin-bottom: 0;position:relative;">
+        <div class="roleIconTriangleParent">
             <div class="roleIconCircle coachBorderColor genericPointerClass" ng-click="navigateAsPerRole(1)"></div>
-            <div ng-if="selectedRole == 1" style="position: absolute;bottom: 15%;left: 10%;border-bottom-color: lightgray;border-width:7px;" class="triangleArrowUp"></div>
+            <div ng-if="selectedRole == 1" class="roleIconTriangle triangleArrowUp"></div>
         </div>
-        <div style="margin: auto;height: 63%;margin-bottom: 0;position:relative;">
+        <div class="roleIconTriangleParent">
             <div class="roleIconCircle menteeBorderColor genericPointerClass" ng-click="navigateAsPerRole(2)"></div>
-            <div ng-if="selectedRole == 2" style="position: absolute;bottom: 15%;left: 10%;border-bottom-color: lightgray;border-width:7px;" class="triangleArrowUp"></div>
+            <div ng-if="selectedRole == 2" class="roleIconTriangle triangleArrowUp"></div>
         </div>
-        <div style="margin: auto;height: 63%;margin-bottom: 0;position:relative;">
+        <div class="roleIconTriangleParent">
             <div class="roleIconCircle mentorBorderColor genericPointerClass" ng-click="navigateAsPerRole(3)"></div>
-            <div ng-if="selectedRole == 3" style="position: absolute;bottom: 15%;left: 10%;border-bottom-color: lightgray;border-width:7px;" class="triangleArrowUp"></div>
+            <div ng-if="selectedRole == 3" class="roleIconTriangle triangleArrowUp"></div>
         </div>
-
-        @*<div class="roleIconCircle coacheeBorderColor genericPointerClass" ng-click="navigateAsPerRole(0)"></div>
-        <div class="roleIconCircle coachBorderColor genericPointerClass" ng-click="navigateAsPerRole(1)"></div>
-        <div class="roleIconCircle menteeBorderColor genericPointerClass" ng-click="navigateAsPerRole(2)"></div>
-        <div class="roleIconCircle mentorBorderColor genericPointerClass" ng-click="navigateAsPerRole(3)"></div>*@
-        @*<div class="triangleArrowUp"></div>*@
     </div>
     @*<div class="profileViewModeMain" style="margin-left: 0;" ng-click="navigateToProfile()" ng-show="uiFlag.profileLogo" >
         <div class="profileImagePartMain">

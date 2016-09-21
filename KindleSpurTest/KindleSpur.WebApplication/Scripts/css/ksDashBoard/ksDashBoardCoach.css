@@ -344,7 +344,19 @@
             width: 100%;
                 display: flex;
         }
-
+        .roleIconTriangleParent {
+             margin: auto;
+             height: 63%;
+             margin-bottom: 0;
+             position:relative;
+        }
+        .roleIconTriangle {
+            position: absolute;
+            bottom: 15%;
+            left: 10%;
+            border-bottom-color: lightgray;
+            border-width:7px;
+        }
         .roleIconCircle {
             float: left;
             margin: auto 4%;
@@ -1261,11 +1273,11 @@ border: 1px solid #999;
 }
 .ctsCategoryPanelSuggestPanel {
     float: left;
-    width: 10%;
+    width: 13%;
     height: 100%;
     display: flex;
     margin: auto;
-    margin-right: 2%;
+    margin-right: 0%;
 }
 .ctsSuggestPanel {
      float: left;
