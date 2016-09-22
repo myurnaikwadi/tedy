@@ -7,7 +7,7 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', 'Keepal
    
     var _string = window.location.href;
     if (_string.indexOf('PasswordPro') > -1) {
-        console.error('1')
+      
         var _userId = _string.split("=")[1];
         $urlRouterProvider.otherwise('passwordPrompt/' + _userId);
     }else{
@@ -16,7 +16,7 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', 'Keepal
     IdleProvider.idle(900);
     IdleProvider.timeout(10);
     KeepaliveProvider.interval(10);
-    //$locationProvider.html5Mode(true);
+    
     $stateProvider
     .state('/', {
         url: '/login',
@@ -145,12 +145,6 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', 'Keepal
     
 
         ///////////////////////////////////////////
-  
-
-    //.state('profile', {
-    //    url: '/profile',
-    //    templateUrl: '/Home/ksProfileView',
-    //})
     .state('passwordPrompt', {
         url: '/password/:userId',
         templateUrl: '/User/PasswordPromp',
@@ -159,26 +153,7 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', 'Keepal
             url: '/forgotPassword/',
             templateUrl: '/User/ForgotPasswordEmail',
     })
-	//.state('ksUserDashBoard', {
-	//    url: '/ksUserDashBoard',
-	//    templateUrl: '/Home/ksUserDashBoard',
-	//})
-    //.state('dashBoardCoach', {
-    //    url: '/coachDashboard/:param',
-	//    templateUrl: '/Home/ksDashBoardCoach',
-	//})
-    //.state('dashBoardCoachee', {
-    //    url: '/coacheeDashboard',
-	//	templateUrl: '/Home/ksDashBoardCoachee',
-	//})
-    //.state('dashBoardMentor', {
-	//    url: '/mentorDashboard',
-	//    templateUrl: '/Home/ksDashBoardMentor',
-    //})
-    //.state('dashBoardMentee', {
-    //    url: '/menteeDashboard',
-    //    templateUrl: '/Home/ksDashBoardMentee',
-    //})    
+	
     .state('Conversation', {
         url: '/Conversation',
         templateUrl: '/Conversation/Index',
