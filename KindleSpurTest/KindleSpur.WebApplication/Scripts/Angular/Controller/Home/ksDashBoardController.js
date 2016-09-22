@@ -1,5 +1,5 @@
 app.controller('ksMainDashBoardController', function ($timeout,$scope, $state, serverCommunication, $rootScope) {
-        console.error('Dashoard load successfully')
+      
         window.dashBoard = $scope;
         $scope.loadingObject = { showLoading: true, loadingMessage: 'Loading' };
         $rootScope.currentModule = 'DashBoard';
@@ -36,7 +36,7 @@ app.controller('ksMainDashBoardController', function ($timeout,$scope, $state, s
       
 		$scope.logout = function () {
 		   
-            console.error(IN.User)  
+          
             if (IN.User) IN.User.logout();
             $state.go('login');
             authentification.logout({ loginObject : {}});
@@ -47,9 +47,9 @@ app.controller('ksMainDashBoardController', function ($timeout,$scope, $state, s
 		    $rootScope.$broadcast("inboxListener", { gridViewLoaded: $scope.gridViewLoaded });
 		};
 		$rootScope.$on("closeInbox", function (event, iObj) {
-		    console.error('refreshStateHomeView ---- ', iObj);
+		 
 		    $scope.gridViewLoaded = false;
-		    //$scope.loadGridView();
+		   
 		});
 		$scope.notificationData =[];       
 		$scope.init = function () {
@@ -59,9 +59,9 @@ app.controller('ksMainDashBoardController', function ($timeout,$scope, $state, s
 		    serverCommunication.getCoachTrandingTopic({
              loggedUserDetails: $rootScope.loggedDetail,
              successCallBack: function (iObj) {
-                 console.error('In successCallBack', iObj);
+              
                  $scope.StoryDetailArray = [].concat(iObj.data);
-               //  console.error($scope.StoryDetailArray)
+            
                  $scope.loadingObject = { showLoading: false, loadingMessage: 'Loading' };
                  if ($scope.StoryDetailArray[0]) {
                      $scope.trendingTopicLeftArray = $scope.StoryDetailArray[0];
@@ -71,7 +71,7 @@ app.controller('ksMainDashBoardController', function ($timeout,$scope, $state, s
                  }
              },
              failureCallBack: function (iObj) {
-                 console.error('In failureCallBack', iObj);
+               
              }
          });
 		};
@@ -79,7 +79,7 @@ app.controller('ksMainDashBoardController', function ($timeout,$scope, $state, s
 		$timeout(function () {
 		    var nodes = document.querySelectorAll('li'),
                 _nodes = [].slice.call(nodes, 0);
-		  //  console.error(_nodes)
+		
 		    var getDirection = function (ev, obj) {		
 		        var w = obj.offsetWidth,
                     h = obj.offsetHeight,
@@ -94,7 +94,7 @@ app.controller('ksMainDashBoardController', function ($timeout,$scope, $state, s
 		        var direction = 0;//getDirection(ev, obj),
                    
                     class_suffix = "";
-		     //   console.error(direction)
+		   
 		        obj.className = "liClassFOrHover";
 
 		        switch (direction) {
