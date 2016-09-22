@@ -15,17 +15,17 @@
     };
     $scope.searchCoachObj = {}
     $scope.selectedMenu = '0';
-    $scope.leftSideMenus = [{ name: 'DASHBOARD' }
+   $scope.leftSideMenus = [{ name: 'DASHBOARD' }
                  //, { name: 'MENTORING STATUS' }
+                 , {name: 'SELECT TOPICS' }
+                  , {name: 'SEARCH MENTOR' }
+                   , {name: 'KNOWLEDGE FEED' }
+                 , {name: 'COMMUNICATION' }
+                 , {name: 'MY REWARDS' }
+                 , {name: 'KNOWLEDGE WORKSPACE'}
                  , { name: 'KNOWLEDGE GARDEN' }
-                 , { name: 'SELECT TOPICS' }
-                  , { name: 'SEARCH MENTOR' }
-                   , { name: 'KNOWLEDGE FEED' }
-                 , { name: 'COMMUNICATION' }
-                 , { name: 'MY REWARDS' }
-                 , { name: 'KNOWLEDGE WORKSPACE' }
                  //, { name: 'ADD TOPICS' }
-    ]
+   ]
     $scope.applicationRole = [{ name: 'COACHEE' }, { name: 'MENTEE' }, { name: 'COACH' }, { name: 'MENTOR' }]
     $scope.showMenteeProfile = false;
     $scope.userInfo = null;
