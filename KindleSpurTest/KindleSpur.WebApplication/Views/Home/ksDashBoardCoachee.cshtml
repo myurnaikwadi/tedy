@@ -55,8 +55,8 @@
                     </div>
                 </div>
             </div>
-            @*Search Coach - 3 *@
-            <div class="fullWidthHeightClass" ng-switch-when="3">
+            @*Search Coach - 2 *@
+            <div class="fullWidthHeightClass" ng-switch-when="2">
                 <div class="hideCoacheeProfile" ng-class="{ showCoacheeProfileClass : showCoacheeProfile == true }">
                     <profile-Page ng-if="showCoacheeProfile && userInfo" load-Outside ="true" user-Info="userInfo" close-Popup="closeProfilePic()" edit-Required="false"></profile-Page>
                 </div>
@@ -133,8 +133,8 @@
                     </div>
                 </div>
             </div>
-            @*Communication - 5*@
-            <div class="fullWidthHeightClass" ng-switch-when="5">
+            @*Communication - 4*@
+            <div class="fullWidthHeightClass" ng-switch-when="4">
                 <div class="homeLabelInChat" style="height:7%;border-bottom:1px solid lightgray;">
                     <h5 class="fontClass" style="font-size: 16px;margin-left:1%;">COMMUNICATION</h5>
                 </div>
@@ -295,18 +295,18 @@
                     </div>
                 </div>                
             </div>
-            @*RESOURCES - 7*@
-            <div class="fullWidthHeightClass" ng-switch-when="7">
+            @*RESOURCES - 6*@
+            <div class="fullWidthHeightClass" ng-switch-when="6">
                 <div class="applicationMiddleStripMain " style="display:flex;height:100%;">
                     <common-Repository class="fullWidthHeightClass" extra-Param="objectForResourceTab"></common-Repository>
                 </div>
             </div>
-            @*Rss feed - 4*@
-            <div class="fullWidthHeightClass" ng-switch-when="4">
+            @*Rss feed - 3*@
+            <div class="fullWidthHeightClass" ng-switch-when="3">
                 <rss-Feed role="coachee" skill="feedCategoryArray"></rss-Feed>
             </div>
-            @*Knowledge Garden - 1*@
-            <div class="fullWidthHeightClass" ng-switch-when="1">
+            @*Knowledge Garden - 7*@
+            <div class="fullWidthHeightClass" ng-switch-when="7">
                 <div class="homeLabelInChat" style="height:7%; border-bottom:1px solid lightgray;">
                     <h5 class="fontClass" style="font-size: 16px;margin-left: 1%;">KNOWLEDGE GARDEN</h5>
                 </div>
@@ -315,13 +315,13 @@
                     <molecule-Map ng-if="ctsDataForMolecule && coachingStatusArray.length >0" cts-Data="ctsDataForMolecule"></molecule-Map>
                 </div>
             </div>           
-            @*Select skills - 2*@
-            <div class="fullWidthHeightClass" ng-switch-when="2">
+            @*Select skills - 1*@
+            <div class="fullWidthHeightClass" ng-switch-when="1">
                 <ctc-Role role="coachee" skill-Required="true"></ctc-Role>
             </div>
-            @*MY Rewards - 6 *@
-            <div class="fullWidthHeightClass" ng-switch-when="6">
-                <my-Reward></my-Reward>
+            @*MY Rewards - 5 *@
+            <div class="fullWidthHeightClass" ng-switch-when="5">
+                <my-Reward role="coachee"></my-Reward>
             </div>
         </div>
     </div>

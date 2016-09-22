@@ -193,44 +193,46 @@ namespace KindleSpur.WebApplication.Controllers
         {
             return View();
         }
-        [HttpPost]
-        public JsonResult UpdatecoverPhoto(Uploadcoverimage model)
-        {
-            UserRepository _repo = new UserRepository();
-            try
-            {
-                var allowedExtensions = new[] {
-                    ".Jpg", ".png", ".jpg", "jpeg"
-                };
-                var file = Request.Files[0];
-                var fileName = Path.GetFileName(file.FileName); //getting only file name(ex-ganesh.jpg)  
-                var ext = Path.GetExtension(file.FileName); //getting the extension(ex-.jpg)  
-                if (allowedExtensions.Contains(ext)) //check what type of extension  
-                {
-                    string name = Path.GetFileNameWithoutExtension(fileName); //getting file name without extension  
-                    string myfile = name + ext; //appending the name with id  
-                                                // store the file inside ~/project folder(Img)  
-                    var path = Path.Combine(Server.MapPath("~/coverimg"), myfile);
-                    file.SaveAs(path);
-                    if (_repo.UpdatecoverPhoto(((IUser)System.Web.HttpContext.Current.Session["User"]).EmailAddress, string.Format("img/{0}", myfile)))
-                    {
-                    }
-                }
-                else
-                {
-                    ViewBag.message = "Please choose only Image file";
-                }
-                IUser user = _repo.GetUserDetail(((IUser)System.Web.HttpContext.Current.Session["User"]).EmailAddress);
-                return Json(user);
-            }
-            catch (Exception)
-            {
 
-                return Json("Error");
-            }
+        //This Functionality SHould be Disable for some time
+        //[HttpPost]
+        //public JsonResult UpdatecoverPhoto(Uploadcoverimage model)
+        //{
+        //    UserRepository _repo = new UserRepository();
+        //    try
+        //    {
+        //        var allowedExtensions = new[] {
+        //            ".Jpg", ".png", ".jpg", "jpeg"
+        //        };
+        //        var file = Request.Files[0];
+        //        var fileName = Path.GetFileName(file.FileName); //getting only file name(ex-ganesh.jpg)  
+        //        var ext = Path.GetExtension(file.FileName); //getting the extension(ex-.jpg)  
+        //        if (allowedExtensions.Contains(ext)) //check what type of extension  
+        //        {
+        //            string name = Path.GetFileNameWithoutExtension(fileName); //getting file name without extension  
+        //            string myfile = name + ext; //appending the name with id  
+        //                                        // store the file inside ~/project folder(Img)  
+        //            var path = Path.Combine(Server.MapPath("~/coverimg"), myfile);
+        //            file.SaveAs(path);
+        //            if (_repo.UpdatecoverPhoto(((IUser)System.Web.HttpContext.Current.Session["User"]).EmailAddress, string.Format("img/{0}", myfile)))
+        //            {
+        //            }
+        //        }
+        //        else
+        //        {
+        //            ViewBag.message = "Please choose only Image file";
+        //        }
+        //        IUser user = _repo.GetUserDetail(((IUser)System.Web.HttpContext.Current.Session["User"]).EmailAddress);
+        //        return Json(user);
+        //    }
+        //    catch (Exception)
+        //    {
+
+        //        return Json("Error");
+        //    }
            
             
-        }
+        //}
 
 
 

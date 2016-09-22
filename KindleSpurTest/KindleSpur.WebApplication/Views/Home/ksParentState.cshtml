@@ -1,5 +1,4 @@
 ﻿<div class="parentBody" ng-controller="ksStateHomeController">
-
         <div style="position:absolute;z-index:1;background: white;width: 30%;border: 1px solid #ddd;height: 18%;" class="hiddenErrorNotificationClass" ng-class="{ 'showErrorNotificationClass' : displayAlert.idleAlert.showAlert  == true}">
               <div style="float: left;width: 100%;height: 100%;position: relative;" ng-show="displayAlert.idleAlert.formatType == '1'">
                   <div style="float: left;width: 100%;height: 45%;position: relative;display: flex;">
@@ -36,7 +35,6 @@
                 <h5 class="closealert-padding close" ng-click="displayAlert.showAlert = false">×</h5>
                 <h5 class="alert-message1">{{displayAlert.message}}</h5>
             </div>
-
         </div>
         <div class="newApplicationStripInvitation" ng-click="$event.stopPropagation();" ng-init="load=false" ng-class="{ AminationStrip : load == true }">
             <div  id="1" title="invite your friends to register" class="roundedCornerShape" ng-click="load=!load;invitation={}">
@@ -87,7 +85,7 @@
                 </div>
             </div>
         </div>
-        <div ng-click="uiFlag.loadBottomContain=false;" ng-class="{ loadBottomContain : uiFlag.loadBottomContain == true}" style="overflow: hidden;display:none; position:absolute;width:100%;height:100%;">
+        <div ng-click="uiFlag.loadBottomContain=false;" ng-class="{ loadBottomContain : uiFlag.loadBottomContain == true}" style="overflow: hidden;display:none; position:absolute;width:100%;height:100%;z-index: 3;">
             <div class="fullWidthHeightClass aboutUsParent fontClass" ng-include src="extraParam.templateUrl"></div>
         </div>
         <div ng-click="uiFlag.loadRepository=false;uiFlag.loadModule = null" ng-class="{ loadRepository : uiFlag.loadRepository == true}" style="overflow: hidden;display:none; position:absolute;width:100%;height:100%;">

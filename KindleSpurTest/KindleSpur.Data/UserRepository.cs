@@ -27,7 +27,7 @@ namespace KindleSpur.Data
 
 
 
-
+        //Constructor Default
         public UserRepository()
         {
             try
@@ -74,6 +74,7 @@ namespace KindleSpur.Data
             this.emailAddress = emailAddress;
         }
 
+        //Signup New user
         public bool AddNewUser(IUser userData)
         {
             bool _transactionStatus = false;
@@ -155,6 +156,7 @@ namespace KindleSpur.Data
             return _transactionStatus;
         }
 
+        //New Password Save From USerProfile Page
         public User SavePassword(string userId, IUser userData)
         {
             User userDetail = _userCollection.FindOneAs<User>(Query.EQ("_id", ObjectId.Parse(userId)));
@@ -176,6 +178,7 @@ namespace KindleSpur.Data
             return (User)userDetail;
         }
 
+        //Get UserDetails
         public IUser GetUserDetails(string userId)
         {
             try
@@ -303,7 +306,8 @@ namespace KindleSpur.Data
             }
             return null;
         }
-
+        //Update User Data
+        //Details Update Method called from UserProfile Page   
         public bool UpdateUserDetails(string EmailAddress, IUser userData)
         {
             bool _transactionStatus = false;
@@ -433,7 +437,7 @@ namespace KindleSpur.Data
             var result = lstMostRatedFeedback.OrderByDescending(C => C.Rating).ToList();
             return result;
         }
-
+        //Call get from UserController for Set new Password
         public bool UpdatePassword(string emailAddress, string password)
         {
             bool _transactionStatus = false;
@@ -468,6 +472,7 @@ namespace KindleSpur.Data
             return _transactionStatus;
         }
 
+        //Call Get From UserCOntroller
         public bool UpdateUserDesc(string EmailAddress, string description)
         {
             bool _transactionStatus = false;
@@ -502,6 +507,7 @@ namespace KindleSpur.Data
             return _transactionStatus;
         }
 
+        //Set UserProfile 
         public bool UpdateUserPhoto(string EmailAddress, string PhotoPath)
         {
             bool _transactionStatus = false;
@@ -536,6 +542,7 @@ namespace KindleSpur.Data
             return _transactionStatus;
         }
 
+        //Send Invite to Friend
         public bool SaveInviteEmailAddresses(User userData, Invitation invitation)
         {
             bool _transactionStatus = false;
@@ -599,41 +606,42 @@ namespace KindleSpur.Data
 
         }
 
-        public bool UpdatecoverPhoto(string EmailAddress, string coverPhotoPath)
-        {
-            bool _transactionStatus = false;
-            try
-            {
-                var userDetail = _userCollection.FindOneAs<User>(Query.EQ("EmailAddress", EmailAddress));
-                userDetail.coverphoto = coverPhotoPath;
-                _userCollection.Save(userDetail);
-                _transactionStatus = true;
-            }
-            catch (MongoException ex)
-            {
-                string message = "{ Error : 'Failed at UpdatecoverPhoto().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ";
-                _logCollection.Insert(message);
-                throw new Exception("User does not Exist!!!");
-            }
-            catch (Exception e)
-            {
-                Exceptionhandle em = new Exceptionhandle();
-                em.Error = "Failed at UpdatecoverPhoto()";
-                em.Log = e.Message.Replace("\r\n", "");
-                var st = new System.Diagnostics.StackTrace(e, true);
-                var frame = st.GetFrame(0);
-                var line = frame.GetFileLineNumber();
-                _logCollection.Insert(em);
-                throw new MongoException("Signup failure!!!");
-            }
-            finally
-            {
+        //This Functionality Should not Apply in this version
+        //public bool UpdatecoverPhoto(string EmailAddress, string coverPhotoPath)
+        //{
+        //    bool _transactionStatus = false;
+        //    try
+        //    {
+        //        var userDetail = _userCollection.FindOneAs<User>(Query.EQ("EmailAddress", EmailAddress));
+        //        userDetail.coverphoto = coverPhotoPath;
+        //        _userCollection.Save(userDetail);
+        //        _transactionStatus = true;
+        //    }
+        //    catch (MongoException ex)
+        //    {
+        //        string message = "{ Error : 'Failed at UpdatecoverPhoto().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ";
+        //        _logCollection.Insert(message);
+        //        throw new Exception("User does not Exist!!!");
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        Exceptionhandle em = new Exceptionhandle();
+        //        em.Error = "Failed at UpdatecoverPhoto()";
+        //        em.Log = e.Message.Replace("\r\n", "");
+        //        var st = new System.Diagnostics.StackTrace(e, true);
+        //        var frame = st.GetFrame(0);
+        //        var line = frame.GetFileLineNumber();
+        //        _logCollection.Insert(em);
+        //        throw new MongoException("Signup failure!!!");
+        //    }
+        //    finally
+        //    {
 
-            }
-            return _transactionStatus;
-        }
+        //    }
+        //    return _transactionStatus;
+        //}
 
-
+            //Rewards should be display in Role Wise.depend on Feddback
         public void GetRewardPoints(string EmailAddress, ref Reward reward)
         {
             bool _transactionStatus = false;
@@ -696,7 +704,7 @@ namespace KindleSpur.Data
 
             }
         }
-
+        //This Method can only show Games Not Unloaked it.
         public string GamesUnLocked(ObjectId userId)
         {
             bool _transactionStatus = false;
@@ -745,7 +753,7 @@ namespace KindleSpur.Data
 
             return "";
         }
-
+        //Only display PSR not unloacked it
         public string PSRUnLocked(ObjectId userId)
         {
             bool _transactionStatus = false;
@@ -800,6 +808,8 @@ namespace KindleSpur.Data
             return "";
         }
 
+        //method called from UserController
+        //Without Point Game Should not be unloacked.(Feedback must)
         private Game UnlockGames(int RewardPointsGained, int BalancePoints, string UnlockedBy)
         {
             var _gamesCollection = con.GetCollection("BrainGames");
@@ -820,6 +830,9 @@ namespace KindleSpur.Data
             return game;
         }
 
+
+        //method called from UserController
+        //Without Point PSR Should not be unloacked.(Feedback must)
         private Boolean UnlockPSR(int RewardPointsGained, int BalancePoints)
         {
 
@@ -952,6 +965,7 @@ namespace KindleSpur.Data
             return _transactionStatus;
         }
 
+        //Calculate Score
         private int CalculateScore(int type, int measure)
         {
             return (1 * type * measure);
@@ -1015,6 +1029,7 @@ namespace KindleSpur.Data
         }
 
 
+        //This Method used to upload files using resources page
         public bool uploadResourceFile(string EmailAddress, object[] filePath, string tagName, Dictionary<int, List<string>> filename)
         {
 
@@ -1077,6 +1092,7 @@ namespace KindleSpur.Data
             return _transactionStatus;
 
         }
+        //Remove Seleted Bokkmarks  
         public bool BookmarkRemoveDiselect(List<BookMark> list, string EmailAddress)
         {
             bool _transactionStatus = false;
@@ -1117,6 +1133,8 @@ namespace KindleSpur.Data
             }
             return _transactionStatus;
         }
+
+        //This Medthod delete added files
         public bool DeleteResourceFiles(List<FileUpload> list, string emailAddress)
         {
             bool _transactionStatus = false;
@@ -1158,6 +1176,8 @@ namespace KindleSpur.Data
             }
             return _transactionStatus;
         }
+
+        //This Method works on delete added bookmark which user selected
         public bool DeleteBookMarks(List<BookMark> list, string EmailAddress)
         {
             bool _transactionStatus = false;

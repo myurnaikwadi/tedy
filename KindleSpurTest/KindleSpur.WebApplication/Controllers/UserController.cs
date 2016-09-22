@@ -19,12 +19,17 @@ namespace KindleSpur.WebApplication.Controllers
         private ResponseMessage response;
         // GET: User
 
+            //GET:Login Page 
         public ActionResult Login()
         {
             Session.Abandon();
             return View();
         }
 
+        //GET Login Page
+        //User Login and check user registered or not
+        //User can set password when link send to his/her mail address
+        //Notification Also sent to user
         [HttpPost]
         public string Login(User signupObject)
         {
@@ -49,6 +54,8 @@ namespace KindleSpur.WebApplication.Controllers
             return response.ToJson();
         }
 
+        //GET:PasswordPromp Page
+        //Set Password for login page 
         public ActionResult PasswordPromp(int? UserId)
         {
             TempData["UserId"] = Request["UserId"].ToString();
@@ -67,16 +74,20 @@ namespace KindleSpur.WebApplication.Controllers
 
         }
 
+        //When password saved from PasswordPromp it Will redirect to login page
         public ActionResult RedirectToLogin(IUser user)
         {
             return View(user);
         }
 
+        //Login Page Click on ForgetPassword Mail Sent to user Mail Id
         public ActionResult ForgotPasswordEmail()
         {
             return View();
         }
 
+        //Business Logic
+        //Login Page Click on ForgetPassword Mail Sent to user Mail Id
         [HttpPost]
         public string ForgotPasswordEmail(User signupObject)
         {
@@ -134,6 +145,7 @@ namespace KindleSpur.WebApplication.Controllers
             return response.ToJson();
         }
 
+        //Used to save password for user in PasswordPromp page
         [HttpPost]
         public ActionResult SavePassword(User signupObject)
         {
@@ -159,7 +171,7 @@ namespace KindleSpur.WebApplication.Controllers
             return this.Json(_userRepo.GetFeedback(senderEmail, receiverEmail, role, skill));
         }
 
-
+        //This Method Use For Direct linkedIn Login
         [HttpPost]
         public ActionResult linkedIn(User _obj)
         {
@@ -181,6 +193,7 @@ namespace KindleSpur.WebApplication.Controllers
             return View();
         }
 
+        //
         [HttpPost]
         public string LoginResult(User signupObject)
         {
@@ -270,6 +283,8 @@ namespace KindleSpur.WebApplication.Controllers
                 // return response.ToJson();
             }
         }
+        // POST: api/UpdateUserDetails
+        //save user details
         [HttpPost]
         public void UpdateUserDesc(User _obj)
         {
@@ -313,6 +328,9 @@ namespace KindleSpur.WebApplication.Controllers
             }
         }
 
+        //Save new password from userprofile page
+        //Call go to UserRepository for search UpdatePassword method
+        //Afetr that Profile page called
         [HttpPost]
         public void UpdatePassword(User _obj)
         {
@@ -356,6 +374,7 @@ namespace KindleSpur.WebApplication.Controllers
 
         }
 
+        //Logout From Application
         [HttpPost]
         public int logout()
         {
@@ -368,6 +387,9 @@ namespace KindleSpur.WebApplication.Controllers
             return 1;
 
         }
+
+        //After giving Feedback points will incress and then GAME will unloack.
+        //Reedme points
         public string UnlockGame()
         {
             UserRepository _repo = new UserRepository();
@@ -376,6 +398,8 @@ namespace KindleSpur.WebApplication.Controllers
 
         }
 
+        //After giving Feedback points will incress and then PSR will unloack.
+        //Reedme points
         public string UnlockPSR()
         {
             UserRepository _repo = new UserRepository();
@@ -383,7 +407,8 @@ namespace KindleSpur.WebApplication.Controllers
             return _repo.PSRUnLocked(userId);
         }
 
-
+        //Points will display role wise on myrewards
+        //Call Get from UserRepository
         public string GetRewardPoints()
         {
             Reward reward = new Reward();
@@ -440,6 +465,8 @@ namespace KindleSpur.WebApplication.Controllers
             _userRepo.RemoveVCSCActivity(EmailAddress, _vscs);
         }
 
+        //The method call (GetSkillsForConversation) this method from Conversation Repo
+        //Skill you get Role wise
         public JsonResult GetSkills()
         {
             ConversationRepository repo = new ConversationRepository();

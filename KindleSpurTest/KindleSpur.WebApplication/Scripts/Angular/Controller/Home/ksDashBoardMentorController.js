@@ -44,14 +44,14 @@
 
 
     $scope.leftSideMenus = [{ name: 'DASHBOARD' }
-                , { name: 'MENTORING STATUS' }
-                   , { name: 'SELECT TOPICS' }
+                , { name: 'SELECT TOPICS' }
                 , { name: 'KNOWLEDGE GARDEN' }
                  , { name: 'KNOWLEDGE FEED' }
                 , { name: 'COMMUNICATION' }
               //  , { name: 'KNOWLEDGE FEED' }
                 , { name: 'MY REWARDS' }
                    , { name: 'KNOWLEDGE WORKSPACE' }
+                    , { name: 'MENTORING STATUS' }
                 // , { name: 'VCS' }
     ]
     $scope.applicationRole = [{ name: 'COACHEE' }, { name: 'MENTEE' }, { name: 'COACH' }, { name: 'MENTOR' }]

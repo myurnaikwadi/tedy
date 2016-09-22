@@ -59,16 +59,20 @@
                 { notificationType: '2', role: 'coachee', name: 'YOUR MEETING HAS BEEN SCHEDULED WITH SAGAR N  ON', meetingDate: '25/05/2016', meetingTime: '08:00AM', meetingTimeDiff: '2 HOUR' },
                 { notificationType: '3', name: 'MOHAN N.', profileImage: '' }
     ];
-    $scope.leftSideMenus = [{ name: 'DASHBOARD' }                
-                   , { name: 'KNOWLEDGE GARDEN' }
-                   , { name: 'SELECT SKILLS' }
-                    , { name: 'SEARCH COACH' }
-                     , { name: 'KNOWLEDGE FEED' }
-                   , { name: 'COMMUNICATION' }                           
+   $scope.leftSideMenus = [{ name: 'DASHBOARD' }
+                   //, { name: 'COACHING STATUS' }
+                   , { name: 'SELECT SKILLS'}
+                   , {name: 'SEARCH COACH' }
+                   , { name: 'KNOWLEDGE FEED'}
+                   , {name: 'COMMUNICATION'}
+               //    , { name: 'KNOWLEDGE FEED' }
+                 //  , { name: 'RESOURCES' }
+                  // , { name: 'SEARCH COACH' }
                    , { name: 'MY REWARDS' }
-                     , { name: 'KNOWLEDGE WORKSPACE' }
-                  
-    ];
+                   , { name: 'KNOWLEDGE WORKSPACE' }
+                   , { name: 'KNOWLEDGE GARDEN' }
+                       // , { name: 'ADD SKILLS' }
+               ];
     $scope.rightSideDashBoardArray = [
                 { name: 'SELECT SKILLS', url: '../../Images/icons/coaching_status.png' },
                { name: 'SEARCH COACH', url: '../../Images/icons/search_mentor_coach.png  ' },

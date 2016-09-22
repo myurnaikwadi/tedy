@@ -23,18 +23,18 @@
             <cube-Strct class="cubeParentClass" loading-Object="loadingMiddleObject"></cube-Strct>
         </div>
         <div class="parentRoleDetailRight" style="padding:1%;padding-bottom: 0;" ng-if="loadingMiddleObject.showLoading == false" ng-switch="selectedMenu">
-            @*rss feed -4 *@
-            <div class="fullWidthHeightClass" ng-switch-when='4'>
+            @*rss feed -3 *@
+            <div class="fullWidthHeightClass" ng-switch-when='3'>
                 <rss-Feed role="mentor" skill="feedCategoryArray"></rss-Feed>
             </div>
-            @*RESOURCES - 7*@
-            <div class="fullWidthHeightClass" ng-switch-when='7'>
+            @*RESOURCES - 6*@
+            <div class="fullWidthHeightClass" ng-switch-when='6'>
                 <div class="applicationMiddleStripMain" style="display:flex;height:100%;">
                     <common-Repository class="fullWidthHeightClass" extra-Param="objectForResourceTab"></common-Repository>
                 </div>
             </div>
-            @*Add topics -2 *@
-            <div class="fullWidthHeightClass" ng-switch-when='2'>
+            @*Add topics -1 *@
+            <div class="fullWidthHeightClass" ng-switch-when='1'>
                 <ctc-Role role="mentor" skill-Required="false"></ctc-Role>
             </div>
             @*dashboard -0 *@
@@ -68,12 +68,12 @@
                     </div>
                 </div>
             </div>
-            @*MY Rewards - 6 *@
-            <div class="fullWidthHeightClass" ng-switch-when='6'>
-                <my-Reward></my-Reward>
+            @*MY Rewards - 5 *@
+            <div class="fullWidthHeightClass" ng-switch-when='5'>
+                <my-Reward role="mentor"></my-Reward>
             </div>
-            @*Mentoring Status - 1 *@
-            <div class="fullWidthHeightClass" ng-switch-when='1'>
+            @*Mentoring Status - 7 *@
+            <div class="fullWidthHeightClass" ng-switch-when='7'>
                 <div class="hideCoacheeProfile" ng-class="{ showCoacheeProfileClass : showCoacheeProfile == true }">
                     <profile-Page ng-if="showCoacheeProfile && userInfo" user-Info="userInfo" close-Popup="closeProfilePic()" edit-Required="false"></profile-Page>
                 </div>
@@ -121,8 +121,8 @@
                 </div>
             </div>
 
-            @* Knowledge garden - 3 *@
-            <div class="fullWidthHeightClass" ng-switch-when='3'>
+            @* Knowledge garden - 2 *@
+            <div class="fullWidthHeightClass" ng-switch-when='2'>
                 <div class="homeLabelInChat" style="height:7%;border-bottom:1px solid lightgray;">
                     <h5 class="fontClass" style="font-size: 16px;margin-left: 1%;">KNOWLEDGE GARDEN</h5>
                 </div>
@@ -131,8 +131,8 @@
                     <molecule-Map ng-if="ctsDataForMolecule &&coachingStatusArray.length > 0" cts-Data="ctsDataForMolecule"></molecule-Map>
                 </div>
             </div>
-            @*Communication - 5*@
-            <div class="fullWidthHeightClass" ng-switch-when='5'>
+            @*Communication - 4*@
+            <div class="fullWidthHeightClass" ng-switch-when='4'>
                 <div class="homeLabelInChat" style="height:7%;border-bottom:1px solid lightgray;">
                     <h5 class="fontClass" style="font-size: 16px;margin-left:1%;">COMMUNICATION</h5>
                 </div>

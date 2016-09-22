@@ -42,14 +42,18 @@
 
     ]
     $scope.leftSideMenus = [{ name: 'DASHBOARD' }
-                , { name: 'COACHING STATUS' }
                  , { name: 'SELECT SKILLS' }
-                , { name: 'KNOWLEDGE GARDEN' }
-                 , { name: 'KNOWLEDGE FEED'  }
-                , { name: 'COMMUNICATION' }          
-                , {  name: 'MY REWARDS' }
-                 , { name: 'KNOWLEDGE WORKSPACE' }
-                                     
+                , { name: 'KNOWLEDGE GARDEN'}
+                 , { name: 'KNOWLEDGE FEED' }
+                , { name: 'COMMUNICATION'}
+             //   , { name: 'KNOWLEDGE FEED' }
+               , {name: 'MY REWARDS'  }
+                 , { name: 'KNOWLEDGE WORKSPACE'}
+                , { name: 'COACHING STATUS' }
+    //   , { name: 'ADD SKILLS' }
+
+       // , { name: 'VCS' }
+
     ]
     $scope.applicationRole = [{ name: 'COACHEE' }, { name: 'MENTEE' }, { name: 'COACH' }, { name: 'MENTOR' }]
     $scope.rightSideDashBoardArray = [
