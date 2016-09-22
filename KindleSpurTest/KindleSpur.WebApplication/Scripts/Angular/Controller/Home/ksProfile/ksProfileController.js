@@ -1,7 +1,6 @@
 ﻿app.controller('ksProfileController', function ($scope, commonFunction, serverCommunication, $rootScope, $state, $timeout, $filter,authentification) {
     $scope.editModeProfile = false;
-    // $rootScope.currentModule = 'Profile';
-    //console.error($scope.userInfo);
+    
     if ($scope.moduleName)
         $rootScope.currentModule = $scope.moduleName;
     
@@ -15,10 +14,10 @@
     }
 
     $scope.slideCar = function (iIndex) {
-        //console.error($scope.userInfo);
+       
         $("#carousel").carousel(iIndex);
     };
-    // $scope.topicArray = [{ Name: 'OVERVIEW' }, { Name: 'OVERVIEW' }, { Name: 'OVERVIEW' }, { Name: 'OVERVIEW' }, { Name: 'OVERVIEW' }, { Name: 'OVERVIEW' },{ Name: 'OVERVIEW' }, { Name: 'FEEDBACKS' }, { Name: 'SETTINGS' }];
+   
     $scope.myInfo = {
         mobileNumber: $scope.userInfo.Mobile ? $scope.userInfo.Mobile : null,
         linkedInLink: $scope.userInfo.LinkdinURL ? $scope.userInfo.LinkdinURL : null,
@@ -47,7 +46,7 @@
             _str += $scope.myInfo.State + " ";
         if($scope.myInfo.Country)
             _str += $scope.myInfo.Country + " ";
-      //  console.error(_str);
+    
         $scope.myInfo.displayAddress = _str;
     };
     var _displayDescription = function () {
@@ -55,7 +54,7 @@
         if ($scope.userInfo.description)
             _str = $scope.userInfo.description;
        
-       // console.error(_str);
+     
        return _str;
     };
     $scope.selectedMenuIndex = -1;
@@ -66,11 +65,11 @@
         for (var k = 0; k < $scope.mySkill.length ; k++) {
             $scope.mySkill[k].showSkill = false;
         }
-        console.error($scope.switchRoleDropDown)
+      
         $scope.switchRoleDropDowns = { role: $scope.switchRoleDropDown };
-        //console.error($scope.switchRoleDropDowns)
+       
         var _array = [].concat($filter('myFormat')($scope.topicArray, $scope.switchRoleDropDowns));
-        //$scope.mySkill = [].concat(_array);
+       
         $scope.mySkill = [].concat(angular.copy(_array));
         $timeout(function () {           
             for (var k = 0; k < $scope.mySkill.length ; k++) {
@@ -89,7 +88,7 @@
         for (var k = 0; k < $scope.topicArray.length ; k++) {
             $scope.topicArray[k].showSkill = false;
         }
-        //   console.error( $scope.selectedMenuIndex)
+       
         switch (iIndex) {
             case 0: $scope.loadPersonalInfoAndSkill(); break;
             case 1: $scope.loadFeedBacks(); break;
@@ -103,7 +102,7 @@
 
     }
     $scope.fun = function (iObj,iModel) {
-        console.log($scope.localModel.Password)
+       
         if (iModel.length > 8 && iModel.length < 13) {
             iObj.flagName = 1;
             iObj.styleToPassword = { 'position': 'absolute', 'height': '100%', 'width': "5%", 'background': 'red', 'transition': 'all 0.7s ease' };
@@ -122,9 +121,12 @@
 
     $scope.loadPersonalInfoAndSkill = function () {
         $timeout(function () { $scope.loadingObject = { showLoading: false, loadingMessage: 'Loading Feed' }; }, 1000);
-        $timeout(function () { $scope.animationActicvate = true; console.error($scope.animationActicvate) }, 1500);
+        $timeout(function () {
+            $scope.animationActicvate = true;
+          
+        }, 1500);
         $scope.mySkill = [].concat(angular.copy($scope.topicArray));
-      //  console.error($scope.mySkill);
+     
         $timeout(function () {
             $scope.displayAddress();
             for (var k = 0; k < $scope.mySkill.length ; k++) {
@@ -134,7 +136,7 @@
     };
 
     $scope.showRatingColor = function (iIndex, iQuestion) {
-        console.error('showRatingColor');
+       
         var _indexArray = []
         for (var j = 1 ; j <= iIndex ; j++) {
             if (_indexArray.indexOf(j) == -1)
@@ -161,7 +163,7 @@
             EmailAddress: $scope.userInfo.EmailAddress,
             role : 'All',
             successCallBack: function (iObj) {
-                console.error('In successCallBack', iObj);
+              
                 if(iObj.data && iObj.data.length > 0){
                     $scope.feedBackArray = [].concat(iObj.data);
                     $timeout(function () {
@@ -176,7 +178,7 @@
                
             },
             failureCallBack: function (iObj) {
-                console.error('In failureCallBack', iObj);
+              
             }
         }
         serverCommunication.getMostRatedFeedback(_object);        
@@ -194,7 +196,7 @@
         $timeout(function () { $scope.loadingObject = { showLoading: false, loadingMessage: 'Loading Feed' }; }, 1000);
         $timeout(function () {
             $scope.animationActicvate = true;
-          //  console.error($scope.animationActicvate);
+         
             $scope.localModel = {};          
             $scope.localModel = angular.copy($scope.myInfo);
             $scope.profileHoverFlag = true;
@@ -226,20 +228,13 @@
     };
     $scope.closeAlertMessage = function (iSelectId) {
         _resetStyles(iSelectId);
-        //if ($scope.toFocusUserId == "true") {
-        //    _setElementFocus('userId'); //To set focus on UserId in login page when error occurred at UerId.  
-        //    $scope.toFocusUserId = "false";
-        //}
-        //else if ($scope.toFocusPwd == "true") {
-        //    _setElementFocus('userIdTask'); //to set focus on Password field in login page when error occurred at password.
-        //    $scope.toFocusPwd = "false";
-        //}
+       
     };
 
     //autocomplete user name
     $scope.resetAutoComplete = function (iSelectId) {
         if ($scope.removedIdName != true) {
-            //$scope.recentlyLoggedUsersAutoSuggestArr = [];
+          
             $scope.selectedIndex = -1;
         }
         else {
@@ -253,8 +248,7 @@
             //if tab is  pressed, set selectedIndex value to userId & focus to password field
             if ($event.keyCode === 9) {
                 if ($scope.selectedIndex != -1) {
-                    //  $scope.credentials.username= $scope.recentlyLoggedUsersAutoSuggestArr[$scope.selectedIndex];
-                    // $scope.recentlyLoggedUsersAutoSuggestArr = [];
+                   
                     $scope.selectedIndex = -1;
                 }
             }
@@ -270,8 +264,7 @@
     };
 
     $scope.closeProfilePopup = function () {
-        //console.error('dddddddddddddddddddddd')
-       // console.error($scope.closePopup)
+       
         if ($scope.closePopup) $scope.closePopup();
     };
 
@@ -280,7 +273,7 @@
     };
 
     $scope.editskills = function (iProfile) {
-        // $scope.selectedMenu = true;
+     
         $state.go('dashBoardCoach', { param: 'test' });
     };
 
@@ -293,15 +286,15 @@
             $scope.myInfo.profileBackgroundImage = valueFile[0];
         }
 
-       // console.error(valueFile)
+     
         var _object = {
             file: valueFile[0],
             successCallBack: function () {
-                console.error('In successCallBack');
+              
 
             },
             failureCallBack: function () {
-                console.error('In failureCallBack');
+               
 
             }
         }
@@ -309,51 +302,24 @@
     }
 
     $scope.triggerUpload = function (iProfile) {
-        //console.error('width: 42px;')
+       
         var obj = {
             fileInputId: "fileInputIdRv"
         }
         uploadImageOnPage(obj, function (imagePath) {
-            //var valueFile = document.getElementById("fileInputIdRv").files;
-            //if (iProfile) {
-            //    $scope.myInfo.profileImage = valueFile[0];
-            //} else {
-            //    $scope.myInfo.profileBackgroundImage = valueFile[0];
-            //}
-
-            //console.error(valueFile)
-            //var _object = {
-            //    file: valueFile[0],
-            //    successCallBack: function () {
-            //        console.error('In successCallBack');
-
-            //    },
-            //    failureCallBack: function () {
-            //        console.error('In failureCallBack');
-
-            //    }
-            //}
+            
 
             var data = new FormData();
-            //angular.forEach(scope.item, function (value, key) {
-            //    if (key == "files") {
-            //        for (var i = 0; i < value.length; i++) {
-            //            data.append(value[i].name, value[i]); // Filename:File
-            //        }
-            //    } else {
-            //        data.append(key, value);
-            //    }
-            //});
+          
 
             var valueFile = document.getElementById("fileInputIdRv").files;
             data.append(valueFile[0].Name, valueFile[0]);
-            //  debugger;
-           // console.error(data);
+           
             if (iProfile) {
-                // $scope.myInfo.profileImage = valueFile[0];
+               
                 serverCommunication.changeProfileImageDetails(data, null, function (iPath) {
                     $scope.myInfo.profileImage = $scope.userInfo.Photo = iPath.data.Photo;
-                    // console.error($scope.myInfo.profileImage)
+                    
                     if ($rootScope.loggedDetail.EmailAddress == iPath.data.EmailAddress) {
                         $rootScope.loggedDetail = iPath.data;
                     }
@@ -382,7 +348,7 @@
         }       
 
         $scope.myInfo = angular.copy($scope.localModel);
-       // console.error($scope.myInfo)
+      
         
         $scope.userInfo.FirstName = $scope.myInfo.firstName;
         $scope.userInfo.LastName = $scope.myInfo.lastName;
@@ -391,7 +357,7 @@
         $scope.userInfo.City = $scope.myInfo.City;
         $scope.userInfo.State = $scope.myInfo.State;
         $scope.userInfo.Country = $scope.myInfo.Country;
-        //return
+        
         var _object = {
             changeDetails: {
                 LinkdinURL: $scope.myInfo.linkedInLink,
@@ -403,12 +369,12 @@
                 Country: $scope.myInfo.Country
             },
             successCallBack: function () {
-                console.error('In successCallBack');
+               
                 _displayAlertMeesage({ message: "Your details has been saved.", formatType: '1' });
 
             },
             failureCallBack: function () {
-                console.error('In failureCallBack');
+               
 
             }
         }
@@ -422,13 +388,13 @@
         };
         $rootScope.$broadcast("refreshStateHomeView", {
             type: 'displayAlert',
-            // subType: 'Meeting',
+         
             data: _displayAlert
         });
     };
     $scope.sendPasswordDetailsToServer = function () {
        
-        console.error($scope.localModel)
+       
         if (!$scope.localModel.Password || $scope.localModel.Password == '') {
             _displayAlertMeesage({ message: "Please Enter your Password", formatType: '2' });
             return;
@@ -445,11 +411,11 @@
                 Password: $scope.localModel.Password
             },
             successCallBack: function () {
-                console.error('In successCallBack');
+               
                 _displayAlertMeesage({ message: "Your password has been saved.", formatType: '1' });
             },
             failureCallBack: function () {
-                console.error('In failureCallBack');
+             
 
             }
         }       
@@ -457,26 +423,25 @@
     };
 
     $scope.sendDescDetailsToServer = function () {
-        console.error($scope.localModel)
+     
         if (!$scope.localModel.description || $scope.localModel.description == '') {
             _displayAlertMeesage({ message: "Description cannot be empty.", formatType: '2' });
             return;
         }
         $scope.editDescription = false;
         $scope.myInfo = angular.copy($scope.localModel);
-      //  console.error($scope.myInfo)
-       // $scope.myInfo.description = $scope.myInfo.descriptiontoDisplay;
+   
         var _object = {
             changeDetails: {
                 description: $scope.myInfo.description
             },
             successCallBack: function () {
-                console.error('In successCallBack');
+             
                 _displayAlertMeesage({ message: "Description has been saved", formatType: '1' });
                 return;
             },
             failureCallBack: function () {
-                console.error('In failureCallBack');
+              
 
             }
         }
@@ -494,7 +459,7 @@
             $scope.loadAnimation = true;
         }, 500);
 
-    //    console.error($scope);
+  
         
         if ($scope.userInfo.Skills) {
             $scope.topicArray = [];
@@ -507,7 +472,7 @@
             }
             $scope.selectedMenuProfile(0);
         } else if ($scope.userInfo.Topics) {
-           // $scope.topicArray = [].concat($scope.userInfo.Topics);
+         
             $scope.topicArray = [];
             for (var i = 0; i < $scope.userInfo.Topics.length; i++) {
                 var _obj = {
@@ -522,7 +487,7 @@
             serverCommunication.GetRecordsOfSkillAndTopics({
                 userID : $scope.userInfo    ,
                 successCallBack: function (iObj) {
-                    console.error('In getMySelection', iObj);
+                 
                     if (iObj.data) {
                         for (var role in iObj.data) {
                             if (iObj.data[role]) {
@@ -537,23 +502,14 @@
                             }
                         }
                     }
-                    console.error($scope.topicArray)
+                 
                     $scope.selectedMenuProfile(0);
-                    //return
-                   // console.error('In getMySelection', _category, _categoryArray, _topicArray, _skillsArray);
-                    //$scope.topicArray = [];
-                    ////  $scope.topicArray =  $scope.topicArray.concat(_categoryArray);
-                    ////  $scope.topicArray =  $scope.topicArray.concat(_topicArray);
-                    //$scope.topicArray = $scope.topicArray.concat(_skillsArray);
-                    //$scope.topicArray = [{ Name: 'OVERVIEW', role: 'Coach' }, { Name: 'OVERVIEW', role: 'Coachee' }, { Name: 'OVERVIEW', role: 'Mentor' }, { Name: 'OVERVIEW', role: 'Coach' },
-                    //                     { Name: 'OVERVIEW', role: 'Mentee' }, { Name: 'OVERVIEW', role: 'Coach' }, { Name: 'OVERVIEW', role: 'Coachee' },
-                    //                     { Name: 'FEEDBACKS', role: 'Coach' }, { Name: 'SETTINGS', role: 'Coachee' }];
-
+                  
                    
                     
                 },
                 failureCallBack: function (iObj) {
-                    console.error('In failuregetMySelectionCallBack', iObj);
+                   
 
                 }
             });
@@ -577,7 +533,7 @@ app.directive('profilePage', function ($state, serverCommunication) {
         },
         templateUrl: '/Home/ksProfileTemplate',
         controller: "ksProfileController",
-        //scope: true,   // optionally create a child scope
+       
         link: function (scope, element, attrs) {
 
         }
