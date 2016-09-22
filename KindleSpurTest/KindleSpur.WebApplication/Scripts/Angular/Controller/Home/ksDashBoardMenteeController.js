@@ -16,7 +16,7 @@
     $scope.searchCoachObj = {}
     $scope.selectedMenu = '0';
     $scope.leftSideMenus = [{ name: 'DASHBOARD' }
-                 //, { name: 'MENTORING STATUS' }
+                
                  , { name: 'KNOWLEDGE GARDEN' }
                  , { name: 'SELECT TOPICS' }
                   , { name: 'SEARCH MENTOR' }
@@ -24,7 +24,7 @@
                  , { name: 'COMMUNICATION' }
                  , { name: 'MY REWARDS' }
                  , { name: 'KNOWLEDGE WORKSPACE' }
-                 //, { name: 'ADD TOPICS' }
+               
     ]
     $scope.applicationRole = [{ name: 'COACHEE' }, { name: 'MENTEE' }, { name: 'COACH' }, { name: 'MENTOR' }]
     $scope.showMenteeProfile = false;
@@ -164,7 +164,7 @@
         $scope.stopFight();
         $scope.loadingMiddleObject = { showLoading: true, loadingMessage: 'Loading' };
         switch (iIndex) {
-            case 0: $scope.loadingMiddleObject = { showLoading: false, loadingMessage: 'Loading' }; break;//$scope.conversationRequest();  $scope.autoSyncRoutine(_conversationTime); break;
+            case 0: $scope.loadingMiddleObject = { showLoading: false, loadingMessage: 'Loading' }; break;
             case 1: $scope.generateGarden(); break;
             case 3: $scope.clearSearch(); $scope.getCoachRecord(); break;
             case 4: $scope.getRssFeedData(); break;
@@ -488,11 +488,11 @@
                     for (var k = 0; k < iObj.data.Categories.length; k++) {
                         if (Object.keys(iObj.data.Categories[k]).length > 0) {
 
-                            // _category[iObj.data.Categories[k].Category] = { Name: iObj.data.Categories[k].Category };
+                         
                             if (iObj.data.Categories[k].Category) {
                                 if (_category[iObj.data.Categories[k].Category]) {//if category is already present
                                     if (_category[iObj.data.Categories[k].Category].topic[iObj.data.Categories[k].Topic]) {//if topic is already present
-                                        //  _category[iObj.data.Categories[k].Category].topic[iObj.data.Categories[k].Topic] = { Name: iObj.data.Categories[k].Topic, skill: {} };
+                                        
                                         if (iObj.data.Categories[k].Skill) {
                                             _skills[iObj.data.Categories[k].Skill] = {Name: iObj.data.Categories[k].Skill, profiLevel: iObj.data.Categories[k].profiLevel };
                                             if (!_category[iObj.data.Categories[k].Category].topic[iObj.data.Categories[k].Topic].skill) _category[iObj.data.Categories[k].Category].topic[iObj.data.Categories[k].Topic].skill = {
