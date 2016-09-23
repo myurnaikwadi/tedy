@@ -96,7 +96,7 @@ app.directive('autoComplete', ['$filter', '$compile', '$rootScope', '$timeout', 
 	    			    scope.suggestions.push(scope.listingData[i]);
 	    			}
 	    		}
-	    		//console.log(scope.suggestions);
+	    	
 	    	}
 	    	
 	    	arrangeIt();
@@ -114,7 +114,7 @@ app.directive('autoComplete', ['$filter', '$compile', '$rootScope', '$timeout', 
 	    	 * @desc - It is for Dynamic Template loading
 	    	 * */
 	    	var _templateScopeHoldingVar = genericMethodsForLoadingTemplatesDynamically('suggestionListTemplate', 'Home/ksAutoSuggestSuggestion', function (iData, id) {
-			    console.error(iData)
+			  
 			    $compile(iData)(scope);
 				scope.generatedTemplateId = id;
 			});
@@ -138,7 +138,7 @@ app.directive('autoComplete', ['$filter', '$compile', '$rootScope', '$timeout', 
 				for(var i in iArr){
 					iArr[i].index = i;
 				}
-				//console.error(iArr);
+				
 				scope.newAlteredSuggestions = iArr;
 			}
 			
@@ -157,7 +157,7 @@ app.directive('autoComplete', ['$filter', '$compile', '$rootScope', '$timeout', 
 			}
 			
 			var onSelectionn = function (selection){
-				console.log(selection)
+				
 				switch (scope.format){
 				case 'tags' :
 					if(scope.selectedTags.indexOf(selection)===-1){
@@ -282,15 +282,10 @@ app.directive('autoComplete', ['$filter', '$compile', '$rootScope', '$timeout', 
 						   scope.addToSelectedTags({
 							   name				:	scope.searchText,
 							   id				:	Date.now(),
-//							   img				:	"www/public/msStream/images/msOrganization/clouzer.png",
-//							   CML_ID 			: 	Date.now(),
-//							   CML_TITLE 		: 	scope.searchText,
-//							   CML_IMAGE_PATH 	:	"www/public/msStream/images/msOrganization/clouzer.png",
-//							   CML_PERSONAL_EMAIL:	scope.searchText,
-//							   email			: 	scope.searchText,
+							 
 							   mode				:	"manual"
 						   });
-						   console.log(scope.searchText);
+						
 					   }
 						   
 				   }
@@ -319,7 +314,7 @@ app.directive('autoComplete', ['$filter', '$compile', '$rootScope', '$timeout', 
 			    }
 			    
 			    scope.suggestionChange = true;
-		        console.log(angular.copy(scope.searchText))
+		     
 			    if(scope.searchText == ''){
 		        	 scope.suggestionChange = false;
 		        }
@@ -336,9 +331,9 @@ app.directive('autoComplete', ['$filter', '$compile', '$rootScope', '$timeout', 
 	    	 */
 			
 			var _removeTag = function (index){
-				console.error('_removeTag');
+				
 				var removedMember = scope.selectedTags[index];
-				console.error(removedMember)
+			
 				scope.selectedTags.splice(index,1);
 				callBackInChange({type:scope.changeInInviteeParentFuncParam,selectedData:removedMember,Removed :true});
 				scope.blurOnTab();
@@ -367,8 +362,7 @@ app.directive('autoComplete', ['$filter', '$compile', '$rootScope', '$timeout', 
 				scope.suggestionChange=true;
 				var arr = scope.listingData;
 				
-				//callBackInChange({type:scope.changeInInviteeParentFuncParam,tagOnFocus:scope.tagOnFocus},3)
-				//scope.changeInInviteeField({type:scope.changeInInviteeParentFuncParam,tagOnFocus:scope.tagOnFocus},3);
+				
 			};
 			
 			
