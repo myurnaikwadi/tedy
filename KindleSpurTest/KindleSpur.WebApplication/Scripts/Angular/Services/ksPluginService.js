@@ -5,7 +5,7 @@
      */
 app.controller('monthlyParent', ['$scope', 'authentification', '$location', '$rootScope', '$state', '$stateParams', function ($scope, authentification, $location, $rootScope, $state, $stateParams) {
     $rootScope.currentModule = 'Calendar';
-    console.error('monthlyParent');
+   
 }]);
 app.directive('monthly', function (dateServiceForMonthlyCalendar, $rootScope, serverCommunication) {
     return {
@@ -14,7 +14,7 @@ app.directive('monthly', function (dateServiceForMonthlyCalendar, $rootScope, se
         },
         templateUrl: 'Home/ksMonthlyView',        
         link: function ($scope) {
-            console.error('monthlyController');
+          
             if ($scope.moduleName)
                 $rootScope.currentModule = $scope.moduleName;
             $scope.monthDate = new Date();
@@ -30,7 +30,7 @@ app.directive('monthly', function (dateServiceForMonthlyCalendar, $rootScope, se
             };
             $scope.closeExpandDateView = function (iEvent) {
                 if(iEvent) iEvent.stopPropagation();
-                console.error('closeExpandDateView()')
+               
                 $scope.expandIndex = -1;
                 $scope.expandDay = null;
                 var _tempHeight = document.getElementById('monthlycontroller').getBoundingClientRect().height;
@@ -108,18 +108,17 @@ app.directive('monthly', function (dateServiceForMonthlyCalendar, $rootScope, se
                     ReceiverName: $scope.ApprovalName,
                     Role: iObj.notification.ConversationType == "Coaching" ? 'Coachee' : 'Mentee',
                     successCallBack: function () {
-                        //$scope.menuClick(5, "CONVERSATIONS");               
-                        console.debug('In successCallBack');
+                      
                         
                     },
                     failureCallBack: function (e) {
-                        console.debug('In failureCallBack' + e);
+                      
                     }
                 });
             };
 
             $scope.updateMeeting = function (index,isVerfied, iNotification) {
-                //console.error(iNotification)
+               
                 $scope.invitesRequest.splice(index, 1);
                 if ($scope.monthlyArray[$scope.expandIndex] && $scope.monthlyArray[$scope.expandIndex].meetingArray) {
                     for (var k = 0 ; k < $scope.monthlyArray[$scope.expandIndex].meetingArray.length ; k++) {
@@ -136,12 +135,10 @@ app.directive('monthly', function (dateServiceForMonthlyCalendar, $rootScope, se
                     MeetingId: iNotification.MeetingId,
                     flag: isVerfied,
                     successCallBack: function () {
-                        console.debug('In successCallBack');
-                        //$scope.conversationRequest();
-                        
+                       
                     },
                     failureCallBack: function (e) {
-                        console.debug('In failureCallBack' + e);
+                      
                     }
                 });
             };
@@ -155,7 +152,7 @@ app.directive('monthly', function (dateServiceForMonthlyCalendar, $rootScope, se
                 $scope.invitesRequest = [];
                 $scope.meetingRequest = [];
                 $scope.upcomingMeetingRequest = [];
-                //_dayWeekMonthView.expandIndex = iIndex;
+               
                 var _object = {
                     iHeight: _tempHeight / 6,
                     index: iIndex,
@@ -166,7 +163,7 @@ app.directive('monthly', function (dateServiceForMonthlyCalendar, $rootScope, se
                     array: $scope.monthlyArray
                 };
                 msIsotopeFunc.prototype.expandForFloat(_object);
-                console.error($scope.monthlyArray[iIndex].styleObj)
+               
                 $scope.monthlyArray[iIndex].styleObj['margin-top'] = '0';
                 if (iCell.inviteObject && Object.keys(iCell.inviteObject).length > 0) {
                     if (iCell.inviteObject.invite && Object.keys(iCell.inviteObject.invite).length > 0) {
@@ -207,7 +204,7 @@ app.directive('monthly', function (dateServiceForMonthlyCalendar, $rootScope, se
             };
 
             var _renderMeeting = function (iObj) {
-                console.error(iObj)
+              
               //  debugger
                 for (var k = 0 ; k < iObj.data.length ; k++) {
                     iObj.data[k].UpdateDate && (iObj.data[k].UpdateDate = new Date(Number(iObj.data[k].UpdateDate.split('(')[1].split(')')[0])));
@@ -219,7 +216,7 @@ app.directive('monthly', function (dateServiceForMonthlyCalendar, $rootScope, se
                     else if (iObj.data[k].UpdateDate)
                         _indexForCheck = dateServiceForMonthlyCalendar.getDayDifference({ startTime: new Date($scope.monthlyArray[0].cellDate), endTime: new Date(iObj.data[k].UpdateDate) })
                     var _arrayIndex = _indexForCheck -1;
-                 //   console.error(_arrayIndex)
+               
                     if (_arrayIndex > -1) {
                         if (iObj.data[k].ConversationType == "Coaching" || iObj.data[k].ConversationType == "Mentoring") {
                             iObj.data[k].Role = iObj.data[k].ConversationType == "Coaching" ? 'Coach' : 'Mentor';
@@ -235,16 +232,16 @@ app.directive('monthly', function (dateServiceForMonthlyCalendar, $rootScope, se
                         }
                     }
                 }
-               // console.error($scope.monthlyArray)
+              
             };
             var _getMeetingFromServer = function () {
                 serverCommunication.GetAllMeetingPerMonth({
-                    //  ConversationType: "Mentoring",
+                   
                     Value: 'All',
                     FromDate: $scope.monthlyArray[0].cellDate.toJSON(),
                     ToDate: $scope.monthlyArray[$scope.monthlyArray.length - 1].cellDate.toJSON(),
                     successCallBack: function (iObj) {
-                        console.debug('In GetAllMeetingPerMonth', iObj);
+                      
                         if(iObj.data){
                             if (iObj.data['invite'] && iObj.data['invite'].length > 0) {
                                 _renderMeeting({ data: iObj.data['invite'], invite: true });
@@ -254,10 +251,10 @@ app.directive('monthly', function (dateServiceForMonthlyCalendar, $rootScope, se
                             }
                         }
                        
-                        // $scope.loadingMiddleObject = { showLoading: false, loadingMessage: 'Loading' };
+                       
                     },
                     failureCallBack: function (iObj) {
-                        console.debug('In failureCallBack', iObj);
+                    
                     }
                 });
             };
