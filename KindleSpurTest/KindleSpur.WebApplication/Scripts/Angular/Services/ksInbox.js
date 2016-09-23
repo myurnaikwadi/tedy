@@ -6,7 +6,7 @@
         },
         templateUrl: 'Home/ksInboxView',
         link: function ($scope) {
-            console.error('invitesView');
+           
             window.inbox = $scope;
             $scope.gridViewLoaded = false;
             var _conversationTime = 60000;
@@ -15,9 +15,7 @@
             $scope.loggedEmail = $rootScope.loggedDetail.EmailAddress;
 
             $scope.updateConversation = function (isVerfied, SenderEmail, ReceiverEmail, iNotificationDash) {
-                //$scope.conversation.IsVerified = isVerfied;
-               
-              //  console.error(iNotificationDash);
+                                       
                 var contentText = "";
                 if (isVerfied != false)
                     contentText = iNotificationDash.ConversationType+' Request by ' + $scope.ApprovalName + ' has been '+ (isVerfied == true ? 'accepted': 'Declined');
@@ -42,38 +40,38 @@
                     ReceiverName: $scope.ApprovalName,
                     Role: 'Coachee',
                     successCallBack: function () {
-                        //$scope.menuClick(5, "CONVERSATIONS");               
-                        console.debug('In successCallBack');
+                                 
+                      
 
                     },
                     failureCallBack: function (e) {
-                        console.debug('In failureCallBack' + e);
+                       
                     }
                 });
             };
 
             $scope.updateMeeting = function (isVerfied, iNotification) {
-                //console.error(iNotification)
+               
                 serverCommunication.MeetingSchedularUpdate({
                     MeetingId: iNotification.Meeting.MeetingId,
                     flag: isVerfied,
                     successCallBack: function () {
-                        console.debug('In successCallBack');
+                    
                         $scope.conversationRequest();
                     },
                     failureCallBack: function (e) {
-                        console.debug('In failureCallBack' + e);
+                       
                     }
                 });                
             };
 
             $scope.viewProfileCall = function (iEvent,iUser) {
-                console.error(iUser);               
+                         
                 serverCommunication.getProfileDetailsUserWise({
                     Role: iUser.ConversationType == 'Coaching' ? 'Coachee' : 'Mentee',
                     EmailAddress: iUser.EmailAddress,
                     successCallBack: function (iObj) {
-                        console.log('In getProfileDetailsUserWise', iObj);
+                      
                         $rootScope.$broadcast("refreshStateHomeView", {
                             type: 'loadUpperSlider',
                             subType: 'Profile',
@@ -85,7 +83,7 @@
                         });
                     },
                     failureCallBack: function (e) {
-                        console.debug('In failureCallBack' + e);
+                       
                     }
                 });               
             };
@@ -107,7 +105,7 @@
                     serverCommunication.getAllMeetingRequest({
                         ConversationType: "Coaching",
                         successCallBack: function (iObj) {
-                            console.debug('In getAllMeetingRequest', iObj);
+                           
                             for (var k = 0 ; k < iObj.data.Result.length ; k++) {
                                 iObj.data.Result[k].Meeting.StartDate = new Date(Number(iObj.data.Result[k].Meeting.StartDate.split('(')[1].split(')')[0]));
                                 iObj.data.Result[k].Meeting.EndDate = new Date(Number(iObj.data.Result[k].Meeting.EndDate.split('(')[1].split(')')[0]));
@@ -122,20 +120,20 @@
                             $scope.loadingMiddleObject = { showLoading: false, loadingMessage: 'Loading' };
                         },
                         failureCallBack: function (iObj) {
-                            console.debug('In failureCallBack', iObj);
+                           
                         }
                     });
                 }
             }
             $scope.notificationData = [];
             $scope.getAllConversationRequest = function () {
-                console.error('Conversation Request Call');
+              
                 $scope.notificationData = [];
                 if ($scope.requiredField.indexOf("REQ") > -1) {
                     serverCommunication.getAllConversationRequest({
                         ConversationType: ($scope.role == 'Coach') ? 'Coaching': 'Mentoring',
                         successCallBack: function (iObj) {
-                            console.debug('Conversation Request Call', iObj);
+                           
                             for (var k = 0 ; k < iObj.data.Result.length ; k++) {
                                 iObj.data.Result[k].CreateDate = new Date(Number(iObj.data.Result[k].CreateDate.split('(')[1].split(')')[0]));
                             }
@@ -144,7 +142,7 @@
                             _callForAllMeetingRequest();
                         },
                         failureCallBack: function (iObj) {
-                            console.debug('In failureCallBack', iObj);
+                          
                         }
                     });
                 } else {
@@ -158,7 +156,7 @@
                     serverCommunication.getMeetingRequestAsPerRole({
                         Role: $scope.role,
                         successCallBack: function (iObj) {
-                            console.debug('In getAllMeetingRequest', iObj);
+                          
                             for (var k = 0 ; k < iObj.data.Result.length ; k++) {
                                 iObj.data.Result[k].Meeting.StartDate = new Date(Number(iObj.data.Result[k].Meeting.StartDate.split('(')[1].split(')')[0]));
                                 iObj.data.Result[k].Meeting.EndDate = new Date(Number(iObj.data.Result[k].Meeting.EndDate.split('(')[1].split(')')[0]));
@@ -173,7 +171,7 @@
                             $scope.loadingMiddleObject = { showLoading: false, loadingMessage: 'Loading' };
                         },
                         failureCallBack: function (iObj) {
-                            console.debug('In failureCallBack', iObj);
+                           
                         }
                     });
                 }
@@ -181,13 +179,13 @@
 
             $scope.notificationData = [];
             $scope.conversationRequest = function () {
-                console.error('Conversation Request Call');
+              
                 $scope.notificationData = [];
                 if ($scope.requiredField.indexOf("REQ") > -1) {
                     serverCommunication.getConversationRequest({
                         ConversationType: ($scope.role == 'Coach') ? 'Coaching' : 'Mentoring',
                         successCallBack: function (iObj) {
-                            console.debug('Conversation Request Call', iObj);
+                          
                             for (var k = 0 ; k < iObj.data.Result.length ; k++) {
                                 iObj.data.Result[k].CreateDate = new Date(Number(iObj.data.Result[k].CreateDate.split('(')[1].split(')')[0]));
                             }
@@ -196,7 +194,7 @@
                             _callForMeetingRequest();
                         },
                         failureCallBack: function (iObj) {
-                            console.debug('In failureCallBack', iObj);
+                           
                         }
                     });
                 } else {
@@ -212,15 +210,15 @@
             };
 
             $scope.autoSyncRoutine = function (iTime) {
-                console.error('autoSyncRoutine')
+             
                 if ($scope.role == 'All') {
                     $scope.autoSyncCounter = $interval(function () {
-                        console.error('autoSyncRoutine - CallBack -- ')
+                      
                         $scope.getAllConversationRequest();
                     }, _conversationTime);
                 } else {
                     $scope.autoSyncCounter = $interval(function () {
-                        console.error('autoSyncRoutine - CallBack -- ')
+                     
                         $scope.conversationRequest();
                     }, _conversationTime);
                 }
@@ -250,7 +248,7 @@
                 }
             }
             $rootScope.$on("inboxListener", function (event, iObj) {
-                console.error('refreshStateHomeView ---- ', iObj);
+               
                 $scope.gridViewLoaded = iObj.gridViewLoaded;
                 $scope.loadGridView();
             });
