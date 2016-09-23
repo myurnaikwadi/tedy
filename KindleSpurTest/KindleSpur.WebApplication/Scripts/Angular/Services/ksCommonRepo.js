@@ -8,7 +8,7 @@
         link: function (scope, element, attrs) {
             window.re = scope;
             scope.uiFlag = { uploadNotRequired: false, Message : '' };
-            console.error(scope.extraParam)
+           
             scope.styleUI = {};
             if (scope.extraParam && scope.extraParam.styleUI)
                 scope.styleUI = scope.extraParam.styleUI;
@@ -32,7 +32,7 @@
             scope.addBookMark = function () {
                 scope.artictFact = false;
                 scope.loadUploadPopupFlag = true;
-                // data = [];
+              
                 data = new FormData();
                 tempArray = [];
             };
@@ -43,7 +43,7 @@
             
             scope.closePopup = function () {
                 scope.loadUploadPopupFlag = false;
-                // data = [];
+               
                 data = new FormData();
                 tempArray = [];
                 scope.artictFact = null;
@@ -60,7 +60,7 @@
                 };
                 $rootScope.$broadcast("refreshStateHomeView", {
                     type: 'displayAlert',
-                    // subType: 'Meeting',
+                 
                     data: _displayAlert
                 });
             };
@@ -76,7 +76,7 @@
                         _callServerSide = false;
                         var _foundElement = null;
                         scope.bookMarkArray.some(function (iContain, iIndex) {
-                            console.error(iIndex)
+                          
                             if (iContain.ParentFileId == iArtifacts.FileId) {
                                 _foundElement.index = iIndex;
                                 _foundElement.contain = iContain;
@@ -91,7 +91,7 @@
                     return;
                 }
                 
-                //console.error(_callServerSide)
+               
                 if (_callServerSide) {
                     scope.bookmark.LinkUrl = scope.bookmark.FilePath;
                     scope.bookmark.DocumentName = scope.bookmark.FileName;
@@ -105,20 +105,19 @@
                             scope.closePopup();
                         },
                         failureCallBack: function () {
-                            // $scope.conversation.Message = "";
-                            console.debug('In failureCallBack');
+                           
                         }
                     });
                 }               
             };
 
             scope.attachFiles = function () {
-                console.error(scope)
+              
                 var _selectedData = {};
                // debugger
                 scope.artifactsArray.some(function (iContain) {
                     //debugger
-                    //console.error(iContain)
+                
                     if (iContain.selected) {
                         if (_selectedData['Artifact'])
                             _selectedData['Artifact'][iContain.FileName] = iContain;
@@ -130,7 +129,7 @@
                     }
 
                 });
-                console.error(_selectedData)
+              
                 scope.bookMarkArray.some(function (iContain) {
                     if (iContain.selected) {
                         if (_selectedData['bookMark'])
@@ -154,31 +153,31 @@
             };
             
             scope.uploadDataOnServer = function () {
-                console.error(scope.artifactsArray)
+             
                 scope.artifactsArray = scope.artifactsArray.concat(tempArray);
                 serverCommunication.sendUploadedFileToServer(data,function (iPath) {
                     data = new FormData();
                     scope.uploadAttachmentArray = [];
                     scope.loadUploadPopupFlag = false;
-                    console.error(iPath)
+                 
                    
 
                 });
                 scope.closePopup();
             };
-            //{ deleteMultiple : false , type : 'artifact' , deletedObject : option , index : $index }
+          
             scope.deleteAttachment = function (iObj) {
                 var _array = [];
-                console.error(iObj);
+              
                 var _selectedData = {};
                 var _deletedArray = [];
                 if (iObj.type == 'artifact') {
                     var _indexArray = [];
                     if (iObj.deleteMultiple) {
                         scope.artifactsArray.some(function (iContain, iIndex) {
-                            console.error(iIndex)
                           
-                            //console.error(iContain)
+                          
+                           
                             if (iContain.selected) {
                                 _indexArray.push(iIndex);
                                 if (_selectedData['Artifact'])
@@ -194,7 +193,7 @@
                             alert('please select some artifacts')
                         } else {
                             _indexArray.sort(function (a, b) { return b - a });
-                            console.error(_indexArray)
+                          
                             for (var k = 0 ; k < _indexArray.length ; k++) {
                                 scope.artifactsArray.splice(_indexArray[k], 1);
                             }
@@ -213,7 +212,7 @@
                     var _indexArray = [];
                     if (iObj.deleteMultiple) {
                         scope.bookMarkArray.some(function (iContain, iIndex) {
-                            console.error(iIndex)
+                         
                             if (iContain.selected) {
                                 if (iContain.selected) {
                                     _indexArray.push(iIndex);
@@ -230,7 +229,7 @@
                             alert('please select some bookmarks')
                         } else {
                             _indexArray.sort(function (a, b) { return b - a });
-                            console.error(_indexArray)
+                          
                             for (var k = 0 ; k < _indexArray.length ; k++) {
                                 scope.bookMarkArray.splice(_indexArray[k], 1);
                             }
@@ -246,25 +245,25 @@
                         _deletedArray.push(_selectedData['bookMark'][_key]);
                     }
                 }
-                console.error(_selectedData)
+              
                  serverCommunication.deleteFilesServer({
                     type :  iObj.type,
                     deletedArray: _deletedArray,
                     successCallBack: function (iObj) {
-                        console.error('serverrrrr', iObj)
+                      
                         if (iObj.data['Artifacts'])
                             scope.artifactsArray = iObj.data['Artifacts'];
                         if (iObj.data['Bookmarks'])
                             scope.bookMarkArray = iObj.data['Bookmarks'];
                        
                     }, failureCallBack: function (iObj) {
-                        console.error('serverrrrr', iObj)
+                     
                     }
                 });              
             };
 
             scope.triggerUpload = function (iId) {
-                console.error('iId --- ', iId)
+              
                 var obj = {
                     fileInputId: iId
                 }
@@ -272,29 +271,28 @@
                     
                     var valueFile = document.getElementById(iId).files;                   
                     //  debugger;
-                    console.error(valueFile);                    
+                                  
                     angular.forEach(valueFile, function (value, key) {
                         value.TagName = "sssss"
                         data.append(key, value);
-                        console.error(key, value)
+                      
                     });
-                    console.error(data)
-                    //serverCommunication.changeProfileImageDetails(data, null, function (iPath) {    
+                 
+                     
                     for (var k = 0 ; k < valueFile.length ; k++) {
-                       // data.append('photo[' + k + ']', valueFile[k]);
-                        // ajaxData.append('photo[' + i + ']', file);
+                      
                         valueFile[k].ContentType = valueFile[k].type;
                         scope.uploadAttachmentArray.push(valueFile[k]);
                         var _obj = {                            
                             FileName :  valueFile[k].name,
-                         //   fileType : valueFile[k].fileType,
+                      
                             FilePath: valueFile[k].name,
                             ContentType: valueFile[k].type
                         }                 
-                        //});                 
+                              
                         tempArray.push(_obj);
                     }
-                    //console.error(scope.uploadAttachmentArray, tempArray);
+                 
                   
                     document.getElementById(iId).value = "";
                     if (!scope.$$phase && !scope.$root.$$phase)
@@ -310,7 +308,7 @@
 
                     loggedDetail: _object,
                     successCallBack: function (iObj) {
-                        console.error('serverrrrr', iObj)
+                     
                         if (iObj.data['Artifacts'])
                             scope.artifactsArray = iObj.data['Artifacts'];
                         if (iObj.data['Bookmarks'])
@@ -318,7 +316,7 @@
                        
 
                     }, failureCallBack: function (iObj) {
-                        console.error('serverrrrr', iObj)
+                      
                     }
                 });
             };
