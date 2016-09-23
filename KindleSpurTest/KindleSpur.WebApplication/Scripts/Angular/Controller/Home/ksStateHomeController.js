@@ -1,7 +1,6 @@
 ﻿app.controller('ksStateHomeController', function ($rootScope, $scope, serverCommunication, $interval, $state, authentification) {
     window.parent = $scope;
-    console.error('Application Home controller --- ');
-    //$scope.bottomStrip = { style : '' };
+   
     $scope.invitation = { email: '' };
     $scope.displayAlert = {
         showAlert: false,
@@ -9,15 +8,15 @@
         idleAlert : { showAlert: false,  formatType: '1',message: '', },
         formatType: '1'
     };    $scope.logout = function (iEvent) {
-       // console.error('logout')
+      
         if (iEvent) iEvent.stopPropagation();
-        //  console.error(IN.User)
+        
         if (IN.User) IN.User.logout();
         authentification.logout({ loginObject: {} });
         $state.go('login');
     };    $scope.checkEmailValidation = function (iObj) {
               if ((iObj.event && (iObj.event.keyCode == 186)) || iObj.otherCall) {
-           console.log(iObj.email);
+         
            var _stringSplit = iObj.email.split(';');           for (var k = 0; k < _stringSplit.length; k++) {
                if(_stringSplit[k]!= '') {
                     if($scope.emailValidation(_stringSplit[k]) == false) {
@@ -58,7 +57,7 @@
         serverCommunication.sendInvitationToFriend({
             invitation: { Email:_string, UserDetails: { FirstName: $rootScope.loggedDetail.FirstName, LastName: $rootScope.loggedDetail.LastName, EmailAddress: $rootScope.loggedDetail.EmailAddress }, Description: $scope.invitation.description },
             successCallBack: function (iObj) {
-                console.error('In successCallBack', iObj);
+               
                 $scope.invitation = {};
             },
             failureCallBack: function (iObj) {
@@ -67,13 +66,13 @@
     };
 
     $scope.closeCallBack = function (iEvent) {
-       // $scope.extraParam.closeCallBack();
+      
         $scope.extraParam.closeCallBack && ($scope.extraParam.closeCallBack());
         $scope.extraParam.closeMainCallBack && ($scope.extraParam.closeMainCallBack());
     };
     $scope.uiFlag = { loadRepository: false, loadBottomContain: false ,loadProfileView : false};
     $rootScope.$on("refreshStateHomeView", function (event, iObj) {
-        console.error('refreshStateHomeView ---- ', iObj);
+      
         switch (iObj.type) {
             case 'displayAlert': $scope.displayAlert = iObj.data; break;
             case "loadUpperSlider":
@@ -81,7 +80,7 @@
                 $scope.uiFlag.loadModule = iObj.subType;
                 $scope.extraParam = iObj.data;
                 $scope.extraParam.closeCallBack = function () {
-                    console.error('sssss')
+               
                     $scope.uiFlag.loadRepository = false;
                     $scope.uiFlag.loadModule = '';
                 }
@@ -90,7 +89,7 @@
                                         $scope.uiFlag.loadBottomContain = true;
                                         $scope.extraParam = iObj.data; 
                                         $scope.extraParam.closeCallBack = function () {
-                                            console.error('sssss')
+                                        
                                             $scope.uiFlag.loadBottomContain = false;                                            
                                         };
                                         break;
@@ -102,7 +101,7 @@
     });
 
     $scope.closeMyPopup = function () {
-        console.error('closeMyPopup')
+     
         $scope.load = false;
         $scope.invitation = {}
     };
@@ -140,15 +139,14 @@ app.directive("outsideClick", ['$document', '$parse', function ($document, $pars
         },
         link: function ($scope, $element, $attributes) {          
             var _id = $scope.id;
-            // console.error($element)
+         
            var onDocumentClick = function (event) {
-              // console.error($scope.idArr)
-              //console.error(event.target)     
+              
               
                 var scopeExpression = $attributes.outsideClick;
-               //  console.error($scope)
+             
                 var isChild = $element.find(event.target).length > 0;
-               //  console.error(isChild)
+           
                 if ($scope.idArr && $scope.idArr.length > 0) {
                     var _index = $scope.idArr.indexOf(event.target.id) ;
                     if (_index > -1)
@@ -163,7 +161,7 @@ app.directive("outsideClick", ['$document', '$parse', function ($document, $pars
             $document.on("click", onDocumentClick);             
 
             $scope.$on('$destroy', function () {
-               // console.error('ddd');
+              
                 if($scope.id == _id)
                  $document.off("click", onDocumentClick);               
             });
@@ -171,16 +169,3 @@ app.directive("outsideClick", ['$document', '$parse', function ($document, $pars
         }
     }
 }]);
-//app.directive('hideLogin', function ($document) {
-//    return {
-//        restrict: 'A',
-//        link: function (scope, elem, attr, ctrl) {
-//            elem.bind('click', function (e) {
-//                e.stopPropagation();
-//            });
-//            $document.bind('click', function () {
-//                scope.$apply(attr.hideLogin);
-//            })
-//        }
-//    }
-//});

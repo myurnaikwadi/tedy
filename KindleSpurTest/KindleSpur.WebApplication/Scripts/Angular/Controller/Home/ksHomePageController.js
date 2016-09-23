@@ -12,7 +12,7 @@
     'In the process, I grow as a better person, more open, more confident and of course, more successful than I was before' +
    'The Mentor-Mentee or Coach-Coachee are Unique relationships and the beauty of these relationships is that,these are always mutually nurturing and rewarding !';
     $scope.fff = function () {
-        console.error('222')
+      
         $('[data-toggle="popover"]').popover();
     }
     $('#popoverOption').popover({ trigger: "hover" });
