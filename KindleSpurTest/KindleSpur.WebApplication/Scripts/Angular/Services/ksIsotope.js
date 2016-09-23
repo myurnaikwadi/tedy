@@ -66,7 +66,7 @@ msIsotopeFunc.prototype.getModValue = function (iIndex, iChangeIndexTo) {
         };
 
     }
-    //////console.log(_that.gnericIsotopeArray[iIndex].styleObj)
+   
 }
 /**
  * 
@@ -76,13 +76,12 @@ msIsotopeFunc.prototype.getModValue = function (iIndex, iChangeIndexTo) {
  *  
  **/
 msIsotopeFunc.prototype.expandForFloat = function (iObj) {
-    //////console.log("WHY AM I IN EXPAND FOR FLOAT")
-    //////console.log(iObj)
+   
     var _that = this;
     _that.heightOfASingleCell = iObj.iHeight;
     _that.widthOfASingleCell = iObj.iWidth;
     var iIndex = iObj.index;
-    ////console.log(iObj.TotalColumns)
+  
     if (iObj.TotalColumns)
         _that.TotalColumns = iObj.TotalColumns;
     _that.expansionCol = iObj.column;

@@ -13,12 +13,12 @@
             scope.MeetingSchedular.TimeTo.setHours(scope.MeetingSchedular.TimeFrom.getHours()+1);
             scope.conflictAlert = { showAlert  : false, message : ''};
             scope.saveSchedular = function () {
-                //console.error(scope)
+               
 
                
 
 
-                //scope.conflictAlert = true;
+              
                 var _date = new Date(scope.MeetingSchedular.MeetingDate);
                 var _startDate = new Date(_date);
                 _startDate.setHours(new Date(scope.MeetingSchedular.TimeFrom).getHours());
@@ -31,7 +31,7 @@
                 var _endDayTIme = new Date(scope.MeetingSchedular.MeetingDate);
                 _endDayTIme.setHours(23, 59, 59, 999);
 
-               // var _endDayTIme = new Date(23,59,59,999);
+              
                 if(_startDate < new Date()){
                     alert('Start Time should be greator than current time');
                     return;
@@ -48,7 +48,7 @@
                     alert('Please specify communication mode');
                     return;
                 }
-                //;
+           
                 var _startTimeForSelectedDay = new Date(_startDate);
                 _startTimeForSelectedDay.setHours(0, 0, 0)
                 var _endTimeForSelectedDay = new Date(_startDate);
@@ -101,7 +101,7 @@
                     scope.extraParam.closeCallBack();
             };
             var _renderMeeting = function (iObj) {
-               // console.error(iObj)                
+                           
                 for (var k = 0 ; k < iObj.data.length ; k++) {
                     iObj.data[k].StartDate && (iObj.data[k].StartDate = new Date(Number(iObj.data[k].StartDate.split('(')[1].split(')')[0])));
                     iObj.data[k].EndDate && (iObj.data[k].EndDate = new Date(Number(iObj.data[k].EndDate.split('(')[1].split(')')[0])));
@@ -110,12 +110,12 @@
             };
             var _getMeetingFromServer = function (iDateObj) {
                 serverCommunication.GetAllMeetingPerMonth({
-                    //  ConversationType: "Mentoring",
+                 
                     Value : 'Meeting',
                     FromDate: iDateObj.StartDate.toJSON(),
                     ToDate: iDateObj.EndDate.toJSON(),
                     successCallBack: function (iObj) {
-                        console.debug('In GetAllMeetingPerMonth', iObj);
+                     
                         if (iObj.data) {
                             if (iObj.data['meeting'] && iObj.data['meeting'].length > 0) {
                                 _renderMeeting({ callBack: iDateObj.callBack, data: iObj.data['meeting'], Meeting: true });
@@ -127,7 +127,7 @@
                         }
                     },
                     failureCallBack: function (iObj) {
-                        console.debug('In failureCallBack', iObj);
+                      
                     }
                 });
             };            
