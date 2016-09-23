@@ -77,12 +77,12 @@
         $scope.loadingMiddleObject = { showLoading: true, loadingMessage: 'Loading' };
         switch (iIndex) {
             case 0: $scope.loadingMiddleObject = { showLoading: false, loadingMessage: 'Loading' };  break;
-            case 1: $scope.getCoachRecord(); break;
-            case 3: $scope.generateGarden(); break;
-            case 4: $scope.getRssFeedData(); break;
-            case 5: $scope.autoSyncRoutine(_chatMessageTime); $scope.conversationLoading(); break;
-            case 2:
-            case 7:
+            case 7: $scope.getCoachRecord(); break;
+            case 2: $scope.generateGarden(); break;
+            case 3: $scope.getRssFeedData(); break;
+            case 4: $scope.autoSyncRoutine(_chatMessageTime); $scope.conversationLoading(); break;
+            case 5:
+            case 1: 
             case 6: $scope.loadingMiddleObject = { showLoading: false, loadingMessage: 'Loading' }; break;
         }
     };
@@ -96,6 +96,7 @@
     };
 
     $scope.generateGarden = function () {
+        console.error('generateGarden')
         $scope.ctsDataForMolecule = null;
         serverCommunication.generateGarden({
             role: 'mentor',
@@ -133,6 +134,7 @@
     };
 
     $scope.getCoachRecord = function () {
+        console.error('getCoachRecord')
         serverCommunication.getCoachingWithStatus({
             role: 'mentor',
             loggedUserDetails: $rootScope.loggedDetail,
@@ -237,7 +239,7 @@
     $scope.feedCategoryArray = [];
     $scope.getRssFeedData = function () {
         //feedback
-       
+        console.error('getRssFeedData;')
         serverCommunication.getMyMentorSelection({
             successCallBack: function (iObj) {
                 
@@ -1092,7 +1094,7 @@
 
     $scope.gridViewLoaded = false;
     $scope.loadGridView = function () {
-        //debugger
+        
         $scope.gridViewLoaded = !$scope.gridViewLoaded;
       
         $rootScope.$broadcast("inboxListener", { gridViewLoaded: $scope.gridViewLoaded });
@@ -1251,7 +1253,7 @@
     };
 
     $scope.updateConversation = function (isVerfied, SenderEmail, ReceiverEmail, iNotificationDash) {
-        debugger
+       
         $scope.conversation.IsVerified = isVerfied;
         
         

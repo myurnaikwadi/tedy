@@ -46,7 +46,8 @@
         return _str;
     };
     $scope.closeProfilePic = function () {
-      
+     
+
         $scope.showMenteeProfile = false;
         $scope.userInfo = null;
     };
@@ -165,12 +166,12 @@
         $scope.loadingMiddleObject = { showLoading: true, loadingMessage: 'Loading' };
         switch (iIndex) {
             case 0: $scope.loadingMiddleObject = { showLoading: false, loadingMessage: 'Loading' }; break;
-            case 1: $scope.generateGarden(); break;
-            case 3: $scope.clearSearch(); $scope.getCoachRecord(); break;
-            case 4: $scope.getRssFeedData(); break;
-            case 5: $scope.autoSyncRoutine(_chatMessageTime); $scope.conversationLoading(); break;
-            case 2:
-            case 7:
+            case 7: $scope.generateGarden(); break;
+            case 2: $scope.clearSearch(); $scope.getCoachRecord(); break;
+            case 3: $scope.getRssFeedData(); break;
+            case 4: $scope.autoSyncRoutine(_chatMessageTime); $scope.conversationLoading(); break;
+            case 1:
+            case 5:
             case 6: $scope.loadingMiddleObject = { showLoading: false, loadingMessage: 'Loading' }; break;
         }
     };
@@ -781,17 +782,17 @@
             Role: "Mentee",
             ConversationType: 'Mentoring',
             successCallBack: function (iObj) {
-              
+             
                 $scope.conversationListNew = [];
                 var _coach = {
                 };
                 for (var k = 0; k < iObj.data.Result.length; k++) {
                    
                     if (_coach[iObj.data.Result[k].skill]) {
-                        _coach[iObj.data.Result[k].skill].user[iObj.data.Result[k].SenderEmail] = iObj.data.Result[k];
+                        _coach[iObj.data.Result[k].skill].user[iObj.data.Result[k].ReceiverEmail] = iObj.data.Result[k];
                     } else {
                         _coach[iObj.data.Result[k].skill] = { user: {}};
-                        _coach[iObj.data.Result[k].skill].user[iObj.data.Result[k].SenderEmail] = iObj.data.Result[k];
+                        _coach[iObj.data.Result[k].skill].user[iObj.data.Result[k].ReceiverEmail] = iObj.data.Result[k];
                     }
                 }
 

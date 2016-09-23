@@ -851,19 +851,17 @@ app.directive('ctcRole', function ($state, serverCommunication) {
             var _topics = {};
             var _skills = {};
 
-
+            
             scope.init = function () {
                 scope.ctsDataForMolecule = null;
 
                 switch (scope.role) {
                     case 'coach':
                         serverCommunication.getMySelection({
-                            successCallBack: function (iObj) {
-                              
+                            successCallBack: function (iObj) {                                
                                 _createMoleculeStructure(iObj);
                             },
-                            failureCallBack: function (iObj) {
-                               
+                            failureCallBack: function (iObj) {                               
 
                             }
                         });
@@ -872,34 +870,29 @@ app.directive('ctcRole', function ($state, serverCommunication) {
                    
                         serverCommunication.getMyMentorSelection({
                             successCallBack: function (iObj) {
-                           
+                                _createMoleculeStructure(iObj);
                             },
                             failureCallBack: function (iObj) {
                              
-
                             }
                         });
                         break;
                     case 'mentee':
                         serverCommunication.getMyMenteeSelection({
-                            successCallBack: function (iObj) {
-                             
+                            successCallBack: function (iObj) {                             
                                 _createMoleculeStructure(iObj);
                             },
                             failureCallBack: function (iObj) {
                                
-
                             }
                         });
                         break;
                     case 'coachee':
                         serverCommunication.getMyCoacheeSelection({
-                            successCallBack: function (iObj) {
-                              
+                            successCallBack: function (iObj) {                              
                                 _createMoleculeStructure(iObj);
                             },
-                            failureCallBack: function (iObj) {
-                              
+                            failureCallBack: function (iObj) {                             
 
                             }
                         });

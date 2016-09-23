@@ -669,34 +669,41 @@ namespace KindleSpur.Data
         {
             List<ICoachingStatus> LstCochees = new List<ICoachingStatus>();
             List<CoachStatus> result = new List<CoachStatus>();
+            List<CoachStatus> finalResult = new List<CoachStatus>();
 
             Role = Role == "Coachee" ? "Coach" : "Mentor";
             try
             {
+                IQueryable<CoachOrMentor> coach = default(IQueryable<CoachOrMentor>);
 
-                CoachOrMentor coach = _coachOrMentorCollection.FindOneAs<CoachOrMentor>(Query.And(Query.EQ("CoachingStatus.Sender", UserId), Query.EQ("Role", Role)));
+                coach = _coachOrMentorCollection.FindAs<CoachOrMentor>(Query.And(Query.EQ("CoachingStatus.Sender", UserId), Query.EQ("Role", Role))).AsQueryable();
+
                 if (coach != null)
                 {
-                    LstCochees = coach.CoachingStatus;
-
-                    if (LstCochees != null)
+                    foreach(var coachStatus in coach)
                     {
-                        result = (from t in LstCochees
-                                  group t by new { t.Receiver, t.Skill }
-                                     into grp
-                                  select new CoachStatus()
-                                  {
-                                      EmailAddress = grp.Key.Receiver,
-                                      Skill = grp.Key.Skill,
-                                      FeedbackClosed = grp.OrderByDescending(t => t.CreateDate).FirstOrDefault().FeedbackClosed,
-                                      FeedbackCount = grp.Count(),
-                                      Rating = grp.OrderByDescending(t => t.customerSatisfactionRating).FirstOrDefault().customerSatisfactionRating
-                                  }).ToList();
+                        LstCochees = coachStatus.CoachingStatus;
 
-                        for (var i = 0; i < result.Count(); i++)
+                        if (LstCochees != null)
                         {
-                            result[i] = GetCocheeDetails(result[i]);
-                            result[i].TreeURL = GetTreeURL(result[i].FeedbackCount, result[i].Rating);
+                            result = (from t in LstCochees
+                                      group t by new { t.Receiver, t.Skill }
+                                         into grp
+                                      select new CoachStatus()
+                                      {
+                                          EmailAddress = grp.Key.Receiver,
+                                          Skill = grp.Key.Skill,
+                                          FeedbackClosed = grp.OrderByDescending(t => t.CreateDate).FirstOrDefault().FeedbackClosed,
+                                          FeedbackCount = grp.Count(),
+                                          Rating = grp.OrderByDescending(t => t.customerSatisfactionRating).FirstOrDefault().customerSatisfactionRating
+                                      }).ToList();
+
+                            for (var i = 0; i < result.Count(); i++)
+                            {
+                                result[i] = GetCocheeDetails(result[i]);
+                                result[i].TreeURL = GetTreeURL(result[i].FeedbackCount, result[i].Rating);
+                                finalResult.Add(result[i]);
+                            }
                         }
                     }
                 }
@@ -723,7 +730,7 @@ namespace KindleSpur.Data
             {
 
             }
-            return result;
+            return finalResult;
         }
 
         public CoachStatus GetCocheeDetails(CoachStatus c)

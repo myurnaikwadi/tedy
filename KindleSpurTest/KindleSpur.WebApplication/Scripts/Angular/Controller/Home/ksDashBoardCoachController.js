@@ -76,12 +76,12 @@
         $scope.loadingMiddleObject = { showLoading: true, loadingMessage: 'Loading' };
         switch (iIndex) {
             case 0: $scope.loadingMiddleObject = { showLoading: false, loadingMessage: 'Loading' };  break;
-            case 1: $scope.getCoachRecord(); break;
-            case 3: $scope.generateGarden(); break;
-            case 4: $scope.getRssFeedData(); break;            
-            case 5: $scope.conversationLoading(); $scope.autoSyncRoutine(_chatMessageTime); break;
-            case 2:
-            case 7:
+            case 7: $scope.getCoachRecord(); break;
+            case 2: $scope.generateGarden(); break;
+            case 3: $scope.getRssFeedData(); break;            
+            case 4: $scope.conversationLoading(); $scope.autoSyncRoutine(_chatMessageTime); break;
+            case 1:
+            case 6:
             case 6: $scope.loadingMiddleObject = { showLoading: false, loadingMessage: 'Loading' }; break;
         }
     };

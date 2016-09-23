@@ -380,10 +380,7 @@ function makeImagePath(iImg) {
     if (iImg && iImg.CML_IMAGE_PATH)
         iImg = iImg.CML_IMAGE_PATH;
     if (iImg) {
-
-        if (iImg != 'null' && iImg != 'undefined' && iImg != undefined && iImg != globalVars.NginxUrl && !iImg.match('public')) {
-            return globalVars.NginxUrl + unescape(iImg);
-        } else if (iImg.match('public') || iImg.match('https://') || iImg.match('http://')) {
+        if (iImg.match('public') || iImg.match('https://') || iImg.match('http://')) {
             return iImg;
         } else {
             return "Images/icons/If no Profile photo.png";
