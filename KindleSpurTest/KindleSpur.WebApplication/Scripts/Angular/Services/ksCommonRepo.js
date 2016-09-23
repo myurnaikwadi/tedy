@@ -314,7 +314,6 @@
                         if (iObj.data['Bookmarks'])
                             scope.bookMarkArray = iObj.data['Bookmarks'];
                        
-
                     }, failureCallBack: function (iObj) {
                       
                     }
