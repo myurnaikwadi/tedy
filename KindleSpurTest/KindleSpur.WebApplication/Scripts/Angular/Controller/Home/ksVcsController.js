@@ -3,8 +3,7 @@
 app.directive('vcsDir', function ($state, serverCommunication,$rootScope) {
     return {
         scope: {
-            //role: "@",
-            //skillRequired: "=",
+           
         },
         templateUrl: '/Home/ksVcs',
         //scope: true,   // optionally create a child scope
@@ -56,7 +55,7 @@ app.directive('vcsDir', function ($state, serverCommunication,$rootScope) {
             //autocomplete user name
             $scope.resetAutoComplete = function () {
                 if ($scope.removedIdName != true) {
-                    //$scope.recentlyLoggedUsersAutoSuggestArr = [];
+                   
                     $scope.selectedIndex = -1;
                 }
                 else {
@@ -70,8 +69,7 @@ app.directive('vcsDir', function ($state, serverCommunication,$rootScope) {
                     //if tab is  pressed, set selectedIndex value to userId & focus to password field
                     if ($event.keyCode === 9) {
                         if ($scope.selectedIndex != -1) {
-                            //  $scope.credentials.username= $scope.recentlyLoggedUsersAutoSuggestArr[$scope.selectedIndex];
-                            // $scope.recentlyLoggedUsersAutoSuggestArr = [];
+                           
                             $scope.selectedIndex = -1;
                         }
                     }
@@ -102,7 +100,7 @@ app.directive('vcsDir', function ($state, serverCommunication,$rootScope) {
                     $scope.setFocusToActivityPart();
                     return;
                 }
-                console.error($scope.addTaskObject)
+               
                 if ($scope.addTaskObject.eventTitle == '' || $scope.addTaskObject.description == '' || $scope.addTaskObject.typeImapact == -1 || $scope.addTaskObject.measureImapact == -1) {
                     alert('Please fill Blank field');
                     return;
@@ -124,7 +122,7 @@ app.directive('vcsDir', function ($state, serverCommunication,$rootScope) {
             $scope.activityMainArray = [];
             $scope.editModeActivate = null;
             $scope.saveActvity = function () {
-                //console.error($scope.addTaskObject)
+               
                 if ($scope.activity.eventTitle == '') {
                     alert('Please Enter Activity Name and score');
                     $scope.setFocusToActivityPart();
@@ -155,12 +153,11 @@ app.directive('vcsDir', function ($state, serverCommunication,$rootScope) {
                 serverCommunication.saveActivity({
                     activity: angular.copy($scope.activity),
                     successCallBack: function (iObj) {
-                        console.error('In Success CallBack', iObj);
-                        //  _createMoleculeStructure(iObj);
+                     
                       
                     },
                     failureCallBack: function (iObj) {
-                        console.error('In failuregetMySelectionCallBack', iObj);
+                       
 
                     }
                 });
@@ -184,12 +181,11 @@ app.directive('vcsDir', function ($state, serverCommunication,$rootScope) {
                     serverCommunication.deleteActivity({
                         activity: angular.copy(iActivity),
                         successCallBack: function (iObj) {
-                            console.error('In Success CallBack', iObj);
-                            //  _createMoleculeStructure(iObj);
+                           
 
                         },
                         failureCallBack: function (iObj) {
-                            console.error('In failuregetMySelectionCallBack', iObj);
+                      
 
                         }
                     });
@@ -207,8 +203,7 @@ app.directive('vcsDir', function ($state, serverCommunication,$rootScope) {
             var _displayActivity = function (iObj) {
                 if (typeof iObj.data === 'string')
                     iObj.data = JSON.parse(iObj.data);
-                console.error(iObj.data)
-                //var _data = JSON.parse(_data);
+             
                 if (iObj.data)
                     $scope.activityMainArray = [].concat(iObj.data);
             };
@@ -217,11 +212,11 @@ app.directive('vcsDir', function ($state, serverCommunication,$rootScope) {
                 serverCommunication.getActivityByUser({
                     loggedUserDetails: $rootScope.loggedDetail,
                     successCallBack: function (iObj) {
-                        console.error('In getMySelection', iObj);
+                       
                        _displayActivity(iObj);
                     },
                     failureCallBack: function (iObj) {
-                        console.error('In failuregetMySelectionCallBack', iObj);
+                      
 
                     }
                 });
@@ -234,8 +229,7 @@ app.directive('vcsDir', function ($state, serverCommunication,$rootScope) {
 app.directive('myReward', function ($state, serverCommunication, $rootScope) {
     return {
         scope: {
-            //role: "@",
-            //skillRequired: "=",
+           
         },
         templateUrl: '/Home/ksMyReward',
         //scope: true,   // optionally create a child scope
@@ -247,24 +241,24 @@ app.directive('myReward', function ($state, serverCommunication, $rootScope) {
             }
             $scope.feedBack.redeemPointsClick = function () {
                 $scope.feedBack.closeFeedBackPopup();
-              //  console.error($scope.feedBack.redeemAction)
+          
                 serverCommunication.unlockGameCode({
-                    //   loggedUserDetails: $rootScope.loggedDetail,
+                  
                     redeemAction: $scope.feedBack.redeemAction,
                     successCallBack: function (iObj) {
                         $scope.init();
-                        console.error('In successCallBack', iObj);
+                      
 
                     },
                     failureCallBack: function (iObj) {
-                        console.error('In failureCallBack', iObj);
+                      
 
                     }
                 });
                
             };
             $scope.loadFeedOnNextTab = function (iFeed) {
-                console.error('http://www.brainhq.com/')
+               
                 window.open('http://www.brainhq.com/');
             };
           //  $scope.redeemAction
@@ -292,7 +286,7 @@ app.directive('myReward', function ($state, serverCommunication, $rootScope) {
             $scope.getPointsRecord = function () {
                 serverCommunication.getPointsRecord({
                     successCallBack: function (iObj) {
-                        console.error('In successCallBack', iObj);
+                      
                         $scope.rewardsPoints.mentorPoints = iObj.data.MentorRewardPoints ? iObj.data.MentorRewardPoints : 0;
                         $scope.rewardsPoints.menteePoints = iObj.data.MenteeRewardPoints ? iObj.data.MenteeRewardPoints : 0;
                         $scope.rewardsPoints.coachPoints = iObj.data.CoachRewardPoints ? iObj.data.CoachRewardPoints : 0;
@@ -305,7 +299,7 @@ app.directive('myReward', function ($state, serverCommunication, $rootScope) {
 
                     },
                     failureCallBack: function (iObj) {
-                        //console.error('In failureCallBack', iObj);
+                       
                     }
                 });
             };
