@@ -6,7 +6,7 @@
 app.controller('ksLoginController', ['$scope', 'authentification', '$location', '$rootScope', '$state', '$stateParams', '$timeout', function ($scope, authentification, $location, $rootScope, $state, $stateParams, $timeout) {
     
     rootScope = $rootScope;
-    //   window.login = $scope
+   
     $scope.passedData = $stateParams;
     $scope.loginDetails = { emailAddress: '', password: ''  };
     $scope.displayAlert = { showAlert: false,  message: '',  formatType: '1'  };
@@ -37,7 +37,7 @@ app.controller('ksLoginController', ['$scope', 'authentification', '$location', 
         var mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
         if (iEmail && iEmail.match(mailformat)) {
             _validFlag = true;
-            console.error('validdate')
+           
         } else {
             _validFlag = false;
 
@@ -64,7 +64,7 @@ app.controller('ksLoginController', ['$scope', 'authentification', '$location', 
                 $state.go('login', {}, { reload: true });
             } else {
                 $state.go('home.dashBoard');
-                //$state.go('landingPage');
+               
             }
         }
     };
@@ -252,7 +252,7 @@ app.controller('ksLoginController', ['$scope', 'authentification', '$location', 
             IN.API.Profile("me").fields(
 					["id", "firstName", "lastName", "pictureUrl",
 							"publicProfileUrl", "email-address", 'summary']).result(function (result) {
-							    console.error(result);
+							  
 							    // set the model
 							    $rootScope.$apply(function () {
 							        var userprofile = result.values[0];
@@ -261,7 +261,7 @@ app.controller('ksLoginController', ['$scope', 'authentification', '$location', 
 							        $rootScope.loggedDetail.LastName = userprofile.lastName;
 							        $rootScope.loggedDetail.Photo = userprofile.pictureUrl ? userprofile.pictureUrl : '';
 							        // coverphoto
-							        // $rootScope.loggedDetail.publicProfileUrl = userprofile.publicProfileUrl;
+							      
 							        $rootScope.loggedDetail.EmailAddress = userprofile.emailAddress;
 							        $rootScope.loggedDetail.LinkdinURL = userprofile.publicProfileUrl;
 
