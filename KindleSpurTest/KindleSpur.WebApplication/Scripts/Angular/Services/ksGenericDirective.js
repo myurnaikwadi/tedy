@@ -229,7 +229,7 @@ app.directive('bottomMainStrip', function ($timeout, $rootScope) {
     }
 });
 
-app.directive('ctcRole', function ($state, serverCommunication) {
+app.directive('ctcRole', function ($state, serverCommunication, $timeout) {
     return {
         scope: {
             role: "@",
@@ -266,7 +266,8 @@ app.directive('ctcRole', function ($state, serverCommunication) {
                 displayArray : [],
                 loadSuggestPopup : false,
             };
-            scope.suggestCts.suggestPanelOpenClose = function () {
+            scope.suggestCts.suggestPanelOpenClose = function (iEvent) {
+                iEvent && iEvent.stopPropagation();
                 scope.suggestCts.loadSuggestPopup = !scope.suggestCts.loadSuggestPopup;
                 scope.suggestCts.inputModel.Category = '';
                 scope.suggestCts.inputModel.Description = '';
@@ -338,23 +339,124 @@ app.directive('ctcRole', function ($state, serverCommunication) {
                         _color = _colorArray[scope.role][iSkill.profiLevel];
                     }
 
-                    scope.styleToCTS[iSkill.Name] = { 'position': 'absolute', 'height': '60px', 'width': (_width + "%"), 'background': _color, 'transition': 'all 0.7s ease' };
+                    scope.styleToCTS[iSkill.Name] = { 'z-index':'3','position': 'absolute', 'height': '60px', 'width': (_width + "%"), 'background': _color, 'transition': 'all 0.7s ease' };
                 } else {
                     // De select
                 }
             };
+
+            var _isotopeFuncForTopic = function () {
+                if (scope.selectedTopicValue == iIndex) {
+                    var _obj = {
+                        iHeight: 40,
+                        iWidth: 30,
+                        iCol: 5,
+                        iArray: scope.topicArray
+                    };
+                    msIsotopeFunc.prototype.genericHeightChange(_obj)
+                    scope.selectedTopicValue = -1;
+                } else {
+                    var _heif = document.getElementById('topicParent').getBoundingClientRect().height;
+                    var _obj = {
+                        iHeight: _heif / 3.1,
+                        index: iIndex,
+                        iWidth: 49.8,
+                        TotalColumns: 2,
+                        column: 2,
+                        row: 3,//expanded block height
+                        array: scope.topicArray
+                    };
+                    msIsotopeFunc.prototype.expandForFloat(_obj);
+                    scope.selectedTopicValue = iIndex;
+                    scope.topicArray[iIndex].styleObj['margin-top'] = '0';
+
+                }
+            };
+
             scope.gridViewSkill = {gridViewLoaded : false, gridViewSkillLoaded : false };
-            
+            scope.selectedCategory = null;
+            scope.selectedCategoryValue = -1;
+            scope.selectedTopic = null;
+            scope.selectedTopicValue = -1;
+            scope.selectedSkill = null;
+            scope.selectedSkillValue = -1;
+
+            scope.closeIsotopeCategory = function (iEvent) {
+                iEvent && iEvent.stopPropagation();
+                var _obj = {
+                    iHeight: 185,
+                    iWidth: 50,
+                    iCol: 3,
+                    iArray: scope.catogoryArray
+                };
+                msIsotopeFunc.prototype.genericHeightChange(_obj)
+                scope.selectedCategory = null;
+                scope.selectedCategoryValue = -1;
+            };
+            scope.closeIsotopeTopic = function (iEvent) {
+                iEvent && iEvent.stopPropagation();
+                var _obj = {
+                    iHeight: 100,
+                    iWidth: 100,
+                    iCol: 5,
+                    iArray: scope.topicArray
+                };
+                msIsotopeFunc.prototype.genericHeightChange(_obj);
+                scope.selectedTopic = null;
+                scope.selectedTopicValue = -1;
+            };
+            scope.closeIsotopeSkills = function (iEvent) {
+                iEvent && iEvent.stopPropagation();
+                var _obj = {
+                    iHeight: 100,
+                    iWidth: 85,
+                    iCol: 5,
+                    iArray: scope.skillsArray
+                };
+
+                msIsotopeFunc.prototype.genericHeightChange(_obj)
+                scope.selectedSkill = null;
+                scope.selectedSkillValue = -1;
+            };
             scope.categoryClick = function (iEvent, iIndex, iCategory) {
                 // scope.selectedCategory = iIndex;
                 iCategory.type = 'C';
                
-
+                iEvent && iEvent.stopPropagation();
                 iCategory.selectedCategory = true;
                 scope.categoryDisplay = false;
-                scope.selectedCategoryValue = iCategory;
-               
-                scope.topicArray = [].concat(iCategory.Topics)
+                
+               // console.error('ddd')
+                if (scope.selectedCategory == iIndex) {
+                    scope.closeIsotopeCategory();
+                } else {
+                    var _obj = {
+                        iHeight: 161,
+                        index: iIndex,
+                        iWidth: 50,
+                        TotalColumns: 2,
+                        column: 2,
+                        row: 3,//expanded block height
+                        array: scope.catogoryArray
+                    };
+                    msIsotopeFunc.prototype.expandForFloat(_obj);
+                    scope.selectedCategory = iCategory;
+                    scope.selectedCategoryValue = iIndex;
+                    scope.catogoryArray[iIndex].styleObj['margin-top'] = '0';
+                    scope.catogoryArray[iIndex].styleObj['background'] = 'white';
+                }
+
+                scope.topicArray = [].concat(iCategory.Topics);
+             
+                for (var k = 0 ; k < scope.topicArray.length ; k++) {
+                    scope.topicArray[k].displayAnimation = false;
+                }  
+                scope.closeIsotopeTopic();
+                $timeout(function () {
+                    for (var k = 0 ; k < scope.topicArray.length ; k++) {
+                        scope.topicArray[k].displayAnimation = true;
+                    }
+                }, 600);
                 for (var k = 0; k < scope.topicArray.length ; k++) {
                     scope.topicArray[k].selected = false;
                  
@@ -365,14 +467,9 @@ app.directive('ctcRole', function ($state, serverCommunication) {
                         if (_topics[scope.topicArray[k].Name].profiLevel)
                             scope.topicArray[k].profiLevel = _topics[scope.topicArray[k].Name].profiLevel;
 
-                        scope.createStyleArrayAsPerSelected(scope.topicArray[k], true);
-                        scope.topicSelection(iEvent, k, scope.topicArray[k]);
-
-
+                       // scope.createStyleArrayAsPerSelected(scope.topicArray[k], true);
+                        //scope.topicSelection(iEvent, k, scope.topicArray[k]);
                     }
-
-
-
                 }
             };
 
@@ -380,8 +477,12 @@ app.directive('ctcRole', function ($state, serverCommunication) {
             scope.topicSelection = function (iEvent, iIndex, iTopic) {
                 iEvent.stopPropagation();
                 iTopic.type = 'T';
+                
                 if (iTopic.selected) {
                     iTopic.selected = false;
+                    scope.closeIsotopeTopic();
+
+                    scope.mouseOverEffectFlagSave = false;
                     scope.styleToCTSText[iTopic.Name] = { 'color': 'black', 'transition': 'all 0.7s ease' };
                     if (iTopic.alreadySelected == true && !scope.skillRequired) {//make delete array
                         _deleteArray[iTopic.Name] = iTopic;
@@ -411,7 +512,20 @@ app.directive('ctcRole', function ($state, serverCommunication) {
                 }
                 else {
                     iTopic.selected = true;
-                   
+                   // var _heif = document.getElementById('topicParent').getBoundingClientRect().height;
+                    var _obj = {
+                        iHeight: 60,
+                        index: iIndex,
+                        iWidth: 49.8,
+                        TotalColumns: 2,
+                        column: 2,
+                        row: 6,//expanded block height
+                        array: scope.topicArray
+                    };
+                    msIsotopeFunc.prototype.expandForFloat(_obj);
+                    scope.selectedTopic = iTopic;
+                    scope.selectedTopicValue = iIndex;
+                    scope.topicArray[iIndex].styleObj['margin-top'] = '0';
                     if (iTopic.alreadySelected == true && !scope.skillRequired) {
                         if (_deleteArray[iTopic.Name]) delete _deleteArray[iTopic.Name];
                       
@@ -436,15 +550,23 @@ app.directive('ctcRole', function ($state, serverCommunication) {
                             }
                            
                         }
-                        scope.skillsArray = scope.skillsArray.concat(angular.copy(iTopic.Skills));
+                        scope.skillsArray = [].concat(angular.copy(iTopic.Skills));
+                        scope.closeIsotopeSkills();
+                        $timeout(function () {
+                            for (var k = 0 ; k < scope.skillsArray.length ; k++) {
+                                scope.skillsArray[k].displayAnimation = true;
+                            }
+                        }, 600);
                     } else {
                         if (!iTopic.profiLevel) iTopic.profiLevel = '0';
                         scope.createStyleArrayAsPerSelected(iTopic, true);
                     }
                 }
             };
+            scope.mouseOverEffectFlagSave = false;
             scope.skillSelection = function (iEvent, iIndex, iSkills) {
                 iEvent.stopPropagation();
+                scope.mouseOverEffectFlagSave = true;
                 iSkills.type = 'S';
                 if (iSkills.selected) {
                     iSkills.selected = false;
@@ -473,12 +595,12 @@ app.directive('ctcRole', function ($state, serverCommunication) {
             };
 
             scope.backButtonClick = function () {
-               
+                scope.mouseOverEffectFlagSave = false;
                 scope.gridViewSkill = {gridViewLoaded : false, gridViewSkillLoaded : false };
                 if (scope.categoryDisplay == true) {
                     scope.mySelection = true;
                    
-                    scope.selectedTopic = -1;
+                    scope.selectedTopic = null;
                     scope.selectedSkills = -1;
                     scope.selectedCategoryValue = null;                    
                 }
@@ -639,7 +761,16 @@ app.directive('ctcRole', function ($state, serverCommunication) {
                                     scope.catogoryArray[k].alreadySelected = true;
                                 }
                             }
-
+                            for (var k = 0 ; k < scope.catogoryArray.length ; k++) {
+                                scope.catogoryArray[k].displayAnimation = false;
+                            }
+                            scope.closeIsotopeCategory();
+                            $timeout(function () {
+                                for (var k = 0 ; k < scope.catogoryArray.length ; k++) {
+                                    scope.catogoryArray[k].displayAnimation = true;
+                                }
+                            }, 600);
+                            
                         },
                         failureCallBack: function (iObj) {
                         
@@ -659,7 +790,22 @@ app.directive('ctcRole', function ($state, serverCommunication) {
                                     scope.catogoryArray[k].alreadySelected = true;
                                 }
                             }
-
+                            for (var k = 0 ; k < scope.catogoryArray.length ; k++) {
+                                scope.catogoryArray[k].displayAnimation = false;
+                            }
+                            scope.selectedCategory = -1;
+                            var _obj = {
+                                iHeight: 185,
+                                iWidth: 50,
+                                iCol: 3,
+                                iArray: scope.catogoryArray
+                            };
+                            msIsotopeFunc.prototype.genericHeightChange(_obj);
+                            $timeout(function () {
+                                for (var k = 0 ; k < scope.catogoryArray.length ; k++) {
+                                    scope.catogoryArray[k].displayAnimation = true;
+                                }
+                            }, 600);
                         },
                         failureCallBack: function (iObj) {
                            
@@ -668,7 +814,21 @@ app.directive('ctcRole', function ($state, serverCommunication) {
                     });
                 }
             };
+            scope.getImage = function (iOption) {
+                var _image = '';
 
+                switch (iOption.Category) {
+                    case "Information Technology": _image = 'Images/information-icon.png'; break;
+                    case "Management": _image = 'Images/management.png'; break;
+                    case "Soft Skills": _image = 'Images/soft_Skill.png'; break;
+                    case "Code Quality": _image = 'Images/code-Quality.jpg'; break;
+                    case "Database": _image = 'Images/Database.png'; break;
+                    case "Process & Quality": _image = 'Images/quality-Process-Icon.png'; break;
+                    case "Industry Domain": _image = 'Images/Industry-Domain.png'; break;
+                }
+              //  console.error(_image, iOption)
+                return _image;
+            }
             var _createMoleculeStructure = function (iObj) {
                 _category = {};
                 _topics = {};

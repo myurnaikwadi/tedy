@@ -1,1 +1,37 @@
 ﻿
+
+.overflowHiddenClass{
+	overflow:hidden !important;
+}
+
+.topicClassNew {
+	width:100%;
+	transition:all 0.8s ease;
+	float: left;
+	position: relative;
+}
+
+.reduceHeightTopicClass {
+	width:50% !important;
+	float: left;
+	position: relative;
+height: 100%;
+	transition:all 0.8s ease;
+}
+
+.topicClassDetailsNew{
+
+	float: left;
+	position: relative;
+	width:0;
+	overflow:hidden;
+	transition:all 0.8s ease;
+}
+.topicClassDetailsNewShow {
+	height: 100%;
+	float: left;
+	position: relative;
+	width:49,5% !important;
+	transition:all 0.8s ease;
+	border-left:1px solid #ddd;
+}

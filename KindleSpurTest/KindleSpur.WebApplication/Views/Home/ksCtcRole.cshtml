@@ -6,9 +6,13 @@
                 <h5 ng-show="mySelection" style="font-size: 16px;margin: auto;margin-left: 1%;margin-right:0px;" class="fontClass" margin-top:15px;>MY SELECTION</h5>
                
                 <img ng-show="categoryDisplay && mySelection == false" ng-class="{ coachThemeColor : role == 'coach' , coacheeThemeColor : role == 'coachee' , mentorThemeColor : role == 'mentor' , menteeThemeColor : role == 'mentee' }" style="width:26px;height:24px;margin: auto auto;padding :6px;cursor:pointer;margin-left:1%;margin-right:0px;" ng-click="backButtonClick()" src="~/Images/minus.png" />
-                <h5 ng-hide="mySelection" style="font-size: 16px;margin: auto;margin-left: 1%;margin-right:0px;" class="fontClass">{{ categoryDisplay ? 'CATEGORIES' : selectedCategoryValue.Category | uppercase }}</h5>
-                <div class="ctsCategoryPanelSuggestPanel" ng-hide="mySelection">
-                    <h5 ng-class="{highlightedSelection : suggestCts.loadSuggestPopup}" ng-click="suggestCts.suggestPanelOpenClose()" style="border-color:#2dc3e8;font-size: 11px;margin: auto;margin-right:0;color:#2dc3e8;" class="fontClass genericPointerClass">Suggest Category</h5>
+                <h5 ng-hide="mySelection" style="font-size: 16px;margin: auto;margin-left: 1%;margin-right:0px;" class="fontClass">{{ 'CATEGORIES' }}</h5>
+                <img ng-if="selectedCategory" class="genericPointerClass" style="margin:auto;width: 20px;height: 20px;float: left;margin-left: 0%;margin-right:0px;" src="~/Images/rightSideIcon.png" />
+                <h5 ng-if="selectedCategory" style="font-size: 16px;margin: auto;margin-left: 0%;margin-right:0px;" class="fontClass">{{ selectedCategory.Category }}</h5>
+                <img ng-if="selectedTopic" class="genericPointerClass" style="margin:auto;width: 20px;height: 20px;float: left;margin-left: 0%;margin-right:0px;"src="~/Images/rightSideIcon.png" />
+                <h5 ng-if="selectedTopic" style="font-size: 16px;margin: auto;margin-left: 0%;margin-right:0px;" class="fontClass">{{ selectedTopic.Name }}</h5>
+                <div class="ctsCategoryPanelSuggestPanel" ng-show="categoryDisplay && mySelection == false">
+                    <h5 ng-class="{highlightedSelection : suggestCts.loadSuggestPopup}" ng-click="suggestCts.suggestPanelOpenClose($event)" style="border-color:#2dc3e8;font-size: 11px;margin: auto;margin-right:0;color:#2dc3e8;" class="fontClass genericPointerClass">Suggest Category</h5>
                 </div>                        
             </div>
             <cube-Strct class="cubeParentClass" ng-show="loadingObject.showLoading" loading-Object="loadingObject"></cube-Strct>
@@ -20,7 +24,7 @@
                     <div class="ctsSuggestPanelParent">
                         <div class="ctsCategoryHeading" style="height:9%;">
                             <h5 style="font-size: 13px;font-weight: 800;margin: auto;margin-left: 1%;margin-right:0px;" class="fontClass">Suggest Category/Topic/Skill</h5>
-                            <img style="width:10px;height:10px;margin: auto auto;cursor:pointer;margin-right:1%;" ng-click="suggestCts.suggestPanelOpenClose()" src="~/Images/cancel.png" />
+                            <img style="width:10px;height:10px;margin: auto auto;cursor:pointer;margin-right:1%;" ng-click="suggestCts.suggestPanelOpenClose($event)" src="~/Images/cancel.png" />
                         </div>
                         <div class="ctsCategoryPanelMainPanel" style="height:81%;border-bottom: 1px solid lightgray;">
                             <div class="inlineCtsAddField">
@@ -61,20 +65,167 @@
             <div class="ctsCategoryPanelMainPanel" ng-hide="mySelection">
                 <div class="ctsCategoryPanel">
                     <div class="parentCatgoryPanel">
-                        <div class="cateGoryRepeatPanel" ng-if="categoryDisplay == true">
-                            <div style="float: left;width: 50%;height:50%" class="genericPointerClass" ng-click="categoryClick($event,$index,option)" ng-repeat="option in catogoryArray">
-                                <div ng-class="{ coachThemeColor : option.selectedCategory == true && role == 'coach' , mentorThemeColor : option.selectedCategory == true && role == 'mentor' , menteeThemeColor : option.selectedCategory == true && role == 'mentee',coacheeThemeColor : option.selectedCategory == true && role == 'coachee' , }" class="categoryCircle">
-                                    <div class="categoryRightlabelPart">
-                                        <div class="categoryRightlabel">
-                                            <h5 style="color:#545454;margin: auto;width:80%;font-size: 15px;" class="leftSideMenuLable fontClass multilineEllipsis" ng-class="{ whiteBackground : option.selectedCategory == true }">
-                                                {{option.Category | uppercase}}
-                                            </h5>
+                        <div class="cateGoryRepeatPanel" ng-class="{ cateGoryRepeatPanelHiddenOver : selectedCategoryValue > -1}" style="position: relative;">
+                            <div style="position: absolute;" class="genericPointerClass"  ng-repeat="option in catogoryArray" ng-style="option.styleObj">
+                                <div ng-show="selectedCategoryValue != $index" ng-click="categoryClick($event,$index,option)" class="categoryRightlabelPart" ng-class="{ categoryRightlabelPartShow : option.displayAnimation == true }">
+                                    <div ng-class="{ coachThemeBgColor : option.selectedCategoryValue == true && role == 'coach' , mentorThemeBgColor : option.selectedCategory == true && role == 'mentor' , menteeThemeBgColor : option.selectedCategory == true && role == 'mentee',coacheeThemeBgColor : option.selectedCategory == true && role == 'coachee' , }" class="categoryCircle">
+                                        <div class="categoryContainParent">
+                                            <div class="topicHeadingSection" style="height: 80%;">
+                                                <img ng-src="{{getImage(option)}}"style="margin: auto auto;float: left;position: relative;width: 105px;height: 105px;" />
+                                            </div>
+
+                                            <div class="categoryRightlabel">
+                                                <h5 style="margin: auto;font-size: 15px;color:black;" class="leftSideMenuLable fontClass multilineEllipsis" ng-class="{ whiteBackground : option.selectedCategory == true }">
+                                                    {{option.Category | uppercase}}
+                                                </h5>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div ng-show="selectedCategoryValue == $index" class="categoryContainParent" style="box-shadow: 0px 0px 10px 2px;width: 99%;margin: 0.5%;height: 98%;">
+                                    <div class="categoryContainParent" style="border:1px solid lightgray;">
+                                        <div class="fullWidthHeightClass" style="margin:auto;">
+                                            <div class="fullWidthHeightClass" style="height: 15%;border-bottom: 1px solid lightgray;">
+                                                <div class="fullWidthHeightClass" style="float: left;">
+                                                    <img ng-click="closeIsotopeCategory($event)" style="z-index: 3;width: 15px;height: 15px;top:1%;right: 1%;bottom: 0;position: absolute;cursor:pointer" title="Close" src="~/Images/cancel.png" />
+                                                    <div class="topicHeadingSection" style="height: 100%;width: 8%;border:0;">
+                                                        <img ng-src="{{getImage(option)}}" style="margin: auto auto;float: left;position: relative;width: 50px;height: 50px;" />
+                                                    </div>
+                                                    <div style="width: 92%;float: left;height: 50%;display: flex;">
+                                                        <h5 style="color: #9E9E9E;margin: auto;margin-left:0%;margin-bottom: 5px;font-size: 15px;" class="leftSideMenuLable fontClass">{{option.Category | uppercase}}</h5>
+                                                    </div>
+                                                    <div style="width: 92%;float: left;height: 50%;display: flex;">
+                                                        <h5 style="color: #9E9E9E;margin: auto;margin-left:0%;margin-top: 5px;font-size: 15px;" class="leftSideMenuLable fontClass">Some description related to selected category</h5>
+                                                    </div>
+                                                    <div class="ctsCategoryPanelSuggestPanel" style="position: absolute;right: 1%;">
+                                                        <h5 ng-class="{highlightedSelection : suggestCts.loadSuggestPopup}" ng-click="suggestCts.suggestPanelOpenClose($event)" style="border-color:#2dc3e8;font-size: 11px;margin: auto;margin-right:0;color:#2dc3e8;" class="fontClass genericPointerClass">Suggest Topic</h5>
+                                                    </div>   
+                                                    @*<h5 style="color: #9E9E9E;font-size: 18px;margin: 0;" class="leftSideMenuLable fontClass">{{option.Category | uppercase}}</h5>
+                                                    <h5 style="color: #9E9E9E;font-size: 15px;margin: 0;" class="leftSideMenuLable fontClass">Some description related to selected category</h5>*@
+                                                </div>
+                                                @*<div style="width: 100%;float: left;height: 30%;display: flex;border-bottom:1px solid #ddd;">
+                                                    <h5 style="color: #9E9E9E;;margin: auto;font-size: 15px;" class="leftSideMenuLable fontClass">Some description related to selected category</h5>
+                                                </div>*@
+                                            </div>                                           
+                                            <div style="width: 100%;float: left;height: 85%;position: relative;">
+                                                <div style="border-bottom:1px solid #ddd;width: 100%;position: relative;float: left;height: 10%;display: flex;">
+                                                    <h5 style="color: #9E9E9E;margin: auto;width: 68%;margin-left:2%;font-size: 15px;" class="leftSideMenuLable fontClass">Topic List</h5>
+                                                    <div ng-show="skillRequired == false" class="cateGoryRepeatPanel" style="width: 10%;height: 100%;float:right;display: flex;margin:0;">
+                                                        <input ng-click="$event.stopPropagation()" ng-model="skill.profiLevel" style="float: left;padding: 0;margin: auto;" type="checkbox" />
+                                                        <h5 style="color: #9E9E9E;margin: auto;margin-left:0%;font-size: 12px;" class="leftSideMenuLable fontClass">Select All</h5>
+                                                    </div>
+                                                </div>
+                                                <div class="fullWidthHeightClass" style="float: left;height: 90%;display:flex;">
+                                                    <div id="topicParent" class="cateGoryRepeatPanel" ng-class="{ overflowHiddenClass : selectedTopicValue > -1 }" style="margin:auto;position: relative;float: left;overflow:auto;">
+                                                        <div ng-init="mouseOverEffectFlag= false" ng-mouseover="mouseOverEffectFlag= true" ng-mouseleave="mouseOverEffectFlag= false" ng-style="topic.styleObj" ng-repeat="topic in topicArray" style="transition:all 0.8s ease;position:absolute;">
+                                                            <div class="categoryContainParent"ng-style="styleToCTSText[topic.Name]">
+                                                                <div ng-show="selectedTopicValue != $index" ng-click="topicSelection($event,$index,topic)"  style="width: 94%;height: 94%;margin: 6%;"class="categoryRightlabelPart" ng-class="{ categoryRightlabelPartShow : topic.displayAnimation == true }">
+                                                                    <div ng-class="{ coachThemeBgColor : topic.selectedCategory == true && role == 'coach' , mentorThemeBgColor : topic.selectedCategory == true && role == 'mentor' , menteeThemeBgColor : topic.selectedCategory == true && role == 'mentee',coacheeThemeBgColor : topic.selectedCategory == true && role == 'coachee' , }" class="categoryCircle">
+                                                                        <div class="categoryContainParent">
+                                                                            <div class="topicHeadingSection" style="border:0;width: 30%;height: 100%;">
+                                                                                <img ng-src="{{getImage({ Category :topic.Name })}}" style="margin: auto auto;float: left;position: relative;width: 45px;height: 45px;" />
+                                                                            </div>
+                                                                            <div class="mentor-actions" style="left:0;display:flex;" ng-class="{ ctsMouseOverEffct : mouseOverEffectFlag == true && topic.selected == true}">
+                                                                                <div class="topicHeadingSection" style="border:0;z-index: 4;position:absolute;width: 100%;height: 100%;display:flex;">
+                                                                                    <input ng-click="$event.stopPropagation()" ng-change="changeslider(topic)" ng-model="topic.profiLevel" name="Proficiency Level" title="{{ 'Proficiency Level - '+ (topic.profiLevel == 0 ? 'Basic' : (topic.profiLevel == 1 ? 'Intermediate' : 'Expert') )}}" min="0" step="1" max="2" style="float: left;padding: 0;width: 80%;margin: auto;margin-top: 3%;" type="range" />
+                                                                                </div>                                                                                
+                                                                                <h6 ng-style="styleToCTSText[skill.Name]">Basic</h6>  
+                                                                                <h6 ng-style="styleToCTSText[skill.Name]">Intermediate</h6>  
+                                                                                <h6 ng-style="styleToCTSText[skill.Name]">Expert</h6>    
+                                                                                <div ng-style="styleToCTS[skill.Name]"></div>  
+                                                                           </div>
+                                                                            <div class="applicationNotiCount" title="{{topic.Skills.length}}" style="float:left;text-align: center;display: flex;position:absolute;top:5%;right:2%;background: #afdeaf;border: 1px solid #afdeaf;">
+                                                                                <h4 class="fontClass" style="margin:auto;font-weight: 700;color:white;">{{topic.Skills.length}}</h4>
+                                                                            </div>
+                                                                            <div class="applicationNotiCount" title="{{topic.Skills.length}}" style="float:left;text-align: center;display: flex;position:absolute;top:5%;right:14%;background: #8f9ad0;border: 1px solid #8f9ad0;">
+                                                                                <h4 class="fontClass" style="margin:auto;font-weight: 700;color:white;">{{topic.Skills.length}}</h4>
+                                                                            </div>
+                                                                            <div class="categoryRightlabel" style="width: 70%;height: 100%;">
+                                                                                <h5 style="margin: auto;margin-left:0;font-size: 12px;color:black;" class="leftSideMenuLable fontClass multilineEllipsis">
+                                                                                    {{topic.Name | uppercase}}
+                                                                                </h5>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>                                                                
+                                                                <div class="fullWidthHeightClass" ng-show="selectedTopicValue == $index" style="background:white;width: 99%;height: 99%;margin: 5px;">
+                                                                    <div class="categoryContainParent" style="border:1px solid lightgray;">
+                                                                        <div class="fullWidthHeightClass" style="margin:auto;">
+                                                                            <div class="fullWidthHeightClass" style="height: 15%;border-bottom: 1px solid lightgray;">
+                                                                                <div class="fullWidthHeightClass" style="float: left;">
+                                                                                    <div class="topicHeadingSection" style="height: 100%;width: 6%;border:0;">
+                                                                                        <img ng-src="{{getImage({ Category :topic.Name })}}" style="margin: auto auto;float: left;position: relative;width: 35px;height: 35px;" />
+                                                                                    </div>
+                                                                                    <div style="width: 94%;float: left;height: 50%;display: flex;">
+                                                                                        <h5 style="color: #9E9E9E;margin: auto;margin-left:0%;margin-bottom: 5px;font-size: 12px;" class="leftSideMenuLable fontClass">{{topic.Name | uppercase}}</h5>
+                                                                                    </div>
+                                                                                    <div style="width: 94%;float: left;height: 50%;display: flex;">
+                                                                                        <h5 style="color: #9E9E9E;margin: auto;margin-left:0%;margin-top: 5px;font-size: 12px;" class="leftSideMenuLable fontClass">Some description related to selected category</h5>
+                                                                                    </div>
+                                                                                    <div class="ctsCategoryPanelSuggestPanel" style="position: absolute;right: 1%;">
+                                                                                        <h5 ng-class="{highlightedSelection : suggestCts.loadSuggestPopup}" ng-click="suggestCts.suggestPanelOpenClose($event)" style="border-color:#2dc3e8;font-size: 11px;margin: auto;margin-right:0;color:#2dc3e8;" class="fontClass genericPointerClass">Suggest Skill</h5>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="fullWidthHeightClass" style="float: left;height: 85%;">
+                                                                                <div style="border-bottom:1px solid #ddd;width: 100%;position: relative;float: left;height: 10%;display: flex;">
+                                                                                    <h5 style="color: #9E9E9E;margin: auto;width: 68%;margin-left:2%;font-size: 15px;" class="leftSideMenuLable fontClass">Skill List</h5>
+                                                                                    <div class="cateGoryRepeatPanel" style="width: 10%;height: 100%;float:right;display: flex;margin:0;">
+                                                                                        <input ng-click="$event.stopPropagation()" ng-model="skill.profiLevel" style="float: left;padding: 0;margin: auto;" type="checkbox" />
+                                                                                        <h5 style="color: #9E9E9E;margin: auto;margin-left:0%;font-size: 12px;" class="leftSideMenuLable fontClass">Select All</h5>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="fullWidthHeightClass" style="float: left;height: 90%;display:flex;">
+                                                                                    <div id="topicParent" class="cateGoryRepeatPanel" style="margin:auto;position: relative;float: left;overflow:auto;">
+                                                                                        <div ng-init="mouseOverEffectFlag= false" ng-mouseover="mouseOverEffectFlag= true" ng-mouseleave="mouseOverEffectFlag= false" ng-click="skillSelection($event,$index,skill)" ng-style="skill.styleObj" ng-repeat="skill in skillsArray" style="transition:all 0.8s ease;position:absolute;">
+                                                                                            <div class="categoryContainParent" ng-style="styleToCTSText[skill.Name]">
+                                                                                                <div style="width: 94%;height: 94%;margin: 3%;" class="categoryRightlabelPart" ng-class="{ categoryRightlabelPartShow : skill.displayAnimation == true }">
+                                                                                                    <div ng-class="{ coachThemeBgColor : skill.selectedCategory == true && role == 'coach' , mentorThemeBgColor : skill.selectedCategory == true && role == 'mentor' , menteeThemeBgColor : skill.selectedCategory == true && role == 'mentee',coacheeThemeBgColor : skill.selectedCategory == true && role == 'coachee' , }" class="categoryCircle">
+                                                                                                        <div class="categoryContainParent">
+                                                                                                            <div class="mentor-actions" style="left:0;display:flex;" ng-class="{ ctsMouseOverEffct : (mouseOverEffectFlag == true && skill.selected == true) || skill.selected == true}">
+                                                                                                                <div class="topicHeadingSection" style="border:0;position:absolute;width: 100%;z-index: 4;height: 100%;display:flex;">
+                                                                                                                    <input ng-click="$event.stopPropagation()" ng-change="changeslider(skill)" ng-model="skill.profiLevel" name="Proficiency Level" title="{{ 'Proficiency Level - '+ (skill.profiLevel == 0 ? 'Basic' : (skill.profiLevel == 1 ? 'Intermediate' : 'Expert') )}}" min="0" step="1" max="2" style="float: left;padding: 0;width: 80%;margin: auto;margin-top: 3%;" type="range" />
+                                                                                                                </div>
+                                                                                                                <h6 ng-style="styleToCTSText[skill.Name]">Basic</h6>
+                                                                                                                <h6 ng-style="styleToCTSText[skill.Name]">Intermediate</h6>
+                                                                                                                <h6 ng-style="styleToCTSText[skill.Name]">Expert</h6>
+                                                                                                                <div ng-style="styleToCTS[skill.Name]"></div>
+                                                                                                            </div>
+                                                                                                            <div class="fullWidthHeightClass">
+                                                                                                                <div class="fullWidthHeightClass" style="height: 100%;display:flex;position:absolute;background:url({{getImage({ Category :topic.Name })}});background-repeat: no-repeat;background-size: 100%;opacity: 0.4;"></div>                                                                                                               
+                                                                                                                <div class="fullWidthHeightClass" style="height: 50%;display:flex;">
+                                                                                                                    <h5 style="width: 90%;margin: auto;font-size: 11px;color:black;" class="leftSideMenuLable fontClass multilineEllipsis" ng-class="{ whiteBackground : skill.selectedCategory == true }">{{skill.Name | uppercase}}</h5>
+                                                                                                                </div>
+                                                                                                                <div class="fullWidthHeightClass" style="height: 50%;display:flex;">
+                                                                                                                    <h5 style="width: 90%;margin: auto;font-size: 10px;color:black;" class="leftSideMenuLable fontClass multilineEllipsis" ng-class="{ whiteBackground : skill.selectedCategory == true }">{{skill.Tooltip | uppercase}}</h5>
+                                                                                                                </div>
+                                                                                                            </div>
+                                                                                                        </div>
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>                                                            
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="mentor-actions" style="left:0;display:flex;" ng-class="{ mentorActionsActivate : mouseOverEffectFlagSave == true}">
+                                                    <button class="signupButton fontClass" ng-click="savepublishClick()" style="padding: 0;margin: auto; margin-right: 0;">{{categoryDisplay ? 'Publish' : 'SAVE' }}</button>
+                                                    <button class="signupButton fontClass" ng-click="backButtonClick() " style="padding: 0;margin: auto; margin-left: 3%;">CANCEL</button>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="topicSkillPanel" ng-if="categoryDisplay == false">
+                        @*<div class="topicSkillPanel" ng-if="categoryDisplay == false">
                             <div  id="topicDynamic"  ng-style="{ 'transition':'all 0.8s ease','overflow' : 'hidden', 'height':  gridViewSkill.gridViewLoaded == true ? '93%' : (gridViewSkill.gridViewSkillLoaded == true ? '35px' : '50%')}" class="topicClassParent" ng-class="{ heightTopicClass : skillRequired == false}">
                                 <div class="topicHeadingSection" ng-style="{ 'transition':'all 0.8s ease','overflow' : 'hidden', 'height':  gridViewSkill.gridViewLoaded == true ? '35px' : (gridViewSkill.gridViewSkillLoaded == true ? '35px' : '35px') }">
                                     <h5 class="topicHeadingBar fontClass">TOPICS</h5>
@@ -90,7 +241,7 @@
                                         <div ng-init="mouseOverEffectFlag= false"  class="topicsList"  ng-repeat="skill in topicArray">
                                             <div ng-mouseover="mouseOverEffectFlag= true" ng-mouseleave="mouseOverEffectFlag= false" class="tagTasks" ng-click="topicSelection($event,$index,skill)" ng-style="styleToCTSText[skill.Name]" style="display:flex;float: left;width: 100%;height: 60px;z-index: 2;position: relative;">
                                                 <h5 class="fontClass multilineEllipsis" style="font-size: 11px;margin:auto;float: left;position: relative;">{{skill.Name | uppercase}}</h5>
-                                                @*<h5 class="fontClass multilineEllipsis" style="font-size: 11px;margin:auto;float: left;position: relative;height: 100%">{{skill.Tooltip | uppercase}}</h5>*@
+                                             
                                                 <div ng-show="skillRequired == false" class="mentor-actions" style="left:0;" ng-class="{ ctsMouseOverEffct : mouseOverEffectFlag == true}">
                                                     <h5 class="genericEventHeadings" style="border:0; margin: auto;color: white;font-size:13px;" title="{{skill.Tooltip}}">{{skill.Tooltip | uppercase}}</h5>
 
@@ -117,10 +268,10 @@
                                     </div>
 
                                     <div  ng-init="mouseOverEffectFlag= false" class="topicsList" ng-repeat="skill in skillsArray" >                                                     
-                                        @*<h5 ng-click="skillSelection($event,$index,skill)" class="tagTasks fontClass multilineEllipsis" ng-style="styleToCTSText[skill.Name]" style="float: left;width: 100%;height: 45px;z-index: 2;position: relative;">{{skill.Name | uppercase}}</h5>*@
+                                     
                                         <div ng-mouseover="mouseOverEffectFlag= true" ng-mouseleave="mouseOverEffectFlag= false"class="tagTasks" ng-style="styleToCTSText[skill.Name]" style="display:flex;float: left;width: 100%;height: 60px;z-index: 2;position: relative;" ng-click="skillSelection($event,$index,skill)">
                                             <h5 class="fontClass multilineEllipsis" style="font-size: 11px;margin:auto;float: left;position: relative;">{{skill.Name | uppercase}}</h5>
-                                            @*<h5 class="fontClass multilineEllipsis" style="font-size: 11px;margin:auto;float: left;position: relative;height: 100%">{{skill.Tooltip | uppercase}}</h5>*@
+                                        
                                             <div class="mentor-actions" style="left:0;" ng-class="{ ctsMouseOverEffct : mouseOverEffectFlag == true}">
                                                 <h5 class="genericEventHeadings" style="border:0; margin: auto;color: white;font-size:13px;" title="{{skill.Tooltip}}" >{{skill.Tooltip | uppercase}}</h5>
                                                 
@@ -131,10 +282,10 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div>*@
                     </div>
                 </div>
-                <div class="ctsCategoryActionPanel" ng-hide="categoryDisplay">
+                <div class="ctsCategoryActionPanel" ng-hide="true">
                     <div class="cateGoryFormDetails">
                         <button class="signupButton fontClass" ng-click="savepublishClick()" style="padding: 0;">{{categoryDisplay ? 'Publish' : 'SAVE' }}</button>
                         <button class="signupButton fontClass" ng-click="backButtonClick() " style="padding: 0;margin-left:20px;">CANCEL</button>
