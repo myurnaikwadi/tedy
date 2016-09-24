@@ -343,7 +343,7 @@
             _displayAlertMeesage({ message: "Please enter your first name.", formatType: '2' });
             return;
         }else if(!$scope.localModel.lastName || $scope.localModel.lastName == ''){
-            _displayAlertMeesage({ message: "Please Enter your last name.", formatType: '2' });
+            _displayAlertMeesage({ message: "Please enter your last name.", formatType: '2' });
             return;
         }       
 
@@ -396,11 +396,11 @@
        
        
         if (!$scope.localModel.Password || $scope.localModel.Password == '') {
-            _displayAlertMeesage({ message: "Please Enter your Password", formatType: '2' });
+            _displayAlertMeesage({ message: "Please enter your password", formatType: '2' });
             return;
         }
        else if (($scope.localModel.Password) != ($scope.localModel.ConfirmPassword)) {
-            _displayAlertMeesage({ message: "password and Confirm password are not same", formatType: '2' });
+            _displayAlertMeesage({ message: "Password and confirm password are not same", formatType: '2' });
             return;
        }
       
