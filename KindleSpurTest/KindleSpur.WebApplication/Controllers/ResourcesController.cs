@@ -33,25 +33,7 @@ namespace KindleSpur.WebApplication.Controllers
             try
             {
                 Dictionary<string, object> obj = new Dictionary<string, object>();
-                var files = cs.getFiles(user.EmailAddress);
-                var bookmark = cs.getFilesBookmarks(user.EmailAddress);
-                if (files != null)
-                {
-                    List<FileUpload> listfile = new List<FileUpload>();
-                    foreach (var i in files)
-
-                        listfile.Add(i);
-                    obj.Add("Artifacts", listfile);
-
-                }
-                if (bookmark != null)
-                {
-                    List<BookMark> listbookmark = new List<BookMark>();
-                    foreach (var e in bookmark)
-                        listbookmark.Add(e);
-
-                    obj.Add("Bookmarks", listbookmark);
-                }
+                GetFillesAnBookmarks(user, cs, obj);
                 return Json(obj);
 
             }
@@ -65,10 +47,35 @@ namespace KindleSpur.WebApplication.Controllers
 
 
         }
+
+        private static void GetFillesAnBookmarks(User user, ConversationRepository cs, Dictionary<string, object> obj)
+        {
+            var files = cs.getFiles(user.EmailAddress);
+            var bookmark = cs.getFilesBookmarks(user.EmailAddress);
+            if (files != null)
+            {
+                List<FileUpload> listfile = new List<FileUpload>();
+                foreach (var i in files)
+
+                    listfile.Add(i);
+                obj.Add("Artifacts", listfile);
+
+            }
+            if (bookmark != null)
+            {
+                List<BookMark> listbookmark = new List<BookMark>();
+                foreach (var e in bookmark)
+                    listbookmark.Add(e);
+
+                obj.Add("Bookmarks", listbookmark);
+            }
+        }
+
         [HttpPost]
         public JsonResult UploadFilesForArtiFacts(FileUpload model)
         {
             UserRepository _repo = new UserRepository();
+            ConversationRepository cs = new ConversationRepository();
 
             try
             {
@@ -116,7 +123,11 @@ namespace KindleSpur.WebApplication.Controllers
                 {
                     ViewBag.message = "Please choose  file";
                 }
+                Dictionary<string, object> obj = new Dictionary<string, object>();
+                User getUser = (User)(_repo.GetUserDetails(UserId));
+                GetFillesAnBookmarks(getUser, cs, obj);
                 IUser user = _repo.GetUserDetail(((IUser)System.Web.HttpContext.Current.Session["User"]).EmailAddress);
+               
                 return Json(user);
             }
             catch (Exception)
@@ -137,11 +148,14 @@ namespace KindleSpur.WebApplication.Controllers
         {
 
 
-
+           
             ConversationRepository cs = new ConversationRepository();
+         
             try
             {
+           
                 return Json(cs.Bookmarks(UserId, user.BookMarks));
+                
 
             }
             catch (Exception)
@@ -150,23 +164,7 @@ namespace KindleSpur.WebApplication.Controllers
                 throw;
             }
         }
-        [HttpPost]
-        public JsonResult DiselectBookmarkRemove(List<Models.BookMark> Obj)
-        {
-            UserRepository user = new UserRepository();
-            try
-            {
-                if (Obj != null)
-                    user.BookmarkRemoveDiselect(Obj, UserId);
-
-            }
-            catch (Exception ex)
-            {
-
-                response.FailureCallBack(ex.Message);
-            }
-            return Json(user);
-        }
+       
         [HttpPost]
         public JsonResult DeleteFiles(List<Models.FileUpload> Obj)
         {
@@ -188,10 +186,13 @@ namespace KindleSpur.WebApplication.Controllers
         public JsonResult DeleteBookmarks(List<Models.BookMark> Obj)
         {
             UserRepository user = new UserRepository();
+         
+         
             try
             {
                 if (Obj != null)
                     user.DeleteBookMarks(Obj, UserId);
+               
 
             }
             catch (Exception ex)

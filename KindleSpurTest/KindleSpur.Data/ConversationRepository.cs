@@ -667,7 +667,7 @@ namespace KindleSpur.Data
         public bool Bookmarks(string UserId, List<BookMark> bookmarks)
         {
             bool _transactionStatus = false;
-
+            UserRepository _repo = new UserRepository();
             try
             {
                 var _userCollection = con.GetCollection("UserDetails");
@@ -676,29 +676,30 @@ namespace KindleSpur.Data
 
                 //var result = _userCollection.FindAs<BsonDocument>(Query.And(Query.EQ("EmailAddress", userDetail.EmailAddress), Query.EQ("Files", userDetail.Files.Select(c => c.FileId ==))).ToList();
                 // List<FileUpload> fileupdate = new List<FileUpload>();
+          
                 foreach (var bookmark in bookmarks)
                 {
+                    // var id = _userCollection.FindAs<User>(Query.EQ("Bookmarks.BookMarkId", userDetail.BookMarks.Select(x=>x.BookMarkId).ToBsonDocument().Any())).ToList();
                     //   FileUpload file = new FileUpload();
-                    BookMark Link = new BookMark();
-                    Link.Id = ObjectId.GenerateNewId();
-                    Link.BookMarkId = Guid.NewGuid().ToString();
-                    Link.LinkUrl = bookmark.LinkUrl;
-                    Link.DocumentName = bookmark.DocumentName;
-                    Link.ParentFileId = bookmark.ParentFileId;
-
-                    path.Add(Link);
-                    if (bookmark.ParentFileId != null)
+                    var id = userDetail.BookMarks.Select(x => new BookMark {ParentFileId=x.ParentFileId }).Distinct().ToList();
+                    var check = id.FirstOrDefault(ch => ch.ParentFileId == bookmark.ParentFileId);
+                    if (check!=null)
                     {
-                        foreach (var fileid in userDetail.Files.Where(w => w.FileId == bookmark.ParentFileId))
+                        if (check.ParentFileId != null)
                         {
-                            fileid.bookMarked = bookmark.ParentFileId;
-                            _userCollection.Update(Query.EQ("EmailAddress", userDetail.EmailAddress), Update<User>.Set(c => c.Files, userDetail.Files));
-
+                            _userCollection.Update(Query.EQ("EmailAddress", userDetail.EmailAddress), Update<User>.Set(c => c.BookMarks, userDetail.BookMarks));
                         }
+                        else
+                        {
+                            Bookmark(_userCollection, userDetail, path, bookmark);
+                          
+                        }
+
                     }
                     else
                     {
-                        _userCollection.Update(Query.EQ("EmailAddress", userDetail.EmailAddress), Update<User>.Set(c => c.Files, userDetail.Files));
+                        Bookmark(_userCollection, userDetail, path, bookmark);
+                    
                     }
 
 
@@ -708,7 +709,29 @@ namespace KindleSpur.Data
                 userDetail.BookMarks.AddRange(path.ToList());
 
                 _userCollection.Save(userDetail);
+                Dictionary<string, object> obj = new Dictionary<string, object>();
+                ConversationRepository cs = new ConversationRepository();
+                GetFillesAnBookmarks(userDetail, cs, obj);
                 _transactionStatus = true;
+                //var files = cs.getFiles(user.EmailAddress);
+                //var bookmark = cs.getFilesBookmarks(user.EmailAddress);
+                //if (files != null)
+                //{
+                //    List<FileUpload> listfile = new List<FileUpload>();
+                //    foreach (var i in files)
+
+                //        listfile.Add(i);
+                //    obj.Add("Artifacts", listfile);
+
+                //}
+                //if (bookmark != null)
+                //{
+                //    List<BookMark> listbookmark = new List<BookMark>();
+                //    foreach (var e in bookmark)
+                //        listbookmark.Add(e);
+
+                //    obj.Add("Bookmarks", listbookmark);
+                //}
             }
             catch (MongoException ex)
             {
@@ -733,7 +756,52 @@ namespace KindleSpur.Data
             }
             return _transactionStatus;
         }
+        private static void GetFillesAnBookmarks(User user, ConversationRepository cs, Dictionary<string, object> obj)
+        {
+            var files = cs.getFiles(user.EmailAddress);
+            var bookmark = cs.getFilesBookmarks(user.EmailAddress);
+            if (files != null)
+            {
+                List<FileUpload> listfile = new List<FileUpload>();
+                foreach (var i in files)
 
+                    listfile.Add(i);
+                obj.Add("Artifacts", listfile);
+
+            }
+            if (bookmark != null)
+            {
+                List<BookMark> listbookmark = new List<BookMark>();
+                foreach (var e in bookmark)
+                    listbookmark.Add(e);
+
+                obj.Add("Bookmarks", listbookmark);
+            }
+        }
+        private static void Bookmark(MongoCollection _userCollection, User userDetail, List<BookMark> path, BookMark bookmark)
+        {
+            BookMark Link = new BookMark();
+            Link.Id = ObjectId.GenerateNewId();
+            Link.BookMarkId = Guid.NewGuid().ToString();
+            Link.LinkUrl = bookmark.LinkUrl;
+            Link.DocumentName = bookmark.DocumentName;
+            Link.ParentFileId = bookmark.ParentFileId;
+
+            path.Add(Link);
+            if (bookmark.ParentFileId != null)
+            {
+                foreach (var fileid in userDetail.Files.Where(w => w.FileId == bookmark.ParentFileId))
+                {
+                    fileid.bookMarked = bookmark.ParentFileId;
+                    _userCollection.Update(Query.EQ("EmailAddress", userDetail.EmailAddress), Update<User>.Set(c => c.Files, userDetail.Files));
+
+                }
+            }
+            else
+            {
+                _userCollection.Update(Query.EQ("EmailAddress", userDetail.EmailAddress), Update<User>.Set(c => c.Files, userDetail.Files));
+            }
+        }
 
         public List<FileUpload> getFiles(string UserId)
         {

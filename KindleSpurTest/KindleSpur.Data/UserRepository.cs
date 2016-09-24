@@ -641,7 +641,7 @@ namespace KindleSpur.Data
         //    return _transactionStatus;
         //}
 
-            //Rewards should be display in Role Wise.depend on Feddback
+        //Rewards should be display in Role Wise.depend on Feddback
         public void GetRewardPoints(string EmailAddress, ref Reward reward)
         {
             bool _transactionStatus = false;
@@ -1092,47 +1092,8 @@ namespace KindleSpur.Data
             return _transactionStatus;
 
         }
-        //Remove Seleted Bokkmarks  
-        public bool BookmarkRemoveDiselect(List<BookMark> list, string EmailAddress)
-        {
-            bool _transactionStatus = false;
-            try
-            {
-                User userDetail = (User)GetUserDetail(EmailAddress);
+      
 
-                foreach (var r in list)
-                {
-                  
-                        userDetail.BookMarks.RemoveAll(x => x.BookMarkId == r.BookMarkId);
-
-                }
-
-                _userCollection.Update(Query.EQ("EmailAddress", userDetail.EmailAddress), Update<User>.Set(c => c.BookMarks, userDetail.BookMarks));
-
-                _transactionStatus = true;
-            }
-            catch (MongoException ex)
-            {
-                string message = "{ Error : 'Failed at DeleteCoacheeOrMentee().', Log: " + ex.Message + ", Trace: " + ex.StackTrace + "} ";
-                _logCollection.Insert(message);
-                throw new MongoException("Signup failure!!!");
-            }
-            catch (Exception e)
-            {
-                Exceptionhandle em = new Exceptionhandle();
-                em.Error = "Failed at DeleteCoacheeOrMentee()";
-                em.Log = e.Message.Replace("\r\n", "");
-                var st = new System.Diagnostics.StackTrace(e, true); var frame = st.GetFrame(0);
-                var line = frame.GetFileLineNumber();
-                _logCollection.Insert(em);
-                throw new MongoException("Signup failure!!!");
-            }
-            finally
-            {
-
-            }
-            return _transactionStatus;
-        }
 
         //This Medthod delete added files
         public bool DeleteResourceFiles(List<FileUpload> list, string emailAddress)
@@ -1187,7 +1148,20 @@ namespace KindleSpur.Data
 
                 foreach (var r in list)
                 {
-                    userDetail.BookMarks.RemoveAll(x => x.BookMarkId == r.BookMarkId);
+                    if (r.ParentFileId != null)
+                    {
+                        foreach (var fileid in userDetail.Files.Where(w => w.FileId == r.ParentFileId))
+                        {
+                            userDetail.BookMarks.RemoveAll(x => x.BookMarkId == r.BookMarkId);
+
+                            fileid.bookMarked = null;
+                            _userCollection.Update(Query.EQ("EmailAddress", userDetail.EmailAddress), Update<User>.Set(c => c.Files, userDetail.Files));
+                        }
+                    }
+                    else
+                    {
+                        userDetail.BookMarks.RemoveAll(x => x.BookMarkId == r.BookMarkId);
+                    }
 
                 }
 
