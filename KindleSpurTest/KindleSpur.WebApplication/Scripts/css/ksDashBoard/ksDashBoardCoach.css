@@ -354,7 +354,7 @@
             position: absolute;
             bottom: 15%;
             left: 10%;
-            border-bottom-color: lightgray;
+            border-bottom-color: gray;
             border-width:7px;
         }
         .roleIconCircle {
