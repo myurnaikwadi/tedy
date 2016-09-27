@@ -74,7 +74,7 @@
                     <div style="height: 88%;width: 100%;float:left;overflow:auto;">
                         <div ng-hide="artifactsArray.length == 0" class="ImpactZoneChildDiv mouseOverEffectDiv"  ng-repeat="option in artifactsArray">
                             <div ng-show="extraParam.deleteIcon == true" class="profileImageCoachingStatus">
-                                <img ng-src="{{ option.bookMarked ? 'Images/rate-star-button.png' : 'Images/silverstar.png' }}" ng-click="option.bookMarked =! option.bookMarked; saveBookmark(option)" style="margin: auto; float: left;height: 20px;width: 20px;" />
+                                <img ng-src="{{ option.bookMarked ? 'Images/rate-star-button.png' : 'Images/silverstar.png' }}" ng-click="selectBookMarkLink(option)" style="margin: auto; float: left;height: 20px;width: 20px;" />
                             </div>
                             <div ng-click="loadFeedOnNextTab(option)" class="profileImageCoachingStatus genericPointerClass">
                                 <img ng-if="option.ContentType.indexOf('document') > -1 && option.ContentType.indexOf('sheet') == -1" src="~/Images/icons/msDoc.png" style="margin: auto auto;float: left;height: 35px;width: 35px;" />

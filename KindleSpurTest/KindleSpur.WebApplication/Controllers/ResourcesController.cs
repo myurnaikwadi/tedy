@@ -72,21 +72,22 @@ namespace KindleSpur.WebApplication.Controllers
         }
 
         [HttpPost]
-        public JsonResult UploadFilesForArtiFacts(FileUpload model)
+        public JsonResult UploadFilesForArtiFacts(FileUpload iObj)
         {
             UserRepository _repo = new UserRepository();
             ConversationRepository cs = new ConversationRepository();
 
             try
             {
+
                 var filess = Request.Files;
+                var id = HttpContext.Request.Params["FileId"];
+                string[] FilesId = id.Split(',');
                 Dictionary<int, List<string>> listname = new Dictionary<int, List<string>>();
+
                 if (filess.Count > 0)
                 {
-
                     object[] myfiles = new object[filess.Count];
-
-
                     for (int i = 0; i < filess.Count; i++)
                     {
                         List<string> filedata = new List<string>();
@@ -95,6 +96,8 @@ namespace KindleSpur.WebApplication.Controllers
                         var contenttype = postfile.ContentType;
                         var Filesize = postfile.ContentLength;
                         //filedata is must  add 0 th index fileName
+                        var FileID = FilesId[i];
+                        filedata.Add(FileID);
                         filedata.Add(fileName);
                         //filedata is must  add 1 th index contenttype
                         filedata.Add(contenttype);
@@ -109,38 +112,34 @@ namespace KindleSpur.WebApplication.Controllers
 
 
                         postfile.SaveAs(Path.Combine(Server.MapPath("~/FilePath"), myfiles[i].ToString()));
+
                     }
                     if (myfiles != null)
                     {
-                        _repo.uploadResourceFile(UserId, myfiles, model.TagName, listname);
+                        _repo.uploadResourceFile(UserId, myfiles, listname);
                     }
                     else
                     {
                         ViewBag.message = "Please choose only Image file";
                     }
+
                 }
                 else
                 {
                     ViewBag.message = "Please choose  file";
                 }
-                Dictionary<string, object> obj = new Dictionary<string, object>();
-                User getUser = (User)(_repo.GetUserDetails(UserId));
-                GetFillesAnBookmarks(getUser, cs, obj);
+                //Dictionary<string, object> obj = new Dictionary<string, object>();
+                //User getUser = (User)(_repo.GetUserDetail(UserId));
+                //GetFillesAnBookmarks(getUser, cs, obj);
                 IUser user = _repo.GetUserDetail(((IUser)System.Web.HttpContext.Current.Session["User"]).EmailAddress);
-               
+
                 return Json(user);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
 
-                throw;
+                throw ex;
             }
-
-
-
-
-
-
         }
 
         [HttpPost]
@@ -148,31 +147,54 @@ namespace KindleSpur.WebApplication.Controllers
         {
 
 
-           
+
             ConversationRepository cs = new ConversationRepository();
-         
+            UserRepository _repo = new UserRepository();
+
             try
             {
-           
-                return Json(cs.Bookmarks(UserId, user.BookMarks));
-                
+                //  Dictionary<string, object> obj = new Dictionary<string, object>();
+                //  User getUser = (User)(_repo.GetUserDetail(UserId));
+                //GetFillesAnBookmarks(getUser, cs, obj);
+
+                cs.Bookmarks(UserId, user.BookMarks);
+
+                return Json(cs);
+
 
             }
-            catch (Exception)
+            catch (Exception ex)
             {
 
-                throw;
+                throw ex;
             }
         }
-       
+
         [HttpPost]
         public JsonResult DeleteFiles(List<Models.FileUpload> Obj)
         {
             UserRepository user = new UserRepository();
+            ConversationRepository cs = new ConversationRepository();
+            //User getUser = (User)(user.GetUserDetail(UserId));
             try
             {
                 if (Obj != null)
+                {
+                    //foreach (var list2 in Obj)
+                    //{
+                    //    if (list2.FileId == null)
+                    //    {
+                    //        foreach (var fileid in getUser.Files.Where(w => w.FileId == list2.FileId))
+                    //        {
+                    //            list2.FileId = fileid.FileId;
+                    //        }
+
+                    //    }
+
+
+                    //}
                     user.DeleteResourceFiles(Obj, UserId);
+                }
 
             }
             catch (Exception ex)
@@ -186,13 +208,15 @@ namespace KindleSpur.WebApplication.Controllers
         public JsonResult DeleteBookmarks(List<Models.BookMark> Obj)
         {
             UserRepository user = new UserRepository();
-         
-         
+            ConversationRepository cs = new ConversationRepository();
+            User getUser = (User)(user.GetUserDetail(UserId));
+
             try
             {
                 if (Obj != null)
                     user.DeleteBookMarks(Obj, UserId);
-               
+
+
 
             }
             catch (Exception ex)
