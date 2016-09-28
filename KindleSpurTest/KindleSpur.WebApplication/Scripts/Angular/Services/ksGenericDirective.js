@@ -821,10 +821,18 @@ app.directive('ctcRole', function ($state, serverCommunication, $timeout) {
                     case "Information Technology": _image = 'Images/information-icon.png'; break;
                     case "Management": _image = 'Images/management.png'; break;
                     case "Soft Skills": _image = 'Images/soft_Skill.png'; break;
-                    case "Code Quality": _image = 'Images/code-Quality.jpg'; break;
-                    case "Database": _image = 'Images/Database.png'; break;
-                    case "Process & Quality": _image = 'Images/quality-Process-Icon.png'; break;
-                    case "Industry Domain": _image = 'Images/Industry-Domain.png'; break;
+                    case "Code Quality": _image = 'Images/cts/Code_Quality.png'; break;
+                    case "Database": _image = 'Images/cts/Database.png'; break;
+                    case "Process & Quality": _image = 'Images/cts/Process_Quality.png'; break;
+                    case "Industry Domain": _image = 'Images/cts/Industry_Domain.png'; break;
+                    case "Business Management": _image = 'Images/cts/Business_management.png'; break;
+                    case "Finance Management": _image = 'Images/cts/Finance_management.png'; break;
+                    case "Pre-Sales Management": _image = 'Images/cts/Presales.png'; break;
+                    case "People Skills": _image = 'Images/cts/People_Skills.png'; break;
+                    case "Virtual Team Skills": _image = 'Images/cts/Virtual_Teams.png'; break;
+                    case "Cross Culture Skills": _image = 'Images/cts/Cross_Culture.png'; break;
+                    case "Negotiation Skills": _image = 'Images/cts/Negotiation_Skills.png'; break;
+
                 }
               //  console.error(_image, iOption)
                 return _image;

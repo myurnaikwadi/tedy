@@ -300,6 +300,32 @@
     <Content Include="Images\business-meeting-of-males.png" />
     <Content Include="Images\businessmen-talking-in-business-meeting.png" />
     <Content Include="Images\code-Quality.jpg" />
+    <Content Include="Images\cts\Analyst_Project_Lead.png" />
+    <Content Include="Images\cts\Business_management.png" />
+    <Content Include="Images\cts\Catch_Market_Trends.png" />
+    <Content Include="Images\cts\Code_Quality.png" />
+    <Content Include="Images\cts\Cross_Culture.png" />
+    <Content Include="Images\cts\Database.png" />
+    <Content Include="Images\cts\Disengage_And_Relax.png" />
+    <Content Include="Images\cts\Finance_management.png" />
+    <Content Include="Images\cts\Industry_Domain.png" />
+    <Content Include="Images\cts\My_Future_Roadmap.png" />
+    <Content Include="Images\cts\Negotiation_Skills.png" />
+    <Content Include="Images\cts\Never_get_Best_Oportunity.png" />
+    <Content Include="Images\cts\Next_Station.png" />
+    <Content Include="Images\cts\Onsite_Assignment.png" />
+    <Content Include="Images\cts\Peers_Earn_More.png" />
+    <Content Include="Images\cts\Peer_pressure.png" />
+    <Content Include="Images\cts\People_Skills.png" />
+    <Content Include="Images\cts\Plan_My_Career.png" />
+    <Content Include="Images\cts\Presales.png" />
+    <Content Include="Images\cts\Process_Quality.png" />
+    <Content Include="Images\cts\Professional_Growth.png" />
+    <Content Include="Images\cts\Relaxed_And_Happy_Weekend.png" />
+    <Content Include="Images\cts\Success_And_Visibility.png" />
+    <Content Include="Images\cts\Success_In_Life.png" />
+    <Content Include="Images\cts\Switch.png" />
+    <Content Include="Images\cts\Virtual_Teams.png" />
     <Content Include="Images\Database.png" />
     <Content Include="Images\error png.png" />
     <Content Include="Images\gamepad.png" />
@@ -522,7 +548,6 @@
     <Content Include="Views\Home\ksParentState.cshtml" />
     <Content Include="Views\Conversation\ksMeetingSchdule.cshtml" />
     <Content Include="Views\Home\ksInboxView.cshtml" />
-    <Content Include="Views\Home\ksAboutUs.cshtml" />
     <Content Include="Views\Home\ksPrivacyPolicy.cshtml" />
     <Content Include="Views\Home\ksTermsCondition.cshtml" />
     <Content Include="Views\Home\ksAutoSuggest.cshtml" />
@@ -544,6 +569,7 @@
     <None Include="Project_Readme.html" />
     <Content Include="Views\User\RedirectToLogin.cshtml" />
     <None Include="Properties\PublishProfiles\KindleSpur %282%29.pubxml" />
+    <Content Include="Views\Home\ksAboutUs.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\KindleSpur.Data\KindleSpur.Data.csproj">
