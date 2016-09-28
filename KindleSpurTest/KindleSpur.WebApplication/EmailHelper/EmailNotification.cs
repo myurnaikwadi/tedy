@@ -11,16 +11,12 @@ namespace KindleSpur.WebApplication.MessageHelper
 {
     public class EmailNotification
     {
-        //static string emailAddress = "kindlespur@livewireprojects.com";
         static string emailAddress = "support@kindlespur.com";
-        //static string password = "livewireprojects";
         static string password = "dreamswesee2016";
         static MailAddress aliasemailsendername = new MailAddress(emailAddress.ToString(), "KindleSpur Support Team");
         static int portNumber = 587;
-       // static string smtpServer = "smtp.gmail.com";
-        static string smtpServer = "mail.kindlespur.com";
+        static string smtpServer = "smtp.gmail.com";
         static string link = "www.kindlespur.com";
-         
 
         public static void SendEmail(User signupObject, string uri)
         {
@@ -118,12 +114,12 @@ namespace KindleSpur.WebApplication.MessageHelper
 
         public static void SendEmailForCategorySuggestion(User signupObject, List<Suggestion> suggestion)
         {
-            MailAddress to = new MailAddress("admin@kindlespur.com");
+            MailAddress to = new MailAddress("curiosity@kindlespur.com");
 
             MailMessage message = new MailMessage(aliasemailsendername.ToString(), to.ToString());
             message.Subject = "Category Suggestion from " + signupObject.EmailAddress;
             string firstName = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(signupObject.FirstName);
-            string body = "Hello Admin,";
+            string body = "Hello Sonali,";
             body += "<br/>";
             body += "<br/><b>Suggestion from " + signupObject.FirstName + " " + signupObject.LastName + "</b>";
             for(int count = 0; count < suggestion.Count; count++)

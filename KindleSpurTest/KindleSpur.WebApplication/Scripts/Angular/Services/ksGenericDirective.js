@@ -1614,7 +1614,7 @@ app.directive('moleculeMap', function ($rootScope) {
 });
 
 
-app.directive('rssFeed', function ($state, serverCommunication, $timeout) {
+app.directive('rssFeed', function ($state, serverCommunication, $timeout, $rootScope) {
     return {
         scope: {
             skill: "=",
@@ -1653,11 +1653,20 @@ app.directive('rssFeed', function ($state, serverCommunication, $timeout) {
                 var _obj = {
                     DocumentName: iFeed.name,
                     LinkUrl: iFeed.url,
+                    BookMarkId: $rootScope.loggedDetail.EmailAddress + ":BMK#" + (Date.now()) + (Math.floor((Math.random() * 10) + 1))
                 }
                 serverCommunication.bookMarkLink({
                     bookMarkObject: _obj,                   
-                    successCallBack: function () {
-                       
+                    successCallBack: function () {                        
+                        $rootScope.$broadcast("refreshStateHomeView", {
+                            type: 'displayAlert',
+                            // subType: 'Meeting',
+                            data: {
+                                showAlert: true,
+                                message: 'Link bookmarked successfully',
+                                formatType: '1',
+                            }
+                        });
                     },
                     failureCallBack: function () {
                      

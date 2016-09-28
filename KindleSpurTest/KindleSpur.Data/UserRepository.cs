@@ -1030,10 +1030,11 @@ namespace KindleSpur.Data
 
 
         //This Method used to upload files using resources page
-        public bool uploadResourceFile(string EmailAddress, object[] filePath, string tagName, Dictionary<int, List<string>> filename)
+        public bool uploadResourceFile(string EmailAddress, object[] filePath, Dictionary<int, List<string>> filename)
         {
 
             bool _transactionStatus = false;
+            ConversationRepository cs = new ConversationRepository();
             try
             {
                 var userDetail = _userCollection.FindOneAs<User>(Query.EQ("EmailAddress", EmailAddress));
@@ -1045,13 +1046,12 @@ namespace KindleSpur.Data
 
                         FileUpload obj = new FileUpload();
                         obj.Id = ObjectId.GenerateNewId();
-                        obj.FileId = Guid.NewGuid().ToString();
+                        obj.FileId = f.Value[0];
+                        obj.FilePath = string.Format("FilePath/{0}", f.Value[1]);
+                        obj.FileName = f.Value[1];
+                        obj.ContentType = f.Value[2];
+                        obj.Filesize = f.Value[3];
 
-                        obj.FilePath = string.Format("FilePath/{0}", f.Value[0]);
-                        obj.FileName = f.Value[0];
-                        obj.ContentType = f.Value[1];
-                        obj.Filesize = f.Value[2];
-                        obj.TagName = tagName;
                         path.Add(obj);
 
                     }
@@ -1064,7 +1064,7 @@ namespace KindleSpur.Data
                 userDetail.Files.AddRange(path.ToList());
 
                 _userCollection.Save(userDetail);
-
+              
 
                 _transactionStatus = true;
             }
@@ -1092,7 +1092,7 @@ namespace KindleSpur.Data
             return _transactionStatus;
 
         }
-      
+
 
 
         //This Medthod delete added files
@@ -1106,7 +1106,8 @@ namespace KindleSpur.Data
 
                 foreach (var r in list)
                 {
-                    userDetail.Files.RemoveAll(x => x.FileId == r.FileId);
+                    if (r.FileId != null)
+                        userDetail.Files.RemoveAll(x => x.FileId == r.FileId);
 
                 }
 
@@ -1162,6 +1163,9 @@ namespace KindleSpur.Data
                     {
                         userDetail.BookMarks.RemoveAll(x => x.BookMarkId == r.BookMarkId);
                     }
+
+
+                    userDetail.BookMarks.RemoveAll(x => x.BookMarkId == r.BookMarkId);
 
                 }
 
