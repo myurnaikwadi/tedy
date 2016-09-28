@@ -13,6 +13,7 @@ using MongoDB.Bson;
 using System.Collections;
 using System.Diagnostics;
 using MongoDB.Bson.Serialization;
+using MongoDB.Driver.Linq;
 
 namespace KindleSpur.Data
 {
@@ -1062,10 +1063,12 @@ namespace KindleSpur.Data
                     userDetail.Files = new List<FileUpload>();
 
                 userDetail.Files.AddRange(path.ToList());
-
+                
                 _userCollection.Save(userDetail);
-              
-
+             
+                //var Coach = (from c in _userCollection.AsQueryable<User>()
+                //             where c.EmailAddress == EmailAddress
+                //             select (c.Skills.Select(r => r.Name).ToList())).ToList();
                 _transactionStatus = true;
             }
             catch (MongoException ex)

@@ -467,7 +467,7 @@ app.factory('serverCommunication', function ($http) {
        * @Purpose :
        */
         bookMarkLink: function (iObj) {
-         
+         debugger
             var req = {
                 method: 'POST',
                 url: '/Resources/AddBookMakrs',

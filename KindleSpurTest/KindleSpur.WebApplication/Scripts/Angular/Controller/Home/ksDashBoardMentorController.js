@@ -523,13 +523,19 @@
 
     $scope.saveBookmark = function (iCate) {      
        
+        var _bookmarkId = $rootScope.loggedDetail.EmailAddress + ":BMK#" + (Date.now()) + (Math.floor((Math.random() * 10) + 1));
         serverCommunication.bookMarkLink({
-            bookMarkObject: { ParentFileId: iCate.FileId, DocumentName: iCate.FileName, LinkUrl: iCate.FilePath },
-            successCallBack: function () {
-               
+            bookMarkObject: { BookMarkId: _bookmarkId, ParentFileId: iCate.FileId, DocumentName: iCate.FileName, LinkUrl: iCate.FilePath },
+            successCallBack: function (iObj) {
+                for (var k = 0 ; k < iObj.data.length ; k++) {
+                    if (iObj.data[k].ParentFileId == iCate.FileId) {
+                        _displayAlertMeesage({ message: 'You already bookmark this file', formatType: '2' });
+                        break;
+                    }
+                }
             },
             failureCallBack: function () {
-              
+
             }
         });
     };
@@ -932,16 +938,25 @@
         $scope.selectedMode = '';
         msIsotopeFunc.prototype.genericHeightChange(_obj);
     }
-
+    var _displayAlertMeesage = function (iObj) {
+        var _displayAlert = {
+            showAlert: true,
+            message: iObj.message,
+            formatType: iObj.formatType,
+        };
+        $rootScope.$broadcast("refreshStateHomeView", {
+            type: 'displayAlert',
+            // subType: 'Meeting',
+            data: _displayAlert
+        });
+    };
     $scope.selectedMode = '';
     $scope.openFeedBackFormOnAction = function (iObj) {
        
         if ($scope.feedBack.askFeedback == true)
             return;
         if (iObj.icon.activate == false && iObj.mode == 'Self') {
-            $scope.displayAlert.showAlert = true;
-            $scope.displayAlert.message = 'You can not perform this operation as previous feedback is not filled';
-            $scope.displayAlert.formatType = '2';
+            _displayAlertMeesage({ message: 'You can not perform this operation as previous feedback is not filled', formatType: '2' });
             return;
         }
 

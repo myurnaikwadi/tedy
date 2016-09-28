@@ -89,7 +89,7 @@
                     if (iArtifacts.bookMarked == false || (!iArtifacts.bookMarked)) {
                         iArtifacts.bookMarked = _bookmarkId;
                         _callServerSide = true;
-                        scope.bookmark = { BookMarkId: _bookmarkId, ParentFileId: iArtifacts.FileId, FileId: iArtifacts.FileId, FilePath: iArtifacts.FileName, FileName: iArtifacts.FilePath };
+                        scope.bookmark = { BookMarkId: _bookmarkId, ParentFileId: iArtifacts.FileId, FileId: iArtifacts.FileId, FilePath: iArtifacts.FilePath, FileName: iArtifacts.FileName };
                     } else {
                         _callServerSide = false;
                     }
@@ -113,11 +113,13 @@
                     scope.bookMarkArray.push(scope.bookmark);
                     serverCommunication.bookMarkLink({
                         bookMarkObject: { BookMarkId: scope.bookmark.BookMarkId, ParentFileId :  scope.bookmark.ParentFileId, LinkUrl: scope.bookmark.FilePath, DocumentName: scope.bookmark.FileName } ,
-                        successCallBack: function () {
+                        successCallBack: function (iObj) {
+                            console.error(iObj)
+                            scope.bookMarkArray = [].concat(iObj.data);
                             scope.closePopup();
                         },
-                        failureCallBack: function () {
-
+                        failureCallBack: function (iObj) {
+                            console.error(iObj)
                         }
                     });
                 }
@@ -145,10 +147,10 @@
                 scope.bookMarkArray.some(function (iContain) {
                     if (iContain.selected) {
                         if (_selectedData['bookMark'])
-                            _selectedData['bookMark'][iContain.FileName] = iContain;
+                            _selectedData['bookMark'][iContain.DocumentName] = iContain;
                         else {
                             _selectedData['bookMark'] = {};
-                            _selectedData['bookMark'][iContain.FileName] = iContain;
+                            _selectedData['bookMark'][iContain.DocumentName] = iContain;
                         }
                     }
                 });
@@ -175,8 +177,8 @@
                     data = new FormData();
                     scope.uploadAttachmentArray = [];
                     scope.loadUploadPopupFlag = false;
-
-
+                    console.error(iPath)
+                    scope.artifactsArray = [].concat(iPath.data);
 
                 });
                 scope.closePopup();
@@ -307,14 +309,14 @@
 
                         valueFile[k].ContentType = valueFile[k].type;
                         scope.uploadAttachmentArray.push(valueFile[k]);
-                        var _random = Date.now() + new Date(1).getTime() + Date.now() + k;                            
+                        var _random = Date.now() * new Date(k).getTime() + Date.now() + k;                            
                         var _obj = {
                             FileName :  valueFile[k].name,
-                            FileId: $rootScope.loggedDetail.EmailAddress + ":AFT#" + (Date.now()) + (Math.floor((Math.random() * 10) + 1 + _random)),
+                            FileId: $rootScope.loggedDetail.EmailAddress + ":AFT#" + ((Date.now()) + (Math.floor((Math.random() * 10) + 1 + _random))),
                             FilePath: valueFile[k].name,
                             ContentType: valueFile[k].type
                         }
-                       // console.error(_random)
+                        console.error(_obj.FileId)
                         tempArray.push(_obj);
                        
                     }

@@ -1,6 +1,7 @@
 ﻿using KindleSpur.Data;
 using KindleSpur.Models;
 using KindleSpur.Models.Interfaces;
+using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -16,10 +17,13 @@ namespace KindleSpur.WebApplication.Controllers
         // GET: Resources
         readonly string UserId;
         private ResponseMessage response;
+        private MongoCollection _userCollection;
+        private Connection con = new Connection();
         public ResourcesController()
         {
             UserId = ((IUser)System.Web.HttpContext.Current.Session["User"]).EmailAddress;
             // AddBookMakrs();
+            _userCollection = con.GetCollection("UserDetails");
 
         }
         public ActionResult Index()
@@ -132,8 +136,8 @@ namespace KindleSpur.WebApplication.Controllers
                 //User getUser = (User)(_repo.GetUserDetail(UserId));
                 //GetFillesAnBookmarks(getUser, cs, obj);
                 IUser user = _repo.GetUserDetail(((IUser)System.Web.HttpContext.Current.Session["User"]).EmailAddress);
-
-                return Json(user);
+                var UserRecord = (from x in user.Files select x).ToList();
+                return Json(UserRecord);
             }
             catch (Exception ex)
             {
@@ -158,8 +162,9 @@ namespace KindleSpur.WebApplication.Controllers
                 //GetFillesAnBookmarks(getUser, cs, obj);
 
                 cs.Bookmarks(UserId, user.BookMarks);
-
-                return Json(cs);
+                User book =(User)(_repo.GetUserDetail(UserId));
+                var BookRecord = (from x in book.BookMarks select x).ToList();
+                return Json(BookRecord);
 
 
             }

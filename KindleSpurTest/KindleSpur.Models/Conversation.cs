@@ -23,6 +23,7 @@ namespace KindleSpur.Models
         public DateTime UpdateDate { get; set; }
         public string skill { get; set; }
         public List<ResourceFileLink> FilesURLlink { get; set; }
+        public List<BookmarkURLLink> BookmarksURLLink { get; set; }
         public Boolean ConversationClosed { get; set; }
         public string ConversationType { get; set; }
         public string ConversationId { get; set; }

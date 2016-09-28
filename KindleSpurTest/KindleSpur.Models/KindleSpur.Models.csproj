@@ -57,6 +57,7 @@
   <ItemGroup>
     <Compile Include="ActiveGamesAndPSR.cs" />
     <Compile Include="BookMark.cs" />
+    <Compile Include="BookmarkURLLink.cs" />
     <Compile Include="CoacheeOrMentee.cs" />
     <Compile Include="CoachingStatus.cs" />
     <Compile Include="CoachOrMentor.cs" />

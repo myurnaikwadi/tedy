@@ -377,6 +377,30 @@ namespace KindleSpur.WebApplication.Controllers
                     _obj.FilesURLlink.AddRange(resourcelist.ToList());
                     
                 }
+                List<BookmarkURLLink> bookmarklist = new List<BookmarkURLLink>();
+                if (_obj.BookmarksURLLink != null)
+                {
+
+                    foreach (var book in _obj.BookmarksURLLink)
+                    {
+                        BookmarkURLLink link = new BookmarkURLLink();
+                        // link.Id = ObjectId.GenerateNewId();
+                        link.BookMarkId = book.BookMarkId;
+                        link.DocumentName = book.DocumentName;
+                        link.LinkUrl = book.LinkUrl;
+                        link.ParentFileId = book.ParentFileId;
+                     
+                        bookmarklist.Add(link);
+                    }
+
+
+                    if (_obj.BookmarksURLLink == null)
+                        _obj.BookmarksURLLink = new List<BookmarkURLLink>();
+
+                    _obj.BookmarksURLLink.Clear();
+                    _obj.BookmarksURLLink.AddRange(bookmarklist.ToList());
+
+                }
 
 
                 _obj.CreateDate = DateTime.Now.ToShortDateString();

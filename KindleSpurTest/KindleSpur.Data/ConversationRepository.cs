@@ -672,6 +672,7 @@ namespace KindleSpur.Data
             {
                 var _userCollection = con.GetCollection("UserDetails");
                 var userDetail = _userCollection.FindOneAs<User>(Query.EQ("EmailAddress", UserId));
+               // var conversations= _conversationCollection.FindOneAs<Conversation>(Query.EQ("SenderEmail", UserId)
                 List<BookMark> path = new List<BookMark>();
 
                 //var result = _userCollection.FindAs<BsonDocument>(Query.And(Query.EQ("EmailAddress", userDetail.EmailAddress), Query.EQ("Files", userDetail.Files.Select(c => c.FileId ==))).ToList();

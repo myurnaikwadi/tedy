@@ -27,6 +27,7 @@ namespace KindleSpur.Models.Interfaces
         Boolean ConversationClosed { get; set; }
         //List<FileUploadConversation> FilesConversations { get; set; }
         List<ResourceFileLink> FilesURLlink { get; set; }
+        List<BookmarkURLLink> BookmarksURLLink { get; set; }
         Boolean IsRejected { get; set; }
         bool Active { get; set; }
         string CoachOrMentor { get; set; }
