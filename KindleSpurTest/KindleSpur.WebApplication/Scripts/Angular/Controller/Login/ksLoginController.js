@@ -3,7 +3,7 @@
      * @date : 07/05/2016
      * @Purpose : login and Signup controller - Manage all data related to  login and signup page
      */
-app.controller('ksLoginController', ['$scope', 'authentification', '$location', '$rootScope', '$state', '$stateParams', '$timeout', function ($scope, authentification, $location, $rootScope, $state, $stateParams, $timeout) {
+app.controller('ksLoginController', ['$scope', 'authentification', '$location', '$rootScope', '$state', '$stateParams', '$timeout', '$interval', function ($scope, authentification, $location, $rootScope, $state, $stateParams, $timeout, $interval) {
     
     rootScope = $rootScope;
    
@@ -44,7 +44,28 @@ app.controller('ksLoginController', ['$scope', 'authentification', '$location', 
         }
         return _validFlag
     };
+   /**
+    * @auther : MKN
+    * @date : 07/05/2016
+    * @Purpose : 
+    */
+    var _messageHidelogic = function () {
 
+        $scope.displayAlert.count = 10;
+        if (angular.isDefined($scope.autoSyncCounter)) {
+            $interval.cancel($scope.autoSyncCounter);
+            $scope.autoSyncCounter = undefined;
+        }
+        //  $scope.displayAlert.count = 10;
+        $scope.autoSyncCounter = $interval(function () {
+            $scope.displayAlert.count--;
+            if ($scope.displayAlert.count == -1) {
+                $interval.cancel($scope.autoSyncCounter);
+                $scope.autoSyncCounter = undefined;
+                $scope.displayAlert.showAlert = false;
+            }
+        }, 1000);
+    };
     /**
     * @auther : MKN
     * @date : 07/05/2016
@@ -54,6 +75,7 @@ app.controller('ksLoginController', ['$scope', 'authentification', '$location', 
     
         if (!iObject.data.Result) {
             $scope.displayAlert = { showAlert: true, message: iObject.data.Message, formatType: '2' };
+            _messageHidelogic();
             //to access in html displayAlert.showAlert 
         } else {
             var _userDetails = _getMyDetailsFromCookies();
@@ -61,6 +83,7 @@ app.controller('ksLoginController', ['$scope', 'authentification', '$location', 
                 $rootScope.loggedDetail = _userDetails;
             if (_userDetails.emailAddress == null && _userDetails.emailAddress == '') {
                 $scope.displayAlert = { showAlert: true, message: 'Wrong id password', formatType: '2' };
+                _messageHidelogic();
                 $state.go('login', {}, { reload: true });
             } else {
                 $state.go('home.dashBoard');
@@ -69,7 +92,8 @@ app.controller('ksLoginController', ['$scope', 'authentification', '$location', 
         }
     };
     var _successPasswordCallBack = function (iObj) {
-        $scope.displayAlert = { showAlert: true, message:'Your password has been saved successfully. Please login', formatType: '1' };
+        $scope.displayAlert = { showAlert: true, message: 'Your password has been saved successfully. Please login', formatType: '1' };
+        _messageHidelogic();
         $timeout(function () {
             $state.go('login', {}, { reload: true });
         }, 1000);
@@ -81,7 +105,8 @@ app.controller('ksLoginController', ['$scope', 'authentification', '$location', 
         $scope.signupDetails.EmailAddress = "";
 
         if (!iObj.data.Result) {
-            $scope.displayAlert = { showAlert: true, message:  iObj.data.Message, formatType: '1' };
+            $scope.displayAlert = { showAlert: true, message: iObj.data.Message, formatType: '1' };
+            _messageHidelogic();
         }
         
         $timeout(function () {
@@ -96,9 +121,11 @@ app.controller('ksLoginController', ['$scope', 'authentification', '$location', 
      */
     var _failureLoginCallBack = function (iObj) {
         $scope.displayAlert = { showAlert: true, message: 'Invalid username or password', formatType: '2' };
+        _messageHidelogic();
     };
     var _failurePasswordCallBack = function (iObj) {
         $scope.displayAlert = { showAlert: true, message: 'Your password has been saved successfully. Please login', formatType: '1' };
+        _messageHidelogic();
         $timeout(function () {
             $state.go('login', {}, { reload: true });
         }, 1000);
@@ -125,11 +152,13 @@ app.controller('ksLoginController', ['$scope', 'authentification', '$location', 
             else if ($scope.loginDetails.password == '') {
                 $scope.displayAlert = { showAlert: true, message: 'Please enter password', formatType: '2' };
             }
+            _messageHidelogic();
             return;
 
         }
         else if ($scope.emailValidation($scope.loginDetails.emailAddress) == false) {
             $scope.displayAlert = { showAlert: true, message: 'Please enter the correct email address or password', formatType: '2' };
+            _messageHidelogic();
             return;
         }
 
@@ -156,10 +185,12 @@ app.controller('ksLoginController', ['$scope', 'authentification', '$location', 
     $scope.savePassword = function () {
         if ($scope.signupDetails.password == '') {
             $scope.displayAlert = { showAlert: true, message: 'Please enter password', formatType: '2' };
+            _messageHidelogic();
             return
         }
         else if (($scope.signupDetails.password) != ($scope.signupDetails.confirmPassword)) {
             $scope.displayAlert = { showAlert: true, message: 'The passwords are not same', formatType: '2' };
+            _messageHidelogic();
             return;
         }
 
@@ -196,6 +227,7 @@ app.controller('ksLoginController', ['$scope', 'authentification', '$location', 
             } else if ($scope.signupDetails.EmailAddress == '') {
                 $scope.displayAlert = { showAlert: true, message: 'Please enter email address', formatType: '2' };
             }
+            _messageHidelogic();
             return
         } else if ($scope.signupDetails.LastName == '') {
             if ($scope.signupDetails.EmailAddress == '') {
@@ -203,15 +235,20 @@ app.controller('ksLoginController', ['$scope', 'authentification', '$location', 
             } else {
                 $scope.displayAlert = { showAlert: true, message: 'Please enter last name', formatType: '2' };
             }
+            _messageHidelogic();
             return
         } else if ($scope.signupDetails.EmailAddress == '') {
             $scope.displayAlert = { showAlert: true, message: 'Please enter email address', formatType: '2' };
+            _messageHidelogic();
             return
         } else if ($scope.emailValidation($scope.signupDetails.EmailAddress) == false) {
             $scope.displayAlert = { showAlert: true, message: 'Please enter correct email address', formatType: '2' };
+            _messageHidelogic();
             return;
         } else {
             $scope.displayAlert = { showAlert: true, message: 'Account activation link sent to your registered email address', formatType: '1' };
+            _messageHidelogic();
+
         }
         var _object = {
             FirstName: $scope.signupDetails.FirstName,
@@ -229,14 +266,17 @@ app.controller('ksLoginController', ['$scope', 'authentification', '$location', 
     $scope.forgotPasswordClick = function () {
         if ($scope.signupDetails.EmailAddress == '') {
             $scope.displayAlert = { showAlert: true, message: 'Please enter email address', formatType: '2' };
+            _messageHidelogic();
             return
         }
         else if ($scope.emailValidation($scope.signupDetails.EmailAddress) == false) {
             $scope.displayAlert = { showAlert: true, message: 'Please enter correct email address', formatType: '2' };
+            _messageHidelogic();
             return;
         }
         else {
             $scope.displayAlert = { showAlert: true, message: 'Verification link sent to registered email address', formatType: '1' };
+            _messageHidelogic();
         }
         var _object = {
             EmailAddress: $scope.signupDetails.EmailAddress.toLowerCase()

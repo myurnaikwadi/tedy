@@ -1376,7 +1376,7 @@
     //        buttonArray : [
     //            {
     //                buttonName: 'Ok',
-    //                color: 'green',
+    //                color: '#A5DC86',
     //                callBackParam : null,
     //                buttonSuccessCallBack: function () {
     //                    alert('ok')

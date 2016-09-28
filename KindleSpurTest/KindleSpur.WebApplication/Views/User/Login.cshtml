@@ -10,17 +10,17 @@
                   </div>
                   <div class="hiddenErrorNotificationClass" ng-class="{ 'showErrorNotificationClass' : displayAlert.showAlert  == true}">            
                       @*Green*@ 
-                      <div class="alert alert-success" ng-show="displayAlert.formatType == '1'">
+                      <div class="alert alert-success" style="margin-bottom: 0;" ng-show="displayAlert.formatType == '1'">
                           <h5 class="closealert-padding close" ng-click="displayAlert.showAlert = false">×</h5>
                           <h5 class="alert-message1">{{displayAlert.message}}</h5>                        
                         </div>
                       
                       @*red*@
-                        <div class="alert alert-error" ng-show="displayAlert.formatType == '2'">
+                        <div class="alert alert-error" style="margin-bottom: 0;" ng-show="displayAlert.formatType == '2'">
                             <h5 class="closealert-padding close" ng-click="displayAlert.showAlert = false">×</h5>
                             <h5 class="alert-message1">{{displayAlert.message}}</h5>                         
                         </div>
-
+                      <h5 style="position:absolute;height:3px;width:100%; background: red;margin: 0;transition:all 0.8s cubic-bezier(0.73, 0.85, 0.58, 1);" ng-style="{ 'width' : (displayAlert.count +'0%') }"></h5>
                    </div>
               </div>
               <div class="applicationMiddleStrip">

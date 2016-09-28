@@ -70,7 +70,22 @@
         $scope.extraParam.closeCallBack && ($scope.extraParam.closeCallBack());
         $scope.extraParam.closeMainCallBack && ($scope.extraParam.closeMainCallBack());
     };
-    $scope.loadApplicationLevel = { loadDiv : false , loadAnimation : false };
+
+    $scope.alertButtonAction = function (iObj) {
+        //loadApplicationLevel.ddCancel = true;
+        //event : $event,iObj.button : button,index : $index 
+        switch (iObj.button.buttonName.toLowerCase()) {
+            case 'ok': $scope.loadApplicationLevel.positiveResponse = true;
+                iObj.button.buttonSuccessCallBack({ callbackParam: iObj.button.callBackParam, button: iObj.button });
+                break;
+            case 'cancel': $scope.loadApplicationLevel.negativeResponse = true;
+                iObj.button.buttonSuccessCallBack({ callbackParam: iObj.button.callBackParam, button: iObj.button });
+                break;
+        }
+        
+    };
+
+    $scope.loadApplicationLevel = { negativeResponse : false, positiveResponse: false, loadDiv: false, loadAnimation: false };
 
     $scope.uiFlag = { loadRepository: false, loadBottomContain: false ,loadProfileView : false};
     $rootScope.$on("refreshStateHomeView", function (event, iObj) {
@@ -86,7 +101,7 @@
                                   //  $scope.displayAlert.count = 10;
                                     $scope.autoSyncCounter = $interval(function () {
                                         $scope.displayAlert.count--;                  
-                                        if ($scope.displayAlert.count == 0) {
+                                        if ($scope.displayAlert.count == -1) {
                                             $interval.cancel($scope.autoSyncCounter);
                                             $scope.autoSyncCounter = undefined;
                                             $scope.displayAlert.showAlert = false;
@@ -111,15 +126,14 @@
                                             $scope.uiFlag.loadBottomContain = false;                                            
                                         };
                                         break;
-            case "loadProfileContain": $scope.extraParam = iObj.data; 
-                                       $scope.uiFlag.loadProfileView = iObj.data.toggleFlag;
-                                       break;
-            case "loadAppAlertBox":
+            case "loadProfileContain":  $scope.extraParam = iObj.data; 
+                                        $scope.uiFlag.loadProfileView = iObj.data.toggleFlag;
+                                        break;
+            case "loadAppAlertBox":     $scope.loadApplicationLevel = { negativeResponse: false, positiveResponse: false, loadDiv: false, loadAnimation: false };
                                         $scope.loadApplicationLevel.loadDiv = true;
                                         angular.extend($scope.loadApplicationLevel, iObj.data);
                                         $timeout(function () {
-                                           // console.error('sddd');
-                   
+                                           // console.error('sddd');                   
                                             $scope.loadApplicationLevel.loadAnimation = true;
                                         }, 900);
                                         break;
