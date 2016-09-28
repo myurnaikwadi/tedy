@@ -1,4 +1,4 @@
-﻿app.controller('ksStateHomeController', function ($rootScope, $scope, serverCommunication, $interval, $state, authentification) {
+﻿app.controller('ksStateHomeController', function ($rootScope, $scope, serverCommunication, $interval, $state, authentification, $timeout) {
     window.parent = $scope;
    
     $scope.invitation = { email: '' };
@@ -70,22 +70,40 @@
         $scope.extraParam.closeCallBack && ($scope.extraParam.closeCallBack());
         $scope.extraParam.closeMainCallBack && ($scope.extraParam.closeMainCallBack());
     };
+    $scope.loadApplicationLevel = { loadDiv : false , loadAnimation : false };
+
     $scope.uiFlag = { loadRepository: false, loadBottomContain: false ,loadProfileView : false};
     $rootScope.$on("refreshStateHomeView", function (event, iObj) {
       
         switch (iObj.type) {
-            case 'displayAlert': $scope.displayAlert = iObj.data; break;
+            case 'displayAlert':
+                                    iObj.data.count = 10;
+                                    $scope.displayAlert = iObj.data;
+                                    if (angular.isDefined($scope.autoSyncCounter)) {
+                                        $interval.cancel($scope.autoSyncCounter);
+                                        $scope.autoSyncCounter = undefined;
+                                    }
+                                  //  $scope.displayAlert.count = 10;
+                                    $scope.autoSyncCounter = $interval(function () {
+                                        $scope.displayAlert.count--;                  
+                                        if ($scope.displayAlert.count == 0) {
+                                            $interval.cancel($scope.autoSyncCounter);
+                                            $scope.autoSyncCounter = undefined;
+                                            $scope.displayAlert.showAlert = false;
+                                        }
+                                    }, 1000);
+                                     break;
             case "loadUpperSlider":
-                $scope.uiFlag.loadRepository = iObj.data.closeFlag ? false : true;
-                $scope.uiFlag.loadModule = iObj.subType;
-                $scope.extraParam = iObj.data;
-                $scope.extraParam.closeCallBack = function () {
+                                        $scope.uiFlag.loadRepository = iObj.data.closeFlag ? false : true;
+                                        $scope.uiFlag.loadModule = iObj.subType;
+                                        $scope.extraParam = iObj.data;
+                                        $scope.extraParam.closeCallBack = function () {
                
-                    $scope.uiFlag.loadRepository = false;
-                    $scope.uiFlag.loadModule = '';
-                }
-                break;
-            case "loadBottomContain":
+                                            $scope.uiFlag.loadRepository = false;
+                                            $scope.uiFlag.loadModule = '';
+                                        }
+                                        break;
+            case "loadBottomContain": 
                                         $scope.uiFlag.loadBottomContain = true;
                                         $scope.extraParam = iObj.data; 
                                         $scope.extraParam.closeCallBack = function () {
@@ -95,6 +113,15 @@
                                         break;
             case "loadProfileContain": $scope.extraParam = iObj.data; 
                                        $scope.uiFlag.loadProfileView = iObj.data.toggleFlag;
+                                       break;
+            case "loadAppAlertBox":
+                                        $scope.loadApplicationLevel.loadDiv = true;
+                                        angular.extend($scope.loadApplicationLevel, iObj.data);
+                                        $timeout(function () {
+                                           // console.error('sddd');
+                   
+                                            $scope.loadApplicationLevel.loadAnimation = true;
+                                        }, 900);
                                         break;
         }
 

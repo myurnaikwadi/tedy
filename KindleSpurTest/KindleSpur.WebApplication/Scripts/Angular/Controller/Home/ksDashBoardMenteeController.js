@@ -1367,6 +1367,36 @@
             }
         });     
     };
+
+    //$rootScope.$broadcast("refreshStateHomeView", {
+    //    type: 'loadAppAlertBox',
+    //    data: {
+    //        alertType: 'Alert',
+    //        alertMessage : 'You will not recover this bookmark after performing ok action',
+    //        buttonArray : [
+    //            {
+    //                buttonName: 'Ok',
+    //                color: 'green',
+    //                callBackParam : null,
+    //                buttonSuccessCallBack: function () {
+    //                    alert('ok')
+    //                },
+                   
+    //            },
+    //             {
+    //                 buttonName: 'Cancel',
+    //                 callBackParam: null,
+    //                 color: '#D60500',
+    //                 buttonSuccessCallBack: function () {
+    //                     alert('Cancel')
+    //                 },
+
+    //             }
+    //        ]            
+    //    }
+    //});
+
+
     var _displayAlertMeesage = function (iObj) {
         var _displayAlert = {
             showAlert: true,

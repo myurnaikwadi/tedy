@@ -11,14 +11,16 @@ namespace KindleSpur.WebApplication.MessageHelper
 {
     public class EmailNotification
     {
-        static string emailAddress = "kindlespur@livewireprojects.com";
-        // static string emailAddress = "support@kindlespur.com";
-        static string password = "livewireprojects";
-        //static string password = "dreamswesee";
+        //static string emailAddress = "kindlespur@livewireprojects.com";
+        static string emailAddress = "support@kindlespur.com";
+        //static string password = "livewireprojects";
+        static string password = "dreamswesee2016";
         static MailAddress aliasemailsendername = new MailAddress(emailAddress.ToString(), "KindleSpur Support Team");
         static int portNumber = 587;
-        static string smtpServer = "smtp.gmail.com";
+       // static string smtpServer = "smtp.gmail.com";
+        static string smtpServer = "mail.kindlespur.com";
         static string link = "www.kindlespur.com";
+         
 
         public static void SendEmail(User signupObject, string uri)
         {

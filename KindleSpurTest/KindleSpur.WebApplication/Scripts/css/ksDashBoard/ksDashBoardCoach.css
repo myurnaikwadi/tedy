@@ -698,11 +698,11 @@ margin: auto auto;
 
 /* flip speed goes here */
 .flipper {
-	transition: 2s;
+	transition: 1s;
 	transform-style: preserve-3d;
         transform: rotateY(-180deg);
 	position: relative;
-   text-align:
+  background:white ;
 }
 .flipperBack {
 	transition:2s;
