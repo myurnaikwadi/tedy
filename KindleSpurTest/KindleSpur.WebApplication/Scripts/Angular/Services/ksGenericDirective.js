@@ -301,9 +301,18 @@ app.directive('ctcRole', function ($state, serverCommunication, $timeout) {
             var _updateArray = {};
             scope.styleToCTS = {};
             scope.styleToCTSText = {};
-            scope.changeslider = function (iSkill) {
-              
+            scope.changeslider = function (iSkill) {              
                 scope.createStyleArrayAsPerSelected(iSkill, true);
+                scope.mouseOverEffectFlagSave = true;
+                //if (iSkill.type == 'T') {
+                //    if (!_topics[iSkill.Name]) {
+                //         scope.mouseOverEffectFlagSave = true;
+                //    }
+                //} else {
+                //    if (!_skills[iSkill.Name]) {
+                //        scope.mouseOverEffectFlagSave = true;
+                //    }
+                //}
             };
             var _colorArray = {
                 'coach': { '0': 'rgb(239,154,72)', '1': 'rgb(231,120,23)', '2': 'rgb(220,53,27)' },
@@ -339,7 +348,7 @@ app.directive('ctcRole', function ($state, serverCommunication, $timeout) {
                         _color = _colorArray[scope.role][iSkill.profiLevel];
                     }
 
-                    scope.styleToCTS[iSkill.Name] = { 'z-index':'3','position': 'absolute', 'height': '60px', 'width': (_width + "%"), 'background': _color, 'transition': 'all 0.7s ease' };
+                    scope.styleToCTS[iSkill.Name] = { 'z-index':'3','position': 'absolute', 'height': '25px', 'width': (_width + "%"), 'background': _color, 'transition': 'all 0.7s ease' };
                 } else {
                     // De select
                 }
@@ -392,8 +401,16 @@ app.directive('ctcRole', function ($state, serverCommunication, $timeout) {
                 msIsotopeFunc.prototype.genericHeightChange(_obj)
                 scope.selectedCategory = null;
                 scope.selectedCategoryValue = -1;
+                scope.selectedTopic = null;
+                scope.selectedTopicValue = -1;
+                scope.selectedSkill = null;
+                scope.selectedSkillValue = -1;
+                scope.categoryDisplay = true;
+                scope.mouseOverEffectFlagSave = false;
+                scope.selectAllTopic = false;
+                scope.selectAllSkill = false;
             };
-            scope.closeIsotopeTopic = function (iEvent) {
+            scope.closeIsotopeTopic = function (iEvent,iSkill) {
                 iEvent && iEvent.stopPropagation();
                 var _obj = {
                     iHeight: 100,
@@ -404,6 +421,8 @@ app.directive('ctcRole', function ($state, serverCommunication, $timeout) {
                 msIsotopeFunc.prototype.genericHeightChange(_obj);
                 scope.selectedTopic = null;
                 scope.selectedTopicValue = -1;
+                scope.mouseOverEffectFlagSave = false;
+                scope.selectAllTopic = false;               
             };
             scope.closeIsotopeSkills = function (iEvent) {
                 iEvent && iEvent.stopPropagation();
@@ -417,6 +436,38 @@ app.directive('ctcRole', function ($state, serverCommunication, $timeout) {
                 msIsotopeFunc.prototype.genericHeightChange(_obj)
                 scope.selectedSkill = null;
                 scope.selectedSkillValue = -1;
+            };
+            scope.gridViewSkill.selectAllTopic = false;
+            scope.gridViewSkill.selectAllSkill = false;
+            scope.selectAllTopicFunc = function (iEvent) {
+              
+                scope.gridViewSkill.selectAllTopic = !scope.gridViewSkill.selectAllTopic;
+                for (var k = 0; k < scope.topicArray.length ; k++) {                   
+                    if (!scope.topicArray[k].alreadySelected) {
+                        scope.topicArray[k].profiLevel = (scope.role == 'coach' || scope.role == 'mentor') ? '1' : '0';
+                        scope.topicSelection(iEvent, k, scope.topicArray[k]);
+                        scope.createStyleArrayAsPerSelected(scope.topicArray[k], true);
+                        scope.mouseOverEffectFlagSave = true;
+                    }
+                }
+                if (scope.selectAllTopic == false && Object.keys(_topics).length == 0) {
+                    scope.mouseOverEffectFlagSave = false;
+                }
+            };
+            scope.selectAllSkillFunc = function (iEvent) {
+
+                scope.gridViewSkill.selectAllSkill = !scope.gridViewSkill.selectAllSkill;
+                for (var k = 0; k < scope.skillsArray.length ; k++) {
+                    if (!scope.skillsArray[k].alreadySelected) {
+                        scope.skillsArray[k].profiLevel = (scope.role == 'coach' || scope.role == 'mentor') ? '1' : '0';
+                        scope.skillSelection(iEvent, k, scope.skillsArray[k]);
+                        scope.createStyleArrayAsPerSelected(scope.skillsArray[k], true);
+                        scope.mouseOverEffectFlagSave = true;
+                    }
+                }
+                if (scope.selectAllTopic == false && Object.keys(_topics).length == 0) {
+                    scope.mouseOverEffectFlagSave = false;
+                }
             };
             scope.categoryClick = function (iEvent, iIndex, iCategory) {
                 // scope.selectedCategory = iIndex;
@@ -450,27 +501,34 @@ app.directive('ctcRole', function ($state, serverCommunication, $timeout) {
              
                 for (var k = 0 ; k < scope.topicArray.length ; k++) {
                     scope.topicArray[k].displayAnimation = false;
-                }  
+                    scope.topicArray[k].selected = false;
+                    scope.topicArray[k].selectedCount = 0;
+                    if (!scope.topicArray[k].profiLevel) scope.topicArray[k].profiLevel = '0';
+                    if (_topics[scope.topicArray[k].Name]) {
+
+                        scope.topicArray[k].alreadySelected = true;
+                        if (_topics[scope.topicArray[k].Name].profiLevel)
+                            scope.topicArray[k].profiLevel = _topics[scope.topicArray[k].Name].profiLevel;
+                        if (scope.skillRequired) {
+                            for (var h = 0; h < scope.topicArray[k].Skills.length ; h++) {
+                                if (_skills[scope.topicArray[k].Skills[h].Name]) {
+                                    scope.topicArray[k].selectedCount++;
+                                }
+                            }
+                        } else {
+                            scope.createStyleArrayAsPerSelected(scope.topicArray[k], true);
+                            scope.topicSelection(iEvent, k, scope.topicArray[k]);
+                        }
+                      
+                    }
+                }
                 scope.closeIsotopeTopic();
                 $timeout(function () {
                     for (var k = 0 ; k < scope.topicArray.length ; k++) {
                         scope.topicArray[k].displayAnimation = true;
                     }
                 }, 600);
-                for (var k = 0; k < scope.topicArray.length ; k++) {
-                    scope.topicArray[k].selected = false;
-                 
-                    if (!scope.topicArray[k].profiLevel) scope.topicArray[k].profiLevel = '0';
-                    if (_topics[scope.topicArray[k].Name]) {
-                      
-                        scope.topicArray[k].alreadySelected = true;
-                        if (_topics[scope.topicArray[k].Name].profiLevel)
-                            scope.topicArray[k].profiLevel = _topics[scope.topicArray[k].Name].profiLevel;
-
-                       // scope.createStyleArrayAsPerSelected(scope.topicArray[k], true);
-                        //scope.topicSelection(iEvent, k, scope.topicArray[k]);
-                    }
-                }
+                
             };
 
 
@@ -480,9 +538,9 @@ app.directive('ctcRole', function ($state, serverCommunication, $timeout) {
                 
                 if (iTopic.selected) {
                     iTopic.selected = false;
-                    scope.closeIsotopeTopic();
+                   // scope.closeIsotopeTopic();
 
-                    scope.mouseOverEffectFlagSave = false;
+                    scope.mouseOverEffectFlagSave = true;
                     scope.styleToCTSText[iTopic.Name] = { 'color': 'black', 'transition': 'all 0.7s ease' };
                     if (iTopic.alreadySelected == true && !scope.skillRequired) {//make delete array
                         _deleteArray[iTopic.Name] = iTopic;
@@ -512,23 +570,25 @@ app.directive('ctcRole', function ($state, serverCommunication, $timeout) {
                 }
                 else {
                     iTopic.selected = true;
-                   // var _heif = document.getElementById('topicParent').getBoundingClientRect().height;
-                    var _obj = {
-                        iHeight: 60,
-                        index: iIndex,
-                        iWidth: 49.8,
-                        TotalColumns: 2,
-                        column: 2,
-                        row: 6,//expanded block height
-                        array: scope.topicArray
-                    };
-                    msIsotopeFunc.prototype.expandForFloat(_obj);
-                    scope.selectedTopic = iTopic;
-                    scope.selectedTopicValue = iIndex;
-                    scope.topicArray[iIndex].styleObj['margin-top'] = '0';
+                    if (scope.skillRequired) {
+                        // var _heif = document.getElementById('topicParent').getBoundingClientRect().height;
+                        var _obj = {
+                            iHeight: 60,
+                            index: iIndex,
+                            iWidth: 49.8,
+                            TotalColumns: 2,
+                            column: 2,
+                            row: 6,//expanded block height
+                            array: scope.topicArray
+                        };
+                        msIsotopeFunc.prototype.expandForFloat(_obj);
+                        scope.selectedTopic = iTopic;
+                        scope.selectedTopicValue = iIndex;
+                        scope.topicArray[iIndex].styleObj['margin-top'] = '0';
+                    }
+                     scope.mouseOverEffectFlagSave = true;
                     if (iTopic.alreadySelected == true && !scope.skillRequired) {
-                        if (_deleteArray[iTopic.Name]) delete _deleteArray[iTopic.Name];
-                      
+                        if (_deleteArray[iTopic.Name]) delete _deleteArray[iTopic.Name];                      
                     }                   
                                      
                     
@@ -615,7 +675,7 @@ app.directive('ctcRole', function ($state, serverCommunication, $timeout) {
                         }
                     }
                 }
-
+                scope.closeIsotopeCategory();
                 scope.skillsArray = [];
                 scope.topicArray = [];
                 _updateArray = {};
@@ -665,20 +725,17 @@ app.directive('ctcRole', function ($state, serverCommunication, $timeout) {
                     }
                    
                     _dataArray = _dataArray.concat(_dd);
-                    //return
+                    scope.closeIsotopeCategory();
                     if (scope.skillRequired) {
                         serverCommunication.sendSelectedCTSDataToServer({
                             selectedArray: _dataArray,
                             role: scope.role,
                             successCallBack: function (iObj) {
+                              
                                 scope.mySelection = true;
                                 scope.categoryDisplay = true;
-                              
-                                scope.selectedTopic = -1;
-                                scope.selectedSkills = -1;
-                                scope.selectedCategoryValue = null;
                                 scope.init();
-                               
+                                scope.closeIsotopeCategory();
                             },
                             failureCallBack: function (iObj) {
                              
@@ -715,15 +772,12 @@ app.directive('ctcRole', function ($state, serverCommunication, $timeout) {
                         serverCommunication.sendSelectedCTSDataToServerMentor({
                             selectedArray: _dataArray,
                             role: scope.role,
-                            successCallBack: function (iObj) {
-                             
+                            successCallBack: function (iObj) {                             
+                                
                                 scope.mySelection = true;
                                 scope.categoryDisplay = true;
-                               
-                                scope.selectedTopic = -1;
-                                scope.selectedSkills = -1;
-                                scope.selectedCategoryValue = null;
                                 scope.init();
+                                scope.closeIsotopeCategory();
                             },
                             failureCallBack: function (iObj) {
                               
@@ -742,9 +796,9 @@ app.directive('ctcRole', function ($state, serverCommunication, $timeout) {
 
             scope.addSkill = function () {
                 scope.mySelection = false;
-                scope.selectedCategory = -1;
-                scope.selectedTopic = -1;
-                scope.selectedSkills = -1;
+                scope.selectedCategory = null;
+                scope.selectedTopic = null;
+                scope.selectedSkills = null;
                 scope.selectedCategoryValue = null;
                 scope.skillsArray = [];
                 if (scope.role == "mentor" || scope.role == "mentee") {
@@ -793,14 +847,8 @@ app.directive('ctcRole', function ($state, serverCommunication, $timeout) {
                             for (var k = 0 ; k < scope.catogoryArray.length ; k++) {
                                 scope.catogoryArray[k].displayAnimation = false;
                             }
-                            scope.selectedCategory = -1;
-                            var _obj = {
-                                iHeight: 185,
-                                iWidth: 50,
-                                iCol: 3,
-                                iArray: scope.catogoryArray
-                            };
-                            msIsotopeFunc.prototype.genericHeightChange(_obj);
+                            scope.selectedCategory = null;
+                            scope.closeIsotopeCategory();
                             $timeout(function () {
                                 for (var k = 0 ; k < scope.catogoryArray.length ; k++) {
                                     scope.catogoryArray[k].displayAnimation = true;
@@ -832,7 +880,6 @@ app.directive('ctcRole', function ($state, serverCommunication, $timeout) {
                     case "Virtual Team Skills": _image = 'Images/cts/Virtual_Teams.png'; break;
                     case "Cross Culture Skills": _image = 'Images/cts/Cross_Culture.png'; break;
                     case "Negotiation Skills": _image = 'Images/cts/Negotiation_Skills.png'; break;
-
                 }
               //  console.error(_image, iOption)
                 return _image;
@@ -1007,19 +1054,15 @@ app.directive('ctcRole', function ($state, serverCommunication, $timeout) {
                             "nodes": _array,
                             "links": _node
                         }
-                    }
-                   
+                    }                   
                     scope.ctsDataForMolecule = _retu;
                     scope.loadingObject = { showLoading: false, loadingMessage: 'Loading' };
                 }
             };
 
-            var _category = {};
-         
+            var _category = {};         
             var _topics = {};
-            var _skills = {};
-
-            
+            var _skills = {};            
             scope.init = function () {
                 scope.ctsDataForMolecule = null;
 
