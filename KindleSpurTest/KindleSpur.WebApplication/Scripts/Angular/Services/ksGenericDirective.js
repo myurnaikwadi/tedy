@@ -71,7 +71,75 @@ app.directive('placeHolder', function ($timeout) {
         }
     };
 });
+app.directive('inputBox', function ($timeout) {
+    return {
+        scope: {
+            inputField: '@',
+            inputModel: '=',
+            onChange: '&',
+            lableName : '@',
+        },       
+        template: '<div class="activityNameInputBox" style="width: 100%;"><input class="profileInputTag homeLogininput addTaskinputClass boldWhiteClass" allow-pattern="[a-z]" style="color: #4f4f4f !important;font-size: 16px !important;letter-spacing: 1px; font-weight: 100 !important;" type="email" required ng-keydown="autoCompleteEmailId($event);" ng-blur="resetAutoComplete();closeAlertMessage()" ng-change="chang(localModel);selectedIndexEmail=-1;changeOccPerInfo = true;" name="{{inputField}}" id="{{inputField}}" ng-model="localModel.model" autocomplete="on"><span class="highlight"></span><span class="bar" style="background:rebeccapurple"></span><label class="addTaskLabel fontClass boldWhiteClass" style="">{{lableName}}</label></div>',
+        //scope: true,   // optionally create a child scope
+        link: function ($scope, element, attrs) {
+            console.error($scope.inputModel)
+            $scope.localModel = { model: '' };
+            $scope.chang = function (iSelectId) {
+                console.error($scope.inputModel)
+                console.error(iSelectId)
+                $scope.inputModel = $scope.localModel.model;
+            };
+            var _resetStyles = function (iSelectId) {
+                var txtBoxes = document.getElementsByTagName("INPUT");
+                for (var i = 0; i < txtBoxes.length; i++) {
+                    if (txtBoxes[i].id == iSelectId) {
+                        document.getElementById(iSelectId).style.borderColor = "#dcdcdc";
+                    }
+                }
+            };
+            //focus on specific field
+            var _setElementFocus = function (elementId, iApplyClass) {//AKP
+                if (elementId && document.getElementById(elementId)) {
+                    setTimeout(function () {
+                        if (elementId && document.getElementById(elementId)) {
+                            document.getElementById(elementId).focus();
+                        }
+                    }, 40);
+                }
+            };
+            $scope.closeAlertMessage = function () {
+                _resetStyles($scope.inputField);
 
+            };
+
+            //autocomplete user name
+            $scope.resetAutoComplete = function () {
+                if ($scope.removedIdName != true) {
+                    $scope.selectedIndex = -1;
+                }
+                else {
+                    _setElementFocus($scope.inputField); //to set focus on Password field in login page when error occurred at password.	
+                    $scope.removedIdName = false;
+                }
+            };
+
+            $scope.autoCompleteEmailId = function ($event) {
+                if ($event.keyCode === 9 || $event.keyCode === 27) {//tab/Esc key press
+                    //if tab is  pressed, set selectedIndex value to userId & focus to password field
+                    if ($event.keyCode === 9) {
+                        if ($scope.selectedIndex != -1) {
+
+                            $scope.selectedIndex = -1;
+                        }
+                    }
+                    $scope.resetAutoComplete($scope.inputField);
+                }
+
+            };
+           
+        }
+    };
+});
 app.directive('topMainStrip', function ($state, $rootScope, authentification) {
     return {
         scope: {

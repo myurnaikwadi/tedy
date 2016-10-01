@@ -292,6 +292,11 @@
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="Images\1.png" />
+    <Content Include="Images\AppLevel\appbg-1.jpg" />
+    <Content Include="Images\AppLevel\appbg-2.jpg" />
+    <Content Include="Images\AppLevel\appbg-4.jpg" />
+    <Content Include="Images\AppLevel\gmail-icon.png" />
+    <Content Include="Images\AppLevel\linkedin-icon.png" />
     <Content Include="Images\attachmentIcon.png" />
     <Content Include="Images\about.png" />
     <Content Include="Images\add.png" />

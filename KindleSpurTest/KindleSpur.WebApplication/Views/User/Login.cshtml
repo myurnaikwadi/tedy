@@ -1,93 +1,280 @@
 ﻿@{Html.RenderAction("Index", "Home");} 
-<div class="parentBody" ng-controller="ksLoginController">
-    
-               <div ng-click="uiFlag.loadBottomContain=false;" ng-class="{ loadBottomContain : uiFlag.loadBottomContain == true}" style="overflow: hidden;display:none; position:absolute;width:100%;height:100%;">
-                    <div class="fullWidthHeightClass aboutUsParent fontClass" ng-include src="extraParam.templateUrl"></div>
-              </div>     
-              <div class="applicationTopStrip">
-                  <div class="applicationLogo">
-                      <img ng-click="navigateAsPerRole(4)" class="genericPointerClass" src="~/Images/icons/kindlespurlogo.png" alt="logo" style="height: auto; width: 72%; margin: auto;" />
-                  </div>
-                  <div class="hiddenErrorNotificationClass" ng-class="{ 'showErrorNotificationClass' : displayAlert.showAlert  == true}">            
-                      @*Green*@ 
-                      <div class="alert alert-success" style="margin-bottom: 0;" ng-show="displayAlert.formatType == '1'">
-                          <h5 class="closealert-padding close" ng-click="displayAlert.showAlert = false">×</h5>
-                          <h5 class="alert-message1">{{displayAlert.message}}</h5>                        
-                        </div>
-                      
-                      @*red*@
-                        <div class="alert alert-error" style="margin-bottom: 0;" ng-show="displayAlert.formatType == '2'">
-                            <h5 class="closealert-padding close" ng-click="displayAlert.showAlert = false">×</h5>
-                            <h5 class="alert-message1">{{displayAlert.message}}</h5>                         
-                        </div>
-                      <h5 style="position:absolute;height:3px;width:100%; background: red;margin: 0;transition:all 0.8s cubic-bezier(0.73, 0.85, 0.58, 1);" ng-style="{ 'width' : (displayAlert.count +'0%') }"></h5>
-                   </div>
-              </div>
-              <div class="applicationMiddleStrip">
-                  <div class="fullWidthHeightClass middleBackgroundImage">
-                      <div class="staticStringMessage">
-                          <h1 class="master-the-art fontClass">MASTER THE ART</h1>
-                          <h3 class="of-growing fontClass">OF GROWING</h3>
-                          <h1 class="knowledge-tree fontClass">A KNOWLEDGE TREE</h1>
+<div ng-if='false' class="parentBody boldBlackClass" ng-controller="ksLoginController">
+    <canvas class="backgroundImageEffectLogin"></canvas>
+    <div ng-click="loginAnimation.otherThanLogin = 0" class="genericPointerClass appLogoDefaultClass" ng-class="{ appLogoAfterClick : (loginAnimation.otherThanLogin == 1 || loginAnimation.otherThanLogin == 2 )}"></div>
+    <div ng-click="loginAnimation.otherThanLogin = 0" class="genericPointerClass smallAppLogoParent" style="position: absolute;top: 2%; left: 5%;" ng-class="{ displaySmallLogo : (loginAnimation.otherThanLogin == 1 || loginAnimation.otherThanLogin == 2 )}">
+        <div class="inner kindleSpurLogo" ng-class="{ kindleSpurLogoAni : loginAnimation.applicationLogo }">
+            <span class="boldWhiteClass fontClass kindleSpurLogoSpanAfterClick" >K</span>
+            <span class="boldRedClass fontClass kindleSpurLogoSpanAfterClick" >I</span>
+            <span class="boldWhiteClass fontClass kindleSpurLogoSpanAfterClick" >N</span>
+            <span class="boldWhiteClass fontClass kindleSpurLogoSpanAfterClick" >D</span>
+            <span class="boldWhiteClass fontClass kindleSpurLogoSpanAfterClick" >L</span>
+            <span class="boldWhiteClass fontClass kindleSpurLogoSpanAfterClick" >E</span>
+            <span class="boldWhiteClass fontClass kindleSpurLogoSpanAfterClick" >S</span>
+            <span class="boldWhiteClass fontClass kindleSpurLogoSpanAfterClick" >P</span>
+            <span class="boldRedClass fontClass kindleSpurLogoSpanAfterClick" >U</span>
+            <span class="boldWhiteClass fontClass kindleSpurLogoSpanAfterClick" >R</span>
+        </div>
+    </div>
 
-                          <div class="systemTheory">
-                              <h4 class="login-Para">QUEST FOR EXCHANGING KNOWLEDGE,</h4>
-                              <h4 class="login-Para">WHERE COACHING/MENTORING REDEFINES,</h4>	     
-                              <h4 class="login-Para">THE WAY WE PERCEIVE IT,IGNITED TO SHARE</h4>    
-                              <h4 class="login-Para">KNOWLEDGE,URGE TO LEARN-</h4>                       
-                              <h4 class="login-Para">MASTER BLEND OF KNOWLEDGE I & U</h4>
-                          </div>
-                      </div>
-                      <div class="signupLoginParentLogin">
-                          <div class="signupForm">
-                              <h4 class="signupNewHereLabel fontClass">NEW HERE?</h4>
-                              <h4 class="sigupLabel fontClass">SIGN UP!</h4>
-                              <form name="myForm">
-                                  <div class="formDetails">
-                                      <input class="inputTagStyle fontClass loginFont" allow-pattern="[a-z]" type="text" ng-model="signupDetails.FirstName" placeholder="FIRST NAME" ng-required maxlength="20"/>
-                                      <input class="inputTagStyle fontClass loginFont" allow-pattern="[a-z]" style="margin-left: 4%;" ng-model="signupDetails.LastName" type="text" placeholder="LAST NAME" ng-required maxlength="20"/>
-                                  </div>
-                                  <div class="formDetails">
-                                      <input class="email-inputTagStyle fontClass email-Textboxmsg loginFont" type="email" ng-keyup="$event.keyCode == 13 && signupClick()" ng-class="{ invalidEmailNotify : emailValidate == false}"  focus-me set-Focus="false" blur="checkEmailFormat()" ng-model="signupDetails.EmailAddress" placeholder="E-MAIL" ng-required maxlength="50" />
-                                  </div>
-                                  <div class="formDetails">
-                                      <button type="button" class="signupButton fontClass btn btn-default" ng-click="signupClick()">SIGN UP</button>
-                                  </div>
-                              </form>
-                          </div>
-                          <div class="signupForm" style="height: 38% !important;margin-bottom: 0;">
-                              <h4 class="sigupLabel fontClass">SIGN IN!</h4>
-                              <form name="myForm">
-                                  <div class="formDetails">
-                                      <input class="email-inputTagStyle fontClass loginFont" type="email" ng-class="{ invalidEmailNotify : emailValidate == false}"  focus-me set-Focus="true" blur="checkEmailFormat()" ng-model="loginDetails.emailAddress" placeholder="E-MAIL" ng-required maxlength="50"/>
-                                  </div>
-                                  <div class="formDetails">
-                                      <input type="password" class="inputTagStyle fontClass loginFont" ng-keyup="$event.keyCode == 13 && loginClick()" style="width: 94%;" ng-model="loginDetails.password" placeholder="PASSWORD" ng-required maxlength="20"/>
-                                  </div>
-                                  <div class="formDetails">
-                                      <button type="button"class="signupButton fontClass btn btn-default" ng-click="loginClick()">SUBMIT</button>       
-                                      
-                                      <h5 class="forgotPassword fontClass" style="margin: 10px;" ng-click="forgotPasswordClickFunc($event)">ForgotPassword</h5>
-                                  </div>
-                              </form>
-                          </div>
-                          <div class="signInWith" id="appBody">
-                              @*<h4 class="signInWithLabel fontClass">SIGN IN WITH</h4>*@
-                              <script class="signInWithLabel" type="in/Login"></script>
-                          </div>
-                          <div class="signInWithTerms">
-                              <p class="fontClass">
-                                  By Signing In, I accept the Terms and Conditions & Privacy Policy
-                              </p>
-                          </div>
-                      </div>
-                  </div>
-              </div>
-              <div class="applicationBottomStrip">
-                  <bottom-Main-Strip></bottom-Main-Strip>
-              </div>     
+    <div class="fullWidthHeightClass" style="height: 94%;">
+        <div class="fullWidthHeightClass showLandingPageTheme" style="height: 100%; display:flex;" ng-class="{ displaySmallLogo : loginAnimation.applicationLogo == true,hideLandingPageTheme : (loginAnimation.otherThanLogin == 1 || loginAnimation.otherThanLogin == 2 ) }">
+           <div class="loginParentNew">
+              
+               <div class="applicationLogoInfo">
+                   <div class="inner kindleSpurLogo displaySmallLogo"><span class="boldWhiteClass fontClass">K</span><span class="boldRedClass fontClass">I</span><span class="boldWhiteClass">N</span><span class="boldWhiteClass">D</span><span class="boldWhiteClass">L</span><span class="boldWhiteClass">E</span><span class="boldWhiteClass">S</span><span class="boldWhiteClass">P</span><span class="boldRedClass">U</span><span class="boldWhiteClass">R</span></div>
+               </div>
+               <div class="applicationThemeMessage">
+                   <div class="basicCssClass" style="margin:auto;">
+                       <h5 class="boldWhiteClass fontClass" style="text-transform: capitalize;font-size: 13px;line-height: 20px">Master the art of growing a knowledge tree quest for exchanging knowledge,where coaching/mentoring redefines,the way we perceive it,ignited to share knowledge,urge to learn master blend of knowledge <strong class="boldRedClass fontClass">I</strong> & <strong class="boldRedClass fontClass">U</strong></h5>
+                   </div>
+               </div>
+               <div class="actionOnLoginPage">
+                   <div class="basicCssClass" style="margin:auto;display: flex;width:45%;">
+                       <button type="button"  style="margin:auto;padding:5px;" class="blueButton genericPointerClass signupButton fontClass btn btn-default roundedCornerButton" ng-click="loginAnimation.loadDemos()">See Demo</button>
+                       <button type="button"  style="margin:auto;padding:5px;" class="blueButton genericPointerClass signupButton fontClass btn btn-default roundedCornerButton" ng-click="loginAnimation.loadLoginPage()">Getting Started</button>
+                   </div>
+               </div>
+           </div>
+        </div>
+        <div class="basicCssClass demoLandingPage" ng-class="{ loadDemosPageClass: loginAnimation.otherThanLogin == 1 }">
+            <div class="basicCssClass signupInfoDiv"></div>
+            <div class="basicCssClass signupInfoDiv"></div>            
+            <div class="basicCssClass signupInfoDiv" >
+                <div class="basicCssClass signupInfoDivParent" style="width:100%;margin-right:auto;">
+                    <h5 class="basicCssClass boldWhiteClass" style="width:85%;">
+                        Master the art of growing a knowledge tree quest for exchanging knowledge,where coaching/mentoring redefines,the way we perceive it,ignited to share knowledge,urge to learn master blend of knowledge <strong class="boldRedClass fontClass">I</strong> & <strong class="boldRedClass fontClass">U</strong>
+                    </h5>                    
+                </div>
+            </div>
+            <div class="basicCssClass loginPaneParent" style="height:70%;">
+                <div class="basicCssClass fullWidthHeightClass" style="width:70%;margin:auto;">
+                    <video class="basicCssClass fullWidthHeightClass" style="width: 100%;height: 100%;" controls>
+                        <source src="http://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
+                    </video>
+                </div>
+            </div>
+        </div>
+        <div class="basicCssClass loginLandingPage" ng-class="{ loadDemosPageClass: loginAnimation.otherThanLogin == 2 }">
+            <div class="basicCssClass signupInfoDiv">
+                <div class="basicCssClass signupInfoDivParent">
+                    <div ng-click="loginAnimation.changeview()" class="basicCssClass left-addon-Don" ng-class="{ displaySmallLogo : loginAnimation.signupClick == 1}">
+                        <h5 class="basicCssClass genericPointerClass boldWhiteClass fontClass" style="text-transform: capitalize;font-size: 18px;text-align: center;width: 100%;margin-bottom: 0;margin-top: 20px;">Don't Have An Account?</h5>
+                        <h5 class="basicCssClass genericPointerClass boldWhiteClass fontClass" style="text-transform: capitalize;font-size: 13px;text-align: center;width: 100%;margin-top: 7px;">Signup Here</h5>
+                    </div>
+                    <div ng-click="loginAnimation.changeview()" class="basicCssClass backToLogin" ng-class="{ displaySmallLogo : loginAnimation.signupClick == 2}">
+                        <h5 class="basicCssClass genericPointerClass boldWhiteClass fontClass" style="text-transform: capitalize;font-size: 18px;text-align: center;width: 100%;margin-bottom: 0;margin-top: 20px;">Already have an account?</h5>
+                        <h5 class="basicCssClass genericPointerClass boldWhiteClass fontClass" style="text-transform: capitalize;font-size: 13px;text-align: center;width: 100%;margin-top: 7px;">Login Here</h5>                 
+                    </div>
+                </div>
+            </div>
+            <div class="basicCssClass loginPaneParent">
+                <div class="loginpanelCarousel">  
+                    <div id="myCarousel" class="carousel slide fullWidthHeightClass" style="height: 100%;" data-ride="carousel">
+                        <!-- Indicators -->
+                        <ol class="carousel-indicators" style="z-index:2;">
+                            <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+                            <li data-target="#myCarousel" data-slide-to="1"></li>
+                            <li data-target="#myCarousel" data-slide-to="2"></li>
+                        </ol>
+
+                        <!-- Wrapper for slides -->
+                        <div class="carousel-inner"  style="height: 100%;" role="listbox">
+                            
+
+                            <div class="item active fullWidthHeightClass">
+                                <div class="basicCssClass fullWidthHeightClass" style="height: 100%;width: 100%;display: flex;">
+                                    <img style="width: 80%;height: 80%;margin: auto;" src="Images/AppLevel/appbg-1.jpg" class="fullWidthHeightClass">
+                                </div>                                
+                            </div>
+                            <div class="item fullWidthHeightClass">
+                                <div class="basicCssClass fullWidthHeightClass" style="height: 100%;width: 100%;display: flex;">
+                                    <img style="width: 80%;height: 80%;margin: auto;" src="Images/AppLevel/appbg-2.jpg" class="fullWidthHeightClass">
+                                </div>                              
+                            </div>                           
+                            <div class="item fullWidthHeightClass">
+                                <div class="basicCssClass fullWidthHeightClass" style="height: 100%;width: 100%;display: flex;">
+                                    <img style="width: 80%;height: 80%;margin: auto;" src="Images/AppLevel/appbg-4.jpg" class="fullWidthHeightClass">
+                                </div>
+                            </div>                            
+                        </div>
+                    </div>
+                </div> 
+                <div class="loginpanelCarousel">
+                    <div class="fullWidthHeightClass" style="height: 100%;">
+                        <div class="fullWidthHeightClass showLandingPageTheme" style="position:absolute;height: 100%; display:flex;" ng-class="{ displaySmallLogo : loginAnimation.signupClick == 1 }">
+                             <div class="basicCssClass fullWidthHeightClass" style="height: 100%;width: 70%;margin:auto;background: rgba(76, 76, 76, 0.25); border: 1px solid white;">
+                                 <div class="basicCssClass basicCssClass fullWidthHeightClass" style="height: 20%; display:flex;border-bottom: 1px solid white;">
+                                     <h5 class="basicCssClass boldWhiteClass" style="margin :auto;margin-left:12%;text-transform: capitalize;font-size: 18px;">Welcome, please login</h5>
+                                     <i class="fa fa-sign-in" style="font-size: 40px;margin: auto;margin-right:5%; color: white;"></i>
+                                 </div>
+                                 <div class="basicCssClass fullWidthHeightClass" style="height: 63%;">
+                                     <div class="basicCssClass fullWidthHeightClass" style="height: 25%;display:flex;">
+                                         <input-Box ng-if="loginAnimation.otherThanLogin" input-Field="uName" lable-Name="Email Id" input-Model="signupDetails.FirstName" style="width: 80%;margin: auto;"></input-Box>
+                                     </div>
+                                     <div class="basicCssClass fullWidthHeightClass" style="height: 25%;display:flex;">
+                                         <input-Box ng-if="loginAnimation.otherThanLogin" input-Field="Pwd" lable-Name="Password" input-Model="signupDetails.LastName" style="width: 80%;margin: auto;"></input-Box>
+                                     </div>                                    
+                                     <div class="basicCssClass fullWidthHeightClass" style="height: 18%;display:flex;">
+                                         <div class="basicCssClass fullWidthHeightClass" style="height: 100%;margin:auto;width: 80%;display: flex;">
+                                             <input class="basicCssClass genericPointerClass" allow-pattern="[a-z]" style="margin: auto;margin-right: 4%;margin-left: 0;" type="checkbox" required ng-model="firstName" autocomplete="off">
+                                             <h5 class="basicCssClass genericPointerClass boldWhiteClass" style="margin: auto;margin-left: 0;font-size: 13px;text-align: center;">Remember Me</h5>
+                                             <h5 class="basicCssClass genericPointerClass boldWhiteClass" style="margin: auto;margin-right: 5%;font-size: 13px;text-align: center;">Forgot Password</h5>
+                                         </div>
+                                     </div>
+                                     <div class="basicCssClass fullWidthHeightClass" style="height: 25%;display:flex;">
+                                         <button type="button" style="margin:auto;padding:5px;" class="blueButton genericPointerClass signupButton fontClass btn btn-default roundedCornerButton">Login</button>
+                                     </div>    
+                                     <div style="display: flex;width: 100%;height: 35px;">
+                                         <div style="margin:auto;width: 100%;display: flex;">
+                                             <div style="width:33.33%;height:100%;float:left;margin: auto;">
+                                                 <div style="height:1px;width:100%;border-bottom:1px solid white;"></div>
+                                             </div>
+                                             <div style="width:33.33%;height:100%;float:left;margin: auto;display:flex;">
+                                                 <h5 class="genericEventHeadings genericMarginZero genericEllipsis" style="margin: auto;color: white;font-size:13px;">OR</h5>
+                                             </div>
+                                             <div style="width:33.33%;height:100%;float:left;margin: auto;">
+                                                 <div style="height:1px;width:100%;border-bottom:1px solid white;"></div>
+                                             </div>
+
+                                         </div>
+
+                                     </div>
+                                 </div>
+                                 <div class="basicCssClass fullWidthHeightClass" style="height: 17%;display:flex;">
+                                     <h5 class="basicCssClass genericPointerClass boldWhiteClass" style="margin: auto;margin-right: 0%;margin-left: 23%;font-size: 13px;text-align: center;">Connect with</h5>
+                                     <img class="basicCssClass" style="margin: auto;margin-right: 0%;margin-left: 4%;width: 30px;height: 30px;" src="~/Images/AppLevel/linkedin-icon.png" />
+                                     <img class="basicCssClass" style="margin: auto;margin-right: 4%;margin-left: 4%;width: 30px;height: 30px;" src="~/Images/AppLevel/gmail-icon.png" />
+                                 </div>
+                             </div>
+                        </div>
+                        <div class="basicCssClass fullWidthHeightClass showLandingPageTheme" style="position:absolute;height: 100%; display:flex;" ng-class="{ displaySmallLogo :  loginAnimation.signupClick == 2 }">
+                            <div class="basicCssClass fullWidthHeightClass" style="height: 100%;width: 70%;margin:auto;background: rgba(76, 76, 76, 0.25); border: 1px solid white;">
+                                <div class="basicCssClass basicCssClass fullWidthHeightClass" style="height: 20%; display:flex;border-bottom: 1px solid white;">
+                                    <h5 class="basicCssClass boldWhiteClass" style="margin :auto;text-transform: capitalize;font-size: 18px;">Signup To Get Instant Access.</h5>
+                                </div>
+                                <div class="basicCssClass fullWidthHeightClass" style="height: 63%;">
+                                    <div class="basicCssClass fullWidthHeightClass" style="height: 25%;display:flex;">
+                                        <input-Box ng-if="loginAnimation.otherThanLogin" input-Field="FName" lable-Name="First Name" input-Model="signupDetails.FirstName" style="width: 80%;margin: auto;"></input-Box>
+                                    </div>
+                                    <div class="basicCssClass fullWidthHeightClass" style="height: 25%;display:flex;">
+                                        <input-Box ng-if="loginAnimation.otherThanLogin" input-Field="LName" lable-Name="Last Name" input-Model="signupDetails.LastName" style="width: 80%;margin: auto;"></input-Box>
+                                    </div>
+                                    <div class="basicCssClass fullWidthHeightClass" style="height: 25%;display:flex;">
+                                        <input-Box ng-if="loginAnimation.otherThanLogin" input-Field="email" lable-Name="Email Address" input-Model="signupDetails.EmailAddress" style="width: 80%;margin: auto;"></input-Box>
+                                    </div>
+                                    <div class="basicCssClass fullWidthHeightClass" style="height: 25%;display:flex;">
+                                        <div class="basicCssClass fullWidthHeightClass" style="height: 100%;margin:auto;width: 80%;display: flex;">
+                                            <input class="basicCssClass genericPointerClass" allow-pattern="[a-z]" style="margin: auto;margin-right: 4%;margin-left: 0;" type="checkbox" required ng-model="firstName" autocomplete="off">
+                                            <h5 class="basicCssClass genericPointerClass boldWhiteClass" style="margin: auto;margin-left: 0;font-size: 13px;text-align: center;">I accept Terms and Conditions</h5>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="basicCssClass fullWidthHeightClass" style="border-top: 1px solid white;height: 17%;display:flex;">
+                                    <button type="button" style="margin:auto;padding:5px;" class="blueButton genericPointerClass signupButton fontClass btn btn-default roundedCornerButton">Register</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>           
+            </div>
+        </div>
+    </div>
+    <div class="applicationBottomStrip">
+        
+        <div class="basicCssClass fullWidthHeightClass" style="height: 100%;margin:auto;width: 100%;display: flex;">
+            <h5 class="basicCssClass genericPointerClass boldWhiteClass fontClass" style="margin: auto;font-size: 13px;text-align: center;">Copyright © 2015 The Project by IRIT Solutions. All Rights Reserved</h5>
+        </div> 
+    </div>
 </div>
-<script src="~/Scripts/jquery-1.10.2.min.js"></script>
-<script src="~/Scripts/jquery-ui-1.10.4.custom.js"></script>
-<script src="~/Scripts/bootstrap.js"></script>
+
+
+    <div class="parentBody" ng-controller="ksLoginController">
+        <div ng-click="uiFlag.loadBottomContain=false;" ng-class="{ loadBottomContain : uiFlag.loadBottomContain == true}" style="overflow: hidden;display:none; position:absolute;width:100%;height:100%;">
+            <div class="fullWidthHeightClass aboutUsParent fontClass" ng-include src="extraParam.templateUrl"></div>
+        </div>
+        <div class="applicationTopStrip">
+            <div class="applicationLogo">
+                <img ng-click="navigateAsPerRole(4)" class="genericPointerClass" src="~/Images/icons/kindlespurlogo.png" alt="logo" style="height: auto; width: 72%; margin: auto;" />
+            </div>
+            <div class="hiddenErrorNotificationClass" ng-class="{ 'showErrorNotificationClass' : displayAlert.showAlert  == true}">
+                @*Green*@
+                <div class="alert alert-success" style="margin-bottom: 0;" ng-show="displayAlert.formatType == '1'">
+                    <h5 class="closealert-padding close" ng-click="displayAlert.showAlert = false">×</h5>
+                    <h5 class="alert-message1">{{displayAlert.message}}</h5>
+                </div>
+
+                @*red*@
+                <div class="alert alert-error" style="margin-bottom: 0;" ng-show="displayAlert.formatType == '2'">
+                    <h5 class="closealert-padding close" ng-click="displayAlert.showAlert = false">×</h5>
+                    <h5 class="alert-message1">{{displayAlert.message}}</h5>
+                </div>
+                <h5 style="position:absolute;height:3px;width:100%; background: red;margin: 0;transition:all 0.8s cubic-bezier(0.73, 0.85, 0.58, 1);" ng-style="{ 'width' : (displayAlert.count +'0%') }"></h5>
+            </div>
+        </div>
+        <div class="applicationMiddleStrip">
+            <div class="fullWidthHeightClass middleBackgroundImage">
+                <div class="staticStringMessage">
+                    <h1 class="master-the-art fontClass">MASTER THE ART</h1>
+                    <h3 class="of-growing fontClass">OF GROWING</h3>
+                    <h1 class="knowledge-tree fontClass">A KNOWLEDGE TREE</h1>
+
+                    <div class="systemTheory">
+                        <h4 class="login-Para">QUEST FOR EXCHANGING KNOWLEDGE,</h4>
+                        <h4 class="login-Para">WHERE COACHING/MENTORING REDEFINES,</h4>
+                        <h4 class="login-Para">THE WAY WE PERCEIVE IT,IGNITED TO SHARE</h4>
+                        <h4 class="login-Para">KNOWLEDGE,URGE TO LEARN-</h4>
+                        <h4 class="login-Para">MASTER BLEND OF KNOWLEDGE I & U</h4>
+                    </div>
+                </div>
+                <div class="signupLoginParentLogin">
+                    <div class="signupForm">
+                        <h4 class="signupNewHereLabel fontClass">NEW HERE?</h4>
+                        <h4 class="sigupLabel fontClass">SIGN UP!</h4>
+                        <form name="myForm">
+                            <div class="formDetails">
+                                <input class="inputTagStyle fontClass loginFont" allow-pattern="[a-z]" type="text" ng-model="signupDetails.FirstName" placeholder="FIRST NAME" ng-required maxlength="20" />
+                                <input class="inputTagStyle fontClass loginFont" allow-pattern="[a-z]" style="margin-left: 4%;" ng-model="signupDetails.LastName" type="text" placeholder="LAST NAME" ng-required maxlength="20" />
+                            </div>
+                            <div class="formDetails">
+                                <input class="email-inputTagStyle fontClass email-Textboxmsg loginFont" type="email" ng-keyup="$event.keyCode == 13 && signupClick()" ng-class="{ invalidEmailNotify : emailValidate == false}" focus-me set-Focus="false" blur="checkEmailFormat()" ng-model="signupDetails.EmailAddress" placeholder="E-MAIL" ng-required maxlength="50" />
+                            </div>
+                            <div class="formDetails">
+                                <button type="button" class="signupButton fontClass btn btn-default" ng-click="signupClick()">SIGN UP</button>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="signupForm" style="height: 38% !important;margin-bottom: 0;">
+                        <h4 class="sigupLabel fontClass">SIGN IN!</h4>
+                        <form name="myForm">
+                            <div class="formDetails">
+                                <input class="email-inputTagStyle fontClass loginFont" type="email" ng-class="{ invalidEmailNotify : emailValidate == false}" focus-me set-Focus="true" blur="checkEmailFormat()" ng-model="loginDetails.emailAddress" placeholder="E-MAIL" ng-required maxlength="50" />
+                            </div>
+                            <div class="formDetails">
+                                <input type="password" class="inputTagStyle fontClass loginFont" ng-keyup="$event.keyCode == 13 && loginClick()" style="width: 94%;" ng-model="loginDetails.password" placeholder="PASSWORD" ng-required maxlength="20" />
+                            </div>
+                            <div class="formDetails">
+                                <button type="button" class="signupButton fontClass btn btn-default" ng-click="loginClick()">SUBMIT</button>
+
+                                <h5 class="forgotPassword fontClass" style="margin: 10px;" ng-click="forgotPasswordClickFunc($event)">ForgotPassword</h5>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="signInWith" id="appBody">
+                        @*<h4 class="signInWithLabel fontClass">SIGN IN WITH</h4>*@
+                        <script class="signInWithLabel" type="in/Login">
+                        </script>
+                    </div>
+                    <div class="signInWithTerms">
+                        <p class="fontClass">
+                            By Signing In, I accept the Terms and Conditions & Privacy Policy
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="applicationBottomStrip">
+            <bottom-Main-Strip></bottom-Main-Strip>
+        </div>
+    </div>
 
