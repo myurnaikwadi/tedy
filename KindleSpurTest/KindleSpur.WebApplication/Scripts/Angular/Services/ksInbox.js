@@ -105,12 +105,13 @@
                     serverCommunication.getAllMeetingRequest({
                         ConversationType: "Coaching",
                         successCallBack: function (iObj) {
-                           
-                            for (var k = 0 ; k < iObj.data.Result.length ; k++) {
-                                iObj.data.Result[k].Meeting.StartDate = new Date(Number(iObj.data.Result[k].Meeting.StartDate.split('(')[1].split(')')[0]));
-                                iObj.data.Result[k].Meeting.EndDate = new Date(Number(iObj.data.Result[k].Meeting.EndDate.split('(')[1].split(')')[0]));
+                            if (iObj.data && iObj.data.Result) {
+                                for (var k = 0 ; k < iObj.data.Result.length ; k++) {
+                                    iObj.data.Result[k].Meeting.StartDate = new Date(Number(iObj.data.Result[k].Meeting.StartDate.split('(')[1].split(')')[0]));
+                                    iObj.data.Result[k].Meeting.EndDate = new Date(Number(iObj.data.Result[k].Meeting.EndDate.split('(')[1].split(')')[0]));
+                                }
+                                $scope.notificationData = $scope.notificationData.concat(iObj.data.Result);
                             }
-                            $scope.notificationData = $scope.notificationData.concat(iObj.data.Result);
                             $timeout(function () {
                                 for (var k = 0 ; k < $scope.notificationData.length ; k++) {
                                     $scope.notificationData[k].showFlag = true;
@@ -133,11 +134,13 @@
                     serverCommunication.getAllConversationRequest({
                         ConversationType: ($scope.role == 'Coach') ? 'Coaching': 'Mentoring',
                         successCallBack: function (iObj) {
-                           
-                            for (var k = 0 ; k < iObj.data.Result.length ; k++) {
-                                iObj.data.Result[k].CreateDate = new Date(Number(iObj.data.Result[k].CreateDate.split('(')[1].split(')')[0]));
+                            if (iObj.data && iObj.data.Result) {
+                                for (var k = 0 ; k < iObj.data.Result.length ; k++) {
+                                    iObj.data.Result[k].CreateDate = new Date(Number(iObj.data.Result[k].CreateDate.split('(')[1].split(')')[0]));
+                                }
+                                $scope.notificationData = $scope.notificationData.concat(iObj.data.Result);
                             }
-                            $scope.notificationData = $scope.notificationData.concat(iObj.data.Result);
+                           
                             $scope.loadingMiddleObject = { showLoading: false, loadingMessage: 'Loading' };
                             _callForAllMeetingRequest();
                         },
@@ -156,12 +159,13 @@
                     serverCommunication.getMeetingRequestAsPerRole({
                         Role: $scope.role,
                         successCallBack: function (iObj) {
-                          
-                            for (var k = 0 ; k < iObj.data.Result.length ; k++) {
-                                iObj.data.Result[k].Meeting.StartDate = new Date(Number(iObj.data.Result[k].Meeting.StartDate.split('(')[1].split(')')[0]));
-                                iObj.data.Result[k].Meeting.EndDate = new Date(Number(iObj.data.Result[k].Meeting.EndDate.split('(')[1].split(')')[0]));
+                            if (iObj.data && iObj.data.Result) {
+                                for (var k = 0 ; k < iObj.data.Result.length ; k++) {
+                                    iObj.data.Result[k].Meeting.StartDate = new Date(Number(iObj.data.Result[k].Meeting.StartDate.split('(')[1].split(')')[0]));
+                                    iObj.data.Result[k].Meeting.EndDate = new Date(Number(iObj.data.Result[k].Meeting.EndDate.split('(')[1].split(')')[0]));
+                                }
+                                $scope.notificationData = $scope.notificationData.concat(iObj.data.Result);
                             }
-                            $scope.notificationData = $scope.notificationData.concat(iObj.data.Result);
                             $timeout(function () {
                                 for (var k = 0 ; k < $scope.notificationData.length ; k++) {
                                     $scope.notificationData[k].showFlag = true;
@@ -185,11 +189,12 @@
                     serverCommunication.getConversationRequest({
                         ConversationType: ($scope.role == 'Coach') ? 'Coaching' : 'Mentoring',
                         successCallBack: function (iObj) {
-                          
-                            for (var k = 0 ; k < iObj.data.Result.length ; k++) {
-                                iObj.data.Result[k].CreateDate = new Date(Number(iObj.data.Result[k].CreateDate.split('(')[1].split(')')[0]));
+                            if (iObj.data && iObj.data.Result) {
+                                for (var k = 0 ; k < iObj.data.Result.length ; k++) {
+                                    iObj.data.Result[k].CreateDate = new Date(Number(iObj.data.Result[k].CreateDate.split('(')[1].split(')')[0]));
+                                }
+                                $scope.notificationData = $scope.notificationData.concat(iObj.data.Result);
                             }
-                            $scope.notificationData = $scope.notificationData.concat(iObj.data.Result);
                             $scope.loadingMiddleObject = { showLoading: false, loadingMessage: 'Loading' };
                             _callForMeetingRequest();
                         },
