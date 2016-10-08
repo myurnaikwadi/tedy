@@ -185,7 +185,7 @@
 }
 .signupInfoDivParent {
   margin:auto;margin-right:0%;
-  width: 23%;
+  width: 25%;
     height: 100%;
    
 }
@@ -212,7 +212,26 @@
 .addEmailabel {
         top: 5px  !important;
 }
+.animationClassForNotValid {
 
+     -webkit-animation:animationForNotValid 2s linear 0 infinite;
+  -moz-animation:animationForNotValid 2s linear 0 infinite;
+  animation:animationForNotValid 2s linear 0 infinite;
+}
+
+/* ANIMATIONS ================ */
+@-webkit-keyframes animationForNotValid {
+	from { right : 2%; }
+  to 	{ right : 8%;}
+}
+@-moz-keyframes animationForNotValid {
+	from { right : 2%; }
+  to 	{ right : 8%; }
+}
+@keyframes animationForNotValid {
+	from { right : 2%;}
+  to 	{ right : 8%; }
+}
 
 
 

@@ -71,24 +71,48 @@ app.directive('placeHolder', function ($timeout) {
         }
     };
 });
+
+app.directive('allowPattern', [function allowPatternDirective() {
+    return {
+        restrict: "A",
+        compile: function (tElement, tAttrs) {
+            return function (scope, element, attrs) {
+                // I handle key events
+                //console.error(attrs.noCheck)
+                if (!attrs.noCheck || attrs.noCheck == 'true') {
+                    element.bind("keypress", function (event) {
+                        var keyCode = event.which || event.keyCode; // I safely get the keyCode pressed from the event.
+                        var keyCodeChar = String.fromCharCode(keyCode); // I determine the char from the keyCode.
+
+                        // If the keyCode char does not match the allowed Regex Pattern, then don't allow the input into the field.
+                     
+                        if (!keyCodeChar.match(new RegExp(attrs.allowPattern, "i"))) {                           
+                            event.preventDefault();
+                            return false;
+                        }
+
+                    });
+                }              
+            };
+        }
+    }
+}]);
+
 app.directive('inputBox', function ($timeout) {
     return {
         scope: {
             inputField: '@',
+            type: '@',
             inputModel: '=',
             onChange: '&',
+            noCheck: '@',
             lableName : '@',
         },       
-        template: '<div class="activityNameInputBox" style="width: 100%;"><input class="profileInputTag homeLogininput addTaskinputClass boldWhiteClass" allow-pattern="[a-z]" style="color: #4f4f4f !important;font-size: 16px !important;letter-spacing: 1px; font-weight: 100 !important;" type="email" required ng-keydown="autoCompleteEmailId($event);" ng-blur="resetAutoComplete();closeAlertMessage()" ng-change="chang(localModel);selectedIndexEmail=-1;changeOccPerInfo = true;" name="{{inputField}}" id="{{inputField}}" ng-model="localModel.model" autocomplete="on"><span class="highlight"></span><span class="bar" style="background:rebeccapurple"></span><label class="addTaskLabel fontClass boldWhiteClass" style="">{{lableName}}</label></div>',
+        template: '<div class="activityNameInputBox" style="width: 100%;"><input class="profileInputTag homeLogininput addTaskinputClass boldWhiteClass" no-Check="{{noCheck}}" allow-pattern="[a-z]" style="color: white  !important;font-size: 16px !important;letter-spacing: 1px; font-weight: 100 !important;" type="{{type}}" required ng-keydown="autoCompleteEmailId($event);" ng-blur="resetAutoComplete();closeAlertMessage()" ng-change="selectedIndexEmail=-1;changeOccPerInfo = true;" name="{{inputField}}" id="{{inputField}}" ng-model="inputModel" autocomplete="off"><span class="highlight"></span><span class="bar" style="background:rebeccapurple"></span><label class="addTaskLabel fontClass boldWhiteClass" style="">{{lableName}}<b style="color:red;margin-left: 5px;">*</b></label></div>',
         //scope: true,   // optionally create a child scope
         link: function ($scope, element, attrs) {
-            console.error($scope.inputModel)
-            $scope.localModel = { model: '' };
-            $scope.chang = function (iSelectId) {
-                console.error($scope.inputModel)
-                console.error(iSelectId)
-                $scope.inputModel = $scope.localModel.model;
-            };
+          //  console.error($scope.inputModel)          
+           
             var _resetStyles = function (iSelectId) {
                 var txtBoxes = document.getElementsByTagName("INPUT");
                 for (var i = 0; i < txtBoxes.length; i++) {
@@ -2221,30 +2245,6 @@ app.directive('feedbackPage', function ($state, serverCommunication, $timeout, $
         }
     }
 });
-
-app.directive('allowPattern', [allowPatternDirective]);
-
-function allowPatternDirective() {
-    return {
-        restrict: "A",
-        compile: function (tElement, tAttrs) {
-            return function (scope, element, attrs) {
-                // I handle key events
-                element.bind("keypress", function (event) {
-                    var keyCode = event.which || event.keyCode; // I safely get the keyCode pressed from the event.
-                    var keyCodeChar = String.fromCharCode(keyCode); // I determine the char from the keyCode.
-
-                    // If the keyCode char does not match the allowed Regex Pattern, then don't allow the input into the field.
-                    if (!keyCodeChar.match(new RegExp(attrs.allowPattern, "i"))) {
-                        event.preventDefault();
-                        return false;
-                    }
-
-                });
-            };
-        }
-    }
-};
 
 app.filter('myFormat', function () {
     return function (x, a) {
