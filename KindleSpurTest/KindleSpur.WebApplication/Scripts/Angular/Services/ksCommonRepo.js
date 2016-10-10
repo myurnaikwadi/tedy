@@ -1,4 +1,4 @@
-﻿app.directive('commonRepository', function ($state, serverCommunication, $rootScope) {
+﻿app.directive('commonRepository', function ($state, serverCommunication, $rootScope, $interval) {
     return {
         scope: {
             extraParam: "="
@@ -6,7 +6,48 @@
         templateUrl: '/Home/ksCommonRepository',
         //scope: true,   // optionally create a child scope
         link: function (scope, element, attrs) {
-            window.re = scope;
+            window.commonRepository = scope;
+
+
+            scope.commonRepoInstance = {
+                commonRepoSelectedMenu: 0,
+                loadGridView : true,
+                uploadingInProgress: { uploadButtonName : 'DONE',  uploadedCount: 0, uploadInProgress : 0 , uploadInProgressFlag : false }
+            };
+
+            scope.ddd = function (iObj) {
+                console.error(iObj)
+                _addInFrontArray(iObj);
+            };
+            scope.commonRepoInstance.loadMenuRepo = function (iIndex) {
+                scope.commonRepoInstance.commonRepoSelectedMenu = iIndex;
+
+                switch (iIndex) {
+                    
+                }
+            };
+
+            scope.loadIsotopeAttachment = function () {
+              
+                if (scope.commonRepoInstance.loadGridView) {
+                    var _obj = {
+                        iHeight: 120,
+                        iWidth: 40,
+                        iCol: 5,
+                        iArray: scope.artifactsArray
+                    };
+                } else {
+                    var _obj = {
+                        iHeight: 40,
+                        iWidth: 40,
+                        iCol: 1,
+                        iArray: scope.artifactsArray
+                    };
+                }
+                msIsotopeFunc.prototype.genericHeightChange(_obj);
+            };
+
+
             scope.uiFlag = { uploadNotRequired: false, Message : '' };
 
             scope.styleUI = {};
@@ -166,22 +207,77 @@
                     scope.extraParam.closeCallBack();
             };
 
-            scope.uploadDataOnServer = function () {
-              
-                scope.artifactsArray = scope.artifactsArray.concat(tempArray);
-               
-                for (var i = 0; i < tempArray.length ; i++) {
-                    data.append("FileId", tempArray[i].FileId);
-                }
-                serverCommunication.sendUploadedFileToServer(data, function (iPath) {
-                    data = new FormData();
-                    scope.uploadAttachmentArray = [];
-                    scope.loadUploadPopupFlag = false;
-                    console.error(iPath)
-                    scope.artifactsArray = [].concat(iPath.data);
+            scope.cancelClick = function (iIndex) {
+                if (scope.uploadAttachmentArray[iIndex].autoSyncCounter) {
+                    $interval.cancel(scope.uploadAttachmentArray[iIndex].autoSyncCounter);
+                    scope.uploadAttachmentArray[iIndex].autoSyncCounter = undefined;
+                }                
+                scope.uploadAttachmentArray.splice(iIndex, 1);
+                if (scope.uploadAttachmentArray.length == 0) {
+                    scope.commonRepoInstance.uploadingInProgress = { uploadButtonName: 'UPLOAD', uploadedCount: 0, uploadInProgress: 0, uploadInProgressFlag: false };
+                } 
+            };
 
-                });
-                scope.closePopup();
+            var _rec = function (iIndex, iArr) {
+                if (iArr[iIndex]) {
+                    console.error(iArr[iIndex])
+                    iArr[iIndex].progressBar = 0;
+                    iArr[iIndex].autoSyncCounter = $interval(function () {
+                        iArr[iIndex].progressBar++;
+                        if (iArr[iIndex].progressBar == 100) {
+                            $interval.cancel(iArr[iIndex].autoSyncCounter);
+                            iArr[iIndex].autoSyncCounter = undefined;
+                            iIndex++;
+                            if (iIndex == iArr.length) {
+                                console.error('Done')
+                                scope.commonRepoInstance.uploadingInProgress = { uploadButtonName: 'DONE', uploadedCount: 0, uploadInProgress: 0, uploadInProgressFlag: false };
+                            } else {
+                                _rec(iIndex, iArr);
+                            }
+                        }
+                    }, 100);
+                   
+                } else {
+                    iIndex++;
+                    if (iIndex == iArr.length) {
+                        console.error('Done')
+                        scope.commonRepoInstance.uploadingInProgress = { uploadButtonName: 'DONE', uploadedCount: 0, uploadInProgress: 0, uploadInProgressFlag: false };
+                    } else {
+                        _rec(iIndex, iArr);
+                    }
+                }
+            }
+
+            scope.uploadingData = function () {
+                scope.commonRepoInstance.uploadingInProgress.uploadInProgressFlag = true;
+                scope.commonRepoInstance.uploadingInProgress.uploadButtonName = 'UPLOADING';
+                _rec(0, scope.uploadAttachmentArray);
+            };
+            scope.uploadDataOnServer = function () {
+
+                if (scope.commonRepoInstance.uploadingInProgress.uploadButtonName == 'UPLOAD') {
+                    scope.uploadingData();
+                    return;
+                } else if (scope.commonRepoInstance.uploadingInProgress.uploadButtonName == 'UPLOADING') {
+                    return;
+                } else {
+                    var _finalArray = [];
+                    scope.artifactsArray = scope.artifactsArray.concat(tempArray);
+                    scope.loadIsotopeAttachment();
+                    for (var i = 0; i < tempArray.length ; i++) {
+                        data.append("FileId", tempArray[i].FileId);
+                    }
+                    serverCommunication.sendUploadedFileToServer(data, function (iPath) {
+                        data = new FormData();
+                        scope.uploadAttachmentArray = [];
+                        scope.loadUploadPopupFlag = false;
+                        console.error(iPath)
+                        scope.artifactsArray = [].concat(iPath.data);
+
+                    });
+                    scope.closePopup();
+                }
+
             };
 
             scope.deleteAttachment = function (iObj) {
@@ -289,38 +385,38 @@
                 });
             };
 
+            var _addInFrontArray = function (iFiles) {
+                angular.forEach(iFiles, function (value, key) {
+                    value.TagName = "sssss"
+                    data.append(key, value);
+                });
+
+                for (var k = 0 ; k < iFiles.length ; k++) {
+                    iFiles[k].ContentType = iFiles[k].type;
+                    scope.uploadAttachmentArray.push(iFiles[k]);
+                    var _random = Date.now() * new Date(k).getTime() + Date.now() + k;
+                    var _obj = {
+                        FileName: iFiles[k].name,
+                        FileId: $rootScope.loggedDetail.EmailAddress + ":AFT#" + ((Date.now()) + (Math.floor((Math.random() * 10) + 1 + _random))),
+                        FilePath: iFiles[k].name,
+                        ContentType: iFiles[k].type,
+                        progressBar: -1,
+                        autoSyncCounter : null
+                    }
+                    console.error(_obj.FileId)
+                    tempArray.push(_obj);
+
+                }
+                if (!scope.$$phase) scope.$digest();
+            };
             scope.triggerUpload = function (iId) {
 
                 var obj = {
                     fileInputId: iId
                 }
                 uploadImageOnPage(obj, function (imagePath) {
-
-                    var valueFile = document.getElementById(iId).files;
-                    //  debugger;
-
-                    angular.forEach(valueFile, function (value, key) {
-                        value.TagName = "sssss"
-                        data.append(key, value);
-
-                    });
-
-                    for (var k = 0 ; k < valueFile.length ; k++) {
-
-                        valueFile[k].ContentType = valueFile[k].type;
-                        scope.uploadAttachmentArray.push(valueFile[k]);
-                        var _random = Date.now() * new Date(k).getTime() + Date.now() + k;                            
-                        var _obj = {
-                            FileName :  valueFile[k].name,
-                            FileId: $rootScope.loggedDetail.EmailAddress + ":AFT#" + ((Date.now()) + (Math.floor((Math.random() * 10) + 1 + _random))),
-                            FilePath: valueFile[k].name,
-                            ContentType: valueFile[k].type
-                        }
-                        console.error(_obj.FileId)
-                        tempArray.push(_obj);
-                       
-                    }
-                    //console.error(tempArray)
+                    var valueFile = document.getElementById(iId).files;                   
+                    _addInFrontArray(valueFile);                   
                     document.getElementById(iId).value = "";                    
                 });
             };
@@ -334,10 +430,16 @@
                     loggedDetail: _object,
                     successCallBack: function (iObj) {
 
-                        if (iObj.data['Artifacts'])
+                        if (iObj.data['Artifacts']) {
                             scope.artifactsArray = iObj.data['Artifacts'];
-                        if (iObj.data['Bookmarks'])
+                            var _tempHeight = document.getElementById('artiFactParent').getBoundingClientRect().height;
+                            
+                            scope.loadIsotopeAttachment();
+                        }
+
+                        if (iObj.data['Bookmarks']) {
                             scope.bookMarkArray = iObj.data['Bookmarks'];
+                        }
 
                     }, failureCallBack: function (iObj) {
 
@@ -345,6 +447,57 @@
                 });
             };
             scope.init();
+        }
+    }
+});
+
+app.directive('droppable', function ($rootScope) {
+    return {
+        scope: {
+            drop: '&',           
+        },
+        link: function (scope, element) {
+            // again we need the native object
+            var el = element[0];
+            el.addEventListener('dragover',function (e) {
+                e.dataTransfer.dropEffect = 'move';
+               //event.dataTransfer.dropEffect = 'copy'
+                event.dataTransfer.effectAllowed = 'copy'
+                  // allows us to drop
+                  if (e.preventDefault) e.preventDefault();
+                //  this.classList.add('over');
+                  return false;
+              },
+              false
+            );
+
+            el.addEventListener('dragenter',function (e) {
+                 // this.classList.add('over');
+                  return false;
+              },
+              false
+            );
+
+            el.addEventListener('dragleave',function (e) {
+                //  this.classList.remove('over');
+                  return false;
+              },
+              false
+            );
+
+            el.addEventListener('drop', function (e) {
+                  // Stops some browsers from redirecting.
+                if (e.stopPropagation) e.stopPropagation();
+                if (e.preventDefault) e.preventDefault();
+                  // call the passed drop function
+                  var fn = scope.drop();
+                  if ('undefined' !== typeof fn) {                    
+                      fn(e.dataTransfer.files);
+                  }
+                  return false;
+              },
+              false
+            );
         }
     }
 });

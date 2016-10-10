@@ -1060,8 +1060,8 @@ border: 1px solid #999;
     position:absolute;
     width: 0%;
     height: 0%;
-    left:25%;
-    top:10%;
+    left: 15%;
+    top: 7%;
     overflow:hidden;
     z-index : -1;
     opacity:0;    
@@ -1069,9 +1069,9 @@ border: 1px solid #999;
     transition: 1s all ease;
 }
 .loadUploadPopup {
-    width: 50%;
-    height: 58%;
-        padding: 5px;
+    width: 71%;
+    height: 87%;
+    padding: 5px;
     background:white;
     border: 1px solid #ddd;
     z-index : 1 !important;
@@ -1083,7 +1083,7 @@ border: 1px solid #999;
 
 .topStripPopup {
     width: 100%;
-    height: 19%;
+    height: 9%;
     float:left;
     position: relative;
     display: flex;
@@ -1092,8 +1092,7 @@ border: 1px solid #999;
 }
 .middlteStripPopup {
     width: 100%;
-    height: 65%;
-    display: flex;
+    height: 82%;
     position: relative;
     float:left;
     border:1px solid lightgray;
@@ -1102,7 +1101,7 @@ border: 1px solid #999;
 .bottomStripPopup {
     width: 100%;
     display: flex;
-    height: 15%;
+    height: 9%;
     position: relative;
     float:left;
     border:1px solid lightgray;
@@ -1111,7 +1110,7 @@ border: 1px solid #999;
 .uploadedAttachment {
     width: 100%;
     display: flex;
-    height: 44%;
+    height: 28%;
     float:left;
     border: 1px solid #ddd;
     margin-bottom: 10px;
@@ -1119,7 +1118,7 @@ border: 1px solid #999;
     border-radius: 3px;
 }
 .uploadDataTypeDiv {
-    width: 10%;
+    width: 6%;
     margin: auto;
     height: 100%;
     float:left;
@@ -1127,7 +1126,7 @@ border: 1px solid #999;
      display: flex;
 }
 .uploadDataBarDiv {
-    width: 90%;
+    width: 88%;
     height: 100%;
     margin: auto;
     float:left;
@@ -1349,6 +1348,10 @@ border: 1px solid #999;
 }
 .highlightedSelection {
     border-bottom:1px solid;
+}
+.highlighted2Selection {
+    border-bottom:2px solid;
+    color: #2dc3e8;
 }
 .ctsLabelParentDiv  {
     float: left;

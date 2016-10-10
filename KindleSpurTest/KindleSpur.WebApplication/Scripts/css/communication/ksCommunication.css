@@ -9,13 +9,13 @@
 .leftContainer{
   float :left;
   height : auto;
-width: 40%;
-    margin-top: 25px;
+  width: 40%;
+  margin-top: 25px;
 }
 .rightContainer{
   float :right;
   height : auto;
-    margin-top: 25px;
+  margin-top: 25px;
 }
 .middleContainer{
   width :calc(100% - 200px);

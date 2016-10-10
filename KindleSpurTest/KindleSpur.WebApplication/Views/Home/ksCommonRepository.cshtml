@@ -1,4 +1,162 @@
-﻿<div class="fullWidthHeightClass" ng-click="$event.stopPropagation()">
+﻿<div ng-if="false" class="fullWidthHeightClass floatingClass" ng-click="$event.stopPropagation()">
+    <div class="uploadPopup" ng-class="{ loadUploadPopup : loadUploadPopupFlag == true && artictFact == true }">
+        <div class="topStripPopup">
+            <h5 style="margin: auto;margin-left:2%;" class="fontClass ValueFeedsHeade">UPLOAD FILES</h5>
+            
+        </div>
+        <div class="middlteStripPopup">
+            <div class="fullWidthHeightClass floatingClass showUploadedElementCommRepo" droppable drop="ddd" ng-class="{ hideUploadedElementCommRepo : uploadAttachmentArray.length > 0  }">
+                <div class="floatingClass displayFlexClass fileUploadImageDiv">
+                    <img class="floatingClass genericPointerClass" ng-class="{ fullHeightConditonComm : uploadAttachmentArray.length > 0 }" src="~/Images/Repository/upload-to-cloud (2).png" /> 
+                </div>
+                <div class="floatingClass displayFlexClass fileUploadh5Label">
+                    <h5 class="fontClass ValueFeedsHeade">Drag file here or</h5>
+                    <a ng-click="triggerUpload('uploadInput')" class="fontClass ValueFeedsHeade">Choose Upload</a>
+                    @*<button type="button" ng-click="triggerUpload('uploadInput')" style="margin: auto;width: 16%;padding: 0%;margin-right: 7%;height: 22px;font-size: 9px;" class="signupButton fontClass btn btn-default">SELECT FILE +</button>*@
+                    <input type="file" multiple ng-model="uploadedFile" style="display: none" id="uploadInput" name="filedata" />
+                </div>
+            </div>
+            <div class="fullWidthHeightClass" ng-class="{ showUploadedDataCommRepo : uploadAttachmentArray.length > 0 ,hideUploadedDataCommRepo  : uploadAttachmentArray.length == 0 }">
+                @*<svg viewBox="0 0 180 320" preserveAspectRatio="none">
+                    <path d="M180,160C180,160,0,218,0,218C0,218,0,0,0,0C0,0,180,0,180,0C180,0,180,160,180,160"></path>
+                    <defs></defs>
+                </svg>*@                
+                <div ng-hide="" class="uploadedAttachment" ng-repeat="attachment in uploadAttachmentArray">
+                    
+                    <div class="uploadDataTypeDiv">
+                        <img ng-if="attachment.ContentType.indexOf('document') > -1 && attachment.ContentType.indexOf('sheet') == -1" src="~/Images/icons/msDoc.png"/>
+                        <img ng-if="attachment.ContentType.indexOf('sheet') > -1" src="~/Images/icons/xlSheet.png"/>
+                        <img ng-if="attachment.ContentType.indexOf('pdf') > -1" src="~/Images/icons/pdfDoc.png"/>
+                        <img ng-if="attachment.ContentType.indexOf('image') > -1" ng-src="{{attachment.FilePath}}"/>
+                    </div>
+                    <div class="uploadDataBarDiv">
+                        <div class="uploadBarDataParent">
+                            <div class="uploadedDataHeading">
+                                <h5 class="fontClass ValueFeedsHeade eliipsisClass">{{attachment.name}}</h5>
+                                <progress ng-if="attachment.progressBar > -1" style="transition: all 1s ease;"class="progressBarUpload" min="0" max="100"  value="{{attachment.progressBar}}"></progress>
+                                <h5 ng-if="attachment.progressBar > -1" class="fontClass ValueFeedsHeade eliipsisClass" style="float:right;width: 8%;">{{attachment.progressBar}}%</h5>
+                            </div>
+                            @*<div class="uploadedDataHeading" style="display:flex;">
+                                    <h5 style="width: 8%;" class="fontClass ValueFeedsHeade">TAG</h5>
+                                    <input ng-model="myInfo.lastName" class="inputTagStyle tagBarUploadProfile fontClass" style="padding:2px;margin-left: 2%;" type="text" placeholder="LAST NAME" />
+                                </div>*@
+                        </div>
+                    </div>
+                    <div class="uploadDataTypeDiv">
+                        <img class="genericPointerClass" ng-click="cancelClick($index)" style="width: 15px;height: 15px;" title="Close" src="~/Images/cancel.png"  />
+                    </div>
+                </div>
+                @*<place-Holder message="Upload Files" ng-show="uploadAttachmentArray.length == 0"></place-Holder>*@
+
+            </div>
+        </div>
+        <div class="bottomStripPopup">
+            <button type="button" style="margin: auto;width: 15%;padding: 0%;height: 22px;font-size: 9px;" ng-click="closePopup()" class="signupButton fontClass btn btn-default">CANCEL</button>
+            <button ng-hide="uploadAttachmentArray.length == 0" type="button" style="margin: auto;width: 15%;padding: 0%;height: 22px;font-size: 9px;" ng-click="uploadDataOnServer()" class="signupButton fontClass btn btn-default">{{ commonRepoInstance.uploadingInProgress.uploadButtonName }}</button>
+        </div>
+    </div>
+    <div class="fullWidthHeightClass floatingClass">
+        <div class="fullWidthHeightClass floatingClass topStripCommonRepo">
+            <div class="fullWidthHeightClass floatingClass">
+                <div class="floatingClass displayFlexClass workspaceLableHeadingComm ">
+                    <h5 class="fontClass floatingClass">KNOWLEDGE WORKSPACE</h5>                    
+                </div>
+                <div class="floatingClass displayFlexClass lableHeadingComm">
+                    <div class="floatingClass displayFlexClass lableHeadingCommParent" >
+                        <h5 ng-class="{ highlighted2Selection : commonRepoInstance.commonRepoSelectedMenu == 0 }" ng-click="commonRepoInstance.loadMenuRepo(0)" class="fontClass floatingClass genericPointerClass upperCaseClass">Artifacts</h5>
+                        <h5 ng-class="{ highlighted2Selection : commonRepoInstance.commonRepoSelectedMenu == 1 }" ng-click="commonRepoInstance.loadMenuRepo(1)" class="fontClass floatingClass genericPointerClass upperCaseClass">Bookmarks</h5>
+                        <h5 ng-class="{ highlighted2Selection : commonRepoInstance.commonRepoSelectedMenu == 2 }" ng-click="commonRepoInstance.loadMenuRepo(2)" class="fontClass floatingClass genericPointerClass upperCaseClass">My Favourite</h5>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="fullWidthHeightClass floatingClass bottomStripCommonRepo">
+            <div class="fullWidthHeightClass floatingClass topStripCommonRepo" ng-switch="commonRepoInstance.commonRepoSelectedMenu">
+                <div class="fullWidthHeightClass floatingClass displayFlexClass addArtifacts" ng-switch-when="0">
+                    <img class="fontClass floatingClass genericPointerClass"  ng-click="loadUploadPopup()" src="~/Images/addBold.png" />
+                    <h5  class="fontClass floatingClass upperCaseClass">Add Artifacts</h5>                   
+                    <img class="fontClass floatingClass genericPointerClass listGridViewIcons" ng-src="{{  commonRepoInstance.loadGridView == true && 'Images/Repository/menu_list.png' || 'Images/Repository/menu_grid.png'}}" ng-click="commonRepoInstance.loadGridView =! commonRepoInstance.loadGridView;loadIsotopeAttachment()" style="margin: auto; float: right;" />
+                </div>
+                <div class="fullWidthHeightClass floatingClass displayFlexClass addArtifacts" ng-switch-when="1">
+                    <img class="fontClass floatingClass genericPointerClass" src="~/Images/addBold.png" />
+                    <h5 class="fontClass floatingClass genericPointerClass">Add BookMark</h5>
+                </div>
+                <div class="fullWidthHeightClass floatingClass" ng-switch-when="2">
+                    2
+                </div>
+            </div>
+            <div class="fullWidthHeightClass floatingClass bottomStripCommonRepo" ng-switch="commonRepoInstance.commonRepoSelectedMenu">
+                <div class="fullWidthHeightClass floatingClass" ng-switch-when="0">
+                    
+                    <div id="artiFactParent" class="fullWidthHeightClass artifactParent">
+                       <div class="artifactRepeat" ng-repeat="artifact in artifactsArray" ng-style="artifact.styleObj" ng-mouseleave="artifact.showOption = false" ng-mouseover="artifact.showOption = true" >
+                           <div class="fullWidthHeightClass floatingClass" ng-if="commonRepoInstance.loadGridView">
+                               <div class="hideMoreOption" ng-class="{ loadMoreOption : artifact.showOption == true || artifact.selected == true }">
+                                   <div class="fullWidthHeightClass floatingClass checkBoxClassCommRepo">
+                                       <input value="true" ng-model="artifact.selected" type="checkbox" />
+                                   </div>
+                                   <div ng-show="extraParam.deleteIcon == true" class="fullWidthHeightClass floatingClass bookMarkStarLinkClass">
+                                       <img class="fullWidthHeightClass floatingClass" ng-src="{{ artifact.bookMarked ? 'Images/rate-star-button.png' : 'Images/silverstar.png' }}" ng-click="selectBookMarkLink(artifact)" />
+                                   </div>
+                                   <div class="fullWidthHeightClass floatingClass bookMarkStarLinkClass">
+                                       <img ng-src="{{ artifact.MarkAsFavourite ? 'Images/Repository/delete_bookmark.png' : 'Images/Repository/add_bookmark.png' }}" ng-click="artifact.MarkAsFavourite =!artifact.MarkAsFavourite"  style="margin: auto; float: left;height: 15px;width: 20px;" />
+                                   </div>
+                                   <div class="fullWidthHeightClass floatingClass bookMarkStarLinkClass">                                      
+                                       <img src="~/Images/Repository/delete-White.png" ng-click="deleteAttachment({ deleteMultiple : false , type : 'artifact' , deletedObject : artifact , index : $index })" style="margin: auto; float: left;height: 15px;width: 20px;" />
+                                   </div>                                  
+                               </div>
+                               <div ng-click="loadFeedOnNextTab(artifact)" style="width: 100%;height:70%;" class="profileImageCoachingStatus genericPointerClass">
+                                   <img ng-if="artifact.ContentType.indexOf('document') > -1 && artifact.ContentType.indexOf('sheet') == -1" src="~/Images/icons/msDoc.png" style="margin: auto auto;float: left;height: 50px;width: 50px;" />
+                                   <img ng-if="artifact.ContentType.indexOf('sheet') > -1 || artifact.ContentType.indexOf('excel') > -1" src="~/Images/icons/xlSheet.png" style="margin: auto auto;float: left;height: 50px;width: 50px;" />
+                                   <img ng-if="artifact.ContentType.indexOf('pdf') > -1" src="~/Images/icons/pdfDoc.png" style="margin: auto auto;float: left;height: 50px;width: 50px;" />
+                                   <img ng-if="artifact.ContentType.indexOf('image') > -1" ng-src="{{artifact.FilePath}}" style="margin: auto auto;float: left;height: 50px;width: 50px;" />
+                               </div>
+                               <div class="statusCoachingStatus" style="width: 100%;height:30%;">
+                                   <h5 ng-click="loadFeedOnNextTab(artifact)" class="fontClass genericPointerClass multilineEllipsis" style="color:#A9A9A9;margin: auto auto;float: left;font-size:13px;">{{artifact.FileName}}</h5>
+                               </div>
+                           </div>
+                           <div class="fullWidthHeightClass floatingClass listViewAttachement" ng-if="commonRepoInstance.loadGridView == false">
+                                <div class="fullWidthHeightClass floatingClass">
+                                    <div style="float: left;display: flex;width: 3%;height: 100%; position: relative;">
+                                        <input style="float: left;margin: auto;" value="true" ng-model="artifact.selected" type="checkbox" />
+                                    </div>
+                                    <div ng-show="extraParam.deleteIcon == true" class="floatingClass listViewIconContain">
+                                        <img ng-src="{{ artifact.bookMarked ? 'Images/rate-star-button.png' : 'Images/silverstar.png' }}" ng-click="selectBookMarkLink(artifact)" style="margin: auto; float: left;height: 20px;width: 20px;" />
+                                    </div>
+                                    <div class="floatingClass listViewIconContain" ng-click="loadFeedOnNextTab(artifact)" style="width: 5%;">
+                                        <img ng-if="artifact.ContentType.indexOf('document') > -1 && artifact.ContentType.indexOf('sheet') == -1" src="~/Images/icons/msDoc.png" style="margin: auto auto;float: left;height: 25px;width: 25px;" />
+                                        <img ng-if="artifact.ContentType.indexOf('sheet') > -1 || artifact.ContentType.indexOf('excel') > -1" src="~/Images/icons/xlSheet.png" style="margin: auto auto;float: left;height: 25px;width: 25px;" />
+                                        <img ng-if="artifact.ContentType.indexOf('pdf') > -1" src="~/Images/icons/pdfDoc.png" style="margin: auto auto;float: left;height: 25px;width: 25px;" />
+                                        <img ng-if="artifact.ContentType.indexOf('image') > -1" ng-src="{{artifact.FilePath}}" style="margin: auto auto;float: left;height: 25px;width: 25px;" />
+                                    </div>
+                                    <div class="statusCoachingStatus" style="width: 82%;">
+                                        <h5 ng-click="loadFeedOnNextTab(artifact)" class="fontClass genericPointerClass multilineEllipsis" style="color:#A9A9A9;margin: auto auto;float: left;margin-left: 0;font-size:13px;">{{artifact.FileName}}</h5>
+                                    </div>
+                                    <div class="floatingClass listViewIconContain">
+                                        <img ng-src="{{ artifact.MarkAsFavourite ? 'Images/Repository/delete_bookmark.png' : 'Images/Repository/add_bookmark.png' }}" ng-click="artifact.MarkAsFavourite =!artifact.MarkAsFavourite" style="margin: auto; float: left;height: 15px;width: 20px;" />
+                                    </div>                                   
+                                    <div class="floatingClass listViewIconContain">
+                                        <img src="~/Images/delete.png" ng-click="deleteAttachment({ deleteMultiple : false , type : 'artifact' , deletedObject : artifact , index : $index })" style="margin: auto; float: left;height: 15px;width: 20px;" />
+                                    </div>
+                                </div>                             
+                           </div>
+                       </div>
+                    </div>
+                </div>
+                <div class="fullWidthHeightClass floatingClass" ng-switch-when="1">
+                    1
+                </div>
+                <div class="fullWidthHeightClass floatingClass" ng-switch-when="2">
+                    2
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+</div>
+
+<div class="fullWidthHeightClass" ng-click="$event.stopPropagation()">
     <div ng-style="styleUI.top" class="labelInRightPanelVCG" style="height:7%;border-bottom:1px solid lightgray;display:flex;background-color: white;" ng-show="extraParam.headingRequired">
         <h5 class="fontClass" style="font-size: 16px;margin: auto;margin-left: 1%;">{{extraParam.headingTitle ? extraParam.headingTitle : 'KNOWLEDGE WORKSPACE'}}</h5>
         <img ng-show="extraParam.closeRequired" ng-click="closePopup()" style="width: 15px;height: 15px;top:5px;right: 5px;bottom: 0;position: absolute;z-index:1;cursor:pointer;" title="Cancel" src="~/Images/cancel.png" />
@@ -42,7 +200,6 @@
                 <div class="bottomStripPopup">   
                     <button type="button" style="margin: auto;width: 15%;padding: 0%;margin-right: 7%;height: 22px;font-size: 9px;" ng-click="closePopup()" class="signupButton fontClass btn btn-default">CANCEL</button>
                     <button  ng-hide="uploadAttachmentArray.length == 0" type="button" style="margin: auto;width: 15%;padding: 0%;margin-right: 7%;height: 22px;font-size: 9px;" ng-click="uploadDataOnServer()" class="signupButton fontClass btn btn-default">UPLOAD</button>                  
-
                 </div>
             </div>
             <div class="uploadPopup" ng-class="{ loadUploadPopup : loadUploadPopupFlag == true && artictFact == false }">

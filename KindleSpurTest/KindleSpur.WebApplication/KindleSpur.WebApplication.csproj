@@ -436,6 +436,13 @@
     <Content Include="Images\rate-star-button.png" />
     <Content Include="Images\redirectLogin.png" />
     <Content Include="Images\redstar.png" />
+    <Content Include="Images\Repository\add_bookmark.png" />
+    <Content Include="Images\Repository\delete-White.png" />
+    <Content Include="Images\Repository\delete_bookmark.png" />
+    <Content Include="Images\Repository\menu_grid.png" />
+    <Content Include="Images\Repository\menu_list.png" />
+    <Content Include="Images\Repository\upload-to-cloud %281%29.png" />
+    <Content Include="Images\Repository\upload-to-cloud %282%29.png" />
     <Content Include="Images\reset.png" />
     <Content Include="Images\rightSideIcon.png" />
     <Content Include="Images\save.png" />
@@ -517,6 +524,7 @@
     <Content Include="Scripts\css\ksDashBoard\ksDashBoardCoachee.css" />
     <Content Include="Scripts\css\ksDashBoard\ksDashBoardMentee.css" />
     <Content Include="Scripts\css\ksDashBoard\ksDashBoardMentor.css" />
+    <Content Include="Scripts\css\ksDashBoard\ksCommonRepo.css" />
     <Content Include="Scripts\css\ksLogin\ksLogin.css" />
     <Content Include="Scripts\css\global.css" />
     <Content Include="Scripts\css\ksLogin\ksSavePassoword.css" />
